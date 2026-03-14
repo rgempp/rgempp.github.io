@@ -1,142 +1,261 @@
 [
   {
-    "objectID": "posts.html",
-    "href": "posts.html",
-    "title": "What’s New & Updated",
+    "objectID": "tests-scales.html",
+    "href": "tests-scales.html",
+    "title": "Tests & Scales",
     "section": "",
-    "text": "Order By\n      Default\n      \n        Title\n      \n      \n        Date - Oldest\n      \n      \n        Date - Newest\n      \n      \n        Author\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n\n\n\n\nQuarto Academic Website Examples and Tips\n\n\n\n\n\n\nnews\n\n\n\nExamples and tips for Quarto Academic Website\n\n\n\n\n\nOct 15, 2024\n\n\nDr. Gang He\n\n\n\n\n\n\n\n\n\n\n\n\nEvent item\n\n\n\n\n\n\nevent\n\npresentation\n\n\n\nAbout Event item.\n\n\n\n\n\nSep 3, 2024\n\n\nEvent\n\n\n\n\n\n\n\n\n\n\n\n\nNews item\n\n\n\n\n\n\nnews\n\n\n\nAbout new item\n\n\n\n\n\nJun 24, 2024\n\n\nNews\n\n\n\n\n\n\n\n\n\n\n\n\nCan quantum-mechanical description of physical reality be considered complete?\n\n\nPhysical Review\n\n\n\npaper\n\n\n\nOne is thus led to conclude that the description of reality as given by a wave function is not complete.\n\n\n\n\n\nMay 15, 1935\n\n\nAlbert Einstein, Boris Podolsky, Nathan Rosen\n\n\n\n\n\nNo matching items"
+    "text": "This section lists psychometric instruments I have developed, adapted, or validated. Over time, each instrument will have a dedicated page with full psychometric documentation including factor structure, reliability estimates, measurement invariance results, and normative data where available.\n\n\nThis section is under construction. Instruments will be added with their corresponding psychometric documentation as it becomes available.\n\n\n\n\n\n\n\nTipPsychometric Reports\n\n\n\nEach instrument page (when available) will include: dimensionality evidence (EFA/CFA/ESEM), reliability estimates (omega, H coefficient), item-level statistics (IRT parameters where applicable), measurement invariance results, and normative data."
+  },
+  {
+    "objectID": "tests-scales.html#psychological-tests-and-scales",
+    "href": "tests-scales.html#psychological-tests-and-scales",
+    "title": "Tests & Scales",
+    "section": "",
+    "text": "This section lists psychometric instruments I have developed, adapted, or validated. Over time, each instrument will have a dedicated page with full psychometric documentation including factor structure, reliability estimates, measurement invariance results, and normative data where available.\n\n\nThis section is under construction. Instruments will be added with their corresponding psychometric documentation as it becomes available.\n\n\n\n\n\n\n\nTipPsychometric Reports\n\n\n\nEach instrument page (when available) will include: dimensionality evidence (EFA/CFA/ESEM), reliability estimates (omega, H coefficient), item-level statistics (IRT parameters where applicable), measurement invariance results, and normative data."
+  },
+  {
+    "objectID": "teaching-tutorials.html",
+    "href": "teaching-tutorials.html",
+    "title": "Tutorials",
+    "section": "",
+    "text": "Tutorials on psychometrics, data analysis, and quantitative methods, written in Quarto with executable R code.\n\n\n\n\n\nNo matching items\n\nTutorials are coming soon. Planned topics include: IRT with mirt, CFA with lavaan, ESEM in Mplus, Best-Worst Scaling analysis, and reliability estimation beyond Cronbach’s alpha."
+  },
+  {
+    "objectID": "teaching-tutorials.html#tutorials-how-to-guides",
+    "href": "teaching-tutorials.html#tutorials-how-to-guides",
+    "title": "Tutorials",
+    "section": "",
+    "text": "Tutorials on psychometrics, data analysis, and quantitative methods, written in Quarto with executable R code.\n\n\n\n\n\nNo matching items\n\nTutorials are coming soon. Planned topics include: IRT with mirt, CFA with lavaan, ESEM in Mplus, Best-Worst Scaling analysis, and reliability estimation beyond Cronbach’s alpha."
+  },
+  {
+    "objectID": "teaching-courses.html",
+    "href": "teaching-courses.html",
+    "title": "Courses",
+    "section": "",
+    "text": "Program: Ingeniería Comercial (undergraduate) · FAE, Universidad Diego Portales\nIntroductory course covering core topics in human behavior within organizations: personality, emotions, motivation, diversity, group dynamics, and leadership. Based on Robbins & Judge, complemented with case analyses and evidence-based evaluations.\n\n\n\n\n\nProgram: Magíster en Dirección de Personas · FAE, Universidad Diego Portales\nGraduate course that prepares students to design and conduct rigorous organizational diagnoses. Students work with real-world cases (TechNova, Muebles del Sur, EcoAcción, Hospital Regional) applying theoretical frameworks and organizational analysis tools."
+  },
+  {
+    "objectID": "teaching-courses.html#current-courses",
+    "href": "teaching-courses.html#current-courses",
+    "title": "Courses",
+    "section": "",
+    "text": "Program: Ingeniería Comercial (undergraduate) · FAE, Universidad Diego Portales\nIntroductory course covering core topics in human behavior within organizations: personality, emotions, motivation, diversity, group dynamics, and leadership. Based on Robbins & Judge, complemented with case analyses and evidence-based evaluations.\n\n\n\n\n\nProgram: Magíster en Dirección de Personas · FAE, Universidad Diego Portales\nGraduate course that prepares students to design and conduct rigorous organizational diagnoses. Students work with real-world cases (TechNova, Muebles del Sur, EcoAcción, Hospital Regional) applying theoretical frameworks and organizational analysis tools."
+  },
+  {
+    "objectID": "teaching-courses.html#past-courses",
+    "href": "teaching-courses.html#past-courses",
+    "title": "Courses",
+    "section": "Past Courses",
+    "text": "Past Courses\n\n\n\n\n\n\n\n\nTipDedicated Course Pages\n\n\n\nSome courses may have their own dedicated pages with syllabi, slides, readings, and supplementary materials. These will be linked from the course descriptions above as they become available."
   },
   {
     "objectID": "publications.html",
     "href": "publications.html",
     "title": "Publications",
     "section": "",
-    "text": "Notes: * corresponding author; GS graduate student advisee; VS visiting scholar;  ESI Highly Cited Paper (top 1%);  ESI Hot Paper (top 0.1%)\nTotal citations as of January 2025:"
+    "text": "My research spans psychometrics, organizational behavior, and quantitative methodology, with a focus on Latin American populations.\nFor a complete and up-to-date list, see my Google Scholar profile."
   },
   {
-    "objectID": "publications.html#selected-work",
-    "href": "publications.html#selected-work",
+    "objectID": "publications.html#journal-articles-book-chapters",
+    "href": "publications.html#journal-articles-book-chapters",
     "title": "Publications",
-    "section": "Selected Work",
-    "text": "Selected Work\nEinstein, A., Podolsky, B., & Rosen, N. (1935). Can quantum-mechanical description of physical reality be considered complete?. Physical review, 47(10), 777. [pdf] [code and data]   \n\n\n\n\n\n\nEinstein, A. (1965). Concerning an heuristic point of view toward the emission and transformation of light. American Journal of Physics, 33(5), 367. [pdf]"
+    "section": "Journal Articles & Book Chapters",
+    "text": "Journal Articles & Book Chapters\n\n\n\nGempp, R., & González-Carrasco, M. (2025). Psychometric evaluation of the brief multidimensional students’ life satisfaction scale (BMSLSS) in Chilean early adolescents: An item response theory analysis. Frontiers in Psychology, 16, 1638017.\n\n\n DOI\n\n\n\n\nEscaffi-Schwarz, M., Gempp, R., & Irmer, J. P. (2025). Meta-analysing the factor structure and reliability of measurement instruments: An R-based tutorial. International Journal of Psychology, 60(2), e70003.\n\n\n DOI\n\n\n\n\nMontero, R., Gempp, R., & Vargas, M. (2022). Chilean university students’ satisfaction with online learning during COVID-19 pandemic: Demonstrating the two-layer methodology. Frontiers in Psychology, 13, 887891.\n\n\n DOI\n\n\n\n\nGonzález, J., & Gempp, R. (2021). Test comparability and measurement validity in educational assessment. In J. Manzi, S. Taut, & M. R. García (Eds.), Validity of educational assessments in Chile and Latin America (pp. 173–204). Springer.\n\n\n DOI\n\n\n\n\nGempp, R., & González-Carrasco, M. (2021). Peer relatedness, school satisfaction, and life satisfaction in early adolescence: A non-recursive model. Frontiers in Psychology, 12, 641714.\n\n\n DOI\n\n\n\n\nGonzález, J., & Gempp, R. (2019). Comparabilidad de las mediciones: Un componente clave de la validez en medición educativa. En J. Manzi, S. Taut, & M. R. García (Eds.), Validez de los sistemas de medición educativa en Latinoamérica. Ediciones PUC.\n\n\n\n\n\n\nThieme, C., Prior, D., Tortosa-Ausina, E., & Gempp, R. (2016). Value added, educational accountability approaches and their effects on schools’ rankings: Evidence from Chile. European Journal of Operational Research, 253(2), 456–471.\n\n\n DOI\n\n\n\n\nGempp, R., & Saiz, J. L. (2014). El coeficiente Phi(Lambda) y la fiabilidad de las decisiones sobre selección de personal. Revista de Psicología, 23(1), 12–20.\n\n\n DOI\n\n\n\n\nGempp, R., & Saiz, J. L. (2014). El coeficiente K2 de Livingston y la fiabilidad de una decisión dicotómica en un test psicológico. Universitas Psychologica, 13(1).\n\n\n DOI\n\n\n\n\nThieme, C., Prior, D., Tortosa-Ausina, E., & Gempp, R. (2013). Value added and contextual factors in education: Evidence from Chilean schools. WP Series Fundación BBVA, 5, 1–40.\n\n\n\n\n\n\nTreviño, E., Toledo, G., & Gempp, R. (2013). Calidad de la educación parvularia: Las prácticas de clase y el camino a la mejora. Pensamiento Educativo. Revista de Investigación Educacional Latinoamericana, 50(1), 40–62.\n\n\n DOI\n\n\n\n\nIbáñez, A., Huepe, D., Gempp, R., Gutiérrez, V., Rivera-Rei, A., & Toledo, M. I. (2013). Empathy, sex and fluid intelligence as predictors of theory of mind. Personality and Individual Differences, 54(5), 616–621.\n\n\n DOI\n\n\n\n\nGempp, R. (2010). Equiparación, alineamiento y predicción de puntuaciones en medición educativa. Revista Iberoamericana de Evaluación Educativa, 3(2), 103–126.\n\n\n DOI\n\n\n\n\nGempp, R., & Thieme, C. (2010). Efecto de diferentes métodos de puntuación sobre la fiabilidad, validez y puntos de corte de la Escala de Depresión del Centro para Estudios Epidemiológicos (CES-D). Terapia Psicológica, 28(1), 5–12.\n\n\n DOI\n\n\n\n\nDenegri, M., Sepúlveda, J., Etchebarne, S., González, Y., Gempp, R., & Del Valle, C. (2009). Construcción de representaciones acerca de la pobreza y movilidad social: Un estudio evolutivo en estudiantes chilenos. PAIDEIA: Revista de Educación, 46(1), 159–176.\n\n\n\n\n\n\nGempp, R., & Avendaño, C. (2008). Datos normativos y propiedades psicométricas del SCL-90-R en estudiantes universitarios chilenos. Terapia Psicológica, 26(1), 39–58.\n\n\n DOI\n\n\n\n\nGempp, R., Denegri, M., Caripán, N., Catalán, V., Hermosilla, S., & Caprile, C. (2007). Desarrollo del Test de Alfabetización Económica para Adultos, versión 25 ítems (TAE-A-25). Revista Interamericana de Psicología, 41(3), 275–284.\n\n\n\n\n\n\nGempp, R., & Chesta, S. (2007). Errores estándar de medida condicionales para las normas metropolitanas de la adaptación chilena del EPQ-R: Aplicación de un modelo binomial a un test de personalidad. Terapia Psicológica, 25(1), 51–62.\n\n\n DOI\n\n\n\n\nGempp, R. (2006). El error estándar de medida y la puntuación verdadera de los tests psicológicos: Algunas recomendaciones prácticas. Terapia Psicológica, 24(2), 117–130.\n\n\n\n\n\n\nGempp, R., Denegri, M., Caprile, C., Cortés, L., Quesada, M., & Sepúlveda, J. (2006). Medición de la alfabetización económica en niños: Oportunidades diagnósticas con el Modelo de Crédito Parcial. Psykhe, 15(1), 13–27.\n\n\n DOI\n\n\n\n\nDenegri, M., Gempp, R., Del Valle, C., Etchebarne, S., & González, J. (2006). El aporte de la psicología educacional a las propuestas de educación económica: Los temas clave. Revista de Psicología, 15(2), 69–84.\n\n\n DOI\n\n\n\n\nDenegri, M., Del Valle, C., Gempp, R., & Martínez, G. (2006). La comprensión del mundo económico como necesidad de adaptación: Un desafío educativo pendiente. REXE: Revista de Estudios y Experiencias en Educación, 5(10), 75–94.\n\n\n DOI\n\n\n\n\nDenegri, M., Del Valle, C., Gempp, R., & Lara, M. A. (2006). Educación económica en la escuela: Hacia una propuesta de intervención. Revista Estudios Pedagógicos, 32(2), 103–120.\n\n\n DOI\n\n\n\n\nGempp, R. (2005). El Inventario de Personalidad BIG-35. En P. Vera-Villarroel & L. Oblitas (Eds.), Manual de escalas y cuestionarios iberoamericanos en psicología clínica y de la salud. Psicom Editores.\n\n\n\n\n\n\nOrtega, V., Rodríguez, J. C., Denegri, M., & Gempp, R. (2005). Segmentación psicoeconómica: Obtención y validación de perfiles para consumidores adultos jóvenes de nivel socioeconómico medio y alto en Colombia. Revista Internacional de Ciencias Sociales y Humanidades, SOCIOTAM, 15(2), 117–132.\n\n\n\n\n\n\nDenegri, M., Gempp, R., & Martínez, G. (2005). Estrategias de socialización económica en familias de clase alta y media-alta y su impacto en las prácticas de uso del dinero de los hijos. Boletín de Investigación Educacional, 20(2), 41–60.\n\n\n\n\n\n\nDenegri, M., Palavecinos, M., Gempp, R., & Caprile, C. (2005). Socializaçao econômica em famílias chilenas de classe média: Educando cidadaos ou consumidores? Psicología e Sociedade, 17(2), 88–98.\n\n\n\n\n\n\nGempp, R., Avendaño, C., & Muñoz, C. (2004). Normas y punto de corte para la Escala de Depresión del Centro para Estudios Epidemiológicos (CES-D) en población juvenil chilena. Terapia Psicológica, 22(2), 145–156.\n\n\n\n\n\n\nSilva, J., & Gempp, R. (2004). Diferenciación emocional y psicopatología: La hipótesis de la acentuación somática. Revista Electrónica de Motivación y Emoción, 6(16).\n\n\n\n\n\n\nGambara, H., Botella, J., & Gempp, R. (2002). Tiempo vacío y tiempo lleno. Un meta-análisis sobre los cambios en la percepción del tiempo en la edad. Estudios de Psicología, 23(1), 87–100.\n\n\n DOI\n\n\n\n\nVinet, E., Saiz, J. L., Gempp, R., Carlson, J., Santibáñez, P., & Solar, R. (2002). ¿Es factible detectar psicopatología a través de la medición de necesidades psicológicas? Revista Interamericana de Psicología, 36(1&2), 107–126.\n\n\n\n\n\n\nSaiz, J. L., & Gempp, R. (2001). Estudios empíricos sobre la identidad nacional chilena: Revisión y nueva evidencia. En J. M. Salazar (Ed.), Identidades nacionales en América Latina (pp. 219–239). Fondo Editorial de Humanidades y Educación, Universidad Central de Venezuela.\n\n\n\n\n\n\nPalavecinos, M., Denegri, M., Keller, A., & Gempp, R. (2000). Diferencias de género en la construcción de representaciones sociales acerca de la pobreza y desigualdad social de niños y niñas de Chile, IX Región. Revista Suma Psicológica, 7(2), 231–258.\n\n\n\n\n\n\nVinet, E., Saiz, J. L., Gempp, R., Benavente, P., Lutz, A., & Pezo, S. (1999). Examen psicométrico del Inventario Clínico Multiaxial de Millon III (MCMI-III) en una muestra de pacientes chilenos. Terapia Psicológica, 7(4), 155–166.\n\n\n\n\n\n\nSaiz, J. L., & Gempp, R. (1997). Identidad nacional chilena: Una taxonomía empírica. En L. Guzmán (Ed.), Exploraciones en psicología política I (pp. 161–176). Ediciones Universidad Diego Portales.\n\n\n\n\n\n\nSaiz, J. L., González, M. E., Gempp, R., & Mladinic, A. (1996). Identidad nacional chilena: Cogniciones, valoración y emociones. Estudios Sociales, 90(4), 29–56.\n\n\n\n\n\n\nSaiz, J. L., & Gempp, R. (1996). Los tipos valóricos de S. H. Schwartz en Chile: Una validación transcultural. En Asociación Mexicana de Psicología Social (Ed.), La psicología social en México: Vol. 6 (pp. 581–586). UNISON-AMEPSO-CIADAC.\n\n\n\n\n\n\nSaiz, J. L., & Gempp, R. (1995). Tres variedades de la identidad nacional chilena. Revista de Psicología Social y Personalidad, 11(1), 21–29.\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "projects.html",
-    "href": "projects.html",
-    "title": "Projects",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "René Gempp",
     "section": "",
-    "text": "Order By\n      Default\n      \n      \n      \n        Title\n      \n      \n        Team\n      \n      \n        Funder\n      \n      \n        Description\n      \n      \n        Start\n      \n      \n        End\n      \n      \n        Funding\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n \n\n\n\nTitle\n\n\n\nTeam\n\n\n\nFunder\n\n\n\nDescription\n\n\n\nFunding\n\n\n\nStart\n\n\n\nEnd\n\n\n\n\n\n\n\n\n\n\n\nExploring \n\n\nAcademic Website\n\n\nFunder\n\n\nThe goal of this project is to investigate .\n\n\n$0\n\n\n2024\n\n\n2025\n\n\n\n\n\n\nNo matching items"
+    "text": "I am the Director of the Department of Management at the Facultad de Administración y Economía (FAE), Universidad Diego Portales, Santiago, Chile.\nMy research sits at the intersection of psychometrics, organizational behavior, and quantitative methodology. I work with Item Response Theory (IRT), structural equation modeling (SEM), meta-analysis, and advanced scaling methods such as Best-Worst Scaling.\nCurrent research interests include the measurement of dark personality traits (Dark Triad/HEXACO), interpersonal affect regulation in leadership contexts, and Chilean workers’ labor preferences.\nI teach Organizational Behavior at the undergraduate level and Organizational Diagnosis in the Master’s in People Management program at UDP.\nI received my training at Universidad de La Frontera (UFRO), where I developed a deep commitment to psychometric rigor and research ethics."
   },
   {
-    "objectID": "posts/news-title/index.html",
-    "href": "posts/news-title/index.html",
-    "title": "News item",
+    "objectID": "grants.html",
+    "href": "grants.html",
+    "title": "Grants & Research Projects",
     "section": "",
-    "text": "About the news"
+    "text": "Section under construction. Active and past funded projects will be listed here."
   },
   {
-    "objectID": "posts/news-title/index.html#summary",
-    "href": "posts/news-title/index.html#summary",
-    "title": "News item",
+    "objectID": "grants.html#current-projects",
+    "href": "grants.html#current-projects",
+    "title": "Grants & Research Projects",
     "section": "",
-    "text": "About the news"
+    "text": "Section under construction. Active and past funded projects will be listed here."
   },
   {
-    "objectID": "posts/paper-title/index.html#abstract",
-    "href": "posts/paper-title/index.html#abstract",
-    "title": "Can quantum-mechanical description of physical reality be considered complete?",
-    "section": "Abstract",
-    "text": "Abstract\nIn a complete theory there is an element corresponding to each element of reality. A sufficient condition for the reality of a physical quantity is the possibility of predicting it with certainty, without disturbing the system. In quantum mechanics in the case of two physical quantities described by non-commuting operators, the knowledge of one precludes the knowledge of the other. Then either (1) the description of reality given by the wave function in quantum mechanics is not complete or (2) these two quantities cannot have simultaneous reality. Consideration of the problem of making predictions concerning a system on the basis of measurements made on another system that had previously interacted with it leads to the result that if (1) is false then (2) is also false. One is thus led to conclude that the description of reality as given by a wave function is not complete."
-  },
-  {
-    "objectID": "posts/paper-title/index.html#links",
-    "href": "posts/paper-title/index.html#links",
-    "title": "Can quantum-mechanical description of physical reality be considered complete?",
-    "section": "Links",
-    "text": "Links\nPublished paper"
-  },
-  {
-    "objectID": "teaching.html",
-    "href": "teaching.html",
-    "title": "Teaching",
-    "section": "",
-    "text": "Fall 2024,   Fall 2023\nClass 1 introduction."
-  },
-  {
-    "objectID": "teaching.html#class-1",
-    "href": "teaching.html#class-1",
-    "title": "Teaching",
-    "section": "",
-    "text": "Fall 2024,   Fall 2023\nClass 1 introduction."
-  },
-  {
-    "objectID": "teaching.html#class-2",
-    "href": "teaching.html#class-2",
-    "title": "Teaching",
-    "section": "Class 2",
-    "text": "Class 2\n\n\n\n\n\nSpring 2025,   Fall 2023\nClass 2 introduction."
-  },
-  {
-    "objectID": "teaching.html#class-3",
-    "href": "teaching.html#class-3",
-    "title": "Teaching",
-    "section": "Class 3",
-    "text": "Class 3\n\n\n\n\n\nSpring 2025,   Spring 2024\nClass 3 introduction."
+    "objectID": "grants.html#past-projects",
+    "href": "grants.html#past-projects",
+    "title": "Grants & Research Projects",
+    "section": "Past Projects",
+    "text": "Past Projects"
   },
   {
     "objectID": "contact.html",
     "href": "contact.html",
     "title": "Contact",
     "section": "",
-    "text": "Quarto Academic\nSchool\nCollege\nUniversity\nAddress:\nPhone:\nE-mail:"
+    "text": "Director, Department of Management Facultad de Administración y Economía (FAE) Universidad Diego Portales\nEmail: rene.gempp@udp.cl\nAddress: Av. Santa Clara 797 Santiago, Chile\n\n\n\n\nGoogle Scholar\nGitHub  \n\n\n\n\n\nIf you are a FAE student seeking guidance on thesis projects, research opportunities, or academic inquiries, please send an email with the subject line “Academic inquiry” including your program and topic of interest."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Quarto Academic, PhD",
+    "objectID": "contact.html#rené-gempp",
+    "href": "contact.html#rené-gempp",
+    "title": "Contact",
     "section": "",
-    "text": "Lab\n  \n  \n    \n     Uprofile\n  \n  \n    \n     E-mail\n  \n  \n    \n     LinkedIn\n  \n  \n    \n     YouTube\n  \n  \n      ORCID\n  \n  \n      Web of Science\n  \n  \n      Scopus\n  \n  \n      Google Scholar\n  \n\n  \n  \nI’m a Quarto Academeic Website Template adapted by Dr. Gang He.\nI’m a template that you can fork to build your own website with easy adaptation and deployment.\n\nStar this repository to bookmark it for future reference.\n\nFork this repository and rename it to YourGitHubUserName.github.io.\n\nTest to publish your site using GitHub Pages (make sure configuring your GitHub repository to publish from the docs directory, not the root folder).\nCheck if your website works or not. If successful, you should see exactly the same website as this one using your own Github Pages url:\n\nhttps://YourGitHubUserName.github.io if your repository name is YourGitHubUserName.github.io\nhttps://YourGitHubUserName.github.io/RepositoryName for other RepositoryName\nErrors:\n\nIf 404, it is likely you haven’t set up GitHub Pages\nIf it shows the README file, it is likely you’ve published from the root folder, not the docs directory\n\n\n\nIf you achieve this milestone, congratulations! You are now ready to start updating your website:\n\nUpdate the _quarto.yml file to configure your site’s basic settings.\n\nAdd or edit content in the following files and folders:\n\n/posts/ – posts about publications, news, events\n\nteaching.qmd – teaching information\n\nprojects.yml – research or other projects\n\npeople.qmd and /people/ – team or collaborators\n\n/files/ - profiles, images, pdfs, and includes\n\nRender and preview your site locally.\n\nCommit to publish your updates.\nRefine and polish your content and design as needed.\n\n✅ Enjoy your new website!\nLink your website on your official pages to let Google and AI bots include in their search results.\n\n\n\n\nResearcher, Univerisity\n\n\n\n\n\nPhD, Univerisity"
+    "text": "Director, Department of Management Facultad de Administración y Economía (FAE) Universidad Diego Portales\nEmail: rene.gempp@udp.cl\nAddress: Av. Santa Clara 797 Santiago, Chile\n\n\n\n\nGoogle Scholar\nGitHub  \n\n\n\n\n\nIf you are a FAE student seeking guidance on thesis projects, research opportunities, or academic inquiries, please send an email with the subject line “Academic inquiry” including your program and topic of interest."
   },
   {
-    "objectID": "index.html#experience",
-    "href": "index.html#experience",
-    "title": "Quarto Academic, PhD",
+    "objectID": "GUIDE-quarto-gempp.html",
+    "href": "GUIDE-quarto-gempp.html",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
     "section": "",
-    "text": "Researcher, Univerisity"
+    "text": "Navbar:  Home | Research ▼ | Teaching ▼ | Tests & Scales | Software & Code | Professional\n                 │                │\n                 ├─ Publications   ├─ Courses\n                 └─ Grants         ├─ Workshops\n                                   └─ Tutorials\n\n\n\n\n\n\n\n\n\nFile\nPurpose\n\n\n\n\n_quarto.yml\nMain site configuration (navbar, theme, footer)\n\n\nindex.qmd\nHomepage with bio, photo, and links\n\n\npublications.qmd\nAuto-generated publication list from BibTeX\n\n\ngrants.qmd\nFunded research projects (current and past)\n\n\nteaching-courses.qmd\nUniversity courses (OB, Organizational Diagnosis)\n\n\nteaching-workshops.qmd\nWorkshops and short courses\n\n\nteaching-tutorials.qmd\nQuarto tutorials with executable R code (listing page)\n\n\ntests-scales.qmd\nPsychometric instruments developed or adapted\n\n\nsoftware.qmd\nCode, scripts, and tools (R, Mplus, Stata)\n\n\nprofessional.qmd\nConsulting, peer review, memberships, conferences\n\n\ncontact.qmd\nContact information\n\n\n\n\n\n\n\n\n\n\nDownload the Windows installer from: https://quarto.org/docs/get-started/\nRun the .msi installer. Verify in Git Bash:\nquarto --version\n\n\n\nYou already have Git configured (from Claude Code). Verify:\ngit --version\n\n\n\nRStudio 2022.07+ has Quarto built in. You can preview the site directly from RStudio. Not strictly required if you prefer the terminal.\n\n\n\n\n\n\n\n\nGo to: https://github.com/drganghe/quarto-academic-website-template\nClick “Use this template” → “Create a new repository”\nConfigure:\n\nRepository name: tu-username.github.io (publishes at https://tu-username.github.io)\nVisibility: Public (required for free GitHub Pages)\n\nClick “Create repository”\n\n\n\n\ncd ~/Dropbox/ANALYTICA/\ngit clone https://github.com/TU-USERNAME/TU-USERNAME.github.io.git\ncd TU-USERNAME.github.io\n\n\n\nquarto preview\nShould open the template site in your browser. Ctrl+C to stop.\n\n\n\n\n\n\n\nrm people.qmd projects.qmd projects.yml posts.qmd\nrm -rf people/ posts/\n\n\n\nReplace _quarto.yml, index.qmd, publications.qmd, and contact.qmd with the versions from this package. Add the new files: grants.qmd, teaching-courses.qmd, teaching-workshops.qmd, teaching-tutorials.qmd, tests-scales.qmd, software.qmd, professional.qmd.\n\n\n\nPlace your photo at files/profiles/profile.jpg.\n\n\n\n\nGo to your Google Scholar profile\nSelect all publications → Export → BibTeX\nSave as references.bib in the project root\n\nAlternative: Export from Zotero as BibTeX for cleaner entries.\n\n\n\nmkdir -p teaching/tutorials\nWhen you create your first tutorial, add a subfolder:\nteaching/tutorials/intro-irt/\n└── index.qmd\n\n\n\nSearch all .qmd files for these strings and replace them:\n\nTU-USERNAME → your GitHub username\nTU-ID → your Google Scholar user ID\nTU-ORCID → your ORCID (uncomment lines when ready)\n\n\n\n\n\n\n\n\nquarto render\n\n\n\nquarto preview\n\n\n\ngit add .\ngit commit -m \"Initial personalized site\"\ngit push\n\n\n\n\nGo to your repository on GitHub\nSettings → Pages\nSource: “Deploy from a branch”\nBranch: main, folder /docs\nClick Save\n\nWait 2-5 minutes. Your site will be live.\n\n\n\n\n\n\n\nSettings → Pages → Custom domain → type gempp.cl → Save\n\n\n\nAdd these DNS records:\nFor gempp.cl (apex domain):\n\n\n\nType\nHost\nValue\n\n\n\n\nA\n@\n185.199.108.153\n\n\nA\n@\n185.199.109.153\n\n\nA\n@\n185.199.110.153\n\n\nA\n@\n185.199.111.153\n\n\n\nFor www.gempp.cl:\n\n\n\nType\nHost\nValue\n\n\n\n\nCNAME\nwww\ntu-username.github.io\n\n\n\n\n\n\nOnce DNS propagates (up to 48h), go to Settings → Pages → check “Enforce HTTPS”.\n\n\n\n\n\n\n\n\nCreate teaching/tutorials/my-tutorial/index.qmd\nWrite your tutorial with executable R chunks\nquarto render and push\n\nExample index.qmd header:\n---\ntitle: \"Introduction to IRT with mirt\"\ndescription: \"A practical walkthrough of Rasch and GRM models in R\"\ndate: 2026-04-01\ncategories: [IRT, R, psychometrics]\nexecute:\n  echo: true\n---\n\n\n\nCreate a subfolder like teaching/ob-2026/ with its own index.qmd. Link to it from teaching-courses.qmd. The course page can include syllabus, slides (Reveal.js), assignments, and R-based materials.\n\n\n\nCreate a subfolder like tests/bmslss/index.qmd with the full psychometric documentation. Link to it from tests-scales.qmd.\n\n\n\n\n\nOnce the site is running:\n\nEdit .qmd files in your editor (RStudio, VS Code)\nquarto preview to check changes\nquarto render to build the final site\ngit add . && git commit -m \"description\" && git push\nGitHub Pages updates automatically (1-2 minutes)\n\n\n\n\n\n\nQuarto documentation: https://quarto.org/docs/websites/\nGang He’s academic site tips: https://drganghe.github.io/quarto-academic-site-examples.html\nPublishing to GitHub Pages: https://quarto.org/docs/publishing/github-pages.html\nAndrew Heiss’s site (reference): https://www.andrewheiss.com/\nHugo → Quarto migration (Spanish): https://jc-castillo.com/blog/posts/quarto-migration/\nqtwAcademic R package: https://github.com/andreaczhang/qtwAcademic"
   },
   {
-    "objectID": "index.html#education",
-    "href": "index.html#education",
-    "title": "Quarto Academic, PhD",
+    "objectID": "GUIDE-quarto-gempp.html#site-architecture",
+    "href": "GUIDE-quarto-gempp.html#site-architecture",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
     "section": "",
-    "text": "PhD, Univerisity"
+    "text": "Navbar:  Home | Research ▼ | Teaching ▼ | Tests & Scales | Software & Code | Professional\n                 │                │\n                 ├─ Publications   ├─ Courses\n                 └─ Grants         ├─ Workshops\n                                   └─ Tutorials\n\n\n\n\n\n\n\n\n\nFile\nPurpose\n\n\n\n\n_quarto.yml\nMain site configuration (navbar, theme, footer)\n\n\nindex.qmd\nHomepage with bio, photo, and links\n\n\npublications.qmd\nAuto-generated publication list from BibTeX\n\n\ngrants.qmd\nFunded research projects (current and past)\n\n\nteaching-courses.qmd\nUniversity courses (OB, Organizational Diagnosis)\n\n\nteaching-workshops.qmd\nWorkshops and short courses\n\n\nteaching-tutorials.qmd\nQuarto tutorials with executable R code (listing page)\n\n\ntests-scales.qmd\nPsychometric instruments developed or adapted\n\n\nsoftware.qmd\nCode, scripts, and tools (R, Mplus, Stata)\n\n\nprofessional.qmd\nConsulting, peer review, memberships, conferences\n\n\ncontact.qmd\nContact information"
   },
   {
-    "objectID": "index.html#recent-posts",
-    "href": "index.html#recent-posts",
-    "title": "Quarto Academic, PhD",
-    "section": "Recent Posts",
-    "text": "Recent Posts\nCheck out the latest  Papers ,  News ,  Events , and  More »\n\n\n\n\n\n\n\n\n\n\nQuarto Academic Website Examples and Tips\n\n\n\nOct 15, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\nEvent item\n\n\n\nSep 3, 2024\n\n\n\n\n\n\n\n\n\n\n\n\n\nNews item\n\n\n\nJun 24, 2024\n\n\n\n\n\n\nNo matching items\n\n\nAll Posts »"
-  },
-  {
-    "objectID": "people.html",
-    "href": "people.html",
-    "title": "People",
+    "objectID": "GUIDE-quarto-gempp.html#part-1-prerequisites-one-time-setup",
+    "href": "GUIDE-quarto-gempp.html#part-1-prerequisites-one-time-setup",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
     "section": "",
-    "text": "PhD Student\n\n\n\n\n\n\n\n\n\n\n\n\n\nMasters Student\n\n\n\n\n\n\n\n\n\n\n\n\n\nUndergraduate Student\n\n\n\n\n\n\n\n\n\n\n\n\n\nPI\n\n\n\n\n\nNo matching items"
+    "text": "Download the Windows installer from: https://quarto.org/docs/get-started/\nRun the .msi installer. Verify in Git Bash:\nquarto --version\n\n\n\nYou already have Git configured (from Claude Code). Verify:\ngit --version\n\n\n\nRStudio 2022.07+ has Quarto built in. You can preview the site directly from RStudio. Not strictly required if you prefer the terminal."
   },
   {
-    "objectID": "people.html#team",
-    "href": "people.html#team",
-    "title": "People",
+    "objectID": "GUIDE-quarto-gempp.html#part-2-create-the-repository-10-minutes",
+    "href": "GUIDE-quarto-gempp.html#part-2-create-the-repository-10-minutes",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
     "section": "",
-    "text": "PhD Student\n\n\n\n\n\n\n\n\n\n\n\n\n\nMasters Student\n\n\n\n\n\n\n\n\n\n\n\n\n\nUndergraduate Student\n\n\n\n\n\n\n\n\n\n\n\n\n\nPI\n\n\n\n\n\nNo matching items"
+    "text": "Go to: https://github.com/drganghe/quarto-academic-website-template\nClick “Use this template” → “Create a new repository”\nConfigure:\n\nRepository name: tu-username.github.io (publishes at https://tu-username.github.io)\nVisibility: Public (required for free GitHub Pages)\n\nClick “Create repository”\n\n\n\n\ncd ~/Dropbox/ANALYTICA/\ngit clone https://github.com/TU-USERNAME/TU-USERNAME.github.io.git\ncd TU-USERNAME.github.io\n\n\n\nquarto preview\nShould open the template site in your browser. Ctrl+C to stop."
   },
   {
-    "objectID": "people.html#alumni",
-    "href": "people.html#alumni",
-    "title": "People",
-    "section": "Alumni",
-    "text": "Alumni\n\n\n   \n    \n    \n      Order By\n      Default\n      \n      \n      \n        Name\n      \n      \n        Role\n      \n      \n        Started\n      \n      \n        Ended\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\n \n\n\n\nName\n\n\n\nRole\n\n\n\nStarted\n\n\n\nEnded\n\n\n\n\n\n\n\n\n\n\n\nAlumni A\n\n\nPhD Alumni\n\n\n2022-01\n\n\n2026-01\n\n\n\n\n\n\n\n\n\nAlumni B\n\n\nMasters Alumni\n\n\n2024-01\n\n\n2025-01\n\n\n\n\n\n\n\n\n\nAlumni C\n\n\nUndergraduate Alumni\n\n\n2023-01\n\n\n2024-01\n\n\n\n\n\n\nNo matching items"
+    "objectID": "GUIDE-quarto-gempp.html#part-3-replace-files",
+    "href": "GUIDE-quarto-gempp.html#part-3-replace-files",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
+    "section": "",
+    "text": "rm people.qmd projects.qmd projects.yml posts.qmd\nrm -rf people/ posts/\n\n\n\nReplace _quarto.yml, index.qmd, publications.qmd, and contact.qmd with the versions from this package. Add the new files: grants.qmd, teaching-courses.qmd, teaching-workshops.qmd, teaching-tutorials.qmd, tests-scales.qmd, software.qmd, professional.qmd.\n\n\n\nPlace your photo at files/profiles/profile.jpg.\n\n\n\n\nGo to your Google Scholar profile\nSelect all publications → Export → BibTeX\nSave as references.bib in the project root\n\nAlternative: Export from Zotero as BibTeX for cleaner entries.\n\n\n\nmkdir -p teaching/tutorials\nWhen you create your first tutorial, add a subfolder:\nteaching/tutorials/intro-irt/\n└── index.qmd\n\n\n\nSearch all .qmd files for these strings and replace them:\n\nTU-USERNAME → your GitHub username\nTU-ID → your Google Scholar user ID\nTU-ORCID → your ORCID (uncomment lines when ready)"
+  },
+  {
+    "objectID": "GUIDE-quarto-gempp.html#part-4-render-and-publish",
+    "href": "GUIDE-quarto-gempp.html#part-4-render-and-publish",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
+    "section": "",
+    "text": "quarto render\n\n\n\nquarto preview\n\n\n\ngit add .\ngit commit -m \"Initial personalized site\"\ngit push\n\n\n\n\nGo to your repository on GitHub\nSettings → Pages\nSource: “Deploy from a branch”\nBranch: main, folder /docs\nClick Save\n\nWait 2-5 minutes. Your site will be live."
+  },
+  {
+    "objectID": "GUIDE-quarto-gempp.html#part-5-connect-gempp.cl",
+    "href": "GUIDE-quarto-gempp.html#part-5-connect-gempp.cl",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
+    "section": "",
+    "text": "Settings → Pages → Custom domain → type gempp.cl → Save\n\n\n\nAdd these DNS records:\nFor gempp.cl (apex domain):\n\n\n\nType\nHost\nValue\n\n\n\n\nA\n@\n185.199.108.153\n\n\nA\n@\n185.199.109.153\n\n\nA\n@\n185.199.110.153\n\n\nA\n@\n185.199.111.153\n\n\n\nFor www.gempp.cl:\n\n\n\nType\nHost\nValue\n\n\n\n\nCNAME\nwww\ntu-username.github.io\n\n\n\n\n\n\nOnce DNS propagates (up to 48h), go to Settings → Pages → check “Enforce HTTPS”."
+  },
+  {
+    "objectID": "GUIDE-quarto-gempp.html#part-6-adding-content-over-time",
+    "href": "GUIDE-quarto-gempp.html#part-6-adding-content-over-time",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
+    "section": "",
+    "text": "Create teaching/tutorials/my-tutorial/index.qmd\nWrite your tutorial with executable R chunks\nquarto render and push\n\nExample index.qmd header:\n---\ntitle: \"Introduction to IRT with mirt\"\ndescription: \"A practical walkthrough of Rasch and GRM models in R\"\ndate: 2026-04-01\ncategories: [IRT, R, psychometrics]\nexecute:\n  echo: true\n---\n\n\n\nCreate a subfolder like teaching/ob-2026/ with its own index.qmd. Link to it from teaching-courses.qmd. The course page can include syllabus, slides (Reveal.js), assignments, and R-based materials.\n\n\n\nCreate a subfolder like tests/bmslss/index.qmd with the full psychometric documentation. Link to it from tests-scales.qmd."
+  },
+  {
+    "objectID": "GUIDE-quarto-gempp.html#part-7-regular-workflow",
+    "href": "GUIDE-quarto-gempp.html#part-7-regular-workflow",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
+    "section": "",
+    "text": "Once the site is running:\n\nEdit .qmd files in your editor (RStudio, VS Code)\nquarto preview to check changes\nquarto render to build the final site\ngit add . && git commit -m \"description\" && git push\nGitHub Pages updates automatically (1-2 minutes)"
+  },
+  {
+    "objectID": "GUIDE-quarto-gempp.html#useful-resources",
+    "href": "GUIDE-quarto-gempp.html#useful-resources",
+    "title": "Guide: Building your Academic Website with Quarto + GitHub Pages",
+    "section": "",
+    "text": "Quarto documentation: https://quarto.org/docs/websites/\nGang He’s academic site tips: https://drganghe.github.io/quarto-academic-site-examples.html\nPublishing to GitHub Pages: https://quarto.org/docs/publishing/github-pages.html\nAndrew Heiss’s site (reference): https://www.andrewheiss.com/\nHugo → Quarto migration (Spanish): https://jc-castillo.com/blog/posts/quarto-migration/\nqtwAcademic R package: https://github.com/andreaczhang/qtwAcademic"
+  },
+  {
+    "objectID": "professional.html",
+    "href": "professional.html",
+    "title": "Professional Activities",
+    "section": "",
+    "text": "Consulting areas will be listed here shortly."
+  },
+  {
+    "objectID": "professional.html#consulting",
+    "href": "professional.html#consulting",
+    "title": "Professional Activities",
+    "section": "",
+    "text": "Consulting areas will be listed here shortly."
+  },
+  {
+    "objectID": "professional.html#editorial-peer-review",
+    "href": "professional.html#editorial-peer-review",
+    "title": "Professional Activities",
+    "section": "Editorial & Peer Review",
+    "text": "Editorial & Peer Review\nI serve as a peer reviewer for multiple international journals."
+  },
+  {
+    "objectID": "professional.html#professional-memberships",
+    "href": "professional.html#professional-memberships",
+    "title": "Professional Activities",
+    "section": "Professional Memberships",
+    "text": "Professional Memberships"
+  },
+  {
+    "objectID": "professional.html#conference-presentations",
+    "href": "professional.html#conference-presentations",
+    "title": "Professional Activities",
+    "section": "Conference Presentations",
+    "text": "Conference Presentations\n\nSelected conference presentations will be listed here."
+  },
+  {
+    "objectID": "software.html",
+    "href": "software.html",
+    "title": "Software & Code",
+    "section": "",
+    "text": "I share here code and tools related to my research and teaching. I work primarily in R, Mplus, and Stata.\n\n\nThis section is under construction. Code will be published as research projects allow."
+  },
+  {
+    "objectID": "software.html#tools-scripts-and-reproducible-workflows",
+    "href": "software.html#tools-scripts-and-reproducible-workflows",
+    "title": "Software & Code",
+    "section": "",
+    "text": "I share here code and tools related to my research and teaching. I work primarily in R, Mplus, and Stata.\n\n\nThis section is under construction. Code will be published as research projects allow."
+  },
+  {
+    "objectID": "software.html#recommended-tools",
+    "href": "software.html#recommended-tools",
+    "title": "Software & Code",
+    "section": "Recommended Tools",
+    "text": "Recommended Tools\n\nlavaan — SEM in R\nmirt — Multidimensional IRT in R\npsych — Psychometric analysis in R\nMplus — Advanced statistical modeling\nQuarto — Reproducible scientific publishing"
+  },
+  {
+    "objectID": "teaching-supervision.html",
+    "href": "teaching-supervision.html",
+    "title": "Thesis Supervision",
+    "section": "",
+    "text": "I have supervised the following master’s theses at the Facultad de Administración y Economía, Universidad Diego Portales. All theses are empirical studies in organizational behavior, psychometrics, personnel selection, marketing, or related areas.\n\n\n\nAvendaño, L., Chomalí, N., & Fernández, A. (2025). Dimensiones del clima organizacional y engagement laboral post-fusión en Rayen Salud. Magíster en Dirección de Personas y Organizaciones, UDP.\nJara, R., Otárola, N., & Sáez, F. (2025). Hacia una cultura de evaluación y retroalimentación efectiva: Barreras y oportunidades en la gestión del desempeño operativo de CMPC Remanufactura Los Ángeles. Magíster en Dirección de Personas y Organizaciones, UDP.\nBaez, F., Galán, B., & Pereira, B. (2025). Efecto de las demandas y los recursos laborales en la satisfacción laboral y bienestar de los trabajadores en Chile. Magíster en Gestión de Personas, UDP.\nCid, S., Moreno, M., & Valdés, K. (2025). Adicción al trabajo y personalidad: Un meta-análisis. Magíster en Gestión de Personas, UDP.\nGonzález, S., Pérez, M., & Silva, M. (2025). Métodos digitales en procesos de selección de personal: Una exploración en Chile. Magíster en Gestión de Personas, UDP.\nAstorga, R., Muñoz, M., & Soto, R. (2025). Desarrollo y evaluación de una Shiny App para evaluar utilidad de procesos de selección de personal. Magíster en Gestión en Negocios Digitales y Analítica de Datos, UDP.\nFaúndez, M., Mella, C., Saavedra, I., & Trigo, Y. (2025). Meta-análisis de la relación entre rasgos de personalidad y desempeño en ventas. Magíster en Marketing, UDP.\n\n\n\nCáceres, D., González, J., & Santibáñez, F. (2024). Aceptación de los métodos de selección digitales por parte de los postulantes. Magíster en Personas y Organizaciones, UDP.\nDuque, S., & Restrepo, V. (2024). Características de personalidad de los seguidores y estilo de liderazgo preferido. Magíster en Personas y Organizaciones, UDP.\nFerreira, C. (2024). El impacto de la personalidad en la preferencia por estilo de liderazgo: Un estudio basado en los factores y facetas del Modelo HEXACO. Magíster en Personas y Organizaciones, UDP.\nFontalba, P., Galviz, V., & Guzmán, J. (2024). Rasgos de personalidad y decisiones laborales poco éticas. Magíster en Personas y Organizaciones, UDP.\nReyes, L., & Rubilar, C. (2024). Aceptación de métodos digitales para selección de personal. Magíster en Gestión de Negocios Digitales, UDP.\nGallardo, S., Rodríguez, J., & Villagra, D. (2024). Meta-análisis de los atributos valorados en la compra de vino. Magíster en Marketing, UDP.\n\n\n\nUrra, B., Vega, K., & Villalón, C. (2023). Predicción de rotación temprana a partir del proceso de selección de personal: Estudio de caso a una empresa del rubro de la construcción en Chile. Magíster en Personas y Organizaciones, UDP.\nCoderch, I., Curín, P., & Wilches, D. (2023). Pacing styles, necesidades psicológicas básicas y bienestar psicológico en estudiantes del área de negocios. Magíster en Personas y Organizaciones, UDP.\nFica, V., Magna, E., & Mura, J. (2023). Determinantes de la capacidad y disposición a encontrar soluciones de cooperación en situaciones de negociación de suma abierta. Magíster en Personas y Organizaciones, UDP.\n\n\n\nOrellana, T., Petit-Laurent, C., & Torres, P. (2022). Personalidad de los seguidores y estilo de liderazgo preferido. Magíster en Personas y Organizaciones, UDP.\nFernández, B., Gutiérrez, S., & Mandiola, P. (2022). Métodos de selección de personal en Chile: Comparación de preferencias en postulantes, seleccionadores y personas que contratan servicios de selección de personal. Magíster en Personas y Organizaciones, UDP.\nAsensio, T., Guerra, S., & Peredo, D. (2022). Atributos que definen el mejor lugar para trabajar en Chile. Magíster en Personas y Organizaciones, UDP.\nArcos, S., Arroyo, C., & Quezada, F. (2022). Validación del modelo de satisfacción de usuarios del Gobierno de Chile. Magíster en Marketing, UDP."
+  },
+  {
+    "objectID": "teaching-supervision.html#masters-theses",
+    "href": "teaching-supervision.html#masters-theses",
+    "title": "Thesis Supervision",
+    "section": "",
+    "text": "I have supervised the following master’s theses at the Facultad de Administración y Economía, Universidad Diego Portales. All theses are empirical studies in organizational behavior, psychometrics, personnel selection, marketing, or related areas.\n\n\n\nAvendaño, L., Chomalí, N., & Fernández, A. (2025). Dimensiones del clima organizacional y engagement laboral post-fusión en Rayen Salud. Magíster en Dirección de Personas y Organizaciones, UDP.\nJara, R., Otárola, N., & Sáez, F. (2025). Hacia una cultura de evaluación y retroalimentación efectiva: Barreras y oportunidades en la gestión del desempeño operativo de CMPC Remanufactura Los Ángeles. Magíster en Dirección de Personas y Organizaciones, UDP.\nBaez, F., Galán, B., & Pereira, B. (2025). Efecto de las demandas y los recursos laborales en la satisfacción laboral y bienestar de los trabajadores en Chile. Magíster en Gestión de Personas, UDP.\nCid, S., Moreno, M., & Valdés, K. (2025). Adicción al trabajo y personalidad: Un meta-análisis. Magíster en Gestión de Personas, UDP.\nGonzález, S., Pérez, M., & Silva, M. (2025). Métodos digitales en procesos de selección de personal: Una exploración en Chile. Magíster en Gestión de Personas, UDP.\nAstorga, R., Muñoz, M., & Soto, R. (2025). Desarrollo y evaluación de una Shiny App para evaluar utilidad de procesos de selección de personal. Magíster en Gestión en Negocios Digitales y Analítica de Datos, UDP.\nFaúndez, M., Mella, C., Saavedra, I., & Trigo, Y. (2025). Meta-análisis de la relación entre rasgos de personalidad y desempeño en ventas. Magíster en Marketing, UDP.\n\n\n\nCáceres, D., González, J., & Santibáñez, F. (2024). Aceptación de los métodos de selección digitales por parte de los postulantes. Magíster en Personas y Organizaciones, UDP.\nDuque, S., & Restrepo, V. (2024). Características de personalidad de los seguidores y estilo de liderazgo preferido. Magíster en Personas y Organizaciones, UDP.\nFerreira, C. (2024). El impacto de la personalidad en la preferencia por estilo de liderazgo: Un estudio basado en los factores y facetas del Modelo HEXACO. Magíster en Personas y Organizaciones, UDP.\nFontalba, P., Galviz, V., & Guzmán, J. (2024). Rasgos de personalidad y decisiones laborales poco éticas. Magíster en Personas y Organizaciones, UDP.\nReyes, L., & Rubilar, C. (2024). Aceptación de métodos digitales para selección de personal. Magíster en Gestión de Negocios Digitales, UDP.\nGallardo, S., Rodríguez, J., & Villagra, D. (2024). Meta-análisis de los atributos valorados en la compra de vino. Magíster en Marketing, UDP.\n\n\n\nUrra, B., Vega, K., & Villalón, C. (2023). Predicción de rotación temprana a partir del proceso de selección de personal: Estudio de caso a una empresa del rubro de la construcción en Chile. Magíster en Personas y Organizaciones, UDP.\nCoderch, I., Curín, P., & Wilches, D. (2023). Pacing styles, necesidades psicológicas básicas y bienestar psicológico en estudiantes del área de negocios. Magíster en Personas y Organizaciones, UDP.\nFica, V., Magna, E., & Mura, J. (2023). Determinantes de la capacidad y disposición a encontrar soluciones de cooperación en situaciones de negociación de suma abierta. Magíster en Personas y Organizaciones, UDP.\n\n\n\nOrellana, T., Petit-Laurent, C., & Torres, P. (2022). Personalidad de los seguidores y estilo de liderazgo preferido. Magíster en Personas y Organizaciones, UDP.\nFernández, B., Gutiérrez, S., & Mandiola, P. (2022). Métodos de selección de personal en Chile: Comparación de preferencias en postulantes, seleccionadores y personas que contratan servicios de selección de personal. Magíster en Personas y Organizaciones, UDP.\nAsensio, T., Guerra, S., & Peredo, D. (2022). Atributos que definen el mejor lugar para trabajar en Chile. Magíster en Personas y Organizaciones, UDP.\nArcos, S., Arroyo, C., & Quezada, F. (2022). Validación del modelo de satisfacción de usuarios del Gobierno de Chile. Magíster en Marketing, UDP."
+  },
+  {
+    "objectID": "teaching-workshops.html",
+    "href": "teaching-workshops.html",
+    "title": "Workshops",
+    "section": "",
+    "text": "Workshops and short courses will be listed here as they are developed. Topics will include IRT, SEM, psychometric analysis, and quantitative research methods.\n\n\n\n\n\n\n\nNoteInterested in a Workshop?\n\n\n\nIf you are interested in organizing a workshop on psychometrics, IRT, SEM, or quantitative methods for your institution or research group, feel free to contact me."
+  },
+  {
+    "objectID": "teaching-workshops.html#workshops-short-courses",
+    "href": "teaching-workshops.html#workshops-short-courses",
+    "title": "Workshops",
+    "section": "",
+    "text": "Workshops and short courses will be listed here as they are developed. Topics will include IRT, SEM, psychometric analysis, and quantitative research methods.\n\n\n\n\n\n\n\nNoteInterested in a Workshop?\n\n\n\nIf you are interested in organizing a workshop on psychometrics, IRT, SEM, or quantitative methods for your institution or research group, feel free to contact me."
   }
 ]

@@ -1,0 +1,29 @@
+---
+title: "Grants & Research Projects"
+---
+
+## Current Projects
+
+<!-- Add your active grants here. Example format:
+
+### Project Title (2024–2026)
+**Funding**: FONDECYT Regular Nº XXXXXXX · **Role**: Principal Investigator
+
+Brief description of the project, its objectives, and expected contributions.
+
+-->
+
+*Section under construction. Active and past funded projects will be listed here.*
+
+---
+
+## Past Projects
+
+<!-- Example:
+
+### Validation of the BMSLSS in Chilean Adolescents (2020–2022)
+**Funding**: Internal grant, UDP · **Role**: Principal Investigator
+
+Psychometric evaluation of the Brief Multidimensional Students' Life Satisfaction Scale using Item Response Theory in Chilean youth.
+
+-->

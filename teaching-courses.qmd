@@ -1,0 +1,43 @@
+---
+title: "Courses"
+---
+
+## Current Courses
+
+### Organizational Behavior
+**Program**: Ingeniería Comercial (undergraduate) · FAE, Universidad Diego Portales
+
+Introductory course covering core topics in human behavior within organizations: personality, emotions, motivation, diversity, group dynamics, and leadership. Based on Robbins & Judge, complemented with case analyses and evidence-based evaluations.
+
+<!-- Uncomment when materials are available:
+[Syllabus (PDF)](files/syllabi/ob-2026.pdf) · [Course page](teaching/ob-2026/)
+-->
+
+---
+
+### Organizational Diagnosis
+**Program**: Magíster en Dirección de Personas · FAE, Universidad Diego Portales
+
+Graduate course that prepares students to design and conduct rigorous organizational diagnoses. Students work with real-world cases (TechNova, Muebles del Sur, EcoAcción, Hospital Regional) applying theoretical frameworks and organizational analysis tools.
+
+<!-- Uncomment when materials are available:
+[Syllabus (PDF)](files/syllabi/diag-org-2026.pdf) · [Course page](teaching/diag-org-2026/)
+-->
+
+---
+
+## Past Courses
+
+<!-- List previous courses here as needed. Example:
+
+### Research Methods in Psychology
+**Program**: Psychology (undergraduate) · Universidad de La Frontera
+
+-->
+
+---
+
+::: {.callout-tip}
+## Dedicated Course Pages
+Some courses may have their own dedicated pages with syllabi, slides, readings, and supplementary materials. These will be linked from the course descriptions above as they become available.
+:::

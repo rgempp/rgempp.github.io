@@ -1,0 +1,42 @@
+---
+title: "Tutorials"
+listing:
+  id: tutorials-listing
+  contents: teaching/tutorials/*/index.qmd
+  type: default
+  sort: "date desc"
+  categories: true
+  fields: [title, description, date, categories]
+---
+
+## Tutorials & How-To Guides
+
+Tutorials on psychometrics, data analysis, and quantitative methods, written in Quarto with executable R code.
+
+<!-- 
+To add a new tutorial, create a folder inside teaching/tutorials/:
+
+teaching/tutorials/
+├── intro-irt-mirt/
+│   └── index.qmd
+├── cfa-lavaan-basics/
+│   └── index.qmd
+└── bws-analysis/
+    └── index.qmd
+
+Each index.qmd should have YAML like:
+
+---
+title: "Introduction to IRT with mirt"
+description: "A practical walkthrough of Rasch and GRM models in R"
+date: 2026-04-01
+categories: [IRT, R, psychometrics]
+execute:
+  echo: true
+---
+-->
+
+:::{#tutorials-listing}
+:::
+
+*Tutorials are coming soon. Planned topics include: IRT with `mirt`, CFA with `lavaan`, ESEM in Mplus, Best-Worst Scaling analysis, and reliability estimation beyond Cronbach's alpha.*

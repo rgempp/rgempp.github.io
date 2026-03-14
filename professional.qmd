@@ -1,0 +1,60 @@
+---
+title: "Professional Activities"
+---
+
+## Consulting
+
+<!-- List your consulting areas. Example:
+
+I provide consulting services in the following areas:
+
+- **Psychometric analysis**: Scale development, validation, and adaptation. IRT and CFA-based item analysis. Reliability and validity assessment.
+- **Organizational diagnosis**: Design and implementation of organizational assessments, climate surveys, and HR analytics.
+- **Personnel selection**: Development and validation of selection instruments. Adverse impact analysis and fairness evaluation.
+- **Research methodology**: Study design, sample size planning, advanced statistical modeling (SEM, IRT, meta-analysis).
+
+For inquiries, please [contact me](contact.qmd).
+
+-->
+
+*Consulting areas will be listed here shortly.*
+
+---
+
+## Editorial & Peer Review
+
+I serve as a peer reviewer for multiple international journals. 
+
+<!-- List journals here. Example:
+
+- *Journal of Organizational Behavior*
+- *European Journal of Psychological Assessment*
+- *Psykhe*
+- *Revista de Psicología del Trabajo y de las Organizaciones*
+
+-->
+
+---
+
+## Professional Memberships
+
+<!-- Example:
+
+- Sociedad Chilena de Psicología del Trabajo y las Organizaciones (SCPTO)
+- European Association of Work and Organizational Psychology (EAWOP)
+
+-->
+
+---
+
+## Conference Presentations
+
+<!-- Example:
+
+### Dark Triad Traits and Self-Favoring Pay Allocation in Team Leadership Contexts
+**Event**: ECP22 — European Congress of Psychology (2025)  
+**Format**: Poster presentation
+
+-->
+
+*Selected conference presentations will be listed here.*

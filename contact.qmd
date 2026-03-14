@@ -1,24 +1,30 @@
 ---
 title: "Contact"
-description-meta: "Reach out to me with questions and comments"
-title-block-banner: false
 ---
 
-<center>
+## René Gempp
 
-**Quarto Academic**
+**Director, Department of Management**
+Facultad de Administración y Economía (FAE)
+Universidad Diego Portales
 
-School
+**Email**: [rene.gempp@udp.cl](mailto:rene.gempp@udp.cl)
 
-College
+**Address**:
+Av. Santa Clara 797
+Santiago, Chile
 
-University
+---
 
-Address: 
+### Academic Profiles
 
-Phone: 
+- [Google Scholar](https://scholar.google.com/citations?user=iWvXzDYAAAAJ)
+- [GitHub](https://github.com/rgempp)
+<!-- - [ORCID](https://orcid.org/TU-ORCID) -->
+<!-- - [ResearchGate](https://www.researchgate.net/profile/TU-PERFIL) -->
 
-E-mail: 
+---
 
+### For Students
 
-</center>
+If you are a FAE student seeking guidance on thesis projects, research opportunities, or academic inquiries, please send an email with the subject line "Academic inquiry" including your program and topic of interest.

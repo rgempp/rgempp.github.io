@@ -1,1 +1,73 @@
-/* css styles */
+/* ============================================
+   styles.css — Base styles for gempp.cl
+   This file is referenced by _quarto.yml alongside custom.css
+   Keep base/structural styles here; visual tweaks in custom.css
+   ============================================ */
+
+/* -- Base font size and spacing -- */
+html {
+  font-size: 16px;
+}
+
+body {
+  line-height: 1.7;
+}
+
+/* -- Content width -- */
+.page-columns .content {
+  max-width: 52rem;
+}
+
+/* -- Paragraph spacing -- */
+p {
+  margin-bottom: 1rem;
+}
+
+/* -- Lists -- */
+ul, ol {
+  margin-bottom: 1rem;
+}
+
+li {
+  margin-bottom: 0.25rem;
+}
+
+/* -- Horizontal rules -- */
+hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 0;
+  border-top: 1px solid #e8e8e8;
+}
+
+/* -- Images -- */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* -- Tables -- */
+table {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e8e8e8;
+  text-align: left;
+}
+
+th {
+  font-weight: 600;
+}
+
+/* -- Blockquotes -- */
+blockquote {
+  border-left: 3px solid #0085a1;
+  padding-left: 1rem;
+  margin-left: 0;
+  color: #555;
+  font-style: italic;
+}

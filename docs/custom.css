@@ -1,4 +1,171 @@
-/*Inline block for altmetric badges, will keep the badges in the same line*/
-span.__dimensions_badge_embed__, div.altmetric-embed {
+/* ============================================
+   Custom styles for gempp.cl
+   Clean, light, academic look
+   Inspired by Hugo Academic / RStudio Education
+   ============================================ */
+
+/* -- Typography -- */
+body {
+  font-family: "Source Sans Pro", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+}
+
+/* -- Page title (name on index) -- */
+.quarto-title .title {
+  color: #4a7c94;
+  font-weight: 600;
+}
+
+/* -- Navbar: light, clean, minimal -- */
+.navbar {
+  font-size: 0.9rem;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: none;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #2c3e50 !important;
+}
+
+.navbar-nav .nav-link {
+  color: #555 !important;
+  font-weight: 400;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #0085a1 !important;
+}
+
+/* -- Links: blue-teal, like Academic theme -- */
+a {
+  color: #0085a1;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #005f73;
+  text-decoration: underline;
+}
+
+/* -- Homepage about section -- */
+.about-entity .about-links a {
+  color: #0085a1;
+  border: 1px solid #0085a1;
+  border-radius: 4px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  transition: all 0.15s ease;
+}
+
+.about-entity .about-links a:hover {
+  background-color: #0085a1;
+  color: #fff;
+  text-decoration: none;
+}
+
+/* -- Round profile image -- */
+.about-entity img.rounded-circle,
+.about-entity img.about-image {
+  border: 3px solid #e8e8e8;
+}
+
+/* -- Section headings -- */
+h1 {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+h2 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #eee;
+}
+
+h3 {
+  color: #3a3a3a;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* -- Publication entries -- */
+.pub-entry {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pub-citation {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 0.3rem;
+  text-indent: -2em;
+  padding-left: 2em;
+  color: #333;
+}
+
+.pub-links {
+  margin-top: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pub-link {
   display: inline-block;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.78rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  text-decoration: none;
+  color: #555;
+  transition: all 0.15s ease;
+}
+
+.pub-link:hover {
+  background-color: #0085a1;
+  color: #fff;
+  border-color: #0085a1;
+  text-decoration: none;
+}
+
+/* -- Footer: light, minimal -- */
+.nav-footer {
+  font-size: 0.82rem;
+  color: #888;
+  border-top: 1px solid #e8e8e8;
+}
+
+/* -- Code blocks -- */
+pre {
+  font-size: 0.85rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+}
+
+/* -- Callouts -- */
+.callout {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* -- Spacing -- */
+.quarto-title {
+  margin-bottom: 1rem;
+}
+
+/* -- Subtle TOC -- */
+.sidebar nav[role="doc-toc"] a {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.sidebar nav[role="doc-toc"] a:hover {
+  color: #0085a1;
 }

@@ -2,15 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.35">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Dr.&nbsp;Gang He">
-<meta name="description" content="Quarto Academic Website Template adapted by Dr.&nbsp;Gang He">
 
-<title>Quarto Academic, PhD – Quarto Academic</title>
+<title>René Gempp</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,34 +33,28 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3e8f12d1b5c8d04d32925f9f9ead600c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9e0b913096b4405525fd8b9c824cf29a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
-  "type": "textbox",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -74,108 +69,13 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-recent-posts .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-date','listing-title','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      page: 3,
-    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-recent-posts'] = new List('listing-recent-posts', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id="></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '', { 'anonymize_ip': true});
-</script>
-
-<!-- 
-Load Academicons v1: https://jpswalsh.github.io/academicons/
--->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-
-<!---
-The following code are needed to show dimension citation and altmetrics.
-https://api.altmetric.com/embeds.html
-https://badge.dimensions.ai/
---->
-
-<script type="text/javascript" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
-
-<script async="" src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
-
-<script type="text/javascript" src="//cdn.plu.mx/widget-popup.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Quarto Academic, PhD – Quarto Academic">
-<meta property="og:description" content="Quarto Academic Website Template adapted by Dr.&nbsp;Gang He">
-<meta property="og:image" content="https://drganghe.github.io/quarto-academic-website-template/files/images/placeholder4.JPG">
-<meta property="og:site_name" content="Quarto Academic">
-<meta name="twitter:title" content="Quarto Academic, PhD – Quarto Academic">
-<meta name="twitter:description" content="Quarto Academic Website Template adapted by Dr.&nbsp;Gang He">
-<meta name="twitter:image" content="https://drganghe.github.io/quarto-academic-website-template/files/images/placeholder4.JPG">
-<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -183,7 +83,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Quarto Academic</span>
+    <span class="navbar-title">René Gempp</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -193,79 +93,69 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">About</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
-        <li>
-    <a class="dropdown-item" href="./posts.html#category=news">
- <span class="dropdown-text">News</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./posts.html#category=event">
- <span class="dropdown-text">Events</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./contact.html">
- <span class="dropdown-text">Contact</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Research</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-research">    
         <li>
     <a class="dropdown-item" href="./publications.html">
- <span class="dropdown-text">List of Publications</span></a>
+ <span class="dropdown-text">Publications</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./posts.html#category=paper">
- <span class="dropdown-text">Selected Papers</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./projects.html">
- <span class="dropdown-text">Grants</span></a>
+    <a class="dropdown-item" href="./grants.html">
+ <span class="dropdown-text">Grants &amp; Projects</span></a>
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="./teaching.html"> 
-<span class="menu-text">Teaching</span></a>
-  </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-outreach" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Outreach</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-teaching" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Teaching</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-outreach">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-teaching">    
         <li>
-    <a class="dropdown-item" href="./posts.html#category=presentation">
- <span class="dropdown-text">Presentations</span></a>
+    <a class="dropdown-item" href="./teaching-courses.html">
+ <span class="dropdown-text">Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./teaching-workshops.html">
+ <span class="dropdown-text">Workshops</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./teaching-tutorials.html">
+ <span class="dropdown-text">Tutorials</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./teaching-supervision.html">
+ <span class="dropdown-text">Thesis Supervision</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./people.html"> 
-<span class="menu-text">Group</span></a>
+    <a class="nav-link" href="./tests-scales.html"> 
+<span class="menu-text">Tests &amp; Scales</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./software.html"> 
+<span class="menu-text">Software &amp; Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./professional.html"> 
+<span class="menu-text">Professional</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./files/nsf-biosketch.pdf"> 
-<span class="menu-text">CV</span></a>
-  </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/drganghe/quarto-academic-website-template" target="_blank"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="mailto:rene.gempp@udp.cl"> <i class="bi bi-envelope" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://bsky.app" target="_blank"> 
-<span class="menu-text"><i class="fa-brands fa-bluesky" aria-label="bluesky"></i></span></a>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rgempp"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./posts.xml" target="_blank"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=iWvXzDYAAAAJ"> <i class="bi bi-mortarboard" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -282,194 +172,52 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content column-page" id="quarto-document-content">
-
-
-
-
-<div class="quarto-about-trestles column-page">
+<div class="quarto-about-trestles">
   <div class="about-entity">
-    <img src="files/images/placeholder4.JPG" class="about-image
-  rounded " style="width: 70%;">
+    <img src="files/profiles/profile.jpg" class="about-image
+  round " style="height: 14em; width: 14em;">
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quarto Academic, PhD</h1>
+<h1 class="title">René Gempp</h1>
+<p class="subtitle lead">Associate Professor · Universidad Diego Portales</p>
 </div>
-<div class="quarto-title-meta column-page">
+<div class="quarto-title-meta">
   </div>
 </header>
     <div class="about-links">
-  <a href="https://www.github.com" class="about-link" rel="" target="_blank">
-    <i class="bi bi-sun"></i>
-     <span class="about-link-text">Lab</span>
-  </a>
-  <a href="https://baruch.cuny.edu" class="about-link" rel="" target="_blank">
-    <i class="bi bi-globe"></i>
-     <span class="about-link-text">Uprofile</span>
-  </a>
-  <a href="mailto:email@gmail.com" class="about-link" rel="" target="">
+  <a href="mailto:rene.gempp@udp.cl" class="about-link" rel="" target="">
     <i class="bi bi-envelope"></i>
-     <span class="about-link-text">E-mail</span>
+     <span class="about-link-text">Email</span>
   </a>
-  <a href="https://linkedin.com" class="about-link" rel="" target="_blank">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
+  <a href="https://github.com/rgempp" class="about-link" rel="" target="">
+    <i class="bi bi-github"></i>
+     <span class="about-link-text">GitHub</span>
   </a>
-  <a href="https://www.youtube.com" class="about-link" rel="" target="_blank">
-    <i class="bi bi-youtube"></i>
-     <span class="about-link-text">YouTube</span>
+  <a href="https://scholar.google.com/citations?user=iWvXzDYAAAAJ" class="about-link" rel="" target="">
+    <i class="bi bi-mortarboard"></i>
+     <span class="about-link-text">Google Scholar</span>
   </a>
-  <a href="https://orcid.org" class="about-link" rel="" target="_blank">
-     <span class="about-link-text"><i class="ai  ai-orcid"></i> ORCID</span>
-  </a>
-  <a href="https://www.webofscience.com" class="about-link" rel="" target="_blank">
-     <span class="about-link-text"><i class="ai  ai-clarivate"></i> Web of Science</span>
-  </a>
-  <a href="https://www.scopus.com" class="about-link" rel="" target="_blank">
-     <span class="about-link-text"><i class="ai  ai-scopus"></i> Scopus</span>
-  </a>
-  <a href="https://scholar.google.com" class="about-link" rel="" target="_blank">
-     <span class="about-link-text"><i class="ai  ai-google-scholar"></i> Google Scholar</span>
+  <a href="https://orcid.org/0000-0002-0427-6894" class="about-link" rel="" target="">
+     <span class="about-link-text">ORCID</span>
   </a>
 </div>
   </div>
-  <div class="about-contents"><div id="hero-heading">
-<p>I’m a <a href="https://github.com/drganghe/quarto-academic-website-template">Quarto Academeic Website Template</a> adapted by <a href="http://drganghe.github.io">Dr.&nbsp;Gang He</a>.</p>
-<p>I’m a template that you can fork to build your own website with easy adaptation and deployment.</p>
-<ol type="1">
-<li><strong>Star</strong> this repository to bookmark it for future reference.<br>
-</li>
-<li><strong>Fork</strong> this repository and rename it to <code>YourGitHubUserName.github.io</code>.<br>
-</li>
-<li><strong>Test to publish</strong> your site using <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-from-a-branch">GitHub Pages</a> (make sure <a href="https://quarto.org/docs/publishing/images/gh-pages-docs-dir.png">configuring</a> your GitHub repository to publish from the <code>docs</code> directory, not the <code>root</code> folder).</li>
-<li><strong>Check</strong> if your website works or not. If successful, you should see exactly the same website as this one using your own Github Pages url:
-<ul>
-<li><code>https://YourGitHubUserName.github.io</code> if your repository name is <code>YourGitHubUserName.github.io</code></li>
-<li><code>https://YourGitHubUserName.github.io/RepositoryName</code> for other <code>RepositoryName</code></li>
-<li>Errors:
-<ul>
-<li>If <a href="./files/images/Error1.png">404</a>, it is likely you haven’t set up GitHub Pages</li>
-<li>If it shows the <a href="./files/images/Error2.png">README</a> file, it is likely you’ve published from the <code>root</code> folder, not the <code>docs</code> directory</li>
-</ul></li>
-</ul></li>
-</ol>
-<p>If you achieve this milestone, congratulations! You are now ready to start updating your website:</p>
-<ol type="1">
-<li><strong>Update</strong> the <code>_quarto.yml</code> file to configure your site’s basic settings.<br>
-</li>
-<li><strong>Add or edit content</strong> in the following files and folders:
-<ul>
-<li><code>/posts/</code> – posts about publications, news, events<br>
-</li>
-<li><code>teaching.qmd</code> – teaching information<br>
-</li>
-<li><code>projects.yml</code> – research or other projects<br>
-</li>
-<li><code>people.qmd</code> and <code>/people/</code> – team or collaborators<br>
-</li>
-<li><code>/files/</code> - profiles, images, pdfs, and includes</li>
-</ul></li>
-<li><a href="https://quarto.org/docs/websites/#website-preview"><strong>Render and preview</strong></a> your site locally.<br>
-</li>
-<li><strong><code>Commit</code> to publish</strong> your updates.</li>
-<li><strong>Refine and polish</strong> your content and design as needed.<br>
-</li>
-<li>✅ Enjoy your new website!</li>
-<li><strong>Link</strong> your website on your official pages to let Google and AI bots include in their search results.</li>
-</ol>
-<section id="experience" class="level2">
-<h2 data-anchor-id="experience">Experience</h2>
-<ul>
-<li>Researcher, Univerisity</li>
-</ul>
-</section>
-<section id="education" class="level2">
-<h2 data-anchor-id="education">Education</h2>
-<ul>
-<li>PhD, Univerisity</li>
-</ul>
-</section>
-</div></div>
-</div>
-
-<!-- Delete the following section and delete corresponding lines in the yaml part to remove the recent posts -->
-<section id="recent-posts" class="level2">
-<h2 data-anchor-id="recent-posts">Recent Posts</h2>
-<p>Check out the latest &nbsp;<a href="./posts.html#category=paper">Papers</a>&nbsp;, &nbsp;<a href="./posts.html#category=news">News</a>&nbsp;, &nbsp;<a href="./posts.html#category=event">Events</a>&nbsp;, and &nbsp;<a href="./posts.html">More »</a></p>
-<div id="listing-recent-posts" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="bmV3cw==" data-listing-date-sort="1728964800000">
-<a href="https://drganghe.github.io/quarto-academic-site-examples.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./files/images/placeholder1.jpg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Quarto Academic Website Examples and Tips
-</h5>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Oct 15, 2024
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="ZXZlbnQlMkNwcmVzZW50YXRpb24=" data-listing-date-sort="1725336000000" data-listing-file-modified-sort="1739198683941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="7">
-<a href="./posts/event-title/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./files/images/placeholder2.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Event item
-</h5>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Sep 3, 2024
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="bmV3cw==" data-listing-date-sort="1719201600000" data-listing-file-modified-sort="1749249243868" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
-<a href="./posts/news-title/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./files/images/placeholder3.JPG" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-News item
-</h5>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Jun 24, 2024
-</div>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div>
-<p align="right">
-<a href="./posts.html">All Posts »</a>
-</p>
+  <div class="about-contents"><main class="content" id="quarto-document-content">
+<p>I am the Director of the Department of Management at the <a href="https://fae.udp.cl/">Facultad de Administración y Economía (FAE)</a>, <a href="https://www.udp.cl/">Universidad Diego Portales</a>, Santiago, Chile.</p>
+<p>My research sits at the intersection of <strong>psychometrics</strong>, <strong>organizational behavior</strong>, and <strong>quantitative methodology</strong>. I work with Item Response Theory (IRT), structural equation modeling (SEM), meta-analysis, and advanced scaling methods such as Best-Worst Scaling.</p>
+<p>Current research interests include the measurement of dark personality traits (Dark Triad/HEXACO), interpersonal affect regulation in leadership contexts, and Chilean workers’ labor preferences.</p>
+<p>I teach <strong>Organizational Behavior</strong> at the undergraduate level and <strong>Organizational Diagnosis</strong> in the Master’s in People Management program at UDP.</p>
+<p>I received my training at <a href="https://www.ufro.cl/">Universidad de La Frontera (UFRO)</a>, where I developed a deep commitment to psychometric rigor and research ethics.</p>
 
 
-
-
-</section>
-
-</main> <!-- /main -->
+</main></div>
+</div>
+ <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {
@@ -536,7 +284,7 @@ Jun 24, 2024
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("^(?:http:|https:)\/\/drganghe\.github\.io\/custom");
+        var filterRegex = new RegExp("https:\/\/gempp\.cl");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -550,11 +298,6 @@ Jun 24, 2024
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
-            // target, if specified
-            link.setAttribute("target", "_blank");
-            if (link.getAttribute("rel") === null) {
-              link.setAttribute("rel", "noopener");
-            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -872,32 +615,13 @@ Jun 24, 2024
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<a href="http://www.github.com">Your Name</a> ©
-<script>document.write(new Date().getFullYear())</script>
-</div>   
+      &nbsp;
+    </div>   
     <div class="nav-footer-center">
-<p>Build on <a href="https://github.com/drganghe/quarto-academic-website-template">Quarto Academic Website Template</a> adapted by <a href="http://drganghe.github.io">Dr.&nbsp;Gang He</a></p>
+<p>© 2026 René Gempp · Facultad de Administración y Economía, Universidad Diego Portales, Chile</p>
 </div>
     <div class="nav-footer-right">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/drganghe/quarto-academic-website-template" target="_blank">
-      <i class="bi bi-github" role="img">
-</i> 
-    </a>
-  </li>  
-    <li class="nav-item">
-    <a class="nav-link" href="https://bsky.app" target="_blank">
-<p><i class="fa-brands fa-bluesky" aria-label="bluesky"></i></p>
-</a>
-  </li>  
-    <li class="nav-item compact">
-    <a class="nav-link" href="./posts.xml" target="_blank">
-      <i class="bi bi-rss" role="img">
-</i> 
-    </a>
-  </li>  
-</ul>
+      &nbsp;
     </div>
   </div>
 </footer>

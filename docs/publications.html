@@ -2,15 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.35">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Dr.&nbsp;Gang He">
-<meta name="description" content="Information, pdfs, and social metrics of papers">
 
-<title>Publications – Quarto Academic</title>
+<title>Publications – René Gempp</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -32,31 +33,31 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3e8f12d1b5c8d04d32925f9f9ead600c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9e0b913096b4405525fd8b9c824cf29a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
-  "type": "textbox",
+  "type": "overlay",
   "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -71,47 +72,69 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-pub-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-citation','listing-type','listing-doi','listing-categories',{ data: ['index'] },{ data: ['categories'] }],
+      page: 25,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
+      searchColumns: ["listing-citation","listing-type","listing-doi","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-pub-listing'] = new List('listing-pub-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '', { 'anonymize_ip': true});
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
 </script>
-
-<!-- 
-Load Academicons v1: https://jpswalsh.github.io/academicons/
--->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-
-<!---
-The following code are needed to show dimension citation and altmetrics.
-https://api.altmetric.com/embeds.html
-https://badge.dimensions.ai/
---->
-
-<script type="text/javascript" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
-
-<script async="" src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
-
-<script type="text/javascript" src="//cdn.plu.mx/widget-popup.js"></script>
-
 
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="custom.css">
-<meta property="og:title" content="Publications – Quarto Academic">
-<meta property="og:description" content="Quarto Academic Website Template adapted by Dr.&nbsp;Gang He">
-<meta property="og:image" content="https://quarto.org/quarto.png">
-<meta property="og:site_name" content="Quarto Academic">
-<meta name="twitter:title" content="Publications – Quarto Academic">
-<meta name="twitter:description" content="Quarto Academic Website Template adapted by Dr.&nbsp;Gang He">
-<meta name="twitter:image" content="https://quarto.org/quarto.png">
-<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -122,7 +145,7 @@ https://badge.dimensions.ai/
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Quarto Academic</span>
+    <span class="navbar-title">René Gempp</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -132,79 +155,69 @@ https://badge.dimensions.ai/
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">About</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
-        <li>
-    <a class="dropdown-item" href="./posts.html#category=news">
- <span class="dropdown-text">News</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./posts.html#category=event">
- <span class="dropdown-text">Events</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./contact.html">
- <span class="dropdown-text">Contact</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Research</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-research">    
         <li>
     <a class="dropdown-item" href="./publications.html">
- <span class="dropdown-text">List of Publications</span></a>
+ <span class="dropdown-text">Publications</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./posts.html#category=paper">
- <span class="dropdown-text">Selected Papers</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./projects.html">
- <span class="dropdown-text">Grants</span></a>
+    <a class="dropdown-item" href="./grants.html">
+ <span class="dropdown-text">Grants &amp; Projects</span></a>
   </li>  
     </ul>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="./teaching.html"> 
-<span class="menu-text">Teaching</span></a>
-  </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-outreach" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Outreach</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-teaching" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Teaching</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-outreach">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-teaching">    
         <li>
-    <a class="dropdown-item" href="./posts.html#category=presentation">
- <span class="dropdown-text">Presentations</span></a>
+    <a class="dropdown-item" href="./teaching-courses.html">
+ <span class="dropdown-text">Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./teaching-workshops.html">
+ <span class="dropdown-text">Workshops</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./teaching-tutorials.html">
+ <span class="dropdown-text">Tutorials</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./teaching-supervision.html">
+ <span class="dropdown-text">Thesis Supervision</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./people.html"> 
-<span class="menu-text">Group</span></a>
+    <a class="nav-link" href="./tests-scales.html"> 
+<span class="menu-text">Tests &amp; Scales</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./software.html"> 
+<span class="menu-text">Software &amp; Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./professional.html"> 
+<span class="menu-text">Professional</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./files/nsf-biosketch.pdf"> 
-<span class="menu-text">CV</span></a>
-  </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/drganghe/quarto-academic-website-template" target="_blank"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="mailto:rene.gempp@udp.cl"> <i class="bi bi-envelope" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="https://bsky.app" target="_blank"> 
-<span class="menu-text"><i class="fa-brands fa-bluesky" aria-label="bluesky"></i></span></a>
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rgempp"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./posts.xml" target="_blank"> <i class="bi bi-rss" role="img">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=iWvXzDYAAAAJ"> <i class="bi bi-mortarboard" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -229,7 +242,7 @@ https://badge.dimensions.ai/
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#selected-work" id="toc-selected-work" class="nav-link active" data-scroll-target="#selected-work">Selected Work</a></li>
+  <li><a href="#journal-articles-book-chapters" id="toc-journal-articles-book-chapters" class="nav-link active" data-scroll-target="#journal-articles-book-chapters">Journal Articles &amp; Book Chapters</a></li>
   </ul>
 </nav>
     </div>
@@ -255,50 +268,302 @@ https://badge.dimensions.ai/
 </header>
 
 
-<!--Include academic icons or buttons-->
-<!-- 
-Load Academicons v1: https://jpswalsh.github.io/academicons/
--->
-<p><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"></p>
-<p><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></p>
-<!---
-The following code are needed to show dimension citation and altmetrics.
-https://api.altmetric.com/embeds.html
-https://badge.dimensions.ai/
---->
-<script type="text/javascript" src="https://d1bxh8uas1mnw7.cloudfront.net/assets/embed.js"></script>
-<script async="" src="https://badge.dimensions.ai/badge.js" charset="utf-8"></script>
-<script type="text/javascript" src="//cdn.plu.mx/widget-popup.js"></script>
-<p>Notes: * corresponding author; <sup>GS</sup> graduate student advisee; <sup>VS</sup> visiting scholar; <img src="https://drganghe.github.io/files/images/highly-cited-paper-badge.png" title="ESI Highly Cited Paper" class="img-fluid" alt="Highly cited paper" width="20"> ESI <a href="https://webofscience.help.clarivate.com/en-us/Content/esi-highly-cited-papers.html">Highly Cited Paper</a> (top 1%); <img src="https://drganghe.github.io/files/images/hot-paper-badge.png" title="ESI Hot Paper" class="img-fluid" alt="Hot paper" width="20"> ESI <a href="https://webofscience.help.clarivate.com/en-us/Content/esi-hot-papers.html">Hot Paper</a> (top 0.1%)</p>
-<p>Total citations as of January 2025:</p>
-<ul>
-<li><a href="https://www.webofscience.com">Web of Science</a>: 100,000 (h-index = 100)<br>
-</li>
-<li><a href="https://scholar.google.com/citations?user=qc6CJjYAAAAJ&amp;hl=en">Google Scholar</a>: 179,000 (h-index = 127, i10-index = 377)</li>
-</ul>
-<section id="selected-work" class="level2">
-<h2 class="anchored" data-anchor-id="selected-work">Selected Work</h2>
-Einstein, A., Podolsky, B., &amp; Rosen, N. (1935). <a href="./posts/paper-title/index.html">Can quantum-mechanical description of physical reality be considered complete?</a>. <em>Physical review</em>, 47(10), 777. [<a href="https://scholar.google.com/">pdf</a>] [<a href="https://doi.org">code and data</a>] <img src="https://drganghe.github.io/files/images/highly-cited-paper-badge.png" title="ESI Highly Cited Paper" class="img-fluid" alt="Highly cited paper" width="20"> <img src="https://drganghe.github.io/files/images/hot-paper-badge.png" title="ESI Hot Paper" class="img-fluid" alt="Hot paper" width="20"> <span class="__dimensions_badge_embed__" data-doi="10.1103/PhysRev.47.777" data-style="large_rectangle"></span>
-<div class="altmetric-embed" data-badge-popover="right" data-badge-type="1" data-doi="10.1103/PhysRev.47.777" data-hide-no-mentions="true">
+<p>My research spans psychometrics, organizational behavior, and quantitative methodology, with a focus on Latin American populations.</p>
+<p>For a complete and up-to-date list, see my <a href="https://scholar.google.com/citations?user=iWvXzDYAAAAJ">Google Scholar profile</a>.</p>
+<section id="journal-articles-book-chapters" class="level2">
+<h2 class="anchored" data-anchor-id="journal-articles-book-chapters">Journal Articles &amp; Book Chapters</h2>
+<div id="listing-pub-listing" class="quarto-listing quarto-listing-container-custom">
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., &amp; González-Carrasco, M. (2025). Psychometric evaluation of the brief multidimensional students’ life satisfaction scale (BMSLSS) in Chilean early adolescents: An item response theory analysis. <em>Frontiers in Psychology</em>, <em>16</em>, 1638017.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.3389/fpsyg.2025.1638017" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Escaffi-Schwarz, M., Gempp, R., &amp; Irmer, J. P. (2025). Meta-analysing the factor structure and reliability of measurement instruments: An R-based tutorial. <em>International Journal of Psychology</em>, <em>60</em>(2), e70003.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.1002/ijop.70003" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Montero, R., Gempp, R., &amp; Vargas, M. (2022). Chilean university students’ satisfaction with online learning during COVID-19 pandemic: Demonstrating the two-layer methodology. <em>Frontiers in Psychology</em>, <em>13</em>, 887891.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.3389/fpsyg.2022.887891" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+González, J., &amp; Gempp, R. (2021). Test comparability and measurement validity in educational assessment. In J. Manzi, S. Taut, &amp; M. R. García (Eds.), <em>Validity of educational assessments in Chile and Latin America</em> (pp.&nbsp;173–204). Springer.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.1007/978-3-030-78390-7_8" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., &amp; González-Carrasco, M. (2021). Peer relatedness, school satisfaction, and life satisfaction in early adolescence: A non-recursive model. <em>Frontiers in Psychology</em>, <em>12</em>, 641714.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.3389/fpsyg.2021.641714" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+González, J., &amp; Gempp, R. (2019). Comparabilidad de las mediciones: Un componente clave de la validez en medición educativa. En J. Manzi, S. Taut, &amp; M. R. García (Eds.), <em>Validez de los sistemas de medición educativa en Latinoamérica</em>. Ediciones PUC.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Thieme, C., Prior, D., Tortosa-Ausina, E., &amp; Gempp, R. (2016). Value added, educational accountability approaches and their effects on schools’ rankings: Evidence from Chile. <em>European Journal of Operational Research</em>, <em>253</em>(2), 456–471.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.1016/j.ejor.2016.01.023" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., &amp; Saiz, J. L. (2014). El coeficiente Phi(Lambda) y la fiabilidad de las decisiones sobre selección de personal. <em>Revista de Psicología</em>, <em>23</em>(1), 12–20.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.5354/0719-0581.2014.32869" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., &amp; Saiz, J. L. (2014). El coeficiente K2 de Livingston y la fiabilidad de una decisión dicotómica en un test psicológico. <em>Universitas Psychologica</em>, <em>13</em>(1).
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.11144/Javeriana.UPSY13-1.eckl" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Thieme, C., Prior, D., Tortosa-Ausina, E., &amp; Gempp, R. (2013). Value added and contextual factors in education: Evidence from Chilean schools. <em>WP Series Fundación BBVA</em>, <em>5</em>, 1–40.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Treviño, E., Toledo, G., &amp; Gempp, R. (2013). Calidad de la educación parvularia: Las prácticas de clase y el camino a la mejora. <em>Pensamiento Educativo. Revista de Investigación Educacional Latinoamericana</em>, <em>50</em>(1), 40–62.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.7764/PEL.50.1.2013.4" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Ibáñez, A., Huepe, D., Gempp, R., Gutiérrez, V., Rivera-Rei, A., &amp; Toledo, M. I. (2013). Empathy, sex and fluid intelligence as predictors of theory of mind. <em>Personality and Individual Differences</em>, <em>54</em>(5), 616–621.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.1016/j.paid.2012.11.022" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R. (2010). Equiparación, alineamiento y predicción de puntuaciones en medición educativa. <em>Revista Iberoamericana de Evaluación Educativa</em>, <em>3</em>(2), 103–126.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.15366/riee2010.3.2.006" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., &amp; Thieme, C. (2010). Efecto de diferentes métodos de puntuación sobre la fiabilidad, validez y puntos de corte de la Escala de Depresión del Centro para Estudios Epidemiológicos (CES-D). <em>Terapia Psicológica</em>, <em>28</em>(1), 5–12.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.4067/S0718-48082010000100001" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Denegri, M., Sepúlveda, J., Etchebarne, S., González, Y., Gempp, R., &amp; Del Valle, C. (2009). Construcción de representaciones acerca de la pobreza y movilidad social: Un estudio evolutivo en estudiantes chilenos. <em>PAIDEIA: Revista de Educación</em>, <em>46</em>(1), 159–176.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., &amp; Avendaño, C. (2008). Datos normativos y propiedades psicométricas del SCL-90-R en estudiantes universitarios chilenos. <em>Terapia Psicológica</em>, <em>26</em>(1), 39–58.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.4067/S0718-48082008000100004" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., Denegri, M., Caripán, N., Catalán, V., Hermosilla, S., &amp; Caprile, C. (2007). Desarrollo del Test de Alfabetización Económica para Adultos, versión 25 ítems (TAE-A-25). <em>Revista Interamericana de Psicología</em>, <em>41</em>(3), 275–284.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., &amp; Chesta, S. (2007). Errores estándar de medida condicionales para las normas metropolitanas de la adaptación chilena del EPQ-R: Aplicación de un modelo binomial a un test de personalidad. <em>Terapia Psicológica</em>, <em>25</em>(1), 51–62.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.4067/S0718-48082007000100004" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R. (2006). El error estándar de medida y la puntuación verdadera de los tests psicológicos: Algunas recomendaciones prácticas. <em>Terapia Psicológica</em>, <em>24</em>(2), 117–130.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., Denegri, M., Caprile, C., Cortés, L., Quesada, M., &amp; Sepúlveda, J. (2006). Medición de la alfabetización económica en niños: Oportunidades diagnósticas con el Modelo de Crédito Parcial. <em>Psykhe</em>, <em>15</em>(1), 13–27.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.4067/S0718-22282006000100002" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Denegri, M., Gempp, R., Del Valle, C., Etchebarne, S., &amp; González, J. (2006). El aporte de la psicología educacional a las propuestas de educación económica: Los temas clave. <em>Revista de Psicología</em>, <em>15</em>(2), 69–84.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.5354/0719-0581.2006.18398" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Denegri, M., Del Valle, C., Gempp, R., &amp; Martínez, G. (2006). La comprensión del mundo económico como necesidad de adaptación: Un desafío educativo pendiente. <em>REXE: Revista de Estudios y Experiencias en Educación</em>, <em>5</em>(10), 75–94.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.21703/rexe1941" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Denegri, M., Del Valle, C., Gempp, R., &amp; Lara, M. A. (2006). Educación económica en la escuela: Hacia una propuesta de intervención. <em>Revista Estudios Pedagógicos</em>, <em>32</em>(2), 103–120.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.4067/S0718-07052006000200006" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R. (2005). El Inventario de Personalidad BIG-35. En P. Vera-Villarroel &amp; L. Oblitas (Eds.), <em>Manual de escalas y cuestionarios iberoamericanos en psicología clínica y de la salud</em>. Psicom Editores.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Ortega, V., Rodríguez, J. C., Denegri, M., &amp; Gempp, R. (2005). Segmentación psicoeconómica: Obtención y validación de perfiles para consumidores adultos jóvenes de nivel socioeconómico medio y alto en Colombia. <em>Revista Internacional de Ciencias Sociales y Humanidades, SOCIOTAM</em>, <em>15</em>(2), 117–132.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Denegri, M., Gempp, R., &amp; Martínez, G. (2005). Estrategias de socialización económica en familias de clase alta y media-alta y su impacto en las prácticas de uso del dinero de los hijos. <em>Boletín de Investigación Educacional</em>, <em>20</em>(2), 41–60.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Denegri, M., Palavecinos, M., Gempp, R., &amp; Caprile, C. (2005). Socializaçao econômica em famílias chilenas de classe média: Educando cidadaos ou consumidores? <em>Psicología e Sociedade</em>, <em>17</em>(2), 88–98.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gempp, R., Avendaño, C., &amp; Muñoz, C. (2004). Normas y punto de corte para la Escala de Depresión del Centro para Estudios Epidemiológicos (CES-D) en población juvenil chilena. <em>Terapia Psicológica</em>, <em>22</em>(2), 145–156.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Silva, J., &amp; Gempp, R. (2004). Diferenciación emocional y psicopatología: La hipótesis de la acentuación somática. <em>Revista Electrónica de Motivación y Emoción</em>, <em>6</em>(16).
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Gambara, H., Botella, J., &amp; Gempp, R. (2002). Tiempo vacío y tiempo lleno. Un meta-análisis sobre los cambios en la percepción del tiempo en la edad. <em>Estudios de Psicología</em>, <em>23</em>(1), 87–100.
+</p>
+<p class="pub-links">
+</p><p><a href="https://doi.org/10.1174/021093902753535204" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a></p>
+<p></p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Vinet, E., Saiz, J. L., Gempp, R., Carlson, J., Santibáñez, P., &amp; Solar, R. (2002). ¿Es factible detectar psicopatología a través de la medición de necesidades psicológicas? <em>Revista Interamericana de Psicología</em>, <em>36</em>(1&amp;2), 107–126.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Saiz, J. L., &amp; Gempp, R. (2001). Estudios empíricos sobre la identidad nacional chilena: Revisión y nueva evidencia. En J. M. Salazar (Ed.), <em>Identidades nacionales en América Latina</em> (pp.&nbsp;219–239). Fondo Editorial de Humanidades y Educación, Universidad Central de Venezuela.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Palavecinos, M., Denegri, M., Keller, A., &amp; Gempp, R. (2000). Diferencias de género en la construcción de representaciones sociales acerca de la pobreza y desigualdad social de niños y niñas de Chile, IX Región. <em>Revista Suma Psicológica</em>, <em>7</em>(2), 231–258.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Vinet, E., Saiz, J. L., Gempp, R., Benavente, P., Lutz, A., &amp; Pezo, S. (1999). Examen psicométrico del Inventario Clínico Multiaxial de Millon III (MCMI-III) en una muestra de pacientes chilenos. <em>Terapia Psicológica</em>, <em>7</em>(4), 155–166.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Saiz, J. L., &amp; Gempp, R. (1997). Identidad nacional chilena: Una taxonomía empírica. En L. Guzmán (Ed.), <em>Exploraciones en psicología política I</em> (pp.&nbsp;161–176). Ediciones Universidad Diego Portales.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Saiz, J. L., González, M. E., Gempp, R., &amp; Mladinic, A. (1996). Identidad nacional chilena: Cogniciones, valoración y emociones. <em>Estudios Sociales</em>, <em>90</em>(4), 29–56.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Saiz, J. L., &amp; Gempp, R. (1996). Los tipos valóricos de S. H. Schwartz en Chile: Una validación transcultural. En Asociación Mexicana de Psicología Social (Ed.), <em>La psicología social en México</em>: Vol. 6 (pp.&nbsp;581–586). UNISON-AMEPSO-CIADAC.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="pub-entry">
+<p class="pub-citation">
+Saiz, J. L., &amp; Gempp, R. (1995). Tres variedades de la identidad nacional chilena. <em>Revista de Psicología Social y Personalidad</em>, <em>11</em>(1), 21–29.
+</p>
+<p class="pub-links">
+</p>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+<nav id="pub-listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
+</div>
 
-</div>
-<center>
-<hr style="width:50%">
-</center>
-Einstein, A. (1965). Concerning an heuristic point of view toward the emission and transformation of light. <em>American Journal of Physics</em>, 33(5), 367. [<a href="https://icg.isy.liu.se/en/phd-courses/quantum_foundations/references/Einstein1905b.pdf">pdf</a>] <span class="__dimensions_badge_embed__" data-doi="10.1038/s41560-023-01304-w" data-style="large_rectangle"></span>
-<div class="altmetric-embed" data-badge-popover="right" data-badge-type="1" data-doi="10.1038/s41560-023-01304-w" data-hide-no-mentions="true">
-
-</div>
-<!--Include social share buttons-->
-<!-- 
-AddToAny check more: https://www.addtoany.com/buttons/for/website 
-Using includes will make edits easier, will only need to add or remove button here if needed.
-https://quarto.org/docs/authoring/includes.html
--->
-<div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-<p><a class="a2a_dd" href="https://www.addtoany.com/share"></a> <a class="a2a_button_linkedin"></a> <a class="a2a_button_bluesky"></a> <a class="a2a_button_facebook"></a> <a class="a2a_button_copy_link"></a> <a class="a2a_button_email"></a></p>
-</div>
-<script async="" src="https://static.addtoany.com/menu/page.js"></script>
 
 
 </section>
@@ -377,7 +642,7 @@ https://quarto.org/docs/authoring/includes.html
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("^(?:http:|https:)\/\/drganghe\.github\.io\/custom");
+        var filterRegex = new RegExp("https:\/\/gempp\.cl");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
@@ -391,11 +656,6 @@ https://quarto.org/docs/authoring/includes.html
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
-            // target, if specified
-            link.setAttribute("target", "_blank");
-            if (link.getAttribute("rel") === null) {
-              link.setAttribute("rel", "noopener");
-            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -713,32 +973,13 @@ https://quarto.org/docs/authoring/includes.html
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<a href="http://www.github.com">Your Name</a> ©
-<script>document.write(new Date().getFullYear())</script>
-</div>   
+      &nbsp;
+    </div>   
     <div class="nav-footer-center">
-<p>Build on <a href="https://github.com/drganghe/quarto-academic-website-template">Quarto Academic Website Template</a> adapted by <a href="http://drganghe.github.io">Dr.&nbsp;Gang He</a></p>
+<p>© 2026 René Gempp · Facultad de Administración y Economía, Universidad Diego Portales, Chile</p>
 </div>
     <div class="nav-footer-right">
-      <ul class="footer-items list-unstyled">
-    <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/drganghe/quarto-academic-website-template" target="_blank">
-      <i class="bi bi-github" role="img">
-</i> 
-    </a>
-  </li>  
-    <li class="nav-item">
-    <a class="nav-link" href="https://bsky.app" target="_blank">
-<p><i class="fa-brands fa-bluesky" aria-label="bluesky"></i></p>
-</a>
-  </li>  
-    <li class="nav-item compact">
-    <a class="nav-link" href="./posts.xml" target="_blank">
-      <i class="bi bi-rss" role="img">
-</i> 
-    </a>
-  </li>  
-</ul>
+      &nbsp;
     </div>
   </div>
 </footer>

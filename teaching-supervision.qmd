@@ -1,0 +1,57 @@
+---
+title: "Thesis Supervision"
+---
+
+## Master's Theses
+
+I have supervised the following master's theses at the Facultad de Administración y Economía, Universidad Diego Portales. All theses are empirical studies in organizational behavior, psychometrics, personnel selection, marketing, or related areas.
+
+---
+
+### 2025
+
+Avendaño, L., Chomalí, N., & Fernández, A. (2025). *Dimensiones del clima organizacional y engagement laboral post-fusión en Rayen Salud*. Magíster en Dirección de Personas y Organizaciones, UDP.
+
+Jara, R., Otárola, N., & Sáez, F. (2025). *Hacia una cultura de evaluación y retroalimentación efectiva: Barreras y oportunidades en la gestión del desempeño operativo de CMPC Remanufactura Los Ángeles*. Magíster en Dirección de Personas y Organizaciones, UDP.
+
+Baez, F., Galán, B., & Pereira, B. (2025). *Efecto de las demandas y los recursos laborales en la satisfacción laboral y bienestar de los trabajadores en Chile*. Magíster en Gestión de Personas, UDP.
+
+Cid, S., Moreno, M., & Valdés, K. (2025). *Adicción al trabajo y personalidad: Un meta-análisis*. Magíster en Gestión de Personas, UDP.
+
+González, S., Pérez, M., & Silva, M. (2025). *Métodos digitales en procesos de selección de personal: Una exploración en Chile*. Magíster en Gestión de Personas, UDP.
+
+Astorga, R., Muñoz, M., & Soto, R. (2025). *Desarrollo y evaluación de una Shiny App para evaluar utilidad de procesos de selección de personal*. Magíster en Gestión en Negocios Digitales y Analítica de Datos, UDP.
+
+Faúndez, M., Mella, C., Saavedra, I., & Trigo, Y. (2025). *Meta-análisis de la relación entre rasgos de personalidad y desempeño en ventas*. Magíster en Marketing, UDP.
+
+### 2024
+
+Cáceres, D., González, J., & Santibáñez, F. (2024). *Aceptación de los métodos de selección digitales por parte de los postulantes*. Magíster en Personas y Organizaciones, UDP.
+
+Duque, S., & Restrepo, V. (2024). *Características de personalidad de los seguidores y estilo de liderazgo preferido*. Magíster en Personas y Organizaciones, UDP.
+
+Ferreira, C. (2024). *El impacto de la personalidad en la preferencia por estilo de liderazgo: Un estudio basado en los factores y facetas del Modelo HEXACO*. Magíster en Personas y Organizaciones, UDP.
+
+Fontalba, P., Galviz, V., & Guzmán, J. (2024). *Rasgos de personalidad y decisiones laborales poco éticas*. Magíster en Personas y Organizaciones, UDP.
+
+Reyes, L., & Rubilar, C. (2024). *Aceptación de métodos digitales para selección de personal*. Magíster en Gestión de Negocios Digitales, UDP.
+
+Gallardo, S., Rodríguez, J., & Villagra, D. (2024). *Meta-análisis de los atributos valorados en la compra de vino*. Magíster en Marketing, UDP.
+
+### 2023
+
+Urra, B., Vega, K., & Villalón, C. (2023). *Predicción de rotación temprana a partir del proceso de selección de personal: Estudio de caso a una empresa del rubro de la construcción en Chile*. Magíster en Personas y Organizaciones, UDP.
+
+Coderch, I., Curín, P., & Wilches, D. (2023). *Pacing styles, necesidades psicológicas básicas y bienestar psicológico en estudiantes del área de negocios*. Magíster en Personas y Organizaciones, UDP.
+
+Fica, V., Magna, E., & Mura, J. (2023). *Determinantes de la capacidad y disposición a encontrar soluciones de cooperación en situaciones de negociación de suma abierta*. Magíster en Personas y Organizaciones, UDP.
+
+### 2022
+
+Orellana, T., Petit-Laurent, C., & Torres, P. (2022). *Personalidad de los seguidores y estilo de liderazgo preferido*. Magíster en Personas y Organizaciones, UDP.
+
+Fernández, B., Gutiérrez, S., & Mandiola, P. (2022). *Métodos de selección de personal en Chile: Comparación de preferencias en postulantes, seleccionadores y personas que contratan servicios de selección de personal*. Magíster en Personas y Organizaciones, UDP.
+
+Asensio, T., Guerra, S., & Peredo, D. (2022). *Atributos que definen el mejor lugar para trabajar en Chile*. Magíster en Personas y Organizaciones, UDP.
+
+Arcos, S., Arroyo, C., & Quezada, F. (2022). *Validación del modelo de satisfacción de usuarios del Gobierno de Chile*. Magíster en Marketing, UDP.

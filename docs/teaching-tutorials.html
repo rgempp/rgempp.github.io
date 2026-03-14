@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Page Unplugged – René Gempp</title>
+<title>Tutorials – René Gempp</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,23 +26,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="/site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="/site_libs/quarto-nav/headroom.min.js"></script>
-<script src="/site_libs/clipboard/clipboard.min.js"></script>
-<script src="/site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="/site_libs/quarto-search/fuse.min.js"></script>
-<script src="/site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="/">
-<script src="/site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="/site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="/site_libs/quarto-html/popper.min.js"></script>
-<script src="/site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="/site_libs/quarto-html/anchor.min.js"></script>
-<link href="/site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="/site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="/site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="/site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="/site_libs/bootstrap/bootstrap-9e0b913096b4405525fd8b9c824cf29a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-9e0b913096b4405525fd8b9c824cf29a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,10 +72,68 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-tutorials-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
 
-<link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet" href="/custom.css">
+    const options = {
+      valueNames: ['listing-title','listing-description','listing-date','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-tutorials-listing'] = new List('listing-tutorials-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="custom.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -83,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="/index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">René Gempp</span>
     </a>
   </div>
@@ -99,11 +159,11 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-research">    
         <li>
-    <a class="dropdown-item" href="/publications.html">
+    <a class="dropdown-item" href="./publications.html">
  <span class="dropdown-text">Publications</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/grants.html">
+    <a class="dropdown-item" href="./grants.html">
  <span class="dropdown-text">Grants &amp; Projects</span></a>
   </li>  
     </ul>
@@ -114,33 +174,33 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-teaching">    
         <li>
-    <a class="dropdown-item" href="/teaching-courses.html">
+    <a class="dropdown-item" href="./teaching-courses.html">
  <span class="dropdown-text">Courses</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/teaching-workshops.html">
+    <a class="dropdown-item" href="./teaching-workshops.html">
  <span class="dropdown-text">Workshops</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/teaching-tutorials.html">
+    <a class="dropdown-item" href="./teaching-tutorials.html">
  <span class="dropdown-text">Tutorials</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="/teaching-supervision.html">
+    <a class="dropdown-item" href="./teaching-supervision.html">
  <span class="dropdown-text">Thesis Supervision</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/tests-scales.html"> 
+    <a class="nav-link" href="./tests-scales.html"> 
 <span class="menu-text">Tests &amp; Scales</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/software.html"> 
+    <a class="nav-link" href="./software.html"> 
 <span class="menu-text">Software &amp; Code</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/professional.html"> 
+    <a class="nav-link" href="./professional.html"> 
 <span class="menu-text">Professional</span></a>
   </li>  
 </ul>
@@ -176,15 +236,21 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#tutorials-how-to-guides" id="toc-tutorials-how-to-guides" class="nav-link active" data-scroll-target="#tutorials-how-to-guides">Tutorials &amp; How-To Guides</a></li>
+  </ul>
+</nav>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(0)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Page Unplugged</h1>
+<h1 class="title">Tutorials</h1>
 </div>
 
 
@@ -201,10 +267,42 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>The page you requested cannot be found (perhaps it was unplugged).</p>
-<p>You may want to try searching to find the page’s new plug.</p>
+<section id="tutorials-how-to-guides" class="level2">
+<h2 class="anchored" data-anchor-id="tutorials-how-to-guides">Tutorials &amp; How-To Guides</h2>
+<p>Tutorials on psychometrics, data analysis, and quantitative methods, written in Quarto with executable R code.</p>
+<!-- 
+To add a new tutorial, create a folder inside teaching/tutorials/:
+
+teaching/tutorials/
+├── intro-irt-mirt/
+│   └── index.qmd
+├── cfa-lavaan-basics/
+│   └── index.qmd
+└── bws-analysis/
+    └── index.qmd
+
+Each index.qmd should have YAML like:
+
+---
+title: "Introduction to IRT with mirt"
+description: "A practical walkthrough of Rasch and GRM models in R"
+date: 2026-04-01
+categories: [IRT, R, psychometrics]
+execute:
+  echo: true
+---
+-->
+<div id="listing-tutorials-listing" class="quarto-listing quarto-listing-container-default">
+<div class="list quarto-listing-default">
+
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+<p><em>Tutorials are coming soon. Planned topics include: IRT with <code>mirt</code>, CFA with <code>lavaan</code>, ESEM in Mplus, Best-Worst Scaling analysis, and reliability estimation beyond Cronbach’s alpha.</em></p>
 
 
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

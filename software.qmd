@@ -1,0 +1,48 @@
+---
+title: "Software & Code"
+---
+
+## Tools, Scripts, and Reproducible Workflows
+
+I share here code and tools related to my research and teaching. I work primarily in **R**, **Mplus**, and **Stata**.
+
+---
+
+<!-- Add repositories and scripts here. Example format:
+
+### bws-network: Network Analysis of Best-Worst Scaling Data
+**Language**: R  
+**Packages**: `qgraph`, `bootnet`, `networktools`
+
+Workflow for applying Gaussian Graphical Models (GGM/GLASSO) to individual-level hierarchical Bayes scores from Best-Worst Scaling studies, with discussion of ipsativity implications.
+
+[GitHub repository](https://github.com/rgempp/bws-network)
+
+---
+
+### mplus-syntax: Common Psychometric Models in Mplus
+**Language**: Mplus syntax
+
+Collection of annotated Mplus syntax files for common models in organizational psychometrics:
+
+- CFA with method effects
+- MIMIC models for DIF detection
+- Bifactor and second-order models
+- Polytomous IRT (GRM, GPCM)
+- ESEM with target rotation
+
+[GitHub repository](https://github.com/rgempp/mplus-syntax)
+
+-->
+
+*This section is under construction. Code will be published as research projects allow.*
+
+---
+
+## Recommended Tools
+
+- [lavaan](https://lavaan.ugent.be/) — SEM in R
+- [mirt](https://philchalmers.github.io/mirt/) — Multidimensional IRT in R
+- [psych](https://personality-project.org/r/psych/) — Psychometric analysis in R
+- [Mplus](https://www.statmodel.com/) — Advanced statistical modeling
+- [Quarto](https://quarto.org/) — Reproducible scientific publishing

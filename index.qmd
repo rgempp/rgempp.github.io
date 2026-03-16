@@ -24,7 +24,7 @@ about:
 
 I am an Assistant Professor at the [Department of Management](https://administracionyeconomia.udp.cl/departamentos/administracion/), [Facultad de Administración y Economía (FAE)](https://administracionyeconomia.udp.cl/), [Universidad Diego Portales](https://www.udp.cl/), Santiago, Chile. I currently serve as Department Chair.
 
-My research lies at the intersection of psychometrics, organizational behavior, and quantitative methodology. I specialize in latent variable methodologies (including Item Response Theory [IRT], structural equation modeling [SEM], and multilevel models), as well as meta-analysis and advanced scaling methods such as Best-Worst Scaling and conjoint analysis. I apply these tools to the measurement of individual differences and the study of human behavior at work.
+My work lies at the intersection of psychometrics, organizational behavior, and quantitative methodology. I specialize in latent variable methodologies (including Item Response Theory [IRT], structural equation modeling [SEM], and multilevel models), as well as meta-analysis and advanced scaling methods such as Best-Worst Scaling and conjoint analysis. I apply these tools to the measurement of individual differences and the study of human behavior at work.
 
 Current research interests include the measurement of individual differences (personality traits, attitudes, and related constructs), subjective well-being, interpersonal affect regulation in leadership contexts, and Chilean workers' labor preferences.
 

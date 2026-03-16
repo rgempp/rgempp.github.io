@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 3 — Quarto: reportes reproducibles | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --amber: #F59E0B; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .yaml-key { color: #38BDF8; }
+  .yaml-val { color: #4ADE80; }
+  .md { color: #F472B6; }
+  .chunk-delim { color: #94A3B8; }
+  .r-code { color: #4ADE80; }
+  .hashpipe { color: #F59E0B; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid var(--amber); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong { display: block; margin-bottom: 0.3rem; }
+  .anatomy { background: white; border: 2px solid #E2E8F0; border-radius: 8px; padding: 0; margin: 1rem 0; overflow: hidden; }
+  .anatomy-section { padding: 0.8rem 1.2rem; border-bottom: 1px solid #E2E8F0; }
+  .anatomy-section:last-child { border-bottom: none; }
+  .anatomy-label { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.4rem; color: white; }
+  .label-yaml { background: var(--amber); }
+  .label-md { background: var(--teal); }
+  .label-chunk { background: var(--coral); }
+  .anatomy-code { font-family: Consolas, monospace; font-size: 0.85rem; white-space: pre; line-height: 1.4; }
+  .side-by-side { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .side-by-side > div { border-radius: 6px; padding: 0.8rem; }
+  .bad-box { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good-box { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .side-by-side h4 { font-size: 0.9rem; margin-bottom: 0.5rem; }
+  .kbd { display: inline-block; background: #E2E8F0; border: 1px solid #CBD5E1; border-radius: 4px; padding: 0.1rem 0.45rem; font-family: Consolas, monospace; font-size: 0.85rem; box-shadow: 0 1px 0 #94A3B8; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media (max-width: 600px) { .side-by-side { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 3 — Quarto: reportes reproducibles</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 1 · Prof. René Gempp</p>
+
+<!-- ============================================================ -->
+<h2>1. ¿Qué es Quarto y por qué lo usamos?</h2>
+
+<p>Quarto es un sistema de publicación que combina <strong>texto narrativo</strong>, <strong>código R</strong> y <strong>resultados</strong> (tablas, gráficos) en un solo documento. Escribes un archivo <code>.qmd</code>, haces click en "Render", y obtienes un reporte profesional en HTML, PDF o Word.</p>
+
+<p><strong>¿Por qué importa para people analytics?</strong> Porque el entregable nunca es "un script de R". El entregable es un <em>reporte para alguien que no sabe R</em>: el VP, el directorio, un gerente de línea. Quarto te permite producir ese reporte sin salir de RStudio, y si los datos cambian, solo vuelves a renderizar.</p>
+
+<div class="tip">
+<strong>Script .R vs. documento .qmd</strong>
+Un script <code>.R</code> es para ti (análisis, exploración, pruebas). Un documento <code>.qmd</code> es para tu audiencia (reporte con interpretaciones, visualizaciones y recomendaciones). En el curso usamos ambos: el script para trabajar y el .qmd para entregar.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Anatomía de un archivo .qmd</h2>
+
+<p>Todo documento Quarto tiene tres partes que se alternan:</p>
+
+<div class="anatomy">
+  <div class="anatomy-section" style="background: #FEF9C3;">
+    <span class="anatomy-label label-yaml">① ENCABEZADO YAML</span>
+    <div class="anatomy-code">---
+title: "Diagnóstico de Fuerza Laboral"
+author: "Tu nombre"
+date: "2025-03-11"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: true
+execute:
+  warning: false
+---</div>
+  </div>
+  <div class="anatomy-section" style="background: #CCFBF1;">
+    <span class="anatomy-label label-md">② TEXTO MARKDOWN</span>
+    <div class="anatomy-code">## Composición de la fuerza laboral
+
+InnovaCo cuenta con 1.200 empleados distribuidos
+en 6 departamentos. A continuación se presenta
+el análisis descriptivo.</div>
+  </div>
+  <div class="anatomy-section" style="background: #FEE2E2;">
+    <span class="anatomy-label label-chunk">③ CHUNK DE CÓDIGO R</span>
+    <div class="anatomy-code">```{r}
+#| label: headcount
+innovaco |&gt;
+  count(departamento, sort = TRUE)
+```</div>
+  </div>
+  <div class="anatomy-section" style="background: #CCFBF1;">
+    <span class="anatomy-label label-md">② TEXTO MARKDOWN</span>
+    <div class="anatomy-code">El departamento más grande es Desarrollo
+de Software con 417 personas (35% del total).</div>
+  </div>
+  <div class="anatomy-section" style="background: #FEE2E2;">
+    <span class="anatomy-label label-chunk">③ CHUNK DE CÓDIGO R</span>
+    <div class="anatomy-code">```{r}
+#| label: fig-edad
+ggplot(innovaco, aes(x = edad)) +
+  geom_histogram(binwidth = 3)
+```</div>
+  </div>
+</div>
+
+<p>Este patrón se repite tantas veces como necesites: texto → código → texto → código → ...</p>
+
+<!-- ============================================================ -->
+<h2>3. El encabezado YAML en detalle</h2>
+
+<p>El YAML (las líneas entre <code>---</code>) configura todo el documento. Es muy sensible a la indentación: cada nivel se indenta con <strong>exactamente 2 espacios</strong>.</p>
+
+<pre><code><span class="yaml-key">---</span>
+<span class="yaml-key">title:</span> <span class="yaml-val">"Diagnóstico de Fuerza Laboral — InnovaCo SpA"</span>
+<span class="yaml-key">subtitle:</span> <span class="yaml-val">"Reporte para el VP de Personas"</span>
+<span class="yaml-key">author:</span> <span class="yaml-val">"Tu nombre"</span>
+<span class="yaml-key">date:</span> <span class="yaml-val">"2025-03-11"</span>
+<span class="yaml-key">format:</span>                          <span class="comment"># ← nivel 0</span>
+  <span class="yaml-key">html:</span>                          <span class="comment"># ← nivel 1 (2 espacios)</span>
+    <span class="yaml-key">theme:</span> <span class="yaml-val">cosmo</span>                 <span class="comment"># ← nivel 2 (4 espacios)</span>
+    <span class="yaml-key">toc:</span> <span class="yaml-val">true</span>                   <span class="comment"># tabla de contenidos</span>
+    <span class="yaml-key">toc-depth:</span> <span class="yaml-val">2</span>                <span class="comment"># hasta qué nivel de título</span>
+    <span class="yaml-key">code-fold:</span> <span class="yaml-val">true</span>             <span class="comment"># código colapsado por defecto</span>
+    <span class="yaml-key">code-summary:</span> <span class="yaml-val">"Ver código"</span>  <span class="comment"># texto del botón para expandir</span>
+    <span class="yaml-key">number-sections:</span> <span class="yaml-val">true</span>       <span class="comment"># numerar secciones</span>
+<span class="yaml-key">execute:</span>
+  <span class="yaml-key">echo:</span> <span class="yaml-val">true</span>                    <span class="comment"># mostrar código en el output</span>
+  <span class="yaml-key">warning:</span> <span class="yaml-val">false</span>                <span class="comment"># ocultar warnings de R</span>
+  <span class="yaml-key">message:</span> <span class="yaml-val">false</span>                <span class="comment"># ocultar mensajes de R</span>
+<span class="yaml-key">---</span></code></pre>
+
+<h3>Opciones YAML más usadas</h3>
+
+<table>
+<tr><th>Opción</th><th>Qué hace</th><th>Valores</th></tr>
+<tr><td><code>theme</code></td><td>Estilo visual del HTML</td><td><code>cosmo</code>, <code>flatly</code>, <code>journal</code>, <code>lumen</code>, <code>sandstone</code></td></tr>
+<tr><td><code>toc</code></td><td>Tabla de contenidos automática</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>toc-depth</code></td><td>Hasta qué nivel de título incluir en el TOC</td><td><code>2</code> (incluye ## y ###), <code>3</code></td></tr>
+<tr><td><code>code-fold</code></td><td>Código aparece colapsado (el lector puede expandirlo)</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>echo</code></td><td>¿Mostrar el código en el documento?</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>warning</code></td><td>¿Mostrar warnings de R?</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>message</code></td><td>¿Mostrar mensajes de R (ej: al cargar paquetes)?</td><td><code>true</code> / <code>false</code></td></tr>
+</table>
+
+<div class="tip">
+<strong>¿Por qué <code>code-fold: true</code>?</strong>
+Porque el destinatario del reporte es un ejecutivo, no un programador. Con <code>code-fold</code>, el reporte muestra solo los resultados (tablas, gráficos, texto), pero el código queda disponible para quien quiera verificar cómo se hizo el análisis. Lo mejor de dos mundos.
+</div>
+
+<div class="warning">
+<strong>Error #1: Indentación YAML</strong>
+YAML es estricto: usa solo espacios (no tabs) y respeta la jerarquía. Si <code>html:</code> tiene 2 espacios, <code>theme:</code> necesita 4 espacios. Si el documento no renderiza y el error menciona "YAML" o "parsing", revisa los espacios.
+</div>
+
+<!-- ============================================================ -->
+<h2>4. Texto en Markdown</h2>
+
+<p>El texto fuera de los chunks de código se escribe en Markdown, un formato de texto simple que se convierte automáticamente a HTML con formato:</p>
+
+<div class="side-by-side">
+<div style="background: var(--code-bg); color: #E2E8F0; padding: 1rem; border-radius: 6px;">
+<h4 style="color: #94A3B8; font-size: 0.85rem; margin-bottom: 0.6rem;">Lo que escribes en el .qmd</h4>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.85rem;"><code>## Título de sección
+
+### Subtítulo
+
+Texto normal de un párrafo.
+
+Texto en **negrita** y en *cursiva*.
+
+- Primer punto
+- Segundo punto
+
+1. Paso uno
+2. Paso dos
+
+> Cita textual o destacado
+
+[Enlace a Google](https://google.com)
+
+`código_en_línea()`</code></pre>
+</div>
+<div style="background: white; padding: 1rem; border-radius: 6px; border: 1px solid #E2E8F0;">
+<h4 style="color: var(--slate); font-size: 0.85rem; margin-bottom: 0.6rem;">Lo que se ve en el HTML</h4>
+<h2 style="font-size: 1.2rem; color: var(--navy); margin: 0 0 0.3rem 0; border: none; padding: 0;">Título de sección</h2>
+<h3 style="font-size: 1rem; color: var(--teal); margin: 0.5rem 0 0.3rem 0;">Subtítulo</h3>
+<p style="margin: 0.3rem 0;">Texto normal de un párrafo.</p>
+<p style="margin: 0.3rem 0;">Texto en <strong>negrita</strong> y en <em>cursiva</em>.</p>
+<ul style="margin: 0.3rem 0 0.3rem 1.5rem;"><li>Primer punto</li><li>Segundo punto</li></ul>
+<ol style="margin: 0.3rem 0 0.3rem 1.5rem;"><li>Paso uno</li><li>Paso dos</li></ol>
+<blockquote style="border-left: 3px solid #CBD5E1; padding-left: 0.5rem; color: var(--slate); margin: 0.3rem 0;">Cita textual o destacado</blockquote>
+<p style="margin: 0.3rem 0;"><a href="#" style="color: var(--teal);">Enlace a Google</a></p>
+<p style="margin: 0.3rem 0;"><code>código_en_línea()</code></p>
+</div>
+</div>
+
+<h3>Callouts: cajas de destaque</h3>
+
+<p>Quarto tiene cajas especiales para destacar información. Se usan mucho en reportes ejecutivos:</p>
+
+<pre><code><span class="md">::: {.callout-note}</span>
+<span class="md">## Hallazgo clave</span>
+La tasa de rotación en Soporte Técnico (35%)
+duplica la del resto de la empresa.
+<span class="md">:::</span>
+
+<span class="md">::: {.callout-warning}</span>
+<span class="md">## Señal de alerta</span>
+La satisfacción en Ventas cayó 8 puntos respecto
+al período anterior.
+<span class="md">:::</span>
+
+<span class="md">::: {.callout-tip}</span>
+<span class="md">## Recomendación</span>
+Se sugiere realizar entrevistas de salida
+focalizadas en Soporte Técnico durante marzo.
+<span class="md">:::</span></code></pre>
+
+<table>
+<tr><th>Tipo</th><th>Color</th><th>Uso sugerido</th></tr>
+<tr><td><code>.callout-note</code></td><td>Azul</td><td>Información general, hallazgos</td></tr>
+<tr><td><code>.callout-tip</code></td><td>Verde</td><td>Recomendaciones, buenas prácticas</td></tr>
+<tr><td><code>.callout-warning</code></td><td>Amarillo</td><td>Precauciones, señales de alerta</td></tr>
+<tr><td><code>.callout-important</code></td><td>Rojo</td><td>Información crítica, urgente</td></tr>
+</table>
+
+
+<!-- ============================================================ -->
+<h2>5. Chunks de código R</h2>
+
+<p>Los chunks son los bloques donde va el código R. Abren con <code>```{r}</code> y cierran con <code>```</code>. Todo lo que está entre esos delimitadores se ejecuta cuando renderizas el documento.</p>
+
+<h3>Estructura de un chunk</h3>
+
+<pre><code><span class="chunk-delim">```{r}</span>
+<span class="hashpipe">#| label:</span> <span class="yaml-val">mi-analisis</span>
+<span class="hashpipe">#| fig-cap:</span> <span class="yaml-val">"Distribución de edad en InnovaCo"</span>
+<span class="hashpipe">#| fig-width:</span> <span class="yaml-val">8</span>
+<span class="hashpipe">#| fig-height:</span> <span class="yaml-val">4.5</span>
+
+<span class="r-code">ggplot(innovaco, aes(x = edad)) +</span>
+<span class="r-code">  geom_histogram(binwidth = 3, fill = "#2C5F2D") +</span>
+<span class="r-code">  theme_minimal()</span>
+<span class="chunk-delim">```</span></code></pre>
+
+<p>Las líneas que empiezan con <code>#|</code> (hashpipe) son <strong>opciones del chunk</strong>. Controlan cómo se ejecuta y se muestra ese bloque específico.</p>
+
+
+<h3>Opciones de chunk más usadas</h3>
+
+<table>
+<tr><th>Opción</th><th>Qué hace</th><th>Valores comunes</th></tr>
+<tr><td><code>#| label: nombre</code></td><td>Nombre identificador del chunk (para referencia)</td><td>Texto sin espacios: <code>headcount</code>, <code>fig-edad</code></td></tr>
+<tr><td><code>#| echo: false</code></td><td>Oculta el código, muestra solo el resultado</td><td><code>true</code> (default) / <code>false</code></td></tr>
+<tr><td><code>#| eval: false</code></td><td>Muestra el código pero NO lo ejecuta</td><td><code>true</code> (default) / <code>false</code></td></tr>
+<tr><td><code>#| warning: false</code></td><td>Oculta warnings de este chunk específico</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>#| message: false</code></td><td>Oculta mensajes (ej: al cargar paquetes)</td><td><code>true</code> / <code>false</code></td></tr>
+<tr><td><code>#| fig-cap: "Texto"</code></td><td>Agrega un título debajo del gráfico</td><td>Texto entre comillas</td></tr>
+<tr><td><code>#| fig-width: 8</code></td><td>Ancho del gráfico (pulgadas)</td><td><code>6</code>, <code>8</code>, <code>10</code></td></tr>
+<tr><td><code>#| fig-height: 4.5</code></td><td>Alto del gráfico (pulgadas)</td><td><code>4</code>, <code>4.5</code>, <code>6</code></td></tr>
+</table>
+
+<div class="note">
+<strong>Opciones globales vs. locales</strong>
+Las opciones en el YAML bajo <code>execute:</code> se aplican a <strong>todos</strong> los chunks. Las opciones con <code>#|</code> dentro de un chunk se aplican solo a <strong>ese chunk</strong> y sobreescriben las globales. Ejemplo: si en el YAML tienes <code>echo: true</code> pero en un chunk pones <code>#| echo: false</code>, ese chunk específico no mostrará código.
+</div>
+
+
+<h3>El primer chunk: siempre <code>setup</code></h3>
+
+<p>Por convención, el primer chunk de todo documento .qmd carga los paquetes y los datos. Se llama <code>setup</code>:</p>
+
+<pre><code><span class="chunk-delim">```{r}</span>
+<span class="hashpipe">#| label:</span> <span class="yaml-val">setup</span>
+<span class="hashpipe">#| message:</span> <span class="yaml-val">false</span>
+
+<span class="r-code">library(tidyverse)</span>
+<span class="r-code">innovaco <- read_csv("innovaco_empleados.csv")</span>
+<span class="chunk-delim">```</span></code></pre>
+
+<div class="warning">
+<strong>Error #2: paquete no cargado en el .qmd</strong>
+Que <code>tidyverse</code> esté cargado en tu consola de RStudio <strong>no significa</strong> que esté cargado en el .qmd. Cada documento es independiente. El <code>library(tidyverse)</code> debe estar en el primer chunk del .qmd, siempre.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>6. Insertar un chunk: el atajo de teclado</h2>
+
+<p>Nunca escribas los <code>```{r}</code> a mano. Usa el atajo:</p>
+
+<table>
+<tr><th>Sistema</th><th>Atajo</th></tr>
+<tr><td>Windows / Linux</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Alt</span> + <span class="kbd">I</span></td></tr>
+<tr><td>Mac</td><td><span class="kbd">Cmd</span> + <span class="kbd">Option</span> + <span class="kbd">I</span></td></tr>
+</table>
+
+<p>Esto inserta automáticamente un chunk completo con apertura y cierre. Solo tienes que escribir el código adentro.</p>
+
+<h3>Ejecutar chunks mientras trabajas</h3>
+
+<table>
+<tr><th>Acción</th><th>Atajo</th><th>Qué hace</th></tr>
+<tr><td>Ejecutar línea actual</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Enter</span></td><td>Ejecuta la línea donde está el cursor</td></tr>
+<tr><td>Ejecutar chunk completo</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">Enter</span></td><td>Ejecuta todo el chunk actual</td></tr>
+<tr><td>Ejecutar todos los chunks anteriores</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Alt</span> + <span class="kbd">P</span></td><td>Ejecuta desde el inicio hasta el chunk actual</td></tr>
+<tr><td>Renderizar documento completo</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">K</span></td><td>Genera el HTML final</td></tr>
+</table>
+
+<div class="tip">
+<strong>Flujo de trabajo recomendado</strong>
+Mientras desarrollas tu reporte, ejecuta chunks individualmente con <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">Enter</span> para verificar que funcionan. Cuando todo esté listo, renderiza con <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">K</span> para generar el HTML final.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>7. Archivos y carpetas: la regla de oro</h2>
+
+<p>Cuando renderizas un <code>.qmd</code>, Quarto busca los archivos (como el CSV) <strong>relativo a donde está el .qmd</strong>, no al working directory de RStudio. La forma más simple de evitar problemas:</p>
+
+<pre><code><span class="comment">Pon todo en la misma carpeta:</span>
+
+mi_proyecto/
+├── clase01_reporte_vp.qmd     <span class="comment"># Tu documento Quarto</span>
+├── clase01_script.R            <span class="comment"># Tu script de trabajo</span>
+└── innovaco_empleados.csv      <span class="comment"># Los datos</span></code></pre>
+
+<p>Dentro del .qmd, la ruta es simplemente:</p>
+
+<pre><code><span class="r-code">innovaco <- read_csv("innovaco_empleados.csv")</span></code></pre>
+
+<div class="side-by-side">
+<div class="bad-box">
+<h4>✗ Esto NO funciona</h4>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.82rem;"><code># Ruta absoluta:
+read_csv("C:/Users/Juan/datos.csv")
+
+# Archivo en otra carpeta:
+read_csv("../Descargas/datos.csv")</code></pre>
+</div>
+<div class="good-box">
+<h4>✓ Esto SÍ funciona</h4>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.82rem;"><code># Mismo directorio que el .qmd:
+read_csv("innovaco_empleados.csv")
+
+# Subcarpeta dentro del proyecto:
+read_csv("datos/innovaco_empleados.csv")</code></pre>
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<h2>8. Código en línea: insertar resultados dentro del texto</h2>
+
+<p>Puedes insertar resultados de R directamente dentro del texto narrativo usando la sintaxis <code>`r expresión`</code>. Esto es muy poderoso para reportes porque los números se actualizan automáticamente:</p>
+
+<pre><code><span class="md">InnovaCo cuenta con `r nrow(innovaco)` empleados.</span>
+<span class="md">La edad promedio es de `r round(mean(innovaco$edad), 1)` años.</span>
+<span class="md">La tasa de rotación global alcanza el</span>
+<span class="md">`r scales::percent(mean(innovaco$rotacion == "Sí"), accuracy = 0.1)`.</span></code></pre>
+
+<p>En el HTML renderizado esto aparecería como:</p>
+
+<blockquote style="border-left: 3px solid var(--teal); padding: 0.5rem 0.8rem; background: #F1F5F9; margin: 0.5rem 0; font-style: normal;">
+InnovaCo cuenta con 1.200 empleados. La edad promedio es de 34.4 años. La tasa de rotación global alcanza el 27.2%.
+</blockquote>
+
+<div class="tip">
+<strong>¿Cuándo usar código en línea?</strong>
+Para cifras que mencionas en el texto narrativo y que podrían cambiar si cambias los datos. Así nunca tendrás un reporte donde el texto dice "1.200 empleados" pero la tabla dice "1.195".
+</div>
+
+
+<!-- ============================================================ -->
+<h2>9. Renderizar: de .qmd a HTML</h2>
+
+<p>Cuando haces click en <strong>Render</strong> (o <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">K</span>), Quarto:</p>
+
+<ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
+<li>Lee el YAML y configura el documento</li>
+<li>Ejecuta <strong>todos</strong> los chunks de arriba hacia abajo, en orden</li>
+<li>Convierte el Markdown a HTML con formato</li>
+<li>Inserta los resultados (tablas y gráficos) donde corresponde</li>
+<li>Genera el archivo <code>.html</code> en la misma carpeta que el <code>.qmd</code></li>
+</ol>
+
+<div class="warning">
+<strong>Error #3: orden de ejecución</strong>
+Al renderizar, los chunks se ejecutan de arriba hacia abajo, como un script nuevo. Si en el chunk 5 usas un objeto que se crea en el chunk 8, dará error. Asegúrate de que cada objeto se cree <strong>antes</strong> de usarse. El chunk <code>setup</code> (que carga datos y paquetes) siempre va primero.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>10. Los 7 errores más comunes y cómo resolverlos</h2>
+
+<table>
+<tr><th style="width: 5%;">#</th><th style="width: 30%;">Síntoma</th><th style="width: 30%;">Causa</th><th style="width: 35%;">Solución</th></tr>
+<tr>
+  <td><strong>1</strong></td>
+  <td>Error de parsing al renderizar, menciona "YAML"</td>
+  <td>Indentación incorrecta en el encabezado YAML. Probablemente usaste tabs en vez de espacios, o la jerarquía no es consistente.</td>
+  <td>Revisa que cada nivel tenga exactamente 2 espacios más. Usa solo espacios, nunca tabs.</td>
+</tr>
+<tr>
+  <td><strong>2</strong></td>
+  <td>Chunk no se ejecuta, aparece como texto plano</td>
+  <td>Falta <code>{r}</code> en la apertura, o falta el <code>```</code> de cierre.</td>
+  <td>Usa <span class="kbd">Ctrl</span>+<span class="kbd">Alt</span>+<span class="kbd">I</span> para insertar chunks. Nunca escribas los backticks a mano.</td>
+</tr>
+<tr>
+  <td><strong>3</strong></td>
+  <td><code>'archivo.csv' does not exist</code></td>
+  <td>El CSV no está en la misma carpeta que el .qmd, o la ruta es incorrecta.</td>
+  <td>Pon el .csv en la misma carpeta que el .qmd. Usa ruta relativa: <code>"innovaco_empleados.csv"</code></td>
+</tr>
+<tr>
+  <td><strong>4</strong></td>
+  <td><code>could not find function "count"</code></td>
+  <td>No cargaste <code>library(tidyverse)</code> en el .qmd. Que esté cargado en la consola no basta.</td>
+  <td>Agrega <code>library(tidyverse)</code> al primer chunk (<code>setup</code>).</td>
+</tr>
+<tr>
+  <td><strong>5</strong></td>
+  <td><code>object 'rotacion_depto' not found</code></td>
+  <td>Usas un objeto que se crea más abajo en el documento, o en un chunk que no se ejecutó.</td>
+  <td>Mueve la creación del objeto antes de su uso. Los chunks se ejecutan de arriba hacia abajo.</td>
+</tr>
+<tr>
+  <td><strong>6</strong></td>
+  <td>El YAML o el Markdown dan error en la consola de R</td>
+  <td>Estás ejecutando código Quarto en la consola de R en vez de dentro del archivo .qmd.</td>
+  <td>El código Quarto solo funciona dentro del archivo .qmd. La consola es solo para código R puro.</td>
+</tr>
+<tr>
+  <td><strong>7</strong></td>
+  <td>Aparecen mensajes como <code>── Attaching core tidyverse packages ──</code> en el reporte</td>
+  <td>No silenciaste los mensajes de carga de paquetes.</td>
+  <td>En el YAML: <code>message: false</code> bajo <code>execute:</code>. O en el chunk setup: <code>#| message: false</code></td>
+</tr>
+</table>
+
+
+<!-- ============================================================ -->
+<h2>11. Checklist de debugging</h2>
+
+<p>Si tu .qmd no renderiza, sigue estos pasos en orden:</p>
+
+<ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
+<li><strong>Lee el mensaje de error.</strong> Indica el número de línea donde falló.</li>
+<li><strong>Revisa el YAML.</strong> ¿Los <code>---</code> están completos? ¿La indentación es correcta?</li>
+<li><strong>Revisa los chunks.</strong> ¿Todos abren con <code>```{r}</code> y cierran con <code>```</code>?</li>
+<li><strong>Revisa la ruta del CSV.</strong> ¿El archivo está donde el .qmd espera encontrarlo?</li>
+<li><strong>Revisa el primer chunk.</strong> ¿Tiene <code>library(tidyverse)</code> y <code>read_csv()</code>?</li>
+<li><strong>Ejecuta chunk por chunk.</strong> Usa el botón ▶ de cada chunk para encontrar cuál falla.</li>
+<li><strong>Si nada funciona:</strong> cierra RStudio, abre de nuevo y vuelve a intentar.</li>
+</ol>
+
+
+<!-- ============================================================ -->
+<h2>12. Referencia rápida de Markdown</h2>
+
+<table>
+<tr><th>Lo que escribes</th><th>Lo que se ve</th></tr>
+<tr><td><code># Título 1</code></td><td>Título principal (rara vez se usa, el <code>title:</code> del YAML lo reemplaza)</td></tr>
+<tr><td><code>## Título 2</code></td><td>Sección principal</td></tr>
+<tr><td><code>### Título 3</code></td><td>Subsección</td></tr>
+<tr><td><code>**negrita**</code></td><td><strong>negrita</strong></td></tr>
+<tr><td><code>*cursiva*</code></td><td><em>cursiva</em></td></tr>
+<tr><td><code>`código`</code></td><td><code>código</code></td></tr>
+<tr><td><code>- item</code></td><td>● item (lista con viñetas)</td></tr>
+<tr><td><code>1. paso</code></td><td>1. paso (lista numerada)</td></tr>
+<tr><td><code>> cita</code></td><td>Bloque de cita</td></tr>
+<tr><td><code>[texto](url)</code></td><td>Hipervínculo</td></tr>
+<tr><td><code>---</code></td><td>Línea horizontal de separación</td></tr>
+<tr><td><code>`r expresión`</code></td><td>Resultado de la expresión R (código en línea)</td></tr>
+</table>
+
+<div class="note">
+<strong>Líneas en blanco importan</strong>
+En Markdown, necesitas una línea en blanco entre un párrafo y una lista, entre dos párrafos, y antes y después de un chunk de código. Si el formato se ve raro, probablemente falta una línea en blanco.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>13. Atajos de teclado: resumen</h2>
+
+<table>
+<tr><th>Acción</th><th>Windows / Linux</th><th>Mac</th></tr>
+<tr><td>Insertar chunk</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Alt</span> + <span class="kbd">I</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">Option</span> + <span class="kbd">I</span></td></tr>
+<tr><td>Ejecutar línea actual</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Enter</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">Enter</span></td></tr>
+<tr><td>Ejecutar chunk completo</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">Enter</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">Enter</span></td></tr>
+<tr><td>Ejecutar chunks anteriores</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Alt</span> + <span class="kbd">P</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">Option</span> + <span class="kbd">P</span></td></tr>
+<tr><td>Renderizar documento</td><td><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">K</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">K</span></td></tr>
+<tr><td>Insertar pipe <code>|&gt;</code></td><td><span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">M</span></td><td><span class="kbd">Cmd</span> + <span class="kbd">Shift</span> + <span class="kbd">M</span></td></tr>
+<tr><td>Insertar asignación <code>&lt;-</code></td><td><span class="kbd">Alt</span> + <span class="kbd">-</span></td><td><span class="kbd">Option</span> + <span class="kbd">-</span></td></tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · <a href="index.html">Analítica de Personas</a> · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

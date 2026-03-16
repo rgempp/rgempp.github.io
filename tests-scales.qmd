@@ -6,8 +6,6 @@ title: "Tests & Scales"
 
 This section lists psychometric instruments I have developed, adapted, or validated. Over time, each instrument will have a dedicated page with full psychometric documentation including factor structure, reliability estimates, measurement invariance results, and normative data where available.
 
----
-
 <!-- Add your instruments here. Example format:
 
 ### Brief Multidimensional Students' Life Satisfaction Scale (BMSLSS) — Chilean Adaptation
@@ -17,39 +15,8 @@ This section lists psychometric instruments I have developed, adapted, or valida
 **Method**: IRT (Graded Response Model)  
 **Status**: Published
 
-Psychometric evaluation of the BMSLSS using IRT with Chilean adolescent samples. Results support adequate item and scale properties.
-
-[Publication](link-to-paper) · [Psychometric report](tests/bmslss/) · [Scoring guide (PDF)](files/tests/bmslss-scoring.pdf)
-
----
-
-### HEXACO-60 — Chilean Validation
-**Original authors**: Ashton & Lee (2009)  
-**Adaptation**: Gempp & colleagues  
-**Population**: Chilean adults  
-**Method**: ESEM, Measurement Invariance  
-**Status**: In preparation
-
-Validation of the HEXACO-60 personality inventory for Chilean populations using Exploratory Structural Equation Modeling.
-
-[Psychometric report](tests/hexaco-60/)
-
----
-
-### Dark Triad Scale (Machiavellianism/Psychopathy subscales)
-**Population**: Chilean adults  
-**Method**: CFA, Rasch analysis  
-**Status**: Under review
-
-Investigation of the factor structure and item properties of dark personality measures.
+[Publication](link-to-paper) · [Psychometric report](tests/bmslss/)
 
 -->
 
 *This section is under construction. Instruments will be added with their corresponding psychometric documentation as it becomes available.*
-
----
-
-::: {.callout-tip}
-## Psychometric Reports
-Each instrument page (when available) will include: dimensionality evidence (EFA/CFA/ESEM), reliability estimates (omega, H coefficient), item-level statistics (IRT parameters where applicable), measurement invariance results, and normative data.
-:::

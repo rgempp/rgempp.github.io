@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 2 — ggplot2 y la lógica de los geom | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .plus { color: #F59E0B; font-weight: bold; }
+  .aes { color: #F472B6; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong { display: block; margin-bottom: 0.3rem; }
+  .layer-diagram { background: white; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1.2rem; margin: 1rem 0; }
+  .layer { display: flex; align-items: center; margin: 0.4rem 0; }
+  .layer-num { background: var(--teal); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold; margin-right: 0.8rem; flex-shrink: 0; }
+  .layer-code { font-family: Consolas, monospace; font-size: 0.9rem; color: var(--navy); }
+  .layer-desc { color: var(--slate); font-size: 0.85rem; margin-left: 0.5rem; }
+  .decision-box { background: #F1F5F9; border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
+  .decision-box h4 { color: var(--navy); margin-bottom: 0.5rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 2 — ggplot2 y la lógica de los geom</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 1 · Prof. René Gempp</p>
+
+<!-- ============================================================ -->
+<h2>1. La idea central: gráficos por capas</h2>
+
+<p>ggplot2 construye gráficos <strong>capa por capa</strong>, como si fueras apilando transparencias. Cada capa agrega un elemento visual. Las capas se conectan con el signo <code>+</code> (no con el pipe <code>|&gt;</code>).</p>
+
+<div class="layer-diagram">
+  <div class="layer">
+    <div class="layer-num">1</div>
+    <span class="layer-code">ggplot(datos, aes(x = ..., y = ...))</span>
+    <span class="layer-desc">← El lienzo: qué datos y qué variables</span>
+  </div>
+  <div class="layer">
+    <div class="layer-num">2</div>
+    <span class="layer-code">+ geom_*()</span>
+    <span class="layer-desc">← La geometría: cómo se dibujan los datos</span>
+  </div>
+  <div class="layer">
+    <div class="layer-num">3</div>
+    <span class="layer-code">+ labs(title = ..., x = ..., y = ...)</span>
+    <span class="layer-desc">← Las etiquetas: títulos y nombres de ejes</span>
+  </div>
+  <div class="layer">
+    <div class="layer-num">4</div>
+    <span class="layer-code">+ theme_minimal()</span>
+    <span class="layer-desc">← El estilo visual general</span>
+  </div>
+</div>
+
+<div class="warning">
+<strong>¡Atención! <code>+</code>, no <code>|&gt;</code></strong>
+Dentro de ggplot2, las capas se conectan con <code>+</code>. El pipe <code>|&gt;</code> se usa para pasar datos <em>antes</em> de ggplot, pero una vez que escribes <code>ggplot()</code>, todo lo que sigue usa <code>+</code>. Es el error más común de la semana 1.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>2. La función <code>aes()</code>: mapeo de variables a propiedades visuales</h2>
+
+<p><code>aes()</code> (de <em>aesthetics</em>) le dice a ggplot qué variable del dataset controla qué propiedad visual del gráfico:</p>
+
+<table>
+<tr><th>Propiedad</th><th>Qué controla</th><th>Ejemplo</th></tr>
+<tr><td><code>x</code></td><td>Posición en el eje horizontal</td><td><code>aes(x = edad)</code></td></tr>
+<tr><td><code>y</code></td><td>Posición en el eje vertical</td><td><code>aes(y = ingreso_mensual)</code></td></tr>
+<tr><td><code>fill</code></td><td>Color de relleno (barras, áreas)</td><td><code>aes(fill = genero)</code></td></tr>
+<tr><td><code>color</code></td><td>Color de borde o línea</td><td><code>aes(color = departamento)</code></td></tr>
+<tr><td><code>size</code></td><td>Tamaño del punto o línea</td><td><code>aes(size = antiguedad)</code></td></tr>
+</table>
+
+<div class="tip">
+<strong>Dentro vs. fuera de <code>aes()</code></strong>
+Si una propiedad visual depende de una <strong>variable del dataset</strong>, va <em>dentro</em> de <code>aes()</code>. Si es un valor fijo para todos los datos, va <em>fuera</em>:
+</div>
+
+<pre><code><span class="comment"># El COLOR depende de la variable "genero" → dentro de aes()</span>
+<span class="func">ggplot</span>(innovaco, <span class="aes">aes</span>(x = departamento, fill = genero)) <span class="plus">+</span>
+  <span class="func">geom_bar</span>()
+
+<span class="comment"># TODAS las barras son verdes (valor fijo) → fuera de aes()</span>
+<span class="func">ggplot</span>(innovaco, <span class="aes">aes</span>(x = departamento)) <span class="plus">+</span>
+  <span class="func">geom_bar</span>(fill = <span class="string">"#2C5F2D"</span>)</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>3. Los geom: ¿qué tipo de gráfico necesito?</h2>
+
+<p>Cada <code>geom_*()</code> dibuja los datos de una manera distinta. La elección depende de qué tipo de variables tienes y qué pregunta quieres responder:</p>
+
+<div class="decision-box">
+<h4>Guía rápida: ¿qué geom uso?</h4>
+<table>
+<tr><th>Quiero ver...</th><th>Variable(s)</th><th>geom</th></tr>
+<tr><td>Distribución de una variable numérica</td><td>1 numérica</td><td><code>geom_histogram()</code></td></tr>
+<tr><td>Conteo por categorías</td><td>1 categórica</td><td><code>geom_bar()</code></td></tr>
+<tr><td>Valores ya calculados en barras</td><td>1 categórica + 1 numérica</td><td><code>geom_col()</code></td></tr>
+<tr><td>Comparar distribuciones entre grupos</td><td>1 categórica + 1 numérica</td><td><code>geom_boxplot()</code></td></tr>
+<tr><td>Relación entre dos numéricas</td><td>2 numéricas</td><td><code>geom_point()</code></td></tr>
+<tr><td>Distribución suavizada</td><td>1 numérica</td><td><code>geom_density()</code></td></tr>
+</table>
+</div>
+
+<!-- ============================================================ -->
+<h3><code>geom_histogram()</code> — Distribución de una variable numérica</h3>
+
+<p>Divide una variable numérica en intervalos (bins) y cuenta cuántas observaciones caen en cada uno. Ideal para responder: <em>¿cómo se distribuye la edad/ingreso/antigüedad?</em></p>
+
+<pre><code><span class="func">ggplot</span>(innovaco, <span class="aes">aes</span>(x = edad)) <span class="plus">+</span>
+  <span class="func">geom_histogram</span>(
+    binwidth = 3,              <span class="comment"># Ancho de cada barra: cada 3 años</span>
+    fill     = <span class="string">"#2C5F2D"</span>,      <span class="comment"># Color de relleno</span>
+    color    = <span class="string">"white"</span>         <span class="comment"># Color del borde</span>
+  ) <span class="plus">+</span>
+  <span class="func">labs</span>(
+    title = <span class="string">"Distribución de Edad en InnovaCo"</span>,
+    x = <span class="string">"Edad (años)"</span>,
+    y = <span class="string">"Número de empleados"</span>
+  ) <span class="plus">+</span>
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<table>
+<tr><th>Argumento</th><th>Qué hace</th><th>Valores típicos</th></tr>
+<tr><td><code>binwidth</code></td><td>Ancho de cada barra (en unidades de la variable)</td><td><code>3</code> para edad, <code>100000</code> para ingreso</td></tr>
+<tr><td><code>bins</code></td><td>Número total de barras (alternativa a binwidth)</td><td><code>20</code>, <code>30</code></td></tr>
+<tr><td><code>fill</code></td><td>Color de relleno de las barras</td><td><code>"#2C5F2D"</code>, <code>"steelblue"</code></td></tr>
+<tr><td><code>color</code></td><td>Color del borde de las barras</td><td><code>"white"</code>, <code>"black"</code></td></tr>
+</table>
+
+<div class="tip">
+<strong>¿<code>binwidth</code> o <code>bins</code>?</strong>
+Usa <code>binwidth</code> cuando la unidad tiene significado (3 años de edad, $100.000 de ingreso). Usa <code>bins</code> cuando solo quieres controlar cuántas barras hay. Si no pones ninguno, R usa 30 bins por defecto y te avisa con un mensaje.
+</div>
+
+
+<!-- ============================================================ -->
+<h3><code>geom_bar()</code> — Contar automáticamente por categoría</h3>
+
+<p>Cuenta cuántas filas hay por cada valor de la variable categórica. No necesitas calcular nada antes: ggplot cuenta por ti.</p>
+
+<pre><code><span class="comment"># Conteo simple por departamento</span>
+<span class="func">ggplot</span>(innovaco, <span class="aes">aes</span>(x = departamento)) <span class="plus">+</span>
+  <span class="func">geom_bar</span>(fill = <span class="string">"#065A82"</span>) <span class="plus">+</span>
+  <span class="func">labs</span>(title = <span class="string">"Empleados por departamento"</span>, x = NULL, y = <span class="string">"Cantidad"</span>) <span class="plus">+</span>
+  <span class="func">theme_minimal</span>()
+
+<span class="comment"># Barras agrupadas por género (fill dentro de aes)</span>
+<span class="func">ggplot</span>(innovaco, <span class="aes">aes</span>(x = departamento, fill = genero)) <span class="plus">+</span>
+  <span class="func">geom_bar</span>(position = <span class="string">"dodge"</span>) <span class="plus">+</span>
+  <span class="func">labs</span>(title = <span class="string">"Composición por departamento y género"</span>) <span class="plus">+</span>
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<table>
+<tr><th>Argumento</th><th>Qué hace</th><th>Opciones</th></tr>
+<tr><td><code>position</code></td><td>Cómo se organizan las barras cuando hay grupos</td><td><code>"stack"</code> (apiladas, default), <code>"dodge"</code> (lado a lado), <code>"fill"</code> (proporcional)</td></tr>
+<tr><td><code>fill</code></td><td>Color de relleno (fijo, fuera de aes)</td><td>Cualquier color</td></tr>
+</table>
+
+<div class="tip">
+<strong><code>position = "dodge"</code> vs <code>"fill"</code></strong>
+<code>"dodge"</code> muestra barras lado a lado (compara cantidades absolutas). <code>"fill"</code> normaliza cada barra al 100% (compara proporciones). Para comparar tasas de rotación entre departamentos, <code>"fill"</code> es más útil.
+</div>
+
+
+<!-- ============================================================ -->
+<h3><code>geom_col()</code> — Barras con valores ya calculados</h3>
+
+<p>A diferencia de <code>geom_bar()</code> que cuenta por ti, <code>geom_col()</code> necesita que le des tanto el eje x como el eje y. Úsalo cuando ya calculaste los valores con <code>summarise()</code>:</p>
+
+<pre><code><span class="comment"># Primero calculo la tasa de rotación por departamento</span>
+rotacion_depto &lt;- innovaco <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(tasa_rotacion = <span class="func">mean</span>(rotacion == <span class="string">"Sí"</span>))
+
+<span class="comment"># Luego grafico con geom_col (necesito x e y)</span>
+<span class="func">ggplot</span>(rotacion_depto, <span class="aes">aes</span>(x = departamento, y = tasa_rotacion)) <span class="plus">+</span>
+  <span class="func">geom_col</span>(fill = <span class="string">"#B85042"</span>) <span class="plus">+</span>
+  <span class="func">scale_y_continuous</span>(labels = scales::<span class="func">percent</span>) <span class="plus">+</span>
+  <span class="func">labs</span>(title = <span class="string">"Tasa de rotación por departamento"</span>) <span class="plus">+</span>
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<div class="decision-box">
+<h4>¿<code>geom_bar()</code> o <code>geom_col()</code>?</h4>
+<p><code>geom_bar()</code>: ggplot cuenta por ti → solo necesitas <code>aes(x = variable)</code><br>
+<code>geom_col()</code>: tú ya calculaste los valores → necesitas <code>aes(x = categoría, y = valor)</code></p>
+</div>
+
+
+<!-- ============================================================ -->
+<h3><code>geom_boxplot()</code> — Comparar distribuciones entre grupos</h3>
+
+<p>Muestra la mediana, cuartiles y valores atípicos de una variable numérica, separada por grupos. Ideal para preguntas como: <em>¿varía el ingreso entre niveles jerárquicos?</em></p>
+
+<pre><code><span class="func">ggplot</span>(innovaco, <span class="aes">aes</span>(x = nivel_jerarquico, y = ingreso_mensual)) <span class="plus">+</span>
+  <span class="func">geom_boxplot</span>(fill = <span class="string">"#A7BEAE"</span>, color = <span class="string">"#2C5F2D"</span>) <span class="plus">+</span>
+  <span class="func">labs</span>(
+    title = <span class="string">"Distribución de ingreso por nivel jerárquico"</span>,
+    x = <span class="string">"Nivel"</span>, y = <span class="string">"Ingreso mensual (CLP)"</span>
+  ) <span class="plus">+</span>
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<p><strong>Lectura de un boxplot:</strong> La línea gruesa del centro es la <strong>mediana</strong>. La caja va del primer cuartil (25%) al tercer cuartil (75%). Los puntos fuera de los "bigotes" son valores atípicos.</p>
+
+
+<!-- ============================================================ -->
+<h2>4. Personalización: <code>labs()</code>, <code>scale_*()</code> y <code>theme_*()</code></h2>
+
+<h3>Etiquetas con <code>labs()</code></h3>
+
+<pre><code><span class="func">labs</span>(
+  title    = <span class="string">"Título principal del gráfico"</span>,
+  subtitle = <span class="string">"Subtítulo que aporta contexto"</span>,
+  x        = <span class="string">"Nombre del eje X"</span>,
+  y        = <span class="string">"Nombre del eje Y"</span>,
+  fill     = <span class="string">"Nombre de la leyenda"</span>,       <span class="comment"># si usas fill en aes</span>
+  caption  = <span class="string">"Fuente: HRIS InnovaCo"</span>       <span class="comment"># nota al pie</span>
+)</code></pre>
+
+<div class="tip">
+<strong>Tip para reportes ejecutivos:</strong>
+Un buen subtítulo resume el hallazgo: <em>"Soporte Técnico lidera con un 35% de rotación"</em>. Así el lector entiende el gráfico sin tener que interpretar las barras.
+</div>
+
+
+<h3>Formateo de ejes con <code>scale_*()</code></h3>
+
+<pre><code><span class="comment"># Eje Y como porcentaje</span>
+<span class="plus">+</span> <span class="func">scale_y_continuous</span>(labels = scales::<span class="func">percent</span>)
+
+<span class="comment"># Eje Y como pesos chilenos</span>
+<span class="plus">+</span> <span class="func">scale_y_continuous</span>(labels = scales::<span class="func">comma</span>)
+
+<span class="comment"># Colores personalizados para categorías</span>
+<span class="plus">+</span> <span class="func">scale_fill_manual</span>(values = c(<span class="string">"Hombre"</span> = <span class="string">"#065A82"</span>, <span class="string">"Mujer"</span> = <span class="string">"#F96167"</span>))
+
+<span class="comment"># Límites del eje</span>
+<span class="plus">+</span> <span class="func">scale_y_continuous</span>(limits = c(0, 0.5))</code></pre>
+
+
+<h3>Temas predefinidos</h3>
+
+<table>
+<tr><th>Tema</th><th>Estilo</th><th>Recomendación</th></tr>
+<tr><td><code>theme_minimal()</code></td><td>Limpio, fondo blanco, sin bordes</td><td>Nuestro default en el curso</td></tr>
+<tr><td><code>theme_classic()</code></td><td>Solo ejes, sin grilla</td><td>Estilo publicación académica</td></tr>
+<tr><td><code>theme_bw()</code></td><td>Fondo blanco con marco</td><td>Formal</td></tr>
+<tr><td><code>theme_gray()</code></td><td>Default de ggplot (fondo gris)</td><td>Evitar en reportes ejecutivos</td></tr>
+</table>
+
+
+<!-- ============================================================ -->
+<h2>5. Trucos útiles</h2>
+
+<h3>Voltear las barras con <code>coord_flip()</code></h3>
+
+<p>Cuando los nombres de las categorías son largos (como nombres de departamento), las barras horizontales son más legibles:</p>
+
+<pre><code><span class="func">ggplot</span>(rotacion_depto, <span class="aes">aes</span>(x = <span class="func">reorder</span>(departamento, tasa_rotacion), 
+                              y = tasa_rotacion)) <span class="plus">+</span>
+  <span class="func">geom_col</span>(fill = <span class="string">"#B85042"</span>) <span class="plus">+</span>
+  <span class="func">coord_flip</span>() <span class="plus">+</span>                 <span class="comment"># Voltea el gráfico</span>
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<p><code>reorder(departamento, tasa_rotacion)</code> ordena las barras de menor a mayor tasa. Así el departamento con más rotación queda arriba (más visible).</p>
+
+
+<h3>Agregar valores sobre las barras con <code>geom_text()</code></h3>
+
+<pre><code><span class="plus">+</span> <span class="func">geom_text</span>(
+    <span class="aes">aes</span>(label = scales::<span class="func">percent</span>(tasa_rotacion, accuracy = 0.1)),
+    hjust = -0.1,    <span class="comment"># Desplaza el texto a la derecha de la barra</span>
+    size  = 3.5      <span class="comment"># Tamaño del texto</span>
+  )</code></pre>
+
+
+<h3>Separar en paneles con <code>facet_wrap()</code></h3>
+
+<pre><code><span class="comment"># Un histograma de edad por cada departamento</span>
+<span class="func">ggplot</span>(innovaco, <span class="aes">aes</span>(x = edad)) <span class="plus">+</span>
+  <span class="func">geom_histogram</span>(binwidth = 3, fill = <span class="string">"#065A82"</span>, color = <span class="string">"white"</span>) <span class="plus">+</span>
+  <span class="func">facet_wrap</span>(~departamento, ncol = 2) <span class="plus">+</span>  <span class="comment"># ~ antes de la variable</span>
+  <span class="func">theme_minimal</span>()</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>6. Plantilla copiable</h2>
+
+<p>Copia y modifica esta plantilla para cualquier gráfico de barras en el curso:</p>
+
+<pre><code><span class="comment"># --- Plantilla de gráfico de barras ---</span>
+<span class="func">ggplot</span>(MIS_DATOS, <span class="aes">aes</span>(x = <span class="func">reorder</span>(MI_VARIABLE_X, MI_VARIABLE_Y), 
+                        y = MI_VARIABLE_Y)) <span class="plus">+</span>
+  <span class="func">geom_col</span>(fill = <span class="string">"#0D9488"</span>) <span class="plus">+</span>
+  <span class="func">geom_text</span>(<span class="aes">aes</span>(label = <span class="func">round</span>(MI_VARIABLE_Y, 1)), 
+            hjust = -0.1, size = 3.5) <span class="plus">+</span>
+  <span class="func">coord_flip</span>() <span class="plus">+</span>
+  <span class="func">labs</span>(
+    title    = <span class="string">"MI TÍTULO"</span>,
+    subtitle = <span class="string">"Mi subtítulo con el hallazgo"</span>,
+    x        = NULL,
+    y        = <span class="string">"Mi eje Y"</span>,
+    caption  = <span class="string">"Fuente: HRIS InnovaCo"</span>
+  ) <span class="plus">+</span>
+  <span class="func">theme_minimal</span>()</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>7. Errores frecuentes</h2>
+
+<table>
+<tr><th>Error</th><th>Causa</th><th>Solución</th></tr>
+<tr>
+  <td><code>Error: unexpected '+'</code> o gráfico incompleto</td>
+  <td>El <code>+</code> quedó al inicio de la línea siguiente en vez del final de la anterior</td>
+  <td>Siempre deja el <code>+</code> al <strong>final</strong> de la línea, no al principio de la siguiente</td>
+</tr>
+<tr>
+  <td>Se abre una ventana de gráfico vacía</td>
+  <td>Escribiste <code>ggplot(datos, aes(...))</code> sin agregar un <code>geom_*()</code></td>
+  <td>Agrega al menos un geom: <code>+ geom_bar()</code></td>
+</tr>
+<tr>
+  <td><code>object 'rotacion_depto' not found</code></td>
+  <td>Usas una tabla calculada que no creaste antes</td>
+  <td>Ejecuta primero el código que crea <code>rotacion_depto</code> con <code>summarise()</code></td>
+</tr>
+<tr>
+  <td>Usaste <code>|&gt;</code> en vez de <code>+</code> entre capas de ggplot</td>
+  <td>ggplot usa <code>+</code> para agregar capas, no el pipe</td>
+  <td>Cambia <code>|&gt; geom_bar()</code> por <code>+ geom_bar()</code></td>
+</tr>
+<tr>
+  <td>Colores iguales para todos a pesar de usar <code>fill = genero</code></td>
+  <td><code>fill = genero</code> está fuera de <code>aes()</code></td>
+  <td>Muévelo adentro: <code>aes(fill = genero)</code></td>
+</tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · <a href="index.html">Analítica de Personas</a> · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

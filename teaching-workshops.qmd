@@ -2,24 +2,18 @@
 title: "Workshops"
 ---
 
-## Workshops & Short Courses
+I periodically offer workshops and short courses in psychometrics and quantitative methods for researchers, graduate students, and practitioners. Topics have included:
 
-<!-- Add workshops here. Example format:
+- Introducción a los modelos de ecuaciones estructurales [Introduction to Structural Equation Modeling]
+- Introducción a los modelos de ecuaciones estructurales longitudinales [Introduction to Longitudinal Structural Equation Modeling]
+- Construcción de instrumentos psicométricos [Psychometric Instrument Development]
+- Análisis de ítems y ensamblaje de instrumentos psicométricos [Item Analysis and Psychometric Instrument Assembly]
+- Teoría de Respuesta al Ítem [Item Response Theory]
+- Best-Worst Scaling
 
-### Introduction to Item Response Theory with R
-**Venue**: Sociedad Chilena de Psicología del Trabajo y las Organizaciones · 2025
-
-A hands-on workshop introducing the basics of IRT using the `mirt` package in R. Covers Rasch models, graded response models, and practical interpretation of item and person parameters.
-
-[Materials](teaching/workshops/irt-intro/)
-
--->
-
-*Workshops and short courses will be listed here as they are developed. Topics will include IRT, SEM, psychometric analysis, and quantitative research methods.*
-
----
+among others.
 
 ::: {.callout-note}
 ## Interested in a Workshop?
-If you are interested in organizing a workshop on psychometrics, IRT, SEM, or quantitative methods for your institution or research group, feel free to [contact me](contact.qmd).
+If you are interested in organizing a workshop on psychometrics, IRT, SEM, or quantitative methods for your institution or research group, feel free to [contact me](mailto:rene.gempp@udp.cl).
 :::

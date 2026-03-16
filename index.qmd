@@ -1,6 +1,6 @@
 ---
 title: "René Gempp"
-subtitle: "Associate Professor · Universidad Diego Portales"
+subtitle: "Assistant Professor · Universidad Diego Portales"
 image: files/profiles/profile.jpg
 about:
   template: trestles
@@ -15,17 +15,17 @@ about:
       href: https://github.com/rgempp
     - icon: mortarboard
       text: Google Scholar
-      href: https://scholar.google.com/citations?user=iWvXzDYAAAAJ
+      href: https://scholar.google.com/citations?user=pyyrrFMAAAAJ&hl=es&oi=ao
     - text: ORCID
       href: https://orcid.org/0000-0002-0427-6894
+    - text: ResearchGate
+      href: https://www.researchgate.net/profile/Rene-Gempp
 ---
 
-I am the Director of the Department of Management at the [Facultad de Administración y Economía (FAE)](https://fae.udp.cl/), [Universidad Diego Portales](https://www.udp.cl/), Santiago, Chile.
+I am an Assistant Professor at the [Department of Management](https://administracionyeconomia.udp.cl/departamentos/administracion/), [Facultad de Administración y Economía (FAE)](https://administracionyeconomia.udp.cl/), [Universidad Diego Portales](https://www.udp.cl/), Santiago, Chile. I currently serve as Department Chair.
 
-My research sits at the intersection of **psychometrics**, **organizational behavior**, and **quantitative methodology**. I work with Item Response Theory (IRT), structural equation modeling (SEM), meta-analysis, and advanced scaling methods such as Best-Worst Scaling.
+My research lies at the intersection of psychometrics, organizational behavior, and quantitative methodology. I specialize in latent variable methodologies (including Item Response Theory [IRT], structural equation modeling [SEM], and multilevel models), as well as meta-analysis and advanced scaling methods such as Best-Worst Scaling and conjoint analysis. I apply these tools to the measurement of individual differences and the study of human behavior at work.
 
-Current research interests include the measurement of dark personality traits (Dark Triad/HEXACO), interpersonal affect regulation in leadership contexts, and Chilean workers' labor preferences.
+Current research interests include the measurement of individual differences (personality traits, attitudes, and related constructs), subjective well-being, interpersonal affect regulation in leadership contexts, and Chilean workers' labor preferences.
 
-I teach **Organizational Behavior** at the undergraduate level and **Organizational Diagnosis** in the Master's in People Management program at UDP.
-
-I received my training at [Universidad de La Frontera (UFRO)](https://www.ufro.cl/), where I developed a deep commitment to psychometric rigor and research ethics.
+I regularly teach courses in Organizational Behavior at both undergraduate and graduate levels, as well as research methodology and people analytics for master's programs in people management. My teaching emphasizes data-driven decision-making and the critical evaluation of empirical evidence in organizational contexts.

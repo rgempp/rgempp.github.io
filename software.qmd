@@ -39,6 +39,16 @@ Collection of annotated Mplus syntax files for common models in organizational p
 
 ---
 
+## Legacy Programs (Delphi)
+
+More years ago than I care to remember, I developed a few small programs in Delphi for teaching purposes. Here are the ones that survived successive computer upgrades. They are in Spanish, Windows-only, and come with no documentation — but they still work.
+
+- **PhiLambda** ([philambda.exe](files/software/philambda.exe)): A small utility for estimating the PhiLambda coefficient (reliability of a dichotomous decision in Generalizability Theory), based on the ANOVA table from the RELIABILITIES menu in SPSS.
+- **WinError** ([WinError.exe](files/software/WinError.exe)): An interactive tool for explaining what the standard error of measurement is and what it is used for.
+- **Notas** ([notas.exe](files/software/notas.exe)): A quick converter from percentage scores to Chilean grades (1 to 7 scale).
+
+---
+
 ## Recommended Tools
 
 - [lavaan](https://lavaan.ugent.be/) — SEM in R

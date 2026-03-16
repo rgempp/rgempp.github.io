@@ -1,42 +1,11 @@
 ---
-title: "Tutorials"
-listing:
-  id: tutorials-listing
-  contents: teaching/tutorials/*/index.qmd
-  type: default
-  sort: "date desc"
-  categories: true
-  fields: [title, description, date, categories]
+title: "Tutorials & Lecture Notes"
 ---
 
-## Tutorials & How-To Guides
+### Analítica de Personas (People Analytics) · Semestre otoño 2026
 
-Tutorials on psychometrics, data analysis, and quantitative methods, written in Quarto with executable R code.
+Lecture notes for the People Analytics course, written in Spanish.
 
-<!-- 
-To add a new tutorial, create a folder inside teaching/tutorials/:
-
-teaching/tutorials/
-├── intro-irt-mirt/
-│   └── index.qmd
-├── cfa-lavaan-basics/
-│   └── index.qmd
-└── bws-analysis/
-    └── index.qmd
-
-Each index.qmd should have YAML like:
-
----
-title: "Introduction to IRT with mirt"
-description: "A practical walkthrough of Rasch and GRM models in R"
-date: 2026-04-01
-categories: [IRT, R, psychometrics]
-execute:
-  echo: true
----
--->
-
-:::{#tutorials-listing}
-:::
-
-*Tutorials are coming soon. Planned topics include: IRT with `mirt`, CFA with `lavaan`, ESEM in Mplus, Best-Worst Scaling analysis, and reliability estimation beyond Cronbach's alpha.*
+- [Apunte 1 — El pipe y las funciones de dplyr](teaching/people-analytics/Apunte01_Pipes_y_dplyr.html)
+- [Apunte 2 — Visualización de datos con ggplot2](teaching/people-analytics/Apunte02_ggplot2_y_geom.html)
+- [Apunte 3 — Introducción a Quarto](teaching/people-analytics/Apunte03_Quarto.html)

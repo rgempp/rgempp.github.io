@@ -95,35 +95,27 @@ h3 {
 
 /* -- Publication entries -- */
 .pub-entry {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
   border-bottom: 1px solid #f0f0f0;
-}
-
-.pub-citation {
   font-size: 0.95rem;
   line-height: 1.65;
-  margin-bottom: 0.3rem;
-  text-indent: -2em;
-  padding-left: 2em;
   color: #333;
-}
-
-.pub-links {
-  margin-top: 0.25rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+  padding-left: 2em;
+  text-indent: -2em;
 }
 
 .pub-link {
   display: inline-block;
-  padding: 0.15rem 0.55rem;
+  padding: 0.1rem 0.5rem;
   font-size: 0.78rem;
   border: 1px solid #ccc;
   border-radius: 3px;
   text-decoration: none;
   color: #555;
+  margin-left: 0.3rem;
+  vertical-align: middle;
+  text-indent: 0;
   transition: all 0.15s ease;
 }
 
@@ -132,6 +124,16 @@ h3 {
   color: #fff;
   border-color: #0085a1;
   text-decoration: none;
+}
+
+/* -- Thesis entries (hanging indent, APA style) -- */
+.thesis-entry {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #333;
+  padding-left: 2em;
+  text-indent: -2em;
 }
 
 /* -- Footer: light, minimal -- */

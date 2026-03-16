@@ -2,42 +2,32 @@
 title: "Courses"
 ---
 
-## Current Courses
+Teaching is one of the most rewarding aspects of my academic work. My approach emphasizes data-driven decision-making and the critical evaluation of empirical evidence in organizational contexts.
 
-### Organizational Behavior
+## Current Courses (Fall 2026)
+
+### [Analítica de Personas [People Analytics]](teaching/people-analytics/)
+**Program**: Magíster en Gestión de Personas · FAE, Universidad Diego Portales
+
+A case-based graduate course that introduces the use of R for solving applied problems in people analytics. Students work through real-world organizational cases, learning to frame HR questions as data problems and to communicate evidence-based recommendations to stakeholders.
+
+## Regular Courses
+
+### Personas y Equipos [Organizational Behavior]
 **Program**: Ingeniería Comercial (undergraduate) · FAE, Universidad Diego Portales
 
-Introductory course covering core topics in human behavior within organizations: personality, emotions, motivation, diversity, group dynamics, and leadership. Based on Robbins & Judge, complemented with case analyses and evidence-based evaluations.
-
-<!-- Uncomment when materials are available:
-[Syllabus (PDF)](files/syllabi/ob-2026.pdf) · [Course page](teaching/ob-2026/)
--->
-
----
+Introductory course covering core topics in human behavior within organizations: personality, emotions, motivation, diversity, group dynamics, and leadership.
 
 ### Organizational Diagnosis
-**Program**: Magíster en Dirección de Personas · FAE, Universidad Diego Portales
+**Program**: Magíster en Dirección de Personas & Magíster en Control de Gestión · FAE, Universidad Diego Portales
 
-Graduate course that prepares students to design and conduct rigorous organizational diagnoses. Students work with real-world cases (TechNova, Muebles del Sur, EcoAcción, Hospital Regional) applying theoretical frameworks and organizational analysis tools.
+Graduate course that prepares students to design and conduct rigorous organizational diagnoses. Students work with real-world cases applying theoretical frameworks and organizational analysis tools.
 
-<!-- Uncomment when materials are available:
-[Syllabus (PDF)](files/syllabi/diag-org-2026.pdf) · [Course page](teaching/diag-org-2026/)
--->
+### Motivation & Incentives
+**Program**: Magíster en Control de Gestión · FAE, Universidad Diego Portales
 
----
+Graduate course exploring models of intrinsic and extrinsic motivation, applied to the design of incentive systems in organizations.
 
 ## Past Courses
 
-<!-- List previous courses here as needed. Example:
-
-### Research Methods in Psychology
-**Program**: Psychology (undergraduate) · Universidad de La Frontera
-
--->
-
----
-
-::: {.callout-tip}
-## Dedicated Course Pages
-Some courses may have their own dedicated pages with syllabi, slides, readings, and supplementary materials. These will be linked from the course descriptions above as they become available.
-:::
+Over the years I have taught a variety of courses in organizational behavior and research methodology, including: Proyecto de Grado I, Proyecto de Grado II, Métodos Cuantitativos de Diagnóstico Organizacional, Métodos Empíricos, Investigación de Mercados, Metodología Cuantitativa, Metodología de la Investigación, Teorías sobre Liderazgo en las Organizaciones, Personas y Equipos, Comportamiento Organizacional, and Laboratorio de Investigación Aplicada en Management, among others.

@@ -2,50 +2,54 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://gempp.cl/tests-scales.html</loc>
-    <lastmod>2026-03-14T03:06:37.911Z</lastmod>
+    <lastmod>2026-03-16T21:25:11.333Z</lastmod>
   </url>
   <url>
     <loc>https://gempp.cl/teaching-tutorials.html</loc>
-    <lastmod>2026-03-14T03:06:37.904Z</lastmod>
+    <lastmod>2026-03-16T21:09:51.045Z</lastmod>
   </url>
   <url>
     <loc>https://gempp.cl/teaching-courses.html</loc>
-    <lastmod>2026-03-14T03:06:37.896Z</lastmod>
+    <lastmod>2026-03-16T20:06:38.930Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gempp.cl/software.html</loc>
+    <lastmod>2026-03-16T21:39:30.678Z</lastmod>
   </url>
   <url>
     <loc>https://gempp.cl/publications.html</loc>
-    <lastmod>2026-03-14T03:31:37.132Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gempp.cl/index.html</loc>
-    <lastmod>2026-03-14T03:34:49.780Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gempp.cl/grants.html</loc>
-    <lastmod>2026-03-14T03:06:37.880Z</lastmod>
-  </url>
-  <url>
-    <loc>https://gempp.cl/contact.html</loc>
-    <lastmod>2026-03-14T03:31:37.124Z</lastmod>
+    <lastmod>2026-03-16T18:50:19.048Z</lastmod>
   </url>
   <url>
     <loc>https://gempp.cl/GUIDE-quarto-gempp.html</loc>
     <lastmod>2026-03-14T03:08:07.436Z</lastmod>
   </url>
   <url>
-    <loc>https://gempp.cl/professional.html</loc>
-    <lastmod>2026-03-14T03:06:37.889Z</lastmod>
+    <loc>https://gempp.cl/contact.html</loc>
+    <lastmod>2026-03-14T03:31:37.124Z</lastmod>
   </url>
   <url>
-    <loc>https://gempp.cl/software.html</loc>
-    <lastmod>2026-03-14T03:31:28.935Z</lastmod>
+    <loc>https://gempp.cl/grants.html</loc>
+    <lastmod>2026-03-14T20:58:55.747Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gempp.cl/index.html</loc>
+    <lastmod>2026-03-16T18:59:23.546Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gempp.cl/service-consulting.html</loc>
+    <lastmod>2026-03-16T21:46:38.882Z</lastmod>
+  </url>
+  <url>
+    <loc>https://gempp.cl/teaching/people-analytics/index.html</loc>
+    <lastmod>2026-03-16T20:57:49.967Z</lastmod>
   </url>
   <url>
     <loc>https://gempp.cl/teaching-supervision.html</loc>
-    <lastmod>2026-03-14T03:06:37.902Z</lastmod>
+    <lastmod>2026-03-16T19:18:19.077Z</lastmod>
   </url>
   <url>
     <loc>https://gempp.cl/teaching-workshops.html</loc>
-    <lastmod>2026-03-14T03:06:37.904Z</lastmod>
+    <lastmod>2026-03-16T19:26:21.144Z</lastmod>
   </url>
 </urlset>

@@ -24,30 +24,33 @@ website:
           - href: teaching-workshops.qmd
             text: Workshops
           - href: teaching-tutorials.qmd
-            text: Tutorials
+            text: Tutorials & Lecture Notes
           - href: teaching-supervision.qmd
             text: Thesis Supervision
       - href: tests-scales.qmd
         text: Tests & Scales
       - href: software.qmd
         text: Software & Code
-      - href: professional.qmd
-        text: Professional
+      - href: service-consulting.qmd
+        text: Service & Consulting
     right:
       - icon: envelope
         href: mailto:rene.gempp@udp.cl
       - icon: github
         href: https://github.com/rgempp
       - icon: mortarboard
-        href: https://scholar.google.com/citations?user=iWvXzDYAAAAJ
+        href: https://scholar.google.com/citations?user=pyyrrFMAAAAJ&hl=es&oi=ao
 
   page-footer:
-    center: |
-      © 2026 René Gempp · Facultad de Administración y Economía, Universidad Diego Portales, Chile
+    center: "© 2026 René Gempp"
     background: light
 
   search: true
   reader-mode: true
+  open-graph: true
+  twitter-card: true
+  site-path: /
+  repo-url: https://github.com/rgempp/rgempp.github.io
 
 format:
   html:

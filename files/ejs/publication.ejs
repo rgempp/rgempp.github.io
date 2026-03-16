@@ -1,13 +1,3 @@
 <% for (const item of items) { %>
-<div class="pub-entry">
-<p class="pub-citation"><%= item.citation %></p>
-<p class="pub-links">
-<% if (item.doi) { %><a href="<%= item.doi %>" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a><% } %>
-<% if (item.preprint) { %><a href="<%= item.preprint %>" class="pub-link" target="_blank"><i class="bi bi-file-earmark-pdf"></i> Preprint</a><% } %>
-<% if (item.pdf) { %><a href="<%= item.pdf %>" class="pub-link" target="_blank"><i class="bi bi-file-earmark-pdf"></i> PDF</a><% } %>
-<% if (item.code) { %><a href="<%= item.code %>" class="pub-link" target="_blank"><i class="bi bi-github"></i> Code</a><% } %>
-<% if (item.data) { %><a href="<%= item.data %>" class="pub-link" target="_blank"><i class="bi bi-database"></i> Data</a><% } %>
-<% if (item.osf) { %><a href="<%= item.osf %>" class="pub-link" target="_blank"><i class="bi bi-box-arrow-up-right"></i> OSF</a><% } %>
-</p>
-</div>
+<div class="pub-entry"><span class="pub-citation"><%= item.citation %></span><% if (item.doi) { %> <a href="<%= item.doi %>" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a><% } %><% if (item.preprint) { %> <a href="<%= item.preprint %>" class="pub-link" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i> Preprint</a><% } %><% if (item.pdf) { %> <a href="<%= item.pdf %>" class="pub-link" target="_blank"><i class="bi bi-file-earmark-pdf"></i> PDF</a><% } %><% if (item.code) { %> <a href="<%= item.code %>" class="pub-link" target="_blank"><i class="bi bi-code-slash"></i> Code</a><% } %><% if (item.data) { %> <a href="<%= item.data %>" class="pub-link" target="_blank"><i class="bi bi-database"></i> Data</a><% } %><% if (item.osf) { %> <a href="<%= item.osf %>" class="pub-link" target="_blank"><i class="bi bi-box-arrow-up-right"></i> OSF</a><% } %></div>
 <% } %>

@@ -8,9 +8,7 @@ listing:
   template: files/ejs/publication.ejs
 ---
 
-My research spans psychometrics, organizational behavior, and quantitative methodology, with a focus on Latin American populations.
-
-For a complete and up-to-date list, see my [Google Scholar profile](https://scholar.google.com/citations?user=iWvXzDYAAAAJ).
+For a complete and up-to-date list, see my [Google Scholar profile](https://scholar.google.com/citations?user=pyyrrFMAAAAJ&hl=es&oi=ao).
 
 ## Journal Articles & Book Chapters
 

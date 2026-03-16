@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 1 — Pipes y funciones de dplyr | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .result { color: #A78BFA; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 1 — El pipe y las funciones de dplyr</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 1 · Prof. René Gempp</p>
+
+<!-- ============================================================ -->
+<h2>1. ¿Qué es el pipe <code>|&gt;</code>?</h2>
+
+<p>El pipe toma el resultado de lo que está a la izquierda y lo pasa como <strong>primer argumento</strong> de la función de la derecha. Es como decir "y luego...":</p>
+
+<pre><code><span class="comment"># Sin pipe: se lee de adentro hacia afuera (confuso)</span>
+<span class="func">summarise</span>(<span class="func">group_by</span>(<span class="func">filter</span>(datos, departamento == <span class="string">"Ventas"</span>), cargo), n = <span class="func">n</span>())
+
+<span class="comment"># Con pipe: se lee de arriba hacia abajo (claro)</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(departamento == <span class="string">"Ventas"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(cargo) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(n = <span class="func">n</span>())</code></pre>
+
+<p>Ambas expresiones hacen exactamente lo mismo. El pipe simplemente cambia el orden de lectura.</p>
+
+<div class="tip">
+<strong>¿De dónde viene?</strong>
+El pipe <code>|&gt;</code> es nativo de R (desde la versión 4.1, 2021). No necesita ningún paquete. Existe otro pipe, <code>%&gt;%</code>, que viene del paquete magrittr y se carga con tidyverse. Para este curso usaremos <code>|&gt;</code> porque es el estándar actual, pero ambos funcionan igual en la práctica.
+</div>
+
+<h3>Cómo leerlo en voz alta</h3>
+
+<pre><code>datos <span class="pipe">|&gt;</span>                          <span class="comment"># "Toma los datos..."</span>
+  <span class="func">filter</span>(edad &gt; 30) <span class="pipe">|&gt;</span>            <span class="comment"># "...filtra los mayores de 30..."</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>      <span class="comment"># "...agrupa por departamento..."</span>
+  <span class="func">summarise</span>(n = <span class="func">n</span>())             <span class="comment"># "...y cuenta cuántos hay en cada uno."</span></code></pre>
+
+<h3>Atajo de teclado</h3>
+<p>En RStudio: <strong>Ctrl + Shift + M</strong> (Windows/Linux) o <strong>Cmd + Shift + M</strong> (Mac) inserta el pipe automáticamente.</p>
+
+<!-- ============================================================ -->
+<h2>2. Funciones para explorar datos</h2>
+
+<table>
+<tr><th>Función</th><th>¿Qué hace?</th><th>Ejemplo</th></tr>
+<tr><td><code>glimpse(datos)</code></td><td>Vista rápida: muestra cada variable, su tipo y primeros valores</td><td><code>glimpse(innovaco)</code></td></tr>
+<tr><td><code>summary(datos)</code></td><td>Resumen estadístico: min, max, media, mediana, cuartiles</td><td><code>summary(innovaco)</code></td></tr>
+<tr><td><code>head(datos, n)</code></td><td>Muestra las primeras <em>n</em> filas (por defecto 6)</td><td><code>head(innovaco, 10)</code></td></tr>
+<tr><td><code>nrow(datos)</code></td><td>Número de filas (empleados)</td><td><code>nrow(innovaco)</code></td></tr>
+<tr><td><code>ncol(datos)</code></td><td>Número de columnas (variables)</td><td><code>ncol(innovaco)</code></td></tr>
+<tr><td><code>names(datos)</code></td><td>Nombres de todas las columnas</td><td><code>names(innovaco)</code></td></tr>
+<tr><td><code>dim(datos)</code></td><td>Filas y columnas juntos</td><td><code>dim(innovaco)</code></td></tr>
+</table>
+
+<div class="tip">
+<strong>¿Cuándo uso cada una?</strong>
+<code>glimpse()</code> es la primera función que deberías ejecutar al cargar datos nuevos: te dice cuántas filas/columnas hay y el tipo de cada variable (chr = texto, dbl = número, date = fecha). <code>summary()</code> es el segundo paso: te da la distribución de cada variable numérica.
+</div>
+
+<!-- ============================================================ -->
+<h2>3. Funciones de dplyr para transformar datos</h2>
+
+<p>Estas son las funciones "verbos" de dplyr. Cada una hace <strong>una sola cosa</strong> y se combinan con el pipe:</p>
+
+<h3><code>count()</code> — Contar por categoría</h3>
+
+<pre><code><span class="comment"># ¿Cuántos empleados hay por departamento?</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">count</span>(departamento)
+
+<span class="comment"># Ordenar de mayor a menor</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">count</span>(departamento, sort = TRUE)
+
+<span class="comment"># Contar por dos variables a la vez</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">count</span>(departamento, genero)</code></pre>
+
+<table>
+<tr><th>Argumento</th><th>Qué hace</th><th>Default</th></tr>
+<tr><td><code>...</code></td><td>Variable(s) por las que contar</td><td>—</td></tr>
+<tr><td><code>sort = TRUE</code></td><td>Ordena de mayor a menor</td><td><code>FALSE</code></td></tr>
+<tr><td><code>name = "total"</code></td><td>Cambia el nombre de la columna de conteo</td><td><code>"n"</code></td></tr>
+</table>
+
+
+<h3><code>filter()</code> — Seleccionar filas que cumplen una condición</h3>
+
+<pre><code><span class="comment"># Solo empleados de Soporte Técnico</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">filter</span>(departamento == <span class="string">"Soporte Técnico"</span>)
+
+<span class="comment"># Empleados mayores de 40 Y que se fueron</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">filter</span>(edad &gt; 40, rotacion == <span class="string">"Sí"</span>)
+
+<span class="comment"># Empleados de Ventas O Marketing</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">filter</span>(departamento %in% c(<span class="string">"Ventas"</span>, <span class="string">"Marketing"</span>))</code></pre>
+
+<table>
+<tr><th>Operador</th><th>Significado</th><th>Ejemplo</th></tr>
+<tr><td><code>==</code></td><td>Igual a</td><td><code>genero == "Mujer"</code></td></tr>
+<tr><td><code>!=</code></td><td>Distinto de</td><td><code>rotacion != "No"</code></td></tr>
+<tr><td><code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code></td><td>Mayor, mayor o igual, menor, menor o igual</td><td><code>edad &gt;= 30</code></td></tr>
+<tr><td><code>&amp;</code> o <code>,</code></td><td>Y (ambas condiciones)</td><td><code>edad &gt; 30, genero == "Mujer"</code></td></tr>
+<tr><td><code>|</code></td><td>O (cualquiera de las dos)</td><td><code>depto == "Ventas" | depto == "RRHH"</code></td></tr>
+<tr><td><code>%in%</code></td><td>Está en una lista</td><td><code>depto %in% c("Ventas", "RRHH")</code></td></tr>
+</table>
+
+<div class="warning">
+<strong>Error frecuente: <code>=</code> vs <code>==</code></strong>
+<code>=</code> es para asignar valores. <code>==</code> es para comparar. Si escribes <code>filter(genero = "Mujer")</code> dará error. Lo correcto es <code>filter(genero == "Mujer")</code>.
+</div>
+
+
+<h3><code>group_by()</code> + <code>summarise()</code> — Agrupar y resumir</h3>
+
+<p>Estas dos funciones se usan casi siempre juntas. <code>group_by()</code> define los grupos, <code>summarise()</code> calcula un resumen para cada grupo:</p>
+
+<pre><code><span class="comment"># Edad promedio por departamento</span>
+innovaco <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n_empleados    = <span class="func">n</span>(),
+    edad_promedio  = <span class="func">mean</span>(edad),
+    edad_mediana   = <span class="func">median</span>(edad),
+    ingreso_min    = <span class="func">min</span>(ingreso_mensual),
+    ingreso_max    = <span class="func">max</span>(ingreso_mensual)
+  )</code></pre>
+
+<p><strong>Funciones de resumen que puedes usar dentro de <code>summarise()</code>:</strong></p>
+
+<table>
+<tr><th>Función</th><th>Qué calcula</th><th>Ejemplo</th></tr>
+<tr><td><code>n()</code></td><td>Número de filas en el grupo</td><td><code>n_empleados = n()</code></td></tr>
+<tr><td><code>mean(x)</code></td><td>Promedio</td><td><code>edad_prom = mean(edad)</code></td></tr>
+<tr><td><code>median(x)</code></td><td>Mediana</td><td><code>edad_med = median(edad)</code></td></tr>
+<tr><td><code>sd(x)</code></td><td>Desviación estándar</td><td><code>edad_sd = sd(edad)</code></td></tr>
+<tr><td><code>min(x)</code>, <code>max(x)</code></td><td>Mínimo y máximo</td><td><code>min_ing = min(ingreso_mensual)</code></td></tr>
+<tr><td><code>sum(x)</code></td><td>Suma</td><td><code>total = sum(horas_capacitacion)</code></td></tr>
+<tr><td><code>sum(condición)</code></td><td>Contar los TRUE</td><td><code>n_salidas = sum(rotacion == "Sí")</code></td></tr>
+<tr><td><code>mean(condición)</code></td><td>Proporción de TRUE</td><td><code>tasa_rot = mean(rotacion == "Sí")</code></td></tr>
+</table>
+
+<div class="tip">
+<strong>Truco: <code>mean(condición)</code> para calcular tasas</strong>
+En R, <code>TRUE</code> vale 1 y <code>FALSE</code> vale 0. Entonces <code>mean(rotacion == "Sí")</code> calcula la proporción de empleados que se fueron. Multiplica por 100 para obtener el porcentaje.
+</div>
+
+
+<h3><code>select()</code> — Elegir columnas</h3>
+
+<pre><code><span class="comment"># Solo estas 3 columnas</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">select</span>(nombre, departamento, edad)
+
+<span class="comment"># Todo EXCEPTO nombre</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">select</span>(-nombre)
+
+<span class="comment"># Columnas que empiezan con "satisf"</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">select</span>(<span class="func">starts_with</span>(<span class="string">"satisf"</span>))</code></pre>
+
+
+<h3><code>mutate()</code> — Crear o modificar columnas</h3>
+
+<pre><code><span class="comment"># Crear una nueva columna</span>
+innovaco <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    ingreso_anual = ingreso_mensual * 12,
+    es_joven = edad &lt; 30
+  )</code></pre>
+
+<p><em>No la usaremos mucho en la Semana 1, pero aparecerá frecuentemente desde la Semana 2.</em></p>
+
+
+<h3><code>arrange()</code> — Ordenar filas</h3>
+
+<pre><code><span class="comment"># Ordenar por edad (ascendente)</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">arrange</span>(edad)
+
+<span class="comment"># Ordenar por ingreso (descendente)</span>
+innovaco <span class="pipe">|&gt;</span> <span class="func">arrange</span>(<span class="func">desc</span>(ingreso_mensual))</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>4. Patrón completo: combinando todo</h2>
+
+<p>Aquí va un ejemplo que combina varias funciones en un solo pipeline. Léelo de arriba hacia abajo:</p>
+
+<pre><code><span class="comment"># "Quiero saber la tasa de rotación por departamento,</span>
+<span class="comment">#  ordenada de peor a mejor"</span>
+
+innovaco <span class="pipe">|&gt;</span>                                  <span class="comment"># Tomo los datos</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>                <span class="comment"># Agrupo por departamento</span>
+  <span class="func">summarise</span>(                                <span class="comment"># Calculo para cada grupo:</span>
+    n_empleados   = <span class="func">n</span>(),                    <span class="comment">#   cuántos son</span>
+    n_salidas     = <span class="func">sum</span>(rotacion == <span class="string">"Sí"</span>),  <span class="comment">#   cuántos se fueron</span>
+    tasa_rotacion = <span class="func">mean</span>(rotacion == <span class="string">"Sí"</span>)  <span class="comment">#   qué proporción se fue</span>
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(tasa_rotacion))              <span class="comment"># Ordeno de mayor a menor tasa</span></code></pre>
+
+
+<!-- ============================================================ -->
+<h2>5. Cargando datos con <code>read_csv()</code></h2>
+
+<pre><code><span class="comment"># Cargar un CSV (del paquete readr, incluido en tidyverse)</span>
+innovaco &lt;- <span class="func">read_csv</span>(<span class="string">"innovaco_empleados.csv"</span>)
+
+<span class="comment"># Opciones útiles:</span>
+datos &lt;- <span class="func">read_csv</span>(<span class="string">"archivo.csv"</span>,
+  show_col_types = FALSE,   <span class="comment"># Silencia el mensaje de tipos de columna</span>
+  locale = <span class="func">locale</span>(encoding = <span class="string">"latin1"</span>)  <span class="comment"># Si hay problemas con ñ/tildes</span>
+)</code></pre>
+
+<div class="warning">
+<strong>¿Por qué <code>read_csv()</code> y no <code>read.csv()</code>?</strong>
+<code>read_csv()</code> (con guión bajo, del paquete readr/tidyverse) es más rápida, adivina mejor los tipos de datos, y produce tibbles en vez de data.frames. Siempre prefiere <code>read_csv()</code> en este curso.
+</div>
+
+<!-- ============================================================ -->
+<h2>6. Redondear y formatear resultados</h2>
+
+<pre><code><span class="comment"># Redondear a 1 decimal</span>
+<span class="func">round</span>(<span class="func">mean</span>(innovaco$edad), 1)    <span class="comment"># 34.4</span>
+
+<span class="comment"># Dentro de summarise</span>
+innovaco <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    edad_promedio = <span class="func">round</span>(<span class="func">mean</span>(edad), 1),
+    tasa_rotacion = scales::<span class="func">percent</span>(<span class="func">mean</span>(rotacion == <span class="string">"Sí"</span>), accuracy = 0.1)
+  )</code></pre>
+
+<table>
+<tr><th>Función</th><th>Qué hace</th><th>Ejemplo</th></tr>
+<tr><td><code>round(x, 1)</code></td><td>Redondea a 1 decimal</td><td><code>round(3.456, 1)</code> → <code>3.5</code></td></tr>
+<tr><td><code>scales::percent(x)</code></td><td>Formatea como porcentaje</td><td><code>scales::percent(0.27)</code> → <code>"27%"</code></td></tr>
+<tr><td><code>scales::comma(x)</code></td><td>Formatea con separador de miles</td><td><code>scales::comma(1500000)</code> → <code>"1,500,000"</code></td></tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · <a href="index.html">Analítica de Personas</a> · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

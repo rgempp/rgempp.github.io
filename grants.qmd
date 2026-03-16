@@ -4,26 +4,22 @@ title: "Grants & Research Projects"
 
 ## Current Projects
 
-<!-- Add your active grants here. Example format:
-
-### Project Title (2024–2026)
-**Funding**: FONDECYT Regular Nº XXXXXXX · **Role**: Principal Investigator
-
-Brief description of the project, its objectives, and expected contributions.
-
--->
-
-*Section under construction. Active and past funded projects will be listed here.*
-
----
+Madrid, H., **Gempp**, R., Vázquez, C., & Niven, K. (2024–2027). Proyecto FONDECYT 1241333: "Developing an Affective Valence and Arousal Model of Leader Interpersonal Emotion Regulation in Organizations." Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Co-Investigator]
 
 ## Past Projects
 
-<!-- Example:
+San Martín, R., Denegri, M., De Araujo, L., & **Gempp**, R. (2016–2018). Proyecto FONDECYT 1161715: "Identificación e intervención de mecanismos neurocognitivos asociados a la compra impulsiva en jóvenes universitarios" [Identification and intervention of neurocognitive mechanisms associated with impulsive buying in university students]. Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Co-Investigator]
 
-### Validation of the BMSLSS in Chilean Adolescents (2020–2022)
-**Funding**: Internal grant, UDP · **Role**: Principal Investigator
+Thieme, C., Treviño, E., **Gempp**, R., & Del Río, F. (2015–2017). Proyecto FONDECYT 1151313: "Los recursos y capacidades como factores explicativos de la calidad, desempeño e impacto de los establecimientos de educación parvularia en Chile" [Resources and capabilities as explanatory factors of quality, performance, and impact of early childhood education centers in Chile]. Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Co-Investigator]
 
-Psychometric evaluation of the Brief Multidimensional Students' Life Satisfaction Scale using Item Response Theory in Chilean youth.
+Thieme, C., **Gempp**, R., & Treviño, E. (2012–2014). Proyecto FONDECYT 1121164: "Medición y evaluación del valor agregado en establecimientos educativos de enseñanza básica en Chile: Factores explicativos y repercusiones organizacionales" [Measurement and evaluation of value added in primary education schools in Chile: Explanatory factors and organizational implications]. Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Co-Investigator]
 
--->
+Denegri, C., Del Valle, C., **Gempp**, R., Etchebarne, S., & González, J. (2009–2010). Proyecto FONDECYT 1090179: "Alfabetización económica y patrones de consumo y endeudamiento en estudiantes de pedagogía: hacia un modelo explicativo" [Economic literacy and consumption and debt patterns in education students: Toward an explanatory model]. Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Co-Investigator]
+
+Avendaño, C., & **Gempp**, R. (2008–2009). Proyecto FONDECYT 1080498: "Jóvenes trabajadoras: transición a la vida adulta, trabajo y familia" [Young women workers: Transition to adulthood, work, and family]. Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Co-Investigator]
+
+Denegri, M., **Gempp**, R., Del Valle, C., Etchebarne, S., & González, Y. (2006–2009). Proyecto FONDECYT 1060303: "'Yo y la Economía': Diseño, aplicación y evaluación de impacto de un programa de educación económica en escolares de 6° año básico de Temuco" ["Me and the Economy": Design, implementation, and impact evaluation of an economic education program for 6th-grade students in Temuco]. Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Co-Investigator]
+
+Denegri, M., **Gempp**, R., Palavecinos, M., & Caprile, C. (2003–2006). Proyecto FONDECYT 1030271: "Socialización económica: Un estudio descriptivo de las prácticas y estrategias socializadoras y de alfabetización económica en familias de una ciudad multifinanciera" [Economic socialization: A descriptive study of socializing practices and economic literacy strategies in families of a multi-financial city]. Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Co-Investigator]
+
+Denegri, M., Palavecino, M., Keller, A., Delval, J., & **Gempp**, R. (1997–1999). Proyecto FONDECYT 1970634: "El desarrollo de conceptos económicos en la infancia: Estudio evolutivo con niños y adolescentes chilenos" [The development of economic concepts in childhood: A developmental study with Chilean children and adolescents]. Fondo Nacional de Desarrollo Científico y Tecnológico, Chile. [Research Collaborator]

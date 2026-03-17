@@ -20,6 +20,9 @@ about:
       href: https://orcid.org/0000-0002-0427-6894
     - text: ResearchGate
       href: https://www.researchgate.net/profile/Rene-Gempp
+    - icon: twitter-x
+      text: X / Twitter
+      href: https://x.com/gempp
 ---
 
 I am an Assistant Professor at the [Department of Management](https://administracionyeconomia.udp.cl/departamentos/administracion/), [Facultad de Administración y Economía (FAE)](https://administracionyeconomia.udp.cl/), [Universidad Diego Portales](https://www.udp.cl/), Santiago, Chile. I currently serve as Department Chair.

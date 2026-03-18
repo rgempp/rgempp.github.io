@@ -3,8 +3,9 @@ title: "Analítica de Personas (People Analytics)"
 subtitle: "Magíster en Gestión de Personas · FAE, Universidad Diego Portales · 1-2026"
 ---
 
-::: {.callout-important}
+::: callout-important
 ## Página oficial del curso
+
 La página oficial del curso en Canvas está disponible en: <https://udp.instructure.com/courses/43138>
 :::
 
@@ -16,61 +17,93 @@ Este curso introduce a los alumnos en el campo de people analytics mediante una 
 
 A través del semestre, se revisarán análisis descriptivo, modelos predictivos (regresión logística, árboles de decisión, random forest), análisis de supervivencia, análisis de redes organizacionales, text mining, equidad salarial, engagement, recruitment analytics, diversidad e inclusión, workforce planning y dashboards ejecutivos. Todas las técnicas se implementan en R dentro del ecosistema tidyverse, con entregables en formato Quarto.
 
-**Profesor**: René Gempp ([rene.gempp@udp.cl](mailto:rene.gempp@udp.cl))
-**Horario**: Miércoles, 10:00 – 12:50 hrs
-**Software**: R, RStudio, Quarto
-**Prerrequisitos**: No tiene. Se asume conocimiento básico de estadística y R.
+**Profesor**: René Gempp ([rene.gempp\@udp.cl](mailto:rene.gempp@udp.cl)) **Horario**: Miércoles, 10:00 – 12:50 hrs **Software**: R, RStudio, Quarto **Prerrequisitos**: No tiene. Se asume conocimiento básico de estadística y R.
 
 ## Resultados de Aprendizaje
 
 Al aprobar el curso, los estudiantes serán capaces de:
 
-- Utilizar R y el ecosistema tidyverse para importar, limpiar, transformar y visualizar datos de recursos humanos.
-- Calcular e interpretar métricas clave de gestión de personas: rotación, equidad salarial, engagement, diversidad, reclutamiento y workforce planning.
-- Construir e interpretar modelos estadísticos (regresión lineal, logística, supervivencia, árboles de decisión) aplicados a problemas de RRHH.
-- Aplicar técnicas de text mining y análisis de redes organizacionales a datos de personas.
-- Comunicar hallazgos analíticos a stakeholders no técnicos mediante visualizaciones efectivas, dashboards y reportes ejecutivos en Quarto.
-- Evaluar críticamente las implicancias éticas y de privacidad de los proyectos de people analytics.
-- Utilizar herramientas de inteligencia artificial como complemento del análisis, manteniendo criterio crítico sobre sus limitaciones.
+-   Utilizar R y el ecosistema tidyverse para importar, limpiar, transformar y visualizar datos de recursos humanos.
+-   Calcular e interpretar métricas clave de gestión de personas: rotación, equidad salarial, engagement, diversidad, reclutamiento y workforce planning.
+-   Construir e interpretar modelos estadísticos (regresión lineal, logística, supervivencia, árboles de decisión) aplicados a problemas de RRHH.
+-   Aplicar técnicas de text mining y análisis de redes organizacionales a datos de personas.
+-   Comunicar hallazgos analíticos a stakeholders no técnicos mediante visualizaciones efectivas, dashboards y reportes ejecutivos en Quarto.
+-   Evaluar críticamente las implicancias éticas y de privacidad de los proyectos de people analytics.
+-   Utilizar herramientas de inteligencia artificial como complemento del análisis, manteniendo criterio crítico sobre sus limitaciones.
 
 ## Calendario de Clases
 
 *Este calendario es tentativo y puede estar sujeto a cambios en caso de imprevistos.*
 
-| Sem. | Fecha | Contenido | Tipo | Material complementario* |
-|:----:|:-----:|-----------|------|:----------:|
-| 1 | 11-mar | "La empresa no sabe qué pasa con su gente" | Clase presencial | [Apunte 1](Apunte01_Pipes_y_dplyr.html) · [Apunte 2](Apunte02_ggplot2_y_geom.html) · [Apunte 3](Apunte03_Quarto.html) |
-| 2 | 18-mar | "¿Por qué se va la gente?": diagnóstico de rotación | Clase presencial | |
-| 3 | 25-mar | "¿Podemos predecir quién se va a ir?": modelo predictivo | Clase presencial | |
-| 4 | 01-abr | **"Su primer cliente": diagnóstico de fuerza laboral** | *Actividad grupal (5%)* | |
-| 5 | 08-abr | "¿Les estamos pagando bien?": equidad salarial | Clase presencial | |
-| 6 | 15-abr | "¿Qué tan comprometida está nuestra gente?": engagement | Clase presencial | |
-| 7 | 22-abr | **Caso MineralCo: consultoría integral de PA** | *Evaluación grupal (15%)* | |
-| 8 | 29-abr | "¿Estamos contratando bien?": recruitment analytics | Clase presencial | |
-| 9 | 06-may | "¿Cuánto tiempo se quedan?": análisis de supervivencia | Clase presencial | |
-| 10 | 13-may | "¿Somos diversos e inclusivos?": analítica de DEI | Clase presencial | |
-| 11 | 20-may | "¿Qué dicen los empleados?": text mining de encuestas | Clase presencial | |
-| 12 | 27-may | "¿Quién conecta con quién?": redes organizacionales | Clase presencial | |
-| 13 | 03-jun | "¿Podemos ver el futuro?": modelos avanzados y repaso | Clase presencial | |
-| 14 | 10-jun | **Evaluación parcial individual presencial** | *Evaluación individual (30%)* | |
-| 15 | 17-jun | "El directorio quiere verlo todo junto": dashboards | Clase presencial | |
-| 16 | 24-jun | "¿Cuánta gente necesitaremos?": workforce planning | Clase presencial | |
-| 17 | 01-jul | "¿Es ético todo lo que podemos hacer?": IA y ética | Clase presencial | |
-| 18 | 08-jul | **Evaluación final individual presencial** | *Evaluación individual (30%)* | |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| Sem.     | Fecha    | Contenido                                                | Tipo                          | Material complementario\*                                                       |
++:========:+:========:+==========================================================+===============================+:===============================================================================:+
+| 1        | 11-mar   | "La empresa no sabe qué pasa con su gente"               | Clase presencial              | [Apunte 1 — El pipe y las funciones de dplyr](Apunte01_Pipes_y_dplyr.html)      |
+|          |          |                                                          |                               |                                                                                 |
+|          |          |                                                          |                               | [Apunte 2 — ggplot2 y la lógica de los geom](Apunte02_ggplot2_y_geom.html)      |
+|          |          |                                                          |                               |                                                                                 |
+|          |          |                                                          |                               | [Apunte 3 — Quarto: reportes reproducibles](Apunte03_Quarto.html)               |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 2        | 18-mar   | "¿Por qué se va la gente?": diagnóstico de rotación      | Clase presencial              | [Apunte 4 — Uniendo bases de datos](Apunte04_Uniendo_bases_de_datos.html)       |
+|          |          |                                                          |                               |                                                                                 |
+|          |          |                                                          |                               | [Apunte 5 — Funciones dplyr avanzadas](Apunte05_Funciones_dplyr_avanzadas.html) |
+|          |          |                                                          |                               |                                                                                 |
+|          |          |                                                          |                               | [Apunte 6 — Limpiar datos con janitor](Apunte06_Limpiar_datos_con_janitor.html) |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 3        | 25-mar   | "¿Podemos predecir quién se va a ir?": modelo predictivo | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 4        | 01-abr   | **"Su primer cliente": diagnóstico de fuerza laboral**   | *Actividad grupal (5%)*       |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 5        | 08-abr   | "¿Les estamos pagando bien?": equidad salarial           | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 6        | 15-abr   | "¿Qué tan comprometida está nuestra gente?": engagement  | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 7        | 22-abr   | **Caso MineralCo: consultoría integral de PA**           | *Evaluación grupal (15%)*     |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 8        | 29-abr   | "¿Estamos contratando bien?": recruitment analytics      | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 9        | 06-may   | "¿Cuánto tiempo se quedan?": análisis de supervivencia   | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 10       | 13-may   | "¿Somos diversos e inclusivos?": analítica de DEI        | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 11       | 20-may   | "¿Qué dicen los empleados?": text mining de encuestas    | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 12       | 27-may   | "¿Quién conecta con quién?": redes organizacionales      | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 13       | 03-jun   | "¿Podemos ver el futuro?": modelos avanzados y repaso    | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 14       | 10-jun   | **Evaluación parcial individual presencial**             | *Evaluación individual (30%)* |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 15       | 17-jun   | "El directorio quiere verlo todo junto": dashboards      | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 16       | 24-jun   | "¿Cuánta gente necesitaremos?": workforce planning       | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 17       | 01-jul   | "¿Es ético todo lo que podemos hacer?": IA y ética       | Clase presencial              |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
+| 18       | 08-jul   | **Evaluación final individual presencial**               | *Evaluación individual (30%)* |                                                                                 |
++----------+----------+----------------------------------------------------------+-------------------------------+---------------------------------------------------------------------------------+
 
 \* Todo el material oficial del curso (tareas, bases de datos, scripts, presentaciones de clases, lecturas) está disponible en la [página oficial del curso en Canvas](https://udp.instructure.com/courses/43138). En esta columna se lista únicamente material complementario.
 
 ## Evaluación
 
-| Componente | Semana | Formato | Peso |
-|------------|:------:|---------|:----:|
-| Actividad grupal diagnóstico | 4 | Grupal, no presencial | 5% |
-| Evaluación grupal consultoría | 7 | Grupal, no presencial | 15% |
-| Tareas semanales en Quarto | Continuo | Individual | 10% |
-| Bitácora de uso de IA | Continuo | Individual | 5% |
-| Participación en clase | Continuo | Individual | 5% |
-| Evaluación parcial | 14 | Individual, presencial | 30% |
-| Evaluación final | 18 | Individual, presencial | 30% |
++-------------------------------+------------+------------------------+------------+
+| Componente                    | Semana     | Formato                | Peso       |
++===============================+:==========:+========================+:==========:+
+| Actividad grupal diagnóstico  | 4          | Grupal, no presencial  | 5%         |
++-------------------------------+------------+------------------------+------------+
+| Evaluación grupal consultoría | 7          | Grupal, no presencial  | 15%        |
++-------------------------------+------------+------------------------+------------+
+| Tareas semanales en Quarto    | Continuo   | Individual             | 10%        |
++-------------------------------+------------+------------------------+------------+
+| Bitácora de uso de IA         | Continuo   | Individual             | 5%         |
++-------------------------------+------------+------------------------+------------+
+| Participación en clase        | Continuo   | Individual             | 5%         |
++-------------------------------+------------+------------------------+------------+
+| Evaluación parcial            | 14         | Individual, presencial | 30%        |
++-------------------------------+------------+------------------------+------------+
+| Evaluación final              | 18         | Individual, presencial | 30%        |
++-------------------------------+------------+------------------------+------------+
 
 Distribución: 80% individual / 20% grupal. Las evaluaciones presenciales (semanas 14 y 18) se realizan sin acceso a internet ni herramientas de IA.
 
@@ -88,14 +121,14 @@ El curso adopta un modelo de "IA como analista junior" con autonomía escalonada
 
 ### Textos principales (gratuitos en línea)
 
-- McNulty, K. (2026). *Handbook of Regression Modeling in People Analytics* (2ª ed.). Chapman & Hall/CRC. Disponible en [peopleanalytics-regression-book.org](https://peopleanalytics-regression-book.org).
-- Starbuck, C. (2023). *The Fundamentals of People Analytics: With Applications in R*. Springer (Open Access). Disponible en [link.springer.com](https://link.springer.com/book/10.1007/978-3-031-28674-2).
-- McNulty, K. (2022). *Handbook of Graphs and Networks in People Analytics*. Chapman & Hall/CRC. Disponible en [ona-book.org](https://ona-book.org).
-- Silge, J. & Robinson, D. (2017). *Text Mining with R: A Tidy Approach*. O'Reilly. Disponible en [tidytextmining.com](https://www.tidytextmining.com).
-- Caughlin, D. *R for HR: An Introduction to Human Resource Analytics Using R*. Disponible en [rforhr.com](https://rforhr.com).
+-   McNulty, K. (2026). *Handbook of Regression Modeling in People Analytics* (2ª ed.). Chapman & Hall/CRC. Disponible en [peopleanalytics-regression-book.org](https://peopleanalytics-regression-book.org).
+-   Starbuck, C. (2023). *The Fundamentals of People Analytics: With Applications in R*. Springer (Open Access). Disponible en [link.springer.com](https://link.springer.com/book/10.1007/978-3-031-28674-2).
+-   McNulty, K. (2022). *Handbook of Graphs and Networks in People Analytics*. Chapman & Hall/CRC. Disponible en [ona-book.org](https://ona-book.org).
+-   Silge, J. & Robinson, D. (2017). *Text Mining with R: A Tidy Approach*. O'Reilly. Disponible en [tidytextmining.com](https://www.tidytextmining.com).
+-   Caughlin, D. *R for HR: An Introduction to Human Resource Analytics Using R*. Disponible en [rforhr.com](https://rforhr.com).
 
 ### Textos complementarios
 
-- Edwards, M. & Edwards, K. (2019). *Predictive HR Analytics* (2ª ed.). Kogan Page.
-- Marr, B. (2018). *Data-Driven HR*. Kogan Page.
-- Leonardi, P. & Contractor, N. (2018). Better People Analytics. *Harvard Business Review, 96*(6), 70–81.
+-   Edwards, M. & Edwards, K. (2019). *Predictive HR Analytics* (2ª ed.). Kogan Page.
+-   Marr, B. (2018). *Data-Driven HR*. Kogan Page.
+-   Leonardi, P. & Contractor, N. (2018). Better People Analytics. *Harvard Business Review, 96*(6), 70–81.

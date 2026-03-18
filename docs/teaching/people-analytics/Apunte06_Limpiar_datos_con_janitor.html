@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 6 — Limpiar datos con janitor | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .result { color: #A78BFA; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  .output-box pre code { color: #1E293B; }
+  .bad pre, .good pre { color: #1E293B; }
+  .bad pre code, .good pre code { color: #1E293B; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 6 — Limpiar datos con janitor</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 2 · Prof. René Gempp</p>
+
+<!-- ============================================================ -->
+<h2>1. ¿Qué es janitor y por qué lo necesitas?</h2>
+
+<p>El paquete <code>janitor</code> es un conjunto de funciones para limpiar y explorar datos "sucios" — el tipo de datos que encuentras en la vida real: columnas con nombres raros, filas vacías, formatos inconsistentes. En people analytics, los datos del HRIS, las planillas Excel de los jefes de área y las encuestas suelen llegar con estos problemas.</p>
+
+<pre><code><span class="comment"># Instalar (una sola vez)</span>
+<span class="func">install.packages</span>(<span class="string">"janitor"</span>)
+
+<span class="comment"># Cargar</span>
+<span class="func">library</span>(janitor)</code></pre>
+
+<div class="tip">
+<strong>¿Cuándo usar janitor?</strong>
+Inmediatamente después de cargar datos con <code>read_csv()</code> o <code>read_excel()</code>. Las funciones de limpieza de janitor son el primer paso antes de analizar.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>2. <code>clean_names()</code> — Limpiar nombres de columnas</h2>
+
+<p>La función más usada de janitor. Convierte nombres de columnas a un formato consistente: minúsculas, sin espacios, sin caracteres especiales.</p>
+
+<pre><code><span class="comment"># Datos reales a menudo vienen con nombres así:</span>
+<span class="comment"># "Nombre Empleado", "Depto.", "Ingreso Mensual (CLP)", "Eval. 2024"</span>
+
+datos &lt;- <span class="func">read_csv</span>(<span class="string">"archivo_sucio.csv"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">clean_names</span>()</code></pre>
+
+<div class="comparison">
+<div class="bad">
+<h4>Antes de <code>clean_names()</code></h4>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.82rem;"><code>Nombre Empleado
+Depto.
+Ingreso Mensual (CLP)
+Eval. 2024
+% Cumplimiento
+Fecha de Ingreso</code></pre>
+</div>
+<div class="good">
+<h4>Después de <code>clean_names()</code></h4>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.82rem;"><code>nombre_empleado
+depto
+ingreso_mensual_clp
+eval_2024
+percent_cumplimiento
+fecha_de_ingreso</code></pre>
+</div>
+</div>
+
+<p><code>clean_names()</code> hace todo esto automáticamente: convierte a minúsculas, reemplaza espacios por guiones bajos, elimina puntos y paréntesis, convierte <code>%</code> a <code>percent</code>, y maneja caracteres especiales.</p>
+
+<div class="tip">
+<strong>Hazlo siempre, incluso si los nombres se ven "bien"</strong>
+Ejecutar <code>clean_names()</code> al cargar datos es un buen hábito. No rompe nada si los nombres ya están limpios, y te protege contra problemas invisibles como espacios al final de los nombres o caracteres Unicode ocultos.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>3. <code>tabyl()</code> — Tablas cruzadas rápidas</h2>
+
+<p>La estrella de janitor para people analytics. <code>tabyl()</code> crea tablas de frecuencia y tablas cruzadas con una sintaxis mínima, mucho más legible que <code>table()</code> de base R.</p>
+
+<h3>Tabla de una variable</h3>
+
+<pre><code><span class="comment"># Distribución de departamentos</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">tabyl</span>(departamento)</code></pre>
+
+<div class="output-box">
+<pre style="background: none; margin: 0; padding: 0;"> departamento             n   percent
+ Desarrollo de Software 417 0.3475000
+ Finanzas               120 0.1000000
+ Marketing               78 0.0650000
+ Recursos Humanos       133 0.1108333
+ Soporte Técnico        195 0.1625000
+ Ventas                 257 0.2141667</pre>
+</div>
+
+<p>Automáticamente incluye la columna <code>n</code> (conteo) y <code>percent</code> (proporción). No necesitas <code>group_by()</code> ni <code>summarise()</code>.</p>
+
+
+<h3>Tabla cruzada de dos variables</h3>
+
+<pre><code><span class="comment"># Tabla cruzada: departamento × tipo de salida</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(rotacion == <span class="string">"Sí"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">tabyl</span>(departamento, tipo_salida)</code></pre>
+
+<div class="output-box">
+<pre style="background: none; margin: 0; padding: 0;"> departamento            Involuntaria Voluntaria
+ Desarrollo de Software           20         73
+ Finanzas                          6         23
+ Marketing                         4         16
+ Recursos Humanos                 11         31
+ Soporte Técnico                  13         55
+ Ventas                           13         61</pre>
+</div>
+
+
+<!-- ============================================================ -->
+<h2>4. <code>adorn_*()</code> — Decorar tablas de tabyl</h2>
+
+<p>Las funciones <code>adorn_*()</code> agregan porcentajes, totales y formato a las tablas de <code>tabyl()</code>. Se encadenan con el pipe:</p>
+
+<pre><code>datos <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(rotacion == <span class="string">"Sí"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">tabyl</span>(departamento, tipo_salida) <span class="pipe">|&gt;</span>
+  <span class="func">adorn_totals</span>(<span class="func">c</span>(<span class="string">"row"</span>, <span class="string">"col"</span>)) <span class="pipe">|&gt;</span>     <span class="comment"># Agrega fila y columna de totales</span>
+  <span class="func">adorn_percentages</span>(<span class="string">"row"</span>) <span class="pipe">|&gt;</span>            <span class="comment"># Convierte a porcentaje por fila</span>
+  <span class="func">adorn_pct_formatting</span>(digits = 1) <span class="pipe">|&gt;</span>    <span class="comment"># Formatea con 1 decimal y símbolo %</span>
+  <span class="func">adorn_ns</span>()                              <span class="comment"># Agrega el N original entre paréntesis</span></code></pre>
+
+<div class="output-box">
+<pre style="background: none; margin: 0; padding: 0;"> departamento            Involuntaria    Voluntaria         Total
+ Desarrollo de Software  21.5%  (20)  78.5%  (73)  100.0%  (93)
+ Finanzas                20.7%   (6)  79.3%  (23)  100.0%  (29)
+ Marketing               20.0%   (4)  80.0%  (16)  100.0%  (20)
+ Recursos Humanos        26.2%  (11)  73.8%  (31)  100.0%  (42)
+ Soporte Técnico         19.1%  (13)  80.9%  (55)  100.0%  (68)
+ Ventas                  17.6%  (13)  82.4%  (61)  100.0%  (74)
+ Total                   20.6%  (67)  79.4% (259)  100.0% (326)</pre>
+</div>
+
+<h3>Referencia rápida de funciones <code>adorn_*()</code></h3>
+
+<table>
+<tr><th>Función</th><th>Qué hace</th><th>Argumentos comunes</th></tr>
+<tr><td><code>adorn_totals()</code></td><td>Agrega fila y/o columna de totales</td><td><code>"row"</code>, <code>"col"</code>, o <code>c("row", "col")</code></td></tr>
+<tr><td><code>adorn_percentages()</code></td><td>Convierte conteos a proporciones</td><td><code>"row"</code> (por fila), <code>"col"</code> (por columna), <code>"all"</code> (del total)</td></tr>
+<tr><td><code>adorn_pct_formatting()</code></td><td>Formatea proporciones como porcentaje</td><td><code>digits = 1</code> (decimales), <code>affix_sign = TRUE</code> (agrega %)</td></tr>
+<tr><td><code>adorn_ns()</code></td><td>Agrega el N original entre paréntesis</td><td><code>position = "front"</code> o <code>"rear"</code></td></tr>
+<tr><td><code>adorn_title()</code></td><td>Agrega título a la tabla</td><td><code>"combined"</code> o <code>"top"</code></td></tr>
+</table>
+
+<div class="note">
+<strong>El orden importa</strong>
+Las funciones <code>adorn_*()</code> se aplican en secuencia. Un orden típico es: (1) <code>adorn_totals()</code> → (2) <code>adorn_percentages()</code> → (3) <code>adorn_pct_formatting()</code> → (4) <code>adorn_ns()</code>. Si calculas porcentajes antes de agregar totales, el total no será 100%.
+</div>
+
+
+<h3>Porcentajes por columna vs. por fila</h3>
+
+<div class="comparison">
+<div class="good">
+<h4><code>adorn_percentages("row")</code></h4>
+<p>Cada <strong>fila</strong> suma 100%. Responde: "De los que se fueron de Ventas, ¿qué proporción fue voluntaria vs. involuntaria?"</p>
+</div>
+<div class="good">
+<h4><code>adorn_percentages("col")</code></h4>
+<p>Cada <strong>columna</strong> suma 100%. Responde: "De todas las salidas voluntarias, ¿qué proporción viene de cada departamento?"</p>
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<h2>5. <code>remove_empty()</code> — Eliminar filas y columnas vacías</h2>
+
+<p>Cuando cargas una planilla Excel, es común que traiga filas o columnas completamente vacías. <code>remove_empty()</code> las elimina:</p>
+
+<pre><code><span class="comment"># Eliminar filas vacías</span>
+datos <span class="pipe">|&gt;</span> <span class="func">remove_empty</span>(<span class="string">"rows"</span>)
+
+<span class="comment"># Eliminar columnas vacías</span>
+datos <span class="pipe">|&gt;</span> <span class="func">remove_empty</span>(<span class="string">"cols"</span>)
+
+<span class="comment"># Ambas a la vez</span>
+datos <span class="pipe">|&gt;</span> <span class="func">remove_empty</span>(<span class="func">c</span>(<span class="string">"rows"</span>, <span class="string">"cols"</span>))</code></pre>
+
+<div class="tip">
+<strong>Pipeline de limpieza recomendado</strong>
+Cuando cargas datos de una fuente "sucia" (Excel, HRIS exportado, etc.), usa este pipeline estándar:
+</div>
+
+<pre><code>datos &lt;- <span class="func">read_csv</span>(<span class="string">"archivo.csv"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">clean_names</span>() <span class="pipe">|&gt;</span>                <span class="comment"># Nombres consistentes</span>
+  <span class="func">remove_empty</span>(<span class="func">c</span>(<span class="string">"rows"</span>, <span class="string">"cols"</span>))  <span class="comment"># Sin filas/columnas vacías</span></code></pre>
+
+
+<!-- ============================================================ -->
+<h2>6. <code>get_dupes()</code> — Encontrar duplicados</h2>
+
+<p>Identifica filas duplicadas en una o más columnas. Esencial para verificar la calidad de datos del HRIS:</p>
+
+<pre><code><span class="comment"># ¿Hay IDs duplicados? (debería dar 0 filas)</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">get_dupes</span>(id_empleado)
+
+<span class="comment"># ¿Hay combinaciones duplicadas de nombre + fecha de ingreso?</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">get_dupes</span>(nombre, fecha_ingreso)
+
+<span class="comment"># Sin argumentos: busca filas completamente idénticas</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">get_dupes</span>()</code></pre>
+
+<p>El resultado incluye una columna <code>dupe_count</code> que indica cuántas veces aparece cada valor duplicado. Si <code>get_dupes()</code> devuelve 0 filas, no hay duplicados.</p>
+
+<div class="warning">
+<strong>Siempre verifica duplicados después de un join</strong>
+Si haces un <code>left_join()</code> y la tabla resultante tiene más filas de las esperadas, usa <code>get_dupes(id_empleado)</code> para encontrar los registros problemáticos.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>7. <code>remove_constant()</code> — Eliminar columnas constantes</h2>
+
+<p>Si una columna tiene el mismo valor en todas las filas (por ejemplo, <code>pais = "Chile"</code> para todos), no aporta información al análisis. <code>remove_constant()</code> la elimina automáticamente:</p>
+
+<pre><code>datos <span class="pipe">|&gt;</span>
+  <span class="func">remove_constant</span>()
+<span class="comment"># Elimina cualquier columna donde todos los valores son iguales</span></code></pre>
+
+
+<!-- ============================================================ -->
+<h2>8. Patrón completo: de datos sucios a tabla limpia</h2>
+
+<p>Aquí va un ejemplo real de pipeline de limpieza para datos típicos de RRHH:</p>
+
+<pre><code><span class="comment"># Supón que recibes un Excel del HRIS con problemas típicos</span>
+
+datos_limpios &lt;- readxl::<span class="func">read_excel</span>(<span class="string">"reporte_hris.xlsx"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">clean_names</span>() <span class="pipe">|&gt;</span>                        <span class="comment"># 1. Nombres consistentes</span>
+  <span class="func">remove_empty</span>(<span class="func">c</span>(<span class="string">"rows"</span>, <span class="string">"cols"</span>)) <span class="pipe">|&gt;</span>      <span class="comment"># 2. Sin filas/columnas vacías</span>
+  <span class="func">remove_constant</span>() <span class="pipe">|&gt;</span>                    <span class="comment"># 3. Sin columnas constantes</span>
+  <span class="func">mutate</span>(
+    departamento = <span class="func">str_trim</span>(departamento), <span class="comment"># 4. Quitar espacios sobrantes</span>
+    genero = <span class="func">str_to_title</span>(genero)          <span class="comment"># 5. Capitalización consistente</span>
+  )
+
+<span class="comment"># Verificar calidad</span>
+datos_limpios <span class="pipe">|&gt;</span> <span class="func">get_dupes</span>(id_empleado)  <span class="comment"># 6. ¿Duplicados?</span>
+datos_limpios <span class="pipe">|&gt;</span> <span class="func">glimpse</span>()               <span class="comment"># 7. Revisión visual</span></code></pre>
+
+
+<!-- ============================================================ -->
+<h2>9. Resumen: funciones de janitor</h2>
+
+<table>
+<tr><th>Función</th><th>¿Qué hace?</th><th>¿Cuándo usarla?</th></tr>
+<tr><td><code>clean_names()</code></td><td>Limpia nombres de columnas</td><td>Siempre, al cargar datos</td></tr>
+<tr><td><code>tabyl()</code></td><td>Tablas de frecuencia y cruzadas</td><td>Para explorar variables categóricas</td></tr>
+<tr><td><code>adorn_totals()</code></td><td>Agrega fila/columna de totales</td><td>Después de <code>tabyl()</code></td></tr>
+<tr><td><code>adorn_percentages()</code></td><td>Convierte a proporciones</td><td>Después de <code>tabyl()</code></td></tr>
+<tr><td><code>adorn_pct_formatting()</code></td><td>Formatea como porcentaje</td><td>Después de <code>adorn_percentages()</code></td></tr>
+<tr><td><code>adorn_ns()</code></td><td>Agrega N entre paréntesis</td><td>Después de <code>adorn_pct_formatting()</code></td></tr>
+<tr><td><code>remove_empty()</code></td><td>Elimina filas/columnas vacías</td><td>Al cargar datos de Excel</td></tr>
+<tr><td><code>get_dupes()</code></td><td>Encuentra duplicados</td><td>Para verificar calidad de datos</td></tr>
+<tr><td><code>remove_constant()</code></td><td>Elimina columnas con un solo valor</td><td>Al limpiar datos inicialmente</td></tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · <a href="index.html">Analítica de Personas</a> · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

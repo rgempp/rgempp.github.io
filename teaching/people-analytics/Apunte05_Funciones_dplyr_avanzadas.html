@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 5 — Funciones de dplyr para manipular datos | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .result { color: #A78BFA; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 5 — Funciones de dplyr para manipular datos</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 2 · Prof. René Gempp</p>
+
+<p>En el Apunte 1 cubrimos las funciones básicas de dplyr: <code>count()</code>, <code>filter()</code>, <code>group_by()</code>, <code>summarise()</code>, <code>select()</code>, <code>mutate()</code> y <code>arrange()</code>. Este apunte amplía el repertorio con funciones que usarás constantemente a partir de la Clase 2.</p>
+
+<!-- ============================================================ -->
+<h2>1. <code>mutate()</code> en profundidad</h2>
+
+<p>Ya sabes que <code>mutate()</code> crea o modifica columnas. Aquí cubrimos sus variantes más útiles.</p>
+
+<h3><code>if_else()</code> — Condición binaria</h3>
+
+<p>Crea una nueva variable con dos posibles valores según una condición. Es como un SI() de Excel:</p>
+
+<pre><code><span class="comment"># Crear flag de alto desempeño</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    alto_desempeno = <span class="func">if_else</span>(evaluacion_desempeno &gt;= 4, <span class="string">"Alto"</span>, <span class="string">"No alto"</span>)
+  )</code></pre>
+
+<table>
+<tr><th>Argumento</th><th>Qué es</th><th>Ejemplo</th></tr>
+<tr><td>1° — condición</td><td>Una expresión lógica (TRUE/FALSE)</td><td><code>evaluacion_desempeno >= 4</code></td></tr>
+<tr><td>2° — valor si TRUE</td><td>Qué asignar cuando la condición se cumple</td><td><code>"Alto"</code></td></tr>
+<tr><td>3° — valor si FALSE</td><td>Qué asignar cuando no se cumple</td><td><code>"No alto"</code></td></tr>
+</table>
+
+<div class="tip">
+<strong>¿<code>if_else()</code> o <code>ifelse()</code>?</strong>
+R tiene dos funciones: <code>ifelse()</code> (base R) e <code>if_else()</code> (dplyr). La de dplyr es más estricta: exige que ambos valores sean del mismo tipo (ambos texto, ambos número, etc.), lo que ayuda a prevenir errores. Usaremos siempre <code>if_else()</code> del tidyverse.
+</div>
+
+
+<h3><code>case_when()</code> — Múltiples condiciones</h3>
+
+<p>Cuando necesitas más de dos opciones, <code>case_when()</code> es tu herramienta. Es como un SI anidado de Excel, pero legible:</p>
+
+<pre><code><span class="comment"># Crear tramos de antigüedad</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    tramo_antiguedad = <span class="func">case_when</span>(
+      antiguedad_anios &lt; 1   ~ <span class="string">"Menos de 1 año"</span>,
+      antiguedad_anios &lt; 3   ~ <span class="string">"1 a 3 años"</span>,
+      antiguedad_anios &lt; 5   ~ <span class="string">"3 a 5 años"</span>,
+      antiguedad_anios &lt; 10  ~ <span class="string">"5 a 10 años"</span>,
+      TRUE                   ~ <span class="string">"10 o más años"</span>   <span class="comment"># ← caso por defecto</span>
+    )
+  )</code></pre>
+
+<p>La sintaxis es <code>condición ~ valor_a_asignar</code>. R evalúa las condiciones <strong>de arriba hacia abajo</strong> y asigna la primera que sea verdadera. <code>TRUE ~</code> al final atrapa todo lo que no matcheó antes (como un "else").</p>
+
+<div class="warning">
+<strong>Atención al orden de las condiciones</strong>
+Las condiciones se evalúan en orden. Si alguien tiene 0.5 años de antigüedad, la primera condición (<code>< 1</code>) ya es TRUE, así que obtiene "Menos de 1 año" y las siguientes no se evalúan. Si pusieras <code>< 10</code> primero, todos los de menos de 10 caerían ahí.
+</div>
+
+<pre><code><span class="comment"># Ejemplo más complejo: clasificar tipo de rotación</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    tipo_rotacion = <span class="func">case_when</span>(
+      rotacion == <span class="string">"No"</span>                                       ~ <span class="string">"Activo"</span>,
+      tipo_salida == <span class="string">"Involuntaria"</span>                          ~ <span class="string">"Involuntaria"</span>,
+      tipo_salida == <span class="string">"Voluntaria"</span> &amp; alto_desempeno == <span class="string">"Alto"</span> ~ <span class="string">"Vol. disfuncional"</span>,
+      tipo_salida == <span class="string">"Voluntaria"</span> &amp; alto_desempeno != <span class="string">"Alto"</span> ~ <span class="string">"Vol. funcional"</span>
+    )
+  )</code></pre>
+
+<div class="comparison">
+<div class="bad">
+<h4>✗ <code>case_when()</code> con <code>=</code></h4>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.82rem;"><code>case_when(
+  edad < 30 = "Joven"  # ERROR
+)</code></pre>
+<p>Usa <code>=</code> en vez de <code>~</code></p>
+</div>
+<div class="good">
+<h4>✓ <code>case_when()</code> con <code>~</code></h4>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.82rem;"><code>case_when(
+  edad < 30 ~ "Joven"  # CORRECTO
+)</code></pre>
+<p>La tilde <code>~</code> es el asignador de <code>case_when()</code></p>
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<h2>2. <code>arrange()</code> y <code>slice_*()</code> — Ordenar y extraer</h2>
+
+<h3><code>arrange()</code> — Ordenar filas</h3>
+
+<pre><code><span class="comment"># Ordenar por edad (ascendente, por defecto)</span>
+datos <span class="pipe">|&gt;</span> <span class="func">arrange</span>(edad)
+
+<span class="comment"># Ordenar por ingreso (descendente)</span>
+datos <span class="pipe">|&gt;</span> <span class="func">arrange</span>(<span class="func">desc</span>(ingreso_mensual))
+
+<span class="comment"># Ordenar por dos variables: primero departamento, luego ingreso descendente</span>
+datos <span class="pipe">|&gt;</span> <span class="func">arrange</span>(departamento, <span class="func">desc</span>(ingreso_mensual))</code></pre>
+
+
+<h3><code>slice_max()</code> y <code>slice_min()</code> — Los N más altos/bajos</h3>
+
+<pre><code><span class="comment"># Los 5 empleados con mayor ingreso</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">slice_max</span>(ingreso_mensual, n = 5)
+
+<span class="comment"># Los 3 con menor satisfacción</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">slice_min</span>(satisfaccion_laboral, n = 3)
+
+<span class="comment"># Top 3 por departamento (combinado con group_by)</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">slice_max</span>(ingreso_mensual, n = 3)</code></pre>
+
+<div class="tip">
+<strong>¿<code>arrange() + head()</code> o <code>slice_max()</code>?</strong>
+Ambos pueden dar el mismo resultado, pero <code>slice_max()</code> es más directo y funciona con <code>group_by()</code> (te da el top N <em>dentro de cada grupo</em>). Prefiere <code>slice_max()</code> cuando quieres un ranking.
+</div>
+
+<h3>Otras funciones <code>slice_*()</code></h3>
+
+<table>
+<tr><th>Función</th><th>Qué hace</th><th>Ejemplo</th></tr>
+<tr><td><code>slice_head(n = 5)</code></td><td>Las primeras N filas</td><td>Equivale a <code>head(5)</code></td></tr>
+<tr><td><code>slice_tail(n = 5)</code></td><td>Las últimas N filas</td><td>Equivale a <code>tail(5)</code></td></tr>
+<tr><td><code>slice_sample(n = 10)</code></td><td>N filas al azar</td><td>Muestra aleatoria rápida</td></tr>
+<tr><td><code>slice_max(x, n = 5)</code></td><td>Las N filas con mayor valor de <code>x</code></td><td>Top 5 ingresos</td></tr>
+<tr><td><code>slice_min(x, n = 5)</code></td><td>Las N filas con menor valor de <code>x</code></td><td>Bottom 5 satisfacción</td></tr>
+</table>
+
+
+<!-- ============================================================ -->
+<h2>3. <code>rename()</code> y <code>relocate()</code> — Renombrar y reordenar columnas</h2>
+
+<pre><code><span class="comment"># Renombrar columnas (nuevo_nombre = nombre_actual)</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">rename</span>(
+    sueldo = ingreso_mensual,
+    depto  = departamento
+  )
+
+<span class="comment"># Mover columnas al principio</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">relocate</span>(rotacion, tipo_salida, .before = edad)
+
+<span class="comment"># Mover columnas al final</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">relocate</span>(id_empleado, nombre, .after = <span class="func">last_col</span>())</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>4. <code>distinct()</code> — Valores únicos</h2>
+
+<pre><code><span class="comment"># ¿Cuántos departamentos distintos hay?</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">distinct</span>(departamento)
+
+<span class="comment"># Combinaciones únicas de departamento y nivel jerárquico</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">distinct</span>(departamento, nivel_jerarquico)
+
+<span class="comment"># Obtener una fila por empleado (eliminar duplicados si los hay)</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">distinct</span>(id_empleado, .keep_all = TRUE)
+<span class="comment"># .keep_all = TRUE conserva todas las columnas, no solo la clave</span></code></pre>
+
+
+<!-- ============================================================ -->
+<h2>5. <code>pull()</code> — Extraer una columna como vector</h2>
+
+<p><code>select()</code> devuelve un tibble (tabla). A veces necesitas un <strong>vector</strong> (un solo valor o lista de valores). Para eso existe <code>pull()</code>:</p>
+
+<pre><code><span class="comment"># Esto devuelve un tibble de 1 columna:</span>
+datos <span class="pipe">|&gt;</span> <span class="func">select</span>(edad)
+
+<span class="comment"># Esto devuelve un vector numérico:</span>
+datos <span class="pipe">|&gt;</span> <span class="func">pull</span>(edad)
+
+<span class="comment"># Útil para extraer un valor calculado</span>
+tasa &lt;- datos <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(tasa_rot = <span class="func">mean</span>(rotacion == <span class="string">"Sí"</span>)) <span class="pipe">|&gt;</span>
+  <span class="func">pull</span>(tasa_rot)
+
+<span class="comment"># Ahora 'tasa' es un número (0.272), no una tabla</span>
+<span class="func">paste0</span>(<span class="string">"La tasa de rotación es "</span>, scales::<span class="func">percent</span>(tasa))</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>6. <code>across()</code> — Aplicar una función a múltiples columnas</h2>
+
+<p>Cuando necesitas calcular lo mismo para varias columnas a la vez, <code>across()</code> evita repetir código:</p>
+
+<pre><code><span class="comment"># Promedio de edad, antigüedad e ingreso por departamento</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    <span class="func">across</span>(
+      <span class="func">c</span>(edad, antiguedad_anios, ingreso_mensual),  <span class="comment"># columnas</span>
+      <span class="func">mean</span>                                          <span class="comment"># función</span>
+    )
+  )
+
+<span class="comment"># También puedes usar selectores:</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    <span class="func">across</span>(<span class="func">where</span>(is.numeric), <span class="func">mean</span>)
+    <span class="comment"># Aplica mean() a TODAS las columnas numéricas</span>
+  )
+
+<span class="comment"># Con función personalizada (redondear a 1 decimal)</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    <span class="func">across</span>(<span class="func">where</span>(is.numeric), \(x) <span class="func">round</span>(<span class="func">mean</span>(x), 1))
+  )</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>7. <code>n_distinct()</code> — Contar valores únicos</h2>
+
+<pre><code><span class="comment"># ¿Cuántos cargos distintos hay por departamento?</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n_empleados   = <span class="func">n</span>(),
+    n_cargos      = <span class="func">n_distinct</span>(cargo),
+    n_oficinas    = <span class="func">n_distinct</span>(oficina)
+  )</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>8. Resumen: mapa de funciones de dplyr</h2>
+
+<table>
+<tr><th>Quiero...</th><th>Función</th><th>Apunte</th></tr>
+<tr><td>Contar filas por grupo</td><td><code>count()</code></td><td>Apunte 1</td></tr>
+<tr><td>Filtrar filas por condición</td><td><code>filter()</code></td><td>Apunte 1</td></tr>
+<tr><td>Agrupar y calcular resúmenes</td><td><code>group_by() + summarise()</code></td><td>Apunte 1</td></tr>
+<tr><td>Elegir columnas</td><td><code>select()</code></td><td>Apunte 1</td></tr>
+<tr><td>Crear/modificar columnas</td><td><code>mutate()</code></td><td>Apuntes 1 y 5</td></tr>
+<tr><td>Condición binaria → nueva variable</td><td><code>if_else()</code></td><td>Apunte 5</td></tr>
+<tr><td>Múltiples condiciones → nueva variable</td><td><code>case_when()</code></td><td>Apunte 5</td></tr>
+<tr><td>Ordenar filas</td><td><code>arrange()</code></td><td>Apuntes 1 y 5</td></tr>
+<tr><td>Top N por valor</td><td><code>slice_max() / slice_min()</code></td><td>Apunte 5</td></tr>
+<tr><td>Renombrar columnas</td><td><code>rename()</code></td><td>Apunte 5</td></tr>
+<tr><td>Reordenar columnas</td><td><code>relocate()</code></td><td>Apunte 5</td></tr>
+<tr><td>Valores únicos</td><td><code>distinct()</code></td><td>Apunte 5</td></tr>
+<tr><td>Extraer vector de un tibble</td><td><code>pull()</code></td><td>Apunte 5</td></tr>
+<tr><td>Aplicar función a muchas columnas</td><td><code>across()</code></td><td>Apunte 5</td></tr>
+<tr><td>Contar valores únicos</td><td><code>n_distinct()</code></td><td>Apunte 5</td></tr>
+<tr><td>Unir tablas por clave</td><td><code>left_join()</code> y familia</td><td>Apunte 4</td></tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · <a href="index.html">Analítica de Personas</a> · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

@@ -6,6 +6,9 @@ title: "Tutorials & Lecture Notes"
 
 Lecture notes for the People Analytics course, written in Spanish.
 
-- [Apunte 1 — El pipe y las funciones de dplyr](teaching/people-analytics/Apunte01_Pipes_y_dplyr.html)
-- [Apunte 2 — Visualización de datos con ggplot2](teaching/people-analytics/Apunte02_ggplot2_y_geom.html)
-- [Apunte 3 — Introducción a Quarto](teaching/people-analytics/Apunte03_Quarto.html)
+-   [Apunte 1 — El pipe y las funciones de dplyr](teaching/people-analytics/Apunte01_Pipes_y_dplyr.html)
+-   [Apunte 2 — Visualización de datos con ggplot2](teaching/people-analytics/Apunte02_ggplot2_y_geom.html)
+-   [Apunte 3 — Introducción a Quarto](teaching/people-analytics/Apunte03_Quarto.html)
+-   [Apunte 4 — Uniendo bases de datos](teaching/people-analytics/Apunte04_Uniendo_bases_de_datos.html)
+-   [Apunte 5 — Funciones dplyr avanzadas](teaching/people-analytics/Apunte05_Funciones_dplyr_avanzadas.html)
+-   [Apunte 6 — Limpiar datos con janitor](teaching/people-analytics/Apunte06_Limpiar_datos_con_janitor.html)

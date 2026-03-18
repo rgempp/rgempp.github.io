@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 4 — Uniendo bases de datos | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .result { color: #A78BFA; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .diagram { background: white; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1.2rem; margin: 1rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.6; white-space: pre-wrap; }
+  .diagram .tbl-name { color: var(--navy); font-weight: bold; }
+  .diagram .key-col { color: var(--teal); font-weight: bold; }
+  /* Join diagram (HTML-based) */
+  .join-diagram { background: white; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; }
+  .join-row { display: flex; align-items: flex-start; gap: 0; justify-content: center; flex-wrap: wrap; }
+  .join-table { flex: 0 1 auto; }
+  .join-title { font-family: Georgia, serif; font-weight: bold; font-size: 0.95rem; margin-bottom: 0.4rem; }
+  .join-title.left { color: var(--navy); }
+  .join-title.right { color: var(--navy); }
+  .join-title.result { color: var(--navy); }
+  .join-detail { font-family: 'Segoe UI', Calibri, sans-serif; font-weight: normal; color: var(--slate); font-size: 0.82rem; }
+  .join-tbl { border-collapse: collapse; font-size: 0.85rem; margin: 0; }
+  .join-tbl th { background: var(--navy); color: white; padding: 0.35rem 0.7rem; font-size: 0.82rem; font-weight: 600; }
+  .join-tbl td { padding: 0.3rem 0.7rem; border: 1px solid #E2E8F0; font-family: Consolas, monospace; font-size: 0.83rem; }
+  .join-tbl tr:nth-child(even) { background: #F8FAFC; }
+  .join-tbl th.key, .join-tbl td.key { color: var(--teal); font-weight: bold; }
+  .join-tbl th.new-col { background: #065A82; }
+  .join-tbl td.matched { color: var(--green); font-weight: 600; }
+  .join-tbl td.na-val { color: #94A3B8; font-style: italic; }
+  .join-tbl tr.empty-row td { color: #CBD5E1; text-align: center; }
+  .join-arrows { display: flex; flex-direction: column; justify-content: flex-start; padding-top: 2rem; font-family: Consolas, monospace; font-size: 0.9rem; line-height: 1; }
+  .join-arrows .arrow { padding: 0.32rem 0.4rem; white-space: nowrap; }
+  .join-arrows .arrow.match { color: var(--green); font-weight: bold; }
+  .join-arrows .arrow.nomatch { color: var(--coral); }
+  .join-result-arrow { text-align: center; font-size: 1.3rem; color: var(--teal); font-weight: bold; margin: 0.8rem 0 0.3rem 0; }
+  .join-result { display: flex; flex-direction: column; align-items: center; }
+  .result-tbl { min-width: 60%; }
+  @media (max-width: 700px) { .join-row { flex-direction: column; align-items: center; } .join-arrows { flex-direction: row; padding-top: 0; margin: 0.5rem 0; } }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 4 — Uniendo bases de datos</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 2 · Prof. René Gempp</p>
+
+<!-- ============================================================ -->
+<h2>1. ¿Por qué unir tablas?</h2>
+
+<p>En people analytics, los datos casi nunca vienen en una sola tabla. El HRIS tiene una tabla de empleados, otra de evaluaciones de desempeño, otra de entrevistas de salida, otra de encuestas. Para responder preguntas de negocio, necesitas <strong>combinar</strong> estas tablas usando una columna en común (una <em>clave</em>).</p>
+
+<p>En nuestro caso de InnovaCo:</p>
+
+<div class="diagram">
+<span class="tbl-name">innovaco_empleados.csv</span> (1.200 filas, todos los empleados)<br>
+  → Columna clave: <span class="key-col">id_empleado</span><br><br>
+<span class="tbl-name">innovaco_salidas.csv</span> (326 filas, solo los que se fueron)<br>
+  → Columna clave: <span class="key-col">id_empleado</span><br><br>
+Queremos: una tabla con <strong>todos</strong> los empleados + la información de salida para los que se fueron.
+</div>
+
+<p>Las funciones de unión (<em>joins</em>) de dplyr resuelven exactamente este problema. La idea es simple: "buscar coincidencias" entre dos tablas por una columna compartida.</p>
+
+
+<!-- ============================================================ -->
+<h2>2. <code>left_join()</code>: el join que más usarás</h2>
+
+<p><code>left_join()</code> toma <strong>todas las filas de la tabla izquierda</strong> y les agrega columnas de la tabla derecha donde coincida la clave. Si no hay coincidencia, rellena con <code>NA</code>.</p>
+
+<pre><code><span class="comment"># Sintaxis básica</span>
+datos &lt;- tabla_izquierda <span class="pipe">|&gt;</span>
+  <span class="func">left_join</span>(tabla_derecha, by = <span class="string">"columna_clave"</span>)
+
+<span class="comment"># Ejemplo concreto de InnovaCo</span>
+datos &lt;- innovaco <span class="pipe">|&gt;</span>
+  <span class="func">left_join</span>(salidas, by = <span class="string">"id_empleado"</span>)</code></pre>
+
+<h3>¿Qué pasa paso a paso?</h3>
+
+<!-- Diagrama visual de left_join -->
+<div class="join-diagram">
+  <div class="join-row">
+    <div class="join-table">
+      <div class="join-title left">innovaco <span class="join-detail">(izquierda, 1.200 filas)</span></div>
+      <table class="join-tbl">
+        <tr><th class="key">id_empleado</th><th>edad</th><th>...</th></tr>
+        <tr><td class="key">INN-0001</td><td>30</td><td>...</td></tr>
+        <tr><td class="key">INN-0002</td><td>35</td><td>...</td></tr>
+        <tr><td class="key">INN-0003</td><td>42</td><td>...</td></tr>
+        <tr><td class="key">INN-0004</td><td>25</td><td>...</td></tr>
+      </table>
+    </div>
+    <div class="join-arrows">
+      <div class="arrow match">───▶</div>
+      <div class="arrow nomatch">──✗</div>
+      <div class="arrow nomatch">──✗</div>
+      <div class="arrow match">───▶</div>
+    </div>
+    <div class="join-table">
+      <div class="join-title right">salidas <span class="join-detail">(derecha, 326 filas)</span></div>
+      <table class="join-tbl">
+        <tr><th class="key">id_empleado</th><th>tipo_salida</th></tr>
+        <tr><td class="key">INN-0001</td><td>Voluntaria</td></tr>
+        <tr class="empty-row"><td></td><td></td></tr>
+        <tr class="empty-row"><td></td><td></td></tr>
+        <tr><td class="key">INN-0004</td><td>Voluntaria</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="join-result-arrow">▼ Resultado</div>
+  <div class="join-result">
+    <div class="join-title result">Resultado <span class="join-detail">(1.200 filas — se conservan todas las de la izquierda)</span></div>
+    <table class="join-tbl result-tbl">
+      <tr><th class="key">id_empleado</th><th>edad</th><th>...</th><th class="new-col">tipo_salida</th></tr>
+      <tr><td class="key">INN-0001</td><td>30</td><td>...</td><td class="matched">Voluntaria</td></tr>
+      <tr><td class="key">INN-0002</td><td>35</td><td>...</td><td class="na-val">NA</td></tr>
+      <tr><td class="key">INN-0003</td><td>42</td><td>...</td><td class="na-val">NA</td></tr>
+      <tr><td class="key">INN-0004</td><td>25</td><td>...</td><td class="matched">Voluntaria</td></tr>
+    </table>
+  </div>
+</div>
+
+<p>INN-0002 e INN-0003 no se fueron, así que no están en <code>salidas</code>. <code>left_join()</code> los mantiene y rellena con <code>NA</code> las columnas nuevas.</p>
+
+<div class="tip">
+<strong>¿Por qué "left"?</strong>
+Porque preserva todas las filas de la tabla de la <strong>izquierda</strong> (la primera que nombras). Es la operación más común en people analytics: "quiero mi tabla completa de empleados, enriquecida con datos de otra fuente".
+</div>
+
+
+<!-- ============================================================ -->
+<h2>3. Claves de unión: el argumento <code>by</code></h2>
+
+<h3>Caso simple: misma columna en ambas tablas</h3>
+
+<pre><code><span class="comment"># Cuando la clave se llama igual en ambas tablas</span>
+datos &lt;- innovaco <span class="pipe">|&gt;</span>
+  <span class="func">left_join</span>(salidas, by = <span class="string">"id_empleado"</span>)</code></pre>
+
+<h3>Caso con nombres distintos</h3>
+
+<pre><code><span class="comment"># Si en una tabla la clave se llama "id" y en otra "id_empleado"</span>
+datos &lt;- tabla_a <span class="pipe">|&gt;</span>
+  <span class="func">left_join</span>(tabla_b, by = <span class="func">c</span>(<span class="string">"id_empleado"</span> = <span class="string">"id"</span>))
+<span class="comment"># Izquierda = derecha</span></code></pre>
+
+<h3>Clave compuesta (más de una columna)</h3>
+
+<pre><code><span class="comment"># Cuando necesitas cruzar por dos columnas a la vez</span>
+<span class="comment"># Ejemplo: encuesta por empleado Y por período</span>
+datos &lt;- empleados <span class="pipe">|&gt;</span>
+  <span class="func">left_join</span>(encuestas, by = <span class="func">c</span>(<span class="string">"id_empleado"</span>, <span class="string">"periodo"</span>))</code></pre>
+
+<div class="warning">
+<strong>¿Qué pasa si no pones <code>by</code>?</strong>
+R intentará unir por <strong>todas las columnas que tengan el mismo nombre</strong> en ambas tablas. Esto puede producir resultados inesperados si hay columnas con nombres coincidentes que no son la clave. Siempre especifica <code>by</code> explícitamente.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>4. Los otros tipos de join</h2>
+
+<p><code>left_join()</code> es el que usarás el 90% del tiempo, pero existen otros cuatro tipos. La diferencia es qué filas conservan cuando no hay coincidencia:</p>
+
+<table>
+<tr><th>Función</th><th>Conserva</th><th>Uso típico en RRHH</th></tr>
+<tr>
+  <td><code>left_join(A, B)</code></td>
+  <td>Todas las filas de <strong>A</strong>. Si no hay match en B, rellena con <code>NA</code>.</td>
+  <td>Enriquecer la tabla de empleados con datos de otra fuente</td>
+</tr>
+<tr>
+  <td><code>right_join(A, B)</code></td>
+  <td>Todas las filas de <strong>B</strong>. Si no hay match en A, rellena con <code>NA</code>.</td>
+  <td>Rara vez. Es un <code>left_join</code> con las tablas al revés.</td>
+</tr>
+<tr>
+  <td><code>inner_join(A, B)</code></td>
+  <td>Solo filas que <strong>existen en ambas</strong> tablas.</td>
+  <td>Cuando solo quieres empleados que se fueron Y tienen entrevista de salida</td>
+</tr>
+<tr>
+  <td><code>full_join(A, B)</code></td>
+  <td><strong>Todas</strong> las filas de ambas tablas. <code>NA</code> donde no hay match.</td>
+  <td>Combinar dos fuentes donde ninguna es "la completa"</td>
+</tr>
+<tr>
+  <td><code>anti_join(A, B)</code></td>
+  <td>Filas de <strong>A que NO están en B</strong>.</td>
+  <td>¿Quiénes se fueron y NO tuvieron entrevista de salida?</td>
+</tr>
+</table>
+
+<pre><code><span class="comment"># inner_join: solo empleados que se fueron (326 filas)</span>
+solo_salidas &lt;- innovaco <span class="pipe">|&gt;</span>
+  <span class="func">inner_join</span>(salidas, by = <span class="string">"id_empleado"</span>)
+
+<span class="func">nrow</span>(solo_salidas)  <span class="comment"># 326</span>
+
+<span class="comment"># anti_join: empleados que NO se fueron (874 filas)</span>
+activos &lt;- innovaco <span class="pipe">|&gt;</span>
+  <span class="func">anti_join</span>(salidas, by = <span class="string">"id_empleado"</span>)
+
+<span class="func">nrow</span>(activos)       <span class="comment"># 874</span></code></pre>
+
+<div class="tip">
+<strong>Regla práctica para elegir</strong>
+¿Quieres conservar a todos los empleados, incluso si no tienen datos en la otra tabla? → <code>left_join()</code>. ¿Quieres solo los que tienen datos en ambas? → <code>inner_join()</code>. ¿Quieres saber quién NO está en la otra tabla? → <code>anti_join()</code>.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>5. Verificar el resultado de un join</h2>
+
+<p>Siempre verifica después de un join. Los tres chequeos esenciales:</p>
+
+<pre><code><span class="comment"># 1. ¿Cuántas filas tiene el resultado?</span>
+<span class="func">nrow</span>(datos)  <span class="comment"># Debería ser 1200 con left_join</span>
+
+<span class="comment"># 2. ¿Hay duplicados? (filas más que las esperadas)</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(id_empleado) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(n &gt; 1)  <span class="comment"># Si hay filas aquí, algo salió mal</span>
+
+<span class="comment"># 3. ¿Los NA están donde esperamos?</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(rotacion, tipo_salida)
+<span class="comment"># Los que NO se fueron deberían tener NA en tipo_salida</span></code></pre>
+
+<div class="warning">
+<strong>Peligro: filas duplicadas después del join</strong>
+Si después de un <code>left_join()</code> tienes <strong>más filas</strong> de las que empezaste, es porque la tabla derecha tiene duplicados en la clave. Por ejemplo, si un empleado tiene 3 registros de encuesta, el join creará 3 filas para ese empleado. Verifica siempre con <code>nrow()</code>.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>6. <code>bind_rows()</code>: apilar tablas</h2>
+
+<p>A veces no necesitas cruzar tablas por una clave, sino simplemente <strong>apilar una debajo de otra</strong> (cuando tienen las mismas columnas). Esto es <code>bind_rows()</code>:</p>
+
+<pre><code><span class="comment"># Ejemplo: juntar datos de dos oficinas</span>
+datos_stgo &lt;- <span class="func">read_csv</span>(<span class="string">"oficina_santiago.csv"</span>)
+datos_valpo &lt;- <span class="func">read_csv</span>(<span class="string">"oficina_valparaiso.csv"</span>)
+
+todos &lt;- <span class="func">bind_rows</span>(datos_stgo, datos_valpo)
+<span class="comment"># Si una tabla tiene una columna que la otra no tiene,</span>
+<span class="comment"># bind_rows() rellena con NA. No da error.</span></code></pre>
+
+<div class="comparison">
+<div class="bad">
+<h4>✗ <code>left_join()</code></h4>
+<p>Agrega <strong>columnas</strong> de otra tabla, cruzando por una clave.</p>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.82rem;"><code>A |> left_join(B, by = "id")
+# A tiene 5 cols → resultado 8 cols</code></pre>
+</div>
+<div class="good">
+<h4>✓ <code>bind_rows()</code></h4>
+<p>Agrega <strong>filas</strong> de otra tabla (misma estructura).</p>
+<pre style="background: none; margin: 0; padding: 0; font-size: 0.82rem;"><code>bind_rows(A, B)
+# A tiene 100 filas, B tiene 50
+# → resultado 150 filas</code></pre>
+</div>
+</div>
+
+
+<!-- ============================================================ -->
+<h2>7. Resumen: ¿qué función necesito?</h2>
+
+<table>
+<tr><th>Quiero...</th><th>Función</th><th>Ejemplo</th></tr>
+<tr><td>Agregar columnas de otra tabla, conservando todos los empleados</td><td><code>left_join()</code></td><td>Empleados + datos de salida</td></tr>
+<tr><td>Solo filas que existen en ambas tablas</td><td><code>inner_join()</code></td><td>Solo empleados que se fueron Y tienen encuesta</td></tr>
+<tr><td>Filas de A que NO están en B</td><td><code>anti_join()</code></td><td>Empleados activos (sin salida registrada)</td></tr>
+<tr><td>Apilar tablas con la misma estructura</td><td><code>bind_rows()</code></td><td>Datos de varias oficinas en una sola tabla</td></tr>
+</table>
+
+
+<!-- ============================================================ -->
+<h2>8. Errores frecuentes</h2>
+
+<table>
+<tr><th>Error</th><th>Causa</th><th>Solución</th></tr>
+<tr>
+  <td><code>Error: `by` must be supplied</code></td>
+  <td>No especificaste la columna de unión</td>
+  <td>Agrega <code>by = "id_empleado"</code></td>
+</tr>
+<tr>
+  <td>El resultado tiene más filas de las esperadas</td>
+  <td>La tabla derecha tiene duplicados en la clave</td>
+  <td>Verifica con <code>tabla_b |> count(clave) |> filter(n > 1)</code></td>
+</tr>
+<tr>
+  <td><code>NA</code> en columnas que no deberían tenerlos</td>
+  <td>La clave no coincide (diferencias de mayúsculas, espacios, formato)</td>
+  <td>Compara las claves: <code>setdiff(tabla_a$id, tabla_b$id)</code></td>
+</tr>
+<tr>
+  <td>Columnas duplicadas con sufijo <code>.x</code> y <code>.y</code></td>
+  <td>Ambas tablas tienen una columna con el mismo nombre (que no es la clave)</td>
+  <td>Renombra antes del join, o usa <code>suffix = c("_emp", "_sal")</code></td>
+</tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · <a href="index.html">Analítica de Personas</a> · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

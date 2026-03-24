@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 08 — La función glm() y modelos lineales generalizados | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .num { color: #C084FC; }
+  .kw { color: #F472B6; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #DBEAFE; border-left: 4px solid #3B82F6; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 0.8rem 1rem; margin: 0.8rem 0; border-radius: 6px; font-family: Georgia, serif; font-size: 1.05rem; text-align: center; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 08 — La función glm() y modelos lineales generalizados</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 3 · Referencia</p>
+
+<!-- ============================================================ -->
+<h2>1. ¿Qué es un modelo lineal generalizado (GLM)?</h2>
+
+<p>La función <code>glm()</code> de R ajusta <strong>modelos lineales generalizados</strong> (generalized linear models). Son una extensión de la regresión lineal clásica (<code>lm()</code>) que permiten trabajar con variables dependientes que no son continuas ni normales: binarias (Sí/No), conteos, proporciones, etc.</p>
+
+<p>Todo GLM tiene tres componentes:</p>
+
+<table>
+<tr><th>Componente</th><th>Qué es</th><th>Ejemplo (regresión logística)</th></tr>
+<tr><td><strong>Componente aleatoria</strong></td><td>La distribución de Y</td><td>Binomial (Y es 0 o 1)</td></tr>
+<tr><td><strong>Componente sistemática</strong></td><td>La combinación lineal de predictores</td><td>β₀ + β₁X₁ + β₂X₂ + ...</td></tr>
+<tr><td><strong>Función de enlace</strong></td><td>Conecta la media de Y con los predictores</td><td>Logit: log(p / (1−p))</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>2. Sintaxis general de glm()</h2>
+
+<pre><code><span class="func">glm</span>(
+  formula,          <span class="comment"># y ~ x1 + x2 + x3</span>
+  data,             <span class="comment"># el data frame</span>
+  family,           <span class="comment"># distribución + enlace (ver sección 3)</span>
+  weights,          <span class="comment"># pesos opcionales</span>
+  subset,           <span class="comment"># subconjunto de datos</span>
+  na.action         <span class="comment"># qué hacer con NAs (default: na.omit)</span>
+)
+</code></pre>
+
+<h3>La fórmula en R</h3>
+
+<table>
+<tr><th>Fórmula</th><th>Significado</th><th>Ejemplo</th></tr>
+<tr><td><code>y ~ x</code></td><td>Un predictor</td><td><code>rotacion_bin ~ satisfaccion_laboral</code></td></tr>
+<tr><td><code>y ~ x1 + x2</code></td><td>Efectos principales aditivos</td><td><code>rotacion_bin ~ satisfaccion + edad</code></td></tr>
+<tr><td><code>y ~ x1 * x2</code></td><td>Efectos principales + interacción</td><td>Equivale a <code>x1 + x2 + x1:x2</code></td></tr>
+<tr><td><code>y ~ x1:x2</code></td><td>Solo la interacción</td><td>Sin efectos principales (raro)</td></tr>
+<tr><td><code>y ~ .</code></td><td>Todos los predictores del data frame</td><td><code>rotacion_bin ~ .</code> (peligroso: incluye todo)</td></tr>
+<tr><td><code>y ~ x1 + I(x2^2)</code></td><td>Término cuadrático</td><td>Efecto no lineal de x2</td></tr>
+<tr><td><code>y ~ 1</code></td><td>Modelo nulo (solo intercepto)</td><td>Referencia para comparar</td></tr>
+</table>
+
+<div class="warning">
+<strong>⚠️ Cuidado con <code>y ~ .</code></strong>
+Incluye todas las columnas del data frame como predictores. Si tienes variables de identificación (<code>id_empleado</code>, <code>nombre</code>) o la misma variable codificada de dos formas (<code>rotacion</code> y <code>rotacion_bin</code>), el modelo fallará o dará resultados absurdos. Siempre especifica las variables explícitamente.
+</div>
+
+<!-- ============================================================ -->
+<h2>3. Familias de distribución (el argumento <code>family</code>)</h2>
+
+<p>El argumento <code>family</code> define qué tipo de variable dependiente tienes y qué función de enlace usar. Esta es la pieza clave que diferencia los tipos de regresión GLM.</p>
+
+<table>
+<tr><th>Family</th><th>Variable dependiente</th><th>Enlace por defecto</th><th>Uso en RRHH</th><th>Equivale a...</th></tr>
+<tr><td><code>gaussian</code></td><td>Continua, normal</td><td>identity</td><td>Predecir ingreso, satisfacción continua</td><td><code>lm()</code></td></tr>
+<tr><td><code><strong>binomial</strong></code></td><td><strong>Binaria (0/1, Sí/No)</strong></td><td><strong>logit</strong></td><td><strong>Predecir rotación, ausentismo, promoción</strong></td><td><strong>Regresión logística</strong></td></tr>
+<tr><td><code>poisson</code></td><td>Conteo (enteros ≥ 0)</td><td>log</td><td>Número de ausencias, cantidad de postulantes</td><td>Regresión de Poisson</td></tr>
+<tr><td><code>Gamma</code></td><td>Continua, positiva, sesgada</td><td>inverse</td><td>Tiempo hasta la contratación, costos</td><td>Regresión Gamma</td></tr>
+<tr><td><code>quasibinomial</code></td><td>Proporciones con sobredispersión</td><td>logit</td><td>% de rotación por unidad (no individual)</td><td>Logística con sobredispersión</td></tr>
+<tr><td><code>quasipoisson</code></td><td>Conteos con sobredispersión</td><td>log</td><td>Conteos con varianza > media</td><td>Poisson con sobredispersión</td></tr>
+</table>
+
+<h3>Ejemplos de cada family</h3>
+
+<pre><code><span class="comment"># Regresión logística (la más usada en PA para rotación)</span>
+<span class="func">glm</span>(rotacion_bin ~ satisfaccion + edad, data = innovaco,
+    family = <span class="kw">binomial</span>)
+
+<span class="comment"># Regresión lineal vía glm (idéntica a lm())</span>
+<span class="func">glm</span>(ingreso_mensual ~ antiguedad_anios + nivel_educacion, data = innovaco,
+    family = <span class="kw">gaussian</span>)
+
+<span class="comment"># Regresión de Poisson para conteos</span>
+<span class="func">glm</span>(n_ausencias ~ satisfaccion + departamento, data = datos_ausencias,
+    family = <span class="kw">poisson</span>)
+
+<span class="comment"># Regresión Gamma para tiempos (sesgados a la derecha)</span>
+<span class="func">glm</span>(tiempo_contratacion ~ canal + cargo, data = datos_recruiting,
+    family = <span class="kw">Gamma</span>(link = <span class="string">"log"</span>))
+</code></pre>
+
+<div class="note">
+<strong>📝 En este curso usaremos principalmente <code>family = binomial</code></strong>
+La regresión logística es la herramienta estrella de people analytics para predecir eventos binarios: rotación (semana 3), promoción, ausentismo, éxito en el período de prueba, etc. El Apunte 10 cubre la regresión logística en profundidad.
+</div>
+
+<!-- ============================================================ -->
+<h2>4. Funciones de enlace</h2>
+
+<p>Cada <code>family</code> tiene un enlace por defecto, pero puedes cambiarlo. El enlace transforma la media de la variable dependiente para que la relación con los predictores sea lineal.</p>
+
+<table>
+<tr><th>Enlace</th><th>Fórmula</th><th>Family habitual</th><th>Cuándo elegirlo</th></tr>
+<tr><td><code>identity</code></td><td>μ = Xβ</td><td>gaussian</td><td>Y es continua sin restricción</td></tr>
+<tr><td><code>logit</code></td><td>log(p/(1−p)) = Xβ</td><td>binomial</td><td>Y es probabilidad (0 a 1)</td></tr>
+<tr><td><code>probit</code></td><td>Φ⁻¹(p) = Xβ</td><td>binomial</td><td>Alternativa al logit (poco usado en RRHH)</td></tr>
+<tr><td><code>log</code></td><td>log(μ) = Xβ</td><td>poisson, Gamma</td><td>Y es positiva (conteos, tiempos)</td></tr>
+<tr><td><code>inverse</code></td><td>1/μ = Xβ</td><td>Gamma</td><td>Default Gamma (raro cambiarlo)</td></tr>
+</table>
+
+<pre><code><span class="comment"># Enlace logit (default para binomial)</span>
+<span class="func">glm</span>(y ~ x, family = <span class="kw">binomial</span>)               <span class="comment"># equivale a:</span>
+<span class="func">glm</span>(y ~ x, family = <span class="kw">binomial</span>(link = <span class="string">"logit"</span>))
+
+<span class="comment"># Enlace probit (alternativa al logit)</span>
+<span class="func">glm</span>(y ~ x, family = <span class="kw">binomial</span>(link = <span class="string">"probit"</span>))
+
+<span class="comment"># Enlace log para Gamma</span>
+<span class="func">glm</span>(y ~ x, family = <span class="kw">Gamma</span>(link = <span class="string">"log"</span>))
+</code></pre>
+
+<!-- ============================================================ -->
+<h2>5. Lo que devuelve glm(): el objeto modelo</h2>
+
+<p>Cuando guardas el resultado de <code>glm()</code> en un objeto, R almacena mucha información. Los componentes más útiles:</p>
+
+<pre><code>modelo <- <span class="func">glm</span>(rotacion_bin ~ satisfaccion_laboral + edad,
+              data = innovaco, family = <span class="kw">binomial</span>)
+
+<span class="comment"># Resumen completo</span>
+<span class="func">summary</span>(modelo)
+
+<span class="comment"># Componentes individuales</span>
+<span class="func">coef</span>(modelo)           <span class="comment"># coeficientes (en log-odds para logística)</span>
+<span class="func">confint</span>(modelo)         <span class="comment"># intervalos de confianza de los coeficientes</span>
+<span class="func">fitted</span>(modelo)          <span class="comment"># valores predichos (en la escala del enlace)</span>
+<span class="func">residuals</span>(modelo)       <span class="comment"># residuos del modelo</span>
+modelo$deviance          <span class="comment"># deviance del modelo</span>
+modelo$null.deviance     <span class="comment"># deviance del modelo nulo</span>
+modelo$aic               <span class="comment"># AIC</span>
+modelo$df.residual       <span class="comment"># grados de libertad residuales</span>
+modelo$family            <span class="comment"># familia y enlace usados</span>
+</code></pre>
+
+<h3>Cómo leer <code>summary(glm_model)</code></h3>
+
+<pre><code><span class="comment"># El output de summary() tiene estas secciones:</span>
+
+<span class="comment"># 1. Call: la fórmula usada</span>
+<span class="comment"># 2. Deviance Residuals: distribución de los residuos</span>
+<span class="comment"># 3. Coefficients:</span>
+<span class="comment">#      Estimate  = coeficiente (log-odds en logística)</span>
+<span class="comment">#      Std.Error = error estándar del coeficiente</span>
+<span class="comment">#      z value   = estadístico Wald (Estimate / Std.Error)</span>
+<span class="comment">#      Pr(>|z|)  = p-value</span>
+<span class="comment">#      Signif. codes: ***, **, *, .</span>
+<span class="comment"># 4. Null deviance: ajuste del modelo sin predictores</span>
+<span class="comment"># 5. Residual deviance: ajuste del modelo con predictores</span>
+<span class="comment"># 6. AIC: Akaike Information Criterion</span>
+</code></pre>
+
+<div class="tip">
+<strong>Los coeficientes de summary() están en log-odds (para logística)</strong>
+No son directamente interpretables. Para obtener <strong>odds ratios</strong>, usa <code>exp(coef(modelo))</code> o, mejor aún, usa el paquete <code>broom</code> con <code>tidy(modelo, exponentiate = TRUE)</code> (ver Apunte 09).
+</div>
+
+<!-- ============================================================ -->
+<h2>6. Predicciones con predict()</h2>
+
+<pre><code><span class="comment"># Predicciones en la escala del enlace (log-odds para logística)</span>
+<span class="func">predict</span>(modelo)
+<span class="comment"># Ejemplo: -1.23 (esto NO es una probabilidad)</span>
+
+<span class="comment"># Predicciones como probabilidades (lo que necesitas)</span>
+<span class="func">predict</span>(modelo, type = <span class="string">"response"</span>)
+<span class="comment"># Ejemplo: 0.23 (23% de probabilidad de irse)</span>
+
+<span class="comment"># Para datos nuevos</span>
+nuevos_datos <- <span class="func">tibble</span>(
+  satisfaccion_laboral = <span class="func">c</span>(<span class="num">1</span>, <span class="num">3</span>, <span class="num">5</span>),
+  edad = <span class="func">c</span>(<span class="num">25</span>, <span class="num">35</span>, <span class="num">45</span>)
+)
+<span class="func">predict</span>(modelo, newdata = nuevos_datos, type = <span class="string">"response"</span>)
+</code></pre>
+
+<div class="warning">
+<strong>⚠️ Error más común de la semana</strong>
+Olvidar <code>type = "response"</code>. Sin este argumento, <code>predict()</code> devuelve log-odds (valores como −2.3 o 1.7), no probabilidades. Para obtener probabilidades entre 0 y 1, <strong>siempre</strong> usa <code>type = "response"</code>.
+</div>
+
+<!-- ============================================================ -->
+<h2>7. Comparar modelos: AIC y deviance</h2>
+
+<h3>AIC (Akaike Information Criterion)</h3>
+
+<p>El AIC balancea el ajuste del modelo con su complejidad. <strong>Menor AIC = mejor modelo.</strong></p>
+
+<div class="formula">
+AIC = −2 × log-verosimilitud + 2k
+</div>
+
+<p>donde <em>k</em> es el número de parámetros. Agregar variables mejora el ajuste (baja la log-verosimilitud) pero aumenta la penalización (2k). El AIC encuentra el balance.</p>
+
+<pre><code><span class="comment"># AIC de un modelo</span>
+<span class="func">AIC</span>(modelo)
+modelo$aic
+
+<span class="comment"># Comparar varios modelos</span>
+<span class="func">AIC</span>(mod_nulo, mod_1, mod_3, mod_ext)
+</code></pre>
+
+<h3>Reglas prácticas para diferencias de AIC</h3>
+
+<table>
+<tr><th>Diferencia ΔAIC</th><th>Interpretación</th></tr>
+<tr><td>0 – 2</td><td>Modelos equivalentes. Preferir el más simple (parsimonia)</td></tr>
+<tr><td>2 – 7</td><td>Diferencia moderada. El modelo con menor AIC es probablemente mejor</td></tr>
+<tr><td>> 10</td><td>Diferencia fuerte. Claramente uno es mejor</td></tr>
+</table>
+
+<h3>Deviance</h3>
+
+<p>La deviance mide cuánto se aleja el modelo del ajuste perfecto. La diferencia entre null deviance y residual deviance indica cuánto mejoran los predictores:</p>
+
+<pre><code><span class="comment"># Diferencia de deviance (análogo a R² en regresión lineal)</span>
+<span class="num">1</span> - modelo$deviance / modelo$null.deviance
+<span class="comment"># Pseudo-R² de McFadden: valores > 0.2 son considerados buenos</span>
+</code></pre>
+
+<!-- ============================================================ -->
+<h2>8. glm() vs. lm(): cuándo usar cada uno</h2>
+
+<div class="comparison">
+<div class="bad">
+<h4>lm() — Regresión lineal</h4>
+<p><strong>Variable dependiente:</strong> Continua, normal</p>
+<p><strong>Ejemplos:</strong> Predecir ingreso mensual, predecir score de engagement</p>
+<p><code>lm(ingreso ~ antiguedad + educacion)</code></p>
+</div>
+<div class="good">
+<h4>glm() — Modelo lineal generalizado</h4>
+<p><strong>Variable dependiente:</strong> Cualquiera (binaria, conteo, etc.)</p>
+<p><strong>Ejemplos:</strong> Predecir rotación (Sí/No), número de ausencias</p>
+<p><code>glm(rotacion_bin ~ satisfaccion, family = binomial)</code></p>
+</div>
+</div>
+
+<div class="tip">
+<strong><code>glm(y ~ x, family = gaussian)</code> es idéntico a <code>lm(y ~ x)</code></strong>
+<code>lm()</code> es un caso particular de <code>glm()</code> con family = gaussian y link = identity. En la práctica, si tu variable dependiente es continua y normal, usa <code>lm()</code> porque es más simple. Usa <code>glm()</code> cuando necesites otra distribución.
+</div>
+
+<!-- ============================================================ -->
+<h2>9. Variables categóricas como predictores</h2>
+
+<p>Cuando incluyes una variable <code>chr</code> o <code>factor</code> en <code>glm()</code>, R automáticamente crea <strong>variables dummy</strong> (indicadoras). El primer nivel alfabético se convierte en la categoría de referencia.</p>
+
+<pre><code><span class="comment"># Si departamento tiene 6 niveles, R crea 5 dummies</span>
+<span class="func">glm</span>(rotacion_bin ~ departamento, data = innovaco, family = <span class="kw">binomial</span>)
+
+<span class="comment"># El output mostrará:</span>
+<span class="comment"># departamentoFinanzas         (comparado con la referencia)</span>
+<span class="comment"># departamentoRRHH             (comparado con la referencia)</span>
+<span class="comment"># departamentoSoporte Técnico  (comparado con la referencia)</span>
+<span class="comment"># departamentoVentas           (comparado con la referencia)</span>
+<span class="comment"># departamento...              etc.</span>
+
+<span class="comment"># Para cambiar la categoría de referencia</span>
+innovaco <- innovaco <span class="pipe">|></span>
+  <span class="func">mutate</span>(departamento = <span class="func">relevel</span>(<span class="func">factor</span>(departamento), ref = <span class="string">"Desarrollo"</span>))
+</code></pre>
+
+<!-- ============================================================ -->
+<h2>10. Resumen rápido</h2>
+
+<table>
+<tr><th>Acción</th><th>Código</th></tr>
+<tr><td>Ajustar modelo logístico</td><td><code>glm(y ~ x1 + x2, data, family = binomial)</code></td></tr>
+<tr><td>Ver resumen</td><td><code>summary(modelo)</code></td></tr>
+<tr><td>Coeficientes (log-odds)</td><td><code>coef(modelo)</code></td></tr>
+<tr><td>Odds ratios</td><td><code>exp(coef(modelo))</code> o <code>broom::tidy(modelo, exponentiate = TRUE)</code></td></tr>
+<tr><td>Intervalos de confianza</td><td><code>confint(modelo)</code></td></tr>
+<tr><td>Probabilidades predichas</td><td><code>predict(modelo, type = "response")</code></td></tr>
+<tr><td>AIC</td><td><code>AIC(modelo)</code> o <code>modelo$aic</code></td></tr>
+<tr><td>Deviance</td><td><code>modelo$deviance</code></td></tr>
+<tr><td>Pseudo-R²</td><td><code>1 - modelo$deviance / modelo$null.deviance</code></td></tr>
+</table>
+
+<footer>
+<p>Apunte 08 — Analítica de Personas · Magíster en Gestión de Personas · Semana 3</p>
+<p>Para odds ratios y tablas limpias, consulta el Apunte 09 (broom). Para la aplicación al caso InnovaCo, consulta el Apunte 10 (regresión logística aplicada).</p>
+</footer>
+
+</body>
+</html>

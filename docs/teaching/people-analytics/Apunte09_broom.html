@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 09 — El paquete broom: resultados de modelos en formato tidy | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .num { color: #C084FC; }
+  .kw { color: #F472B6; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 09 — El paquete broom</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 3 · Referencia</p>
+
+<!-- ============================================================ -->
+<h2>1. ¿Qué problema resuelve broom?</h2>
+
+<p>Los modelos estadísticos en R (<code>lm()</code>, <code>glm()</code>, <code>t.test()</code>, etc.) devuelven objetos complejos con estructuras inconsistentes. <code>broom</code> los convierte en <strong>tibbles limpios y predecibles</strong> que puedes filtrar, graficar y exportar directamente.</p>
+
+<div class="comparison">
+<div class="bad">
+<h4>❌ Sin broom</h4>
+<pre style="background:#fff;color:#333;font-size:0.78rem;margin:0;padding:0.5rem;"><code>summary(modelo)$coefficients
+# Devuelve una matrix
+# Columnas con nombres inconsistentes
+# No incluye intervalos de confianza
+# Los coeficientes están en log-odds
+# No se puede usar con ggplot o dplyr</code></pre>
+</div>
+<div class="good">
+<h4>✅ Con broom</h4>
+<pre style="background:#fff;color:#333;font-size:0.78rem;margin:0;padding:0.5rem;"><code>tidy(modelo, exponentiate = TRUE,
+     conf.int = TRUE)
+# Devuelve un tibble
+# Columnas estándar siempre iguales
+# Con intervalos de confianza
+# Odds ratios directos
+# Se integra con ggplot y dplyr</code></pre>
+</div>
+</div>
+
+<pre><code><span class="kw">library</span>(broom)
+<span class="comment"># broom se instala automáticamente con tidyverse</span>
+<span class="comment"># pero hay que cargarlo explícitamente</span>
+</code></pre>
+
+<!-- ============================================================ -->
+<h2>2. Las tres funciones principales</h2>
+
+<p><code>broom</code> tiene tres funciones que se aplican a prácticamente cualquier modelo en R:</p>
+
+<table>
+<tr><th>Función</th><th>¿Qué devuelve?</th><th>Una fila por...</th><th>Uso principal</th></tr>
+<tr><td><code><strong>tidy()</strong></code></td><td>Coeficientes del modelo</td><td>Cada variable/término</td><td>Tabla de odds ratios, forest plots</td></tr>
+<tr><td><code><strong>glance()</strong></code></td><td>Métricas globales del modelo</td><td>El modelo completo (1 fila)</td><td>Comparar modelos (AIC, BIC, deviance)</td></tr>
+<tr><td><code><strong>augment()</strong></code></td><td>Datos originales + predicciones</td><td>Cada observación</td><td>Diagnósticos, residuos, valores predichos</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>3. tidy(): coeficientes del modelo</h2>
+
+<h3>Uso básico</h3>
+
+<pre><code>modelo <- <span class="func">glm</span>(rotacion_bin ~ satisfaccion_laboral + edad + antiguedad_anios,
+              data = innovaco, family = <span class="kw">binomial</span>)
+
+<span class="comment"># Coeficientes en log-odds (poco útil para comunicar)</span>
+<span class="func">tidy</span>(modelo)
+<span class="comment"># # A tibble: 4 × 5</span>
+<span class="comment">#   term                  estimate std.error statistic  p.value</span>
+<span class="comment">#   (Intercept)             1.234     0.456     2.707   0.0068</span>
+<span class="comment">#   satisfaccion_laboral   -0.432     0.078    -5.538   3.1e-8</span>
+<span class="comment">#   edad                   -0.021     0.009    -2.333   0.0196</span>
+<span class="comment">#   antiguedad_anios       -0.145     0.034    -4.265   2.0e-5</span>
+</code></pre>
+
+<h3>Con odds ratios e intervalos de confianza</h3>
+
+<pre><code><span class="comment"># ESTO es lo que quieres para comunicar resultados</span>
+<span class="func">tidy</span>(modelo, exponentiate = <span class="kw">TRUE</span>, conf.int = <span class="kw">TRUE</span>)
+<span class="comment"># # A tibble: 4 × 7</span>
+<span class="comment">#   term                  estimate std.error statistic  p.value conf.low conf.high</span>
+<span class="comment">#   (Intercept)             3.435     0.456     2.707   0.0068    1.405     8.397</span>
+<span class="comment">#   satisfaccion_laboral    0.649     0.078    -5.538   3.1e-8    0.557     0.757</span>
+<span class="comment">#   edad                    0.979     0.009    -2.333   0.0196    0.961     0.997</span>
+<span class="comment">#   antiguedad_anios        0.865     0.034    -4.265   2.0e-5    0.809     0.925</span>
+</code></pre>
+
+<h3>Columnas que devuelve tidy()</h3>
+
+<table>
+<tr><th>Columna</th><th>Contenido</th><th>Con <code>exponentiate = TRUE</code></th></tr>
+<tr><td><code>term</code></td><td>Nombre de la variable</td><td>Igual</td></tr>
+<tr><td><code>estimate</code></td><td>Coeficiente (log-odds)</td><td><strong>Odds ratio</strong></td></tr>
+<tr><td><code>std.error</code></td><td>Error estándar</td><td>Error estándar (del log-OR)</td></tr>
+<tr><td><code>statistic</code></td><td>Estadístico z (Wald)</td><td>Igual</td></tr>
+<tr><td><code>p.value</code></td><td>P-valor</td><td>Igual</td></tr>
+<tr><td><code>conf.low</code></td><td>IC 95% inferior (log-odds)</td><td><strong>IC 95% inferior del OR</strong></td></tr>
+<tr><td><code>conf.high</code></td><td>IC 95% superior (log-odds)</td><td><strong>IC 95% superior del OR</strong></td></tr>
+</table>
+
+<h3>Filtrar y transformar con dplyr</h3>
+
+<pre><code><span class="comment"># Solo los predictores significativos</span>
+<span class="func">tidy</span>(modelo, exponentiate = <span class="kw">TRUE</span>, conf.int = <span class="kw">TRUE</span>) <span class="pipe">|></span>
+  <span class="func">filter</span>(term != <span class="string">"(Intercept)"</span>,
+         p.value < <span class="num">0.05</span>)
+
+<span class="comment"># Ordenar por efecto (de mayor a menor OR)</span>
+<span class="func">tidy</span>(modelo, exponentiate = <span class="kw">TRUE</span>, conf.int = <span class="kw">TRUE</span>) <span class="pipe">|></span>
+  <span class="func">filter</span>(term != <span class="string">"(Intercept)"</span>) <span class="pipe">|></span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(estimate))
+
+<span class="comment"># Crear etiquetas para el gráfico</span>
+<span class="func">tidy</span>(modelo, exponentiate = <span class="kw">TRUE</span>, conf.int = <span class="kw">TRUE</span>) <span class="pipe">|></span>
+  <span class="func">filter</span>(term != <span class="string">"(Intercept)"</span>) <span class="pipe">|></span>
+  <span class="func">mutate</span>(
+    variable = <span class="func">case_when</span>(
+      term == <span class="string">"satisfaccion_laboral"</span> ~ <span class="string">"Satisfacción laboral"</span>,
+      term == <span class="string">"antiguedad_anios"</span>     ~ <span class="string">"Antigüedad (años)"</span>,
+      term == <span class="string">"edad"</span>                 ~ <span class="string">"Edad"</span>,
+      <span class="kw">TRUE</span> ~ term
+    ),
+    significativo = p.value < <span class="num">0.05</span>
+  )
+</code></pre>
+
+<h3>Usar tidy() para forest plots con ggplot2</h3>
+
+<pre><code><span class="comment"># Forest plot de odds ratios (código completo)</span>
+or_datos <- <span class="func">tidy</span>(modelo, exponentiate = <span class="kw">TRUE</span>, conf.int = <span class="kw">TRUE</span>) <span class="pipe">|></span>
+  <span class="func">filter</span>(term != <span class="string">"(Intercept)"</span>) <span class="pipe">|></span>
+  <span class="func">mutate</span>(significativo = p.value < <span class="num">0.05</span>)
+
+<span class="func">ggplot</span>(or_datos, <span class="func">aes</span>(x = estimate, y = <span class="func">reorder</span>(term, estimate))) +
+  <span class="func">geom_vline</span>(xintercept = <span class="num">1</span>, linetype = <span class="string">"dashed"</span>, color = <span class="string">"gray50"</span>) +
+  <span class="func">geom_point</span>(<span class="func">aes</span>(color = significativo), size = <span class="num">3</span>) +
+  <span class="func">geom_errorbarh</span>(<span class="func">aes</span>(xmin = conf.low, xmax = conf.high,
+                      color = significativo), height = <span class="num">0.2</span>) +
+  <span class="func">scale_color_manual</span>(values = <span class="func">c</span>(<span class="string">"TRUE"</span> = <span class="string">"#B85042"</span>, <span class="string">"FALSE"</span> = <span class="string">"gray60"</span>)) +
+  <span class="func">labs</span>(x = <span class="string">"Odds Ratio"</span>, y = <span class="kw">NULL</span>,
+       title = <span class="string">"Factores de riesgo de rotación"</span>) +
+  <span class="func">theme_minimal</span>()
+</code></pre>
+
+<!-- ============================================================ -->
+<h2>4. glance(): métricas globales del modelo</h2>
+
+<pre><code><span class="func">glance</span>(modelo)
+<span class="comment"># # A tibble: 1 × 8</span>
+<span class="comment">#   null.deviance df.null logLik   AIC   BIC deviance df.residual  nobs</span>
+<span class="comment">#         1423.      1199  -652.  1312. 1332.   1304.       1196  1200</span>
+</code></pre>
+
+<h3>Columnas que devuelve glance()</h3>
+
+<table>
+<tr><th>Columna</th><th>Significado</th><th>Uso práctico</th></tr>
+<tr><td><code>null.deviance</code></td><td>Deviance del modelo sin predictores</td><td>Referencia: cuánto "error" hay sin explicar nada</td></tr>
+<tr><td><code>df.null</code></td><td>GL del modelo nulo</td><td>n − 1</td></tr>
+<tr><td><code>logLik</code></td><td>Log-verosimilitud</td><td>Base para AIC, BIC; más alto = mejor ajuste</td></tr>
+<tr><td><code><strong>AIC</strong></code></td><td>Akaike Information Criterion</td><td><strong>Comparar modelos: menor = mejor</strong></td></tr>
+<tr><td><code>BIC</code></td><td>Bayesian Information Criterion</td><td>Similar al AIC pero penaliza más la complejidad</td></tr>
+<tr><td><code>deviance</code></td><td>Deviance del modelo ajustado</td><td>Menor que null.deviance si los predictores ayudan</td></tr>
+<tr><td><code>df.residual</code></td><td>GL residuales</td><td>n − k − 1</td></tr>
+<tr><td><code>nobs</code></td><td>Número de observaciones</td><td>Verificación</td></tr>
+</table>
+
+<h3>Comparar modelos con glance()</h3>
+
+<pre><code><span class="comment"># Crear tabla comparativa de varios modelos</span>
+<span class="func">bind_rows</span>(
+  <span class="func">glance</span>(mod_nulo) <span class="pipe">|></span> <span class="func">mutate</span>(modelo = <span class="string">"Nulo"</span>),
+  <span class="func">glance</span>(mod_1)    <span class="pipe">|></span> <span class="func">mutate</span>(modelo = <span class="string">"Satisfacción"</span>),
+  <span class="func">glance</span>(mod_3)    <span class="pipe">|></span> <span class="func">mutate</span>(modelo = <span class="string">"Sat + Antig + Edad"</span>),
+  <span class="func">glance</span>(mod_ext)  <span class="pipe">|></span> <span class="func">mutate</span>(modelo = <span class="string">"Extendido"</span>)
+) <span class="pipe">|></span>
+  <span class="func">select</span>(modelo, AIC, BIC, deviance, df.residual) <span class="pipe">|></span>
+  <span class="func">arrange</span>(AIC)
+</code></pre>
+
+<!-- ============================================================ -->
+<h2>5. augment(): datos + predicciones</h2>
+
+<pre><code><span class="func">augment</span>(modelo, type.predict = <span class="string">"response"</span>)
+<span class="comment"># Devuelve el data frame original + columnas nuevas:</span>
+<span class="comment">#   .fitted    = probabilidad predicha (con type.predict = "response")</span>
+<span class="comment">#   .resid     = residuos del modelo</span>
+<span class="comment">#   .hat       = leverage (influencia de cada observación)</span>
+<span class="comment">#   .cooksd    = distancia de Cook (observaciones influyentes)</span>
+<span class="comment">#   .std.resid = residuos estandarizados</span>
+</code></pre>
+
+<h3>Uso práctico: agregar predicciones al dataset</h3>
+
+<pre><code><span class="comment"># Agregar probabilidades predichas al dataset original</span>
+innovaco_con_pred <- <span class="func">augment</span>(modelo, newdata = innovaco,
+                             type.predict = <span class="string">"response"</span>)
+
+<span class="comment"># Ahora puedes usar .fitted como probabilidad de rotación</span>
+innovaco_con_pred <span class="pipe">|></span>
+  <span class="func">select</span>(id_empleado, nombre, departamento, rotacion, .fitted) <span class="pipe">|></span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(.fitted)) <span class="pipe">|></span>
+  <span class="func">head</span>(<span class="num">20</span>)
+</code></pre>
+
+<h3>Diagnósticos del modelo</h3>
+
+<pre><code><span class="comment"># Identificar observaciones influyentes</span>
+diagnosticos <- <span class="func">augment</span>(modelo)
+
+<span class="comment"># Puntos con alta distancia de Cook (influyentes)</span>
+diagnosticos <span class="pipe">|></span>
+  <span class="func">filter</span>(.cooksd > <span class="num">4</span> / <span class="func">nrow</span>(innovaco)) <span class="pipe">|></span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(.cooksd))
+
+<span class="comment"># Gráfico de residuos vs. fitted</span>
+<span class="func">ggplot</span>(diagnosticos, <span class="func">aes</span>(x = .fitted, y = .resid)) +
+  <span class="func">geom_point</span>(alpha = <span class="num">0.3</span>) +
+  <span class="func">geom_hline</span>(yintercept = <span class="num">0</span>, linetype = <span class="string">"dashed"</span>) +
+  <span class="func">labs</span>(title = <span class="string">"Residuos vs. Valores ajustados"</span>)
+</code></pre>
+
+<!-- ============================================================ -->
+<h2>6. tidy() con otros tipos de modelos</h2>
+
+<p><code>broom</code> no es solo para <code>glm()</code>. Funciona con la mayoría de los modelos estadísticos en R:</p>
+
+<pre><code><span class="comment"># Con prueba t</span>
+<span class="func">tidy</span>(<span class="func">t.test</span>(satisfaccion_laboral ~ rotacion, data = innovaco))
+
+<span class="comment"># Con chi-cuadrado</span>
+<span class="func">tidy</span>(<span class="func">chisq.test</span>(<span class="func">table</span>(innovaco$departamento, innovaco$rotacion)))
+
+<span class="comment"># Con correlación</span>
+<span class="func">tidy</span>(<span class="func">cor.test</span>(innovaco$satisfaccion_laboral, innovaco$edad))
+
+<span class="comment"># Con regresión lineal</span>
+<span class="func">tidy</span>(<span class="func">lm</span>(ingreso_mensual ~ antiguedad_anios + educacion, data = innovaco))
+
+<span class="comment"># Con ANOVA</span>
+<span class="func">tidy</span>(<span class="func">aov</span>(satisfaccion_laboral ~ departamento, data = innovaco))
+</code></pre>
+
+<div class="tip">
+<strong>Regla de oro</strong>
+Cada vez que ejecutes una prueba estadística o ajustes un modelo, envuelve el resultado en <code>tidy()</code>. Obtendrás un tibble limpio que puedes usar inmediatamente con <code>dplyr</code> y <code>ggplot2</code>, sin tener que extraer componentes manualmente con <code>$</code>.
+</div>
+
+<!-- ============================================================ -->
+<h2>7. Resumen rápido</h2>
+
+<table>
+<tr><th>Función</th><th>Input</th><th>Output</th><th>Uso típico</th></tr>
+<tr><td><code>tidy(modelo)</code></td><td>Cualquier modelo</td><td>Tibble: 1 fila por término</td><td>Tabla de coeficientes, forest plot</td></tr>
+<tr><td><code>tidy(modelo, exponentiate = TRUE)</code></td><td>glm binomial</td><td>Tibble con odds ratios</td><td>Odds ratios para el VP</td></tr>
+<tr><td><code>tidy(modelo, conf.int = TRUE)</code></td><td>Cualquier modelo</td><td>Tibble con IC 95%</td><td>Forest plots con barras de error</td></tr>
+<tr><td><code>glance(modelo)</code></td><td>Cualquier modelo</td><td>Tibble: 1 fila total</td><td>Comparar AIC entre modelos</td></tr>
+<tr><td><code>augment(modelo)</code></td><td>Cualquier modelo</td><td>Datos + predicciones</td><td>Diagnósticos, residuos, leverage</td></tr>
+<tr><td><code>augment(modelo, type.predict = "response")</code></td><td>glm binomial</td><td>Datos + probabilidades</td><td>Ranking de riesgo de rotación</td></tr>
+</table>
+
+<footer>
+<p>Apunte 09 — Analítica de Personas · Magíster en Gestión de Personas · Semana 3</p>
+<p><code>broom</code> se instala con tidyverse pero debe cargarse explícitamente: <code>library(broom)</code></p>
+</footer>
+
+</body>
+</html>

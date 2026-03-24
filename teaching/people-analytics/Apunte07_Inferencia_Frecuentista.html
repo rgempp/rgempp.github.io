@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 07 — Inferencia estadística frecuentista | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .num { color: #C084FC; }
+  .kw { color: #F472B6; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #DBEAFE; border-left: 4px solid #3B82F6; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 0.8rem 1rem; margin: 0.8rem 0; border-radius: 6px; font-family: Georgia, serif; font-size: 1.05rem; text-align: center; }
+  .decision-tree { background: #FFF7ED; border: 1px solid #FED7AA; padding: 1rem; border-radius: 8px; margin: 1rem 0; }
+  .decision-tree h4 { color: #C2410C; margin-bottom: 0.5rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 07 — Inferencia estadística frecuentista</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 3 · Referencia</p>
+
+<!-- ============================================================ -->
+<div class="note">
+<strong>📝 Nota terminológica</strong>
+En este apunte y en todo el curso usaremos el término en inglés <strong>p-value</strong> (en vez de "valor p" o "valor-p"). La razón es pragmática: R reporta la columna como <code>p.value</code>, la literatura internacional usa <em>p-value</em>, y mantener el término en inglés evita confusiones cuando los alumnos consulten fuentes en ambos idiomas.
+</div>
+
+<h2>1. ¿Qué es la inferencia estadística?</h2>
+
+<p>La inferencia estadística nos permite <strong>hacer afirmaciones sobre una población</strong> a partir de una muestra. En people analytics, queremos saber si lo que observamos en los datos de InnovaCo (nuestra muestra) refleja un patrón real o podría ser producto del azar.</p>
+
+<p>El enfoque <strong>frecuentista</strong> se basa en una idea central: si no hubiera efecto real (hipótesis nula), ¿qué tan probable sería observar datos como los nuestros? Esa probabilidad es el <strong>p-value</strong>.</p>
+
+<h3>El marco de prueba de hipótesis</h3>
+
+<table>
+<tr><th>Paso</th><th>Qué hacer</th><th>Ejemplo</th></tr>
+<tr><td>1. Plantear H₀ y H₁</td><td>H₀: no hay efecto/diferencia. H₁: sí lo hay.</td><td>H₀: la satisfacción es igual entre quienes se van y quienes se quedan</td></tr>
+<tr><td>2. Elegir prueba</td><td>Depende del tipo de variables y supuestos</td><td>Prueba t (dos medias, variable continua)</td></tr>
+<tr><td>3. Fijar α</td><td>Nivel de significancia (convencionalmente .05)</td><td>α = .05</td></tr>
+<tr><td>4. Calcular estadístico</td><td>Ejecutar la prueba en R</td><td><code>t.test(satisfaccion ~ rotacion)</code></td></tr>
+<tr><td>5. Decidir</td><td>Si p < α, rechazamos H₀</td><td>p = .0003 < .05 → rechazamos H₀</td></tr>
+<tr><td>6. Reportar tamaño de efecto</td><td>¿Cuán grande es la diferencia?</td><td>d de Cohen = 0.45 (mediano)</td></tr>
+</table>
+
+<div class="warning">
+<strong>⚠️ Rechazar H₀ ≠ "probamos que H₁ es verdadera"</strong>
+El p-value es la probabilidad de los datos dado H₀, no la probabilidad de H₀ dados los datos. Rechazar H₀ significa que los datos son muy improbables bajo H₀, no que H₁ sea "cierta". Esta distinción importa cuando comunicamos resultados al VP.
+</div>
+
+<!-- ============================================================ -->
+<h2>2. Árbol de decisión: ¿qué prueba usar?</h2>
+
+<div class="decision-tree">
+<h4>🌳 Guía rápida para elegir la prueba</h4>
+<p><strong>¿Qué tipo de variables estoy comparando?</strong></p>
+<p>📊 <strong>Continua vs. categórica (2 grupos)</strong> → Prueba t / Mann-Whitney</p>
+<p>📊 <strong>Continua vs. categórica (3+ grupos)</strong> → ANOVA / Kruskal-Wallis</p>
+<p>📊 <strong>Categórica vs. categórica</strong> → Chi-cuadrado / Fisher</p>
+<p>📊 <strong>Continua vs. continua</strong> → Correlación de Pearson / Spearman</p>
+<p>📊 <strong>Continua pre-post (mismas personas)</strong> → t pareada / Wilcoxon signado</p>
+</div>
+
+<!-- ============================================================ -->
+<h2>3. Pruebas para comparar dos grupos</h2>
+
+<h3>3.1 Prueba t de Student (paramétrica)</h3>
+
+<p><strong>¿Cuándo?</strong> Comparar la media de una variable continua entre dos grupos independientes. Supone normalidad (robusta con n > 30) y varianzas similares (R usa la corrección de Welch por defecto).</p>
+
+<pre><code><span class="comment"># t de Student para dos muestras independientes</span>
+<span class="func">t.test</span>(satisfaccion_laboral <span class="pipe">~</span> rotacion, data = innovaco)
+
+<span class="comment"># Guardar y extraer componentes</span>
+res_t <- <span class="func">t.test</span>(satisfaccion_laboral <span class="pipe">~</span> rotacion, data = innovaco)
+res_t$p.value       <span class="comment"># p-value</span>
+res_t$estimate       <span class="comment"># medias de cada grupo</span>
+res_t$conf.int       <span class="comment"># IC 95% de la diferencia</span>
+res_t$statistic      <span class="comment"># valor del estadístico t</span>
+</code></pre>
+
+<h3>3.2 Prueba t pareada (mismas personas, dos momentos)</h3>
+
+<pre><code><span class="comment"># Si tuviéramos satisfacción medida antes y después de una intervención</span>
+<span class="func">t.test</span>(datos$satisfaccion_post, datos$satisfaccion_pre,
+       paired = <span class="kw">TRUE</span>)
+</code></pre>
+
+<h3>3.3 Mann-Whitney U (no paramétrica)</h3>
+
+<p><strong>¿Cuándo?</strong> Cuando la variable no es normal (ej: escalas Likert 1-5 con distribución asimétrica, n pequeño, o variables ordinales). Compara medianas en vez de medias.</p>
+
+<pre><code><span class="comment"># Equivalente no paramétrico de la prueba t</span>
+<span class="func">wilcox.test</span>(satisfaccion_laboral <span class="pipe">~</span> rotacion, data = innovaco)
+
+<span class="comment"># Versión pareada (equivalente no paramétrico de t pareada)</span>
+<span class="func">wilcox.test</span>(datos$post, datos$pre, paired = <span class="kw">TRUE</span>)
+</code></pre>
+
+<div class="tip">
+<strong>¿Paramétrica o no paramétrica?</strong>
+En la práctica, con muestras grandes (n > 30 por grupo), la prueba t es robusta ante violaciones de normalidad. Con la muestra de InnovaCo (n = 1.200), la prueba t es perfectamente apropiada. Las alternativas no paramétricas son más relevantes con muestras pequeñas o distribuciones muy sesgadas.
+</div>
+
+<h3>Tabla comparativa: 2 grupos</h3>
+
+<table>
+<tr><th>Prueba</th><th>Tipo</th><th>Supuestos</th><th>En R</th><th>Compara</th></tr>
+<tr><td>t de Student</td><td>Paramétrica</td><td>Normalidad, varianzas ~iguales</td><td><code>t.test(y ~ grupo)</code></td><td>Medias</td></tr>
+<tr><td>Welch t-test</td><td>Paramétrica</td><td>Normalidad (varianzas pueden diferir)</td><td><code>t.test(y ~ grupo)</code> (default en R)</td><td>Medias</td></tr>
+<tr><td>Mann-Whitney U</td><td>No paramétrica</td><td>Independencia</td><td><code>wilcox.test(y ~ grupo)</code></td><td>Distribuciones/medianas</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>4. Pruebas para comparar tres o más grupos</h2>
+
+<h3>4.1 ANOVA de un factor (paramétrica)</h3>
+
+<p><strong>¿Cuándo?</strong> Comparar la media de una variable continua entre 3+ grupos (ej: satisfacción por departamento). Supone normalidad y homogeneidad de varianzas.</p>
+
+<pre><code><span class="comment"># ANOVA: ¿la satisfacción difiere entre departamentos?</span>
+modelo_anova <- <span class="func">aov</span>(satisfaccion_laboral <span class="pipe">~</span> departamento, data = innovaco)
+<span class="func">summary</span>(modelo_anova)
+
+<span class="comment"># Comparaciones post-hoc (¿CUÁLES departamentos difieren?)</span>
+<span class="func">TukeyHSD</span>(modelo_anova)
+
+<span class="comment"># Tamaño de efecto: eta-cuadrado (η²)</span>
+<span class="comment"># η² = SS_between / SS_total</span>
+ss <- <span class="func">summary</span>(modelo_anova)[[<span class="num">1</span>]]
+eta_sq <- ss[<span class="string">"departamento"</span>, <span class="string">"Sum Sq"</span>] / <span class="func">sum</span>(ss[, <span class="string">"Sum Sq"</span>])
+eta_sq
+</code></pre>
+
+<h3>4.2 Kruskal-Wallis (no paramétrica)</h3>
+
+<pre><code><span class="comment"># Equivalente no paramétrico del ANOVA</span>
+<span class="func">kruskal.test</span>(satisfaccion_laboral <span class="pipe">~</span> departamento, data = innovaco)
+
+<span class="comment"># Post-hoc no paramétrico: Dunn test (requiere paquete dunn.test)</span>
+<span class="comment"># install.packages("dunn.test")</span>
+<span class="comment"># dunn.test::dunn.test(innovaco$satisfaccion_laboral, innovaco$departamento)</span>
+</code></pre>
+
+<h3>Tabla comparativa: 3+ grupos</h3>
+
+<table>
+<tr><th>Prueba</th><th>Tipo</th><th>Supuestos</th><th>En R</th><th>Post-hoc</th></tr>
+<tr><td>ANOVA</td><td>Paramétrica</td><td>Normalidad, homogeneidad de varianzas</td><td><code>aov(y ~ grupo)</code></td><td><code>TukeyHSD()</code></td></tr>
+<tr><td>Welch ANOVA</td><td>Paramétrica</td><td>Normalidad (varianzas pueden diferir)</td><td><code>oneway.test(y ~ grupo)</code></td><td>Games-Howell</td></tr>
+<tr><td>Kruskal-Wallis</td><td>No paramétrica</td><td>Independencia</td><td><code>kruskal.test(y ~ grupo)</code></td><td>Dunn test</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>5. Pruebas para variables categóricas</h2>
+
+<h3>5.1 Chi-cuadrado de independencia</h3>
+
+<p><strong>¿Cuándo?</strong> Evaluar si hay asociación entre dos variables categóricas (ej: ¿la rotación depende del departamento?).</p>
+
+<pre><code><span class="comment"># Tabla de contingencia</span>
+tabla <- <span class="func">table</span>(innovaco$departamento, innovaco$rotacion)
+tabla
+
+<span class="comment"># Chi-cuadrado</span>
+chi_res <- <span class="func">chisq.test</span>(tabla)
+chi_res
+
+<span class="comment"># Componentes útiles</span>
+chi_res$statistic    <span class="comment"># valor chi-cuadrado</span>
+chi_res$p.value      <span class="comment"># p-value</span>
+chi_res$expected     <span class="comment"># frecuencias esperadas bajo H₀</span>
+chi_res$residuals    <span class="comment"># residuos estandarizados</span>
+chi_res$stdres       <span class="comment"># residuos estandarizados ajustados (mejores)</span>
+</code></pre>
+
+<div class="tip">
+<strong>Los residuos estandarizados ajustados son tu mejor amigo</strong>
+<code>chi_res$stdres</code> te dice <em>dónde</em> está la asociación: valores con |z| > 2 son celdas donde hay significativamente más (positivo) o menos (negativo) casos de lo esperado. Ejemplo: un residuo de +3.2 en "Ventas × Sí" significa que Ventas tiene significativamente más rotación de la esperada.
+</div>
+
+<h3>5.2 Prueba exacta de Fisher</h3>
+
+<p><strong>¿Cuándo?</strong> Cuando alguna celda esperada tiene frecuencia < 5. Más precisa que chi-cuadrado con muestras pequeñas.</p>
+
+<pre><code><span class="comment"># Para tablas 2x2 o con celdas pequeñas</span>
+<span class="func">fisher.test</span>(tabla)
+
+<span class="comment"># Si la tabla es grande, Fisher puede ser lento.</span>
+<span class="comment"># Alternativa: simular el p-value</span>
+<span class="func">chisq.test</span>(tabla, simulate.p.value = <span class="kw">TRUE</span>, B = <span class="num">10000</span>)
+</code></pre>
+
+<h3>5.3 Prueba de proporciones</h3>
+
+<pre><code><span class="comment"># Comparar proporciones entre 2 grupos</span>
+<span class="comment"># ¿La tasa de rotación difiere entre hombres y mujeres?</span>
+tabla_genero <- <span class="func">table</span>(innovaco$genero, innovaco$rotacion)
+<span class="func">prop.test</span>(tabla_genero)
+</code></pre>
+
+<!-- ============================================================ -->
+<h2>6. Correlaciones</h2>
+
+<h3>6.1 Pearson (paramétrica)</h3>
+
+<p>Mide la fuerza y dirección de la relación <strong>lineal</strong> entre dos variables continuas. Rango: −1 a +1.</p>
+
+<pre><code><span class="comment"># Correlación entre dos variables</span>
+<span class="func">cor</span>(innovaco$satisfaccion_laboral, innovaco$antiguedad_anios)
+
+<span class="comment"># Con test de significancia</span>
+<span class="func">cor.test</span>(innovaco$satisfaccion_laboral, innovaco$antiguedad_anios)
+
+<span class="comment"># Matriz completa de correlaciones</span>
+vars_num <- innovaco <span class="pipe">|></span>
+  <span class="func">select</span>(<span class="func">where</span>(is.numeric))
+mat_cor <- <span class="func">cor</span>(vars_num)
+<span class="func">round</span>(mat_cor, <span class="num">2</span>)
+</code></pre>
+
+<h3>6.2 Spearman (no paramétrica)</h3>
+
+<p><strong>¿Cuándo?</strong> Variables ordinales, relaciones no lineales, o distribuciones no normales. Mide relación <strong>monotónica</strong> (no necesariamente lineal).</p>
+
+<pre><code><span class="comment"># Correlación de Spearman</span>
+<span class="func">cor</span>(innovaco$satisfaccion_laboral, innovaco$antiguedad_anios,
+    method = <span class="string">"spearman"</span>)
+
+<span class="func">cor.test</span>(innovaco$satisfaccion_laboral, innovaco$antiguedad_anios,
+         method = <span class="string">"spearman"</span>)
+</code></pre>
+
+<h3>6.3 Visualización con corrplot</h3>
+
+<pre><code><span class="kw">library</span>(corrplot)
+
+<span class="comment"># Opciones de visualización</span>
+<span class="func">corrplot</span>(mat_cor,
+         method = <span class="string">"color"</span>,        <span class="comment"># "circle", "number", "pie", "shade"</span>
+         type   = <span class="string">"upper"</span>,        <span class="comment"># solo triángulo superior</span>
+         addCoef.col = <span class="string">"black"</span>,   <span class="comment"># mostrar números</span>
+         tl.col = <span class="string">"black"</span>,        <span class="comment"># color de etiquetas</span>
+         tl.cex = <span class="num">0.8</span>,            <span class="comment"># tamaño de etiquetas</span>
+         number.cex = <span class="num">0.7</span>,        <span class="comment"># tamaño de números</span>
+         order = <span class="string">"hclust"</span>,        <span class="comment"># agrupar variables similares</span>
+         col = <span class="func">colorRampPalette</span>(<span class="func">c</span>(<span class="string">"#EF4444"</span>, <span class="string">"white"</span>, <span class="string">"#16A34A"</span>))(<span class="num">200</span>))
+</code></pre>
+
+<h3>Tabla comparativa: correlaciones</h3>
+
+<table>
+<tr><th>Tipo</th><th>Supuestos</th><th>En R</th><th>Mide</th></tr>
+<tr><td>Pearson (r)</td><td>Linealidad, normalidad bivariada</td><td><code>cor(x, y)</code> o <code>cor(x, y, method = "pearson")</code></td><td>Relación lineal</td></tr>
+<tr><td>Spearman (ρ)</td><td>Monotonicidad</td><td><code>cor(x, y, method = "spearman")</code></td><td>Relación monotónica</td></tr>
+<tr><td>Kendall (τ)</td><td>Concordancia de pares</td><td><code>cor(x, y, method = "kendall")</code></td><td>Concordancia (más robusto, más conservador)</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2>7. Tamaños de efecto: por qué importan</h2>
+
+<p>El p-value responde "¿existe un efecto?". El tamaño de efecto responde "<strong>¿cuán grande es?</strong>". Con muestras grandes (como n = 1.200), casi cualquier diferencia es significativa, incluso diferencias triviales. Para tomar decisiones de gestión, necesitamos saber si el efecto es <em>lo suficientemente grande como para actuar</em>.</p>
+
+<div class="comparison">
+<div class="bad">
+<h4>❌ Solo p-value</h4>
+<p>"La diferencia en satisfacción entre quienes se van y quienes se quedan es significativa (p = .0003)."</p>
+<p><em>¿Y? ¿Es grande o pequeña? ¿Invierto $50 millones en programas de satisfacción?</em></p>
+</div>
+<div class="good">
+<h4>✅ P-value + tamaño de efecto</h4>
+<p>"La diferencia es significativa (p = .0003) y de magnitud mediana (d = 0.45). Un empleado insatisfecho tiene casi el doble de chances de irse."</p>
+<p><em>Ahora sí puedo decidir.</em></p>
+</div>
+</div>
+
+<h3>7.1 d de Cohen (para comparación de medias)</h3>
+
+<div class="formula">
+d = |M₁ − M₂| / SD<sub>pooled</sub>
+</div>
+
+<pre><code><span class="comment"># Cálculo manual de d de Cohen</span>
+stats <- innovaco <span class="pipe">|></span>
+  <span class="func">group_by</span>(rotacion) <span class="pipe">|></span>
+  <span class="func">summarise</span>(media = <span class="func">mean</span>(satisfaccion_laboral),
+            sd    = <span class="func">sd</span>(satisfaccion_laboral),
+            n     = <span class="func">n</span>())
+
+sd_pooled <- <span class="func">sqrt</span>(
+  ((stats$n[<span class="num">1</span>] - <span class="num">1</span>) * stats$sd[<span class="num">1</span>]^<span class="num">2</span> +
+   (stats$n[<span class="num">2</span>] - <span class="num">1</span>) * stats$sd[<span class="num">2</span>]^<span class="num">2</span>) /
+  (stats$n[<span class="num">1</span>] + stats$n[<span class="num">2</span>] - <span class="num">2</span>)
+)
+
+d_cohen <- <span class="func">abs</span>(<span class="func">diff</span>(stats$media)) / sd_pooled
+d_cohen
+</code></pre>
+
+<h3>7.2 V de Cramér (para chi-cuadrado)</h3>
+
+<div class="formula">
+V = √(χ² / (n × (min(filas, columnas) − 1)))
+</div>
+
+<pre><code><span class="comment"># Cálculo manual</span>
+n_total <- <span class="func">sum</span>(tabla)
+k <- <span class="func">min</span>(<span class="func">nrow</span>(tabla), <span class="func">ncol</span>(tabla))
+v_cramer <- <span class="func">sqrt</span>(chi_res$statistic / (n_total * (k - <span class="num">1</span>)))
+v_cramer
+</code></pre>
+
+<h3>7.3 η² (eta-cuadrado, para ANOVA)</h3>
+
+<div class="formula">
+η² = SS<sub>between</sub> / SS<sub>total</sub>
+</div>
+
+<h3>7.4 r como tamaño de efecto</h3>
+<p>La propia correlación de Pearson (r) es un tamaño de efecto. También se puede convertir t a r:</p>
+
+<div class="formula">
+r = √(t² / (t² + gl))
+</div>
+
+<h3>Tabla de referencia: magnitudes convencionales</h3>
+
+<table>
+<tr><th>Medida</th><th>Pequeño</th><th>Mediano</th><th>Grande</th><th>Para qué prueba</th></tr>
+<tr><td><strong>d de Cohen</strong></td><td>0.20</td><td>0.50</td><td>0.80</td><td>Prueba t, comparación de medias</td></tr>
+<tr><td><strong>r</strong></td><td>0.10</td><td>0.30</td><td>0.50</td><td>Correlación</td></tr>
+<tr><td><strong>V de Cramér</strong></td><td>0.10</td><td>0.30</td><td>0.50</td><td>Chi-cuadrado</td></tr>
+<tr><td><strong>η² (eta-cuadrado)</strong></td><td>0.01</td><td>0.06</td><td>0.14</td><td>ANOVA</td></tr>
+<tr><td><strong>Odds Ratio</strong></td><td>1.5</td><td>2.5</td><td>4.3</td><td>Regresión logística (equivalencias aproximadas)</td></tr>
+</table>
+
+<div class="note">
+<strong>📝 Regla para comunicar al VP</strong>
+"El p-value le dice si existe un efecto. El tamaño del efecto le dice si vale la pena hacer algo al respecto. Con 1.200 empleados, casi todo da significativo. Un efecto pequeño (d = 0.2) probablemente no justifica una intervención costosa; uno mediano (d = 0.5) o grande (d = 0.8) sí."
+</div>
+
+<!-- ============================================================ -->
+<h2>8. Supuestos y cuándo verificarlos</h2>
+
+<h3>Normalidad</h3>
+
+<pre><code><span class="comment"># Test de Shapiro-Wilk (máx ~5.000 obs)</span>
+<span class="func">shapiro.test</span>(innovaco$satisfaccion_laboral)
+
+<span class="comment"># Visualización: QQ-plot</span>
+<span class="func">qqnorm</span>(innovaco$satisfaccion_laboral)
+<span class="func">qqline</span>(innovaco$satisfaccion_laboral, col = <span class="string">"red"</span>)
+
+<span class="comment"># Con ggplot2</span>
+<span class="func">ggplot</span>(innovaco, <span class="func">aes</span>(sample = satisfaccion_laboral)) +
+  <span class="func">stat_qq</span>() + <span class="func">stat_qq_line</span>(color = <span class="string">"red"</span>)
+</code></pre>
+
+<h3>Homogeneidad de varianzas</h3>
+
+<pre><code><span class="comment"># Test de Levene (requiere paquete car)</span>
+<span class="comment"># car::leveneTest(satisfaccion_laboral ~ rotacion, data = innovaco)</span>
+
+<span class="comment"># Alternativa rápida: comparar SDs por grupo</span>
+innovaco <span class="pipe">|></span>
+  <span class="func">group_by</span>(rotacion) <span class="pipe">|></span>
+  <span class="func">summarise</span>(sd = <span class="func">sd</span>(satisfaccion_laboral))
+<span class="comment"># Si la razón SD_mayor / SD_menor < 2, está bien</span>
+</code></pre>
+
+<div class="tip">
+<strong>Regla práctica</strong>
+Con n > 30 por grupo y grupos de tamaño similar, las pruebas paramétricas son robustas a violaciones moderadas de normalidad y homogeneidad de varianzas. Con la muestra de InnovaCo, rara vez será necesario recurrir a alternativas no paramétricas. Pero es importante <em>saber que existen</em> para cuando trabajen con muestras más pequeñas.
+</div>
+
+<!-- ============================================================ -->
+<h2>9. Mapa resumen de pruebas</h2>
+
+<table>
+<tr><th>Variable dependiente</th><th>Variable independiente</th><th>Paramétrica</th><th>No paramétrica</th><th>Tamaño de efecto</th></tr>
+<tr><td>Continua</td><td>Categórica (2 grupos)</td><td><code>t.test()</code></td><td><code>wilcox.test()</code></td><td>d de Cohen</td></tr>
+<tr><td>Continua</td><td>Categórica (3+ grupos)</td><td><code>aov()</code></td><td><code>kruskal.test()</code></td><td>η²</td></tr>
+<tr><td>Categórica</td><td>Categórica</td><td><code>chisq.test()</code></td><td><code>fisher.test()</code></td><td>V de Cramér</td></tr>
+<tr><td>Continua</td><td>Continua</td><td><code>cor(method="pearson")</code></td><td><code>cor(method="spearman")</code></td><td>r / ρ</td></tr>
+<tr><td>Continua (pre-post)</td><td>Tiempo (2 mediciones)</td><td><code>t.test(paired=TRUE)</code></td><td><code>wilcox.test(paired=TRUE)</code></td><td>d de Cohen</td></tr>
+</table>
+
+<footer>
+<p>Apunte 07 — Analítica de Personas · Magíster en Gestión de Personas · Semana 3</p>
+<p>Este apunte es material de referencia. Consulta el script de clase (<code>clase03_script.R</code>) para el código aplicado al caso InnovaCo.</p>
+</footer>
+
+</body>
+</html>

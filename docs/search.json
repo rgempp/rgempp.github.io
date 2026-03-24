@@ -18,7 +18,7 @@
     "href": "teaching-tutorials.html",
     "title": "Tutorials & Lecture Notes",
     "section": "",
-    "text": "Analítica de Personas (People Analytics) · Semestre otoño 2026\nLecture notes for the People Analytics course, written in Spanish.\n\nApunte 1 — El pipe y las funciones de dplyr\nApunte 2 — Visualización de datos con ggplot2\nApunte 3 — Introducción a Quarto\nApunte 4 — Uniendo bases de datos\nApunte 5 — Funciones dplyr avanzadas\nApunte 6 — Limpiar datos con janitor"
+    "text": "Analítica de Personas (People Analytics) · Semestre otoño 2026\nLecture notes for the People Analytics course, written in Spanish.\n\nApunte 1 — El pipe y las funciones de dplyr\nApunte 2 — Visualización de datos con ggplot2\nApunte 3 — Introducción a Quarto\nApunte 4 — Uniendo bases de datos\nApunte 5 — Funciones dplyr avanzadas\nApunte 6 — Limpiar datos con janitor\nApunte 7 — Inferencia frecuentista\nApunte 8 — glm y Modelos Lineales Generalizados\nApunte 9 — El paquete broom\nApunte 10 — Regresión logística aplicada"
   },
   {
     "objectID": "teaching-courses.html",

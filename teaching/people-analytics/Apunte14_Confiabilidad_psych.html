@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 14 — Datos Likert y confiabilidad con psych | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .result { color: #A78BFA; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; color: #1E293B; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  .output-box pre code { color: #1E293B; }
+  .bad pre, .good pre { color: #1E293B; background: none; padding: 0; margin: 0; }
+  .bad pre code, .good pre code { color: #1E293B; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  blockquote { border-left: 3px solid var(--slate); padding-left: 1rem; margin: 1rem 0; color: var(--slate); font-style: italic; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 14 — Datos Likert y confiabilidad con psych</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 6 · Prof. René Gempp</p>
+
+
+<h2>1. Datos Likert: lo que conviene saber antes de mirarlos</h2>
+
+<p>Una <strong>escala Likert</strong> (Likert, 1932) es un conjunto de afirmaciones —cada una con opciones de respuesta ordenadas, típicamente de 5 o 7 puntos— diseñadas para medir un constructo latente como satisfacción, engagement, compromiso o confianza. En analítica de personas son la materia prima de toda encuesta organizacional.</p>
+
+<p>Tres tecnicismos que conviene tener claros antes de mirar los datos:</p>
+
+<h3>1.1 Ítem Likert ≠ escala Likert</h3>
+
+<p>Un <em>ítem</em> aislado no es una escala. Hablar de "una escala Likert" estrictamente significa <strong>un puntaje sumado o promediado</strong> de varios ítems que cargan en un mismo constructo. Un ítem único tiene mucho más error de medición que el promedio de cinco ítems del mismo constructo. Por eso las encuestas serias agrupan ítems en sub-escalas y reportan resultados a nivel de sub-escala.</p>
+
+<h3>1.2 Tratamiento como variable continua</h3>
+
+<p>Cada ítem individual es, técnicamente, una variable <strong>ordinal</strong>: "muy en desacuerdo" no está exactamente a la misma distancia de "en desacuerdo" que "de acuerdo" lo está de "muy de acuerdo". Pero en la práctica, cuando promediamos cinco ítems para crear un puntaje de sub-escala, ese promedio se trata como continuo y se analiza con correlación, regresión y EFA. La literatura psicométrica moderna debate este punto (Liddell &amp; Kruschke, 2018), pero la práctica organizacional sigue siendo el promedio simple. Esta clase adopta esa convención y la declara explícitamente.</p>
+
+<h3>1.3 Ítems con redacción inversa (<em>reverse-keyed</em>)</h3>
+
+<p>Para reducir el sesgo de aquiescencia (tendencia a marcar "de acuerdo" sin pensar demasiado), las encuestas suelen incluir ítems formulados en sentido negativo. Por ejemplo, en una sub-escala de reconocimiento, casi todos los ítems pueden ser positivos:</p>
+
+<ul>
+  <li><em>"Mi jefatura reconoce mi trabajo cuando lo hago bien"</em></li>
+  <li><em>"En InnovaCo se valora públicamente a quienes destacan"</em></li>
+</ul>
+
+<p>...pero uno o dos ítems pueden estar formulados al revés:</p>
+
+<ul>
+  <li><em>"En InnovaCo el trabajo de uno pasa desapercibido"</em></li>
+</ul>
+
+<p>Si olvidas recodificar ese ítem antes de calcular alpha o de promediar, los resultados pierden sentido. Es uno de los errores más frecuentes en el análisis de datos de encuesta —tan frecuente que vamos a dedicarle una sección entera más adelante.</p>
+
+<div class="warning">
+<strong>Recodificación de un ítem reverso en escala 1–5</strong>
+La fórmula es <code>nuevo = 6 - viejo</code>. Para escalas 1–7, es <code>nuevo = 8 - viejo</code>. Generalizando: <code>nuevo = (max + min) - viejo</code>.
+</div>
+
+<pre><code><span class="comment"># Recodificar un ítem reverso con dplyr</span>
+datos &lt;- datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(item_rec_03 = 6 - item_rec_03)
+
+<span class="comment"># O varios ítems a la vez con across()</span>
+items_reversos &lt;- <span class="func">c</span>(<span class="string">"item_rec_03"</span>, <span class="string">"item_pro_05"</span>)
+datos &lt;- datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(<span class="func">across</span>(<span class="func">all_of</span>(items_reversos), ~ 6 - .x))</code></pre>
+
+<div class="tip">
+<strong>Atajo del paquete <code>psych</code></strong>
+La función <code>psych::reverse.code()</code> hace lo mismo de forma vectorizada. Su sintaxis es ligeramente más compacta cuando hay muchos ítems reversos en una misma escala.
+</div>
+
+
+<h2>2. Confiabilidad: el coeficiente α de Cronbach</h2>
+
+<p>La <strong>confiabilidad</strong> de una escala se refiere al grado en que sus ítems miden consistentemente el mismo constructo. La medida más reportada en la literatura organizacional es el <strong>coeficiente α de Cronbach</strong> (Cronbach, 1951). Conceptualmente, α responde a la pregunta: <em>"si yo dividiera mis ítems en dos mitades aleatorias, ¿qué tan correlacionadas estarían entre sí, en promedio, sobre todas las particiones posibles?"</em>.</p>
+
+<p>La fórmula es:</p>
+
+<p style="text-align: center; font-family: Georgia, serif; font-size: 1.05rem; margin: 1rem 0;">
+α = (k / (k − 1)) · (1 − Σσ²ᵢ / σ²<sub>total</sub>)
+</p>
+
+<p>donde <em>k</em> es el número de ítems, σ²ᵢ es la varianza de cada ítem y σ²<sub>total</sub> es la varianza del puntaje total (la suma de los ítems).</p>
+
+<h3>2.1 Reglas prácticas (con cautela)</h3>
+
+<table>
+<tr><th>α</th><th>Interpretación tradicional (Nunnally, 1978)</th></tr>
+<tr><td>≥ 0,90</td><td>Excelente — pero <em>cuidado</em>: puede sugerir redundancia entre ítems.</td></tr>
+<tr><td>0,80 – 0,89</td><td>Buena. Estándar deseado en investigación aplicada.</td></tr>
+<tr><td>0,70 – 0,79</td><td>Aceptable. Mínimo razonable para uso aplicado.</td></tr>
+<tr><td>0,60 – 0,69</td><td>Cuestionable. Solo defendible para escalas exploratorias o muy cortas.</td></tr>
+<tr><td>&lt; 0,60</td><td>Insuficiente. La escala probablemente no mide lo que crees.</td></tr>
+</table>
+
+
+<h2>3. <code>psych::alpha()</code>: cálculo en R</h2>
+
+<p>El paquete <code>psych</code> de William Revelle (Northwestern) es el estándar de facto para psicometría en R. La función <code>alpha()</code> calcula el coeficiente y entrega además un diagnóstico ítem por ítem que es el verdadero valor del output.</p>
+
+<pre><code><span class="comment"># Instalar (una sola vez)</span>
+<span class="func">install.packages</span>(<span class="string">"psych"</span>)
+
+<span class="comment"># Cargar</span>
+<span class="func">library</span>(psych)
+
+<span class="comment"># Seleccionar los ítems de UNA sub-escala</span>
+items_lid &lt;- datos <span class="pipe">|&gt;</span> <span class="func">select</span>(<span class="func">starts_with</span>(<span class="string">"item_lid"</span>))
+
+<span class="comment"># Calcular alpha</span>
+psych::<span class="func">alpha</span>(items_lid)</code></pre>
+
+<h3>3.1 Lectura del output completo</h3>
+
+<p>El output de <code>psych::alpha()</code> tiene tres bloques principales:</p>
+
+<div class="output-box">
+<pre>Reliability analysis
+Call: psych::alpha(x = items_lid)
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+       0.83      0.83    0.81      0.50 5.0 0.0083  3.4 0.81     0.49
+
+ lower alpha upper     95% confidence boundaries
+0.82 0.83 0.85
+
+ Reliability if an item is dropped:
+            raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
+item_lid_01      0.79      0.79    0.76      0.49 3.8   0.0099 0.014  0.49
+item_lid_02      0.80      0.80    0.77      0.50 3.9   0.0096 0.014  0.49
+item_lid_03      0.79      0.79    0.76      0.49 3.8   0.0099 0.013  0.49
+item_lid_04      0.81      0.81    0.78      0.51 4.2   0.0090 0.011  0.50
+item_lid_05      0.80      0.80    0.77      0.50 4.0   0.0094 0.013  0.49
+
+ Item statistics
+              n raw.r std.r r.cor r.drop mean   sd
+item_lid_01 936  0.78  0.79  0.71   0.61  3.4 1.05
+item_lid_02 936  0.76  0.76  0.68   0.59  3.5 1.04
+item_lid_03 936  0.78  0.78  0.71   0.61  3.4 1.06
+item_lid_04 936  0.74  0.74  0.65   0.57  3.5 1.05
+item_lid_05 936  0.76  0.76  0.68   0.59  3.4 1.05</pre>
+</div>
+
+<h3>3.2 Las cuatro columnas que te tienen que importar</h3>
+
+<table>
+<tr><th>Columna</th><th>Qué es</th><th>Cómo leerla</th></tr>
+<tr><td><code>raw_alpha</code></td><td>α calculado sobre las covarianzas (escala original de los ítems)</td><td>El número que reportas en tu informe.</td></tr>
+<tr><td><code>std.alpha</code></td><td>α calculado sobre las correlaciones (ítems estandarizados)</td><td>Útil cuando los ítems tienen escalas distintas. En una encuesta Likert homogénea suele ser muy parecido al raw.</td></tr>
+<tr><td><code>r.drop</code></td><td>Correlación de cada ítem con la suma del resto (item-total correlation corregida)</td><td>Cualquier ítem con <code>r.drop &lt; 0,30</code> es candidato a revisión. Si es <strong>negativo</strong>, casi seguro olvidaste recodificar un ítem reverso.</td></tr>
+<tr><td><code>Reliability if an item is dropped → raw_alpha</code></td><td>Cómo cambiaría α si removieras ese ítem</td><td>Si dropear un ítem <em>aumenta</em> α, ese ítem es candidato a eliminación.</td></tr>
+</table>
+
+
+<h2>4. La firma del bug: olvidar recodificar un ítem reverso</h2>
+
+<p>Esta es la lección más importante del apunte. Mira lo que pasa cuando "olvidamos" recodificar <code>item_rec_03</code> (que está formulado al revés):</p>
+
+<div class="comparison">
+<div class="bad">
+<h4>Sin recodificar (BUG)</h4>
+<pre>raw_alpha = 0.33
+
+r.drop por ítem:
+item_rec_01:  0.55
+item_rec_02:  0.52
+item_rec_03: -0.62  &lt;-- ALERTA
+item_rec_04:  0.49
+item_rec_05:  0.58</pre>
+</div>
+<div class="good">
+<h4>Después de recodificar</h4>
+<pre>raw_alpha = 0.81
+
+r.drop por ítem:
+item_rec_01:  0.61
+item_rec_02:  0.58
+item_rec_03:  0.57
+item_rec_04:  0.55
+item_rec_05:  0.62</pre>
+</div>
+</div>
+
+<p>Dos firmas del bug:</p>
+
+<ol>
+  <li>El α global es <strong>absurdamente bajo</strong> (~0,30) cuando esperabas algo en torno a 0,80.</li>
+  <li>Hay un ítem con <code>r.drop</code> <strong>negativa</strong>. Eso es matemáticamente equivalente a decir: "este ítem se mueve en sentido contrario al resto de la escala", lo cual solo tiene sentido si está formulado al revés.</li>
+</ol>
+
+<div class="warning">
+<strong>Hábito profesional</strong>
+Antes de calcular alpha, <strong>siempre</strong> mira las correlaciones bivariadas entre los ítems de la sub-escala (con <code>cor()</code>). Si ves una columna con correlaciones consistentemente negativas mientras las demás son positivas, ese ítem probablemente es reverso y nadie te avisó.
+</div>
+
+
+<h2>5. Limitaciones del α de Cronbach</h2>
+
+<p>Aunque α es la medida de confiabilidad más reportada, tiene tres problemas conceptuales que conviene tener presentes y nombrar honestamente cuando reportamos resultados:</p>
+
+<ol>
+  <li><strong>Asume tau-equivalencia.</strong> El cálculo de α supone que todos los ítems miden el constructo con exactamente el mismo peso (cargas factoriales iguales). Es un supuesto fuerte que casi nunca se cumple en la práctica.</li>
+  <li><strong>Aumenta artificialmente con el número de ítems.</strong> Una escala larga y mediocre puede tener α alto solo por la cantidad de ítems, no por la calidad. Por eso α &gt; 0,90 a veces sugiere redundancia en lugar de confiabilidad excelente.</li>
+  <li><strong>No es prueba de unidimensionalidad.</strong> Una escala que mide <em>dos</em> constructos distintos pero correlacionados puede tener α aceptable. α te dice "los ítems se mueven juntos" pero no "los ítems miden una sola cosa".</li>
+</ol>
+
+<div class="advanced">
+<strong>Más allá del α: el coeficiente ω de McDonald</strong>
+McNeish (2018) publicó en <em>Psychological Methods</em> un artículo titulado <em>"Thanks coefficient alpha, we'll take it from here"</em> argumentando que la psicometría moderna debe migrar de α a coeficientes basados en modelos factoriales. El más popular es el <strong>coeficiente ω</strong> (omega) de McDonald, que se calcula con <code>psych::omega()</code> y no requiere el supuesto de tau-equivalencia. En esta clase reportamos α por su ubicuidad práctica, pero quien hará una tesis empírica debería conocer ω. La referencia es: McNeish, D. (2018). Thanks coefficient alpha, we'll take it from here. <em>Psychological Methods, 23</em>(3), 412–433.
+</div>
+
+
+<h2>6. Flujo de trabajo recomendado para una sub-escala</h2>
+
+<ol>
+  <li><strong>Identifica los ítems</strong> que pertenecen a la sub-escala (en base a la documentación de la encuesta).</li>
+  <li><strong>Detecta ítems reversos</strong> leyendo los enunciados o calculando correlaciones bivariadas con <code>cor()</code>.</li>
+  <li><strong>Recodifica los reversos</strong> con <code>mutate(across(...))</code> antes de cualquier cálculo posterior.</li>
+  <li><strong>Calcula α</strong> con <code>psych::alpha()</code>.</li>
+  <li><strong>Lee el bloque "Reliability if an item is dropped"</strong>: si algún ítem aumenta α al ser eliminado, considera quitarlo (con justificación).</li>
+  <li><strong>Lee la columna <code>r.drop</code></strong>: cualquier valor &lt; 0,30 o (peor) negativo merece atención.</li>
+  <li><strong>Reporta α</strong> en tu informe junto al N, el número de ítems y el rango de respuestas. Por convención: <em>"La sub-escala de liderazgo (5 ítems, escala 1–5) presentó una confiabilidad adecuada (α = 0,83, n = 936)."</em></li>
+  <li><strong>Solo entonces</strong>, calcula el puntaje promedio de la sub-escala con <code>rowMeans()</code> para análisis posteriores.</li>
+</ol>
+
+
+<h2>7. Resumen: el kit de la confiabilidad</h2>
+
+<table>
+<tr><th>Función</th><th>Paquete</th><th>Para qué sirve</th></tr>
+<tr><td><code>mutate(x = 6 - x)</code></td><td>dplyr</td><td>Recodificar un ítem reverso en escala 1–5</td></tr>
+<tr><td><code>psych::alpha()</code></td><td>psych</td><td>Coeficiente α de Cronbach + diagnóstico ítem por ítem</td></tr>
+<tr><td><code>psych::omega()</code></td><td>psych</td><td>Coeficiente ω de McDonald (avanzado)</td></tr>
+<tr><td><code>psych::reverse.code()</code></td><td>psych</td><td>Atajo para recodificar varios ítems reversos a la vez</td></tr>
+<tr><td><code>cor()</code></td><td>base R</td><td>Matriz de correlaciones para detectar ítems reversos por su firma</td></tr>
+</table>
+
+
+<footer>
+Apunte 14 · Curso Analítica de Personas · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+</footer>
+
+</body>
+</html>

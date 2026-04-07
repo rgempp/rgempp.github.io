@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 12 — Diagnóstico de regresión: residuos, VIF y supuestos | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --terracotta: #B85042; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; color: #1E293B; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .key { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .key strong { display: block; margin-bottom: 0.3rem; }
+  .output-box { background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 6px; padding: 0.8rem 1rem; margin: 0.8rem 0; font-family: 'Consolas', monospace; font-size: 0.85rem; color: #1E293B; white-space: pre; overflow-x: auto; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 12 — Diagnóstico de regresión: residuos, VIF y supuestos</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 5 · Prof. René Gempp</p>
+
+<!-- ============================================================ -->
+<h2>1. Por qué necesitamos diagnosticar el modelo</h2>
+
+<p>La regresión lineal estima coeficientes <em>siempre</em>. Le das cualquier dataset y te entrega números. Pero esos números solo son confiables si se cumplen ciertos <strong>supuestos</strong>. Si los supuestos están seriamente violados, los <em>p</em>-values, los intervalos de confianza y la interpretación del modelo pueden ser engañosos. Diagnosticar el modelo es el equivalente a, en una auditoría contable, revisar que los libros estén cuadrados antes de firmar el informe.</p>
+
+
+<!-- ============================================================ -->
+<h2>2. Los cuatro supuestos clásicos del modelo lineal</h2>
+
+<table>
+<tr><th>Supuesto</th><th>Qué dice</th><th>Cómo se chequea</th></tr>
+<tr><td><strong>Linealidad</strong></td><td>La relación entre cada VI y la VD es aproximadamente lineal.</td><td>Gráfico de residuos vs. valores ajustados.</td></tr>
+<tr><td><strong>Independencia</strong></td><td>Las observaciones son independientes entre sí.</td><td>Conocimiento del diseño del estudio (no es un test estadístico).</td></tr>
+<tr><td><strong>Homocedasticidad</strong></td><td>La varianza de los residuos es constante a lo largo de los valores ajustados.</td><td>Gráfico de residuos vs. valores ajustados (de nuevo).</td></tr>
+<tr><td><strong>Normalidad de residuos</strong></td><td>Los residuos siguen aproximadamente una distribución normal.</td><td>QQ-plot, histograma de residuos.</td></tr>
+</table>
+
+<p>A esto se agrega una preocupación práctica que no es un "supuesto" formal pero sí una condición de buena especificación: la <strong>multicolinealidad</strong>, que aparece cuando dos o más predictores miden cosas muy similares.</p>
+
+
+<!-- ============================================================ -->
+<h2>3. <code>broom::augment()</code>: extraer residuos y diagnósticos</h2>
+
+<p>El paquete <strong>broom</strong> tiene tres funciones principales (Apunte 13). La que nos sirve para diagnóstico es <code>augment()</code>: toma un modelo y devuelve los datos originales <em>enriquecidos</em> con columnas nuevas (residuos, valores ajustados, leverage, etc.).</p>
+
+<pre><code><span class="func">library</span>(broom)
+
+diagnostico &lt;- <span class="func">augment</span>(modelo_2)
+<span class="func">glimpse</span>(diagnostico)</code></pre>
+
+<p>Las columnas que agrega <code>augment()</code>:</p>
+
+<table>
+<tr><th>Columna</th><th>Qué contiene</th></tr>
+<tr><td><code>.fitted</code></td><td>Valor predicho por el modelo (ŷ)</td></tr>
+<tr><td><code>.resid</code></td><td>Residuo: y − ŷ</td></tr>
+<tr><td><code>.std.resid</code></td><td>Residuo estandarizado (dividido por su error estándar)</td></tr>
+<tr><td><code>.hat</code></td><td>Leverage: cuán "extremo" es el caso en sus predictores</td></tr>
+<tr><td><code>.cooksd</code></td><td>Distancia de Cook: influencia del caso sobre el modelo</td></tr>
+<tr><td><code>.sigma</code></td><td>Error estándar residual del modelo si ese caso fuera eliminado</td></tr>
+</table>
+
+
+<!-- ============================================================ -->
+<h2>4. Gráfico residuos vs. valores ajustados</h2>
+
+<pre><code><span class="func">ggplot</span>(diagnostico, <span class="func">aes</span>(x = .fitted, y = .resid)) +
+  <span class="func">geom_point</span>(alpha = 0.4) +
+  <span class="func">geom_hline</span>(yintercept = 0, color = <span class="string">"red"</span>) +
+  <span class="func">geom_smooth</span>(se = FALSE) +
+  <span class="func">labs</span>(
+    title = <span class="string">"Residuos vs. valores ajustados"</span>,
+    x = <span class="string">"Valor ajustado"</span>, y = <span class="string">"Residuo"</span>
+  ) +
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<p>Cómo leer este gráfico:</p>
+
+<table>
+<tr><th>Lo que ves</th><th>Lo que significa</th></tr>
+<tr><td>Nube simétrica alrededor de cero, sin patrón</td><td>✅ Bien. Linealidad y homocedasticidad razonables.</td></tr>
+<tr><td>Forma de embudo (varianza crece con ŷ)</td><td>⚠️ Heterocedasticidad. Considera transformar la VD (e.g., log).</td></tr>
+<tr><td>Curva sistemática en el suavizador</td><td>⚠️ Falta de linealidad. Considera agregar términos cuadráticos o transformar predictores.</td></tr>
+<tr><td>Puntos muy alejados del resto</td><td>⚠️ Outliers. Investigar caso por caso, no eliminar a ciegas.</td></tr>
+</table>
+
+
+<!-- ============================================================ -->
+<h2>5. QQ-plot: normalidad de los residuos</h2>
+
+<pre><code><span class="func">ggplot</span>(diagnostico, <span class="func">aes</span>(sample = .std.resid)) +
+  <span class="func">stat_qq</span>(alpha = 0.5) +
+  <span class="func">stat_qq_line</span>(color = <span class="string">"red"</span>) +
+  <span class="func">labs</span>(
+    title = <span class="string">"Normalidad de los residuos"</span>,
+    x = <span class="string">"Cuantiles teóricos"</span>, y = <span class="string">"Cuantiles observados"</span>
+  ) +
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<p>El QQ-plot compara los cuantiles observados de los residuos contra los cuantiles que esperaríamos si fueran perfectamente normales. Si los puntos caen sobre la línea diagonal, los residuos son aproximadamente normales.</p>
+
+<table>
+<tr><th>Patrón</th><th>Diagnóstico</th></tr>
+<tr><td>Puntos sobre la diagonal</td><td>✅ Normalidad razonable.</td></tr>
+<tr><td>Puntas que se separan en los extremos</td><td>⚠️ Colas más pesadas que la normal (típico con outliers).</td></tr>
+<tr><td>Forma de "S"</td><td>⚠️ Distribución sesgada.</td></tr>
+</table>
+
+<div class="tip">
+<strong>Nota tranquilizadora:</strong>
+Con muestras grandes (N > 200, lo que es la regla en RRHH), el modelo lineal es bastante robusto a desviaciones moderadas de la normalidad. No hay que entrar en pánico si el QQ-plot no es perfecto.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>6. Multicolinealidad: <code>car::vif()</code></h2>
+
+<p>La <strong>multicolinealidad</strong> aparece cuando dos o más predictores están altamente correlacionados entre sí. El problema no es que el modelo "se rompa" — los coeficientes siguen siendo insesgados — sino que sus errores estándar se inflan, los coeficientes individuales se vuelven inestables y difíciles de interpretar.</p>
+
+<p>El <strong>VIF</strong> (Variance Inflation Factor) cuantifica este problema: indica cuánto se infla la varianza del coeficiente de cada predictor por su correlación con los demás predictores del modelo.</p>
+
+<pre><code><span class="func">library</span>(car)
+
+<span class="func">vif</span>(modelo_2)</code></pre>
+
+<table>
+<tr><th>Valor de VIF</th><th>Interpretación</th></tr>
+<tr><td>VIF ≈ 1</td><td>Predictor no correlacionado con los demás. Ideal.</td></tr>
+<tr><td>1 &lt; VIF &lt; 5</td><td>Correlación moderada. Sin problema.</td></tr>
+<tr><td>5 ≤ VIF &lt; 10</td><td>⚠️ Atención. Revisar si hay redundancia.</td></tr>
+<tr><td>VIF ≥ 10</td><td>⛔ Problema serio. Eliminar uno de los predictores correlacionados.</td></tr>
+</table>
+
+<div class="key">
+<strong>Para variables categóricas con más de 2 niveles:</strong>
+<code>vif()</code> reporta el <strong>GVIF</strong> (Generalized VIF) y la columna <code>GVIF^(1/(2*Df))</code>. Esa última es la que se compara con los umbrales clásicos: el valor 2 equivale a un VIF tradicional de 4, y el valor 3.16 equivale a un VIF de 10.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>7. Observaciones influyentes: la distancia de Cook</h2>
+
+<p>Una observación es <strong>influyente</strong> si, al eliminarla, los coeficientes del modelo cambian sustancialmente. La distancia de Cook combina dos cosas: cuán extremo es el residuo y cuán extremo es el caso en sus predictores (leverage).</p>
+
+<pre><code><span class="comment"># Identificar los casos más influyentes</span>
+diagnostico <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(.cooksd)) <span class="pipe">|&gt;</span>
+  <span class="func">slice_head</span>(n = 10) <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(.cooksd, .fitted, .resid)
+
+<span class="comment"># Regla práctica: Cook's D &gt; 4/n merece atención</span>
+n &lt;- <span class="func">nrow</span>(diagnostico)
+diagnostico <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(.cooksd &gt; 4 / n)</code></pre>
+
+<div class="warning">
+<strong>NO eliminar observaciones a ciegas:</strong>
+Un caso influyente no es "un error". Puede ser un dato perfectamente válido que cuenta una historia importante (por ejemplo: el único gerente de un departamento, una empleada con un sueldo excepcional). La regla profesional es: investigar caso por caso, documentar la decisión y, si se decide excluir, reportarlo explícitamente en el memo.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>8. Cuándo no preocuparse demasiado</h2>
+
+<p>El modelo lineal es razonablemente robusto. En la práctica de people analytics, con muestras de cientos o miles de empleados:</p>
+
+<ul style="margin-left:1.5rem;">
+  <li>Pequeñas desviaciones de la normalidad: <strong>no son un problema</strong>.</li>
+  <li>Heterocedasticidad moderada: los coeficientes siguen siendo insesgados; los errores estándar pueden corregirse con errores robustos (paquete <code>sandwich</code>).</li>
+  <li>VIFs entre 4 y 5: tolerables si la teoría justifica incluir ambas variables.</li>
+  <li>Algunos puntos influyentes en una muestra grande: investigar, pero rara vez justifican excluir casos.</li>
+</ul>
+
+<p>El diagnóstico no es un examen que el modelo "aprueba o reprueba". Es una conversación entre el analista y los datos: <em>"¿confío lo suficiente en este modelo como para presentar sus resultados al directorio?"</em>.</p>
+
+
+<!-- ============================================================ -->
+<h2>9. Resumen: el chequeo mínimo antes de reportar</h2>
+
+<table>
+<tr><th>Paso</th><th>Función</th><th>Qué buscar</th></tr>
+<tr><td>1. Multicolinealidad</td><td><code>car::vif(modelo)</code></td><td>VIFs &lt; 5</td></tr>
+<tr><td>2. Residuos vs. ajustados</td><td><code>augment()</code> + <code>geom_point()</code></td><td>Nube sin patrón sistemático</td></tr>
+<tr><td>3. Normalidad de residuos</td><td><code>stat_qq()</code></td><td>Puntos cerca de la diagonal</td></tr>
+<tr><td>4. Influyentes</td><td><code>arrange(desc(.cooksd))</code></td><td>Cook's D &lt; 4/n</td></tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · Analítica de Personas · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

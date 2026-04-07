@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 17 — Presentaciones ejecutivas con Quarto Reveal.js | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .yaml-key { color: #F472B6; font-weight: bold; }
+  .yaml-val { color: #4ADE80; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; color: #1E293B; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  .output-box pre code { color: #1E293B; }
+  .bad pre, .good pre { color: #1E293B; background: none; padding: 0; margin: 0; }
+  .bad pre code, .good pre code { color: #1E293B; }
+  .slide-preview { background: white; border: 2px solid #CBD5E1; border-radius: 8px; padding: 1.2rem; margin: 1rem 0; font-family: 'Segoe UI', sans-serif; min-height: 160px; }
+  .slide-preview h5 { font-family: Georgia, serif; color: var(--navy); font-size: 1.1rem; margin-bottom: 0.8rem; border-bottom: 2px solid var(--terra); padding-bottom: 0.3rem; }
+  .slide-preview .bullet { color: var(--slate); font-size: 0.88rem; margin: 0.3rem 0 0.3rem 1rem; }
+  .slide-label { display: inline-block; background: var(--terra); color: white; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.4rem; font-family: Calibri, sans-serif; letter-spacing: 0.5px; }
+  .checklist { list-style: none; padding-left: 0; }
+  .checklist li { padding-left: 1.8rem; position: relative; margin-bottom: 0.6rem; }
+  .checklist li::before { content: "☐"; position: absolute; left: 0.3rem; top: 0; color: var(--teal); font-size: 1.2rem; font-weight: bold; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  blockquote { border-left: 3px solid var(--slate); padding-left: 1rem; margin: 1rem 0; color: var(--slate); font-style: italic; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 17 — Presentaciones ejecutivas con Quarto Reveal.js</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 6 · Prof. René Gempp</p>
+
+
+<h2>1. ¿Por qué Reveal.js desde Quarto y no PowerPoint?</h2>
+
+<p>La Tarea 5 pide dos productos distintos: un informe técnico completo y una presentación ejecutiva de 5 slides dirigida a la VP de Personas. Hasta ahora hemos trabajado en Quarto generando documentos HTML. En este apunte aprenderemos a generar, desde el mismo Quarto, un segundo tipo de salida: una presentación en formato <strong>Reveal.js</strong>.</p>
+
+<p>La pregunta razonable es: ¿por qué no usar PowerPoint? Tres motivos:</p>
+
+<table>
+<tr><th>Dimensión</th><th>PowerPoint</th><th>Quarto Reveal.js</th></tr>
+<tr><td><strong>Reproducibilidad</strong></td><td>Los gráficos se copian y pegan desde R. Si cambian los datos, hay que volver a pegar todo.</td><td>Los gráficos se generan desde chunks de R cada vez que renderizamos. Si cambian los datos, la presentación se actualiza automáticamente.</td></tr>
+<tr><td><strong>Consistencia</strong></td><td>El estilo visual depende de cada archivo y tiende a "derivar" con las ediciones.</td><td>El estilo vive en el YAML del documento. Todas las slides heredan la misma tipografía, colores y espaciados.</td></tr>
+<tr><td><strong>Una sola fuente de verdad</strong></td><td>El informe y la presentación son dos archivos distintos que hay que mantener sincronizados a mano.</td><td>Podemos generar la presentación a partir del mismo <code>.qmd</code> del informe (o de uno muy parecido), con los mismos chunks de análisis.</td></tr>
+</table>
+
+<div class="tip">
+<strong>¿Cuándo seguiría teniendo sentido PowerPoint?</strong>
+Cuando nuestra audiencia va a editar la presentación después de recibirla (p. ej., el VP quiere agregar sus propias notas o reordenar slides). Para presentaciones de "solo lectura" que vamos a mostrar nosotros mismos, Reveal.js es superior. Quarto también puede exportar a <code>.pptx</code> con <code>format: pptx</code> si necesitamos un archivo editable como entregable paralelo.
+</div>
+
+
+<h2>2. El header YAML mínimo para una presentación Reveal.js</h2>
+
+<p>Un archivo <code>.qmd</code> se convierte en una presentación Reveal.js cuando su header YAML tiene <code>format: revealjs</code> en lugar de <code>format: html</code>. El header mínimo usable para la Tarea 5 es:</p>
+
+<pre><code><span class="comment">---</span>
+<span class="yaml-key">title</span>: <span class="yaml-val">"Engagement 2026"</span>
+<span class="yaml-key">subtitle</span>: <span class="yaml-val">"Presentación a la VP de Personas"</span>
+<span class="yaml-key">author</span>: <span class="yaml-val">"[Tu nombre]"</span>
+<span class="yaml-key">date</span>: <span class="yaml-val">today</span>
+<span class="yaml-key">format</span>:
+  <span class="yaml-key">revealjs</span>:
+    <span class="yaml-key">theme</span>: <span class="yaml-val">simple</span>
+    <span class="yaml-key">slide-number</span>: <span class="yaml-val">true</span>
+    <span class="yaml-key">embed-resources</span>: <span class="yaml-val">true</span>
+    <span class="yaml-key">incremental</span>: <span class="yaml-val">false</span>
+    <span class="yaml-key">fig-width</span>: <span class="yaml-val">9</span>
+    <span class="yaml-key">fig-height</span>: <span class="yaml-val">5</span>
+<span class="yaml-key">lang</span>: <span class="yaml-val">es</span>
+<span class="yaml-key">execute</span>:
+  <span class="yaml-key">echo</span>: <span class="yaml-val">false</span>
+  <span class="yaml-key">warning</span>: <span class="yaml-val">false</span>
+  <span class="yaml-key">message</span>: <span class="yaml-val">false</span>
+<span class="comment">---</span></code></pre>
+
+<p>Tres claves que conviene entender bien:</p>
+
+<h3>2.1 <code>embed-resources: true</code> — el detalle más importante</h3>
+
+<p>Por defecto, Quarto genera un <code>.html</code> que depende de una carpeta auxiliar con imágenes, CSS y JavaScript. Si subimos solo el HTML a Canvas, la presentación <strong>no se ve</strong> cuando alguien más la abre. Con <code>embed-resources: true</code>, Quarto empaqueta todo —imágenes, scripts, CSS— dentro del mismo archivo HTML. Es un archivo más grande, pero autosuficiente: podemos mandarlo por correo, subirlo a cualquier lado, y siempre se verá bien.</p>
+
+<div class="warning">
+<strong>La regla de oro para entregas</strong>
+Nunca entregues una presentación Reveal.js sin <code>embed-resources: true</code>. El archivo que sube a Canvas debe abrirse correctamente en cualquier navegador sin carpetas auxiliares.
+</div>
+
+<h3>2.2 <code>echo: false</code> — presentación, no reporte</h3>
+
+<p>En el informe técnico usamos <code>code-fold: true</code> para ocultar el código pero dejarlo disponible. En una presentación ejecutiva no queremos código en absoluto: queremos gráficos y bullets. <code>echo: false</code> evita que aparezcan los chunks en las slides. Los gráficos que producen los chunks sí aparecen.</p>
+
+<h3>2.3 <code>theme: simple</code> — el tema más limpio para audiencias ejecutivas</h3>
+
+<p>Quarto Reveal.js trae varios temas built-in. Para una presentación dirigida a un VP, tres son especialmente apropiados: <code>simple</code> (fondo blanco, negro suave, máxima sobriedad), <code>serif</code> (con tipografía Georgia, más formal) y <code>default</code> (fondo blanco ligeramente gris). Los temas oscuros (<code>dark</code>, <code>black</code>, <code>blood</code>) son más llamativos pero menos apropiados para presentaciones formales de consultoría interna.</p>
+
+
+<h2>3. Cómo se separan las slides</h2>
+
+<p>Esta es la parte que más confunde al principio. Quarto ofrece <strong>dos formas distintas</strong> de separar slides, y conviene elegir una y ser consistente.</p>
+
+<h3>3.1 Opción A — separar con <code>##</code> (headers de nivel 2)</h3>
+
+<p>Cada <code>##</code> inicia una nueva slide. El texto después del <code>##</code> es el título de esa slide. Es la opción más intuitiva y la que recomendamos para la Tarea 5.</p>
+
+<pre><code><span class="comment">## Mensaje 1: la caída no es transversal</span>
+
+Desarrollo de Software y Soporte Técnico concentran
+el 72% de la caída total de engagement.
+
+<span class="comment">## Mensaje 2: liderazgo es el driver más potente</span>
+
+El modelo de regresión atribuye 30% del R² a liderazgo,
+seguido por desarrollo (25%).</code></pre>
+
+<h3>3.2 Opción B — separar con <code>---</code> (tres guiones)</h3>
+
+<p>Cada línea de tres guiones crea una nueva slide sin título. Es útil para slides sin encabezado —por ejemplo, una slide que solo muestra un gráfico grande. Se puede combinar con la Opción A.</p>
+
+<pre><code><span class="comment">## Cambio 2025 → 2026 por área</span>
+
+Gráfico de comparación año a año:
+
+---
+
+![](engagement_2025_2026.png){.r-stretch}</code></pre>
+
+<div class="note">
+<strong>La trampa del <code>slide-level</code></strong>
+Por defecto, Quarto considera que cada <code>##</code> inicia una slide y los <code>###</code> son subsecciones dentro de la misma slide. Este comportamiento se controla con la opción <code>slide-level</code> en el YAML. Para la Tarea 5, el default (<code>slide-level: 2</code>) es el correcto: un <code>##</code> por slide.
+</div>
+
+
+<h2>4. Insertar gráficos generados desde R</h2>
+
+<p>La gran ventaja de usar Quarto para la presentación es que podemos incluir chunks de R que se ejecutan al renderizar. Un gráfico de ggplot2 se ve así en la slide:</p>
+
+<pre><code><span class="comment">## Heatmap por departamento × dimensión</span>
+
+```{r}
+#| fig-width: 10
+#| fig-height: 5
+
+ggplot(heatmap_data, aes(dimension, departamento, fill = puntaje)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(midpoint = 3,
+                        low = "#B85042",
+                        high = "#0D9488") +
+  labs(title = "Engagement promedio por área y dimensión",
+       x = NULL, y = NULL) +
+  theme_minimal(base_size = 14)
+```</code></pre>
+
+<div class="tip">
+<strong>Tipografía más grande en gráficos para slides</strong>
+Los gráficos para slides necesitan tipografía más grande que los gráficos para un informe. Usa <code>theme_minimal(base_size = 14)</code> o <code>base_size = 16</code> en tus slides, y <code>base_size = 11</code> (default) en los chunks del informe. Esto hace que los ejes y leyendas sean legibles desde la última fila de la sala.
+</div>
+
+<h3>4.1 Ajustar el tamaño del gráfico al slide</h3>
+
+<p>Los options del chunk (<code>fig-width</code>, <code>fig-height</code>) controlan el tamaño del gráfico que R genera. Para una slide Reveal.js estándar (widescreen 16:9), algo como <code>fig-width: 10</code>, <code>fig-height: 5</code> suele funcionar bien. Si el gráfico se ve chico, se puede agregar la clase <code>.r-stretch</code> después del chunk:</p>
+
+<pre><code>```{r}
+#| fig-width: 10
+#| fig-height: 5
+#| classes: r-stretch
+
+ggplot(...) + ...
+```</code></pre>
+
+<p><code>.r-stretch</code> es una clase especial de Reveal.js que hace que el elemento ocupe todo el espacio vertical disponible en la slide.</p>
+
+
+<h2>5. Layouts: columnas, bullets incrementales, backgrounds</h2>
+
+<h3>5.1 Dos columnas con <code>:::: {.columns}</code></h3>
+
+<p>Para una slide con texto a la izquierda y un gráfico a la derecha, el patrón es:</p>
+
+<pre><code><span class="comment">## Liderazgo es el driver más potente</span>
+
+:::: {.columns}
+
+::: {.column width="45%"}
+- Explica el **30%** del R² del modelo
+- Su efecto es consistente entre departamentos
+- Cualquier intervención debe partir aquí
+:::
+
+::: {.column width="55%"}
+```{r}
+plot(importancia)
+```
+:::
+
+::::</code></pre>
+
+<div class="slide-preview">
+<span class="slide-label">Vista previa del slide</span>
+<h5>Liderazgo es el driver más potente</h5>
+<div style="display: grid; grid-template-columns: 45% 55%; gap: 1rem; align-items: center;">
+<div>
+<div class="bullet">• Explica el <strong>30%</strong> del R² del modelo</div>
+<div class="bullet">• Su efecto es consistente entre departamentos</div>
+<div class="bullet">• Cualquier intervención debe partir aquí</div>
+</div>
+<div style="background: #F1F5F9; border: 1px dashed #CBD5E1; padding: 1.5rem; text-align: center; font-size: 0.75rem; color: #94A3B8;">
+[gráfico de importancia relativa]
+</div>
+</div>
+</div>
+
+<h3>5.2 Listas incrementales</h3>
+
+<p>Reveal.js permite que los bullets aparezcan uno por uno con clicks del teclado. Se activa con la clase <code>.incremental</code>:</p>
+
+<pre><code>::: {.incremental}
+- Primer mensaje: la caída no es transversal
+- Segundo mensaje: liderazgo es el driver más potente
+- Tercer mensaje: el eNPS está en zona crítica
+:::</code></pre>
+
+<p>Útil para slides donde queremos "dosificar" la información y evitar que la audiencia lea toda la slide mientras hablamos del primer punto. Para una presentación ejecutiva de 5 slides, es preferible <strong>no abusar</strong> de esto: una slide con 3 bullets incrementales se convierte en 4 "clicks" y puede fragmentar el ritmo.</p>
+
+<h3>5.3 Slide con fondo de color o imagen</h3>
+
+<p>Para darle énfasis visual a una slide de transición (por ejemplo, la portada o el cierre), Reveal.js permite poner un fondo de color o una imagen como background:</p>
+
+<pre><code><span class="comment">## Las tres palancas {background-color="#1B2A4A"}</span>
+
+1. Programa de mentoría en Soporte Técnico
+2. Nuevo marco de 1:1 para jefaturas
+3. Revisión de carga en Desarrollo de Software</code></pre>
+
+<p>La opción <code>background-color</code> va entre llaves después del título. Con fondos oscuros, el tema se adapta automáticamente y el texto aparece en blanco. También existen <code>background-image</code>, <code>background-size</code> y <code>background-opacity</code>.</p>
+
+
+<h2>6. Speaker notes</h2>
+
+<p>Las <strong>speaker notes</strong> son anotaciones privadas que nosotros vemos en nuestra pantalla pero que la audiencia no ve en la proyección. En Reveal.js se activan con la clase <code>.notes</code>:</p>
+
+<pre><code><span class="comment">## Mensaje 1: la caída no es transversal</span>
+
+Desarrollo de Software y Soporte Técnico concentran
+el 72% de la caída total de engagement.
+
+::: {.notes}
+Recordarle al VP que la cifra de 72% viene de sumar
+las caídas absolutas de esos dos departamentos
+dividido por la caída total. Si pregunta por el cálculo
+exacto, está en el apéndice técnico del informe.
+:::</code></pre>
+
+<p>Para verlas durante la presentación, presiona la tecla <kbd>S</kbd> mientras la presentación está abierta en el navegador. Se abre una ventana separada con las notas y un timer.</p>
+
+
+<h2>7. Personalización mínima del estilo</h2>
+
+<p>El tema <code>simple</code> es apropiado tal como viene. Pero si queremos alinear los colores con la identidad de InnovaCo (terracotta, navy, sage, teal), podemos agregar un pequeño archivo de estilos personalizado. Se hace en dos pasos:</p>
+
+<p><strong>Paso 1:</strong> crear un archivo <code>custom.scss</code> en la misma carpeta del <code>.qmd</code>:</p>
+
+<pre><code><span class="comment">/*-- scss:defaults --*/</span>
+
+<span class="yaml-key">$presentation-heading-color</span>: #1B2A4A;
+<span class="yaml-key">$presentation-heading-font</span>: "Georgia", serif;
+<span class="yaml-key">$body-color</span>: #1E293B;
+<span class="yaml-key">$link-color</span>: #B85042;
+
+<span class="comment">/*-- scss:rules --*/</span>
+
+.reveal .slide-number { color: #B85042; }
+.reveal blockquote { border-left: 4px solid #B85042; }</code></pre>
+
+<p><strong>Paso 2:</strong> referenciarlo desde el YAML del <code>.qmd</code>:</p>
+
+<pre><code><span class="yaml-key">format</span>:
+  <span class="yaml-key">revealjs</span>:
+    <span class="yaml-key">theme</span>: [<span class="yaml-val">simple</span>, <span class="yaml-val">custom.scss</span>]</code></pre>
+
+<p>Reveal.js combina las dos hojas: primero aplica <code>simple</code> y después sobreescribe con lo que declaramos en <code>custom.scss</code>. Así mantenemos la sobriedad del tema base pero adaptamos los colores.</p>
+
+<div class="advanced">
+<strong>No te pongas a diseñar — ponte a comunicar</strong>
+Personalizar el estilo es tentador, pero es la última prioridad. La diferencia entre una presentación buena y una mala no está en los colores, está en los mensajes. Solo aborda la personalización si tu contenido ya está listo.
+</div>
+
+
+<h2>8. Renderizar y exportar</h2>
+
+<p>Desde RStudio: el botón <strong>Render</strong> genera el archivo <code>.html</code>. Desde el terminal:</p>
+
+<pre><code>quarto render mi_presentacion.qmd</code></pre>
+
+<p>El resultado es un único archivo <code>mi_presentacion.html</code> (gracias a <code>embed-resources: true</code>) que se puede abrir en cualquier navegador, mandar por correo, o subir a Canvas.</p>
+
+<h3>8.1 Navegar la presentación</h3>
+
+<table>
+<tr><th>Tecla</th><th>Acción</th></tr>
+<tr><td><kbd>→</kbd> / <kbd>Espacio</kbd></td><td>Siguiente slide</td></tr>
+<tr><td><kbd>←</kbd></td><td>Slide anterior</td></tr>
+<tr><td><kbd>F</kbd></td><td>Pantalla completa</td></tr>
+<tr><td><kbd>S</kbd></td><td>Abrir ventana de speaker notes con timer</td></tr>
+<tr><td><kbd>O</kbd> o <kbd>Esc</kbd></td><td>Vista general (grid de todas las slides)</td></tr>
+<tr><td><kbd>?</kbd></td><td>Ver el listado completo de atajos</td></tr>
+</table>
+
+<h3>8.2 Exportar a PDF</h3>
+
+<p>Si necesitamos entregar la presentación como PDF (para imprimir o para subirla a un sistema que no acepta HTML), abre la presentación en Chrome, agrega <code>?print-pdf</code> al final de la URL y luego imprime desde el navegador (<kbd>Ctrl</kbd>+<kbd>P</kbd>) eligiendo "Guardar como PDF". Cada slide ocupa una página del PDF.</p>
+
+
+<h2>9. La disciplina del límite: 5 slides como restricción creativa</h2>
+
+<p>La Tarea 5 pide exactamente <strong>5 slides de contenido</strong>, sin contar portada ni cierre. No es capricho: es la restricción que convierte el ejercicio en formación profesional. Cuando tenemos todo el espacio del mundo, comunicamos todo lo que sabemos. Cuando tenemos 5 slides, comunicamos lo que importa.</p>
+
+<p>Una estructura que funciona bien para esta tarea:</p>
+
+<div class="comparison">
+<div class="good" style="grid-column: span 2;">
+<h4>Estructura sugerida para la Tarea 5</h4>
+<pre style="background: none; color: #1E293B; font-size: 0.82rem; line-height: 1.5;">
+Slide 1 — Mensaje 1: ¿Dónde está el problema?
+          (responde la pregunta 1 del CEO)
+          + 1 visualización: heatmap por área × dimensión
+
+Slide 2 — Mensaje 2: ¿Por qué bajó?
+          (responde la pregunta 2 del CEO)
+          + 1 visualización: importancia relativa de drivers
+
+Slide 3 — Mensaje 3: ¿Qué tan urgente es?
+          (contextualización: eNPS + comparación año a año)
+          + 1 visualización: dumbbell 2025 vs 2026
+
+Slide 4 — Las tres palancas (acciones concretas con costo)
+
+Slide 5 — Próximos pasos y timeline (qué empezar el lunes)
+</pre>
+</div>
+</div>
+
+<div class="warning">
+<strong>La prueba de los 5 minutos</strong>
+Antes de entregar, ensaya la presentación con un cronómetro. Si no puedes pasar las 5 slides en 5 minutos, hay demasiado contenido. Si las pasas en 2, hay demasiado poco. El sweet spot es un minuto por slide: 10 segundos de introducción, 30 segundos de mensaje, 20 segundos para mirar el gráfico con la audiencia.
+</div>
+
+
+<h2>10. Checklist antes de entregar</h2>
+
+<p>Antes de subir la presentación a Canvas, recorre esta lista:</p>
+
+<ul class="checklist">
+  <li>El header YAML tiene <code>embed-resources: true</code>.</li>
+  <li>El archivo <code>.html</code> resultante abre correctamente haciendo doble click, sin necesidad de una carpeta auxiliar.</li>
+  <li>Hay exactamente 5 slides de contenido (sin contar portada ni cierre).</li>
+  <li>Cada slide tiene un título que <em>es</em> un mensaje, no una categoría. (Mal: "Resultados". Bien: "Liderazgo es el driver más potente".)</li>
+  <li>Cada slide tiene al menos una visualización o una cifra grande; no hay slides de solo bullets.</li>
+  <li>Los gráficos son legibles desde la última fila: ejes grandes, títulos descriptivos, leyendas claras.</li>
+  <li>No hay código R visible en ninguna slide.</li>
+  <li>Las tres palancas son concretas y accionables, con un rango de costo estimado.</li>
+  <li>Cronometraste el ensayo y duró entre 4:30 y 5:30 minutos.</li>
+  <li>El nombre del archivo sigue la convención <code>Apellido_Nombre_presentacion.html</code>.</li>
+</ul>
+
+
+<h2>11. Resumen: el flujo de trabajo completo</h2>
+
+<ol>
+  <li><strong>Termina primero el informe técnico.</strong> La presentación se alimenta del informe, no al revés. Sin el análisis hecho, no hay mensajes que comunicar.</li>
+  <li><strong>Escribe los tres mensajes clave</strong> en un post-it o en un papel, antes de abrir Quarto. Una frase cada uno. Esas tres frases son los títulos de las slides 1, 2 y 3.</li>
+  <li><strong>Crea un nuevo archivo <code>.qmd</code></strong> con el header YAML de <code>format: revealjs</code> que vimos en la sección 2.</li>
+  <li><strong>Reutiliza los chunks del informe</strong> que producen los gráficos relevantes. Cópialos al <code>.qmd</code> de la presentación. Ajusta <code>base_size</code> para que sean legibles en slide.</li>
+  <li><strong>Arma cada slide con <code>##</code> + título-mensaje + gráfico o bullets breves.</strong> Nada más.</li>
+  <li><strong>Renderiza, cronometra, ajusta.</strong> Itera hasta que la presentación dure entre 4:30 y 5:30 minutos.</li>
+  <li><strong>Revisa la checklist de la sección 10</strong> y entrega.</li>
+</ol>
+
+<div class="tip">
+<strong>Para profundizar</strong>
+La documentación oficial de Quarto sobre Reveal.js está en <a href="https://quarto.org/docs/presentations/revealjs/">https://quarto.org/docs/presentations/revealjs/</a>. Tiene ejemplos de todas las opciones que cubrimos aquí y muchas más (transiciones personalizadas, menú lateral, chalkboard, auto-play). Para este curso, lo de este apunte es suficiente; para una presentación de conferencia académica, vale la pena explorar la documentación completa.
+</div>
+
+
+<footer>
+Apunte 17 · Curso Analítica de Personas · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 15 — Análisis factorial exploratorio con psych::fa() | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .result { color: #A78BFA; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; color: #1E293B; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  .output-box pre code { color: #1E293B; }
+  .bad pre, .good pre { color: #1E293B; background: none; padding: 0; margin: 0; }
+  .bad pre code, .good pre code { color: #1E293B; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  blockquote { border-left: 3px solid var(--slate); padding-left: 1rem; margin: 1rem 0; color: var(--slate); font-style: italic; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 15 — Análisis factorial exploratorio con psych::fa()</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 6 · Prof. René Gempp</p>
+
+
+<h2>1. La intuición del factor latente</h2>
+
+<p>Cuando aplicamos una encuesta de 25 ítems Likert sobre experiencia del empleado, los ítems no son independientes entre sí: las personas que responden alto a "Mi jefatura me da retroalimentación útil" tienden a responder alto también a "Mi jefatura me apoya cuando lo necesito". Esa <strong>covariación sistemática</strong> entre los ítems sugiere que detrás de ellos hay algo común —una dimensión <em>latente</em>, no medida directamente, pero que explica por qué los ítems se mueven juntos.</p>
+
+<p>El <strong>análisis factorial exploratorio (EFA)</strong> es la herramienta estadística que estima estos factores latentes a partir de la matriz de correlaciones de los ítems. Responde a la pregunta:</p>
+
+<blockquote>
+¿Cuántas dimensiones latentes subyacen a este conjunto de ítems, y qué ítems "cargan" en cada dimensión?
+</blockquote>
+
+<p>Un buen EFA produce una <strong>matriz de cargas factoriales</strong> donde cada ítem tiene una carga grande en uno (y solo uno) de los factores, y cargas pequeñas en los demás. Cuando eso ocurre, podemos <em>nombrar</em> cada factor en lenguaje sustantivo (liderazgo, desarrollo, etc.) y construir puntajes promedio para usarlos en análisis posteriores —por ejemplo, como predictores en una regresión.</p>
+
+
+<h2>2. EFA vs. PCA: una distinción que importa</h2>
+
+<p>Es muy común confundir el análisis factorial exploratorio (EFA) con el análisis de componentes principales (PCA). Comparten matemáticas similares y a primera vista producen outputs parecidos, pero son <strong>conceptualmente distintos</strong>:</p>
+
+<table>
+<tr><th></th><th>PCA (Principal Components Analysis)</th><th>EFA (Exploratory Factor Analysis)</th></tr>
+<tr><td><strong>Pregunta</strong></td><td>¿Cómo reduzco dimensionalidad sin perder varianza?</td><td>¿Qué constructos latentes generan estos ítems?</td></tr>
+<tr><td><strong>Modelo</strong></td><td>Componentes = combinaciones lineales de ítems</td><td>Ítems = combinaciones lineales de factores latentes + error</td></tr>
+<tr><td><strong>Varianza modelada</strong></td><td>Toda (común + única + error)</td><td>Solo la varianza compartida entre ítems</td></tr>
+<tr><td><strong>En R</strong></td><td><code>psych::principal()</code> o <code>prcomp()</code></td><td><code>psych::fa()</code></td></tr>
+<tr><td><strong>Cuándo usar</strong></td><td>Reducir dimensiones para visualización o ML</td><td>Identificar dimensiones psicológicas detrás de una encuesta</td></tr>
+</table>
+
+<div class="note">
+<strong>Para encuestas organizacionales: usa EFA, no PCA</strong>
+La razón conceptual es que PCA modela toda la varianza —incluyendo la varianza específica de cada ítem y el error de medición—, mientras que EFA modela solo la varianza compartida entre ítems. Como las encuestas Likert tienen mucho error de medición ítem por ítem, atribuirlo todo a "componentes" infla artificialmente las cargas. EFA es la elección teóricamente correcta.
+</div>
+
+
+<h2>3. Las cuatro decisiones del EFA</h2>
+
+<p>Hacer un EFA en <code>psych::fa()</code> requiere tomar cuatro decisiones. Las tres primeras son los argumentos del comando; la cuarta es interpretativa.</p>
+
+<table>
+<tr><th>Decisión</th><th>Argumento en <code>fa()</code></th><th>Lo que enseñamos</th></tr>
+<tr><td>Cuántos factores extraer</td><td><code>nfactors</code></td><td>Análisis paralelo de Horn con <code>fa.parallel()</code></td></tr>
+<tr><td>Método de extracción</td><td><code>fm</code></td><td><code>"minres"</code> (default; mínimos residuos)</td></tr>
+<tr><td>Tipo de rotación</td><td><code>rotate</code></td><td><code>"oblimin"</code> (oblicua)</td></tr>
+<tr><td>Umbral de cargas para "saturar"</td><td>(decisión interpretativa)</td><td>0,40</td></tr>
+</table>
+
+
+<h2>4. Decisión 1: ¿cuántos factores extraer?</h2>
+
+<p>Esta es la pregunta más debatida del EFA. Históricamente se han propuesto varios criterios:</p>
+
+<ol>
+  <li><strong>Kaiser (eigenvalues &gt; 1):</strong> el más antiguo y el más usado en cursos introductorios. Cuenta cuántos factores tienen un eigenvalue mayor a 1. <em>Problema:</em> tiende a sobreestimar el número de factores, especialmente con muchos ítems.</li>
+  <li><strong>Scree plot visual:</strong> graficar los eigenvalues ordenados y "ver" el codo. Subjetivo y reproducible solo a medias.</li>
+  <li><strong>Análisis paralelo de Horn (Horn, 1965):</strong> compara los eigenvalues observados con los eigenvalues que se obtendrían si los datos fueran completamente aleatorios. Se retienen tantos factores como eigenvalues observados <em>excedan</em> los simulados.</li>
+  <li><strong>MAP de Velicer (1976):</strong> minimum average partial. Otro criterio cuantitativo, también recomendado.</li>
+</ol>
+
+<p>El consenso de la literatura psicométrica moderna (Zwick &amp; Velicer, 1986; Fabrigar et al., 1999) es que <strong>el análisis paralelo es el método más preciso</strong>. En <code>psych</code> está disponible como <code>fa.parallel()</code>.</p>
+
+<pre><code><span class="comment"># Análisis paralelo: ¿cuántos factores retener?</span>
+items_todos &lt;- datos <span class="pipe">|&gt;</span> <span class="func">select</span>(<span class="func">starts_with</span>(<span class="string">"item_"</span>))
+
+psych::<span class="func">fa.parallel</span>(items_todos,
+                   fa     = <span class="string">"fa"</span>,    <span class="comment"># para EFA (alternativa: "pc" o "both")</span>
+                   n.iter = 50,       <span class="comment"># número de simulaciones aleatorias</span>
+                   main   = <span class="string">"Análisis paralelo: encuesta engagement"</span>)</code></pre>
+
+<p>El output es un gráfico con dos curvas: la línea azul son los eigenvalues observados, y la línea roja son los eigenvalues promedio bajo datos aleatorios. La función imprime también en consola un mensaje del tipo:</p>
+
+<div class="output-box">
+<pre>Parallel analysis suggests that the number of factors =  5  and the number of components =  5</pre>
+</div>
+
+<p>Ese 5 es la respuesta. La regla operativa: <strong>retén tantos factores como eigenvalues observados estén por encima de los simulados</strong>.</p>
+
+
+<h2>5. Decisión 2: el método de extracción</h2>
+
+<p>El argumento <code>fm</code> de <code>fa()</code> controla cómo se estiman las cargas. Las opciones más comunes:</p>
+
+<table>
+<tr><th>Opción</th><th>Nombre completo</th><th>Cuándo usar</th></tr>
+<tr><td><code>"minres"</code></td><td>Mínimos residuos (default)</td><td>Robusto, no requiere normalidad multivariada. Es el default y la elección segura.</td></tr>
+<tr><td><code>"ml"</code></td><td>Máxima verosimilitud</td><td>Requiere normalidad multivariada. Permite calcular índices de ajuste tipo SEM (RMSEA, CFI). Útil si vas a hacer comparación de modelos.</td></tr>
+<tr><td><code>"pa"</code></td><td>Factores principales</td><td>Método clásico de la psicometría tradicional. Hoy menos recomendado.</td></tr>
+</table>
+
+<p>Para esta clase usamos <code>fm = "minres"</code>. Si en una tesis necesitas índices de ajuste, migra a <code>fm = "ml"</code> y reporta CFI &gt; 0,95, RMSEA &lt; 0,06, SRMR &lt; 0,08 como criterios estándar (Hu &amp; Bentler, 1999).</p>
+
+
+<h2>6. Decisión 3: la rotación</h2>
+
+<p>La <strong>rotación</strong> es un paso de post-procesamiento que reordena los factores para hacerlos más interpretables. Un EFA sin rotar produce típicamente cargas dispersas y difíciles de leer; con rotación, los ítems "se asientan" en sus factores de manera más limpia.</p>
+
+<p>Hay dos grandes familias:</p>
+
+<table>
+<tr><th>Tipo</th><th>Ejemplos</th><th>Supuesto sobre los factores</th></tr>
+<tr><td><strong>Ortogonal</strong></td><td>varimax, quartimax</td><td>Los factores son <em>independientes</em> (correlación = 0)</td></tr>
+<tr><td><strong>Oblicua</strong></td><td>oblimin, promax</td><td>Los factores están <em>correlacionados</em></td></tr>
+</table>
+
+<div class="warning">
+<strong>En psicología organizacional, casi siempre usa rotación oblicua</strong>
+Las dimensiones de la experiencia laboral —liderazgo, desarrollo, reconocimiento, propósito— están <em>casi siempre</em> correlacionadas en datos reales: las áreas con buen liderazgo también tienden a ofrecer mejor desarrollo. Suponer ortogonalidad es teóricamente injustificado y produce cargas menos interpretables. Fabrigar et al. (1999) son enfáticos en este punto: <strong>el default de la psicometría organizacional moderna es oblimin</strong>.
+</div>
+
+<pre><code>fa_res &lt;- psych::<span class="func">fa</span>(items_todos,
+                    nfactors = 5,
+                    rotate   = <span class="string">"oblimin"</span>,
+                    fm       = <span class="string">"minres"</span>)</code></pre>
+
+<p>Cuando usas rotación oblicua, <code>fa()</code> te entrega <strong>tres</strong> matrices distintas, no una:</p>
+
+<ul>
+  <li><code>fa_res$loadings</code> (o <code>$Structure</code>): la matriz de cargas que típicamente se reporta.</li>
+  <li><code>fa_res$Phi</code>: la matriz de correlaciones <strong>entre los factores</strong>. Si todas son cercanas a cero, una rotación ortogonal habría dado lo mismo.</li>
+  <li><code>fa_res$Structure</code>: la matriz de correlaciones simples ítem-factor (ignorando las correlaciones entre factores).</li>
+</ul>
+
+<p>Reportar <code>$Phi</code> en el informe es un signo de rigor: muestra cuán correlacionadas están las dimensiones extraídas y justifica la elección de rotación oblicua.</p>
+
+
+<h2>7. Lectura de la matriz de cargas</h2>
+
+<p>Después de ajustar el modelo, la matriz de cargas es lo central. Para mostrarla limpia, usa el método <code>print()</code> con un <code>cutoff</code>:</p>
+
+<pre><code><span class="comment"># Mostrar solo cargas |x| >= 0.40, ordenadas por factor</span>
+<span class="func">print</span>(fa_res$loadings, cutoff = 0.40, sort = TRUE)</code></pre>
+
+<div class="output-box">
+<pre>Loadings:
+            MR1    MR2    MR3    MR4    MR5
+item_lid_01  0.78
+item_lid_03  0.76
+item_lid_02  0.74
+item_lid_05  0.72
+item_lid_04  0.69
+item_des_01         0.75
+item_des_03         0.73
+item_des_05         0.71
+item_des_02         0.69
+item_des_04         0.66
+item_rec_05                0.74
+item_rec_01                0.71
+item_rec_03                0.68
+item_rec_02                0.67
+item_rec_04                0.64
+item_car_04                       0.74
+item_car_02                       0.72
+item_car_05                       0.70
+item_car_01                       0.69
+item_car_03                       0.67
+item_pro_01                              0.76
+item_pro_04                              0.73
+item_pro_02                              0.71
+item_pro_03                              0.69
+item_pro_05                              0.68
+
+                 MR1   MR2   MR3   MR4   MR5
+SS loadings    2.87  2.65  2.43  2.55  2.52
+Proportion Var 0.11  0.11  0.10  0.10  0.10
+Cumulative Var 0.11  0.22  0.32  0.42  0.52</pre>
+</div>
+
+<p>Lectura paso a paso:</p>
+
+<ol>
+  <li><strong>Cada columna es un factor</strong> (MR1, MR2, ... MR5; las siglas vienen de <em>minimum residuals</em>).</li>
+  <li><strong>Cada fila es un ítem.</strong> Si el ítem cargó "limpio", verás un solo número en su fila (los demás están en blanco porque están bajo el cutoff de 0,40).</li>
+  <li><strong>Identifica el factor de cada ítem.</strong> Aquí los ítems <code>item_lid_*</code> cargan en MR1, los <code>item_des_*</code> en MR2, etc.</li>
+  <li><strong>Nombra cada factor en lenguaje sustantivo.</strong> No reportes "MR1" en tu informe al VP. Reporta "Liderazgo".</li>
+  <li><strong>Mira la fila <code>SS loadings</code>:</strong> es la suma de cuadrados de las cargas de ese factor. Refleja qué tanto del fenómeno "explica" cada factor.</li>
+  <li><strong>Mira <code>Cumulative Var</code>:</strong> el porcentaje acumulado de varianza explicada por todos los factores juntos. En encuestas Likert es habitual quedarse entre 40 y 60 %.</li>
+</ol>
+
+
+<h2>8. Cargas cruzadas e ítems "huérfanos"</h2>
+
+<p>El mundo real no siempre produce matrices tan limpias como la del ejemplo. Pueden aparecer dos patrones problemáticos:</p>
+
+<h3>8.1 Cargas cruzadas</h3>
+
+<p>Un ítem que carga &gt; 0,40 en <strong>dos o más</strong> factores. Esto significa que el ítem está midiendo dos cosas a la vez, o que los dos factores no están bien diferenciados.</p>
+
+<div class="output-box">
+<pre>item_amb_07  0.45    0.51                 (carga en MR1 y MR2)</pre>
+</div>
+
+<p><strong>Qué hacer:</strong></p>
+<ul>
+  <li>Si la diferencia entre las dos cargas es &lt; 0,15, considera <strong>eliminar el ítem</strong> y repetir el EFA.</li>
+  <li>Si la diferencia es &gt; 0,15, asígnalo al factor con la carga mayor pero <strong>documenta</strong> la carga cruzada en tu reporte.</li>
+</ul>
+
+<h3>8.2 Ítems huérfanos</h3>
+
+<p>Un ítem cuya carga máxima en cualquier factor es &lt; 0,40. Está "suelto" — no pertenece claramente a ningún constructo.</p>
+
+<p><strong>Qué hacer:</strong> revisa la redacción del ítem. ¿Es ambiguo? ¿Mide algo distinto al resto de la encuesta? Lo más probable es que tengas que <strong>eliminarlo</strong> antes de construir puntajes de sub-escala.</p>
+
+
+<h2>9. Lo que queda fuera de este apunte (y dónde profundizar)</h2>
+
+<p>EFA es la puerta de entrada al modelado de factores latentes, pero hay un universo mucho más amplio que conviene conocer si harás una tesis empírica:</p>
+
+<ul>
+  <li><strong>Confirmatory Factor Analysis (CFA):</strong> cuando tienes una hipótesis previa sobre la estructura factorial (basada en teoría o en EFA previo), CFA permite ponerla a prueba con índices de ajuste. En R: <code>lavaan::cfa()</code>. Referencia: Brown (2015), <em>Confirmatory Factor Analysis for Applied Research</em>.</li>
+  <li><strong>Exploratory Structural Equation Modeling (ESEM):</strong> un híbrido entre EFA y CFA que permite cargas cruzadas dentro de un marco SEM. Referencia: Asparouhov &amp; Muthén (2009).</li>
+  <li><strong>Modelos bifactoriales:</strong> cuando un constructo tiene un factor general más factores específicos. Útil para escalas como UWES (engagement) que tienen un factor general y tres específicos (vigor, dedicación, absorción). Referencia: Reise (2012).</li>
+  <li><strong>Invarianza de medida entre grupos:</strong> ¿la encuesta mide lo mismo en hombres y mujeres? ¿En distintos países? Es el paso previo a comparar promedios entre grupos. En R: <code>lavaan::measurementInvariance()</code>. Referencia: Vandenberg &amp; Lance (2000).</li>
+</ul>
+
+<div class="advanced">
+<strong>Para profundizar</strong>
+El manual de referencia del paquete <code>psych</code> de William Revelle (disponible gratuitamente en https://personality-project.org/r/psych) es la mejor introducción técnica a EFA en R. Para el marco conceptual completo: Fabrigar, L. R., Wegener, D. T., MacCallum, R. C., &amp; Strahan, E. J. (1999). Evaluating the use of exploratory factor analysis in psychological research. <em>Psychological Methods, 4</em>(3), 272–299.
+</div>
+
+
+<h2>10. Resumen: el flujo del EFA</h2>
+
+<ol>
+  <li>Selecciona los ítems que quieres factorizar. Asegúrate de que están en escala numérica y los reversos están recodificados.</li>
+  <li>Corre <code>fa.parallel()</code> para decidir <em>cuántos</em> factores extraer.</li>
+  <li>Ajusta el modelo con <code>fa(items, nfactors = k, rotate = "oblimin", fm = "minres")</code>.</li>
+  <li>Examina la matriz de cargas con <code>print(..., cutoff = 0.40, sort = TRUE)</code>.</li>
+  <li>Identifica el factor de cada ítem y <strong>nombra</strong> cada factor en lenguaje de negocio.</li>
+  <li>Examina <code>$Phi</code>: las correlaciones entre factores justifican (o no) la rotación oblicua.</li>
+  <li>Detecta cargas cruzadas e ítems huérfanos. Decide qué hacer con ellos y <strong>documenta</strong> tu decisión.</li>
+  <li>Construye los puntajes promedio de cada sub-escala con <code>rowMeans()</code> para análisis posteriores (regresión, etc.).</li>
+</ol>
+
+
+<footer>
+Apunte 15 · Curso Analítica de Personas · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+</footer>
+
+</body>
+</html>

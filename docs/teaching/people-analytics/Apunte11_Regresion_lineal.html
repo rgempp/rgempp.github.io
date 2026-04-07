@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 11 — Regresión lineal con lm() | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --terracotta: #B85042; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; color: #1E293B; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .result { color: #A78BFA; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .key { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .key strong { display: block; margin-bottom: 0.3rem; }
+  .output-box { background: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 6px; padding: 0.8rem 1rem; margin: 0.8rem 0; font-family: 'Consolas', monospace; font-size: 0.85rem; color: #1E293B; white-space: pre; overflow-x: auto; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 11 — Regresión lineal con <code>lm()</code></h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 5 · Prof. René Gempp</p>
+
+<!-- ============================================================ -->
+<h2>1. ¿Para qué sirve una regresión lineal en RRHH?</h2>
+
+<p>La regresión lineal responde una pregunta del tipo: <em>"¿qué explica la variación de Y, y cuánto aporta cada variable a esa explicación?"</em>. En people analytics, las preguntas típicas son:</p>
+
+<ul style="margin-left:1.5rem; margin-bottom:0.8rem;">
+  <li>¿Qué explica el salario de cada empleado? ¿Hay diferencias por género <em>a igualdad de cargo</em>?</li>
+  <li>¿Qué predice la evaluación de desempeño?</li>
+  <li>¿Qué dimensiones de la encuesta de engagement explican mejor el compromiso global?</li>
+  <li>¿Cuánto aporta cada año de antigüedad al salario?</li>
+</ul>
+
+<p>La regresión lineal exige una variable dependiente <strong>continua</strong> (salario, puntaje de engagement, horas de capacitación, etc.). Cuando la VD es binaria, usamos regresión logística (Apunte 09). La sintaxis en R es casi idéntica.</p>
+
+
+<!-- ============================================================ -->
+<h2>2. La sintaxis de <code>lm()</code></h2>
+
+<pre><code><span class="comment"># Estructura general</span>
+modelo &lt;- <span class="func">lm</span>(VD ~ VI1 + VI2 + VI3, data = mi_base)
+
+<span class="comment"># Ejemplo: salario en función del género</span>
+modelo_1 &lt;- <span class="func">lm</span>(<span class="func">log</span>(ingreso_mensual) ~ genero, data = empleados)</code></pre>
+
+<div class="tip">
+<strong>Paralelo con <code>glm()</code>:</strong>
+La sintaxis es la misma que aprendiste para la regresión logística en la Clase 3. La única diferencia es que <code>lm()</code> no necesita argumento <code>family</code>: por defecto asume una distribución normal de los residuos. <code>glm(VD ~ VI, family = binomial)</code> ⇒ logística; <code>lm(VD ~ VI)</code> ⇒ lineal.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>3. Lectura del <code>summary()</code></h2>
+
+<pre><code><span class="func">summary</span>(modelo_1)</code></pre>
+
+<div class="output-box">Call:
+lm(formula = log(ingreso_mensual) ~ genero, data = empleados)
+
+Residuals:
+     Min       1Q   Median       3Q      Max
+-1.36912 -0.65089 -0.01258  0.65430  1.71247
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) 14.10891    0.02999  470.42   &lt;2e-16 ***
+generoMujer -0.08628    0.04576   -1.89   0.0596 .
+---
+Residual standard error: 0.7905 on 1198 degrees of freedom
+Multiple R-squared:  0.00297,   Adjusted R-squared:  0.00214
+F-statistic: 3.567 on 1 and 1198 DF,  p-value: 0.05912</div>
+
+<p>Cómo se lee, línea por línea:</p>
+
+<table>
+<tr><th>Elemento</th><th>Qué significa</th></tr>
+<tr><td><code>Call</code></td><td>El modelo que ajustaste. Verifica que sea el que querías.</td></tr>
+<tr><td><code>Residuals</code></td><td>Resumen de los errores del modelo. Buscamos mediana cercana a 0 y cuartiles aproximadamente simétricos.</td></tr>
+<tr><td><code>(Intercept)</code></td><td>Valor predicho de la VD cuando todas las VI categóricas están en su nivel de referencia y las numéricas valen 0.</td></tr>
+<tr><td><code>Estimate</code></td><td>El coeficiente <strong>β</strong>: cuánto cambia la VD por una unidad de cambio en esa VI.</td></tr>
+<tr><td><code>Std. Error</code></td><td>Cuán precisa es esa estimación. Más pequeño = más preciso.</td></tr>
+<tr><td><code>t value</code></td><td>Estimate / Std. Error. Indica cuántos errores estándar se aleja el coeficiente de cero.</td></tr>
+<tr><td><code>Pr(&gt;|t|)</code></td><td><strong>p-value:</strong> probabilidad de observar un t así de extremo si la verdadera β fuera cero. Menor a 0.05 ⇒ significativo (Apunte 07).</td></tr>
+<tr><td><code>R-squared</code></td><td>Proporción de la varianza de la VD explicada por el modelo. Va de 0 a 1.</td></tr>
+<tr><td><code>Adjusted R²</code></td><td>R² penalizado por el número de predictores. Es el que se debe reportar en modelos con varios predictores.</td></tr>
+<tr><td><code>F-statistic</code></td><td>Test global del modelo: ¿al menos un predictor es útil? Su p-value debe ser pequeño.</td></tr>
+</table>
+
+
+<!-- ============================================================ -->
+<h2>4. Predictores categóricos: dummies automáticas</h2>
+
+<p>Cuando una variable es categórica (texto), R crea automáticamente variables <em>dummy</em> y elige una categoría como <strong>referencia</strong>. Por defecto, R toma la categoría que viene primero alfabéticamente.</p>
+
+<pre><code><span class="comment"># En empleados$genero hay dos niveles: "Hombre" y "Mujer"</span>
+<span class="comment"># R toma "Hombre" como referencia (por orden alfabético)</span>
+<span class="comment"># Por eso aparece "generoMujer" en el output, pero NO "generoHombre"</span></code></pre>
+
+<div class="tip">
+<strong>Cambiar la categoría de referencia:</strong>
+Si quieres que el grupo de referencia sea otro, usa <code>fct_relevel()</code>:
+<pre style="margin-top:0.5rem;"><code>empleados &lt;- empleados <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(genero = <span class="func">fct_relevel</span>(genero, <span class="string">"Mujer"</span>))</code></pre>
+</div>
+
+<p>Para una variable con <em>k</em> categorías, R crea <em>k − 1</em> dummies. Por ejemplo, <code>nivel_jerarquico</code> tiene 4 niveles (Operativo, Profesional, Jefatura, Gerencia), por lo que en el output verás 3 coeficientes: <code>nivel_jerarquicoOperativo</code>, <code>nivel_jerarquicoProfesional</code>, <code>nivel_jerarquicoJefatura</code>. La categoría que falta (<code>Gerencia</code>) es la referencia.</p>
+
+
+<!-- ============================================================ -->
+<h2>5. Predictores múltiples: <em>ceteris paribus</em></h2>
+
+<pre><code>modelo_2 &lt;- <span class="func">lm</span>(
+  <span class="func">log</span>(ingreso_mensual) ~ genero + nivel_jerarquico + departamento +
+                          antiguedad_anios + edad + nivel_educacion +
+                          evaluacion_desempeno,
+  data = empleados
+)
+
+<span class="func">summary</span>(modelo_2)</code></pre>
+
+<div class="key">
+<strong>Cómo se lee cada coeficiente en un modelo múltiple:</strong>
+"El cambio esperado en la VD por una unidad de cambio en esta VI, <strong>manteniendo constantes todas las demás variables del modelo</strong>." Esa cláusula <em>ceteris paribus</em> es lo que hace tan poderosa la regresión múltiple: nos permite aislar el efecto de cada variable.
+</div>
+
+<p>Ejemplo concreto: si en el Modelo 2 el coeficiente de <code>generoMujer</code> vale −0,08, lo leemos así:</p>
+
+<blockquote style="border-left:3px solid var(--teal); padding-left:1rem; margin:0.8rem 0; color:#334155;">
+"A igualdad de nivel jerárquico, departamento, antigüedad, edad, educación y desempeño, las mujeres ganan en promedio aproximadamente un 8% menos que los hombres en InnovaCo."
+</blockquote>
+
+
+<!-- ============================================================ -->
+<h2>6. La transformación logarítmica de la VD</h2>
+
+<p>En el ejemplo anterior usamos <code>log(ingreso_mensual)</code> como variable dependiente, no <code>ingreso_mensual</code> directo. Tres razones:</p>
+
+<h3>Razón 1: la distribución de salarios es asimétrica</h3>
+
+<p>Los salarios típicamente tienen una cola larga a la derecha (pocas personas con sueldos muy altos). Un histograma de <code>ingreso_mensual</code> se ve sesgado; un histograma de <code>log(ingreso_mensual)</code> se aproxima a una normal. Los modelos lineales asumen residuos aproximadamente normales.</p>
+
+<h3>Razón 2: el coeficiente se interpreta como porcentaje</h3>
+
+<p>Cuando la VD es <code>log(Y)</code>, un coeficiente <strong>β</strong> se interpreta como un cambio <em>porcentual</em> en Y, no como un cambio en pesos. La aproximación es:</p>
+
+<table>
+<tr><th>Coeficiente β</th><th>Interpretación aproximada</th><th>Cálculo exacto</th></tr>
+<tr><td>−0.05</td><td>≈ 5% menos</td><td>(exp(−0.05) − 1) × 100 = −4.9%</td></tr>
+<tr><td>−0.08</td><td>≈ 8% menos</td><td>(exp(−0.08) − 1) × 100 = −7.7%</td></tr>
+<tr><td>+0.10</td><td>≈ 10% más</td><td>(exp(0.10) − 1) × 100 = +10.5%</td></tr>
+<tr><td>+0.30</td><td>≈ 30% más (impreciso)</td><td>(exp(0.30) − 1) × 100 = +35.0%</td></tr>
+</table>
+
+<div class="tip">
+<strong>Regla práctica:</strong>
+Para coeficientes pequeños (entre −0.15 y +0.15), la aproximación β ≈ % es suficientemente exacta. Para coeficientes mayores, calcula <code>(exp(β) − 1) × 100</code>.
+</div>
+
+<h3>Razón 3: estabiliza la varianza de los residuos</h3>
+
+<p>En escala original, los errores del modelo crecen con el salario (alguien que gana 10 millones puede tener residuos de cientos de miles; alguien que gana 600 mil tiene residuos mucho menores). En escala log, esos errores tienden a estabilizarse, cumpliendo mejor el supuesto de homocedasticidad (Apunte 12).</p>
+
+
+<!-- ============================================================ -->
+<h2>7. Resumen visual: la regresión lineal en R</h2>
+
+<table>
+<tr><th>Quiero...</th><th>Función</th></tr>
+<tr><td>Ajustar el modelo</td><td><code>lm(VD ~ VI1 + VI2, data = ...)</code></td></tr>
+<tr><td>Ver coeficientes, R², F</td><td><code>summary(modelo)</code></td></tr>
+<tr><td>Tabla ordenada de coeficientes</td><td><code>broom::tidy(modelo, conf.int = TRUE)</code> (Apunte 13)</td></tr>
+<tr><td>R², AIC, BIC en una fila</td><td><code>broom::glance(modelo)</code> (Apunte 13)</td></tr>
+<tr><td>Residuos y valores ajustados</td><td><code>broom::augment(modelo)</code> (Apunte 12)</td></tr>
+<tr><td>Multicolinealidad</td><td><code>car::vif(modelo)</code> (Apunte 12)</td></tr>
+<tr><td>Predicción para nuevos casos</td><td><code>predict(modelo, newdata = ...)</code></td></tr>
+<tr><td>Especificar interacciones</td><td><code>VI1 * VI2</code> (Apunte 13)</td></tr>
+<tr><td>Comparar dos modelos anidados</td><td><code>anova(modelo_1, modelo_2)</code></td></tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · Analítica de Personas · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 13 — Interacciones, broom y gráficos de coeficientes | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --terracotta: #B85042; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; color: #1E293B; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .key { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .key strong { display: block; margin-bottom: 0.3rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 13 — Interacciones, <code>broom</code> y gráficos de coeficientes</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 5 · Prof. René Gempp</p>
+
+<!-- ============================================================ -->
+<h2>1. ¿Qué es una interacción?</h2>
+
+<p>Una interacción aparece cuando <strong>el efecto de una variable sobre Y depende del valor de otra variable</strong>. En lenguaje cotidiano: "depende".</p>
+
+<p>Ejemplos en RRHH:</p>
+
+<ul style="margin-left:1.5rem; margin-bottom:0.8rem;">
+  <li>¿El efecto de la antigüedad sobre el salario es el mismo en todos los niveles jerárquicos? (probablemente no: en niveles operativos la antigüedad pesa menos que en gerencia)</li>
+  <li>¿La brecha salarial de género es la misma en todos los departamentos? (esa es la pregunta clave de la auditoría)</li>
+  <li>¿El efecto de la capacitación sobre la rotación es igual para hombres y mujeres?</li>
+</ul>
+
+<p>Sin interacción, el modelo asume que el efecto de cada variable es <strong>uniforme</strong> en toda la muestra. Con interacción, le permitimos al efecto <em>variar</em> según los valores de otra variable.</p>
+
+
+<!-- ============================================================ -->
+<h2>2. Sintaxis en R: <code>*</code> y <code>:</code></h2>
+
+<p>R distingue entre dos operadores en las fórmulas:</p>
+
+<table>
+<tr><th>Sintaxis</th><th>Qué incluye</th></tr>
+<tr><td><code>A * B</code></td><td>Efectos principales (A y B) <strong>+</strong> interacción (A:B)</td></tr>
+<tr><td><code>A:B</code></td><td>Solo el término de interacción (sin efectos principales)</td></tr>
+<tr><td><code>A + B + A:B</code></td><td>Equivalente a <code>A * B</code></td></tr>
+</table>
+
+<div class="warning">
+<strong>Regla práctica:</strong>
+Casi siempre se usa <code>A * B</code>, no <code>A:B</code>. Incluir una interacción sin sus efectos principales es matemáticamente posible pero rara vez interpretable. La excepción son los modelos con variables centradas o estandarizadas.
+</div>
+
+<pre><code><span class="comment"># Modelo con interacción genero × nivel_jerarquico</span>
+modelo_3 &lt;- <span class="func">lm</span>(
+  <span class="func">log</span>(ingreso_mensual) ~ genero * nivel_jerarquico + departamento +
+                          antiguedad_anios + edad + nivel_educacion +
+                          evaluacion_desempeno,
+  data = empleados
+)
+
+<span class="func">summary</span>(modelo_3)</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>3. Cómo se leen los coeficientes de interacción</h2>
+
+<p>Cuando agregas <code>genero * nivel_jerarquico</code>, R crea automáticamente:</p>
+
+<ul style="margin-left:1.5rem;">
+  <li>El efecto principal de género: <code>generoMujer</code></li>
+  <li>Los efectos principales de nivel jerárquico (3 dummies, ya que hay 4 niveles)</li>
+  <li>Los términos de interacción: <code>generoMujer:nivel_jerarquicoOperativo</code>, <code>generoMujer:nivel_jerarquicoProfesional</code>, <code>generoMujer:nivel_jerarquicoJefatura</code></li>
+</ul>
+
+<div class="key">
+<strong>La clave para interpretar:</strong>
+El coeficiente <code>generoMujer</code> ahora representa el efecto de ser mujer <strong>en la categoría de referencia de nivel jerárquico</strong> (típicamente Gerencia, por orden alfabético). Los términos de interacción son <em>ajustes</em> a ese efecto en cada uno de los otros niveles.
+</div>
+
+<p>Ejemplo numérico (cifras hipotéticas):</p>
+
+<table>
+<tr><th>Término</th><th>Coeficiente</th><th>Interpretación</th></tr>
+<tr><td><code>generoMujer</code></td><td>−0.15</td><td>Las mujeres en <strong>Gerencia</strong> ganan ≈15% menos que los hombres en Gerencia</td></tr>
+<tr><td><code>generoMujer:Profesional</code></td><td>+0.07</td><td>En Profesional, la brecha es 7 puntos porcentuales <em>menor</em> que en Gerencia → ≈ −15% + 7% = −8%</td></tr>
+<tr><td><code>generoMujer:Operativo</code></td><td>+0.10</td><td>En Operativo, la brecha es 10 pp menor → ≈ −5%</td></tr>
+<tr><td><code>generoMujer:Jefatura</code></td><td>+0.11</td><td>En Jefatura, ≈ −4%</td></tr>
+</table>
+
+<p>Si <strong>ninguna</strong> de las interacciones es estadísticamente significativa, podemos concluir que la brecha es razonablemente uniforme entre niveles. Si <strong>alguna</strong> lo es, debemos reportar la brecha por subgrupo.</p>
+
+<div class="warning">
+<strong>Cuidado con los subgrupos pequeños:</strong>
+Con pocas mujeres en Gerencia (e.g., 7 personas), la potencia estadística es baja. La <em>falta de significancia</em> de una interacción no es lo mismo que <em>evidencia de igualdad</em>. Reporta los intervalos de confianza, no solo el <em>p</em>-value.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>4. El paquete <code>broom</code>: tres funciones que cambian todo</h2>
+
+<p>El output de <code>summary(modelo)</code> es informativo para leer en consola, pero no se puede manipular ni graficar directamente. <strong>broom</strong> convierte los resultados de un modelo en <em>tibbles ordenados</em> (en el sentido de Wickham, 2014, <em>"tidy data"</em>) que se integran con dplyr y ggplot2.</p>
+
+<table>
+<tr><th>Función</th><th>Qué devuelve</th><th>Cuándo usarla</th></tr>
+<tr><td><code>tidy(modelo)</code></td><td>Una fila por coeficiente, con estimate, std.error, statistic, p.value</td><td>Para tablas y gráficos de coeficientes</td></tr>
+<tr><td><code>glance(modelo)</code></td><td>Una sola fila con R², R² ajustado, AIC, BIC, F, df, sigma, nobs</td><td>Para comparar modelos</td></tr>
+<tr><td><code>augment(modelo)</code></td><td>Los datos originales más columnas con .fitted, .resid, .hat, .cooksd</td><td>Para diagnóstico (Apunte 12)</td></tr>
+</table>
+
+<h3><code>tidy()</code> con intervalos de confianza</h3>
+
+<pre><code><span class="func">tidy</span>(modelo_2, conf.int = TRUE)</code></pre>
+
+<p>Esto entrega un tibble con las columnas: <code>term</code>, <code>estimate</code>, <code>std.error</code>, <code>statistic</code>, <code>p.value</code>, <code>conf.low</code>, <code>conf.high</code>. Y esa estructura ordenada es lo que nos permite filtrar, ordenar y graficar:</p>
+
+<pre><code><span class="comment"># Solo el coeficiente de género</span>
+<span class="func">tidy</span>(modelo_2, conf.int = TRUE) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(term == <span class="string">"generoMujer"</span>)
+
+<span class="comment"># Solo coeficientes significativos al 1%</span>
+<span class="func">tidy</span>(modelo_2, conf.int = TRUE) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(p.value &lt; 0.01)</code></pre>
+
+<h3><code>glance()</code> para comparar modelos</h3>
+
+<pre><code><span class="func">bind_rows</span>(
+  <span class="func">glance</span>(modelo_1) <span class="pipe">|&gt;</span> <span class="func">mutate</span>(modelo = <span class="string">"1: bruto"</span>),
+  <span class="func">glance</span>(modelo_2) <span class="pipe">|&gt;</span> <span class="func">mutate</span>(modelo = <span class="string">"2: ajustado"</span>),
+  <span class="func">glance</span>(modelo_3) <span class="pipe">|&gt;</span> <span class="func">mutate</span>(modelo = <span class="string">"3: con interacción"</span>)
+) <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(modelo, r.squared, adj.r.squared, AIC, nobs)</code></pre>
+
+
+<!-- ============================================================ -->
+<h2>5. Gráfico de coeficientes paso a paso</h2>
+
+<p>Una tabla de regresión con 15 coeficientes es intimidante para un directorio. Un gráfico de coeficientes es claro, honesto y memorable. Es la visualización estándar de los economistas y se construye con <code>geom_pointrange()</code>.</p>
+
+<pre><code><span class="comment"># Paso 1: extraer coeficientes ordenados</span>
+coef_tbl &lt;- <span class="func">tidy</span>(modelo_2, conf.int = TRUE) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(term != <span class="string">"(Intercept)"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    significativo = p.value &lt; 0.05,
+    term = <span class="func">fct_reorder</span>(term, estimate)
+  )
+
+<span class="comment"># Paso 2: graficar con geom_pointrange()</span>
+<span class="func">ggplot</span>(coef_tbl, <span class="func">aes</span>(x = estimate, y = term, color = significativo)) +
+  <span class="func">geom_vline</span>(xintercept = 0, linetype = <span class="string">"dashed"</span>) +
+  <span class="func">geom_pointrange</span>(<span class="func">aes</span>(xmin = conf.low, xmax = conf.high)) +
+  <span class="func">scale_color_manual</span>(values = <span class="func">c</span>(<span class="string">"TRUE"</span> = <span class="string">"#B85042"</span>, <span class="string">"FALSE"</span> = <span class="string">"#A7BEAE"</span>)) +
+  <span class="func">labs</span>(
+    title = <span class="string">"Coeficientes del modelo de equidad salarial"</span>,
+    subtitle = <span class="string">"VD = log(ingreso). Punto = estimado; barra = IC 95%."</span>,
+    x = <span class="string">"Coeficiente (≈ % de cambio en el salario)"</span>,
+    y = NULL
+  ) +
+  <span class="func">theme_minimal</span>() +
+  <span class="func">theme</span>(legend.position = <span class="string">"bottom"</span>)</code></pre>
+
+<div class="tip">
+<strong>Por qué la línea vertical en x = 0:</strong>
+Es la "línea de no efecto". Si el intervalo de confianza de un coeficiente <strong>cruza</strong> esa línea, no podemos descartar que su verdadero valor sea cero (no significativo). Si <strong>no la cruza</strong>, el efecto es significativo al nivel correspondiente al IC.
+</div>
+
+
+<!-- ============================================================ -->
+<h2>6. Predicción contrafactual con <code>predict()</code></h2>
+
+<p>Una pregunta natural en una auditoría: <em>"¿cuánto ganaría esta misma persona si fuera del otro género, manteniendo todo lo demás constante?"</em>. Es exactamente para eso que sirve <code>predict()</code>.</p>
+
+<pre><code><span class="comment"># Tomar un caso real de la base</span>
+caso_real &lt;- empleados <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(genero == <span class="string">"Mujer"</span>, nivel_jerarquico == <span class="string">"Profesional"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">slice</span>(1)
+
+<span class="comment"># Crear su versión contrafactual: misma persona, género cambiado</span>
+caso_cf &lt;- caso_real <span class="pipe">|&gt;</span> <span class="func">mutate</span>(genero = <span class="string">"Hombre"</span>)
+
+<span class="comment"># Predecir con ambos casos (escala log)</span>
+pred_real &lt;- <span class="func">predict</span>(modelo_2, newdata = caso_real)
+pred_cf   &lt;- <span class="func">predict</span>(modelo_2, newdata = caso_cf)
+
+<span class="comment"># Volver a la escala original (pesos chilenos)</span>
+<span class="func">exp</span>(pred_real)
+<span class="func">exp</span>(pred_cf)
+<span class="func">exp</span>(pred_cf) - <span class="func">exp</span>(pred_real)</code></pre>
+
+<div class="key">
+<strong>Por qué <code>exp()</code>:</strong>
+Si tu VD es <code>log(salario)</code>, lo que <code>predict()</code> devuelve son log-salarios predichos. Para volverlos a pesos chilenos, hay que aplicar la función inversa del logaritmo, que es la exponencial: <code>exp()</code>. Esto se conoce como "des-transformar" o "back-transform".
+</div>
+
+
+<!-- ============================================================ -->
+<h2>7. Resumen: el toolbox de la regresión lineal</h2>
+
+<table>
+<tr><th>Tarea</th><th>Función</th><th>Apunte</th></tr>
+<tr><td>Ajustar modelo lineal</td><td><code>lm(VD ~ VI, data)</code></td><td>11</td></tr>
+<tr><td>Lectura del modelo</td><td><code>summary(modelo)</code></td><td>11</td></tr>
+<tr><td>Coeficientes ordenados</td><td><code>broom::tidy(modelo, conf.int = TRUE)</code></td><td>13</td></tr>
+<tr><td>Métricas globales</td><td><code>broom::glance(modelo)</code></td><td>13</td></tr>
+<tr><td>Residuos y diagnóstico</td><td><code>broom::augment(modelo)</code></td><td>12</td></tr>
+<tr><td>Multicolinealidad</td><td><code>car::vif(modelo)</code></td><td>12</td></tr>
+<tr><td>Interacciones</td><td><code>VI1 * VI2</code> en la fórmula</td><td>13</td></tr>
+<tr><td>Comparar modelos anidados</td><td><code>anova(m1, m2)</code></td><td>13</td></tr>
+<tr><td>Predicción contrafactual</td><td><code>predict(modelo, newdata = ...)</code></td><td>13</td></tr>
+<tr><td>Gráfico de coeficientes</td><td><code>geom_pointrange()</code></td><td>13</td></tr>
+</table>
+
+
+<footer>
+<strong>Autor:</strong> René Gempp · Analítica de Personas · Magíster en Gestión de Personas · FAE, Universidad Diego Portales<br>
+© 2026 René Gempp. Este apunte es material de referencia. No reemplaza la práctica con los datos.
+</footer>
+
+</body>
+</html>

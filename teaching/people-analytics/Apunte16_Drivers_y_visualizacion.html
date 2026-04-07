@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 16 — Drivers, importancia relativa y visualización de encuestas | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  .result { color: #A78BFA; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong { display: block; margin-bottom: 0.3rem; }
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
+  .comparison > div { padding: 0.8rem; border-radius: 6px; }
+  .bad { background: #FEE2E2; border: 1px solid #FECACA; }
+  .good { background: #DCFCE7; border: 1px solid #BBF7D0; }
+  .comparison h4 { font-size: 0.9rem; margin-bottom: 0.4rem; color: #1E293B; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  .output-box pre code { color: #1E293B; }
+  .bad pre, .good pre { color: #1E293B; background: none; padding: 0; margin: 0; }
+  .bad pre code, .good pre code { color: #1E293B; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  blockquote { border-left: 3px solid var(--slate); padding-left: 1rem; margin: 1rem 0; color: var(--slate); font-style: italic; }
+  @media (max-width: 600px) { .comparison { grid-template-columns: 1fr; } }
+  @media print { body { max-width: 100%; } pre { font-size: 0.8rem; } }
+</style>
+</head>
+<body>
+
+<h1>Apunte 16 — Drivers, importancia relativa y visualización de encuestas</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 6 · Prof. René Gempp</p>
+
+
+<h2>1. Drivers de engagement: el problema del VP</h2>
+
+<p>Hasta ahora, en esta semana, hemos hecho lo siguiente:</p>
+
+<ol>
+  <li>Analizamos la confiabilidad de las cinco sub-escalas de la encuesta con <code>psych::alpha()</code> (Apunte 14).</li>
+  <li>Confirmamos la estructura factorial con <code>psych::fa()</code> (Apunte 15).</li>
+  <li>Construimos puntajes promedio para liderazgo, desarrollo, reconocimiento, carga y propósito.</li>
+</ol>
+
+<p>Ahora viene la pregunta del VP de Personas: <strong>¿qué dimensión está moviendo más al engagement global?</strong> Esa es la pregunta que decide dónde poner presupuesto.</p>
+
+<p>La herramienta natural es la regresión múltiple con engagement global como VD y las cinco dimensiones como predictores:</p>
+
+<pre><code>modelo &lt;- <span class="func">lm</span>(engagement_global ~ liderazgo + desarrollo +
+                                  reconocimiento + carga + proposito,
+             data = datos)
+
+<span class="func">summary</span>(modelo)
+broom::<span class="func">tidy</span>(modelo, conf.int = TRUE)</code></pre>
+
+<div class="tip">
+<strong>Re-uso de la Clase 5</strong>
+Esta es exactamente la misma sintaxis de <code>lm()</code> que aprendimos en la auditoría salarial. La diferencia: la VD (engagement_global) es continua y no se transforma con logaritmo. Si necesitas refrescar la lectura del <code>summary()</code> y de <code>broom::tidy()</code>, vuelve al Apunte 11.
+</div>
+
+
+<h2>2. Por qué los coeficientes no responden la pregunta</h2>
+
+<p>Lee con cuidado el coeficiente de "liderazgo" en el output:</p>
+
+<div class="output-box">
+<pre>           term  estimate std.error statistic  p.value conf.low conf.high
+1   (Intercept)     0.971     0.273     3.560 0.000391    0.435     1.508
+2     liderazgo     0.756     0.063    11.984 0.000000    0.632     0.880
+3    desarrollo     0.685     0.067    10.193 0.000000    0.553     0.817
+4 reconocimiento    0.429     0.064     6.713 0.000000    0.304     0.555
+5         carga    -0.396     0.054    -7.290 0.000000   -0.503    -0.290
+6     proposito     0.325     0.062     5.265 0.000000    0.204     0.447</pre>
+</div>
+
+<p>Lectura ingenua: "liderazgo es el driver más fuerte porque tiene el coeficiente más grande". <strong>Esa lectura es engañosa</strong>, por dos razones:</p>
+
+<ol>
+  <li><strong>Los predictores están en distintas unidades.</strong> Si liderazgo y desarrollo se miden en la misma escala 1–5 (como aquí), comparar coeficientes es razonable. Pero si midiéramos antigüedad en años y otros predictores en escalas Likert, los coeficientes serían incomparables.</li>
+  <li><strong>Los predictores están correlacionados entre sí.</strong> Liderazgo y desarrollo tienen correlación ~0,40 en estos datos. Cuando los predictores se solapan, el coeficiente de regresión refleja solo el "efecto único" de cada uno —la parte que no comparte con los demás. Eso <em>no</em> es lo mismo que "qué tanto importa".</li>
+</ol>
+
+<p>Necesitamos otra métrica: <strong>la importancia relativa</strong>.</p>
+
+
+<h2>3. Importancia relativa: la intuición</h2>
+
+<p>La importancia relativa busca responder: <em>"si tuviera que repartir el R² total entre los predictores, ¿qué porcentaje le tocaría a cada uno?"</em>. Hay varios métodos para calcularla; el más usado y mejor comportado es el <strong>método LMG</strong> (Lindeman, Merenda &amp; Gold, 1980), implementado en el paquete <code>relaimpo</code>.</p>
+
+<p>La intuición del LMG: cuando los predictores están correlacionados, el R² que aporta cada uno depende del orden en que entran al modelo. Por ejemplo:</p>
+
+<ul>
+  <li>Si liderazgo entra <strong>primero</strong>, aporta mucho R² (porque correlaciona con engagement).</li>
+  <li>Si liderazgo entra <strong>después</strong> de desarrollo y reconocimiento, aporta poco R² adicional (porque buena parte de su efecto ya está capturado por los otros).</li>
+</ul>
+
+<p>El método LMG resuelve este problema <strong>promediando la contribución de cada predictor sobre todos los órdenes posibles de entrada</strong>. El resultado es un número por cada predictor, y la suma de los números es el R² total del modelo. Esos números <strong>sí</strong> se pueden comparar honestamente como "qué tanto importa cada driver".</p>
+
+<div class="advanced">
+<strong>Las matemáticas, en una línea</strong>
+LMG es matemáticamente equivalente al "valor de Shapley" de la teoría de juegos cooperativos (Shapley, 1953), aplicado al juego de "repartir el R² entre los jugadores predictores". Para una discusión rigurosa: Grömping, U. (2006). Relative importance for linear regression in R: The package relaimpo. <em>Journal of Statistical Software, 17</em>(1), 1–27.
+</div>
+
+
+<h2>4. <code>relaimpo::calc.relimp()</code>: cálculo en R</h2>
+
+<pre><code><span class="comment"># Instalar (una sola vez)</span>
+<span class="func">install.packages</span>(<span class="string">"relaimpo"</span>)
+
+<span class="func">library</span>(relaimpo)
+
+<span class="comment"># Calcular importancia relativa con el método LMG</span>
+importancia &lt;- relaimpo::<span class="func">calc.relimp</span>(modelo,
+                                       type = <span class="string">"lmg"</span>,
+                                       rela = <span class="literal">TRUE</span>)
+importancia</code></pre>
+
+<div class="output-box">
+<pre>Response variable: engagement_global
+Total response variance: 4.21
+Analysis based on 936 observations
+
+5 Regressors:
+liderazgo desarrollo reconocimiento carga proposito
+Proportion of variance explained by model: 64.6%
+Metrics are normalized to sum to 100%.
+
+Relative importance metrics:
+
+                     lmg
+liderazgo       0.302
+desarrollo      0.246
+reconocimiento  0.165
+carga           0.154
+proposito       0.133</pre>
+</div>
+
+<p>Lectura:</p>
+
+<ul>
+  <li>El modelo explica 64,6 % de la varianza del engagement global (R² del modelo completo).</li>
+  <li>Con <code>rela = TRUE</code>, los cinco números de la columna <code>lmg</code> suman 1 (o 100 %). Cada uno es la <strong>fracción del R² explicado</strong> que se atribuye a ese driver.</li>
+  <li><strong>Liderazgo es el driver más importante</strong>, con 30,2 % del R² explicado. Le sigue desarrollo (24,6 %).</li>
+  <li>Entre los tres primeros (liderazgo, desarrollo, reconocimiento) suman 71,3 % del R² explicado.</li>
+</ul>
+
+<p>El gráfico es un complemento natural:</p>
+
+<pre><code><span class="func">plot</span>(importancia)</code></pre>
+
+<p>...que produce un gráfico de barras de las contribuciones LMG, ordenadas o no según prefieras.</p>
+
+
+<h2>5. Limitaciones de la importancia relativa</h2>
+
+<p>Tres advertencias importantes que conviene tener presentes:</p>
+
+<ol>
+  <li><strong>Importancia relativa no es causalidad.</strong> Que liderazgo "explique" un 30 % del R² no significa que mejorar liderazgo en X puntos vaya a subir engagement en Y. Para inferencias causales serias se necesitan diseños cuasi-experimentales o experimentos de campo. Reportar la importancia relativa como un argumento para invertir en liderazgo es <em>razonable</em>; reportarla como una garantía de retorno es <em>incorrecto</em>.</li>
+  <li><strong>Es sensible al conjunto de predictores incluidos.</strong> Si quitas un predictor importante del modelo, las contribuciones de los demás se reorganizan. La importancia relativa no es una propiedad "absoluta" del predictor, sino una propiedad de su contribución <em>dentro del modelo que ajustaste</em>.</li>
+  <li><strong>Varianza explicada no es lo mismo que impacto en valores extremos.</strong> Un driver puede explicar mucha varianza pero ser poco accionable; otro puede explicar poca varianza pero ser fácil de mover. La conversación con el VP debe combinar importancia relativa con costo/factibilidad de las palancas.</li>
+</ol>
+
+
+<h2>6. eNPS: cálculo y crítica</h2>
+
+<p>El <strong>employee Net Promoter Score (eNPS)</strong> es la versión organizacional del NPS de Reichheld (2003). La pregunta canónica es:</p>
+
+<blockquote>
+"En una escala de 0 a 10, ¿qué tan probable es que recomiendes a InnovaCo como un buen lugar para trabajar?"
+</blockquote>
+
+<p>Las respuestas se categorizan en tres grupos:</p>
+
+<table>
+<tr><th>Rango</th><th>Categoría</th></tr>
+<tr><td>9 – 10</td><td>Promotor</td></tr>
+<tr><td>7 – 8</td><td>Pasivo</td></tr>
+<tr><td>0 – 6</td><td>Detractor</td></tr>
+</table>
+
+<p>Y la fórmula del eNPS es simplemente:</p>
+
+<p style="text-align: center; font-family: Georgia, serif; font-size: 1.05rem; margin: 1rem 0;">
+eNPS = % Promotores − % Detractores
+</p>
+
+<p>El score teórico va de −100 (todos detractores) a +100 (todos promotores).</p>
+
+<h3>6.1 Cálculo en R</h3>
+
+<pre><code>datos &lt;- datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(categoria_enps = <span class="func">case_when</span>(
+    enps &gt;= 9 ~ <span class="string">"Promotor"</span>,
+    enps &gt;= 7 ~ <span class="string">"Pasivo"</span>,
+    <span class="literal">TRUE</span>      ~ <span class="string">"Detractor"</span>
+  ))
+
+<span class="comment"># eNPS global</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(categoria_enps) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(pct = n / <span class="func">sum</span>(n) * 100) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(eNPS = pct[categoria_enps == <span class="string">"Promotor"</span>] -
+                       pct[categoria_enps == <span class="string">"Detractor"</span>])
+
+<span class="comment"># eNPS segmentado por departamento</span>
+datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    promotor = <span class="func">mean</span>(categoria_enps == <span class="string">"Promotor"</span>) * 100,
+    detractor= <span class="func">mean</span>(categoria_enps == <span class="string">"Detractor"</span>) * 100,
+    eNPS     = promotor - detractor
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(eNPS)</code></pre>
+
+<h3>6.2 Por qué a las empresas les gusta y a los académicos les molesta</h3>
+
+<div class="comparison">
+<div class="good">
+<h4>A favor</h4>
+<ul>
+  <li>Una sola pregunta, una sola cifra.</li>
+  <li>Comparable año a año y entre empresas.</li>
+  <li>Comunicacionalmente irresistible para el comité ejecutivo.</li>
+  <li>Reichheld (2003) reportó correlación con crecimiento de empresas.</li>
+</ul>
+</div>
+<div class="bad">
+<h4>En contra</h4>
+<ul>
+  <li>La discretización 0–6 / 7–8 / 9–10 descarta información: un 5 y un 0 son tratados igual.</li>
+  <li>La fórmula es no-lineal y poco interpretable estadísticamente.</li>
+  <li>Empíricamente, el promedio simple del ítem 0–10 predice mejor el comportamiento futuro (Kristensen &amp; Eskildsen, 2014).</li>
+  <li>Los rangos de "promotor" son culturalmente sesgados: en países donde marcar "9" es raro, el eNPS subestima la lealtad.</li>
+</ul>
+</div>
+</div>
+
+<div class="warning">
+<strong>Recomendación profesional</strong>
+Reporta el eNPS porque tu VP lo va a pedir. <strong>Pero acompáñalo del promedio simple del ítem 0–10</strong> y, si el espacio lo permite, de la distribución completa. La transparencia sobre las limitaciones de la métrica es parte de tu credibilidad como analista.
+</div>
+
+
+<h2>7. Visualización 1: heatmaps con <code>geom_tile()</code></h2>
+
+<p>Cuando quieres mostrar una métrica (engagement promedio) cruzada entre dos categorías (departamento × dimensión), un <strong>heatmap</strong> permite ver patrones de un vistazo. La función ggplot2 es <code>geom_tile()</code>:</p>
+
+<pre><code><span class="comment"># Datos en formato largo</span>
+heatmap_data &lt;- datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(<span class="func">across</span>(<span class="func">c</span>(liderazgo, desarrollo, reconocimiento,
+                       carga, proposito), mean)) <span class="pipe">|&gt;</span>
+  <span class="func">pivot_longer</span>(-departamento, names_to = <span class="string">"dimension"</span>,
+                                values_to = <span class="string">"puntaje"</span>)
+
+<span class="func">ggplot</span>(heatmap_data, <span class="func">aes</span>(dimension, departamento, fill = puntaje)) +
+  <span class="func">geom_tile</span>(color = <span class="string">"white"</span>, linewidth = 0.6) +
+  <span class="func">geom_text</span>(<span class="func">aes</span>(label = <span class="func">round</span>(puntaje, 1)),
+            color = <span class="string">"white"</span>, size = 3.5) +
+  <span class="func">scale_fill_gradient2</span>(
+    midpoint = 3, low = <span class="string">"#B85042"</span>, mid = <span class="string">"#E7E8D1"</span>, high = <span class="string">"#0D9488"</span>,
+    limits = <span class="func">c</span>(1, 5)
+  ) +
+  <span class="func">labs</span>(title = <span class="string">"Engagement promedio por departamento y dimensión"</span>,
+       subtitle = <span class="string">"Encuesta InnovaCo 2026 · n = 936"</span>,
+       x = <span class="literal">NULL</span>, y = <span class="literal">NULL</span>, fill = <span class="string">"Promedio (1–5)"</span>) +
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<div class="tip">
+<strong>El detalle clave: <code>scale_fill_gradient2()</code> con <code>midpoint</code> anclado</strong>
+Para datos centrados en un valor con significado (e.g., el "neutral" de una escala Likert 1–5 está en 3), usa <code>scale_fill_gradient2()</code>, no <code>scale_fill_gradient()</code>. La paleta divergente (un color para "bajo", otro para "alto", pasando por un color neutral en el punto medio) hace inmediatamente legible qué celdas están "en zona roja" y cuáles "en zona verde". Si usaras una paleta secuencial, todo se vería en un mismo gradiente y perderías la información ordinal del punto medio.
+</div>
+
+
+<h2>8. Visualización 2: barras divergentes para datos Likert</h2>
+
+<p>Las <strong>barras divergentes</strong> (<em>diverging stacked bar charts</em>) son la forma más honesta de visualizar una distribución de respuestas Likert. La idea: poner el "neutral" en el centro y dejar crecer las respuestas positivas a la derecha y las negativas a la izquierda. Inventadas por Heiberger y Robbins (2014) y popularizadas en R por los paquetes <code>HH</code> y <code>likert</code>.</p>
+
+<p>El patrón en ggplot2 puro:</p>
+
+<pre><code><span class="comment"># Calcular % en cada categoría de respuesta para un ítem</span>
+item_div &lt;- datos <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(item_rec_01) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    pct = n / <span class="func">sum</span>(n) * 100,
+    label = <span class="func">factor</span>(item_rec_01,
+                   levels = 1:5,
+                   labels = <span class="func">c</span>(<span class="string">"Muy en desacuerdo"</span>, <span class="string">"En desacuerdo"</span>,
+                              <span class="string">"Neutral"</span>, <span class="string">"De acuerdo"</span>, <span class="string">"Muy de acuerdo"</span>)),
+    pct_signed = <span class="func">case_when</span>(
+      item_rec_01 %in% 1:2 ~ -pct,
+      item_rec_01 == 3     ~ -pct/2,
+      item_rec_01 %in% 4:5 ~ pct
+    )
+  )
+
+<span class="func">ggplot</span>(item_div, <span class="func">aes</span>(x = pct_signed, y = <span class="string">"item"</span>, fill = label)) +
+  <span class="func">geom_col</span>() +
+  <span class="func">geom_vline</span>(xintercept = 0, color = <span class="string">"black"</span>) +
+  <span class="func">scale_fill_manual</span>(values = <span class="func">c</span>(
+    <span class="string">"Muy en desacuerdo"</span> = <span class="string">"#B85042"</span>,
+    <span class="string">"En desacuerdo"</span>     = <span class="string">"#D88471"</span>,
+    <span class="string">"Neutral"</span>           = <span class="string">"#E7E8D1"</span>,
+    <span class="string">"De acuerdo"</span>        = <span class="string">"#7DAEA0"</span>,
+    <span class="string">"Muy de acuerdo"</span>    = <span class="string">"#0D9488"</span>
+  )) +
+  <span class="func">labs</span>(title = <span class="string">"'Mi jefatura reconoce mi trabajo cuando lo hago bien'"</span>,
+       x = <span class="string">"% de respondientes"</span>, y = <span class="literal">NULL</span>) +
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<div class="tip">
+<strong>Una alternativa elegante: el paquete <code>likert</code></strong>
+Si vas a hacer muchas visualizaciones de este tipo, vale la pena explorar el paquete <code>likert</code>, que automatiza todo el trabajo de barras divergentes con una sintaxis específica para ítems Likert. <code>install.packages("likert")</code> y luego <code>likert::likert(items_df) |&gt; plot()</code>.
+</div>
+
+
+<h2>9. Visualización 3: comparación año a año</h2>
+
+<p>Mostrar una caída de engagement de un año al otro requiere una visualización que <strong>contextualice la magnitud</strong>, no solo que la dramatice. Dos opciones efectivas:</p>
+
+<h3>9.1 Dumbbell plot con <code>geom_segment()</code> + <code>geom_point()</code></h3>
+
+<pre><code>comparacion &lt;- datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(engagement_2026 = <span class="func">mean</span>(engagement_global)) <span class="pipe">|&gt;</span>
+  <span class="func">left_join</span>(hist_2025 <span class="pipe">|&gt;</span>
+              <span class="func">select</span>(departamento,
+                     engagement_2025 = engagement_global_2025),
+            by = <span class="string">"departamento"</span>)
+
+<span class="func">ggplot</span>(comparacion, <span class="func">aes</span>(y = <span class="func">reorder</span>(departamento, engagement_2026))) +
+  <span class="func">geom_segment</span>(<span class="func">aes</span>(x = engagement_2025, xend = engagement_2026,
+                   yend = departamento),
+               linewidth = 1.5, color = <span class="string">"grey60"</span>,
+               arrow = <span class="func">arrow</span>(length = <span class="func">unit</span>(0.18, <span class="string">"cm"</span>),
+                             type = <span class="string">"closed"</span>)) +
+  <span class="func">geom_point</span>(<span class="func">aes</span>(x = engagement_2025), color = <span class="string">"#A7BEAE"</span>, size = 4) +
+  <span class="func">geom_point</span>(<span class="func">aes</span>(x = engagement_2026), color = <span class="string">"#B85042"</span>, size = 4) +
+  <span class="func">labs</span>(title = <span class="string">"Engagement global por departamento: 2025 vs. 2026"</span>,
+       x = <span class="string">"Engagement promedio (escala 0–10)"</span>, y = <span class="literal">NULL</span>) +
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<h3>9.2 Atajo: <code>geom_dumbbell()</code> del paquete <code>ggalt</code></h3>
+
+<pre><code><span class="func">library</span>(ggalt)
+
+<span class="func">ggplot</span>(comparacion, <span class="func">aes</span>(y = <span class="func">reorder</span>(departamento, engagement_2026),
+                         x = engagement_2025, xend = engagement_2026)) +
+  <span class="func">geom_dumbbell</span>(colour_x = <span class="string">"#A7BEAE"</span>,
+                colour_xend = <span class="string">"#B85042"</span>,
+                size_x = 4, size_xend = 4)</code></pre>
+
+
+<h2>10. Tres principios de visualización para datos de encuesta</h2>
+
+<ol>
+  <li><strong>Las tablas son para leer; los heatmaps son para ver patrones.</strong> Una tabla de 6 departamentos × 5 dimensiones tiene 30 celdas. Un heatmap permite captar el patrón en 2 segundos; una tabla requiere lectura secuencial.</li>
+  <li><strong>Para datos Likert, las barras divergentes son más honestas que las apiladas.</strong> Una barra apilada tradicional alinea todas las respuestas de izquierda a derecha y obliga al ojo a comparar áreas; las divergentes anclan el "neutral" en el centro y hacen inmediato el balance positivo/negativo.</li>
+  <li><strong>Comparaciones año a año necesitan contexto, no solo flechas.</strong> Una caída de 8 puntos sin contexto invita al pánico. Mostrar la serie histórica completa, o el rango intercuartílico de empresas comparables del benchmark, enmarca la magnitud del cambio.</li>
+</ol>
+
+
+<h2>11. Resumen del kit técnico de la semana</h2>
+
+<table>
+<tr><th>Función</th><th>Paquete</th><th>Para qué sirve</th></tr>
+<tr><td><code>relaimpo::calc.relimp()</code></td><td>relaimpo</td><td>Importancia relativa por método LMG</td></tr>
+<tr><td><code>case_when()</code></td><td>dplyr</td><td>Categorización de respondientes para eNPS</td></tr>
+<tr><td><code>geom_tile()</code></td><td>ggplot2</td><td>Heatmaps de métrica × dos categorías</td></tr>
+<tr><td><code>scale_fill_gradient2()</code></td><td>ggplot2</td><td>Paleta divergente con punto medio anclado</td></tr>
+<tr><td><code>geom_segment()</code> / <code>geom_dumbbell()</code></td><td>ggplot2 / ggalt</td><td>Comparación entre dos puntos en el tiempo</td></tr>
+<tr><td><code>likert::likert()</code></td><td>likert</td><td>Atajo para barras divergentes Likert (opcional)</td></tr>
+</table>
+
+
+<footer>
+Apunte 16 · Curso Analítica de Personas · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+</footer>
+
+</body>
+</html>

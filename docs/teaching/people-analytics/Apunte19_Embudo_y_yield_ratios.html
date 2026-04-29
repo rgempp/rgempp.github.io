@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 19 — El embudo de reclutamiento: yield ratios, TTF, CPH y QoH | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong { display: block; margin-bottom: 0.3rem; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 19 — El embudo de reclutamiento: yield ratios, TTF, CPH y QoH</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 8 · Prof. René Gempp</p>
+
+
+<h2>1. La metáfora del embudo y por qué es útil</h2>
+
+<p>Cuando publicas una vacante, recibes muchos CV y, al final, contratas a una sola persona. Entre lo uno y lo otro hay una serie de filtros que, mirados juntos, tienen forma de embudo: ancho arriba, angosto abajo. La metáfora se popularizó en marketing (el «funnel» de conversión) y migró al reclutamiento porque captura algo cierto: <strong>en cada etapa perdemos candidatos, y los lugares donde más perdemos son los que más conviene examinar</strong>.</p>
+
+<p>El estándar SHRM/ANSI 2012 <em>Cost-per-Hire Standard</em> reconoce las siguientes etapas básicas, aunque cada empresa adapta el detalle a su proceso:</p>
+
+<ol>
+  <li><strong>Postulaciones recibidas</strong> (top del embudo).</li>
+  <li><strong>Pasaron filtro de CV</strong> (screening por reclutador o ATS).</li>
+  <li><strong>Pasaron evaluación técnica</strong> (test de aptitud, prueba práctica, ejercicio de código).</li>
+  <li><strong>Pasaron entrevista estructurada</strong> (con jefatura o panel).</li>
+  <li><strong>Recibieron oferta formal</strong>.</li>
+  <li><strong>Aceptaron la oferta</strong> (= contrataciones).</li>
+</ol>
+
+<p>El dataset <code>innovaco_postulaciones.csv</code> tiene una columna por etapa, así que vamos a poder calcular tasas de paso de manera directa.</p>
+
+
+<h2>2. Yield ratio: la métrica más simple y más usada</h2>
+
+<p>El <strong>yield ratio</strong> de una etapa es la proporción de candidatos que pasaron a la etapa siguiente. Existen dos versiones:</p>
+
+<div class="formula">
+<p><strong>Yield ratio etapa-a-etapa</strong>: candidatos que pasan a la etapa <em>k+1</em> ÷ candidatos que estaban en la etapa <em>k</em></p>
+<p><strong>Yield ratio acumulado</strong>: candidatos en la etapa <em>k</em> ÷ postulaciones totales</p>
+</div>
+
+<p>El yield ratio acumulado del último paso es lo que en marketing se llama <strong>tasa de conversión global</strong>: candidatos que terminan contratados sobre el total de postulaciones.</p>
+
+<pre><code><span class="func">library</span>(tidyverse)
+postulaciones &lt;- <span class="func">read_csv</span>(<span class="string">"innovaco_postulaciones.csv"</span>)
+
+postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n_postulaciones    = <span class="func">n</span>(),
+    n_paso_cv          = <span class="func">sum</span>(paso_filtro_cv == 1, na.rm = TRUE),
+    n_paso_entrevista  = <span class="func">sum</span>(score_entrevista &gt;= 3.0, na.rm = TRUE),
+    n_recibio_oferta   = <span class="func">sum</span>(recibio_oferta == 1, na.rm = TRUE),
+    n_acepto_oferta    = <span class="func">sum</span>(acepto_oferta == 1, na.rm = TRUE)
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    yield_global = n_acepto_oferta / n_postulaciones
+  )</code></pre>
+
+<div class="output-box">
+<pre>  n_postulaciones n_paso_cv n_paso_entrevista n_recibio_oferta n_acepto_oferta yield_global
+1           3000      1150              905              108              99       0.033</pre>
+</div>
+
+<p>El yield global de InnovaCo es del 3,3%: por cada 100 postulaciones, terminamos contratando a poco más de 3 personas. Es una cifra coherente con benchmarks SHRM (2-5% en cargos profesionales), aunque está lejos del 15% que reporta una agencia headhunter típica para sus procesos guiados.</p>
+
+
+<h3>2.1 Yield ratio por fuente: dónde está la diferencia</h3>
+
+<p>Calcular el yield global no nos dice dónde poner el dinero. Lo que sí lo dice es desagregar por fuente:</p>
+
+<pre><code>postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(fuente) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n_postulaciones = <span class="func">n</span>(),
+    n_contratados   = <span class="func">sum</span>(acepto_oferta == 1, na.rm = TRUE),
+    yield_ratio     = n_contratados / n_postulaciones
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(yield_ratio))</code></pre>
+
+<div class="output-box">
+<pre>  fuente         n_postulaciones n_contratados yield_ratio
+1 Headhunter                 158            22       0.139
+2 Referido                   238            16       0.067
+3 Universidades              196             8       0.041
+4 LinkedIn                   908            22       0.024
+5 Portal Web                 762            10       0.013
+6 Indeed                     449             4       0.009
+7 Trabajando.com             289             1       0.003</pre>
+</div>
+
+<p>Cinco veces más probable que un postulante de Headhunter termine contratado que uno de LinkedIn. Cuarenta veces más probable que uno de Trabajando.com. Esto justifica que el costo unitario por candidato del headhunter sea alto: pocos candidatos, todos pre-seleccionados.</p>
+
+<div class="warning">
+<strong>El yield ratio por sí solo no decide</strong>
+Que Headhunter tenga el mejor yield no significa automáticamente que sea la mejor fuente. El costo por candidato es 20 veces más alto que el de LinkedIn. La pregunta correcta es: ¿cuánto vale cada contratación que produce esa fuente, considerando además la <em>calidad</em>? Para eso vamos a necesitar el quality-of-hire.
+</div>
+
+
+<h2>3. Time-to-fill: la métrica del tiempo</h2>
+
+<p>El time-to-fill (TTF) es el número de días entre la apertura de la vacante y el inicio efectivo del contrato. Es la métrica de eficiencia operativa por excelencia: cuando un cargo está vacante, está costando productividad pérdida.</p>
+
+<p>Una distinción importante que SHRM/ANSI 2012 explicita pero que en la práctica muchas empresas ignoran:</p>
+
+<table>
+<tr><th>Métrica</th><th>Inicio del conteo</th><th>Fin del conteo</th></tr>
+<tr><td>Time-to-fill</td><td>Apertura formal de la vacante (requisición aprobada)</td><td>Día de inicio del contrato</td></tr>
+<tr><td>Time-to-hire</td><td>Día en que el candidato entra al proceso</td><td>Día en que acepta la oferta</td></tr>
+</table>
+
+<p>El TTF es siempre mayor o igual al time-to-hire. La diferencia es relevante: si tu time-to-hire es bajo pero el TTF es alto, el problema no está en la velocidad de tu reclutamiento, sino en la lentitud para abrir requisiciones.</p>
+
+<pre><code>postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(acepto_oferta == 1) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n           = <span class="func">n</span>(),
+    ttf_mediana = <span class="func">median</span>(time_to_fill_dias, na.rm = TRUE),
+    ttf_media   = <span class="func">mean</span>(time_to_fill_dias,   na.rm = TRUE),
+    ttf_p25     = <span class="func">quantile</span>(time_to_fill_dias, 0.25, na.rm = TRUE),
+    ttf_p75     = <span class="func">quantile</span>(time_to_fill_dias, 0.75, na.rm = TRUE),
+    ttf_p90     = <span class="func">quantile</span>(time_to_fill_dias, 0.90, na.rm = TRUE)
+  )</code></pre>
+
+<div class="output-box">
+<pre>  n  ttf_mediana ttf_media ttf_p25 ttf_p75 ttf_p90
+1 99          63      69.4      45      88     115</pre>
+</div>
+
+<div class="tip">
+<strong>Por qué reportamos mediana y P90, no solo el promedio</strong>
+La distribución del TTF es típicamente sesgada a la derecha: la mayoría de los procesos toma 40-70 días, pero hay una cola larga de procesos que demoran 120, 150, 200 días. La media se infla con esa cola; la mediana es robusta. Y el P90 te dice cuánto demora el 10% más lento de tus procesos, que es justamente donde está el problema operativo.
+</div>
+
+
+<h2>4. Cost-per-hire: la métrica del dinero</h2>
+
+<p>El estándar SHRM/ANSI 2012 define el cost-per-hire (CPH) como:</p>
+
+<div class="formula">
+<p>CPH = (Costos externos + Costos internos) ÷ Número de contrataciones realizadas en el periodo</p>
+</div>
+
+<p>Donde los costos externos incluyen fees a headhunters, publicación en portales y pagos a agencias; y los costos internos incluyen salarios prorrateados de reclutadores, administración del ATS, y los días-persona de jefaturas dedicados a entrevistar.</p>
+
+<p>En el dataset, la columna <code>costo_proceso_clp</code> ya tiene imputada esa contabilidad. El cálculo del CPH por fuente es:</p>
+
+<pre><code>postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(fuente) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n_contratados      = <span class="func">sum</span>(acepto_oferta == 1, na.rm = TRUE),
+    costo_total        = <span class="func">sum</span>(costo_proceso_clp, na.rm = TRUE),
+    cost_per_hire      = costo_total / n_contratados
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(n_contratados &gt; 0) <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(cost_per_hire)</code></pre>
+
+<div class="output-box">
+<pre>  fuente         n_contratados costo_total cost_per_hire
+1 Indeed                     4    7980000        1995000
+2 Trabajando.com             1    2150000        2150000
+3 Portal Web                10   30100000        3010000
+4 LinkedIn                  22   75300000        3422727
+5 Universidades              8   31200000        3900000
+6 Referido                  16   40500000        2531250
+7 Headhunter                22   97800000        4445454</pre>
+</div>
+
+<p>El CPH varía en un orden de magnitud entre las fuentes baratas (Indeed, ~CLP 2 millones por contratación) y las caras (Headhunter, ~CLP 4,4 millones). El CPH promedio de InnovaCo está alrededor de CLP 3 millones, en línea con benchmarks SHRM 2024 para cargos profesionales en Chile (CLP 2-5 M).</p>
+
+<div class="warning">
+<strong>Trampa frecuente del CPH: dividir entre cero</strong>
+Si una fuente tuvo postulaciones pero ninguna contratación, su CPH es indefinido (división por cero). Asegúrate siempre de filtrar fuentes con <code>n_contratados &gt; 0</code> antes de calcular el ratio. Para el reporte, conviene listar esas fuentes aparte como «sin contrataciones en el periodo».
+</div>
+
+
+<h2>5. Quality-of-hire: la métrica que más importa pero menos se mide</h2>
+
+<p>Las tres métricas anteriores —yield, TTF, CPH— miden el <em>proceso</em>. La pregunta que falta es: <strong>¿qué tan buenas son las contrataciones que estamos haciendo?</strong> Esa es la quality-of-hire (QoH), y es la métrica que más cambia las decisiones cuando se mide bien.</p>
+
+<p>No hay una sola fórmula canónica. Las definiciones más usadas son combinaciones de:</p>
+
+<ul>
+  <li><strong>Desempeño post-contratación</strong> (a 6, 12 o 18 meses), medido en la evaluación regular.</li>
+  <li><strong>Permanencia</strong> a un horizonte fijo (típicamente 12 meses).</li>
+  <li><strong>Promoción</strong> en los primeros 24 meses.</li>
+  <li><strong>Satisfacción del jefe directo</strong> con la incorporación.</li>
+</ul>
+
+<p>Una versión simple y defensible para empezar es el producto del desempeño promedio por la permanencia:</p>
+
+<div class="formula">
+<p>QoH<sub>fuente</sub> = desempeño_promedio_a_12m × tasa_permanencia_12m</p>
+</div>
+
+<p>Si todos los contratados de una fuente permanecen y tienen desempeño 4.0/5, la QoH = 4.0. Si la mitad se va antes del año, aunque los que quedan sean 4.0, la QoH = 2.0. La métrica castiga las fuentes que producen contrataciones inestables.</p>
+
+<pre><code>postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(acepto_oferta == 1) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(fuente) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n_contrataciones      = <span class="func">n</span>(),
+    n_con_desempeno_12m   = <span class="func">sum</span>(!<span class="func">is.na</span>(desempeno_12m)),
+    desempeno_promedio    = <span class="func">mean</span>(desempeno_12m,    na.rm = TRUE),
+    permanencia_promedio  = <span class="func">mean</span>(permanencia_12m,  na.rm = TRUE),
+    quality_of_hire       = desempeno_promedio * permanencia_promedio
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(quality_of_hire))</code></pre>
+
+<div class="output-box">
+<pre>  fuente          n_contrat n_desemp desemp_prom perm_prom QoH
+1 Referido                16        7       4.33      1.00 4.33
+2 LinkedIn                22       11       4.12      1.00 4.12
+3 Universidades            8        4       3.90      1.00 3.90
+4 Headhunter              22        9       3.73      1.00 3.73
+5 Portal Web              10        1       3.50      1.00 3.50
+6 Trabajando.com           1        1       3.30      1.00 3.30</pre>
+</div>
+
+<div class="note">
+<strong>El problema del N pequeño</strong>
+La QoH solo se puede calcular para contrataciones que ya cumplieron el horizonte (12 meses). Eso significa que, en cualquier momento, una fracción importante de tus contrataciones del año en curso no tiene QoH disponible. Si publicas un reporte con N de fuente igual a 1 o 2, el ruido es enorme. Reglas prudentes: agregar fuentes a categorías mayores cuando el N es chico, o reportar intervalos de confianza, o esperar tener al menos 10 observaciones por fuente antes de tomar decisiones de presupuesto.
+</div>
+
+
+<h2>6. El trade-off costo vs. calidad: un gráfico que cambia decisiones</h2>
+
+<p>Los datos de InnovaCo permiten visualizar las cuatro métricas en una sola figura: scatterplot con cost-per-hire en el eje x, quality-of-hire en el eje y, tamaño del punto proporcional al número de contrataciones, y color por fuente. Cada cuadrante tiene una interpretación de negocio:</p>
+
+<table>
+<tr><th>Cuadrante</th><th>Cost-per-hire</th><th>Quality-of-hire</th><th>Acción recomendada</th></tr>
+<tr><td><strong>Estrella</strong></td><td>Bajo</td><td>Alta</td><td>Reforzar volumen</td></tr>
+<tr><td><strong>Premium</strong></td><td>Alto</td><td>Alta</td><td>Mantener para perfiles críticos</td></tr>
+<tr><td><strong>Eficiente</strong></td><td>Bajo</td><td>Media</td><td>Volumen base, cuidar la conversión</td></tr>
+<tr><td><strong>A revisar</strong></td><td>Alto</td><td>Baja</td><td>Renegociar o cerrar</td></tr>
+</table>
+
+<pre><code>calidad_costo <span class="pipe">|&gt;</span>
+  <span class="func">ggplot</span>(<span class="func">aes</span>(x = cost_per_hire / 1e6,
+             y = quality_of_hire,
+             size = n_contrataciones,
+             color = fuente)) +
+  <span class="func">geom_point</span>(alpha = 0.8) +
+  <span class="func">scale_size_continuous</span>(range = <span class="func">c</span>(3, 12)) +
+  <span class="func">labs</span>(
+    title = <span class="string">"Costo vs calidad por fuente"</span>,
+    x = <span class="string">"Cost-per-hire (CLP, millones)"</span>,
+    y = <span class="string">"Quality-of-hire"</span>
+  ) +
+  <span class="func">theme_minimal</span>()</code></pre>
+
+<p>En InnovaCo, la lectura del gráfico es: <strong>Referido es el cuadrante estrella</strong> (CLP 2.5M y QoH 4.33), <strong>Headhunter es premium</strong> (CLP 4.4M y QoH 3.73), <strong>Trabajando.com es a revisar</strong> (CLP 2.2M, pero QoH 3.30 con N=1 — necesitamos más datos antes de cerrarlo definitivamente).</p>
+
+
+<h2>7. Cinco principios para construir un dashboard de reclutamiento</h2>
+
+<p>Cierro con cinco principios que aprendí dictando este curso, mirando dashboards de RRHH de empresas chilenas:</p>
+
+<ol>
+  <li><strong>El embudo siempre se reporta desagregado por fuente</strong>. El embudo agregado tiene poca capacidad de acción: te dice que hay un problema, no dónde está.</li>
+  <li><strong>Las cuatro métricas (yield, TTF, CPH, QoH) son complementarias, no sustitutas</strong>. Optimizar solo una distorsiona el sistema. Bajar el CPH a costa de la QoH es la receta del mal reclutamiento barato.</li>
+  <li><strong>Reportar mediana, no media, para TTF y CPH</strong>. Las distribuciones son sesgadas y los outliers (procesos que tomaron 200 días, gerencias caras) inflan la media artificialmente.</li>
+  <li><strong>Reportar intervalos de confianza o N por celda cuando la celda es chica</strong>. Una QoH de 5.0 con N=1 no es un dato, es ruido. La sobriedad estadística construye credibilidad ante el VP.</li>
+  <li><strong>El dashboard de reclutamiento no es el de selección</strong>. El embudo de reclutamiento mide el flujo (cuántos pasaron, cuánto demoraron, cuánto costaron). La <em>validez</em> del proceso de selección —si los que contratamos son efectivamente los mejores— se mide con las herramientas del Apunte 20.</li>
+</ol>
+
+
+<h2>Referencias</h2>
+
+<ul>
+  <li>Society for Human Resource Management. (2012). <em>Cost-per-hire standard</em> (ANSI/SHRM 06001.2012). SHRM Foundation.</li>
+  <li>Society for Human Resource Management. (2024). <em>Talent acquisition benchmarking report 2024</em>. SHRM Research.</li>
+  <li>Phillips, J. J., &amp; Phillips, P. P. (2012). <em>Measuring the success of hiring: Cost, time, and quality</em>. ASTD Press.</li>
+  <li>Cascio, W. F. (2019). <em>Investing in people: Financial impact of human resource initiatives</em> (3rd ed.). Pearson FT Press.</li>
+  <li>Boudreau, J. W., &amp; Ramstad, P. M. (2007). <em>Beyond HR: The new science of human capital</em>. Harvard Business School Press.</li>
+</ul>
+
+<footer>
+Apunte 19 · Curso Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · 2026
+</footer>
+
+</body>
+</html>

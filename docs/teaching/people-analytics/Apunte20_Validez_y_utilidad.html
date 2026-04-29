@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 20 — Validez de selección y modelos clásicos de utilidad | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<h1>Apunte 20 — Validez de selección y modelos clásicos de utilidad</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 8 · Prof. René Gempp</p>
+
+<div class="business">
+<strong>¿Por qué este apunte importa para alguien que no es psicólogo?</strong>
+Si en tu empresa se gasta dinero en tests, entrevistas estructuradas, evaluaciones psicotécnicas o assessment centers, alguien tiene que justificar ese gasto. Este apunte te da el lenguaje y las herramientas para hacerlo. La pregunta «¿el test predice o no?» es exactamente análoga a «¿el modelo de credit scoring funciona?» o «¿el segmento de mercado es real?». Lo que cambia es el outcome (desempeño laboral en vez de default o conversión), pero la lógica estadística es la misma. Si entiendes regresión, entiendes validez de criterio. El resto es vocabulario.
+</div>
+
+
+<h2>1. La pregunta que separa al reclutamiento de la selección</h2>
+
+<p>El reclutamiento te trae candidatos. La <strong>selección</strong> te obliga a decidir, entre todos esos candidatos, a quiénes contratar. Esa decisión —en principio— se justifica con una creencia: <em>«este candidato va a rendir mejor que aquel»</em>. La validez es la forma técnica de preguntar si esa creencia tiene base empírica.</p>
+
+<p>Concretamente: si tomamos un grupo de candidatos, los hacemos pasar por un proceso de evaluación (test, entrevista, prueba técnica), les ponemos un puntaje, y después de un año medimos cómo les fue en el cargo, ¿hay correlación entre el puntaje del proceso y el desempeño efectivo? Si el coeficiente de correlación es prácticamente cero, el proceso no está prediciendo nada, y la decisión que toma es esencialmente arbitraria. Si el coeficiente es alto, el proceso vale la pena.</p>
+
+<div class="tip">
+<strong>La traducción a lenguaje de negocio</strong>
+Validez ≈ qué tan bien tu sistema de evaluación distingue a los candidatos que van a rendir bien de los que no. Es exactamente la misma noción que tiene un banco al evaluar la <em>discriminación</em> de un modelo de credit scoring (AUC, KS, etc.). De hecho, las matemáticas son primas hermanas.
+</div>
+
+
+<h2>2. Tres tipos de validez (lo mínimo para entender la conversación)</h2>
+
+<p>La literatura técnica distingue tres tipos de validez. No necesitas dominarlos como un psicólogo, pero sí saber qué dice cada uno cuando aparece en una conversación.</p>
+
+<h3>2.1 Validez de contenido</h3>
+
+<p><strong>Pregunta</strong>: ¿el instrumento mide cosas <em>relevantes</em> para el cargo?</p>
+
+<p>Si estás contratando un programador y el test pregunta sólo de capitales del mundo, la validez de contenido es baja: el contenido del test no tiene relación con lo que la persona va a hacer. Si el test consiste en escribir código real frente a una pantalla, la validez de contenido es alta. Esta validez no se mide con un coeficiente: se evalúa con expertos del cargo (lo que en la jerga se llama <em>panel de expertos</em>) o documentando el análisis del puesto.</p>
+
+<h3>2.2 Validez de constructo</h3>
+
+<p><strong>Pregunta</strong>: ¿el instrumento mide lo que dice medir?</p>
+
+<p>Esta es la validez más abstracta. Un test de razonamiento lógico debería correlacionar fuerte con otros tests de razonamiento lógico (eso le da <em>convergente</em>) y débil con tests de cosas que no son razonamiento lógico, como conocimientos específicos o personalidad (eso le da <em>discriminante</em>). Si quieres profundizar, esto se estudia formalmente con análisis factorial confirmatorio. Para fines de este curso basta con que sepas que existe.</p>
+
+<h3>2.3 Validez de criterio</h3>
+
+<p><strong>Pregunta</strong>: ¿el puntaje del instrumento <em>predice</em> el desempeño?</p>
+
+<p>Esta es la validez que más nos interesa, porque es la que se traduce directamente en dinero. Operacionalmente, es la correlación entre el puntaje en el proceso de selección y una medida de desempeño del cargo (calificación del jefe, productividad, etc.).</p>
+
+<div class="formula">
+$r_{xy} = \dfrac{\text{cov}(x, y)}{\sqrt{\text{var}(x) \cdot \text{var}(y)}}$
+</div>
+
+<p>Donde $x$ es el puntaje del proceso (test, entrevista, etc.) y $y$ es el desempeño. La validez de criterio es <em>literalmente</em> el coeficiente de correlación de Pearson entre los dos. En R:</p>
+
+<pre><code><span class="comment"># Si tienes datos de desempeño 12 meses después</span>
+datos |&gt; <span class="func">summarise</span>(r = <span class="func">cor</span>(score_total, desempeno_12m))</code></pre>
+
+<div class="business">
+<strong>Lectura práctica de la magnitud de r</strong>
+<ul>
+<li>r ≈ 0,10 → trivial. El proceso no está prediciendo nada útil.</li>
+<li>r ≈ 0,20 → modesto. Mejor que cara o sello, pero apenas.</li>
+<li>r ≈ 0,30 → sustantivo. Empieza a justificar el gasto.</li>
+<li>r ≈ 0,50 → raro y valioso. Pocos métodos llegan acá en la realidad.</li>
+</ul>
+</div>
+
+
+<h2>3. ¿Por qué la validez observada subestima la verdadera? (range restriction)</h2>
+
+<p>Hay un detalle técnico que es importante mencionar porque, si no lo conoces, las cifras de la literatura te van a parecer infladas. Se llama <em>range restriction</em> (restricción de rango).</p>
+
+<p>El problema es este: para calcular validez de criterio en una empresa, necesitas medir desempeño <em>de las personas que efectivamente fueron contratadas</em>. Pero tu instrumento ya seleccionó a esa muestra: típicamente, los contratados son los que sacaron <em>mejores</em> puntajes en el proceso. Eso recorta la varianza del predictor. Y cuando recortas la varianza, la correlación observada cae mecánicamente, aunque la relación verdadera sea fuerte.</p>
+
+<p>La consecuencia es que las validez observadas en muestras restringidas (<em>incumbents</em>, los que ya están en el cargo) son sistemáticamente menores que la validez «verdadera» de la población completa de candidatos. Existen fórmulas de corrección, pero son delicadas y dependen de supuestos.</p>
+
+<div class="warning">
+<strong>Por qué esto te importa</strong>
+Cuando leas «la validez del test es 0,35», pregúntate primero: <em>¿esa cifra está corregida por restricción de rango?</em> Si está corregida, es una proyección de lo que valdría el test en candidatos sin filtrar. Si no está corregida, es la cifra observada en la empresa, que probablemente subestima la validez real. La diferencia importa para decisiones de inversión.
+</div>
+
+
+<h2>4. Schmidt y Hunter (1998): los 85 años de meta-análisis condensados en una tabla</h2>
+
+<p>Schmidt y Hunter publicaron en 1998 un artículo que se convirtió en la referencia obligada de la disciplina. Acumularon 85 años de estudios sobre validez de instrumentos de selección y reportaron las correlaciones <strong>operacionales corregidas</strong> (con restricción de rango y unreliability del criterio) para los principales métodos.</p>
+
+<table>
+<thead>
+<tr><th>Método de selección</th><th>r (operacional)</th></tr>
+</thead>
+<tbody>
+<tr><td>Test de capacidad cognitiva general (GMA)</td><td>0,51</td></tr>
+<tr><td>Work sample test (muestra de trabajo)</td><td>0,54</td></tr>
+<tr><td>Entrevista estructurada</td><td>0,51</td></tr>
+<tr><td>Entrevista no estructurada</td><td>0,38</td></tr>
+<tr><td>Test de integridad</td><td>0,41</td></tr>
+<tr><td>Conscientiousness (responsabilidad, Big Five)</td><td>0,31</td></tr>
+<tr><td>Reference checks (revisión de referencias)</td><td>0,26</td></tr>
+<tr><td>Años de experiencia</td><td>0,18</td></tr>
+<tr><td>Años de educación</td><td>0,10</td></tr>
+<tr><td>GMA + entrevista estructurada (combinado)</td><td>0,63</td></tr>
+</tbody>
+</table>
+
+<p>La tabla generó tres consensos que dominaron la disciplina por 25 años: (1) la capacidad cognitiva general es el predictor individual más fuerte; (2) las muestras de trabajo y las entrevistas estructuradas son alternativas con validez comparable; (3) lo que las empresas más miran —años de educación, referencias, experiencia— está abajo de la tabla.</p>
+
+
+<h2>5. Sackett et al. (2022): la corrección que sacudió el campo</h2>
+
+<p>En 2022, Sackett, Zhang, Berry y Lievens publicaron una reanálisis de los mismos datos con correcciones más conservadoras. Argumentaron que las correcciones de Schmidt y Hunter (especialmente por restricción de rango indirecta y por unreliability del criterio) eran demasiado agresivas y producían validez inflada.</p>
+
+<table>
+<thead>
+<tr><th>Método</th><th>r (Schmidt-Hunter, 1998)</th><th>r (Sackett et al., 2022)</th><th>Caída relativa</th></tr>
+</thead>
+<tbody>
+<tr><td>GMA</td><td>0,51</td><td>0,31</td><td>−39 %</td></tr>
+<tr><td>Work sample</td><td>0,54</td><td>0,33</td><td>−39 %</td></tr>
+<tr><td>Entrevista estructurada</td><td>0,51</td><td>0,42</td><td>−18 %</td></tr>
+<tr><td>Test de integridad</td><td>0,41</td><td>0,31</td><td>−24 %</td></tr>
+<tr><td>Conscientiousness</td><td>0,31</td><td>0,19</td><td>−39 %</td></tr>
+</tbody>
+</table>
+
+<p>La jerarquía relativa entre métodos se preserva, pero las magnitudes caen entre 18 % y 40 %. Eso es importante porque cualquier cálculo de retorno económico (que veremos en el Apunte 21) es lineal en r: si dividimos r por dos, dividimos el retorno por dos.</p>
+
+<div class="advanced">
+<strong>La controversia abierta</strong>
+Bobko, Roth, Huy, Oh y Salgado (2024) publicaron una respuesta cuestionando algunos supuestos de Sackett et al. Sackett y colegas (2024) replicaron defendiendo su enfoque. La discusión sigue activa en revistas como <em>Journal of Applied Psychology</em> y <em>International Journal of Selection and Assessment</em>. Para fines de este curso, lo razonable es presentar los <strong>dos</strong> rangos en cualquier estimación que hagas: «bajo Schmidt-Hunter (1998) el ROI es X; bajo Sackett et al. (2022) es Y». Reportar una sola cifra es deshonesto.
+</div>
+
+
+<h2>6. Validez incremental: combinando predictores</h2>
+
+<p>En la práctica, los procesos de selección no usan un solo predictor: combinan varios (test + entrevista + prueba técnica). La pregunta es cuánto <em>agrega</em> cada predictor adicional sobre lo que ya tienes.</p>
+
+<p>Esto se llama <strong>validez incremental</strong> y, técnicamente, es el incremento en R² al agregar un predictor a un modelo de regresión múltiple sobre el desempeño:</p>
+
+<pre><code><span class="comment"># Modelo base: solo test de aptitud</span>
+m1 &lt;- <span class="func">lm</span>(desempeno_12m ~ score_test, data = datos)
+
+<span class="comment"># Modelo extendido: agrega entrevista</span>
+m2 &lt;- <span class="func">lm</span>(desempeno_12m ~ score_test + score_entrevista, data = datos)
+
+<span class="comment"># Validez incremental = incremento en R²</span>
+<span class="func">summary</span>(m1)$r.squared
+<span class="func">summary</span>(m2)$r.squared
+<span class="func">summary</span>(m2)$r.squared - <span class="func">summary</span>(m1)$r.squared</code></pre>
+
+<div class="business">
+<strong>El criterio práctico</strong>
+Un predictor adicional vale la pena agregarlo al proceso si: (a) incrementa R² de manera apreciable; (b) ese incremento se traduce en mayor utilidad económica que su costo (esto se mide formalmente con BCG, ver Apunte 21); (c) no introduce adverse impact mayor que el del proceso actual (Apunte 22).
+</div>
+
+
+<h2>7. Taylor-Russell (1939): el modelo más antiguo y todavía útil</h2>
+
+<p>Hasta acá hablamos de validez como correlación. Eso es informativo, pero no responde la pregunta del gerente: <em>«si yo subo la barra del test, ¿cuántos de mis contratados van a rendir bien?»</em>. Para responder eso necesitamos los modelos de utilidad. El más antiguo —y el más fácil de comunicar— es el de Taylor y Russell.</p>
+
+<p>El modelo asume que tanto el predictor (puntaje del proceso) como el criterio (desempeño) son normales bivariados. Toma tres parámetros:</p>
+
+<ul>
+<li><strong>r</strong>: la validez del proceso (correlación entre puntaje y desempeño)</li>
+<li><strong>BR</strong> (<em>base rate</em>): proporción de la población actual que rinde por encima del umbral de «exitoso», sin usar el proceso</li>
+<li><strong>SR</strong> (<em>selection ratio</em>): proporción de candidatos que terminamos contratando (los del top de scores)</li>
+</ul>
+
+<p>El modelo entrega un único output: la <strong>success ratio</strong> esperada, es decir, la proporción de los contratados-con-proceso que serán exitosos.</p>
+
+<div class="formula">
+$\text{Success Ratio}(r, BR, SR) = \dfrac{P(z_x \geq z_{SR},\ z_y \geq z_{BR})}{SR}$
+</div>
+
+<p>Donde la integral del numerador se calcula sobre una normal bivariada con correlación r. En R no hay que derivarla a mano: <code>mvtnorm::pmvnorm()</code> hace la integración.</p>
+
+<pre><code><span class="func">library</span>(mvtnorm)
+
+taylor_russell &lt;- <span class="func">function</span>(r, BR, SR) {
+  z_BR &lt;- <span class="func">qnorm</span>(1 - BR)   <span class="comment"># umbral en desempeño</span>
+  z_SR &lt;- <span class="func">qnorm</span>(1 - SR)   <span class="comment"># umbral en predictor</span>
+  Sigma &lt;- <span class="func">matrix</span>(<span class="func">c</span>(1, r, r, 1), 2, 2)
+  joint &lt;- <span class="func">pmvnorm</span>(
+    lower = <span class="func">c</span>(z_SR, z_BR),
+    upper = <span class="func">c</span>(Inf, Inf),
+    sigma = Sigma
+  )
+  <span class="func">as.numeric</span>(joint) / SR
+}
+
+<span class="comment"># Ejemplo InnovaCo Tecnología</span>
+<span class="comment"># r = 0,33 (validez Sackett 2022); BR = 0,55 (sin test, 55% rinde bien)</span>
+<span class="comment"># SR = 0,33 (contratamos top 33% de scores)</span>
+<span class="func">taylor_russell</span>(r = 0.33, BR = 0.55, SR = 0.33)</code></pre>
+
+<div class="output-box">
+[1] 0.7088
+</div>
+
+<p>Lectura: si pasamos de no usar el test (con el cual el 55 % de los contratados rinde bien) a usarlo con un punto de corte que selecciona al top 33 %, esperamos que el <strong>71 %</strong> de los contratados rinda bien. Una mejora de 16 puntos porcentuales.</p>
+
+<div class="tip">
+<strong>El gráfico de Taylor-Russell para una conversación con el directorio</strong>
+Una práctica recomendable es graficar la success ratio como función de SR y r juntos, para mostrar visualmente cómo cambia. Mira el script <code>clase08_script.R</code> §12 para el código completo del heatmap.
+</div>
+
+
+<h2>8. Naylor-Shine (1965): de la dicotomía a la ganancia continua</h2>
+
+<p>Taylor-Russell tiene una limitación que un ingeniero comercial detecta enseguida: <strong>obliga a dicotomizar</strong> el desempeño en «exitoso/no exitoso». En la práctica, el desempeño es una variable continua, y no queremos perder información dicotomizándola.</p>
+
+<p>Naylor y Shine resolvieron este problema en 1965. Su modelo no requiere fijar un umbral de éxito en el desempeño. Entrega como output el <strong>incremento esperado en el desempeño promedio</strong> (medido en desviaciones estándar) al usar el proceso de selección.</p>
+
+<div class="formula">
+$\Delta \bar{Z}_y = r \cdot \lambda(SR)$
+</div>
+
+<p>Donde:</p>
+<ul>
+<li>$\Delta \bar{Z}_y$ es la mejora esperada en desempeño promedio, en unidades de desviación estándar.</li>
+<li>$r$ es la validez del proceso.</li>
+<li>$\lambda(SR) = \dfrac{\varphi(z_{SR})}{SR}$, donde $\varphi$ es la densidad normal estándar evaluada en el cutoff $z_{SR} = \Phi^{-1}(1 - SR)$.</li>
+</ul>
+
+<p>El parámetro $\lambda$ es la <strong>razón de selección estandarizada</strong>: dice cuántas SDs por encima del promedio de la población está el candidato promedio que efectivamente seleccionas, antes de aplicar la validez. En R:</p>
+
+<pre><code>naylor_shine &lt;- <span class="func">function</span>(r, SR) {
+  z_SR &lt;- <span class="func">qnorm</span>(1 - SR)
+  lambda &lt;- <span class="func">dnorm</span>(z_SR) / SR
+  delta_z_y &lt;- r * lambda
+  <span class="func">list</span>(lambda = lambda, delta_z_y = delta_z_y)
+}
+
+<span class="func">naylor_shine</span>(r = 0.33, SR = 0.33)</code></pre>
+
+<div class="output-box">
+$lambda
+[1] 1.157
+$delta_z_y
+[1] 0.382
+</div>
+
+<p>Lectura: con r = 0,33 y SR = 0,33, los contratados-con-proceso rendirán, en promedio, <strong>0,38 desviaciones estándar mejor</strong> que un contratado sacado al azar de la población de candidatos. Si $SD_y$ se mide en pesos, ese 0,38 SD se traduce directamente a beneficio monetario por contratado, lo que conecta con el modelo BCG (Apunte 21).</p>
+
+<h3>Tabla canónica de λ (la herramienta de bolsillo)</h3>
+
+<p>Memoriza esta tabla, o tenla a mano. Son los valores de $\lambda$ para los <em>selection ratios</em> más típicos en la práctica:</p>
+
+<table>
+<thead>
+<tr><th>SR</th><th>λ(SR)</th><th>Interpretación</th></tr>
+</thead>
+<tbody>
+<tr><td>0,05 (top 5 %)</td><td>2,06</td><td>Selección extremadamente exigente; cada contratado está a 2 SDs sobre el promedio del predictor</td></tr>
+<tr><td>0,10</td><td>1,76</td><td>Top 10 %; común en posiciones gerenciales</td></tr>
+<tr><td>0,20</td><td>1,40</td><td>Top 20 %; común en cargos profesionales muy demandados</td></tr>
+<tr><td>0,30</td><td>1,16</td><td>Selección razonablemente exigente</td></tr>
+<tr><td>0,50</td><td>0,80</td><td>Mitad de los candidatos pasa</td></tr>
+<tr><td>0,80</td><td>0,35</td><td>Casi todos pasan; selección muy laxa</td></tr>
+</tbody>
+</table>
+
+<div class="business">
+<strong>La intuición clave para reuniones</strong>
+$\lambda$ refleja cuán «exigente» es el filtro. <strong>Procesos más exigentes (SR pequeño) tienen λ más grande</strong>, lo que multiplica el efecto de la validez. Pero ojo: también requieren más postulaciones para llenar la misma cantidad de vacantes, lo que aumenta el costo del proceso. La elección del SR no es solo psicométrica: es estratégica y financiera.
+</div>
+
+
+<h2>9. ¿Cuándo usar Taylor-Russell y cuándo Naylor-Shine?</h2>
+
+<table>
+<thead>
+<tr><th>Característica</th><th>Taylor-Russell (1939)</th><th>Naylor-Shine (1965)</th></tr>
+</thead>
+<tbody>
+<tr><td>Output</td><td>Proporción de contratados exitosos</td><td>Incremento en desempeño promedio (en SDs)</td></tr>
+<tr><td>Requiere umbral de éxito en y</td><td>Sí (necesitas BR)</td><td>No</td></tr>
+<tr><td>Comunicabilidad ejecutiva</td><td>Alta (proporción es intuitiva)</td><td>Media (SDs requiere explicación)</td></tr>
+<tr><td>Conexión con utilidad monetaria</td><td>Indirecta</td><td>Directa (vía SD<sub>y</sub> → BCG)</td></tr>
+<tr><td>Cuándo conviene usarlo</td><td>Cuando el cargo tiene umbrales claros (alcanza meta o no)</td><td>Cuando el desempeño es continuo (productividad, ventas, etc.)</td></tr>
+</tbody>
+</table>
+
+<p>Una buena práctica es <strong>usarlos juntos</strong>: Taylor-Russell le da al ejecutivo la cifra fácil de comunicar («pasamos de 55 % a 71 % de éxito»), y Naylor-Shine alimenta el cálculo de utilidad monetaria que veremos en el Apunte 21.</p>
+
+
+<h2>10. Variantes modernas: machine learning como predictor</h2>
+
+<p>Cada vez más empresas reemplazan los tests psicométricos tradicionales por modelos de <em>machine learning</em>: gradient boosting, redes neuronales o, más recientemente, modelos de lenguaje aplicados a CVs y datos de procesos pasados. Conceptualmente, eso es válido: cualquier modelo que produce un score puede usarse como predictor en los modelos de utilidad clásicos. La validez del modelo se mide igual: correlación con desempeño.</p>
+
+<p>Pero hay tres advertencias que debes manejar antes de hacer una recomendación de inversión:</p>
+
+<div class="warning">
+<strong>Advertencia 1: target leakage</strong>
+Si entrenas el modelo de scoring con datos de <em>quién fue contratado</em> en lugar de <em>quién rindió bien</em>, el modelo aprende los sesgos de los reclutadores históricos, no los predictores reales del desempeño. La validez aparente puede ser alta, pero el modelo está prediciendo el comportamiento del reclutador, no el del cargo. Volveremos sobre esto en el Apunte 22.
+</div>
+
+<div class="warning">
+<strong>Advertencia 2: range restriction es peor con ML</strong>
+Los modelos de ML típicamente se entrenan con muestras de personas <em>contratadas</em>, lo que magnifica la restricción de rango. La validez observada puede subestimar fuertemente la validez sobre la población candidata completa.
+</div>
+
+<div class="warning">
+<strong>Advertencia 3: explainability como condición regulatoria</strong>
+Bajo NYC LL 144 (2023) y el AI Act europeo (2024), los sistemas algorítmicos de selección requieren documentación, auditoría y, en algunos casos, derecho a explicación. Un modelo black-box que no puedes explicar al candidato es problemático aunque tenga alta validez. El Apunte 22 desarrolla en detalle el marco regulatorio y la auditoría.
+</div>
+
+<p>Empíricamente, los estudios disponibles sobre selección con ML (Sajjadiani et al., 2019; Hickman et al., 2022) sugieren que estos modelos producen mejoras incrementales modestas sobre los métodos tradicionales bien aplicados, no saltos cualitativos. La validez incremental sobre una entrevista estructurada bien diseñada rara vez supera 0,05–0,10 en r.</p>
+
+
+<h2>11. Resumen práctico: lo que necesitas hacer en tu empresa</h2>
+
+<ol>
+<li><strong>Establece la validez del proceso actual.</strong> Calcula la correlación entre los puntajes que generas en selección y el desempeño 12 meses después de los contratados. Esa cifra, aunque imperfecta, es tu línea de base.</li>
+<li><strong>Compárala contra los benchmarks de Sackett et al. (2022).</strong> Si tu validez está sustantivamente por debajo del benchmark del método que usas, hay margen para mejorar el proceso. Reporta los rangos Schmidt-Hunter ↔ Sackett, no una cifra única.</li>
+<li><strong>Calcula la success ratio con Taylor-Russell</strong> para comunicar al directorio. Es la cifra más fácil de entender: «pasamos de X % a Y % de contratados exitosos».</li>
+<li><strong>Calcula el incremento en desempeño promedio con Naylor-Shine.</strong> Esto te conecta con el cálculo monetario del Apunte 21.</li>
+<li><strong>Documenta la decisión.</strong> Bajo el marco regulatorio que viene (UE AI Act, proyecto chileno de Ley sobre IA), la trazabilidad de la decisión —por qué este test, con este r, con este SR— pasa a ser exigible. Empieza ya.</li>
+</ol>
+
+<div class="tip">
+<strong>El siguiente paso natural</strong>
+Una vez que sabes que tu proceso predice (validez) y cuánto mejora el desempeño promedio (Naylor-Shine), la pregunta natural es: <em>¿cuánto vale eso en pesos?</em>. Esa pregunta se responde con Brogden-Cronbach-Gleser, que es el tema del Apunte 21.
+</div>
+
+
+<h2>Referencias</h2>
+
+<p style="font-size: 0.9rem;">Bobko, P., Roth, P. L., Huy, L., Oh, I.-S., &amp; Salgado, J. F. (2024). Critique of Sackett et al.'s (2022) revised meta-analytic validity coefficients. <em>Journal of Applied Psychology</em>. Advance online publication.</p>
+
+<p style="font-size: 0.9rem;">Hickman, L., Bosch, N., Ng, V., Saef, R., Tay, L., &amp; Woo, S. E. (2022). Automated video interview personality assessments: Reliability, validity, and generalizability investigations. <em>Journal of Applied Psychology, 107</em>(8), 1323–1351.</p>
+
+<p style="font-size: 0.9rem;">Naylor, J. C., &amp; Shine, L. C. (1965). A table for determining the increase in mean criterion score obtained by using a selection device. <em>Journal of Industrial Psychology, 3</em>, 33–42.</p>
+
+<p style="font-size: 0.9rem;">Sackett, P. R., Zhang, C., Berry, C. M., &amp; Lievens, F. (2022). Revisiting meta-analytic estimates of validity in personnel selection: Addressing systematic overcorrection for restriction of range. <em>Journal of Applied Psychology, 107</em>(11), 2040–2068.</p>
+
+<p style="font-size: 0.9rem;">Sackett, P. R., Zhang, C., Berry, C. M., &amp; Lievens, F. (2023). Revisiting the design of selection systems in light of new findings regarding the validity of widely used predictors. <em>Industrial and Organizational Psychology, 16</em>(3), 283–300.</p>
+
+<p style="font-size: 0.9rem;">Sajjadiani, S., Sojourner, A. J., Kammeyer-Mueller, J. D., &amp; Mykerezi, E. (2019). Using machine learning to translate applicant work history into predictors of performance and turnover. <em>Journal of Applied Psychology, 104</em>(10), 1207–1225.</p>
+
+<p style="font-size: 0.9rem;">Schmidt, F. L., &amp; Hunter, J. E. (1998). The validity and utility of selection methods in personnel psychology: Practical and theoretical implications of 85 years of research findings. <em>Psychological Bulletin, 124</em>(2), 262–274.</p>
+
+<p style="font-size: 0.9rem;">Taylor, H. C., &amp; Russell, J. T. (1939). The relationship of validity coefficients to the practical effectiveness of tests in selection: Discussion and tables. <em>Journal of Applied Psychology, 23</em>(5), 565–578.</p>
+
+
+<footer>
+Apunte 20 · Curso Analítica de Personas · Magíster en Gestión de Personas · UDP · Otoño 2026
+</footer>
+
+</body>
+</html>

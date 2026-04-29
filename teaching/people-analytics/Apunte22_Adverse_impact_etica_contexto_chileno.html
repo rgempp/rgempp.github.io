@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 22 — Adverse impact, sesgo algorítmico y ética en selección: marco internacional y contexto chileno | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  h4 { color: var(--navy); font-size: 0.98rem; margin-top: 1rem; margin-bottom: 0.4rem; font-weight: 600; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .chile { background: #FEF2F2; border-left: 4px solid #B85042; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong, .chile strong { display: block; margin-bottom: 0.3rem; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<h1>Apunte 22 — Adverse impact, sesgo algorítmico y ética en selección: marco internacional y contexto chileno</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 8 · Prof. René Gempp</p>
+
+<div class="business">
+<strong>El problema concreto que resuelve este apunte</strong>
+Imagínate que armaste un modelo de scoring. Predice bien (Apunte 20: validez sólida) y rinde económicamente (Apunte 21: ROI estimado en cientos de millones). Tu CFO quiere ponerlo en producción mañana. Pero antes de firmar, tu Gerente Legal te pregunta: <em>«¿estamos seguros que este modelo no nos va a meter en un problema con la Dirección del Trabajo, con la nueva Agencia de Protección de Datos, o con un litigio por discriminación?»</em>. Este apunte te enseña a responder esa pregunta con rigor técnico y con conocimiento del marco normativo chileno.
+</div>
+
+
+<h2>1. Por qué hablamos de equidad en una clase técnica</h2>
+
+<p>Los Apuntes 20 y 21 mostraron cómo medir si un sistema de selección predice el desempeño (validez) y cuánto vale en pesos (utilidad). Pero un sistema con validez alta y utilidad millonaria puede, simultáneamente, estar sistemáticamente excluyendo a personas calificadas porque pertenecen a un grupo demográfico determinado. Cuando eso ocurre, la métrica que falta detectarlo es el <strong>adverse impact</strong>.</p>
+
+<p>El concepto tiene origen jurídico, no académico. La sentencia <em>Griggs v. Duke Power</em> (US Supreme Court, 1971) estableció que un requisito laboral neutral en su redacción puede ser discriminatorio en sus efectos, y que la responsabilidad del empleador es demostrar que el requisito es necesario para el puesto. Una década después, la <em>Equal Employment Opportunity Commission</em> (EEOC) publicó las <em>Uniform Guidelines on Employee Selection Procedures</em> (UGESP, 1978), que dieron a la doctrina su forma operativa: cualquier procedimiento de selección con tasas de paso desiguales entre grupos protegidos debía justificarse técnicamente.</p>
+
+<div class="note">
+<strong>«Disparate treatment» vs. «disparate impact»</strong>
+La jurisprudencia estadounidense distingue dos formas de discriminación. <em>Disparate treatment</em> es trato distinto deliberado en virtud del grupo protegido (e.g., descartar CV con nombres femeninos a propósito). <em>Disparate impact</em> es un procedimiento neutral que produce efectos desiguales, sin requerir intención discriminatoria. La regla de los 4/5 que veremos a continuación está pensada para detectar el segundo, que es el más sutil y el más frecuente en la práctica. La distinción es importante porque, en el derecho chileno, el artículo 2 del Código del Trabajo y la Ley 20.609 capturan ambas modalidades, aunque la doctrina nacional sobre <em>disparate impact</em> está mucho menos desarrollada que la estadounidense.
+</div>
+
+
+<h2>2. La regla de los 4/5: la heurística más conocida</h2>
+
+<p>El UGESP de 1978 introdujo la regla de los 4/5 (también llamada regla del 80%) como criterio operativo para identificar adverse impact:</p>
+
+<div class="formula">
+<p>Si la tasa de paso del grupo focal es menor al 80% de la tasa de paso del grupo de referencia, hay adverse impact <em>prima facie</em>.</p>
+</div>
+
+<p>Formalmente:</p>
+
+<div class="formula">
+$$\text{Impact Ratio} = \dfrac{\text{Tasa de paso}_{\text{grupo focal}}}{\text{Tasa de paso}_{\text{grupo referencia}}}$$
+</div>
+
+<p>Si el impact ratio es menor a 0.80, el procedimiento dispara la regla y debe justificarse. Si es mayor o igual a 0.80, la regla no dispara, pero eso no exime al procedimiento de otras objeciones legales.</p>
+
+<h3>2.1 Qué cuenta como grupo protegido</h3>
+
+<p>El concepto de «grupo protegido» varía por jurisdicción. En Estados Unidos, las categorías protegidas federalmente incluyen raza/etnicidad, género, edad (≥40 años), discapacidad, religión, origen nacional, embarazo y veterancia. En la Unión Europea, la Directiva 2000/78 cubre las mismas categorías más orientación sexual.</p>
+
+<p>En Chile, el catálogo de categorías protegidas se construye a partir de varios cuerpos normativos que veremos en detalle en la sección 6: el artículo 19 nº 16 de la Constitución, el artículo 2 del Código del Trabajo, la Ley 20.609 (antidiscriminación), la Ley 20.348 (igualdad de remuneraciones) y las Leyes 21.015 y 21.275 (inclusión laboral de personas con discapacidad). Las categorías cubiertas incluyen sexo, edad, estado civil, sindicación, religión, opinión política, nacionalidad, ascendencia nacional, origen social, orientación sexual, identidad de género, discapacidad y otras.</p>
+
+<h3>2.2 Aplicación en R con el dataset de InnovaCo</h3>
+
+<pre><code><span class="func">library</span>(tidyverse)
+postulaciones &lt;- <span class="func">read_csv</span>(<span class="string">"innovaco_postulaciones.csv"</span>)
+
+<span class="comment"># Tasa de paso de la entrevista en familia Tecnología, por género</span>
+adverse_tec &lt;- postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(familia_cargo == <span class="string">"Tecnología"</span>,
+         paso_filtro_cv == 1) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(genero) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n_evaluados = <span class="func">n</span>(),
+    n_pasaron   = <span class="func">sum</span>(score_entrevista &gt;= 3.0, na.rm = TRUE),
+    tasa_paso   = n_pasaron / n_evaluados
+  )
+
+adverse_tec</code></pre>
+
+<div class="output-box">
+<pre>  genero  n_evaluados n_pasaron tasa_paso
+1 Hombre          219       133     0.607
+2 Mujer           138        46     0.333</pre>
+</div>
+
+<pre><code>impact_ratio &lt;- adverse_tec$tasa_paso[adverse_tec$genero == <span class="string">"Mujer"</span>] /
+                adverse_tec$tasa_paso[adverse_tec$genero == <span class="string">"Hombre"</span>]
+impact_ratio
+<span class="comment"># [1] 0.549</span>
+
+impact_ratio &lt; 0.80
+<span class="comment"># [1] TRUE → viola la regla de los 4/5</span></code></pre>
+
+<p>El impact ratio para la entrevista de Tecnología en InnovaCo es 0.55, muy por debajo del umbral de 0.80. La regla dispara: hay adverse impact <em>prima facie</em>. La empresa debe ahora justificar técnicamente la entrevista (validez de criterio, validez de contenido) o cambiar el procedimiento.</p>
+
+
+<h3>2.3 Limitaciones de la regla del 4/5</h3>
+
+<p>La regla del 4/5 es popular precisamente porque es simple. Pero tiene tres limitaciones técnicas serias que un analista debe conocer:</p>
+
+<ul>
+  <li><strong>No es un test estadístico</strong>. Con N pequeños, ratios extremos pueden surgir por azar muestral. Una empresa con 10 hombres y 5 mujeres en una etapa puede pasar la regla 4/5 fácilmente solo por variabilidad de muestreo, sin que haya sesgo real.</li>
+  <li><strong>Sensibilidad a la base rate</strong>. Si solo el 5% de los hombres pasa, basta que el 4% de las mujeres pase para que la regla dispare (4/5 = 0.80). Pero si el 95% de los hombres pasa, hay que bajar al 76% de mujeres para violar la regla. La métrica trata desigualmente cifras altas y bajas.</li>
+  <li><strong>No considera la dirección causal</strong>. La regla detecta diferencia, no sesgo. Si las mujeres aplican mayoritariamente a un cargo donde sus calificaciones promedio son más bajas (por razones estructurales del mercado, no del proceso), la regla disparará aunque el procedimiento no esté sesgado en sí.</li>
+</ul>
+
+<div class="warning">
+<strong>El test estadístico complementario</strong>
+La práctica recomendada es complementar la regla del 4/5 con un test de proporciones. Si la diferencia es pequeña pero el N es grande, el test puede ser estadísticamente significativo aunque la regla no dispare. Si el N es chico y la diferencia es grande, la regla dispara pero el test puede no rechazar. Ambas pruebas, juntas, dan una imagen más completa.
+</div>
+
+<pre><code>n_h &lt;- adverse_tec$n_evaluados[adverse_tec$genero == <span class="string">"Hombre"</span>]
+x_h &lt;- adverse_tec$n_pasaron[adverse_tec$genero == <span class="string">"Hombre"</span>]
+n_m &lt;- adverse_tec$n_evaluados[adverse_tec$genero == <span class="string">"Mujer"</span>]
+x_m &lt;- adverse_tec$n_pasaron[adverse_tec$genero == <span class="string">"Mujer"</span>]
+
+<span class="func">prop.test</span>(<span class="func">c</span>(x_h, x_m), <span class="func">c</span>(n_h, n_m))</code></pre>
+
+<div class="output-box">
+<pre>     2-sample test for equality of proportions with continuity correction
+
+X-squared = 26.4, df = 1, p-value = 2.8e-07
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ 0.169  0.379
+sample estimates:
+  prop 1   prop 2
+0.6073  0.3333</pre>
+</div>
+
+<p>El test confirma: la diferencia es altamente significativa (p &lt; 0.001), con un intervalo de confianza al 95% para la diferencia de tasas que va de 17 a 38 puntos porcentuales. La regla del 4/5 y el test estadístico convergen en la misma conclusión.</p>
+
+
+<h2>3. El caso Amazon 2018: el incidente que cambió el debate</h2>
+
+<p>En octubre de 2018, Reuters publicó una nota firmada por Jeffrey Dastin que se convertiría en referencia obligada del campo: <em>«Amazon scraps secret AI recruiting tool that showed bias against women»</em>. La compañía había desarrollado, entre 2014 y 2017, un sistema de machine learning para puntuar CVs de candidatos a puestos técnicos. El sistema escaneaba decenas de miles de CVs por mes.</p>
+
+<p>Cuando los ingenieros auditaron el modelo, encontraron que <strong>penalizaba sistemáticamente los CVs que contenían la palabra «women's»</strong> (como en «women's chess club captain») y <strong>devaluaba los grados otorgados por dos universidades exclusivamente femeninas</strong>. El sistema no había sido programado para hacer eso. Lo había aprendido.</p>
+
+<h3>3.1 El mecanismo: cómo aprendió el sesgo</h3>
+
+<p>Amazon entrenó el modelo con CVs de los últimos 10 años de candidatos exitosos en la empresa. Esos CVs venían mayoritariamente de hombres, reflejando la composición histórica del sector tecnológico. El algoritmo aprendió a reconocer patrones que predecían «ser contratado» en ese histórico, y entre esos patrones estaban los marcadores lingüísticos de identidad masculina.</p>
+
+<p>El sesgo no estaba en el algoritmo: estaba en los datos. Pero el algoritmo lo amplificó y operacionalizó a escala industrial. Cuando los ingenieros intentaron eliminar las palabras de género más obvias, surgieron variables proxy: el modelo encontraba la señal en otras pistas correlacionadas con género (verbos usados, deportes practicados, formato del CV).</p>
+
+<h3>3.2 La decisión final</h3>
+
+<p>Amazon nunca usó el sistema para decisiones de contratación reales. El proyecto se desactivó en 2017, el equipo se disolvió, y la noticia se conoció un año después. La compañía declaró que el sistema había sido solo «experimental».</p>
+
+<div class="advanced">
+<strong>El valor pedagógico del caso Amazon</strong>
+El caso es citado tanto como ejemplo de sesgo algorítmico cuanto como ejemplo de buena gobernanza: la empresa identificó el problema y desactivó el sistema antes de causar daño operativo masivo. La pregunta abierta —y políticamente cargada— es cuántas empresas, hoy, tienen sistemas similares en producción sin haber hecho una auditoría comparable.
+</div>
+
+
+<h2>4. Tres mecanismos de sesgo algorítmico en selección</h2>
+
+<p>Raghavan, Barocas, Kleinberg y Levy (2020) sistematizaron, en un análisis de 19 herramientas comerciales de pre-employment assessment, los mecanismos por los que el sesgo entra en sistemas algorítmicos de selección. Los tres más comunes:</p>
+
+<h3>4.1 Target leakage</h3>
+
+<p>El criterio que predice el modelo está él mismo contaminado por sesgo histórico. Si predigo «ser promovido en los próximos 3 años» y la empresa históricamente ha promovido más a hombres, el modelo aprenderá a preferir candidatos masculinos. La señal aprendida es real (en términos de la historia), pero codifica injusticia.</p>
+
+<h3>4.2 Variables proxy</h3>
+
+<p>Aunque la variable protegida (género, raza) no esté en el modelo, otras variables correlacionadas la representan implícitamente. En el contexto chileno, el código postal correlaciona fuertemente con nivel socioeconómico y, en algunas regiones, con composición étnica. La universidad de origen correlaciona con clase social. El año de graduación con edad. Eliminar la variable explícita no elimina el sesgo si los proxies permanecen.</p>
+
+<h3>4.3 Feedback loop</h3>
+
+<p>El sistema entrena hoy con resultados de decisiones que él mismo tomó ayer. Si ayer el sistema descartó a 1.000 mujeres calificadas, ese descarte se convierte en señal de «no calificada» en el dataset de mañana, reforzando la decisión inicial. El sesgo se amplifica con el tiempo en lugar de corregirse.</p>
+
+
+<h2>5. Auditoría de un sistema de scoring: una checklist</h2>
+
+<p>Cuando te toque auditar un sistema de scoring algorítmico —tu propio modelo logístico de la Tarea 6, o un sistema comercial que está evaluando RRHH—, las preguntas de la checklist son:</p>
+
+<ol>
+  <li><strong>¿Cuál es el criterio que el modelo predice?</strong> ¿Es un proxy razonable de «buen trabajador»? ¿Está él mismo contaminado por sesgo histórico?</li>
+  <li><strong>¿Qué predictores entran al modelo?</strong> ¿Cada uno tiene justificación de validez de contenido? ¿Hay proxies de variables protegidas?</li>
+  <li><strong>¿Cuál es la composición demográfica del set de entrenamiento?</strong> ¿Refleja la diversidad esperada de aplicantes futuros?</li>
+  <li><strong>¿Cuál es la performance del modelo desagregada por grupo?</strong> ¿AUC, sensibilidad, especificidad por género/edad/discapacidad?</li>
+  <li><strong>¿Cuál es el impact ratio en la decisión final?</strong> ¿Y a lo largo de las etapas del embudo?</li>
+  <li><strong>¿Hay un proceso de monitoreo periódico?</strong> ¿Cada cuánto se re-audita el modelo?</li>
+  <li><strong>¿Hay una vía de apelación humana</strong> para candidatos rechazados por el sistema?</li>
+</ol>
+
+<div class="tip">
+<strong>El test mínimo viable</strong>
+Si solo puedes hacer una cosa antes de poner un sistema en producción, ese debe ser <strong>calcular el impact ratio en cada etapa por cada grupo protegido relevante</strong>. Es la métrica que primero detectaría problemas tipo Amazon 2018 y la que primero te exigiría un auditor regulatorio.
+</div>
+
+
+<h2>6. Marco regulatorio chileno: lo que aplica hoy y lo que viene</h2>
+
+<p>Chile tiene un marco normativo de no discriminación laboral robusto, aunque distribuido en varios cuerpos legales sin una norma específica para sistemas algorítmicos de empleo. Lo que sigue es el mapa completo, en orden creciente de relevancia operativa para tu trabajo como analista.</p>
+
+<h3>6.1 Marco constitucional y laboral general</h3>
+
+<p>La <strong>Constitución Política de la República, artículo 19 nº 16</strong>, garantiza la libertad de trabajo y establece que «se prohíbe cualquiera discriminación que no se base en la capacidad o idoneidad personal». Esa frase es el ancla constitucional de todo análisis de adverse impact en Chile: si una práctica de selección produce efectos diferenciales que no derivan de capacidad o idoneidad, el procedimiento es inconstitucional <em>per se</em>.</p>
+
+<p>El <strong>Código del Trabajo, artículo 2</strong>, desarrolla esta garantía a nivel laboral. Define como actos de discriminación «las distinciones, exclusiones o preferencias basadas en motivos de raza, color, sexo, edad, estado civil, sindicación, religión, opinión política, nacionalidad, ascendencia nacional u origen social, situación socioeconómica, idioma, creencias, participación en organizaciones gremiales, orientación sexual, identidad de género, filiación, apariencia personal, enfermedad o discapacidad u origen social, que tengan por objeto anular o alterar la igualdad de oportunidades o de trato en el empleo y la ocupación». La lista es extensa y, para efectos prácticos, mucho más amplia que la lista federal estadounidense.</p>
+
+<h3>6.2 Ley 20.348 (2009): igualdad de remuneraciones</h3>
+
+<p>La Ley 20.348 obliga a los empleadores con 200 o más trabajadores a llevar un registro de cargos y funciones y a tener un procedimiento para que las trabajadoras puedan reclamar diferencias salariales injustificadas con sus pares masculinos en el mismo cargo. Aunque su foco es compensación (no selección), hay un punto operativo que importa para analítica de personas: <strong>la ley exige que las diferencias salariales tengan justificación objetiva basada en capacidades, calificaciones o idoneidad</strong>, y los modelos predictivos de salario o de potencial deben poder pasar ese test si llegaran a usarse en decisiones que afecten remuneración.</p>
+
+<h3>6.3 Ley 20.609 (2012): antidiscriminación («Ley Zamudio»)</h3>
+
+<p>La Ley 20.609 establece un mecanismo judicial específico para reclamar contra actos de discriminación arbitraria, definidos como «toda distinción, exclusión o restricción que carezca de justificación razonable». La acción se interpone ante el juez de letras y permite ordenar el cese del acto discriminatorio y la reparación. Aunque su uso ha sido principalmente en discriminación por orientación sexual y religión, la redacción es genérica y aplica a discriminación algorítmica en selección si se consigue acreditarla.</p>
+
+<h3>6.4 Ley 21.015 (2017) y Ley 21.275 (2020): inclusión laboral de personas con discapacidad</h3>
+
+<p>La Ley 21.015 obliga a empresas y organismos públicos con 100 o más trabajadores a contratar al menos 1% de personas con discapacidad. La Ley 21.275, vigente desde noviembre de 2022, agregó tres obligaciones complementarias:</p>
+
+<ul>
+  <li>Contar con al menos un trabajador del área de RRHH certificado como Gestor de Inclusión Laboral por ChileValora.</li>
+  <li>Promover políticas internas de inclusión, informadas anualmente a la Dirección del Trabajo.</li>
+  <li>Considerar las normas de la Ley 20.422 sobre igualdad de oportunidades en todas las actividades de la empresa.</li>
+</ul>
+
+<p>Para tu análisis de adverse impact, esto significa que <strong>el grupo «personas con discapacidad» debe estar explícitamente en tu auditoría</strong> si la empresa supera los 100 trabajadores, no como una cortesía sino como obligación legal con sanciones administrativas.</p>
+
+<h3>6.5 Ley 21.719 (2024): el game-changer en protección de datos</h3>
+
+<div class="chile">
+<strong>La norma más importante para analítica de personas en Chile</strong>
+La Ley 21.719, publicada en el Diario Oficial el 13 de diciembre de 2024 y vigente desde el 1 de diciembre de 2026, reemplaza la Ley 19.628 de 1999 y cambia radicalmente las reglas para cualquier modelo predictivo aplicado a personas. Está fuertemente alineada con el GDPR europeo y crea una nueva Agencia de Protección de Datos Personales con facultades de fiscalización y sanción.
+</div>
+
+<p>Los puntos que deben estar en el radar de cualquier persona que haga analítica de personas en Chile a partir de diciembre de 2026:</p>
+
+<ul>
+  <li><strong>Derecho a no ser objeto de decisiones automatizadas significativas.</strong> El titular de los datos puede oponerse a y exigir intervención humana en cualquier decisión —incluida la selección laboral— que produzca efectos jurídicos en su persona o que le afecte significativamente, y que se base exclusivamente en tratamiento automatizado, incluida la elaboración de perfiles.</li>
+  <li><strong>Evaluación de impacto en protección de datos (EIPD).</strong> Para tratamientos que probablemente impliquen un alto riesgo —y la elaboración sistemática de perfiles de candidatos lo califica claramente—, el responsable debe realizar una evaluación de impacto antes de comenzar el tratamiento.</li>
+  <li><strong>Derechos ARCO ampliados</strong> (Acceso, Rectificación, Cancelación y Oposición) más portabilidad de datos. Un candidato puede pedirle a tu empresa todos los datos que tienes sobre él, incluido cómo tu modelo lo evaluó.</li>
+  <li><strong>Sanciones de hasta 20.000 UTM</strong> por infracciones graves, o 4% de los ingresos anuales en casos de reincidencia.</li>
+</ul>
+
+<div class="warning">
+<strong>Lo que esto cambia para tu trabajo</strong>
+Hasta ahora, un modelo predictivo de selección podía operar sin más documentación que un README técnico. Desde diciembre de 2026, ese modelo necesitará: (i) base de licitud del tratamiento documentada; (ii) EIPD si el tratamiento es de alto riesgo; (iii) procedimiento operativo para responder solicitudes ARCO en plazos legales; (iv) mecanismo de intervención humana significativa en decisiones automatizadas. Si tu empresa no se está preparando hoy, tiene 8 meses para hacerlo.
+</div>
+
+<h3>6.6 Política Nacional de IA y proyecto de Ley sobre Sistemas de IA</h3>
+
+<p>La <strong>Política Nacional de Inteligencia Artificial</strong> en su versión actualizada de 2024 (Decreto Supremo nº 12 del Ministerio de Ciencia, del 11 de abril de 2024, publicado en el Diario Oficial el 28 de enero de 2025) establece los lineamientos estratégicos del Estado en materia de IA con horizonte al año 2031. Profundiza, respecto de la versión 2021, en gobernanza y ética, e incluye un Plan de Acción con 177 iniciativas coordinadas por 14 ministerios. Aunque la Política no es vinculante para el sector privado, define el lenguaje técnico y los principios que serán recogidos por la futura ley.</p>
+
+<p>El <strong>proyecto de ley que regula los sistemas de inteligencia artificial</strong> (Boletín 16.821-19, refundido con el Boletín 15.869-19) ingresó a tramitación el 7 de mayo de 2024 mediante mensaje del Ejecutivo. Fue aprobado en particular por la Cámara de Diputadas y Diputados el 13 de octubre de 2025, y a la fecha de redacción de este apunte se encuentra en segundo trámite constitucional en el Senado, con urgencia simple, en la Comisión de Desafíos del Futuro, Ciencia, Tecnología e Innovación.</p>
+
+<p>El proyecto adopta un modelo basado en riesgo similar al AI Act europeo, con cuatro categorías: prohibido, alto riesgo, riesgo limitado y riesgo mínimo. Las herramientas automatizadas de selección de personal caen claramente en la categoría de <em>alto riesgo</em>, lo que implicará obligaciones reforzadas de documentación técnica, supervisión humana, auditoría y registro de operaciones.</p>
+
+<p>Si y cuándo el proyecto se promulgue como ley es incierto. Pero la dirección de la política regulatoria está clara: Chile va a tener una ley específica de IA en los próximos 12–24 meses, modelada sobre el AI Act europeo, con selección de personal entre los sistemas de alto riesgo. La práctica responsable hoy es operar como si esa ley ya estuviera vigente.</p>
+
+
+<h2>7. Marco regulatorio comparado: NYC LL 144 y AI Act EU</h2>
+
+<p>Aunque ninguna de estas normas es directamente exigible en Chile, ambas son las referencias que están moldeando la discusión local y la práctica de las empresas multinacionales que operan en el país.</p>
+
+<h3>7.1 NYC Local Law 144 (vigente desde julio 2023)</h3>
+
+<p>La ciudad de Nueva York fue la primera jurisdicción del mundo en regular específicamente las herramientas automatizadas de empleo (AEDT, <em>automated employment decision tools</em>). La ley exige:</p>
+
+<ul>
+  <li>Auditoría de sesgo anual realizada por un auditor independiente, con metodología pública.</li>
+  <li>Resultados publicados en el sitio web del empleador, mostrando impact ratios por género y raza.</li>
+  <li>Notificación previa al candidato de que se usará una AEDT, al menos 10 días hábiles antes.</li>
+  <li>Multas de USD 500 por la primera violación y hasta USD 1.500 por cada violación subsiguiente.</li>
+</ul>
+
+<h3>7.2 EU AI Act (Regulation 2024/1689)</h3>
+
+<p>La Unión Europea aprobó en 2024 el AI Act, primer marco regulatorio integral de inteligencia artificial. La ley clasifica los sistemas de IA en categorías de riesgo. Los sistemas usados para selección y reclutamiento están clasificados como <strong>alto riesgo</strong> (Anexo III), lo que implica obligaciones reforzadas: sistema de gestión de calidad documentado, datos de entrenamiento auditables y representativos, supervisión humana significativa, robustez técnica y ciberseguridad, registro automático de operaciones (logs), transparencia, marcaje CE y registro en una base de datos europea pública.</p>
+
+<p>Las disposiciones para sistemas de alto riesgo entran en vigencia escalonadamente entre agosto de 2026 y agosto de 2027. Las multas pueden alcanzar el 3% de la facturación global anual o EUR 15 millones, lo que sea mayor.</p>
+
+
+<h2>8. Herramientas chilenas concretas para la práctica responsable</h2>
+
+<p>Más allá de la normativa, en Chile existe una infraestructura técnica desarrollada en los últimos cinco años que pone a disposición —gratis, en español, adaptada al contexto local— las herramientas que necesitas para auditar un sistema de scoring. Conocerla y usarla es lo que distingue a un analista profesional de uno aficionado.</p>
+
+<h3>8.1 GobLab UAI: el proyecto Algoritmos Éticos</h3>
+
+<p>El <strong>GobLab</strong>, laboratorio de innovación pública de la Escuela de Gobierno de la Universidad Adolfo Ibáñez, dirigido por María Paz Hermosilla, lleva adelante desde 2020 el proyecto <em>Algoritmos Éticos, Responsables y Transparentes</em>, con apoyo del BID Lab y financiamiento de ANID. El proyecto ha articulado a organismos públicos, mundo privado y academia para desarrollar normativa, guías y herramientas de IA responsable, en una iniciativa pionera en Latinoamérica.</p>
+
+<p>De este proyecto han salido tres productos concretos que cualquier analista chileno debería conocer:</p>
+
+<ol>
+  <li><strong>Ficha de Transparencia Algorítmica.</strong> Una plantilla estandarizada para documentar un sistema algorítmico —objetivo, datos, predictores, métricas, supervisión humana, vías de apelación— con información comprensible para usuarios no técnicos.</li>
+  <li><strong>Medición de Sesgos y Equidad.</strong> Herramienta que calcula impact ratios, métricas de fairness desagregadas y test estadísticos complementarios, todo desde una interfaz adaptada al contexto chileno.</li>
+  <li><strong>Evaluación de Impacto Algorítmico (EIA).</strong> Guía estructurada para identificar riesgos —sesgos, discriminación, infracciones a protección de datos, opacidad— en etapa temprana del ciclo de vida de un sistema algorítmico.</li>
+</ol>
+
+<p>Las tres herramientas están disponibles públicamente en <a href="https://algoritmospublicos.cl" target="_blank">algoritmospublicos.cl</a>, son gratuitas y de código abierto.</p>
+
+<div class="tip">
+<strong>Por qué esto importa para tu trabajo</strong>
+Si te toca defender frente a un comité ejecutivo o frente a un regulador la auditoría de un sistema, citar el uso de las herramientas del GobLab UAI tiene un peso institucional mucho mayor que armar tu propia plantilla desde cero. La Subsecretaría de Seguros y Seguridad Social (SUSESO) y otros servicios públicos las han pilotado y adoptado, lo que las convierte en estándar de facto en el sector público chileno. En el sector privado, su adopción es voluntaria pero creciente.
+</div>
+
+<h3>8.2 ChileCompra: Bases Tipo de Licitación con estándares éticos</h3>
+
+<p>En 2023, ChileCompra publicó las primeras Bases Tipo de Licitación en Latinoamérica para la contratación de servicios de ciencia de datos e inteligencia artificial por parte del Estado, con requisitos específicos de transparencia, equidad y protección de datos. Estas bases, elaboradas en alianza con el GobLab UAI, fueron aprobadas por la Contraloría General de la República.</p>
+
+<p>Aunque aplican formalmente solo al sector público, son la mejor referencia operativa que existe hoy en Chile para escribir términos de referencia internos cuando una empresa privada licita un proveedor de IA para selección de personal. La práctica recomendada es <strong>copiar las cláusulas relevantes de las Bases Tipo en tu RFP interno</strong>: te protege legalmente y te asegura que el proveedor entrega un sistema auditable.</p>
+
+<h3>8.3 Instructivo General de Transparencia Algorítmica</h3>
+
+<p>El Consejo para la Transparencia, en alianza con el GobLab UAI, publicó en 2023 el primer Instructivo General de Transparencia Algorítmica de Latinoamérica, regulando estándares de transparencia para sistemas algorítmicos en el sector público. Aunque su alcance formal es público, sus exigencias —documentación, explicabilidad, accountability— son la mejor benchmark disponible para definir tu propia política interna en el sector privado.</p>
+
+
+<h2>9. Pareto-optimization: cuando validez y equidad están en tensión</h2>
+
+<p>Cerramos con una idea que enlaza con el Apunte 20: cuando el adverse impact aparece, la respuesta no siempre es eliminar el predictor. De Corte, Lievens y Sackett (2007) propusieron el marco de <strong>Pareto-optimization</strong>: en lugar de maximizar la validez, encontrar el frente de combinaciones de predictores donde no se puede mejorar uno sin empeorar el otro.</p>
+
+<p>El algoritmo asume que tienes varios predictores con distintos perfiles de validez y de adverse impact, y busca la combinación lineal óptima entre ellos. El resultado es un frente de Pareto que muestra, para cada nivel de adverse impact aceptado, el sistema con máxima validez compatible. La decisión sobre qué punto del frente elegir es organizacional y ética, no técnica, pero al menos el espacio queda descrito.</p>
+
+<p>El paquete <code>paretoR</code> de R implementa el algoritmo. Su uso queda fuera del alcance de esta clase, pero merece estar en el horizonte de cualquier analista que enfrenta la disyuntiva validez-equidad en serio.</p>
+
+
+<h2>10. La decisión ética del analista: cuándo recomendar no construir el modelo</h2>
+
+<p>Los apuntes anteriores te entregaron herramientas para construir, validar y monetizar un modelo de selección. Este apunte cierra con la pregunta complementaria: <em>¿cuándo la respuesta correcta es no construirlo?</em></p>
+
+<p>Hay tres situaciones donde, profesionalmente, lo correcto es decirle a tu cliente o a tu empresa que <strong>el modelo no debería entrar en producción</strong>, incluso si técnicamente funciona:</p>
+
+<ol>
+  <li><strong>Cuando el criterio del modelo está estructuralmente sesgado.</strong> Si el modelo predice «ser contratado en los últimos 10 años» en una empresa que históricamente no ha contratado mujeres, no hay limpieza técnica que arregle el problema. El criterio es la falla.</li>
+  <li><strong>Cuando los costos de un falso negativo son catastróficos para el candidato.</strong> Un modelo que descarta a una persona del proceso de selección le quita una oportunidad económica que probablemente no recuperará. Si tu falso negativo está concentrado en un grupo histórico-mente excluido, estás amplificando una injusticia preexistente.</li>
+  <li><strong>Cuando la organización no tiene la madurez para auditar y monitorear.</strong> Un modelo que entra en producción sin un proceso de re-auditoría periódica, sin documentación, sin canal de apelación humana, y sin un dueño accountable, no es un modelo: es una bomba de tiempo regulatoria. Si tu cliente no está dispuesto a invertir en esa infraestructura, tu recomendación profesional honesta es no implementar.</li>
+</ol>
+
+<div class="advanced">
+<strong>El analista como conciencia técnica</strong>
+En tu trayectoria profesional vas a estar en posiciones donde un comité ejecutivo querrá implementar algo y tú serás la única persona en la sala que entiende los riesgos técnicos y regulatorios. La obligación profesional de levantar la mano —con datos, con cita normativa, con propuestas alternativas— es la diferencia entre ser un técnico ejecutor y ser un analista profesional. La frase que separa a uno del otro es: «<em>antes de avanzar, necesito mostrarles tres cosas que un regulador o un litigante van a preguntarnos en 24 meses</em>».
+</div>
+
+
+<h2>11. Cinco principios para la práctica responsable + checklist chilena</h2>
+
+<ol>
+  <li><strong>Audita antes de implementar.</strong> Regla 4/5 + test de proporciones por etapa, por grupo protegido, antes de poner cualquier procedimiento en producción.</li>
+  <li><strong>Re-audita periódicamente.</strong> Las composiciones demográficas y los criterios de éxito cambian. Una auditoría de hace 2 años no protege hoy.</li>
+  <li><strong>Documenta todo.</strong> Si un regulador o un demandante pregunta dentro de 3 años cómo entrenaste tu modelo, qué decisiones tomaste y por qué, debes poder responder con artefactos guardados. La Ficha de Transparencia Algorítmica del GobLab UAI es un buen punto de partida.</li>
+  <li><strong>No elimines la supervisión humana.</strong> Aunque el sistema decida, debe haber un humano <em>accountable</em> y un canal de apelación operativo. Esto no es solo buena práctica: a partir de diciembre 2026 será exigencia de la Ley 21.719.</li>
+  <li><strong>Asume que el sesgo está en los datos, no en el algoritmo.</strong> La pregunta correcta no es «¿este modelo es justo?» sino «¿qué historia me están contando los datos sobre las decisiones que tomó esta organización antes?».</li>
+</ol>
+
+<div class="chile">
+<strong>Checklist chilena mínima antes de poner un modelo de selección en producción</strong>
+<ol>
+<li>¿Calculé impact ratio por género, edad y discapacidad en cada etapa del embudo?</li>
+<li>¿Mi modelo sobrevivirá una solicitud ARCO bajo Ley 21.719 (acceso del candidato a sus datos y a la lógica de la decisión)?</li>
+<li>¿Tengo un mecanismo de intervención humana significativa en la decisión final, no meramente decorativo?</li>
+<li>¿Mi documentación cumpliría con el formato de la Ficha de Transparencia Algorítmica del GobLab UAI?</li>
+<li>¿Si la empresa tiene 100+ trabajadores, mi auditoría incluye explícitamente el grupo «personas con discapacidad» (Leyes 21.015 y 21.275)?</li>
+<li>¿Hay un dueño <em>accountable</em> identificado por nombre y cargo, con responsabilidad sobre el sistema?</li>
+<li>¿Hay un canal documentado de apelación humana para candidatos rechazados?</li>
+<li>¿Hay un calendario de re-auditoría definido (mínimo anual)?</li>
+</ol>
+Si alguna respuesta es «no», el sistema no está listo para producción.
+</div>
+
+
+<h2>Referencias</h2>
+
+<h3>Doctrina y normativa internacional</h3>
+
+<ul>
+  <li>Dastin, J. (2018, octubre 11). Amazon scraps secret AI recruiting tool that showed bias against women. <em>Reuters</em>.</li>
+  <li>De Corte, W., Lievens, F., &amp; Sackett, P. R. (2007). Combining predictors to achieve optimal trade-offs between selection quality and adverse impact. <em>Journal of Applied Psychology, 92</em>(5), 1380–1393.</li>
+  <li>Equal Employment Opportunity Commission. (1978). <em>Uniform guidelines on employee selection procedures</em>. 29 CFR §1607. <em>Federal Register, 43</em>(166), 38290–38315.</li>
+  <li>European Union. (2024). <em>Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence (Artificial Intelligence Act)</em>. Official Journal of the European Union, L 1689.</li>
+  <li>Griggs v. Duke Power Co., 401 U.S. 424 (1971).</li>
+  <li>New York City Department of Consumer and Worker Protection. (2023). <em>Local Law 144 of 2021: Automated employment decision tools</em>. NYC DCWP final rules.</li>
+  <li>Raghavan, M., Barocas, S., Kleinberg, J., &amp; Levy, K. (2020). Mitigating bias in algorithmic hiring: Evaluating claims and practices. En <em>Proceedings of the 2020 Conference on Fairness, Accountability, and Transparency</em> (pp. 469–481). ACM. <a href="https://doi.org/10.1145/3351095.3372828" target="_blank">https://doi.org/10.1145/3351095.3372828</a></li>
+  <li>Sackett, P. R., Zhang, C., Berry, C. M., &amp; Lievens, F. (2023). Revisiting the design of selection systems in light of new findings regarding the validity of widely used predictors. <em>Industrial and Organizational Psychology, 16</em>(3), 283–300.</li>
+</ul>
+
+<h3>Normativa chilena</h3>
+
+<ul>
+  <li>Constitución Política de la República de Chile, artículo 19 nº 16.</li>
+  <li>Decreto con Fuerza de Ley nº 1 de 2002, del Ministerio del Trabajo y Previsión Social, que fija el texto refundido, coordinado y sistematizado del Código del Trabajo, artículo 2.</li>
+  <li>Ley nº 19.628 (1999). Sobre protección de la vida privada. <em>Diario Oficial de la República de Chile</em>, 28 de agosto de 1999. (Vigente hasta el 30 de noviembre de 2026.)</li>
+  <li>Ley nº 20.348 (2009). Resguarda el derecho a la igualdad en las remuneraciones. <em>Diario Oficial</em>, 19 de junio de 2009.</li>
+  <li>Ley nº 20.609 (2012). Establece medidas contra la discriminación. <em>Diario Oficial</em>, 24 de julio de 2012.</li>
+  <li>Ley nº 21.015 (2017). Incentiva la inclusión de personas con discapacidad al mundo laboral. <em>Diario Oficial</em>, 15 de junio de 2017.</li>
+  <li>Ley nº 21.275 (2020). Modifica el Código del Trabajo para exigir de las empresas pertinentes la adopción de medidas que faciliten la inclusión laboral de los trabajadores con discapacidad. <em>Diario Oficial</em>, 21 de octubre de 2020. (Vigente desde el 1 de noviembre de 2022.)</li>
+  <li>Ley nº 21.719 (2024). Regula la protección y el tratamiento de los datos personales y crea la Agencia de Protección de Datos Personales. <em>Diario Oficial</em>, 13 de diciembre de 2024. (Vigencia general: 1 de diciembre de 2026.)</li>
+  <li>Ministerio de Ciencia, Tecnología, Conocimiento e Innovación. (2024). <em>Política Nacional de Inteligencia Artificial — Actualización 2024</em>. Decreto Supremo nº 12 de 11 de abril de 2024 (publicado en el Diario Oficial el 28 de enero de 2025).</li>
+  <li>Cámara de Diputadas y Diputados de Chile. (2024). <em>Proyecto de ley que regula los sistemas de inteligencia artificial</em>. Boletín 16.821-19 (refundido con Boletín 15.869-19). Ingreso: 7 de mayo de 2024. Estado: segundo trámite constitucional en el Senado (al cierre de redacción).</li>
+</ul>
+
+<h3>Herramientas e iniciativas chilenas</h3>
+
+<ul>
+  <li>GobLab UAI &amp; BID Lab. (2020–presente). <em>Algoritmos Éticos, Responsables y Transparentes</em>. Universidad Adolfo Ibáñez. <a href="https://goblab.uai.cl/algoritmos-eticos/" target="_blank">https://goblab.uai.cl/algoritmos-eticos/</a></li>
+  <li>GobLab UAI. <em>Plataforma Algoritmos Públicos: Ficha de Transparencia, Medición de Sesgos y Equidad, Evaluación de Impacto Algorítmico</em>. <a href="https://algoritmospublicos.cl" target="_blank">https://algoritmospublicos.cl</a></li>
+  <li>ChileCompra. (2023). <em>Bases Tipo de Licitación para la contratación de servicios de ciencia de datos e inteligencia artificial</em>. Aprobadas por la Contraloría General de la República.</li>
+  <li>Consejo para la Transparencia &amp; GobLab UAI. (2023). <em>Instructivo General de Transparencia Algorítmica</em>.</li>
+</ul>
+
+
+<footer>
+Apunte 22 · Curso Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · Otoño 2026
+</footer>
+
+</body>
+</html>

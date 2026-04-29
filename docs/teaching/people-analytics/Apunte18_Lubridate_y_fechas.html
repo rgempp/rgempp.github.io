@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 18 — Trabajar con fechas en R: el paquete lubridate | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong { display: block; margin-bottom: 0.3rem; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 18 — Trabajar con fechas en R: el paquete lubridate</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 8 · Prof. René Gempp</p>
+
+
+<h2>1. ¿Por qué un apunte completo sobre fechas?</h2>
+
+<p>En las clases anteriores trabajamos casi siempre con datos transversales: una fila = una persona, sin tiempo. Pero la pregunta que abre la clase de hoy <em>—«¿cuántos días estamos demorando en llenar una vacante?»—</em> es una pregunta sobre <strong>duraciones</strong>. Y eso significa restar fechas.</p>
+
+<p>Restar fechas en R parece simple, pero esconde tres problemas que arruinan el análisis si los pasamos por alto:</p>
+
+<ol>
+  <li>R no sabe, por defecto, que <code>"2025-04-30"</code> es una fecha. La trata como texto. Si intentas restarle otra fecha, te tira un error.</li>
+  <li>Las fechas vienen escritas en mil formatos: <code>"30/04/2025"</code>, <code>"April 30, 2025"</code>, <code>"2025-04-30T09:30:00"</code>. Cada planilla del SIRH viene distinta.</li>
+  <li>La aritmética con fechas tiene trampas: <strong>"un mes"</strong> no es siempre lo mismo que 30 días, y <strong>"un año"</strong> a veces tiene 365 días y a veces 366.</li>
+</ol>
+
+<p>El paquete <code>lubridate</code>, parte del tidyverse, resuelve los tres problemas con una sintaxis tan ordenada que terminamos olvidándonos de que las fechas eran complicadas.</p>
+
+<div class="tip">
+<strong>El nombre del paquete</strong>
+"Lubridate" viene de <em>lubricate</em> (lubricar): el objetivo del paquete es hacer que el trabajo con fechas en R sea suave, sin fricción. El paquete fue desarrollado por Garrett Grolemund y Hadley Wickham (2011), y se carga automáticamente con <code>library(tidyverse)</code> en versiones recientes.
+</div>
+
+
+<h2>2. El primer paso: parsear strings a fechas</h2>
+
+<p>El nombre de la familia de funciones que vamos a usar más es muy mnemotécnica: <code>ymd()</code>, <code>dmy()</code>, <code>mdy()</code>. La idea es: <strong>las letras te dicen el orden en que aparecen año, mes y día en el texto</strong>.</p>
+
+<pre><code><span class="func">library</span>(lubridate)
+
+<span class="comment"># Formato ISO (año-mes-día), que es el que viene en innovaco_postulaciones.csv</span>
+<span class="func">ymd</span>(<span class="string">"2025-04-30"</span>)
+<span class="comment"># [1] "2025-04-30"</span>
+
+<span class="comment"># Formato chileno típico (día/mes/año)</span>
+<span class="func">dmy</span>(<span class="string">"30/04/2025"</span>)
+<span class="comment"># [1] "2025-04-30"</span>
+
+<span class="comment"># Formato gringo (mes-día-año)</span>
+<span class="func">mdy</span>(<span class="string">"April 30, 2025"</span>)
+<span class="comment"># [1] "2025-04-30"</span></code></pre>
+
+<p>Las funciones aceptan vectores y son tolerantes con separadores: barras, guiones, puntos, espacios. Lo único que les importa es el <strong>orden</strong>.</p>
+
+<pre><code><span class="comment"># Mismo orden, separadores distintos: todos parsean</span>
+<span class="func">dmy</span>(<span class="func">c</span>(<span class="string">"30/04/2025"</span>, <span class="string">"30-04-2025"</span>, <span class="string">"30.04.2025"</span>, <span class="string">"30 abr 2025"</span>))
+<span class="comment"># [1] "2025-04-30" "2025-04-30" "2025-04-30" "2025-04-30"</span></code></pre>
+
+<div class="warning">
+<strong>El error clásico: confundir <code>dmy</code> con <code>mdy</code></strong>
+Si un dataset chileno trae fechas como <code>"05/04/2025"</code> y por descuido aplicas <code>mdy()</code>, R te va a dar como resultado el 4 de mayo en lugar del 5 de abril, sin avisarte. Antes de parsear, mira algunas filas y pregúntate: ¿el primer número es el día (típico chileno/europeo) o el mes (típico estadounidense)?
+</div>
+
+
+<h3>2.1 Parseo en pipeline: el patrón que vas a usar siempre</h3>
+
+<p>En la práctica, casi nunca parseamos una fecha aislada. Lo que hacemos es leer un archivo y, en el mismo pipeline, transformar las columnas de fecha a tipo <code>Date</code>:</p>
+
+<pre><code>postulaciones &lt;- <span class="func">read_csv</span>(<span class="string">"innovaco_postulaciones.csv"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    fecha_postulacion = <span class="func">ymd</span>(fecha_postulacion),
+    fecha_oferta      = <span class="func">ymd</span>(fecha_oferta),
+    fecha_inicio      = <span class="func">ymd</span>(fecha_inicio)
+  )</code></pre>
+
+<p>Después de este <code>mutate()</code>, las tres columnas dejan de ser <em>strings</em> y pasan a ser objetos de clase <code>Date</code>. Eso desbloquea la aritmética y todos los extractores que vamos a ver a continuación.</p>
+
+<div class="note">
+<strong>Una pregunta razonable</strong>
+"Pero si <code>read_csv</code> ya reconoce las fechas en formato ISO, ¿no es redundante hacer <code>ymd()</code>?". A veces <code>read_csv</code> las reconoce, sí. Pero pasa muy seguido que un valor anómalo en la columna (un <code>"NA"</code> en texto, una celda vacía, una fecha en otro formato) hace que <code>read_csv</code> caiga al modo seguro y lea toda la columna como <em>character</em>. Aplicar <code>ymd()</code> explícitamente garantiza el resultado.
+</div>
+
+
+<h2>3. Aritmética con fechas: lo que parece obvio y no lo es</h2>
+
+<p>Una vez que las fechas son del tipo correcto, restarlas es directo, pero hay una sutileza:</p>
+
+<pre><code>fecha1 &lt;- <span class="func">ymd</span>(<span class="string">"2025-04-30"</span>)
+fecha2 &lt;- <span class="func">ymd</span>(<span class="string">"2025-06-15"</span>)
+
+fecha2 - fecha1
+<span class="comment"># Time difference of 46 days</span></code></pre>
+
+<p>El resultado es un objeto de tipo <code>difftime</code>, no un número. Si lo metes a un <code>summarise()</code> y luego intentas hacer aritmética con él, te puedes encontrar con sorpresas. La solución es convertirlo a número con <code>as.numeric()</code>:</p>
+
+<pre><code>postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    dias_proceso = <span class="func">as.numeric</span>(fecha_inicio - fecha_postulacion)
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(acepto_oferta == 1) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    ttf_mediana = <span class="func">median</span>(dias_proceso, na.rm = TRUE),
+    ttf_media   = <span class="func">mean</span>(dias_proceso,   na.rm = TRUE)
+  )</code></pre>
+
+<div class="output-box">
+<pre>  ttf_mediana ttf_media
+1          63      69.4</pre>
+</div>
+
+<p>La columna <code>dias_proceso</code> que acabamos de crear es la que necesitamos para responder la pregunta de Macarena: <strong>en mediana, llenar una vacante en InnovaCo está tomando 63 días</strong>.</p>
+
+
+<h2>4. Extraer componentes: año, mes, día de la semana</h2>
+
+<p>Cuando queremos agrupar postulaciones por mes, o ver si los lunes son distintos a los viernes, necesitamos <strong>extraer</strong> componentes de una fecha. Las funciones son intuitivas:</p>
+
+<table>
+<tr><th>Función</th><th>Devuelve</th><th>Ejemplo</th></tr>
+<tr><td><code>year(x)</code></td><td>Año (entero)</td><td><code>2025</code></td></tr>
+<tr><td><code>month(x)</code></td><td>Mes (entero 1-12)</td><td><code>4</code></td></tr>
+<tr><td><code>month(x, label = TRUE)</code></td><td>Mes como factor ordenado</td><td><code>abr</code></td></tr>
+<tr><td><code>day(x)</code></td><td>Día del mes</td><td><code>30</code></td></tr>
+<tr><td><code>wday(x, label = TRUE)</code></td><td>Día de la semana como factor</td><td><code>mié</code></td></tr>
+<tr><td><code>quarter(x)</code></td><td>Trimestre (1-4)</td><td><code>2</code></td></tr>
+<tr><td><code>week(x)</code></td><td>Número de semana (1-53)</td><td><code>18</code></td></tr>
+</table>
+
+<p>Las versiones con <code>label = TRUE</code> devuelven factores ordenados, lo que es ideal para <code>ggplot</code>. Si tu locale del sistema está en español, los nombres salen en español; si está en inglés, salen en inglés. Para forzar:</p>
+
+<pre><code><span class="func">wday</span>(<span class="func">ymd</span>(<span class="string">"2026-04-29"</span>), label = TRUE, abbr = FALSE)
+<span class="comment"># [1] miércoles</span>
+
+<span class="func">wday</span>(<span class="func">ymd</span>(<span class="string">"2026-04-29"</span>), label = TRUE, abbr = TRUE, week_start = 1)
+<span class="comment"># [1] mié — semana que empieza en lunes (default tidyverse)</span></code></pre>
+
+<div class="tip">
+<strong>El argumento <code>week_start = 1</code></strong>
+Por defecto, R considera que la semana empieza el domingo (<code>week_start = 7</code>), siguiendo la convención estadounidense. En Chile y en la mayor parte del mundo la semana empieza en lunes. Acuérdate de poner <code>week_start = 1</code> para que <code>"lunes"</code> aparezca como primer nivel del factor.
+</div>
+
+
+<h3>4.1 Aplicación al embudo: ¿hay un día de la semana donde se postula más?</h3>
+
+<p>Una pregunta razonable de Macarena podría ser: «¿deberíamos publicar las vacantes los domingos por la noche, para capturar los postulantes del lunes?». La pregunta se vuelve respondible una vez que extraemos el día de la semana:</p>
+
+<pre><code>postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    dia_semana = <span class="func">wday</span>(fecha_postulacion, label = TRUE,
+                       abbr = TRUE, week_start = 1)
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(dia_semana) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(prop = n / <span class="func">sum</span>(n))</code></pre>
+
+<div class="output-box">
+<pre>  dia_semana   n   prop
+1 lun        478  0.159
+2 mar        459  0.153
+3 mié        448  0.149
+4 jue        434  0.145
+5 vie        418  0.139
+6 sáb        383  0.128
+7 dom        380  0.127</pre>
+</div>
+
+<p>El patrón es claro: lunes y martes concentran ~31% de las postulaciones; sábado y domingo solo el 25%. Es un dato chico pero útil para decidir cuándo publicar.</p>
+
+
+<h2>5. Construir fechas a partir de partes</h2>
+
+<p>A veces tenemos el año, el mes y el día en columnas separadas y queremos armar la fecha. La función <code>make_date()</code> sirve para esto:</p>
+
+<pre><code>tibble(
+  ano = <span class="func">c</span>(2025, 2025, 2026),
+  mes = <span class="func">c</span>(1, 6, 4),
+  dia = <span class="func">c</span>(15, 30, 29)
+) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(fecha = <span class="func">make_date</span>(ano, mes, dia))</code></pre>
+
+<div class="output-box">
+<pre>    ano   mes   dia fecha
+1  2025     1    15 2025-01-15
+2  2025     6    30 2025-06-30
+3  2026     4    29 2026-04-29</pre>
+</div>
+
+
+<h2>6. Sumar y restar duraciones: <code>days()</code>, <code>months()</code>, <code>years()</code></h2>
+
+<p>Cuando queremos calcular «la fecha 90 días después de la postulación», usamos las funciones de duración:</p>
+
+<pre><code>postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    fecha_evaluacion_90d = fecha_inicio + <span class="func">days</span>(90),
+    fecha_evaluacion_12m = fecha_inicio + <span class="func">months</span>(12),
+    fecha_evaluacion_1a  = fecha_inicio + <span class="func">years</span>(1)
+  )</code></pre>
+
+<p>Hay una sutileza importante con <code>months()</code> y <code>years()</code>:</p>
+
+<pre><code><span class="func">ymd</span>(<span class="string">"2025-01-31"</span>) + <span class="func">months</span>(1)
+<span class="comment"># [1] NA  ← porque "31 de febrero" no existe</span>
+
+<span class="func">ymd</span>(<span class="string">"2025-01-31"</span>) %m+% <span class="func">months</span>(1)
+<span class="comment"># [1] "2025-02-28"  ← lubridate ajusta al último día válido</span></code></pre>
+
+<div class="note">
+<strong>El operador <code>%m+%</code> es tu amigo</strong>
+Cuando suméis meses o años, prefiere siempre <code>%m+%</code> y <code>%m-%</code> antes que <code>+</code> y <code>-</code>. Estos operadores manejan los casos borde como el 31 de enero + 1 mes, devolviendo el último día válido del mes destino en lugar de <code>NA</code>.
+</div>
+
+
+<h2>7. Filtrar por rangos de fecha</h2>
+
+<p>Combinar fechas con <code>filter()</code> es directo, una vez que las fechas están bien tipadas:</p>
+
+<pre><code><span class="comment"># Postulaciones del último trimestre (enero-marzo 2026)</span>
+postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(fecha_postulacion &gt;= <span class="func">ymd</span>(<span class="string">"2026-01-01"</span>),
+         fecha_postulacion &lt;= <span class="func">ymd</span>(<span class="string">"2026-03-31"</span>))
+
+<span class="comment"># Postulaciones del año corriente</span>
+postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(<span class="func">year</span>(fecha_postulacion) == 2026)
+
+<span class="comment"># Postulaciones de los últimos 90 días desde una fecha de corte</span>
+fecha_corte &lt;- <span class="func">ymd</span>(<span class="string">"2026-04-28"</span>)
+postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(fecha_postulacion &gt;= fecha_corte - <span class="func">days</span>(90))</code></pre>
+
+
+<h2>8. Cookbook RRHH: las cinco operaciones que vas a repetir</h2>
+
+<p>Cierro el apunte con un mini-recetario de las operaciones de fecha que aparecen prácticamente en cualquier análisis de RRHH. Si memorizas estas cinco, el 90% de las preguntas con fechas las resuelves.</p>
+
+<h3>8.1 Antigüedad en años (con decimales)</h3>
+
+<pre><code>empleados <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    antiguedad_anios = <span class="func">as.numeric</span>(<span class="func">today</span>() - fecha_ingreso) / 365.25
+  )</code></pre>
+
+<p>El <code>365.25</code> en lugar de <code>365</code> es para promediar el efecto de los años bisiestos sobre periodos largos.</p>
+
+<h3>8.2 Edad al momento de un evento</h3>
+
+<pre><code>empleados <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    edad_al_ingreso = <span class="func">as.numeric</span>(fecha_ingreso - fecha_nacimiento) / 365.25
+  )</code></pre>
+
+<h3>8.3 Tenure mensual para análisis de turnover</h3>
+
+<pre><code>empleados <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    tenure_meses = <span class="func">interval</span>(fecha_ingreso, fecha_salida) <span class="pipe">/</span> <span class="func">months</span>(1)
+  )</code></pre>
+
+<p>La función <code>interval()</code> crea un objeto de intervalo, que dividido por <code>months(1)</code> da el número exacto de meses respetando los días reales de cada mes.</p>
+
+<h3>8.4 Cohorte por año-mes de ingreso</h3>
+
+<pre><code>empleados <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    cohorte = <span class="func">format</span>(fecha_ingreso, <span class="string">"%Y-%m"</span>)
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(cohorte)</code></pre>
+
+<h3>8.5 Time-to-fill como duración del proceso</h3>
+
+<pre><code>postulaciones <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(acepto_oferta == 1) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    ttf_dias = <span class="func">as.numeric</span>(fecha_inicio - fecha_postulacion)
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(fuente) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    ttf_mediana = <span class="func">median</span>(ttf_dias, na.rm = TRUE),
+    ttf_p90     = <span class="func">quantile</span>(ttf_dias, 0.90, na.rm = TRUE)
+  )</code></pre>
+
+
+<h2>9. Lo que dejamos fuera (por ahora)</h2>
+
+<p>Este apunte cubre las operaciones más frecuentes con fechas en RRHH, pero <code>lubridate</code> hace mucho más:</p>
+
+<ul>
+  <li><strong>Manejo de zonas horarias</strong> con <code>with_tz()</code> y <code>force_tz()</code> — relevante si trabajas con datos de plataformas internacionales (Workday, Greenhouse) que guardan timestamps UTC.</li>
+  <li><strong>Periodos vs. duraciones vs. intervalos</strong> — la diferencia técnica es importante cuando haces aritmética con calendarios irregulares (años bisiestos, cambios de horario).</li>
+  <li><strong>Funciones de redondeo temporal</strong> como <code>floor_date()</code>, <code>round_date()</code> y <code>ceiling_date()</code>, útiles para construir series de tiempo agregadas (semanales, mensuales, trimestrales).</li>
+</ul>
+
+<p>Para profundizar, el capítulo <em>Dates and times</em> de Wickham, Çetinkaya-Rundel y Grolemund (2023) en <em>R for Data Science</em>, segunda edición, es la mejor referencia gratuita y está disponible en <a href="https://r4ds.hadley.nz/datetimes" target="_blank">r4ds.hadley.nz/datetimes</a>.</p>
+
+
+<h2>Referencias</h2>
+
+<ul>
+  <li>Grolemund, G., &amp; Wickham, H. (2011). Dates and times made easy with lubridate. <em>Journal of Statistical Software, 40</em>(3), 1–25. <a href="https://doi.org/10.18637/jss.v040.i03" target="_blank">https://doi.org/10.18637/jss.v040.i03</a></li>
+  <li>Wickham, H., Çetinkaya-Rundel, M., &amp; Grolemund, G. (2023). <em>R for Data Science</em> (2nd ed.). O'Reilly Media. <a href="https://r4ds.hadley.nz" target="_blank">https://r4ds.hadley.nz</a></li>
+</ul>
+
+<footer>
+Apunte 18 · Curso Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · 2026
+</footer>
+
+</body>
+</html>

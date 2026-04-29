@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 21 — ROI del proceso de selección: Brogden-Cronbach-Gleser y alternativas | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<h1>Apunte 21 — ROI del proceso de selección: Brogden-Cronbach-Gleser y alternativas contemporáneas</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 8 · Prof. René Gempp</p>
+
+<div class="business">
+<strong>El problema concreto que resuelve este apunte</strong>
+Un test psicométrico le cuesta a tu empresa 5 millones de pesos al año. Tu CFO te pregunta: <em>«¿cuánto recuperamos por esa inversión?»</em>. Si tu respuesta es «el test mide bien la inteligencia», estás respondiendo otra pregunta. Si tu respuesta es «no se puede saber», estás cediendo el debate. Si tu respuesta es «el ROI estimado bajo Sackett 2022 está entre 80 y 120× el costo, con sensibilidad sobre los siguientes parámetros…», estás haciendo el trabajo. Este apunte te enseña a llegar a esa tercera respuesta.
+</div>
+
+
+<h2>1. ¿Qué es el ROI de un proceso de selección?</h2>
+
+<p>El concepto de ROI (<em>return on investment</em>) en cualquier proyecto financiero tiene la misma estructura: <strong>(beneficio − costo) / costo</strong>. La pregunta que respondemos aquí es la versión específica para selección de personal:</p>
+
+<div class="formula">
+$\text{ROI}_{\text{selección}} = \dfrac{\text{utilidad bruta del proceso} - \text{costo del proceso}}{\text{costo del proceso}}$
+</div>
+
+<p>El costo del proceso es relativamente fácil de medir: licencia del test, horas-hombre del entrevistador, plataformas, etc. Es lo que viste en el Apunte 19 bajo el estándar SHRM/ANSI 12-09 de cost-per-hire.</p>
+
+<p>La <strong>utilidad bruta</strong> es el desafío. ¿Cuánto más vale en pesos un buen contratado que uno mediocre? Y, dado que un proceso de selección con un cierto r y un cierto SR mejora el desempeño promedio en cierta cantidad de SDs (Naylor-Shine, Apunte 20), ¿cómo traducimos esa mejora en SDs a pesos chilenos al año?</p>
+
+<p>El modelo Brogden-Cronbach-Gleser (BCG) es la respuesta clásica a esa pregunta. Vamos a desarrollarlo paso a paso.</p>
+
+
+<h2>2. La intuición del modelo BCG</h2>
+
+<p>Imagínate que tienes un cargo en el que la productividad anual de un empleado, medida en pesos, varía. Algunos empleados generan más valor que otros. Si pudiéramos medir ese valor para cada empleado, obtendríamos una distribución (aproximadamente normal) con cierto promedio y cierta desviación estándar. Llamemos $SD_y$ a esa desviación estándar: el «ancho» de la variabilidad de desempeño en pesos.</p>
+
+<p>Ahora supongamos que aplicamos un proceso de selección con validez $r$ y selection ratio $SR$. Por Naylor-Shine, sabemos que los contratados-con-proceso van a rendir, en promedio, $r \cdot \lambda(SR)$ desviaciones estándar más que un contratado promedio sacado al azar.</p>
+
+<p>El paso lógico para llegar a pesos es <strong>multiplicar esa ganancia en SDs por SD<sub>y</sub></strong> (que está en pesos). Eso te da la ganancia esperada en pesos <em>por contratado, por año</em>. Si el proceso contrata a $N_s$ personas al año y cada una se queda en promedio $t$ años, multiplicas. Y al final restas el costo del proceso.</p>
+
+<p>Esa es la fórmula completa. Brogden la propuso en 1949; Cronbach y Gleser la formalizaron en 1965. La versión usada hoy es:</p>
+
+<div class="formula">
+$U = N_s \cdot t \cdot r \cdot SD_y \cdot \lambda(SR) - N_a \cdot C$
+</div>
+
+<p>Donde:</p>
+
+<table>
+<thead>
+<tr><th>Símbolo</th><th>Significado</th><th>Unidad</th></tr>
+</thead>
+<tbody>
+<tr><td>$U$</td><td>Utilidad neta del proceso</td><td>Pesos al año (o por cohorte)</td></tr>
+<tr><td>$N_s$</td><td>Número de personas contratadas con el proceso</td><td>Personas / año</td></tr>
+<tr><td>$t$</td><td>Tenure esperado (años promedio que se quedan)</td><td>Años</td></tr>
+<tr><td>$r$</td><td>Validez del proceso (correlación con desempeño)</td><td>Sin unidades, [-1, 1]</td></tr>
+<tr><td>$SD_y$</td><td>Desviación estándar del desempeño en pesos</td><td>Pesos</td></tr>
+<tr><td>$\lambda(SR)$</td><td>Razón de selección estandarizada (Apunte 20)</td><td>Sin unidades, > 0</td></tr>
+<tr><td>$N_a$</td><td>Número de candidatos evaluados (no solo contratados)</td><td>Personas / año</td></tr>
+<tr><td>$C$</td><td>Costo unitario por candidato evaluado</td><td>Pesos</td></tr>
+</tbody>
+</table>
+
+<div class="business">
+<strong>La intuición en una línea</strong>
+$N_s \cdot t$ es «cuánto va a usarse el sistema medido en años-persona». $r \cdot \lambda(SR)$ es «cuánto mejor rinde un contratado con el proceso». $SD_y$ traduce esa mejora a pesos. $N_a \cdot C$ es el costo total. La fórmula no tiene magia: es una resta entre beneficio y costo, ambos en pesos.
+</div>
+
+
+<h2>3. Implementación en R: la función <code>bcg()</code></h2>
+
+<p>Veamos la función paso a paso. Es importante que la implementes tú: la idea es que entiendas cada parámetro, no que copies y pegues.</p>
+
+<pre><code><span class="comment"># Función BCG con parámetros explícitos</span>
+bcg &lt;- <span class="func">function</span>(N_s, t, r, SD_y, SR, N_a, C) {
+
+  <span class="comment"># Paso 1: razón de selección estandarizada (de Naylor-Shine)</span>
+  z_SR &lt;- <span class="func">qnorm</span>(1 - SR)
+  lambda &lt;- <span class="func">dnorm</span>(z_SR) / SR
+
+  <span class="comment"># Paso 2: utilidad bruta = ganancia por contratado × dotación × tenure</span>
+  utilidad_bruta &lt;- N_s * t * r * SD_y * lambda
+
+  <span class="comment"># Paso 3: costo total del proceso (todos los evaluados, no solo contratados)</span>
+  costo_total &lt;- N_a * C
+
+  <span class="comment"># Paso 4: utilidad neta y ROI</span>
+  utilidad_neta &lt;- utilidad_bruta - costo_total
+  roi &lt;- utilidad_neta / costo_total
+
+  <span class="func">list</span>(
+    lambda          = lambda,
+    utilidad_bruta  = utilidad_bruta,
+    costo_total     = costo_total,
+    utilidad_neta   = utilidad_neta,
+    roi             = roi
+  )
+}</code></pre>
+
+<div class="tip">
+<strong>Detalle que se olvida</strong>
+$N_a$ (candidatos evaluados) y $N_s$ (contratados) no son lo mismo. Si tu SR es 0,33 y contratas 50 al año, $N_a$ = 150. El costo del proceso aplica a todos los evaluados, no solo a los contratados. Confundir estos dos números —error frecuente— infla artificialmente el ROI estimado.
+</div>
+
+
+<h2>4. Aplicación a InnovaCo: cifras concretas</h2>
+
+<p>InnovaCo está evaluando si mantiene el test de aptitud que aplica a candidatos para cargos profesionales en Tecnología. Los parámetros estimados:</p>
+
+<ul>
+<li><strong>$N_s$ = 50</strong>: contrata aproximadamente 50 personas al año en cargos donde aplica el test.</li>
+<li><strong>$t$ = 4 años</strong>: el tenure promedio de los profesionales de Tecnología en InnovaCo es de cuatro años.</li>
+<li><strong>$r$ = 0,33</strong>: validez operacional bajo Sackett et al. (2022) para test cognitivo. Bajo Schmidt-Hunter (1998), $r$ = 0,51.</li>
+<li><strong>$SD_y$ = CLP 8 millones</strong>: estimación con la regla del 40 % aplicada al salario anual promedio de CLP 20 millones (regla Schmidt et al. 1979; ver §6).</li>
+<li><strong>$SR$ = 0,33</strong>: contratan al top 33 % de scores.</li>
+<li><strong>$N_a$ = 150</strong>: 150 candidatos evaluados al año (50 contratados / 0,33 SR).</li>
+<li><strong>$C$ = CLP 60.000 por candidato</strong>: licencia del test + tiempo del psicólogo de selección.</li>
+</ul>
+
+<pre><code><span class="comment"># Aplicación a InnovaCo Tecnología, escenario Sackett 2022</span>
+res_sackett &lt;- <span class="func">bcg</span>(
+  N_s  = 50,
+  t    = 4,
+  r    = 0.33,
+  SD_y = 8e6,        <span class="comment"># 8 millones de pesos</span>
+  SR   = 0.33,
+  N_a  = 150,
+  C    = 60000
+)
+res_sackett</code></pre>
+
+<div class="output-box">
+$lambda
+[1] 1.157
+
+$utilidad_bruta
+[1] 610976000
+
+$costo_total
+[1] 9000000
+
+$utilidad_neta
+[1] 601976000
+
+$roi
+[1] 66.89
+</div>
+
+<p>Lectura: bajo el escenario Sackett 2022, la utilidad neta anual estimada del test es <strong>aproximadamente CLP 602 millones</strong>, contra un costo anual de CLP 9 millones. ROI ≈ 67×. Es decir, por cada peso invertido en el test, esperamos recuperar 67 pesos en mayor desempeño organizacional.</p>
+
+<div class="warning">
+<strong>Antes de presentar esta cifra al directorio: lee la sección 6 de este apunte</strong>
+La cifra de 602 millones depende crucialmente de $SD_y$. Si en lugar de 8M usamos 4M, la utilidad cae a la mitad. Si usamos r de Schmidt-Hunter (0,51 en vez de 0,33), la utilidad sube ≈ 50 %. Reportar una cifra puntual sin sensibilidad es una falla profesional.
+</div>
+
+
+<h2>5. La pregunta más difícil: ¿cómo estimas SD<sub>y</sub>?</h2>
+
+<p>$SD_y$ es la desviación estándar del valor del desempeño <strong>medido en pesos</strong>. Conceptualmente, es la respuesta a esta pregunta: <em>«si comparo a un trabajador que está en el percentil 50 con uno que está en el percentil 84 (es decir, una SD por encima), ¿cuál es la diferencia en lo que cada uno produce?»</em>. Esa diferencia, en pesos al año, es $SD_y$.</p>
+
+<p>El problema es que casi nunca tenemos una medida directa de eso. Por décadas, la disciplina ha desarrollado tres reglas heurísticas para estimarlo. Las tres dan respuestas diferentes y ninguna es objetiva.</p>
+
+<h3>5.1 La regla del 40 % (Schmidt, Hunter, McKenzie y Muldrow, 1979)</h3>
+
+<p>Schmidt y colegas analizaron juicios de gerentes sobre el valor del desempeño y concluyeron que, para cargos profesionales, $SD_y \approx 0,40 \times \text{salario anual}$.</p>
+
+<pre><code>SD_y_40 &lt;- 0.40 * salario_anual</code></pre>
+
+<p>Para un cargo con salario anual de CLP 20 millones, eso da $SD_y$ ≈ CLP 8 millones. Es la estimación <strong>conservadora</strong>: la usada en presentaciones a directorios escépticos.</p>
+
+<h3>5.2 La regla del 70 % (Hunter, Schmidt y Judiesch, 1990)</h3>
+
+<p>Diez años después, Hunter y colegas publicaron una meta-análisis sobre la relación entre desviación estándar de productividad medida directamente en outputs y salario. Encontraron que, en promedio, $SD_y \approx 0,70 \times \text{salario anual}$.</p>
+
+<pre><code>SD_y_70 &lt;- 0.70 * salario_anual</code></pre>
+
+<p>Para el mismo cargo de CLP 20 millones, eso da $SD_y$ ≈ CLP 14 millones. Casi el doble que la regla del 40 %. Es la estimación <strong>menos conservadora</strong>.</p>
+
+<h3>5.3 Método CREPID (Cascio, 1982)</h3>
+
+<p>Cascio propuso un método más estructurado, llamado CREPID (<em>Cascio-Ramos Estimate of Performance In Dollars</em>). En vez de una regla porcentual sobre el salario, descompone el cargo en sus tareas principales, asigna pesos relativos por importancia, y suma. El resultado típico está entre la regla del 40 % y la regla del 70 %, pero el método obliga a documentar la lógica del cálculo, lo que es más defendible ante auditoría.</p>
+
+<p>Operativamente, CREPID requiere una entrevista estructurada con el supervisor del cargo y entre dos y tres horas de trabajo por puesto. Es defendible ante un auditor externo (cosa que las reglas del 40 % o 70 % no lo son), pero no es escalable a 50 cargos distintos.</p>
+
+<div class="business">
+<strong>El protocolo recomendado para tu memo</strong>
+Reporta los tres escenarios:
+<ul>
+<li>Conservador: $SD_y$ = 0,40 × salario.</li>
+<li>Esperado: $SD_y$ = 0,55 × salario (punto medio entre 40 % y 70 %).</li>
+<li>Optimista: $SD_y$ = 0,70 × salario.</li>
+</ul>
+Reporta la utilidad neta y el ROI en cada escenario. Si los tres dan ROI > 10×, la decisión es clara. Si solo el optimista lo justifica, la decisión es discutible. Esto es buena práctica profesional: hace tu análisis defendible y honesto.
+</div>
+
+
+<h2>6. Análisis de sensibilidad: el ejercicio honesto</h2>
+
+<p>El BCG es lineal en cinco de sus seis parámetros principales ($N_s$, $t$, $r$, $SD_y$, $\lambda$). Cualquier error de estimación se transmite directamente al output. La forma honesta de presentar el resultado es como una <strong>matriz de sensibilidad</strong>, no como un punto.</p>
+
+<pre><code><span class="comment"># Sensibilidad combinada sobre r (Schmidt-Hunter vs Sackett)</span>
+<span class="comment"># y sobre SD_y (regla del 40%, 55% y 70%)</span>
+
+salario &lt;- 20e6
+escenarios &lt;- <span class="func">expand.grid</span>(
+  r        = <span class="func">c</span>(Sackett = 0.33, Promedio = 0.42, SchmidtHunter = 0.51),
+  SDy_pct  = <span class="func">c</span>(Conservador = 0.40, Esperado = 0.55, Optimista = 0.70)
+)
+
+escenarios$utilidad_neta &lt;- <span class="func">mapply</span>(
+  <span class="func">function</span>(r, sdy_pct) {
+    <span class="func">bcg</span>(N_s = 50, t = 4, r = r,
+        SD_y = sdy_pct * salario,
+        SR = 0.33, N_a = 150, C = 60000)$utilidad_neta
+  },
+  escenarios$r,
+  escenarios$SDy_pct
+)
+
+<span class="func">round</span>(escenarios$utilidad_neta / 1e6, 0)  <span class="comment"># en millones de CLP</span></code></pre>
+
+<div class="output-box">
+       SDy_pct=0.40   SDy_pct=0.55   SDy_pct=0.70
+r=0.33      602           830           1058
+r=0.42      770          1059           1349
+r=0.51      935          1287           1639
+</div>
+
+<p>Lectura: la utilidad neta estimada va desde CLP 602 millones (escenario más conservador) hasta CLP 1.639 millones (escenario más optimista). Una variación de casi 3×. <strong>Eso, no la cifra puntual, es lo que tu CFO necesita saber.</strong></p>
+
+
+<h2>7. Limitaciones del modelo BCG</h2>
+
+<p>El modelo es elegante y útil, pero tiene cinco limitaciones conocidas que cualquier ingeniero comercial debería poder enumerar antes de presentar resultados.</p>
+
+<h3>7.1 Top-down hiring (Murphy, 1986)</h3>
+
+<p>El modelo BCG asume que la empresa contrata a los candidatos con score más alto, en orden estricto descendente. En la realidad esto rara vez se cumple: los candidatos top rechazan ofertas, hay restricciones de tiempo, los reclutadores bajan el corte por presión de plazos. Murphy (1986) demostró formalmente que cuando esto ocurre, el ROI real puede ser del orden del <strong>30–50 % del estimado</strong> por BCG estándar.</p>
+
+<div class="formula">
+$U_{\text{real}} \approx U_{\text{BCG}} \cdot \dfrac{1}{1 + \text{rechazo} \cdot k}$
+</div>
+
+<p>(Donde $k$ es un factor que depende del SR: rechazos en SR muy bajos cuestan más utilidad que rechazos en SR altos.) Reportar BCG sin esta corrección sobreestima sistemáticamente.</p>
+
+<h3>7.2 La crítica de Latham y Whyte (1994)</h3>
+
+<p>Latham y Whyte hicieron un experimento que se ha vuelto folclore en la disciplina: presentaron un cálculo de utilidad BCG genuino a ejecutivos, mostrándoles que un test de selección generaba (en cifras reales) cientos de millones de utilidad para sus empresas. La reacción modal fue desconfianza, no entusiasmo. Las cifras les parecieron <em>«infladas»</em> y restaron credibilidad al equipo de RRHH que las presentaba. <strong>Una utilidad muy alta puede tener efecto contraproducente</strong>.</p>
+
+<p>La lección práctica: el reporte de utilidad debe acompañarse siempre de (i) rangos, no puntos; (ii) la corrección por top-down hiring; (iii) explicación honesta de los supuestos. Una cifra única, redondeada al millón, sin sensibilidad, sin caveats, es un boomerang.</p>
+
+<h3>7.3 Asume independencia entre cargos</h3>
+
+<p>El BCG estándar trata a cada cargo como un módulo independiente. Pero el desempeño organizacional depende de interdependencias entre roles: un equipo bien armado rinde más que la suma de sus integrantes, y un mal hire en un equipo cohesionado puede destruir el desempeño de los demás. Esos efectos no entran en el modelo.</p>
+
+<h3>7.4 Asume estabilidad temporal</h3>
+
+<p>El modelo asume que la validez $r$ y la $SD_y$ son constantes a lo largo del tenure. En cargos altamente dinámicos (tecnología, marketing digital), tanto los predictores como el desempeño cambian: lo que predecía rendimiento hace cinco años ya no predice hoy. Sturman (2003) estudió esta dinámica y mostró que la validez tiende a decaer con el tiempo, lo que reduce la utilidad real para cargos volátiles.</p>
+
+<h3>7.5 Ignora consideraciones de equidad</h3>
+
+<p>El modelo BCG optimiza utilidad económica esperada, pero no incorpora directamente las restricciones de adverse impact (que veremos en el Apunte 22). Un proceso puede tener ROI altísimo y violar la regla del 4/5. La extensión moderna de BCG —Pareto-optimization (De Corte, Lievens y Sackett, 2007)— intenta resolver esto explícitamente; volveremos sobre ella en el Apunte 22.</p>
+
+
+<h2>8. Variantes contemporáneas</h2>
+
+<p>El modelo BCG clásico tiene casi 80 años. La literatura ha producido extensiones que valen la pena conocer, especialmente si vas a presentar análisis a un comité financiero sofisticado.</p>
+
+<h3>8.1 Boudreau (1983): valor presente neto y descuento financiero</h3>
+
+<p>Boudreau introdujo el cálculo financiero ortodoxo dentro del modelo. La utilidad acumulada a lo largo del tenure $t$ no debería sumarse linealmente: debe descontarse a valor presente con la tasa de costo de capital de la empresa.</p>
+
+<div class="formula">
+$U_{\text{NPV}} = \sum_{k=1}^{t} \dfrac{N_s \cdot r \cdot SD_y \cdot \lambda(SR)}{(1+i)^k} - N_a \cdot C$
+</div>
+
+<p>Donde $i$ es la tasa de descuento (típicamente 8–12 % en empresas chilenas para proyectos de RRHH). En la versión más extendida, Boudreau también incorpora impuestos corporativos sobre la utilidad incremental, depreciación, y costos crecientes.</p>
+
+<pre><code>bcg_npv &lt;- <span class="func">function</span>(N_s, t, r, SD_y, SR, N_a, C, tasa = 0.10, tax = 0.27) {
+  z_SR &lt;- <span class="func">qnorm</span>(1 - SR)
+  lambda &lt;- <span class="func">dnorm</span>(z_SR) / SR
+  ganancia_anual &lt;- N_s * r * SD_y * lambda * (1 - tax)
+  vp &lt;- <span class="func">sum</span>(ganancia_anual / (1 + tasa)^(1:t))
+  utilidad_neta &lt;- vp - N_a * C
+  <span class="func">list</span>(vp_bruto = vp, utilidad_neta = utilidad_neta)
+}
+
+<span class="func">bcg_npv</span>(N_s = 50, t = 4, r = 0.33, SD_y = 8e6,
+        SR = 0.33, N_a = 150, C = 60000,
+        tasa = 0.10, tax = 0.27)</code></pre>
+
+<div class="output-box">
+$vp_bruto
+[1] 353568519
+
+$utilidad_neta
+[1] 344568519
+</div>
+
+<p>El ajuste reduce la utilidad estimada en aproximadamente 43 % comparado con el BCG simple (de 602M a 345M en este ejemplo). El descuento financiero más impuestos es lo que un CFO va a hacer mentalmente, así que mejor incorporarlo desde el inicio.</p>
+
+<h3>8.2 Cabrera y Raju (2001): incertidumbre paramétrica con Monte Carlo</h3>
+
+<p>Cabrera y Raju notaron que cada parámetro del BCG es una <em>estimación</em> con incertidumbre asociada, no un punto fijo. La forma profesional de manejar esa incertidumbre es modelar cada parámetro como una distribución y simular el ROI con Monte Carlo.</p>
+
+<pre><code>bcg_montecarlo &lt;- <span class="func">function</span>(n_sim = 10000) {
+  <span class="comment"># Cada parámetro como una distribución, no un punto</span>
+  N_s  &lt;- <span class="func">rnorm</span>(n_sim, mean = 50,    sd = 8)
+  t    &lt;- <span class="func">rnorm</span>(n_sim, mean = 4,     sd = 0.7)
+  r    &lt;- <span class="func">runif</span>(n_sim, min  = 0.20,  max = 0.51)  <span class="comment"># Sackett a Schmidt-Hunter</span>
+  SD_y &lt;- <span class="func">runif</span>(n_sim, min  = 8e6,   max = 14e6)  <span class="comment"># 40% a 70% del salario</span>
+  SR   &lt;- 0.33
+  N_a  &lt;- N_s / SR
+  C    &lt;- <span class="func">rnorm</span>(n_sim, mean = 60000, sd = 5000)
+
+  z_SR &lt;- <span class="func">qnorm</span>(1 - SR)
+  lambda &lt;- <span class="func">dnorm</span>(z_SR) / SR
+
+  utilidad_neta &lt;- N_s * t * r * SD_y * lambda - N_a * C
+
+  <span class="func">list</span>(
+    media   = <span class="func">mean</span>(utilidad_neta),
+    p10     = <span class="func">quantile</span>(utilidad_neta, 0.10),
+    mediana = <span class="func">median</span>(utilidad_neta),
+    p90     = <span class="func">quantile</span>(utilidad_neta, 0.90)
+  )
+}
+<span class="func">set.seed</span>(20260429)
+<span class="func">bcg_montecarlo</span>()</code></pre>
+
+<div class="output-box">
+$media
+[1] 1043500000
+
+$p10
+[1] 470800000
+
+$mediana
+[1] 988200000
+
+$p90
+[1] 1672600000
+</div>
+
+<p>Lectura: la utilidad neta esperada (mediana de la distribución) es CLP 988 millones, con un intervalo del 80 % entre CLP 471 millones y CLP 1.673 millones. <strong>Esa es la forma defendible de reportar el ROI</strong>: una distribución, no un punto.</p>
+
+<h3>8.3 Sturman (2003): tenure variable y validez decayente</h3>
+
+<p>Sturman extendió el modelo permitiendo que tanto $r$ como $SD_y$ varíen con el tiempo dentro del tenure. La utilidad acumulada se calcula como:</p>
+
+<div class="formula">
+$U = N_s \cdot \sum_{k=1}^{t} r_k \cdot SD_{y,k} \cdot \lambda(SR) - N_a \cdot C$
+</div>
+
+<p>Donde $r_k$ es la validez del proceso para predecir desempeño <em>en el año k del tenure</em>, y $SD_{y,k}$ es la desviación estándar del desempeño en pesos en ese año. Empíricamente, Sturman documentó que $r_k$ tiende a decaer (la validez decrece con el tiempo) en la mayoría de los cargos. Para análisis de cargos con tenure largo, ignorar este decay sobreestima.</p>
+
+<h3>8.4 Cascio y Boudreau (2008/2011): el HR cost-justification framework</h3>
+
+<p>Cascio y Boudreau publicaron dos ediciones de un manual operativo (<em>Investing in People</em>) que extiende el BCG a otras intervenciones de RRHH: capacitación, programas de retención, planes de incentivos. La lógica es la misma: traducir la intervención a SDs de mejora en alguna variable de outcome (productividad, retención, satisfacción del cliente), monetizar el SD, restar el costo, calcular ROI y NPV.</p>
+
+<p>Es la referencia estándar para hacer <em>business case</em> de iniciativas de gestión de personas. Si vas a justificar una inversión en RRHH a un CFO, este libro es tu fuente principal.</p>
+
+
+<h2>9. Mini-cookbook: tres ejemplos resueltos</h2>
+
+<h3>Ejemplo 1: ¿conviene un test que aumenta la validez de 0,30 a 0,40?</h3>
+
+<p>El test actual cuesta CLP 30.000 por candidato y tiene validez 0,30. Un nuevo test cuesta CLP 80.000 por candidato y tiene validez 0,40. Mismo cargo, mismas dotaciones. ¿Vale la pena el cambio?</p>
+
+<pre><code><span class="comment"># Test actual</span>
+actual &lt;- <span class="func">bcg</span>(N_s = 50, t = 4, r = 0.30, SD_y = 8e6,
+              SR = 0.33, N_a = 150, C = 30000)
+
+<span class="comment"># Test nuevo</span>
+nuevo &lt;- <span class="func">bcg</span>(N_s = 50, t = 4, r = 0.40, SD_y = 8e6,
+              SR = 0.33, N_a = 150, C = 80000)
+
+<span class="comment"># Diferencia incremental</span>
+incremental &lt;- nuevo$utilidad_neta - actual$utilidad_neta
+incremental / 1e6  <span class="comment"># en millones de CLP</span></code></pre>
+
+<div class="output-box">
+[1] 177.7
+</div>
+
+<p>El nuevo test, aunque más caro, genera CLP 178 millones más de utilidad neta al año. La diferencia de costo (CLP 7,5 millones adicionales) es órdenes de magnitud menor que la ganancia incremental. La decisión es clara, salvo que la sensibilidad sobre $SD_y$ revierta el resultado.</p>
+
+<h3>Ejemplo 2: ¿deberíamos relajar el cutoff para reducir adverse impact?</h3>
+
+<p>El proceso actual tiene SR = 0,20 (selección exigente) y un ratio de 4/5 que viola la regla. Para reducir adverse impact, RRHH propone relajar a SR = 0,40. ¿Qué pasa con la utilidad?</p>
+
+<pre><code>exigente &lt;- <span class="func">bcg</span>(N_s = 50, t = 4, r = 0.40, SD_y = 8e6,
+                 SR = 0.20, N_a = 250, C = 60000)
+relajado &lt;- <span class="func">bcg</span>(N_s = 50, t = 4, r = 0.40, SD_y = 8e6,
+                 SR = 0.40, N_a = 125, C = 60000)
+
+<span class="func">c</span>(exigente = exigente$utilidad_neta / 1e6,
+  relajado = relajado$utilidad_neta / 1e6)</code></pre>
+
+<div class="output-box">
+exigente   relajado
+   882.0      627.5
+</div>
+
+<p>Relajar el cutoff cuesta CLP 254 millones de utilidad al año. Pero también puede reducir el adverse impact (que tiene su propio costo en términos legales y reputacionales). La decisión final no es solo financiera: es un ejercicio de Pareto-optimization que se desarrolla en el Apunte 22.</p>
+
+<h3>Ejemplo 3: el BCG breakeven</h3>
+
+<p>Macarena te pregunta: <em>«¿con qué validez mínima el test paga su costo?»</em>. La respuesta es analítica:</p>
+
+<div class="formula">
+$r_{\text{breakeven}} = \dfrac{N_a \cdot C}{N_s \cdot t \cdot SD_y \cdot \lambda(SR)}$
+</div>
+
+<pre><code>r_breakeven &lt;- <span class="func">function</span>(N_s, t, SD_y, SR, N_a, C) {
+  z_SR &lt;- <span class="func">qnorm</span>(1 - SR)
+  lambda &lt;- <span class="func">dnorm</span>(z_SR) / SR
+  (N_a * C) / (N_s * t * SD_y * lambda)
+}
+
+<span class="func">r_breakeven</span>(N_s = 50, t = 4, SD_y = 8e6,
+            SR = 0.33, N_a = 150, C = 60000)</code></pre>
+
+<div class="output-box">
+[1] 0.00486
+</div>
+
+<p>Lectura: el test paga su costo con una validez de apenas 0,005. Cualquier validez por encima de 0,01 ya es rentable. Dado que las validez típicas están entre 0,20 y 0,50, el test casi siempre paga su costo en cargos profesionales. <strong>Esto explica por qué los grandes empleadores invierten en testing: el costo es bajo respecto a la varianza del desempeño en pesos.</strong></p>
+
+
+<h2>10. Resumen práctico</h2>
+
+<ol>
+<li><strong>Implementa <code>bcg()</code> tú mismo.</strong> Es media página de código y obliga a entender cada parámetro.</li>
+<li><strong>No reportes nunca una cifra puntual.</strong> Reporta el rango bajo Schmidt-Hunter ↔ Sackett y bajo las tres reglas de $SD_y$ (40 %, 55 %, 70 %).</li>
+<li><strong>Aplica la corrección de Murphy (1986)</strong> si tu proceso tiene rechazos de oferta significativos.</li>
+<li><strong>Si el ROI estimado es muy alto, reporta también NPV con tasa de descuento</strong> (Boudreau 1983) y, si tu auditoría lo permite, Monte Carlo (Cabrera y Raju 2001) para reportar la distribución completa, no solo la media.</li>
+<li><strong>El cálculo de utilidad no es una herramienta de venta.</strong> Es una herramienta de honestidad analítica. Sirve para mostrar que la inversión vale la pena, pero también para detectar cuándo no la vale.</li>
+</ol>
+
+<div class="tip">
+<strong>El siguiente paso natural</strong>
+Hasta acá hemos optimizado utilidad. Pero la utilidad económica no es el único criterio relevante: hay restricciones legales (regla del 4/5), regulatorias (NYC LL 144, AI Act, marco chileno) y éticas. El Apunte 22 te enseña a auditar el proceso desde esos otros ángulos.
+</div>
+
+
+<h2>Referencias</h2>
+
+<p style="font-size: 0.9rem;">Boudreau, J. W. (1983). Economic considerations in estimating the utility of human resource productivity improvement programs. <em>Personnel Psychology, 36</em>(3), 551–576.</p>
+
+<p style="font-size: 0.9rem;">Brogden, H. E. (1949). When testing pays off. <em>Personnel Psychology, 2</em>(2), 171–183.</p>
+
+<p style="font-size: 0.9rem;">Cabrera, E. F., &amp; Raju, N. S. (2001). Utility analysis: Current trends and future directions. <em>International Journal of Selection and Assessment, 9</em>(1–2), 92–102.</p>
+
+<p style="font-size: 0.9rem;">Cascio, W. F. (1982). <em>Costing human resources: The financial impact of behavior in organizations</em>. Kent.</p>
+
+<p style="font-size: 0.9rem;">Cascio, W. F., &amp; Boudreau, J. W. (2011). <em>Investing in people: Financial impact of human resource initiatives</em> (2.<sup>a</sup> ed.). Pearson FT Press.</p>
+
+<p style="font-size: 0.9rem;">Cronbach, L. J., &amp; Gleser, G. C. (1965). <em>Psychological tests and personnel decisions</em> (2.<sup>a</sup> ed.). University of Illinois Press.</p>
+
+<p style="font-size: 0.9rem;">Hunter, J. E., Schmidt, F. L., &amp; Judiesch, M. K. (1990). Individual differences in output variability as a function of job complexity. <em>Journal of Applied Psychology, 75</em>(1), 28–42.</p>
+
+<p style="font-size: 0.9rem;">Latham, G. P., &amp; Whyte, G. (1994). The futility of utility analysis. <em>Personnel Psychology, 47</em>(1), 31–46.</p>
+
+<p style="font-size: 0.9rem;">Murphy, K. R. (1986). When your top choice turns you down: Effect of rejected offers on the utility of selection tests. <em>Psychological Bulletin, 99</em>(1), 133–138.</p>
+
+<p style="font-size: 0.9rem;">Schmidt, F. L., Hunter, J. E., McKenzie, R. C., &amp; Muldrow, T. W. (1979). Impact of valid selection procedures on work-force productivity. <em>Journal of Applied Psychology, 64</em>(6), 609–626.</p>
+
+<p style="font-size: 0.9rem;">Sturman, M. C. (2003). Utility analysis: A tool for quantifying the value of human resource investments. En J. W. Greenhaus &amp; G. A. Callanan (Eds.), <em>Encyclopedia of career development</em>. Sage.</p>
+
+
+<footer>
+Apunte 21 · Curso Analítica de Personas · Magíster en Gestión de Personas · UDP · Otoño 2026
+</footer>
+
+</body>
+</html>

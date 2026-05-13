@@ -180,31 +180,56 @@ Si solo te interesa <strong>quién está en riesgo</strong> (y no cuándo), la r
 </div>
 
 
-<h2>5. <code>ggforest()</code>: el forest plot</h2>
+<h2>5. El forest plot: visualizar los hazard ratios</h2>
 
-<p>El forest plot es la visualización estándar de los hazard ratios. <code>survminer::ggforest()</code> lo genera directamente desde un objeto <code>coxph</code>:</p>
+<p>El forest plot es la visualización estándar de los hazard ratios: una fila por variable, con un punto (HR) y una barra horizontal (IC 95 %). La línea vertical en <code>HR = 1</code> es la referencia: si la barra cruza el 1, el efecto no es significativo al 5 %.</p>
 
-<pre><code><span class="func">ggforest</span>(modelo_cox, data = datos_surv)</code></pre>
+<div class="warning">
+<strong>Bug conocido en <code>ggforest()</code></strong>
+El paquete <code>survminer</code> incluye la función <code>ggforest(modelo_cox, data = datos_surv)</code> que genera un forest plot con un solo llamado. Sin embargo, tiene un bug documentado: cuando las variables categóricas tienen niveles con <strong>espacios</strong> ("Soporte Tecnico", "Recursos Humanos"), el merge interno falla con el error <em>"los nombres no coinciden con los nombres anteriores"</em>. Este bug lleva abierto desde 2019 y no ha sido resuelto. Por eso, construimos el forest plot manualmente con <code>ggplot2</code>.
+</div>
 
-<p>El gráfico muestra una fila por variable, con un punto (HR) y una barra horizontal (IC 95 %). La línea vertical en <code>HR = 1</code> es la referencia: si la barra cruza el 1, el efecto no es significativo al 5 %.</p>
+<h3>Forest plot manual con <code>ggplot2</code> (recomendado)</h3>
 
-<p>Si quieres más control sobre la estética (por ejemplo, para usar la paleta Warm Terracotta), puedes construir el forest plot manualmente con <code>ggplot2</code>:</p>
+<p>Partimos de la tabla de hazard ratios generada con <code>broom::tidy()</code> y la visualizamos directamente. Este enfoque es más robusto y nos da control total sobre la estética:</p>
 
-<pre><code><span class="comment"># Forest plot personalizado</span>
+<pre><code><span class="comment"># 1. Limpiar los nombres de coeficientes para legibilidad</span>
 hr_plot <- hr_tabla <span class="pipe">|&gt;</span>
-  <span class="func">filter</span>(p_valor &lt; 0.10) <span class="pipe">|&gt;</span>
-  <span class="func">mutate</span>(term = <span class="func">fct_reorder</span>(term, HR))
+  <span class="func">mutate</span>(
+    etiqueta = term <span class="pipe">|&gt;</span>
+      <span class="func">str_replace</span>(<span class="string">"^departamento"</span>, <span class="string">"Depto: "</span>) <span class="pipe">|&gt;</span>
+      <span class="func">str_replace</span>(<span class="string">"^nivel_jerarquico"</span>, <span class="string">"Nivel: "</span>) <span class="pipe">|&gt;</span>
+      <span class="func">str_replace</span>(<span class="string">"^genero"</span>, <span class="string">"Género: "</span>) <span class="pipe">|&gt;</span>
+      <span class="func">str_replace</span>(<span class="string">"satisfaccion_laboral"</span>, <span class="string">"Satisfacción laboral"</span>) <span class="pipe">|&gt;</span>
+      <span class="func">str_replace</span>(<span class="string">"evaluacion_desempeno"</span>, <span class="string">"Evaluación desempeño"</span>) <span class="pipe">|&gt;</span>
+      <span class="func">str_replace</span>(<span class="string">"ingreso_mensual"</span>, <span class="string">"Ingreso mensual"</span>) <span class="pipe">|&gt;</span>
+      <span class="func">str_replace</span>(<span class="string">"horas_capacitacion"</span>, <span class="string">"Horas capacitación"</span>),
+    direccion = <span class="func">if_else</span>(HR &gt; 1, <span class="string">"Riesgo"</span>, <span class="string">"Protector"</span>)
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(etiqueta = <span class="func">fct_reorder</span>(etiqueta, HR))
 
-<span class="func">ggplot</span>(hr_plot, <span class="func">aes</span>(x = HR, y = term)) +
-  <span class="func">geom_point</span>(size = 3, color = <span class="string">"#B85042"</span>) +
-  <span class="func">geom_errorbarh</span>(<span class="func">aes</span>(xmin = IC_bajo, xmax = IC_alto),
-                 height = 0.2, color = <span class="string">"#1B2A4A"</span>) +
+<span class="comment"># 2. Forest plot</span>
+<span class="func">ggplot</span>(hr_plot, <span class="func">aes</span>(x = HR, y = etiqueta, color = direccion)) +
+  <span class="func">geom_point</span>(size = 3) +
+  <span class="func">geom_errorbarh</span>(<span class="func">aes</span>(xmin = IC_bajo, xmax = IC_alto), height = 0.25) +
   <span class="func">geom_vline</span>(xintercept = 1, linetype = <span class="string">"dashed"</span>, color = <span class="string">"grey50"</span>) +
-  <span class="func">labs</span>(
-    title = <span class="string">"Factores que aceleran o frenan la salida"</span>,
-    x = <span class="string">"Hazard Ratio"</span>, y = NULL
+  <span class="func">scale_color_manual</span>(
+    values = <span class="func">c</span>(<span class="string">"Riesgo"</span> = <span class="string">"#B85042"</span>, <span class="string">"Protector"</span> = <span class="string">"#0D9488"</span>),
+    guide  = <span class="string">"none"</span>
   ) +
-  <span class="func">theme_minimal</span>()</code></pre>
+  <span class="func">labs</span>(
+    title = <span class="string">"¿Qué factores aceleran o frenan la salida?"</span>,
+    subtitle = <span class="string">"Hazard ratios con IC 95 % — Modelo de Cox"</span>,
+    x = <span class="string">"Hazard Ratio"</span>, y = NULL,
+    caption = <span class="string">"HR &gt; 1 = mayor riesgo · HR &lt; 1 = menor riesgo"</span>
+  ) +
+  <span class="func">theme_minimal</span>() +
+  <span class="func">theme</span>(panel.grid.major.y = <span class="func">element_blank</span>())</code></pre>
+
+<div class="tip">
+<strong>Ventajas del forest plot manual</strong>
+Además de evitar el bug de <code>ggforest()</code>, el enfoque manual te permite: (1) usar colores distintos para factores de riesgo vs. protectores, (2) limpiar las etiquetas para que el directorio las entienda, (3) filtrar solo las variables significativas, y (4) aplicar la paleta visual del curso. Es más trabajo inicial, pero el resultado es más profesional y reproducible.
+</div>
 
 
 <h2>6. <code>cox.zph()</code>: verificar proporcionalidad</h2>

@@ -23,103 +23,111 @@ A través del semestre, se revisarán análisis descriptivo, modelos predictivos
 
 Al aprobar el curso, los estudiantes serán capaces de:
 
--   Utilizar R y el ecosistema tidyverse para importar, limpiar, transformar y visualizar datos de recursos humanos.
--   Calcular e interpretar métricas clave de gestión de personas: rotación, equidad salarial, engagement, diversidad, reclutamiento y workforce planning.
--   Construir e interpretar modelos estadísticos (regresión lineal, logística, supervivencia, árboles de decisión) aplicados a problemas de RRHH.
--   Aplicar técnicas de text mining y análisis de redes organizacionales a datos de personas.
--   Comunicar hallazgos analíticos a stakeholders no técnicos mediante visualizaciones efectivas, dashboards y reportes ejecutivos en Quarto.
--   Evaluar críticamente las implicancias éticas y de privacidad de los proyectos de people analytics.
--   Utilizar herramientas de inteligencia artificial como complemento del análisis, manteniendo criterio crítico sobre sus limitaciones.
+- Utilizar R y el ecosistema tidyverse para importar, limpiar, transformar y visualizar datos de recursos humanos.
+- Calcular e interpretar métricas clave de gestión de personas: rotación, equidad salarial, engagement, diversidad, reclutamiento y workforce planning.
+- Construir e interpretar modelos estadísticos (regresión lineal, logística, supervivencia, árboles de decisión) aplicados a problemas de RRHH.
+- Aplicar técnicas de text mining y análisis de redes organizacionales a datos de personas.
+- Comunicar hallazgos analíticos a stakeholders no técnicos mediante visualizaciones efectivas, dashboards y reportes ejecutivos en Quarto.
+- Evaluar críticamente las implicancias éticas y de privacidad de los proyectos de people analytics.
+- Utilizar herramientas de inteligencia artificial como complemento del análisis, manteniendo criterio crítico sobre sus limitaciones.
 
 ## Calendario de Clases
 
 *Este calendario es tentativo y puede estar sujeto a cambios en caso de imprevistos.*
 
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| Sem. | Fecha  | Contenido                                                | Tipo                          | Material complementario\*                                                                                                         |   |   |
-+:====:+:======:+==========================================================+===============================+:=================================================================================================================================:+===+===+
-| 1    | 11-mar | "La empresa no sabe qué pasa con su gente"               | Clase presencial              | [Apunte 1: El pipe y las funciones de dplyr](Apunte01_Pipes_y_dplyr.html)                                                         |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 2: ggplot2 y la lógica de los geom](Apunte02_ggplot2_y_geom.html)                                                         |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 3: Usando Quarto para reportes reproducibles](Apunte03_Quarto.html)                                                       |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 2    | 18-mar | "¿Por qué se va la gente?": diagnóstico de rotación      | Clase presencial              | [Apunte 4: Uniendo bases de datos](Apunte04_Uniendo_bases_de_datos.html)                                                          |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 5: Funciones dplyr avanzadas](Apunte05_Funciones_dplyr_avanzadas.html)                                                    |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 6: Limpiar datos con janitor](Apunte06_Limpiar_datos_con_janitor.html)                                                    |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 3    | 25-mar | "¿Podemos predecir quién se va a ir?": modelo predictivo | Clase presencial              | [Apunte 7: Inferencia frecuentista](Apunte07_Inferencia_Frecuentista.html)                                                        |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 8: glm y Modelos Lineales Generalizados](Apunte08_glm_Modelos_Lineales_Generalizados.html)                                |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 9: El paquete broom](Apunte09_broom.html)                                                                                 |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 10: Regresión logística aplicada](Apunte10_Regresion_Logistica_Aplicada.html)                                             |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 4    | 01-abr | **"Su primer cliente": diagnóstico de fuerza laboral**   | *Actividad grupal (5%)*       |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 5    | 08-abr | "¿Les estamos pagando bien?": equidad salarial           | Clase presencial              | [Apunte 11: Regresión lineal con lm()](Apunte11_Regresion_lineal.html)                                                            |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 12: Diagnóstico de regresión: residuos, VIF y supuestos](Apunte12_Diagnostico_regresion.html)                             |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 13: Interacciones, broom y gráficos de coeficientes](Apunte13_Interacciones_y_broom_lm.html)                              |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 6    | 15-abr | "¿Qué tan comprometida está nuestra gente?": engagement  | Clase presencial              | [Apunte 14: Datos Likert y confiabilidad (fiabilidad) con psych](Apunte14_Confiabilidad_psych.html)                               |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 15: Análisis factorial exploratorio con psych::fa()](Apunte15_EFA_psych.html)                                             |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 16: Drivers, importancia relativa y visualización de encuestas](Apunte16_Drivers_y_visualizacion.html)                    |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 17: Presentaciones ejecutivas con Quarto Reveal.js](Apunte17_Presentaciones_Reveal.html)                                  |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 7    | 22-abr | **Caso MineralCo: consultoría integral de PA**           | *Evaluación grupal (15%)*     |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 8    | 29-abr | "¿Estamos contratando bien?": recruitment analytics      | Clase presencial              | [Apunte 18: Trabajar con fechas en R; el paquete lubridate](Apunte18_Lubridate_y_fechas.html)                                     |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 19: El embudo de reclutamiento; yield ratios, TTF, CPH y QoH](Apunte19_Embudo_y_yield_ratios.html)                        |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 20: Validez de selección y modelos clásicos de utilidad](Apunte20_Validez_y_utilidad.html)                                |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 21: ROI del proceso de selección; Brogden-Cronbach-Gleser y alternativas contemporáneas](Apunte21_ROI_seleccion_BCG.html) |   |   |
-|      |        |                                                          |                               |                                                                                                                                   |   |   |
-|      |        |                                                          |                               | [Apunte 22: Adverse impact, sesgo algorítmico y ética en selección](Apunte22_Adverse_impact_etica_contexto_chileno.html)          |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 9    | 06-may | "¿Cuánto tiempo se quedan?": análisis de supervivencia   | Clase presencial              |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 10   | 13-may | "¿Somos diversos e inclusivos?": analítica de DEI        | Clase presencial              |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 11   | 20-may | "¿Qué dicen los empleados?": text mining de encuestas    | Clase presencial              |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 12   | 27-may | "¿Quién conecta con quién?": redes organizacionales      | Clase presencial              |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 13   | 03-jun | "¿Podemos ver el futuro?": modelos avanzados y repaso    | Clase presencial              |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 14   | 10-jun | **Evaluación parcial individual presencial**             | *Evaluación individual (30%)* |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 15   | 17-jun | "El directorio quiere verlo todo junto": dashboards      | Clase presencial              |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 16   | 24-jun | "¿Cuánta gente necesitaremos?": workforce planning       | Clase presencial              |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 17   | 01-jul | "¿Es ético todo lo que podemos hacer?": IA y ética       | Clase presencial              |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
-| 18   | 08-jul | **Evaluación final individual presencial**               | *Evaluación individual (30%)* |                                                                                                                                   |   |   |
-+------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+---+---+
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| Sem. | Fecha  | Contenido                                                | Tipo                          | Material complementario\*                                                                                                         |      |      |
++:====:+:======:+==========================================================+===============================+:=================================================================================================================================:+======+======+
+| 1    | 11-mar | "La empresa no sabe qué pasa con su gente"               | Clase presencial              | [Apunte 1: El pipe y las funciones de dplyr](Apunte01_Pipes_y_dplyr.html)                                                         |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 2: ggplot2 y la lógica de los geom](Apunte02_ggplot2_y_geom.html)                                                         |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 3: Usando Quarto para reportes reproducibles](Apunte03_Quarto.html)                                                       |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 2    | 18-mar | "¿Por qué se va la gente?": diagnóstico de rotación      | Clase presencial              | [Apunte 4: Uniendo bases de datos](Apunte04_Uniendo_bases_de_datos.html)                                                          |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 5: Funciones dplyr avanzadas](Apunte05_Funciones_dplyr_avanzadas.html)                                                    |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 6: Limpiar datos con janitor](Apunte06_Limpiar_datos_con_janitor.html)                                                    |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 3    | 25-mar | "¿Podemos predecir quién se va a ir?": modelo predictivo | Clase presencial              | [Apunte 7: Inferencia frecuentista](Apunte07_Inferencia_Frecuentista.html)                                                        |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 8: glm y Modelos Lineales Generalizados](Apunte08_glm_Modelos_Lineales_Generalizados.html)                                |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 9: El paquete broom](Apunte09_broom.html)                                                                                 |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 10: Regresión logística aplicada](Apunte10_Regresion_Logistica_Aplicada.html)                                             |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 4    | 01-abr | **"Su primer cliente": diagnóstico de fuerza laboral**   | *Actividad grupal (5%)*       |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 5    | 08-abr | "¿Les estamos pagando bien?": equidad salarial           | Clase presencial              | [Apunte 11: Regresión lineal con lm()](Apunte11_Regresion_lineal.html)                                                            |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 12: Diagnóstico de regresión: residuos, VIF y supuestos](Apunte12_Diagnostico_regresion.html)                             |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 13: Interacciones, broom y gráficos de coeficientes](Apunte13_Interacciones_y_broom_lm.html)                              |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 6    | 15-abr | "¿Qué tan comprometida está nuestra gente?": engagement  | Clase presencial              | [Apunte 14: Datos Likert y confiabilidad (fiabilidad) con psych](Apunte14_Confiabilidad_psych.html)                               |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 15: Análisis factorial exploratorio con psych::fa()](Apunte15_EFA_psych.html)                                             |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 16: Drivers, importancia relativa y visualización de encuestas](Apunte16_Drivers_y_visualizacion.html)                    |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 17: Presentaciones ejecutivas con Quarto Reveal.js](Apunte17_Presentaciones_Reveal.html)                                  |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 7    | 22-abr | **Caso MineralCo: consultoría integral de PA**           | *Evaluación grupal (15%)*     |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 8    | 29-abr | "¿Estamos contratando bien?": recruitment analytics      | Clase presencial              | [Apunte 18: Trabajar con fechas en R; el paquete lubridate](Apunte18_Lubridate_y_fechas.html)                                     |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 19: El embudo de reclutamiento; yield ratios, TTF, CPH y QoH](Apunte19_Embudo_y_yield_ratios.html)                        |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 20: Validez de selección y modelos clásicos de utilidad](Apunte20_Validez_y_utilidad.html)                                |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 21: ROI del proceso de selección; Brogden-Cronbach-Gleser y alternativas contemporáneas](Apunte21_ROI_seleccion_BCG.html) |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 22: Adverse impact, sesgo algorítmico y ética en selección](Apunte22_Adverse_impact_etica_contexto_chileno.html)          |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 9    | 13-may | "¿Cuánto tiempo se quedan?": análisis de supervivencia   | Clase presencial              | [Apunte 23: Análisis de supervivencia; Kaplan-Meier y log-rank](Apunte23_Supervivencia_KM.html)                                   |      |      |
+|      |        |                                                          |                               |                                                                                                                                   |      |      |
+|      |        |                                                          |                               | [Apunte 24: Modelo de Cox y hazard ratios](Apunte24_Cox_Hazard_Ratios.html)                                                       |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 10   | 20-may | "¿Somos diversos e inclusivos?": analítica de DEI        | Clase presencial              |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 11   | 27-may | "¿Qué dicen los empleados?": text mining de encuestas    | Clase presencial              |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 12   | 03-jun | "¿Quién conecta con quién?": redes organizacionales      | Clase presencial              |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 13   | 10-jun | **Evaluación parcial individual presencial**             | *Evaluación individual (30%)* |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 14   | 17-jun | "El directorio quiere verlo todo junto": dashboards      | Clase presencial              |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 15   | 24-jun | "¿Cuánta gente necesitaremos?": workforce planning       | Clase presencial              |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 16   | 01-jul | "¿Es ético todo lo que podemos hacer?": IA y ética       | Clase presencial              |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
+| 17   | 08-jul | **Evaluación final individual presencial**               | *Evaluación individual (30%)* |                                                                                                                                   |      |      |
++------+--------+----------------------------------------------------------+-------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+------+------+
 
 \* Todo el material oficial del curso (tareas, bases de datos, scripts, presentaciones de clases, lecturas) está disponible en la [página oficial del curso en Canvas](https://udp.instructure.com/courses/43138). En esta columna se lista únicamente material complementario.
 
 ## Evaluación
 
-| Componente                    |  Semana  | Formato                | Peso |
-|-------------------------------|:--------:|------------------------|:----:|
-| Actividad grupal diagnóstico  |    4     | Grupal, no presencial  |  5%  |
-| Evaluación grupal consultoría |    7     | Grupal, no presencial  | 15%  |
-| Tareas semanales en Quarto    | Continuo | Individual             | 10%  |
-| Bitácora de uso de IA         | Continuo | Individual             |  5%  |
-| Participación en clase        | Continuo | Individual             |  5%  |
-| Evaluación parcial            |    14    | Individual, presencial | 30%  |
-| Evaluación final              |    18    | Individual, presencial | 30%  |
++-------------------------------+------------+------------------------+------------+
+| Componente                    | Semana     | Formato                | Peso       |
++===============================+:==========:+========================+:==========:+
+| Actividad grupal diagnóstico  | 4          | Grupal, no presencial  | 5%         |
++-------------------------------+------------+------------------------+------------+
+| Evaluación grupal consultoría | 7          | Grupal, no presencial  | 15%        |
++-------------------------------+------------+------------------------+------------+
+| Tareas semanales en Quarto    | Continuo   | Individual             | 10%        |
++-------------------------------+------------+------------------------+------------+
+| Bitácora de uso de IA         | Continuo   | Individual             | 5%         |
++-------------------------------+------------+------------------------+------------+
+| Participación en clase        | Continuo   | Individual             | 5%         |
++-------------------------------+------------+------------------------+------------+
+| Evaluación parcial            | 14         | Individual, presencial | 30%        |
++-------------------------------+------------+------------------------+------------+
+| Evaluación final              | 18         | Individual, presencial | 30%        |
++-------------------------------+------------+------------------------+------------+
 
 Distribución: 80% individual / 20% grupal. Las evaluaciones presenciales (semanas 14 y 18) se realizan sin acceso a internet ni herramientas de IA.
 
@@ -137,14 +145,14 @@ El curso adopta un modelo de "IA como analista junior" con autonomía escalonada
 
 ### Textos principales (gratuitos en línea)
 
--   McNulty, K. (2026). *Handbook of Regression Modeling in People Analytics* (2ª ed.). Chapman & Hall/CRC. Disponible en [peopleanalytics-regression-book.org](https://peopleanalytics-regression-book.org).
--   Starbuck, C. (2023). *The Fundamentals of People Analytics: With Applications in R*. Springer (Open Access). Disponible en [link.springer.com](https://link.springer.com/book/10.1007/978-3-031-28674-2).
--   McNulty, K. (2022). *Handbook of Graphs and Networks in People Analytics*. Chapman & Hall/CRC. Disponible en [ona-book.org](https://ona-book.org).
--   Silge, J. & Robinson, D. (2017). *Text Mining with R: A Tidy Approach*. O'Reilly. Disponible en [tidytextmining.com](https://www.tidytextmining.com).
--   Caughlin, D. *R for HR: An Introduction to Human Resource Analytics Using R*. Disponible en [rforhr.com](https://rforhr.com).
+- McNulty, K. (2026). *Handbook of Regression Modeling in People Analytics* (2ª ed.). Chapman & Hall/CRC. Disponible en [peopleanalytics-regression-book.org](https://peopleanalytics-regression-book.org).
+- Starbuck, C. (2023). *The Fundamentals of People Analytics: With Applications in R*. Springer (Open Access). Disponible en [link.springer.com](https://link.springer.com/book/10.1007/978-3-031-28674-2).
+- McNulty, K. (2022). *Handbook of Graphs and Networks in People Analytics*. Chapman & Hall/CRC. Disponible en [ona-book.org](https://ona-book.org).
+- Silge, J. & Robinson, D. (2017). *Text Mining with R: A Tidy Approach*. O'Reilly. Disponible en [tidytextmining.com](https://www.tidytextmining.com).
+- Caughlin, D. *R for HR: An Introduction to Human Resource Analytics Using R*. Disponible en [rforhr.com](https://rforhr.com).
 
 ### Textos complementarios
 
--   Edwards, M. & Edwards, K. (2019). *Predictive HR Analytics* (2ª ed.). Kogan Page.
--   Marr, B. (2018). *Data-Driven HR*. Kogan Page.
--   Leonardi, P. & Contractor, N. (2018). Better People Analytics. *Harvard Business Review, 96*(6), 70–81.
+- Edwards, M. & Edwards, K. (2019). *Predictive HR Analytics* (2ª ed.). Kogan Page.
+- Marr, B. (2018). *Data-Driven HR*. Kogan Page.
+- Leonardi, P. & Contractor, N. (2018). Better People Analytics. *Harvard Business Review, 96*(6), 70–81.

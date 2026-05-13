@@ -2,42 +2,45 @@
 title: "Software & Code"
 ---
 
-## Tools, Scripts, and Reproducible Workflows
+## R Packages
 
-I share here code and tools related to my research and teaching. I work primarily in **R**, **Mplus**, and **Stata**.
+### personnelSelectionUtility
+
+`personnelSelectionUtility` implements classical and contemporary utility-analysis methods for personnel selection under a unified notation, organized by criterion scale (classificatory or continuous/monetary) and selection structure (compensatory or multiple-hurdle). The package covers Taylor–Russell univariate and Thomas–Owen–Gunst multivariate classification models, Brogden–Cronbach–Gleser and Boudreau-style continuous and monetary utility, Schmidt–Hunter–Pearlman intervention utility, Sturman-style incremental validity for multiple predictors and outcomes, simulation tools for compensatory and staged multiple-hurdle systems, Pareto frontiers for validity–diversity trade-offs, AUC-to-effect-size conversions, and Monte Carlo uncertainty propagation.
+
+[Package website](https://gempp.cl/personnelSelectionUtility/){.btn .btn-outline-primary .btn-sm} [GitHub](https://github.com/rgempp/personnelSelectionUtility){.btn .btn-outline-secondary .btn-sm}
+
+**Installation:**
+
+``` r
+# From CRAN
+install.packages("personnelSelectionUtility")
+
+# Development version
+remotes::install_github("rgempp/personnelSelectionUtility", build_vignettes = TRUE)
+```
 
 ------------------------------------------------------------------------
 
-```{=html}
-<!-- Add repositories and scripts here. Example format:
+## Stata Packages
 
-### bws-network: Network Analysis of Best-Worst Scaling Data
-**Language**: R  
-**Packages**: `qgraph`, `bootnet`, `networktools`
+### gtcsem
 
-Workflow for applying Gaussian Graphical Models (GGM/GLASSO) to individual-level hierarchical Bayes scores from Best-Worst Scaling studies, with discussion of ipsativity implications.
+`gtcsem` is a Stata module that estimates per-person conditional standard errors of measurement (CSEMs) under Generalizability Theory for the univariate, single-facet, persons-by-items (p × i) crossed design. Unlike the overall (population-level) SEM, which summarizes measurement precision averaged across persons, the CSEM characterizes the precision of measurement for an individual at a given score level — the relevant index when decisions concern individuals rather than groups, including the local accuracy of cut-score classifications. The package implements three estimators of the per-person relative error variance (Brennan, 1998), analytical and bootstrap standard errors, generalizability and dependability coefficients, D-study extrapolation to hypothetical test lengths, and a companion command (`gtcsem_plot`) for Brennan-style CSEM plots.
 
-[GitHub repository](https://github.com/rgempp/bws-network)
+[GitHub](https://github.com/rgempp/gtcsem){.btn .btn-outline-secondary .btn-sm}
 
----
+**Installation:**
 
-### mplus-syntax: Common Psychometric Models in Mplus
-**Language**: Mplus syntax
+``` stata
+* From SSC
+ssc install gtcsem
 
-Collection of annotated Mplus syntax files for common models in organizational psychometrics:
-
-- CFA with method effects
-- MIMIC models for DIF detection
-- Bifactor and second-order models
-- Polytomous IRT (GRM, GPCM)
-- ESEM with target rotation
-
-[GitHub repository](https://github.com/rgempp/mplus-syntax)
-
--->
+* From GitHub (development version)
+net install gtcsem, from("https://raw.githubusercontent.com/rgempp/gtcsem/main/") replace
 ```
 
-*This section is under construction. Code will be published as research projects allow.*
+**Requires:** Stata 16 or later.
 
 ------------------------------------------------------------------------
 
@@ -45,16 +48,16 @@ Collection of annotated Mplus syntax files for common models in organizational p
 
 More years ago than I care to remember, I developed a few small programs in Delphi for teaching purposes. Here are the ones that survived successive computer upgrades. They are in Spanish, Windows-only, and come with no documentation, but they still work.
 
--   **PhiLambda** ([philambda.exe](files/software/philambda.exe)): A small utility for estimating the PhiLambda coefficient (reliability of a dichotomous decision in Generalizability Theory), based on the ANOVA table from the RELIABILITIES menu in SPSS.
--   **WinError** ([WinError.exe](files/software/WinError.exe)): An interactive tool for explaining what the standard error of measurement is and what it is used for.
--   **Notas** ([notas.exe](files/software/notas.exe)): A quick converter from percentage scores to Chilean grades (1 to 7 scale).
+- **PhiLambda** ([philambda.exe](files/software/philambda.exe)): A small utility for estimating the PhiLambda coefficient (reliability of a dichotomous decision in Generalizability Theory), based on the ANOVA table from the RELIABILITIES menu in SPSS.
+- **WinError** ([WinError.exe](files/software/WinError.exe)): An interactive tool for explaining what the standard error of measurement is and what it is used for.
+- **Notas** ([notas.exe](files/software/notas.exe)): A quick converter from percentage scores to Chilean grades (1 to 7 scale).
 
 ------------------------------------------------------------------------
 
 ## Recommended Tools
 
--   [lavaan](https://lavaan.ugent.be/) — SEM in R
--   [mirt](https://philchalmers.github.io/mirt/) — Multidimensional IRT in R
--   [psych](https://personality-project.org/r/psych/) — Psychometric analysis in R
--   [Mplus](https://www.statmodel.com/) — Advanced statistical modeling
--   [Quarto](https://quarto.org/) — Reproducible scientific publishing
+- [lavaan](https://lavaan.ugent.be/) — SEM in R
+- [mirt](https://philchalmers.github.io/mirt/) — Multidimensional IRT in R
+- [psych](https://personality-project.org/r/psych/) — Psychometric analysis in R
+- [Mplus](https://www.statmodel.com/) — Advanced statistical modeling
+- [Quarto](https://quarto.org/) — Reproducible scientific publishing

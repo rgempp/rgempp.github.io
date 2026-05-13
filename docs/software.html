@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.35">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -39,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-46f66b053e56abd73bb6e954d61a315b.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-9e0b913096b4405525fd8b9c824cf29a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -187,7 +222,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#tools-scripts-and-reproducible-workflows" id="toc-tools-scripts-and-reproducible-workflows" class="nav-link active" data-scroll-target="#tools-scripts-and-reproducible-workflows">Tools, Scripts, and Reproducible Workflows</a></li>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link active" data-scroll-target="#r-packages">R Packages</a>
+  <ul class="collapse">
+  <li><a href="#personnelselectionutility" id="toc-personnelselectionutility" class="nav-link" data-scroll-target="#personnelselectionutility">personnelSelectionUtility</a></li>
+  </ul></li>
+  <li><a href="#stata-packages" id="toc-stata-packages" class="nav-link" data-scroll-target="#stata-packages">Stata Packages</a>
+  <ul class="collapse">
+  <li><a href="#gtcsem" id="toc-gtcsem" class="nav-link" data-scroll-target="#gtcsem">gtcsem</a></li>
+  </ul></li>
   <li><a href="#legacy-programs-delphi" id="toc-legacy-programs-delphi" class="nav-link" data-scroll-target="#legacy-programs-delphi">Legacy Programs (Delphi)</a></li>
   <li><a href="#recommended-tools" id="toc-recommended-tools" class="nav-link" data-scroll-target="#recommended-tools">Recommended Tools</a></li>
   </ul>
@@ -215,38 +257,36 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="tools-scripts-and-reproducible-workflows" class="level2">
-<h2 class="anchored" data-anchor-id="tools-scripts-and-reproducible-workflows">Tools, Scripts, and Reproducible Workflows</h2>
-<p>I share here code and tools related to my research and teaching. I work primarily in <strong>R</strong>, <strong>Mplus</strong>, and <strong>Stata</strong>.</p>
+<section id="r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="r-packages">R Packages</h2>
+<section id="personnelselectionutility" class="level3">
+<h3 class="anchored" data-anchor-id="personnelselectionutility">personnelSelectionUtility</h3>
+<p><code>personnelSelectionUtility</code> implements classical and contemporary utility-analysis methods for personnel selection under a unified notation, organized by criterion scale (classificatory or continuous/monetary) and selection structure (compensatory or multiple-hurdle). The package covers Taylor–Russell univariate and Thomas–Owen–Gunst multivariate classification models, Brogden–Cronbach–Gleser and Boudreau-style continuous and monetary utility, Schmidt–Hunter–Pearlman intervention utility, Sturman-style incremental validity for multiple predictors and outcomes, simulation tools for compensatory and staged multiple-hurdle systems, Pareto frontiers for validity–diversity trade-offs, AUC-to-effect-size conversions, and Monte Carlo uncertainty propagation.</p>
+<p><a href="https://gempp.cl/personnelSelectionUtility/" class="btn btn-outline-primary btn-sm">Package website</a> <a href="https://github.com/rgempp/personnelSelectionUtility" class="btn btn-outline-secondary btn-sm">GitHub</a></p>
+<p><strong>Installation:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># From CRAN</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"personnelSelectionUtility"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Development version</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"rgempp/personnelSelectionUtility"</span>, <span class="at">build_vignettes =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
-<!-- Add repositories and scripts here. Example format:
-
-### bws-network: Network Analysis of Best-Worst Scaling Data
-**Language**: R  
-**Packages**: `qgraph`, `bootnet`, `networktools`
-
-Workflow for applying Gaussian Graphical Models (GGM/GLASSO) to individual-level hierarchical Bayes scores from Best-Worst Scaling studies, with discussion of ipsativity implications.
-
-[GitHub repository](https://github.com/rgempp/bws-network)
-
----
-
-### mplus-syntax: Common Psychometric Models in Mplus
-**Language**: Mplus syntax
-
-Collection of annotated Mplus syntax files for common models in organizational psychometrics:
-
-- CFA with method effects
-- MIMIC models for DIF detection
-- Bifactor and second-order models
-- Polytomous IRT (GRM, GPCM)
-- ESEM with target rotation
-
-[GitHub repository](https://github.com/rgempp/mplus-syntax)
-
--->
-<p><em>This section is under construction. Code will be published as research projects allow.</em></p>
+</section>
+</section>
+<section id="stata-packages" class="level2">
+<h2 class="anchored" data-anchor-id="stata-packages">Stata Packages</h2>
+<section id="gtcsem" class="level3">
+<h3 class="anchored" data-anchor-id="gtcsem">gtcsem</h3>
+<p><code>gtcsem</code> is a Stata module that estimates per-person conditional standard errors of measurement (CSEMs) under Generalizability Theory for the univariate, single-facet, persons-by-items (p × i) crossed design. Unlike the overall (population-level) SEM, which summarizes measurement precision averaged across persons, the CSEM characterizes the precision of measurement for an individual at a given score level — the relevant index when decisions concern individuals rather than groups, including the local accuracy of cut-score classifications. The package implements three estimators of the per-person relative error variance (Brennan, 1998), analytical and bootstrap standard errors, generalizability and dependability coefficients, D-study extrapolation to hypothetical test lengths, and a companion command (<code>gtcsem_plot</code>) for Brennan-style CSEM plots.</p>
+<p><a href="https://github.com/rgempp/gtcsem" class="btn btn-outline-secondary btn-sm">GitHub</a></p>
+<p><strong>Installation:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode stata code-with-copy"><code class="sourceCode stata"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>* From SSC</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install gtcsem</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>* From GitHub (development <span class="kw">version</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>net install gtcsem, from(<span class="st">"https://raw.githubusercontent.com/rgempp/gtcsem/main/"</span>) <span class="kw">replace</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Requires:</strong> Stata 16 or later.</p>
 <hr>
+</section>
 </section>
 <section id="legacy-programs-delphi" class="level2">
 <h2 class="anchored" data-anchor-id="legacy-programs-delphi">Legacy Programs (Delphi)</h2>

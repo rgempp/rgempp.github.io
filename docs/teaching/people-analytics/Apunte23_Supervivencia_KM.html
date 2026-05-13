@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 23 — Análisis de supervivencia: Kaplan-Meier y log-rank | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong { display: block; margin-bottom: 0.3rem; }
+  .output-box { background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 8px; padding: 1rem 1.2rem; margin: 0.8rem 0 1.2rem 0; font-family: Consolas, monospace; font-size: 0.85rem; line-height: 1.5; overflow-x: auto; color: #1E293B; }
+  .output-box pre { background: none; color: #1E293B; padding: 0; margin: 0; font-size: inherit; line-height: inherit; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 23 — Análisis de supervivencia: Kaplan-Meier y log-rank</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 9 · Prof. René Gempp</p>
+
+
+<h2>1. ¿Qué es un análisis de supervivencia?</h2>
+
+<p>En la Clase 3 construimos un modelo logístico para predecir <strong>si</strong> un empleado se va de InnovaCo. La variable era binaria: "Sí" o "No". Pero el directorio ahora quiere saber algo distinto: <strong>¿cuánto tiempo se quedan?</strong> ¿Hay un momento crítico donde es más probable que se vayan? ¿Se van más rápido en Ventas que en Desarrollo?</p>
+
+<p>El análisis de supervivencia es la familia de técnicas estadísticas diseñadas para estudiar <strong>el tiempo hasta que ocurre un evento</strong>. El nombre viene de la medicina —originalmente se usaba para estudiar cuánto tiempo sobrevivían pacientes después de un tratamiento— pero hoy se aplica en muchos campos:</p>
+
+<table>
+<tr><th>Campo</th><th>Evento</th><th>Tiempo</th></tr>
+<tr><td>Medicina</td><td>Muerte, recurrencia de cáncer</td><td>Días/meses desde diagnóstico</td></tr>
+<tr><td>Ingeniería</td><td>Falla de un componente</td><td>Horas de operación</td></tr>
+<tr><td><strong>People analytics</strong></td><td><strong>Salida del empleado</strong></td><td><strong>Meses desde ingreso</strong></td></tr>
+<tr><td>People analytics</td><td>Cierre de vacante (time-to-fill)</td><td>Días desde apertura</td></tr>
+<tr><td>People analytics</td><td>Promoción</td><td>Meses en el cargo actual</td></tr>
+<tr><td>Marketing</td><td>Cancelación de suscripción (churn)</td><td>Meses desde alta</td></tr>
+</table>
+
+<p>La semana pasada ya hiciste un primer análisis de "tiempo hasta evento" sin saberlo: cuando calculaste el <em>time-to-fill</em> con <code>lubridate</code>, estabas midiendo cuánto tardaba en cerrarse una vacante. La diferencia es que todas las vacantes del dataset estaban cerradas: no había observaciones incompletas. Hoy eso cambia.</p>
+
+
+<h2>2. El problema de la censura</h2>
+
+<p>Imagina que quieres responder: "¿Cuánto tiempo permanecen nuestros empleados?" Tu primer instinto podría ser calcular el promedio de antigüedad:</p>
+
+<pre><code><span class="func">mean</span>(empleados$antiguedad_anios)
+<span class="comment"># [1] 3.5</span></code></pre>
+
+<p>Pero hay un problema grave: ese promedio mezcla dos tipos de datos completamente distintos:</p>
+
+<ul>
+<li><strong>Empleados que se fueron</strong> (rotación = "Sí"): su antigüedad es su tiempo total en la empresa. Es un dato <em>completo</em>.</li>
+<li><strong>Empleados que siguen</strong> (rotación = "No"): su antigüedad es cuánto llevan <em>hasta ahora</em>. Es un dato <em>incompleto</em> — podrían quedarse 10 años más.</li>
+</ul>
+
+<p>Los empleados que siguen tienen una antigüedad que es un <strong>límite inferior</strong> de su permanencia real. Incluirlos en el promedio como si fueran datos completos <strong>subestima</strong> la permanencia real.</p>
+
+<div class="warning">
+<strong>El error más común</strong>
+Calcular <code>mean(antiguedad_anios)</code> mezclando empleados activos y desvinculados es estadísticamente incorrecto. Es como calcular la esperanza de vida promedio incluyendo personas que todavía están vivas: el resultado no tiene sentido.
+</div>
+
+<p>En la jerga del análisis de supervivencia, un empleado activo es una observación <strong>censurada por la derecha</strong> (<em>right-censored</em>): sabemos que <em>al menos</em> lleva X años, pero no sabemos cuándo (ni si) experimentará el evento. La censura no es un dato perdido — es una observación parcial que aporta información valiosa.</p>
+
+<h3>Tipos de censura (solo la primera nos interesa)</h3>
+
+<table>
+<tr><th>Tipo</th><th>Qué significa</th><th>Ejemplo en HR</th><th>Uso en este curso</th></tr>
+<tr><td><strong>Censura por la derecha</strong></td><td>El evento no ha ocurrido al cierre del estudio</td><td>El empleado sigue activo al 1 de marzo de 2025</td><td><strong>Sí — es el caso dominante</strong></td></tr>
+<tr><td>Censura por la izquierda</td><td>El evento ya había ocurrido antes del inicio del estudio</td><td>Un empleado que se fue antes de que existiera el SIRH</td><td>No se cubre</td></tr>
+<tr><td>Censura por intervalo</td><td>Solo sabemos que el evento ocurrió dentro de un rango</td><td>"Se fue entre enero y marzo, no sabemos el día exacto"</td><td>No se cubre</td></tr>
+</table>
+
+<h3>Visualizar la censura: diagrama de líneas de vida</h3>
+
+<p>Un diagrama de líneas de vida muestra cada empleado como una línea horizontal desde su ingreso hasta su salida (o hasta el cierre del estudio). Una <strong>×</strong> marca un evento (se fue); una <strong>→</strong> marca una observación censurada (sigue).</p>
+
+<pre><code><span class="comment"># Ejemplo con 8 empleados (concepto):</span>
+<span class="comment"># Ana:    |────────×                    (se fue a los 14 meses)</span>
+<span class="comment"># Bruno:  |──────────────────→          (sigue a los 24 meses: censurado)</span>
+<span class="comment"># Carla:  |───×                         (se fue a los 5 meses)</span>
+<span class="comment"># Diego:  |────────────→                (sigue a los 18 meses: censurado)</span>
+<span class="comment"># Elena:  |──────────────────────→      (sigue a los 30 meses: censurado)</span>
+<span class="comment"># Felipe: |─────────×                   (se fue a los 12 meses)</span>
+<span class="comment"># Gloria: |──×                          (se fue a los 3 meses)</span>
+<span class="comment"># Hugo:   |──────────────────────────→  (sigue a los 36 meses: censurado)</span></code></pre>
+
+<p>De estos 8 empleados, 4 se fueron (eventos) y 4 siguen (censurados). El Kaplan-Meier usa <strong>toda</strong> esta información para estimar la curva de permanencia.</p>
+
+
+<h2>3. El paquete <code>survival</code></h2>
+
+<p>El análisis de supervivencia en R se apoya en el paquete <code>survival</code>, escrito y mantenido por Terry Therneau (Mayo Clinic). Es uno de los paquetes más antiguos de R — existe desde la versión 2.x — y viene <strong>pre-instalado</strong> con la distribución estándar. No necesitas <code>install.packages()</code>, solo cargarlo:</p>
+
+<pre><code><span class="func">library</span>(survival)     <span class="comment"># Surv(), survfit(), coxph(), survdiff(), cox.zph()</span>
+<span class="func">library</span>(survminer)    <span class="comment"># ggsurvplot(), ggforest(), ggcoxzph() — este SÍ hay que instalarlo</span></code></pre>
+
+<div class="tip">
+<strong>Instalar survminer</strong>
+El paquete <code>survminer</code> no viene pre-instalado. Ejecútalo una vez: <code>install.packages("survminer")</code>. Proporciona visualizaciones basadas en ggplot2 para los objetos del paquete <code>survival</code>.
+</div>
+
+
+<h2>4. <code>Surv()</code>: crear el objeto de supervivencia</h2>
+
+<p>El primer paso siempre es crear un <strong>objeto Surv</strong>, que combina dos piezas de información: el <strong>tiempo</strong> hasta el evento (o censura) y el <strong>indicador de evento</strong> (1 = ocurrió, 0 = censurado).</p>
+
+<pre><code><span class="comment"># Preparar los datos</span>
+datos_surv <- empleados <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    evento = <span class="func">if_else</span>(rotacion == <span class="string">"Sí"</span>, 1L, 0L),
+    tiempo_meses = antiguedad_anios * 12
+  )
+
+<span class="comment"># Crear el objeto Surv</span>
+surv_obj <- <span class="func">Surv</span>(time  = datos_surv$tiempo_meses,
+                 event = datos_surv$evento)
+
+<span class="comment"># Inspeccionar</span>
+<span class="func">head</span>(surv_obj, 10)</code></pre>
+
+<div class="output-box"><pre>  [1]   6   159.6  57.6  56.4+ 16.8+ 20.4+ 52.8   10.8  180  + 36+</pre></div>
+
+<p>Los números sin signo son tiempos de evento (el empleado se fue a los X meses). Los números con <strong>+</strong> son tiempos censurados (el empleado seguía activo a los X meses).</p>
+
+<div class="warning">
+<strong>Error frecuente: el indicador de evento debe ser numérico</strong>
+<code>Surv()</code> necesita un vector numérico para <code>event</code>: <code>1</code> = evento, <code>0</code> = censurado. Si le pasas <code>"Sí"</code>/<code>"No"</code>, R tirará un error. Por eso creamos <code>evento</code> con <code>if_else()</code> antes.
+</div>
+
+
+<h2>5. <code>survfit()</code>: estimar la curva de Kaplan-Meier</h2>
+
+<p>Con el objeto <code>Surv</code> listo, estimamos la curva de supervivencia con <code>survfit()</code>. La fórmula usa la misma notación que <code>lm()</code> y <code>glm()</code>: el lado izquierdo es el <code>Surv()</code> y el lado derecho dice cómo agrupar.</p>
+
+<pre><code><span class="comment"># Curva global (sin agrupar: ~ 1)</span>
+km_global <- <span class="func">survfit</span>(<span class="func">Surv</span>(tiempo_meses, evento) ~ 1, data = datos_surv)
+
+<span class="comment"># Ver el resumen</span>
+km_global</code></pre>
+
+<div class="output-box"><pre>Call: survfit(formula = Surv(tiempo_meses, evento) ~ 1, data = datos_surv)
+
+       n events median 0.95LCL 0.95UCL
+[1,] 1200    326     NA      NA      NA</pre></div>
+
+<p>El output te dice: hay 1.200 observaciones, 326 eventos (salidas), y la mediana de supervivencia es <code>NA</code>. ¿Por qué <code>NA</code>? Porque la curva nunca baja del 50 %: más de la mitad de los empleados sigue activo al cierre del periodo. La mediana solo se puede calcular si la curva cruza el 50 %. Que sea <code>NA</code> es, en sí mismo, un resultado informativo: la mayoría se queda.</p>
+
+<p>Para ver el detalle paso a paso:</p>
+
+<pre><code><span class="func">summary</span>(km_global)</code></pre>
+
+<p>Esto imprime una tabla con cada "peldaño" de la escalera de Kaplan-Meier: el tiempo, el número en riesgo, los eventos, y la probabilidad acumulada de permanencia S(t).</p>
+
+
+<h2>6. <code>ggsurvplot()</code>: visualizar la curva</h2>
+
+<p>La función estrella de <code>survminer</code> convierte un objeto <code>survfit</code> en una visualización completa con un solo llamado:</p>
+
+<pre><code><span class="func">ggsurvplot</span>(
+  km_global,
+  data        = datos_surv,
+  conf.int    = TRUE,                <span class="comment"># Banda de confianza al 95 %</span>
+  risk.table  = TRUE,                <span class="comment"># Tabla de n en riesgo debajo del gráfico</span>
+  xlab        = <span class="string">"Tiempo (meses)"</span>,
+  ylab        = <span class="string">"Probabilidad de permanencia"</span>,
+  title       = <span class="string">"Curva de supervivencia — InnovaCo"</span>,
+  ggtheme     = <span class="func">theme_minimal</span>(),
+  palette     = <span class="string">"#B85042"</span>,           <span class="comment"># Color terracotta</span>
+  surv.median.line = <span class="string">"hv"</span>,          <span class="comment"># Líneas de mediana (si existe)</span>
+  break.x.by  = 12                   <span class="comment"># Marcas cada 12 meses</span>
+)</code></pre>
+
+<h3>Parámetros más útiles de <code>ggsurvplot()</code></h3>
+
+<table>
+<tr><th>Parámetro</th><th>Qué hace</th><th>Valor típico</th></tr>
+<tr><td><code>conf.int</code></td><td>Muestra la banda de confianza</td><td><code>TRUE</code> para curvas solas; <code>FALSE</code> si hay muchos grupos</td></tr>
+<tr><td><code>risk.table</code></td><td>Agrega tabla de "número en riesgo" debajo</td><td><code>TRUE</code> — muy útil para reportes</td></tr>
+<tr><td><code>pval</code></td><td>Muestra el p-valor del log-rank test</td><td><code>TRUE</code> cuando comparas grupos</td></tr>
+<tr><td><code>surv.median.line</code></td><td>Líneas que marcan la mediana</td><td><code>"hv"</code> = horizontal + vertical</td></tr>
+<tr><td><code>break.x.by</code></td><td>Intervalo de marcas en el eje X</td><td><code>12</code> si mides en meses</td></tr>
+<tr><td><code>xlim</code></td><td>Límites del eje X</td><td><code>c(0, 180)</code> para 15 años en meses</td></tr>
+<tr><td><code>palette</code></td><td>Colores (uno por grupo)</td><td>Vector de hex o nombre de paleta</td></tr>
+<tr><td><code>legend.title</code></td><td>Título de la leyenda</td><td><code>"Departamento"</code>, <code>"Género"</code>, etc.</td></tr>
+</table>
+
+
+<h2>7. Leer la curva: mediana y probabilidades a tiempos clave</h2>
+
+<p>Para extraer probabilidades de permanencia a tiempos específicos, usa <code>summary()</code> con el argumento <code>times</code>:</p>
+
+<pre><code><span class="comment"># ¿Qué fracción sigue a los 12, 36 y 60 meses?</span>
+<span class="func">summary</span>(km_global, times = <span class="func">c</span>(12, 36, 60))</code></pre>
+
+<p>La columna <code>survival</code> te da S(t): la probabilidad estimada de que un empleado siga en la empresa después de <code>t</code> meses. Con las columnas <code>lower</code> y <code>upper</code> tienes el intervalo de confianza.</p>
+
+<div class="tip">
+<strong>Lenguaje ejecutivo</strong>
+Para el directorio, traduce los números a frases: "De cada 100 empleados que contratamos, a los 12 meses siguen 85. A los 3 años (36 meses), siguen 68. A los 5 años, siguen 52." Cada número es una decisión de inversión en retención.
+</div>
+
+
+<h2>8. Comparar curvas por subgrupo</h2>
+
+<p>Para obtener una curva de Kaplan-Meier por cada nivel de una variable categórica, cambia el lado derecho de la fórmula:</p>
+
+<pre><code><span class="comment"># Curvas por departamento</span>
+km_depto <- <span class="func">survfit</span>(<span class="func">Surv</span>(tiempo_meses, evento) ~ departamento,
+                    data = datos_surv)
+
+<span class="func">ggsurvplot</span>(
+  km_depto,
+  data      = datos_surv,
+  conf.int  = FALSE,       <span class="comment"># Sin IC para legibilidad con 6 curvas</span>
+  pval      = TRUE,        <span class="comment"># p-valor del log-rank test</span>
+  risk.table = TRUE,
+  xlab      = <span class="string">"Tiempo (meses)"</span>,
+  ylab      = <span class="string">"Probabilidad de permanencia"</span>,
+  title     = <span class="string">"Supervivencia por departamento"</span>,
+  ggtheme   = <span class="func">theme_minimal</span>(),
+  palette   = <span class="func">c</span>(<span class="string">"#1B2A4A"</span>, <span class="string">"#B85042"</span>, <span class="string">"#A7BEAE"</span>,
+                <span class="string">"#0D9488"</span>, <span class="string">"#E8B96E"</span>, <span class="string">"#7B6B8D"</span>),
+  legend.title = <span class="string">"Departamento"</span>
+)
+
+<span class="comment"># Medianas por grupo</span>
+km_depto</code></pre>
+
+<p>El <code>pval = TRUE</code> muestra automáticamente el p-valor del log-rank test sobre el gráfico. Si es menor que 0,05, hay al menos un departamento con supervivencia significativamente distinta.</p>
+
+
+<h2>9. <code>survdiff()</code>: el log-rank test</h2>
+
+<p>El log-rank test (Mantel, 1966) compara formalmente si dos o más curvas de supervivencia son iguales. Es el análogo de un chi-cuadrado: compara eventos observados vs. esperados en cada grupo en cada tiempo de evento.</p>
+
+<pre><code><span class="comment"># Log-rank test</span>
+<span class="func">survdiff</span>(<span class="func">Surv</span>(tiempo_meses, evento) ~ departamento, data = datos_surv)</code></pre>
+
+<div class="output-box"><pre>Call:
+survdiff(formula = Surv(tiempo_meses, evento) ~ departamento, data = datos_surv)
+
+                                  N Observed Expected (O-E)^2/E
+departamento=Desarrollo de Software 417       93    113.5      3.71
+departamento=Finanzas               120       29     32.6      0.40
+departamento=Marketing               78       20     21.2      0.07
+departamento=Recursos Humanos       133       42     36.2      0.94
+departamento=Soporte Técnico        195       68     53.0      4.24
+departamento=Ventas                 257       74     69.8      0.26
+
+ Chisq= 9.6  on 5 degrees of freedom, p= 0.087</pre></div>
+
+<p>La columna <code>Expected</code> muestra cuántos eventos esperarías en cada departamento si todos tuvieran la misma curva de supervivencia. La diferencia <code>(O-E)^2/E</code> indica cuánto se desvía cada grupo. Soporte Técnico tiene más eventos de los esperados (68 observados vs. 53 esperados).</p>
+
+<div class="note">
+<strong>Hipótesis del log-rank test</strong>
+H₀: las funciones de supervivencia de los k grupos son idénticas. Un p-valor bajo rechaza la igualdad, pero no dice cuál grupo es distinto. Para eso, usa el modelo de Cox (Apunte 24) o haz comparaciones por pares.
+</div>
+
+<div class="advanced">
+<strong>Alternativas al log-rank test</strong>
+El log-rank estándar pondera todos los tiempos por igual. Si te interesa detectar diferencias <em>tempranas</em> (que es lo relevante si piensas en onboarding), puedes usar el test de Wilcoxon generalizado: <code>survdiff(..., rho = 1)</code>. Con <code>rho = 1</code>, los tiempos tempranos (donde hay más gente en riesgo) reciben más peso. Esto no se cubre en clase pero queda como herramienta disponible.
+</div>
+
+
+<h2>10. Ejemplo completo con <code>peopleanalyticsdata::job_retention</code></h2>
+
+<p>El paquete <code>peopleanalyticsdata</code> (Keith McNulty) incluye el dataset <code>job_retention</code>, diseñado para practicar análisis de supervivencia en HR. Tiene variables de supervivencia pre-construidas. Puedes usarlo para practicar de forma independiente:</p>
+
+<pre><code><span class="comment"># install.packages("peopleanalyticsdata")  # solo una vez</span>
+<span class="func">library</span>(peopleanalyticsdata)
+
+<span class="comment"># Cargar el dataset</span>
+data(job_retention)
+<span class="func">glimpse</span>(job_retention)
+
+<span class="comment"># Las variables clave son:</span>
+<span class="comment"># - month: tiempo en meses</span>
+<span class="comment"># - event: 1 = se fue, 0 = censurado</span>
+<span class="comment"># - gender, field, level, sentiment: covariables</span>
+
+<span class="comment"># Kaplan-Meier global</span>
+km_jr <- <span class="func">survfit</span>(<span class="func">Surv</span>(month, event) ~ 1, data = job_retention)
+<span class="func">ggsurvplot</span>(km_jr, data = job_retention, conf.int = TRUE,
+           xlab = <span class="string">"Meses"</span>, ylab = <span class="string">"S(t)"</span>,
+           title = <span class="string">"Supervivencia — job_retention"</span>)
+
+<span class="comment"># Kaplan-Meier por nivel</span>
+km_jr_level <- <span class="func">survfit</span>(<span class="func">Surv</span>(month, event) ~ level, data = job_retention)
+<span class="func">ggsurvplot</span>(km_jr_level, data = job_retention, pval = TRUE)</code></pre>
+
+<p>Este dataset es excelente para practicar porque ya viene en formato de supervivencia. Los datos de InnovaCo requieren la transformación previa (construir <code>evento</code> y <code>tiempo_meses</code>) que es, en sí misma, un paso pedagógico valioso.</p>
+
+
+<h2>11. Errores frecuentes</h2>
+
+<div class="warning">
+<strong>Error 1: confundir censurado con dato perdido</strong>
+Una observación censurada <em>no</em> es un <code>NA</code>. Tiene información: sabemos que el empleado <em>al menos</em> lleva X meses. Si eliminas las observaciones censuradas con <code>filter(evento == 1)</code>, sesgas todo el análisis (solo describes a los que se fueron).
+</div>
+
+<div class="warning">
+<strong>Error 2: olvidar <code>event</code> en <code>Surv()</code></strong>
+Si escribes <code>Surv(tiempo_meses)</code> sin el segundo argumento, R asume que <em>todos</em> son eventos (nadie está censurado). El resultado será una curva de Kaplan-Meier que cae mucho más rápido de lo real.
+</div>
+
+<div class="warning">
+<strong>Error 3: interpretar la curva como predicción individual</strong>
+La curva de Kaplan-Meier describe el <em>patrón histórico de una cohorte</em>. No es una predicción de lo que le pasará a un empleado contratado hoy. Las condiciones futuras (mercado laboral, liderazgo, estrategia de la empresa) pueden ser distintas a las históricas. La curva es un punto de partida, no un pronóstico.
+</div>
+
+<div class="warning">
+<strong>Error 4: comparar cohortes con distinto seguimiento</strong>
+Si comparas la curva de empleados contratados en 2023 con la de empleados contratados en 2015, las curvas tendrán largos distintos. Eso no significa que los de 2023 "se van más rápido" — simplemente tienen menos tiempo de observación. Para una comparación justa, restringe ambas cohortes al mismo horizonte temporal.
+</div>
+
+
+<footer>
+Apunte 23 · Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · Semestre otoño 2026<br>
+Paquetes: <code>survival</code> (Therneau, 2024), <code>survminer</code> (Kassambara, Kosinski &amp; Biecek, 2021).<br>
+Referencia canónica: Kaplan, E. L., &amp; Meier, P. (1958). Nonparametric estimation from incomplete observations. <em>Journal of the American Statistical Association, 53</em>(282), 457–481.
+</footer>
+
+</body>
+</html>

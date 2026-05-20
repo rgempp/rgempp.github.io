@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 25 — Diversidad organizacional: índices, representación e interseccionalidad | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<h1>Apunte 25 — Diversidad organizacional: índices, representación e interseccionalidad</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 10 · Prof. René Gempp</p>
+
+<!-- §1 -->
+<h2>§1. Diversidad ≠ inclusión</h2>
+
+<p>La primera distinción que necesitas dominar es que <strong>diversidad</strong> e <strong>inclusión</strong> no son sinónimos. La diversidad es una propiedad <em>composicional del grupo</em>: describe quiénes están. Es objetiva, medible con datos de RRHH. La inclusión es una propiedad <em>experiencial del individuo</em>: describe cómo se sienten quienes están. Es subjetiva, medible solo con encuestas. Una organización puede ser diversa sin ser inclusiva ("te contratamos pero no te escuchamos") o inclusiva sin ser diversa. Roberson (2006) documentó esta separación conceptual en un análisis de contenido de la literatura organizacional.</p>
+
+<p>Este apunte cubre la parte objetiva: la medición de la diversidad. El <strong>Apunte 26</strong> cubre la parte subjetiva: la medición de la inclusión.</p>
+
+<!-- §2 -->
+<h2>§2. Tres tipos de diversidad: Harrison y Klein (2007)</h2>
+
+<p>El artículo de Harrison y Klein (2007) en <em>Academy of Management Review</em> es la referencia obligada. Su argumento: la investigación ha producido resultados contradictorios porque los investigadores usan la palabra "diversidad" para referirse a constructos distintos. Proponen tres tipos, cada uno con su propia lógica, sus propias medidas y sus propios efectos esperados:</p>
+
+<table>
+<tr><th>Tipo</th><th>Significado</th><th>Ejemplo</th><th>Distribución máxima</th><th>Índices</th><th>Efecto esperado</th></tr>
+<tr><td><strong>Separación</strong></td><td>Diferencias laterales en posición u opinión</td><td>Actitudes hacia el cambio, satisfacción</td><td>Bimodal (mitad en cada extremo)</td><td>SD, MDE</td><td>Conflicto, baja cohesión</td></tr>
+<tr><td><strong>Variedad</strong></td><td>Diferencias en categoría, tipo o conocimiento</td><td>Género, departamento, formación</td><td>Uniforme (cada uno en categoría distinta)</td><td>Blau, Teachman</td><td>Creatividad, mejores decisiones</td></tr>
+<tr><td><strong>Disparidad</strong></td><td>Diferencias verticales en recursos/estatus</td><td>Ingreso, poder, nivel jerárquico</td><td>Hiperconcentrada (uno tiene todo)</td><td>CV, Gini</td><td>Competencia, resentimiento</td></tr>
+</table>
+
+<div class="warning">
+<strong>La elección del índice no es neutral.</strong> Usar el índice equivocado para el tipo equivocado de diversidad produce conclusiones erróneas. El índice de Blau para medir disparidad salarial no tiene sentido (mide variedad de categorías, no concentración). El Gini para medir diversidad de género tampoco (mide concentración de un recurso, no variedad categórica). Antes de elegir un índice, decide qué <em>tipo</em> de diversidad te importa.
+</div>
+
+<!-- §3 -->
+<h2>§3. Variedad: el índice de Blau (1977)</h2>
+
+<p>El índice de Blau es la medida más utilizada para cuantificar diversidad como variedad en ciencias sociales:</p>
+
+<div class="formula">$B = 1 - \sum_{i=1}^{k} p_i^2$</div>
+
+<p>donde $p_i$ es la proporción del grupo en la categoría $i$ y $k$ es el número total de categorías.</p>
+
+<ul>
+  <li><strong>Rango:</strong> de 0 (homogeneidad total) a $1 - 1/k$ (distribución uniforme).</li>
+  <li><strong>Interpretación:</strong> probabilidad de que dos miembros seleccionados al azar pertenezcan a categorías distintas.</li>
+  <li><strong>Para género (k = 2):</strong> máximo = 0,500 (paridad 50/50).</li>
+  <li><strong>Equivalencia:</strong> Blau = 1 − Simpson (1949). Son el mismo índice con otro nombre.</li>
+</ul>
+
+<h3>Implementación en R</h3>
+
+<pre><code><span class="comment"># Función para calcular el índice de Blau</span>
+blau <span class="pipe">&lt;-</span> <span class="func">function</span>(x) {
+  p <span class="pipe">&lt;-</span> <span class="func">table</span>(x) / <span class="func">length</span>(x)
+  1 - <span class="func">sum</span>(p^2)
+}
+
+<span class="comment"># Ejemplo: diversidad de género por departamento</span>
+activos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(blau_genero = <span class="func">blau</span>(genero))</code></pre>
+
+<h3>Ejemplo numérico</h3>
+
+<p>Un departamento con 60 hombres y 40 mujeres (k = 2):</p>
+<p>$B = 1 - (0.60^2 + 0.40^2) = 1 - (0.36 + 0.16) = 1 - 0.52 = 0.48$</p>
+<p>Muy cercano al máximo (0.50). Si fuera 90/10: $B = 1 - (0.81 + 0.01) = 0.18$. Mucho menos diverso.</p>
+
+<!-- §4 -->
+<h2>§4. Variedad: el índice de entropía de Teachman (1980)</h2>
+
+<div class="formula">$H = -\sum_{i=1}^{k} p_i \ln(p_i)$</div>
+
+<ul>
+  <li><strong>Rango:</strong> de 0 (homogeneidad) a $\ln(k)$ (distribución uniforme).</li>
+  <li><strong>Diferencia con Blau:</strong> Teachman es más sensible a categorías con proporciones pequeñas. Si hay un grupo que representa el 2 % del total, Blau casi no lo detecta ($0.02^2 = 0.0004$) pero Teachman sí ($0.02 \times \ln(0.02) = -0.078$).</li>
+</ul>
+
+<pre><code><span class="comment"># Función para calcular Teachman</span>
+teachman <span class="pipe">&lt;-</span> <span class="func">function</span>(x) {
+  p <span class="pipe">&lt;-</span> <span class="func">table</span>(x) / <span class="func">length</span>(x)
+  p <span class="pipe">&lt;-</span> p[p > 0]  <span class="comment"># evitar log(0)</span>
+  -<span class="func">sum</span>(p * <span class="func">log</span>(p))
+}
+
+<span class="comment"># Normalizado (rango 0–1)</span>
+teachman_norm <span class="pipe">&lt;-</span> <span class="func">function</span>(x) {
+  k <span class="pipe">&lt;-</span> <span class="func">length</span>(<span class="func">unique</span>(x))
+  <span class="func">if</span> (k <= 1) <span class="func">return</span>(0)
+  <span class="func">teachman</span>(x) / <span class="func">log</span>(k)
+}</code></pre>
+
+<div class="tip">
+<strong>¿Cuándo usar Teachman en vez de Blau?</strong> Si te importa detectar la presencia de minorías pequeñas (e.g., un programa de inclusión que logró atraer al primer empleado de un grupo subrepresentado), Teachman es más sensible. Para reportes ejecutivos donde la audiencia es no técnica, Blau es más intuitivo.
+</div>
+
+<!-- §5 -->
+<h2>§5. Normalizar los índices de variedad</h2>
+
+<p>El índice de Blau depende del número de categorías: con 2 categorías, el máximo es 0,50; con 6, es 0,833. Comparar un Blau de género (máx 0,50) con un Blau de departamento (máx 0,833) sin normalizar es engañoso.</p>
+
+<div class="formula">
+$B_{\text{norm}} = \frac{B}{1 - 1/k}$ &nbsp;&nbsp;&nbsp; $H_{\text{norm}} = \frac{H}{\ln(k)}$
+</div>
+
+<p>Ambos producen un rango de 0 a 1, donde 1 = distribución uniforme perfecta, independiente del número de categorías.</p>
+
+<!-- §6 -->
+<h2>§6. Disparidad: el coeficiente de variación (CV)</h2>
+
+<div class="formula">$CV = \frac{SD}{\bar{x}}$</div>
+
+<p>Es la desviación estándar dividida por la media: dispersión relativa, adimensional. Un CV de 0,45 en ingresos significa que la SD es el 45 % de la media. Permite comparar la disparidad entre variables con distintas escalas.</p>
+
+<pre><code>cv <span class="pipe">&lt;-</span> <span class="func">function</span>(x) <span class="func">sd</span>(x, na.rm = TRUE) / <span class="func">mean</span>(x, na.rm = TRUE)
+
+activos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(nivel_jerarquico) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(cv_ingreso = <span class="func">cv</span>(ingreso_mensual))</code></pre>
+
+<!-- §7 -->
+<h2>§7. Disparidad: el coeficiente de Gini (1912)</h2>
+
+<p>El Gini mide la concentración de un recurso. Rango de 0 (igualdad perfecta) a 1 (concentración total). Se interpreta gráficamente con la <strong>curva de Lorenz</strong>: el Gini es la proporción del área entre la curva y la diagonal de igualdad.</p>
+
+<pre><code><span class="func">library</span>(DescTools)
+
+<span class="comment"># Gini de ingresos por nivel</span>
+activos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(nivel_jerarquico) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(gini = <span class="func">Gini</span>(ingreso_mensual))</code></pre>
+
+<div class="business">
+<strong>Conexión con la Clase 5.</strong> En la auditoría salarial mediste la brecha <em>entre</em> grupos (hombres vs. mujeres). El Gini mide la desigualdad <em>dentro</em> de cada grupo. Un Gini alto en Gerencia indica que los pocos gerentes tienen salarios muy distintos entre sí.
+</div>
+
+<!-- §8 -->
+<h2>§8. Separación: SD y media de distancias euclídeas</h2>
+
+<p>La <strong>desviación estándar</strong> ya la conoces. La novedad es su interpretación como índice de diversidad: una SD alta en satisfacción laboral dentro de un departamento no significa satisfacción baja, sino que hay posiciones polarizadas.</p>
+
+<p>La <strong>media de distancias euclídeas (MDE)</strong> es más informativa cuando la distribución es multimodal:</p>
+
+<pre><code>mde <span class="pipe">&lt;-</span> <span class="func">function</span>(x) {
+  x <span class="pipe">&lt;-</span> <span class="func">na.omit</span>(x)
+  <span class="func">if</span> (<span class="func">length</span>(x) < 2) <span class="func">return</span>(NA_real_)
+  <span class="func">mean</span>(<span class="func">dist</span>(x, method = <span class="string">"manhattan"</span>))
+}</code></pre>
+
+<!-- §9 -->
+<h2>§9. Resumen: ¿qué índice para qué pregunta?</h2>
+
+<table>
+<tr><th>¿Qué quiero medir?</th><th>Variable</th><th>Índice</th></tr>
+<tr><td>¿Cuántos tipos hay y cuán equilibrados? (variedad)</td><td>Categórica (género, departamento)</td><td><strong>Blau</strong> o <strong>Teachman</strong></td></tr>
+<tr><td>¿Cuán concentrados están los recursos? (disparidad)</td><td>Continua jerárquica (ingreso, estatus)</td><td><strong>CV</strong> o <strong>Gini</strong></td></tr>
+<tr><td>¿Cuán polarizado está el grupo? (separación)</td><td>Continua lateral (satisfacción)</td><td><strong>SD</strong> o <strong>MDE</strong></td></tr>
+</table>
+
+<!-- §10 -->
+<h2>§10. Waffle charts con el paquete <code>waffle</code></h2>
+
+<p>Los waffle charts son una alternativa visual al pie chart donde cada cuadro representa una persona o una unidad proporcional:</p>
+
+<pre><code><span class="comment"># install.packages("waffle", repos = "https://cinc.rud.is")</span>
+<span class="func">library</span>(waffle)
+
+<span class="func">waffle</span>(
+  c(<span class="string">"Hombre"</span> = 78, <span class="string">"Mujer"</span> = 22),
+  rows = 5,
+  colors = c(<span class="string">"#1B2A4A"</span>, <span class="string">"#B85042"</span>),
+  title = <span class="string">"Gerencia: composición de género"</span>
+)
+
+<span class="comment"># Combinar múltiples waffles con iron()</span>
+w1 <span class="pipe">&lt;-</span> <span class="func">waffle</span>(c(H = 55, M = 45), rows = 5, title = <span class="string">"Operativo"</span>)
+w2 <span class="pipe">&lt;-</span> <span class="func">waffle</span>(c(H = 78, M = 22), rows = 5, title = <span class="string">"Gerencia"</span>)
+<span class="func">iron</span>(w1, w2)</code></pre>
+
+<div class="note">
+<strong>Si hay problemas de instalación.</strong> El paquete <code>waffle</code> no está en CRAN principal. Si la instalación falla, puedes construir un waffle manualmente con <code>geom_tile()</code> en ggplot2: genera un data frame con coordenadas x/y en una grilla y usa <code>fill</code> para colorear.
+</div>
+
+<!-- §11 -->
+<h2>§11. Análisis interseccional</h2>
+
+<p>La interseccionalidad (Crenshaw, 1989) sostiene que las categorías identitarias no operan de forma aditiva. Para analizar cruces múltiples:</p>
+
+<pre><code><span class="comment"># Tabla cruzada género × nivel × rango etario</span>
+activos <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(nivel_jerarquico, genero, rango_edad) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(nivel_jerarquico, rango_edad) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(pct = n / <span class="func">sum</span>(n) * 100)
+
+<span class="comment"># Heatmap</span>
+<span class="func">ggplot</span>(datos_mujer, <span class="func">aes</span>(x = rango_edad, y = nivel, fill = pct)) +
+  <span class="func">geom_tile</span>(color = <span class="string">"white"</span>) +
+  <span class="func">geom_text</span>(<span class="func">aes</span>(label = <span class="func">sprintf</span>(<span class="string">"%.0f%%"</span>, pct)))</code></pre>
+
+<div class="warning">
+<strong>Tamaños mínimos de celda.</strong> Si un cruce interseccional produce una celda con n &lt; 5, no la reportes. Con 3 mujeres gerentes en Soporte Técnico, decir "el 33 % se siente poco incluida" identifica a una persona. Es una regla ética, no estadística.
+</div>
+
+<!-- §12 -->
+<h2>§12. Adverse impact en promociones</h2>
+
+<p>La regla del 4/5 (EEOC, 1978), ya vista en la Clase 8 para reclutamiento, se aplica igual a promociones:</p>
+
+<pre><code><span class="comment"># Tasa de promoción por género</span>
+tasa <span class="pipe">&lt;-</span> datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(genero) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(tasa = <span class="func">sum</span>(promovido == <span class="string">"Sí"</span>) / <span class="func">n</span>())
+
+<span class="comment"># Impact ratio</span>
+ir <span class="pipe">&lt;-</span> <span class="func">min</span>(tasa$tasa) / <span class="func">max</span>(tasa$tasa)
+<span class="comment"># Si IR < 0.80 → adverse impact</span>
+
+<span class="comment"># Test complementario</span>
+<span class="func">prop.test</span>(x = c(prom_h, prom_m), n = c(n_h, n_m))</code></pre>
+
+<!-- §13 -->
+<h2>§13. Errores frecuentes</h2>
+
+<table>
+<tr><th>Error</th><th>Corrección</th></tr>
+<tr><td>Usar Blau para medir disparidad salarial</td><td>El Blau mide variedad categórica. Para salarios usa CV o Gini</td></tr>
+<tr><td>Comparar Blau de género (máx 0,50) con Blau de departamento (máx 0,83)</td><td>Normaliza antes de comparar</td></tr>
+<tr><td>Interpretar Blau alto como "la organización es equitativa"</td><td>El Blau mide heterogeneidad, no justicia. Una composición 50/50 puede coexistir con discriminación</td></tr>
+<tr><td>Reportar celdas interseccionales con n &lt; 5</td><td>Riesgo de re-identificación. Agrupa o no reportes</td></tr>
+<tr><td>Olvidar que la SD mide separación, no nivel</td><td>Media 3,5 con SD 1,2 ≠ insatisfacción. Es polarización</td></tr>
+</table>
+
+<h2>Referencias</h2>
+<ul>
+  <li>Blau, P. M. (1977). <em>Inequality and heterogeneity</em>. Free Press.</li>
+  <li>Crenshaw, K. (1989). Demarginalizing the intersection of race and sex. <em>University of Chicago Legal Forum</em>, 1989(1), 139–167.</li>
+  <li>Eagly, A. H., & Carli, L. L. (2007). Women and the labyrinth of leadership. <em>Harvard Business Review, 85</em>(9), 62–71.</li>
+  <li>EEOC (1978). <em>Uniform guidelines on employee selection procedures</em>. 29 C.F.R. Part 1607.</li>
+  <li>Harrison, D. A., & Klein, K. J. (2007). What's the difference? Diversity constructs as separation, variety, or disparity in organizations. <em>Academy of Management Review, 32</em>(4), 1199–1228.</li>
+  <li>Roberson, Q. M. (2006). Disentangling the meanings of diversity and inclusion in organizations. <em>Group & Organization Management, 31</em>(2), 212–236.</li>
+  <li>Simpson, E. H. (1949). Measurement of diversity. <em>Nature, 163</em>, 688.</li>
+  <li>Solanas, A., Selvam, R. M., Navarro, J., & Leiva, D. (2012). Some common indices of group diversity: Upper boundaries. <em>Psychological Reports, 111</em>(3), 777–796.</li>
+  <li>Teachman, J. D. (1980). Analysis of population diversity. <em>Sociological Methods & Research, 8</em>(3), 341–362.</li>
+</ul>
+
+<footer>
+Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · Semestre otoño 2026
+</footer>
+
+</body>
+</html>

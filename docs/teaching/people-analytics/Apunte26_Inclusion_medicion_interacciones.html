@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 26 — Inclusión percibida: medición, brechas e interacciones | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<h1>Apunte 26 — Inclusión percibida: medición, brechas e interacciones</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 10 · Prof. René Gempp</p>
+
+<!-- §1 -->
+<h2>§1. ¿Qué es la inclusión organizacional?</h2>
+
+<p>La definición más citada es la de Shore, Randel, Chung, Dean, Holcombe Ehrhart y Singh (2011, p. 1265): la inclusión es <em>"el grado en que un empleado percibe que es un miembro valorado del grupo de trabajo a través de un trato que satisface sus necesidades de <strong>pertenencia</strong> y <strong>singularidad</strong>"</em>.</p>
+
+<p>Basándose en la <em>optimal distinctiveness theory</em> de Brewer (1991), Shore et al. proponen un framework 2×2:</p>
+
+<table>
+<tr><th></th><th>Baja singularidad valorada</th><th>Alta singularidad valorada</th></tr>
+<tr><td><strong>Alta pertenencia</strong></td><td><strong>Asimilación:</strong> "Te aceptamos si te adaptas"</td><td><strong>Inclusión:</strong> "Eres parte del grupo Y valoramos tus diferencias"</td></tr>
+<tr><td><strong>Baja pertenencia</strong></td><td><strong>Exclusión:</strong> "No perteneces ni te escuchamos"</td><td><strong>Diferenciación:</strong> "Eres diferente, pero no eres de los nuestros"</td></tr>
+</table>
+
+<p>La inclusión genuina requiere <em>ambas</em> dimensiones simultáneamente. Un grupo donde todos se sienten aceptados pero no pueden expresar sus diferencias es asimilación, no inclusión.</p>
+
+<!-- §2 -->
+<h2>§2. Escalas de inclusión: Nishii (2013)</h2>
+
+<p>Lisa Nishii (2013) desarrolló una escala de <strong>Clima de Inclusión</strong> con 31 ítems en tres dimensiones:</p>
+
+<ol>
+  <li><strong>Prácticas laborales equitativas</strong> (9 ítems): justicia en evaluaciones, compensaciones, desarrollo.</li>
+  <li><strong>Integración de diferencias</strong> (11 ítems): las diferencias personales son respetadas y valoradas.</li>
+  <li><strong>Inclusión en la toma de decisiones</strong> (11 ítems): el input de todos es solicitado y utilizado.</li>
+</ol>
+
+<p>Su hallazgo principal: en equipos diversos, un clima de inclusión alto reduce significativamente el conflicto relacional. La diversidad sola puede generar conflicto; la inclusión lo transforma en ventaja.</p>
+
+<div class="note">
+<strong>Versiones abreviadas.</strong> En la práctica corporativa, 31 ítems es largo. La encuesta de InnovaCo usa 10 ítems que capturan las tres dimensiones más un componente global. Esto es una simplificación didáctica, no un estándar psicométrico. El apunte lo declara; el rigor lo exige.
+</div>
+
+<!-- §3 -->
+<h2>§3. Ítems reversos: por qué existen y cómo recodificar</h2>
+
+<p>Los ítems reversos (formulados en dirección negativa) se incluyen para detectar respuestas por aquiescencia y para capturar matices que los ítems positivos no capturan. Los reconoces porque una persona con alta inclusión <em>estaría en desacuerdo</em> con ellos.</p>
+
+<pre><code><span class="comment"># Recodificar: 6 menos el puntaje original</span>
+<span class="comment"># Escala 1–5: 1→5, 2→4, 3→3, 4→2, 5→1</span>
+datos <span class="pipe">&lt;-</span> datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    incl_05_r = 6L - incl_05,
+    incl_07_r = 6L - incl_07
+  )</code></pre>
+
+<div class="warning">
+<strong>Lección de la Clase 6.</strong> ¿Recuerdas qué pasaba con el alpha de Cronbach si olvidabas recodificar los ítems reversos del engagement? Caía de 0,84 a 0,31. Lo mismo pasa aquí. Siempre recodifica antes de calcular promedios o alpha.
+</div>
+
+<!-- §4 -->
+<h2>§4. Puntaje global e ítems por dimensión</h2>
+
+<pre><code><span class="comment"># Puntaje global = promedio de los 10 ítems (reversos ya corregidos)</span>
+datos <span class="pipe">&lt;-</span> datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    inclusion_global = <span class="func">rowMeans</span>(
+      <span class="func">pick</span>(incl_01, incl_02, incl_03, incl_04, incl_05_r,
+           incl_06, incl_07_r, incl_08, incl_09, incl_10),
+      na.rm = TRUE
+    )
+  )</code></pre>
+
+<p>Usamos la <strong>media</strong> (no la suma) porque mantiene la escala original (1–5) y facilita la interpretación: "una persona con inclusión global de 3,8 tiene, en promedio, un nivel de acuerdo moderado-alto con las afirmaciones de inclusión".</p>
+
+<!-- §5 -->
+<h2>§5. Análisis de brechas</h2>
+
+<h3>Descriptivos por subgrupo</h3>
+
+<pre><code>datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(genero) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n     = <span class="func">n</span>(),
+    media = <span class="func">mean</span>(inclusion_global),
+    sd    = <span class="func">sd</span>(inclusion_global)
+  )</code></pre>
+
+<h3>Tests de significancia</h3>
+
+<pre><code><span class="comment"># t-test para dos grupos</span>
+<span class="func">t.test</span>(inclusion_global ~ genero, data = datos)
+
+<span class="comment"># ANOVA para más de dos grupos</span>
+<span class="func">aov</span>(inclusion_global ~ departamento, data = datos) <span class="pipe">|&gt;</span> <span class="func">summary</span>()</code></pre>
+
+<h3>Tamaño del efecto: d de Cohen</h3>
+
+<p>Un t-test significativo no te dice cuán grande es la diferencia. La d de Cohen sí:</p>
+
+<div class="formula">$d = \frac{\bar{x}_1 - \bar{x}_2}{SD_{\text{pooled}}}$</div>
+
+<p>Criterios convencionales: d = 0,20 (pequeño), 0,50 (mediano), 0,80 (grande). Una brecha de d = 0,30 entre hombres y mujeres en inclusión es pequeña-moderada: existe, se detecta con un n suficiente, pero no es un abismo.</p>
+
+<h3>Visualización de brechas</h3>
+
+<pre><code><span class="comment"># Dot plot de brechas: efectivo para mostrar dónde se abren</span>
+brechas <span class="pipe">|&gt;</span>
+  <span class="func">ggplot</span>(<span class="func">aes</span>(x = media, y = nivel, color = genero)) +
+  <span class="func">geom_point</span>(size = 5) +
+  <span class="func">geom_line</span>(<span class="func">aes</span>(group = nivel), color = <span class="string">"grey60"</span>)</code></pre>
+
+<!-- §6 -->
+<h2>§6. Interacciones en regresión lineal</h2>
+
+<p>Una <strong>interacción</strong> significa que el efecto de una variable sobre el outcome depende del valor de otra variable. En el contexto de DEI: el efecto del género sobre la inclusión depende del nivel jerárquico.</p>
+
+<h3>Sintaxis en R</h3>
+
+<pre><code><span class="comment"># Estas dos expresiones son equivalentes:</span>
+<span class="func">lm</span>(y ~ x1 * x2)
+<span class="func">lm</span>(y ~ x1 + x2 + x1:x2)
+
+<span class="comment"># x1 * x2 se expande automáticamente a x1 + x2 + x1:x2</span></code></pre>
+
+<h3>Los dos modelos que compararás</h3>
+
+<pre><code><span class="comment"># Modelo 1: efectos principales (sin interacción)</span>
+modelo_1 <span class="pipe">&lt;-</span> <span class="func">lm</span>(inclusion_global ~ genero + nivel_jerarquico +
+              departamento + antiguedad_anios, data = datos)
+
+<span class="comment"># Modelo 2: con interacción género × nivel</span>
+modelo_2 <span class="pipe">&lt;-</span> <span class="func">lm</span>(inclusion_global ~ genero * nivel_jerarquico +
+              departamento + antiguedad_anios, data = datos)</code></pre>
+
+<!-- §7 -->
+<h2>§7. Interpretar coeficientes de interacción</h2>
+
+<p>Este es el punto más difícil conceptualmente. Supongamos que el output del Modelo 2 incluye:</p>
+
+<table>
+<tr><th>Término</th><th>β</th><th>Interpretación</th></tr>
+<tr><td><code>generoMujer</code></td><td>−0,02</td><td>Diferencia H-M en la categoría de referencia de nivel (Gerencia)</td></tr>
+<tr><td><code>nivel_jerarquicoJefatura</code></td><td>−0,15</td><td>Diferencia Jefatura vs. Gerencia para el grupo de referencia de género (Hombres)</td></tr>
+<tr><td><code>generoMujer:nivel_jerarquicoJefatura</code></td><td>−0,25</td><td>La brecha de género se <strong>amplía</strong> en 0,25 puntos al pasar de Gerencia a Jefatura</td></tr>
+</table>
+
+<div class="warning">
+<strong>Error clásico.</strong> El coeficiente de <code>generoMujer:nivelJefatura</code> NO es el efecto de ser mujer, ni el efecto de estar en Jefatura. Es la <em>modificación</em> del efecto de ser mujer cuando estás en Jefatura comparado con la referencia. Los efectos principales ya están capturados por los otros coeficientes.
+</div>
+
+<div class="tip">
+<strong>Regla práctica.</strong> Si el coeficiente de interacción tiene el mismo signo que el efecto principal del género (ambos negativos), la brecha se agranda en ese nivel. Si tiene signo opuesto, la brecha se reduce.
+</div>
+
+<!-- §8 -->
+<h2>§8. Visualizar la interacción</h2>
+
+<p>La forma más clara de comunicar una interacción es un gráfico con líneas separadas por grupo:</p>
+
+<pre><code><span class="comment"># 1. Crear grilla de combinaciones</span>
+nuevos <span class="pipe">&lt;-</span> <span class="func">expand_grid</span>(
+  genero           = c(<span class="string">"Hombre"</span>, <span class="string">"Mujer"</span>),
+  nivel_jerarquico = c(<span class="string">"Operativo"</span>, <span class="string">"Profesional"</span>, <span class="string">"Jefatura"</span>, <span class="string">"Gerencia"</span>),
+  departamento     = <span class="string">"Desarrollo de Software"</span>,  <span class="comment"># fijar controles</span>
+  antiguedad_anios = <span class="func">mean</span>(datos$antiguedad_anios)
+)
+
+<span class="comment"># 2. Predecir</span>
+nuevos$pred <span class="pipe">&lt;-</span> <span class="func">predict</span>(modelo_2, newdata = nuevos)
+
+<span class="comment"># 3. Graficar</span>
+<span class="func">ggplot</span>(nuevos, <span class="func">aes</span>(x = nivel_jerarquico, y = pred,
+                     color = genero, group = genero)) +
+  <span class="func">geom_line</span>(linewidth = 1.2) +
+  <span class="func">geom_point</span>(size = 4)</code></pre>
+
+<p><strong>Lectura del gráfico:</strong> si las líneas son paralelas, no hay interacción (el efecto del género es constante en todos los niveles). Si las líneas divergen, la interacción es real: la brecha cambia según el nivel.</p>
+
+<!-- §9 -->
+<h2>§9. Comparar modelos con y sin interacción</h2>
+
+<pre><code><span class="comment"># F-test de restricción (H₀: coeficientes de interacción = 0)</span>
+<span class="func">anova</span>(modelo_1, modelo_2)
+<span class="comment"># Si p < 0.05 → la interacción mejora significativamente el modelo</span>
+
+<span class="comment"># AIC (menor = mejor)</span>
+<span class="func">AIC</span>(modelo_1, modelo_2)</code></pre>
+
+<div class="note">
+<strong>Criterio para incluir la interacción.</strong> No basta con que sea significativa. Debe tener (1) razón teórica (la literatura sugiere que el efecto del género varía por nivel) Y (2) evidencia empírica (el p-valor y la mejora en AIC lo confirman). Incluir interacciones "por si acaso" infla el modelo y dificulta la interpretación.
+</div>
+
+<!-- §10 -->
+<h2>§10. Ética de la analítica de diversidad</h2>
+
+<p>La misma herramienta que diagnostica puede vigilar. Cinco principios para la práctica responsable:</p>
+
+<ol>
+  <li><strong>Finalidad declarada y acotada:</strong> los datos se usan para diagnóstico grupal, no para decisiones individuales.</li>
+  <li><strong>Nivel de análisis grupal:</strong> nunca identificar personas por su grupo demográfico.</li>
+  <li><strong>Consentimiento informado:</strong> los empleados saben que sus datos se usarán para un diagnóstico agregado.</li>
+  <li><strong>Tamaños mínimos:</strong> no reportar celdas con n &lt; 5 para evitar re-identificación.</li>
+  <li><strong>Temporalidad:</strong> un diagnóstico, no un rastreo permanente de la identidad.</li>
+</ol>
+
+<h3>Marco legal chileno</h3>
+
+<ul>
+  <li><strong>Ley 19.628:</strong> datos sensibles incluyen origen racial, opiniones políticas, vida sexual.</li>
+  <li><strong>Ley 21.719</strong> (vigente 1 dic 2026): principios de finalidad, proporcionalidad y minimización, más cercanos al GDPR.</li>
+  <li><strong>Ley 20.609</strong> (Ley Zamudio): no discriminación por múltiples motivos incluyendo sexo, orientación sexual, identidad de género, edad, apariencia.</li>
+</ul>
+
+<!-- §11 -->
+<h2>§11. Errores frecuentes</h2>
+
+<table>
+<tr><th>Error</th><th>Corrección</th></tr>
+<tr><td>Olvidar recodificar ítems reversos antes del puntaje global</td><td>Siempre verificar: si el alpha es inusualmente bajo, probablemente olvidaste recodificar</td></tr>
+<tr><td>Interpretar la interacción como efecto principal</td><td>El coeficiente de <code>genero:nivel</code> es una <em>modificación</em>, no un efecto directo</td></tr>
+<tr><td>Usar datos de diversidad para decisiones individuales</td><td>Los datos son para diagnóstico grupal. Nunca para decidir quién promueves</td></tr>
+<tr><td>Reportar celdas interseccionales con n &lt; 5</td><td>Agrupa o no reportes para proteger la privacidad</td></tr>
+<tr><td>Confundir significancia estadística con relevancia práctica</td><td>Calcula siempre la d de Cohen. Un p &lt; 0,001 con d = 0,05 no es relevante</td></tr>
+<tr><td>Incluir <code>nivel_educacion</code> en el modelo</td><td>Colineal con <code>nivel_jerarquico</code> (Clases 5 y 9). Ya deberías tener este reflejo</td></tr>
+</table>
+
+<h2>Referencias</h2>
+<ul>
+  <li>Brewer, M. B. (1991). The social self: On being the same and different at the same time. <em>Personality and Social Psychology Bulletin, 17</em>(5), 475–482.</li>
+  <li>Chung, B. G., Ehrhart, K. H., Shore, L. M., Randel, A. E., Dean, M. A., & Kedharnath, U. (2020). Work group inclusion: Test of a scale and model. <em>Group & Organization Management, 45</em>(1), 75–102.</li>
+  <li>Else-Quest, N. M., & Hyde, J. S. (2016). Intersectionality in quantitative psychological research. <em>Psychology of Women Quarterly, 40</em>(3), 319–336.</li>
+  <li>Nishii, L. H. (2013). The benefits of climate for inclusion for gender-diverse groups. <em>Academy of Management Journal, 56</em>(6), 1754–1774.</li>
+  <li>Shore, L. M., et al. (2011). Inclusion and diversity in work groups: A review and model for future research. <em>Journal of Management, 37</em>(4), 1262–1289.</li>
+</ul>
+
+<footer>
+Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · Semestre otoño 2026
+</footer>
+
+</body>
+</html>

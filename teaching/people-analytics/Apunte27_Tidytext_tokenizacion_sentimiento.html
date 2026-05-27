@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 27 — Text mining con tidytext: tokenización, frecuencia y sentimiento | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 27 — Text mining con tidytext: tokenización, frecuencia y sentimiento</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 11 · Prof. René Gempp</p>
+
+<!-- §1 -->
+<h2>§1. ¿Por qué analizar texto en people analytics?</h2>
+
+<p>Hasta ahora, todos los datos que has analizado eran <strong>estructurados</strong>: columnas con tipos definidos (numérico, categórico, fecha), filas con observaciones (un empleado, una postulación, un ítem de encuesta). El texto libre — la respuesta que alguien escribe cuando le preguntas "¿hay algo que quieras agregar?" — es un dato <strong>no estructurado</strong>. No tiene columnas. No tiene categorías predefinidas. No tiene escala. Es lenguaje natural, con toda su riqueza y toda su ambigüedad.</p>
+
+<p>¿Por qué importa? Porque las escalas Likert miden lo que <em>tú decidiste preguntar</em>. Las preguntas abiertas dejan que la persona diga lo que <em>ella quiere decir</em>. A veces coinciden; a veces no. Los temas que emergen del texto libre pueden revelar preocupaciones que ninguna escala anticipó: la calidad de las sillas, los microondas del comedor, la sensación de que "las promociones están arregladas", el orgullo por un proyecto reciente. El text mining es la herramienta que convierte esa masa de texto en algo analizable — sin reemplazar la lectura humana, sino complementándola.</p>
+
+<div class="business">
+<strong>En la práctica.</strong> Una encuesta de clima con 1.200 empleados puede generar 800 respuestas abiertas. Leerlas todas tomaría ~8 horas de trabajo concentrado. Clasificarlas manualmente, ~20 horas. Con text mining, el pipeline completo toma ~30 minutos de código R y produce frecuencias, temas y sentimientos cuantificables. No es perfecto, pero escala.
+</div>
+
+<!-- §2 -->
+<h2>§2. El principio tidy text: un token por fila</h2>
+
+<p>Silge y Robinson (2017) propusieron un framework elegante: tratar el texto como un data frame donde cada fila es un <strong>token</strong> — la unidad mínima de análisis. Un token puede ser una palabra (lo más común), un bigrama, una oración o un párrafo. La idea es que una vez que el texto está en formato tidy, puedes usar todas las herramientas de <code>dplyr</code> y <code>ggplot2</code> que ya conoces.</p>
+
+<p>Imagina que tienes tres respuestas de encuesta:</p>
+
+<table>
+<tr><th>id</th><th>respuesta</th></tr>
+<tr><td>1</td><td>"Me gusta mi equipo de trabajo"</td></tr>
+<tr><td>2</td><td>"La carga laboral es excesiva"</td></tr>
+<tr><td>3</td><td>"Buen ambiente pero falta comunicación"</td></tr>
+</table>
+
+<p>Después de tokenizar con <code>unnest_tokens()</code>, el data frame se transforma en:</p>
+
+<table>
+<tr><th>id</th><th>word</th></tr>
+<tr><td>1</td><td>me</td></tr>
+<tr><td>1</td><td>gusta</td></tr>
+<tr><td>1</td><td>mi</td></tr>
+<tr><td>1</td><td>equipo</td></tr>
+<tr><td>1</td><td>de</td></tr>
+<tr><td>1</td><td>trabajo</td></tr>
+<tr><td>2</td><td>la</td></tr>
+<tr><td>2</td><td>carga</td></tr>
+<tr><td>2</td><td>laboral</td></tr>
+<tr><td>...</td><td>...</td></tr>
+</table>
+
+<p>Ahora es un data frame tidy con dos columnas. Puedes hacer <code>count(word)</code> para saber qué palabras son más frecuentes. Puedes hacer <code>filter(word == "equipo")</code> para ver en qué respuestas aparece "equipo". Puedes hacer <code>group_by(id) |> summarise(n_palabras = n())</code> para calcular la longitud de cada respuesta. Son las mismas operaciones que usas desde la Clase 1.</p>
+
+<div class="tip">
+<strong>Instalación.</strong> El paquete <code>tidytext</code> se instala con <code>install.packages("tidytext")</code>. Depende de <code>dplyr</code>, <code>tidyr</code> y otros paquetes del tidyverse que ya tienes. Cárgalo con <code>library(tidytext)</code>.
+</div>
+
+<!-- §3 -->
+<h2>§3. <code>unnest_tokens()</code>: la puerta de entrada</h2>
+
+<p>La función <code>unnest_tokens()</code> es la piedra angular de <code>tidytext</code>. Toma un data frame con una columna de texto y devuelve un data frame con una fila por token.</p>
+
+<h3>Sintaxis básica</h3>
+
+<pre><code><span class="func">unnest_tokens</span>(tbl, output, input, token = <span class="string">"words"</span>)</code></pre>
+
+<ul>
+<li><code>tbl</code>: el data frame de entrada.</li>
+<li><code>output</code>: nombre de la nueva columna que contendrá los tokens (sin comillas).</li>
+<li><code>input</code>: nombre de la columna que contiene el texto original (sin comillas).</li>
+<li><code>token</code>: tipo de token. Por defecto <code>"words"</code>. Otras opciones: <code>"ngrams"</code>, <code>"sentences"</code>, <code>"lines"</code>, <code>"paragraphs"</code>.</li>
+</ul>
+
+<h3>Ejemplo completo</h3>
+
+<pre><code><span class="comment"># Supongamos que tienes respuestas de encuesta</span>
+respuestas &lt;- tibble(
+  id_empleado = c(<span class="string">"E001"</span>, <span class="string">"E002"</span>, <span class="string">"E003"</span>),
+  respuesta = c(
+    <span class="string">"Me gusta mi equipo de trabajo"</span>,
+    <span class="string">"La carga laboral es excesiva y nadie nos escucha"</span>,
+    <span class="string">"Buen ambiente pero falta comunicación con jefatura"</span>
+  )
+)
+
+<span class="comment"># Tokenizar: una palabra por fila</span>
+tokens &lt;- respuestas <span class="pipe">|&gt;</span>
+  <span class="func">unnest_tokens</span>(word, respuesta)
+
+tokens
+<span class="comment"># # A tibble: 21 × 2</span>
+<span class="comment">#    id_empleado word        </span>
+<span class="comment">#    &lt;chr&gt;       &lt;chr&gt;       </span>
+<span class="comment">#  1 E001        me          </span>
+<span class="comment">#  2 E001        gusta       </span>
+<span class="comment">#  3 E001        mi          </span>
+<span class="comment">#  4 E001        equipo      </span>
+<span class="comment">#  5 E001        de          </span>
+<span class="comment">#  6 E001        trabajo     </span>
+<span class="comment">#  7 E002        la          </span>
+<span class="comment">#  8 E002        carga       </span>
+<span class="comment">#  9 E002        laboral     </span>
+<span class="comment"># 10 E002        es          </span>
+<span class="comment"># # ... y 11 filas más</span></code></pre>
+
+<div class="note">
+<strong>Transformaciones automáticas.</strong> <code>unnest_tokens()</code> hace varias cosas por ti: convierte a minúsculas, elimina la puntuación, elimina los números (por defecto). Puedes desactivar estas opciones con <code>to_lower = FALSE</code>, <code>strip_punct = FALSE</code> y <code>strip_numeric = FALSE</code>, pero en la mayoría de los casos las opciones por defecto son las correctas.
+</div>
+
+<!-- §4 -->
+<h2>§4. Stopwords: las palabras que sobran</h2>
+
+<p>Si cuentas las palabras del ejemplo anterior sin limpiar, las más frecuentes serán "de", "la", "mi", "es" — palabras funcionales que no aportan significado temático. Estas son las <strong>stopwords</strong> (palabras vacías). Eliminarlas es esencial para que emerjan los términos sustantivos.</p>
+
+<h3>Stopwords en español con el paquete <code>stopwords</code></h3>
+
+<pre><code><span class="comment"># install.packages("stopwords")</span>
+library(stopwords)
+
+<span class="comment"># Lista de stopwords en español</span>
+sw_es &lt;- tibble(word = <span class="func">stopwords</span>(<span class="string">"es"</span>))
+nrow(sw_es)
+<span class="comment"># → 308 stopwords</span>
+
+<span class="comment"># Ver las primeras</span>
+head(sw_es, 20)
+<span class="comment"># de, la, que, el, en, y, a, los, del, se, las, por, un, para, con, ...</span></code></pre>
+
+<h3>Eliminar stopwords con <code>anti_join()</code></h3>
+
+<pre><code><span class="comment"># anti_join: quédate con las filas de 'tokens' que NO están en 'sw_es'</span>
+tokens_limpios &lt;- tokens <span class="pipe">|&gt;</span>
+  <span class="func">anti_join</span>(sw_es, by = <span class="string">"word"</span>)
+
+tokens_limpios
+<span class="comment"># Ahora sin "me", "mi", "de", "la", "es", "y", "nos", "con", "pero"</span></code></pre>
+
+<p>La lógica es exactamente la misma de los <code>anti_join()</code> que usaste en la Clase 2 para encontrar empleados que no aparecían en otra tabla. Aquí, estás encontrando palabras que no aparecen en la lista de stopwords.</p>
+
+<h3>Stopwords de dominio</h3>
+
+<p>La lista genérica elimina artículos, preposiciones y conjunciones. Pero en el contexto de una encuesta de clima de InnovaCo, hay palabras que aparecen en casi toda respuesta sin aportar discriminación: "empresa", "trabajo", "innovaco". Estas son <strong>stopwords de dominio</strong> que debes agregar manualmente:</p>
+
+<pre><code><span class="comment"># Stopwords de dominio: aparecen en todo sin discriminar</span>
+sw_dominio &lt;- tibble(word = c(<span class="string">"empresa"</span>, <span class="string">"innovaco"</span>, <span class="string">"trabajo"</span>,
+                               <span class="string">"trabajar"</span>, <span class="string">"creo"</span>, <span class="string">"cosas"</span>))
+
+<span class="comment"># Combinar ambas listas</span>
+sw_completas &lt;- <span class="func">bind_rows</span>(sw_es, sw_dominio)
+
+<span class="comment"># Aplicar</span>
+tokens_limpios &lt;- tokens <span class="pipe">|&gt;</span>
+  <span class="func">anti_join</span>(sw_completas, by = <span class="string">"word"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(<span class="func">str_length</span>(word) &gt; 2)  <span class="comment"># eliminar palabras de 1-2 letras</span></code></pre>
+
+<div class="warning">
+<strong>No hay lista perfecta.</strong> Curar stopwords es una decisión del analista. Si eliminas demasiadas, pierdes señal. Si eliminas pocas, el ruido oscurece los temas. La regla: ejecuta el pipeline, mira las frecuencias, y si una palabra aparece en el top 10 sin aportar información temática, agrégala a la lista y vuelve a correr. Es un proceso iterativo, no un paso único.
+</div>
+
+<!-- §5 -->
+<h2>§5. Frecuencia de palabras: el <code>count()</code> que ya conoces</h2>
+
+<p>Una vez que tienes los tokens limpios, calcular frecuencias es literalmente <code>count(word, sort = TRUE)</code> — la misma función que usas desde la Clase 1 para contar empleados por departamento. Solo que ahora cuentas palabras.</p>
+
+<pre><code>freq_palabras &lt;- tokens_limpios <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(word, sort = TRUE)
+
+freq_palabras
+<span class="comment"># # A tibble: N × 2</span>
+<span class="comment">#   word          n</span>
+<span class="comment">#   &lt;chr&gt;     &lt;int&gt;</span>
+<span class="comment"># 1 equipo       87</span>
+<span class="comment"># 2 jefatura     72</span>
+<span class="comment"># 3 carga        65</span>
+<span class="comment"># ...</span></code></pre>
+
+<h3>Visualización: top N palabras</h3>
+
+<pre><code>freq_palabras <span class="pipe">|&gt;</span>
+  <span class="func">slice_max</span>(n, n = 20) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(word = <span class="func">fct_reorder</span>(word, n)) <span class="pipe">|&gt;</span>
+  <span class="func">ggplot</span>(<span class="func">aes</span>(x = n, y = word)) +
+  <span class="func">geom_col</span>(fill = <span class="string">"#0D9488"</span>) +
+  <span class="func">labs</span>(
+    title = <span class="string">"Top 20 palabras más frecuentes"</span>,
+    subtitle = <span class="string">"Respuestas abiertas de encuesta de clima"</span>,
+    x = <span class="string">"Frecuencia"</span>,
+    y = NULL
+  ) +
+  <span class="func">theme_minimal</span>(base_size = 13)</code></pre>
+
+<p>El <code>fct_reorder(word, n)</code> ordena las barras de menor a mayor frecuencia (el más frecuente arriba). Es un patrón de <code>ggplot2</code> que ya usaste en la Clase 2 para ordenar departamentos.</p>
+
+<!-- §6 -->
+<h2>§6. Wordclouds: bonitas pero limitadas</h2>
+
+<p>Una <strong>wordcloud</strong> (nube de palabras) es una visualización donde el tamaño de cada palabra es proporcional a su frecuencia. Es visualmente atractiva y funciona bien para presentaciones ejecutivas, pero tiene limitaciones serias como herramienta analítica: no muestra la frecuencia exacta, dificulta las comparaciones precisas, y privilegia las palabras largas (que ocupan más espacio visual).</p>
+
+<pre><code><span class="comment"># install.packages("wordcloud2")</span>
+library(wordcloud2)
+
+freq_palabras <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(n &gt;= 5) <span class="pipe">|&gt;</span>
+  <span class="func">rename</span>(freq = n) <span class="pipe">|&gt;</span>
+  <span class="func">wordcloud2</span>(
+    size = 0.8,
+    color = <span class="func">rep</span>(c(<span class="string">"#1B2A4A"</span>, <span class="string">"#B85042"</span>, <span class="string">"#0D9488"</span>, <span class="string">"#A7BEAE"</span>), 100)
+  )</code></pre>
+
+<div class="note">
+<strong>Regla de uso.</strong> La wordcloud es un <em>complemento</em> visual, no un sustituto del gráfico de barras. En un informe, muestra primero la tabla de frecuencias (datos duros) y luego la wordcloud (impacto visual). Nunca al revés.
+</div>
+
+<!-- §7 -->
+<h2>§7. Bigramas: capturar el contexto local</h2>
+
+<p>Un <strong>bigrama</strong> es un par de palabras consecutivas. Los bigramas capturan expresiones compuestas que los unigramas destruyen. "Jefatura directa" es un concepto distinto de "jefatura" + "directa" por separado. "No escuchan" es una negación que el análisis de unigramas clasificaría incorrectamente.</p>
+
+<pre><code><span class="comment"># Tokenizar en bigramas</span>
+bigramas &lt;- respuestas <span class="pipe">|&gt;</span>
+  <span class="func">unnest_tokens</span>(bigram, respuesta, token = <span class="string">"ngrams"</span>, n = 2)
+
+bigramas
+<span class="comment"># # A tibble: N × 2</span>
+<span class="comment">#   id_empleado bigram          </span>
+<span class="comment">#   &lt;chr&gt;       &lt;chr&gt;           </span>
+<span class="comment"># 1 E001        me gusta        </span>
+<span class="comment"># 2 E001        gusta mi        </span>
+<span class="comment"># 3 E001        mi equipo       </span>
+<span class="comment"># 4 E001        equipo de       </span>
+<span class="comment"># 5 E001        de trabajo      </span>
+<span class="comment"># ...</span></code></pre>
+
+<p>El problema: muchos bigramas contienen stopwords ("de trabajo", "la carga", "es excesiva"). Necesitas filtrarlos.</p>
+
+<!-- §8 -->
+<h2>§8. Filtrar bigramas: <code>separate()</code>, <code>filter()</code>, <code>unite()</code></h2>
+
+<p>El truco es separar el bigrama en sus dos palabras, filtrar las filas donde alguna de las dos es una stopword, y volver a unirlas:</p>
+
+<pre><code><span class="comment"># Paso 1: separar las dos palabras</span>
+bigramas_sep &lt;- bigramas <span class="pipe">|&gt;</span>
+  <span class="func">separate</span>(bigram, into = c(<span class="string">"word1"</span>, <span class="string">"word2"</span>), sep = <span class="string">" "</span>)
+
+<span class="comment"># Paso 2: filtrar — ninguna de las dos debe ser stopword</span>
+bigramas_filt &lt;- bigramas_sep <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(!word1 %in% sw_completas$word,
+         !word2 %in% sw_completas$word) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(<span class="func">str_length</span>(word1) &gt; 2,
+         <span class="func">str_length</span>(word2) &gt; 2)
+
+<span class="comment"># Paso 3: reunir y contar</span>
+bigramas_freq &lt;- bigramas_filt <span class="pipe">|&gt;</span>
+  <span class="func">unite</span>(bigram, word1, word2, sep = <span class="string">" "</span>) <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(bigram, sort = TRUE)
+
+bigramas_freq
+<span class="comment"># # A tibble: N × 2</span>
+<span class="comment">#   bigram              n</span>
+<span class="comment">#   &lt;chr&gt;           &lt;int&gt;</span>
+<span class="comment"># 1 jefatura directa   34</span>
+<span class="comment"># 2 carga laboral      28</span>
+<span class="comment"># 3 horario flexible   19</span>
+<span class="comment"># ...</span></code></pre>
+
+<p>Las funciones <code>separate()</code> y <code>unite()</code> son de <code>tidyr</code> — el mismo paquete que usaste para <code>pivot_wider()</code> y <code>pivot_longer()</code>. Aquí las usas para manipular texto, no datos numéricos.</p>
+
+<div class="tip">
+<strong>Bigramas accionables.</strong> Un bigrama es "accionable" si sugiere una intervención concreta. "Jefatura directa" señala un problema de supervisión. "Carga laboral" señala un problema de volumen de trabajo. "Horario flexible" señala una aspiración de beneficios. Identifica los bigramas accionables y destácalos en tu informe. Los bigramas que son solo descripciones genéricas ("buen ambiente", "buena empresa") son contexto, no recomendación.
+</div>
+
+<!-- §9 -->
+<h2>§9. Trigramas y más allá: cuándo ir más allá del par</h2>
+
+<p>Un <strong>trigrama</strong> es una secuencia de tres palabras. Se construye igual que el bigrama, cambiando <code>n = 2</code> por <code>n = 3</code>:</p>
+
+<pre><code>trigramas &lt;- respuestas <span class="pipe">|&gt;</span>
+  <span class="func">unnest_tokens</span>(trigram, respuesta, token = <span class="string">"ngrams"</span>, n = 3)</code></pre>
+
+<p>Los trigramas son más informativos ("falta de comunicación" es más claro que "falta comunicación"), pero son mucho más escasos. Con 800 respuestas, la mayoría de los trigramas aparecen solo 1–2 veces. La regla práctica: usa unigramas para el panorama general, bigramas para las expresiones compuestas, y trigramas solo si tienes un corpus grande (> 5.000 documentos).</p>
+
+<!-- §10 -->
+<h2>§10. ¿Qué es el análisis de sentimiento?</h2>
+
+<p>El <strong>análisis de sentimiento</strong> intenta clasificar un texto como positivo, negativo o neutro. El enfoque más simple — y el que usaremos — es el basado en <strong>léxicos</strong>: una lista de palabras con su polaridad pre-asignada. Cada palabra del texto se busca en el léxico; si está, se suma su polaridad; si no está, se ignora. El sentimiento del documento es la agregación de las polaridades de sus palabras.</p>
+
+<p>Existen tres tipos principales de léxicos:</p>
+
+<table>
+<tr><th>Léxico</th><th>Escala</th><th>Ventaja</th><th>Limitación</th></tr>
+<tr><td><strong>AFINN</strong> (Nielsen, 2011)</td><td>−5 a +5 (numérico)</td><td>Permite promediar, mide intensidad</td><td>Léxico pequeño</td></tr>
+<tr><td><strong>Bing</strong> (Hu &amp; Liu, 2004)</td><td>positive / negative (binario)</td><td>Simple, robusto</td><td>Pierde intensidad</td></tr>
+<tr><td><strong>NRC</strong> (Mohammad &amp; Turney, 2013)</td><td>8 emociones + pos/neg</td><td>Granularidad emocional</td><td>Clasificaciones discutibles</td></tr>
+</table>
+
+<!-- §11 -->
+<h2>§11. Léxicos en español: NRC traducido</h2>
+
+<p>Ninguno de los léxicos principales fue creado en español. Para esta clase usamos una traducción del NRC al español. La operación es un <code>inner_join()</code> entre los tokens limpios y el léxico:</p>
+
+<pre><code><span class="comment"># Cargar el léxico NRC en español</span>
+lexico &lt;- <span class="func">read_csv</span>(<span class="string">"lexico_sentimiento_es.csv"</span>)
+
+<span class="comment"># Estructura del léxico:</span>
+<span class="comment"># word: la palabra en español</span>
+<span class="comment"># sentiment: "positive", "negative", "anger", "joy", etc.</span>
+
+<span class="comment"># Inner join: solo las palabras que están en AMBOS (tokens y léxico)</span>
+sentimiento &lt;- tokens_limpios <span class="pipe">|&gt;</span>
+  <span class="func">inner_join</span>(lexico, by = <span class="string">"word"</span>)</code></pre>
+
+<div class="warning">
+<strong>Cobertura del léxico.</strong> El <code>inner_join()</code> solo retiene las palabras que están en el léxico. Si tu corpus tiene 10.000 tokens limpios y el léxico tiene 5.000 entradas, es posible que solo 1.500 tokens coincidan (15 % de cobertura). Las otras 8.500 palabras son invisibles para el análisis de sentimiento. <strong>Reporta siempre la cobertura</strong>: es una medida de la limitación del análisis.
+</div>
+
+<pre><code><span class="comment"># Calcular la cobertura</span>
+n_match &lt;- nrow(sentimiento)
+n_total &lt;- nrow(tokens_limpios)
+cat(<span class="string">"Cobertura del léxico:"</span>, <span class="func">round</span>(n_match / n_total * 100, 1), <span class="string">"%\n"</span>)</code></pre>
+
+<!-- §12 -->
+<h2>§12. Sentimiento neto: <code>pivot_wider()</code> y resta</h2>
+
+<p>Para calcular el sentimiento neto de cada respuesta (palabras positivas menos negativas), necesitas pivotar y restar:</p>
+
+<pre><code>sent_neto &lt;- sentimiento <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(sentiment %in% c(<span class="string">"positive"</span>, <span class="string">"negative"</span>)) <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(id_empleado, sentiment) <span class="pipe">|&gt;</span>
+  <span class="func">pivot_wider</span>(
+    names_from = sentiment,
+    values_from = n,
+    values_fill = 0   <span class="comment"># si no hay palabras de un tipo, poner 0</span>
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(neto = positive - negative)
+
+sent_neto
+<span class="comment"># # A tibble: N × 4</span>
+<span class="comment">#   id_empleado negative positive  neto</span>
+<span class="comment">#   &lt;chr&gt;          &lt;int&gt;    &lt;int&gt; &lt;int&gt;</span>
+<span class="comment"># 1 E001               0        2     2</span>
+<span class="comment"># 2 E002               2        0    -2</span>
+<span class="comment"># 3 E003               1        1     0</span></code></pre>
+
+<p>Un sentimiento neto > 0 indica que la respuesta tiene más palabras positivas que negativas. Un neto < 0, lo contrario. Un neto = 0 puede significar equilibrio o ausencia de palabras en el léxico.</p>
+
+<!-- §13 -->
+<h2>§13. Sentimiento por grupo: cruce con datos cuantitativos</h2>
+
+<p>El verdadero poder del análisis de sentimiento aparece cuando lo cruzas con las variables que ya tienes. Usa <code>left_join()</code> para agregar las variables del dataset de empleados:</p>
+
+<pre><code><span class="comment"># Join con datos de empleados</span>
+empleados &lt;- <span class="func">read_csv</span>(<span class="string">"innovaco_empleados.csv"</span>)
+
+sent_con_datos &lt;- sent_neto <span class="pipe">|&gt;</span>
+  <span class="func">left_join</span>(
+    empleados <span class="pipe">|&gt;</span> <span class="func">select</span>(id_empleado, departamento, satisfaccion_laboral, genero),
+    by = <span class="string">"id_empleado"</span>
+  )
+
+<span class="comment"># Sentimiento promedio por departamento</span>
+sent_con_datos <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n = <span class="func">n</span>(),
+    media_neto = <span class="func">mean</span>(neto, na.rm = TRUE),
+    .groups = <span class="string">"drop"</span>
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(media_neto)</code></pre>
+
+<p>Esto te permite responder: "¿los departamentos con peor engagement cuantitativo también tienen peor sentimiento en sus respuestas abiertas?" Si la respuesta es sí, la triangulación refuerza la evidencia. Si es no, hay algo interesante que investigar.</p>
+
+<!-- §14 -->
+<h2>§14. Limitaciones del análisis de sentimiento con léxicos</h2>
+
+<p>Antes de reportar resultados, debes conocer (y declarar) las limitaciones:</p>
+
+<ol>
+<li><strong>Negaciones no capturadas.</strong> "No estoy insatisfecho" contiene "insatisfecho" (negativo), pero el significado es positivo. Los léxicos no manejan negaciones. Los bigramas ayudan parcialmente ("no + adjetivo"), pero requieren procesamiento adicional.</li>
+<li><strong>Sarcasmo invisible.</strong> "Claro, la gerencia realmente se preocupa por nosotros" es sarcástico, pero el léxico clasificará "preocupa" como positivo.</li>
+<li><strong>Traducciones imperfectas.</strong> "Compromiso" en español puede ser positivo (engagement) o negativo (obligación no deseada). La traducción del inglés "commitment" no captura esta ambigüedad.</li>
+<li><strong>Cobertura parcial.</strong> Solo las palabras que están en el léxico contribuyen al análisis. Las demás son invisibles. Si la cobertura es baja (< 15 %), los resultados son poco confiables.</li>
+<li><strong>No captura intensidad relativa.</strong> "Bueno" y "extraordinario" pueden tener la misma clasificación ("positive") pero significan cosas muy diferentes.</li>
+</ol>
+
+<div class="business">
+<strong>En el informe.</strong> Siempre incluye un párrafo de limitaciones: "El análisis de sentimiento se basó en el léxico NRC traducido al español. La cobertura del léxico fue del X %. Las limitaciones principales incluyen la incapacidad de capturar negaciones y sarcasmo, y la pérdida de matices culturales en la traducción. Los resultados deben interpretarse como una tendencia, no como una medición precisa."
+</div>
+
+<!-- §15 -->
+<h2>§15. Resumen y conexión con el Apunte 28</h2>
+
+<p>En este apunte aprendiste el pipeline básico de text mining con <code>tidytext</code>:</p>
+
+<ol>
+<li><strong>Tokenizar</strong> con <code>unnest_tokens()</code>: texto → un token por fila.</li>
+<li><strong>Limpiar</strong> con <code>anti_join(stopwords)</code>: eliminar ruido.</li>
+<li><strong>Contar</strong> con <code>count()</code>: frecuencias de palabras.</li>
+<li><strong>Visualizar</strong> con <code>ggplot2</code> y <code>wordcloud2</code>.</li>
+<li><strong>Bigramas</strong> con <code>unnest_tokens(token = "ngrams", n = 2)</code>: capturar contexto.</li>
+<li><strong>Sentimiento</strong> con <code>inner_join(lexico)</code>: polaridad de los textos.</li>
+<li><strong>Cruzar</strong> con <code>left_join(empleados)</code>: integrar texto y números.</li>
+</ol>
+
+<p>Todo esto usa funciones que ya conoces: <code>count()</code>, <code>filter()</code>, <code>mutate()</code>, <code>group_by()</code>, <code>summarise()</code>, <code>left_join()</code>, <code>anti_join()</code>, <code>ggplot()</code>. Lo que es nuevo es la preparación (tokenización y stopwords), no el análisis.</p>
+
+<p>El <strong>Apunte 28</strong> extiende este pipeline con tres técnicas más avanzadas: <strong>redes de co-ocurrencia</strong> (¿qué palabras aparecen juntas?), <strong>topic modeling con LDA</strong> (¿qué temas emergen?), y el <strong>cruce sistemático</strong> entre texto y datos cuantitativos.</p>
+
+<footer>
+<p>Apunte 27 · Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · Prof. René Gempp · 2026</p>
+<p><strong>Referencia principal:</strong> Silge, J. y Robinson, D. (2017). <em>Text Mining with R: A Tidy Approach</em>. O'Reilly. Disponible en <a href="https://www.tidytextmining.com" target="_blank">tidytextmining.com</a>.</p>
+</footer>
+
+</body>
+</html>

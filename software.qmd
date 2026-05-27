@@ -20,23 +20,41 @@ install.packages("personnelSelectionUtility")
 remotes::install_github("rgempp/personnelSelectionUtility", build_vignettes = TRUE)
 ```
 
+### csemGT
+
+`csemGT` estimates *conditional* standard errors of measurement (CSEMs) under Generalizability Theory for the univariate single-facet design in which persons are crossed with items (a `p × i` design). Whereas a single overall SEM summarises measurement precision for a whole test, a conditional SEM describes how precision varies along the score scale, so that examinees at different observed-score levels can be assigned different error bands.
+
+The package implements the absolute-error estimator and the three relative-error estimators (`full, large_a, uncorrelated`) developed by Brennan (1998), together with optional polynomial smoothing of the conditional error variances across the score scale and analytical or bootstrap standard errors for the per-person estimates. `csemGT` is the R companion to the Stata `gtcsem` command and reproduces its numerical results.
+
+[Package website](https://gempp.cl/csemGT/){.btn .btn-outline-primary .btn-sm} [GitHub](https://github.com/rgempp/csemGT){.btn .btn-outline-secondary .btn-sm}
+
+**Installation:**
+
+``` r
+# From CRAN
+install.packages("csemGT")
+
+# Development version
+remotes::install_github("rgempp/csemGT", build_vignettes = TRUE)
+```
+
 ------------------------------------------------------------------------
 
 ## Stata Packages
 
 ### gtcsem
 
-`gtcsem` is a Stata module that estimates per-person conditional standard errors of measurement (CSEMs) under Generalizability Theory for the univariate, single-facet, persons-by-items (p × i) crossed design. Unlike the overall (population-level) SEM, which summarizes measurement precision averaged across persons, the CSEM characterizes the precision of measurement for an individual at a given score level — the relevant index when decisions concern individuals rather than groups, including the local accuracy of cut-score classifications. The package implements three estimators of the per-person relative error variance (Brennan, 1998), analytical and bootstrap standard errors, generalizability and dependability coefficients, D-study extrapolation to hypothetical test lengths, and a companion command (`gtcsem_plot`) for Brennan-style CSEM plots.
+`gtcsem` is a Stata module that estimates per-person *conditional* standard errors of measurement (CSEMs) under Generalizability Theory for the univariate, single-facet, persons-by-items (p × i) crossed design. Unlike the overall (population-level) SEM, which summarizes measurement precision averaged across persons, the CSEM characterizes the precision of measurement for an individual at a given score level, the relevant index when decisions concern individuals rather than groups, including the local accuracy of cut-score classifications. The package implements three estimators of the per-person relative error variance (Brennan, 1998), analytical and bootstrap standard errors, generalizability and dependability coefficients, D-study extrapolation to hypothetical test lengths, and a companion command (`gtcsem_plot`) for Brennan-style CSEM plots.
 
 [GitHub](https://github.com/rgempp/gtcsem){.btn .btn-outline-secondary .btn-sm}
 
 **Installation:**
 
 ``` stata
-* From SSC
+# From SSC
 ssc install gtcsem
 
-* From GitHub (development version)
+# From GitHub (development version)
 net install gtcsem, from("https://raw.githubusercontent.com/rgempp/gtcsem/main/") replace
 ```
 

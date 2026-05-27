@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 28 — Tópicos, redes de co-ocurrencia y cruce texto-cuantitativo | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 28 — Tópicos, redes de co-ocurrencia y cruce texto-cuantitativo</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 11 · Prof. René Gempp</p>
+
+<!-- §1 -->
+<h2>§1. De las palabras a los temas</h2>
+
+<p>En el Apunte 27 aprendiste a contar palabras y a calcular sentimientos. Eso responde a <em>qué palabras se usan</em> y <em>qué tono tienen</em>. Pero no responde a <em>de qué hablan</em>. Para eso necesitas herramientas que descubran <strong>temas</strong> — agrupaciones de palabras que aparecen juntas porque se refieren al mismo asunto.</p>
+
+<p>Este apunte cubre tres herramientas complementarias para descubrir temas:</p>
+
+<ol>
+<li><strong>Redes de co-ocurrencia</strong> (§9–11): un enfoque visual que muestra qué palabras aparecen juntas en las mismas respuestas, revelando clusters temáticos.</li>
+<li><strong>Topic modeling con LDA</strong> (§2–8): un modelo probabilístico que asigna automáticamente cada documento a una mezcla de tópicos.</li>
+<li><strong>Cruce texto × cuantitativo</strong> (§12): la integración de los temas descubiertos con los datos numéricos que ya tienes.</li>
+</ol>
+
+<!-- §2 -->
+<h2>§2. La Document-Term Matrix (DTM)</h2>
+
+<p>Antes de ajustar un modelo de tópicos, necesitas convertir tus datos tidy en una <strong>document-term matrix</strong> (DTM): una matriz donde cada fila es un documento (una respuesta), cada columna es un término (una palabra), y cada celda contiene la frecuencia de ese término en ese documento. La mayoría de las celdas son 0 (cada respuesta usa una fracción pequeña del vocabulario total), por eso la DTM se almacena como una <strong>matriz dispersa</strong>.</p>
+
+<pre><code><span class="comment"># Preparar los datos: contar palabras por documento</span>
+conteo_por_doc &lt;- tokens_limpios <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(id_empleado, word)
+
+<span class="comment"># Convertir a DTM con cast_dtm()</span>
+dtm &lt;- conteo_por_doc <span class="pipe">|&gt;</span>
+  <span class="func">cast_dtm</span>(id_empleado, word, n)
+
+dtm
+<span class="comment"># &lt;&lt;DocumentTermMatrix (documents: 800, terms: 1247)&gt;&gt;</span>
+<span class="comment"># Non-/sparse entries: 8932/989668</span>
+<span class="comment"># Sparsity           : 99%</span></code></pre>
+
+<p>La función <code>cast_dtm()</code> de <code>tidytext</code> es el puente entre el formato tidy (un token por fila) y el formato matricial que el LDA necesita. Nota la esparcidad del 99 %: eso es normal. La mayoría de las palabras no aparecen en la mayoría de las respuestas.</p>
+
+<div class="tip">
+<strong>La operación inversa.</strong> Si alguna vez recibes una DTM y necesitas volver al formato tidy, usa <code>tidy(dtm)</code>. La función <code>tidy()</code> de <code>tidytext</code> funciona con objetos de <code>tm</code> y <code>topicmodels</code>, igual que <code>broom::tidy()</code> funciona con modelos estadísticos.
+</div>
+
+<!-- §3 -->
+<h2>§3. LDA: la intuición del modelo generativo</h2>
+
+<p>El <strong>Latent Dirichlet Allocation</strong> (LDA; Blei, Ng &amp; Jordan, 2003) es el modelo de tópicos más utilizado. Su intuición generativa es que cada documento fue "escrito" por un proceso en dos pasos:</p>
+
+<ol>
+<li>Primero, el autor elige una <strong>mezcla de tópicos</strong>. Por ejemplo: "esta respuesta es 60 % sobre liderazgo y 40 % sobre carga laboral."</li>
+<li>Luego, para cada palabra, elige un tópico de esa mezcla y saca una palabra del vocabulario de ese tópico. Las palabras de "liderazgo" incluyen "jefatura", "comunicación", "escucha"; las de "carga laboral" incluyen "horas", "estrés", "presión".</li>
+</ol>
+
+<p>El LDA <em>invierte</em> este proceso: dado un corpus de documentos, descubre los tópicos latentes y las mezclas que mejor explican las frecuencias observadas. No sabe de antemano que hay un tema de "liderazgo" — lo descubre a partir de que las palabras "jefatura", "comunicación" y "escucha" tienden a aparecer juntas.</p>
+
+<div class="note">
+<strong>Analogía con el EFA.</strong> Si hiciste la Clase 6 (engagement), esto te sonará familiar. El EFA descubre factores latentes a partir de las correlaciones entre ítems. El LDA descubre tópicos latentes a partir de las co-ocurrencias entre palabras. La lógica es la misma: reducir muchas variables observadas (ítems/palabras) a pocas dimensiones latentes (factores/tópicos). La diferencia es que el EFA usa correlaciones continuas y el LDA usa frecuencias discretas.
+</div>
+
+<!-- §4 -->
+<h2>§4. Ajustar un LDA con <code>topicmodels::LDA()</code></h2>
+
+<pre><code><span class="comment"># install.packages("topicmodels")</span>
+library(topicmodels)
+
+<span class="comment"># Ajustar LDA con k = 4 tópicos</span>
+<span class="func">set.seed</span>(2026)  <span class="comment"># IMPORTANTE: fijar semilla para reproducibilidad</span>
+lda_modelo &lt;- <span class="func">LDA</span>(dtm, k = 4, control = <span class="func">list</span>(seed = 2026))
+
+lda_modelo
+<span class="comment"># A LDA_VEM topic model with 4 topics.</span></code></pre>
+
+<p>Los argumentos clave:</p>
+
+<ul>
+<li><code>dtm</code>: la document-term matrix.</li>
+<li><code>k</code>: el número de tópicos. <strong>Tú lo eliges.</strong> No hay un valor correcto a priori.</li>
+<li><code>control = list(seed = ...)</code>: fija la semilla para que el resultado sea reproducible. Sin semilla, el LDA produce resultados diferentes cada vez que lo corres.</li>
+</ul>
+
+<div class="warning">
+<strong>La semilla importa.</strong> El LDA es un algoritmo iterativo que parte de una inicialización aleatoria. Diferentes semillas pueden producir tópicos diferentes (aunque usualmente similares si el corpus tiene estructura clara). <strong>Siempre fija la semilla</strong> y repórtala en tu informe. Si los tópicos cambian mucho con distintas semillas, eso indica que la estructura temática del corpus es ambigua.
+</div>
+
+<!-- §5 -->
+<h2>§5. Extraer β: las palabras que definen cada tópico</h2>
+
+<p>La distribución <strong>β</strong> (beta) te dice, para cada tópico, la probabilidad de cada palabra. Las palabras con mayor β en un tópico son las que lo definen. Usa <code>tidy()</code> de <code>tidytext</code> para extraerla:</p>
+
+<pre><code><span class="comment"># Extraer β: probabilidades palabra-tópico</span>
+topicos_beta &lt;- <span class="func">tidy</span>(lda_modelo, matrix = <span class="string">"beta"</span>)
+
+topicos_beta
+<span class="comment"># # A tibble: N × 3</span>
+<span class="comment">#   topic term         beta</span>
+<span class="comment">#   &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="comment"># 1     1 jefatura  0.0234</span>
+<span class="comment"># 2     1 equipo    0.0089</span>
+<span class="comment"># 3     1 comunicar 0.0178</span>
+<span class="comment"># ...</span>
+
+<span class="comment"># Top 10 palabras por tópico</span>
+top_beta &lt;- topicos_beta <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(topic) <span class="pipe">|&gt;</span>
+  <span class="func">slice_max</span>(beta, n = 10) <span class="pipe">|&gt;</span>
+  <span class="func">ungroup</span>()</code></pre>
+
+<!-- §6 -->
+<h2>§6. Visualizar tópicos: <code>facet_wrap()</code> con <code>reorder_within()</code></h2>
+
+<p>Quieres un gráfico de barras donde cada faceta muestra las top 10 palabras de un tópico, ordenadas por β. El problema: <code>fct_reorder()</code> ordena globalmente, pero necesitas ordenar <em>dentro de cada faceta</em> independientemente. Para eso, <code>tidytext</code> ofrece <code>reorder_within()</code> y <code>scale_y_reordered()</code>:</p>
+
+<pre><code>top_beta <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(term = <span class="func">reorder_within</span>(term, beta, topic)) <span class="pipe">|&gt;</span>
+  <span class="func">ggplot</span>(<span class="func">aes</span>(x = beta, y = term, fill = <span class="func">factor</span>(topic))) +
+  <span class="func">geom_col</span>(show.legend = FALSE) +
+  <span class="func">facet_wrap</span>(~ topic, scales = <span class="string">"free_y"</span>) +
+  <span class="func">scale_y_reordered</span>() +
+  <span class="func">scale_fill_manual</span>(values = c(<span class="string">"#1B2A4A"</span>, <span class="string">"#B85042"</span>,
+                                <span class="string">"#0D9488"</span>, <span class="string">"#E8B96E"</span>)) +
+  <span class="func">labs</span>(
+    title = <span class="string">"Top 10 palabras por tópico (LDA, k = 4)"</span>,
+    x = <span class="string">"Probabilidad (β)"</span>,
+    y = NULL
+  ) +
+  <span class="func">theme_minimal</span>(base_size = 12)</code></pre>
+
+<p>El truco de <code>reorder_within()</code> agrega un sufijo invisible al término (e.g., "jefatura___1") para que el reordenamiento sea independiente por faceta. <code>scale_y_reordered()</code> elimina el sufijo en la visualización. Es un patrón específico de <code>tidytext</code> que se usa en casi todo gráfico facetado de tópicos.</p>
+
+<h3>Nombrar los tópicos</h3>
+
+<p>El LDA te da números (Tópico 1, 2, 3, 4). Tú les pones nombre mirando las palabras con mayor β. Si el Tópico 2 tiene alta probabilidad para "jefatura", "comunicación", "escucha", "retroalimentación", "apoyo", lo nombras <strong>"Liderazgo y supervisión"</strong>. Si el Tópico 3 tiene "capacitación", "oportunidades", "carrera", "desarrollo", "aprender", lo nombras <strong>"Desarrollo profesional"</strong>.</p>
+
+<div class="warning">
+<strong>Los nombres son tuyos, no del modelo.</strong> El LDA no sabe que el Tópico 2 es sobre liderazgo. Eso es tu interpretación. Dos analistas pueden mirar las mismas palabras y nombrar el tópico de manera diferente. Es una decisión sustantiva, no algorítmica. Defiéndela con las palabras que la respaldan.
+</div>
+
+<!-- §7 -->
+<h2>§7. Extraer γ: a qué tópico pertenece cada documento</h2>
+
+<p>La distribución <strong>γ</strong> (gamma) te dice, para cada documento, la probabilidad de pertenecer a cada tópico:</p>
+
+<pre><code><span class="comment"># Extraer γ: probabilidades documento-tópico</span>
+topicos_gamma &lt;- <span class="func">tidy</span>(lda_modelo, matrix = <span class="string">"gamma"</span>)
+
+topicos_gamma
+<span class="comment"># # A tibble: N × 3</span>
+<span class="comment">#   document topic     gamma</span>
+<span class="comment">#   &lt;chr&gt;    &lt;int&gt;     &lt;dbl&gt;</span>
+<span class="comment"># 1 E001         1 0.0543</span>
+<span class="comment"># 2 E001         2 0.812 </span>
+<span class="comment"># 3 E001         3 0.0234</span>
+<span class="comment"># 4 E001         4 0.110 </span>
+<span class="comment"># ...</span></code></pre>
+
+<p>Cada documento tiene una γ para cada tópico. Las γ de un documento suman 1. En el ejemplo, el documento E001 tiene un γ de 0,81 para el Tópico 2 — es mayoritariamente sobre ese tema.</p>
+
+<h3>Tópico dominante</h3>
+
+<pre><code><span class="comment"># Asignar cada documento a su tópico dominante</span>
+topico_dom &lt;- topicos_gamma <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(document) <span class="pipe">|&gt;</span>
+  <span class="func">slice_max</span>(gamma, n = 1) <span class="pipe">|&gt;</span>
+  <span class="func">ungroup</span>() <span class="pipe">|&gt;</span>
+  <span class="func">rename</span>(id_empleado = document, topico = topic)
+
+<span class="comment"># ¿Cuántos documentos en cada tópico?</span>
+topico_dom <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(topico) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(pct = n / <span class="func">sum</span>(n) * 100)</code></pre>
+
+<!-- §8 -->
+<h2>§8. Elegir k: ¿cuántos tópicos?</h2>
+
+<p>El número de tópicos (k) es la decisión más influyente del análisis y no tiene una respuesta única. Opciones:</p>
+
+<h3>Enfoque cuantitativo: perplexity</h3>
+
+<p>La <strong>perplexity</strong> mide qué tan bien el modelo predice palabras nuevas. Menor perplexity = mejor ajuste. Puedes calcularla para varios k y buscar un "codo":</p>
+
+<pre><code><span class="comment"># Calcular perplexity para varios k</span>
+ks &lt;- c(2, 3, 4, 5, 6, 8)
+perp &lt;- <span class="func">map_dbl</span>(ks, ~ {
+  m &lt;- <span class="func">LDA</span>(dtm, k = .x, control = <span class="func">list</span>(seed = 2026))
+  <span class="func">perplexity</span>(m)
+})
+
+tibble(k = ks, perplexity = perp) <span class="pipe">|&gt;</span>
+  <span class="func">ggplot</span>(<span class="func">aes</span>(x = k, y = perplexity)) +
+  <span class="func">geom_line</span>() + <span class="func">geom_point</span>() +
+  <span class="func">labs</span>(title = <span class="string">"Perplexity por número de tópicos"</span>)</code></pre>
+
+<h3>Enfoque cualitativo: coherencia semántica</h3>
+
+<p>Ajusta el modelo con k = 3, 4, 5, 6. Mira las top 10 palabras de cada tópico. Pregúntate:</p>
+
+<ul>
+<li>¿Los tópicos "cuentan una historia" coherente?</li>
+<li>¿Son distintos entre sí? (Si dos tópicos comparten 6 de 10 palabras, probablemente son el mismo)</li>
+<li>¿Son accionables? (¿Puedo hacer una recomendación basada en cada tópico?)</li>
+</ul>
+
+<div class="tip">
+<strong>Regla práctica.</strong> Para un corpus de 800 respuestas cortas, k entre 3 y 6 suele funcionar. Con k = 2, los tópicos son demasiado genéricos (uno positivo, uno negativo). Con k > 8, los tópicos empiezan a fragmentarse y ser ininterpretables. Para un curso de magíster, el enfoque cualitativo es suficiente y más formativo que la perplexity.
+</div>
+
+<!-- §9 -->
+<h2>§9. Redes de co-ocurrencia: de los pares al grafo</h2>
+
+<p>Una <strong>red de co-ocurrencia</strong> es un enfoque complementario al LDA. En vez de asignar cada documento a un tópico, muestra qué palabras aparecen juntas en los mismos documentos. Las palabras que co-ocurren frecuentemente forman clusters visuales que representan temas.</p>
+
+<h3><code>widyr::pairwise_count()</code></h3>
+
+<p>El paquete <code>widyr</code> (Robinson, 2020) tiene una función elegante para calcular co-ocurrencias:</p>
+
+<pre><code><span class="comment"># install.packages("widyr")</span>
+library(widyr)
+
+<span class="comment"># Contar pares de palabras que co-ocurren en la misma respuesta</span>
+cooc &lt;- tokens_limpios <span class="pipe">|&gt;</span>
+  <span class="func">pairwise_count</span>(word, id_empleado, sort = TRUE)
+
+cooc
+<span class="comment"># # A tibble: N × 3</span>
+<span class="comment">#   item1       item2           n</span>
+<span class="comment">#   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt;</span>
+<span class="comment"># 1 jefatura    comunicación   45</span>
+<span class="comment"># 2 comunicación jefatura      45</span>
+<span class="comment"># 3 carga       horario        38</span>
+<span class="comment"># ...</span></code></pre>
+
+<p>La función cuenta cuántas veces cada par de palabras aparece en el mismo documento (la misma respuesta). El resultado es simétrico: si "jefatura" co-ocurre con "comunicación" 45 veces, lo mismo al revés.</p>
+
+<!-- §10 -->
+<h2>§10. Crear y visualizar grafos con <code>igraph</code> y <code>ggraph</code></h2>
+
+<p>Para visualizar la red necesitas dos paquetes: <code>igraph</code> (crea y manipula grafos) y <code>ggraph</code> (los visualiza con la gramática de <code>ggplot2</code>).</p>
+
+<pre><code><span class="comment"># install.packages(c("igraph", "ggraph"))</span>
+library(igraph)
+library(ggraph)
+
+<span class="comment"># Filtrar: solo pares con co-ocurrencia ≥ 8</span>
+cooc_filt &lt;- cooc <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(n &gt;= 8)
+
+<span class="comment"># Crear el grafo</span>
+grafo &lt;- <span class="func">graph_from_data_frame</span>(cooc_filt, directed = FALSE)
+
+<span class="comment"># Visualizar</span>
+<span class="func">set.seed</span>(42)
+<span class="func">ggraph</span>(grafo, layout = <span class="string">"fr"</span>) +
+  <span class="func">geom_edge_link</span>(<span class="func">aes</span>(edge_alpha = n, edge_width = n),
+                 color = <span class="string">"#A7BEAE"</span>, show.legend = FALSE) +
+  <span class="func">geom_node_point</span>(color = <span class="string">"#0D9488"</span>, size = 4) +
+  <span class="func">geom_node_text</span>(<span class="func">aes</span>(label = name), repel = TRUE,
+                 size = 3.5, color = <span class="string">"#1B2A4A"</span>) +
+  <span class="func">labs</span>(title = <span class="string">"Red de co-ocurrencia de palabras"</span>) +
+  <span class="func">theme_void</span>()</code></pre>
+
+<p>Desglose de la gramática de <code>ggraph</code>:</p>
+
+<ul>
+<li><code>ggraph(grafo, layout = "fr")</code>: inicia el gráfico. <code>"fr"</code> es el algoritmo de layout Fruchterman-Reingold, que coloca nodos conectados cerca entre sí. Otras opciones: <code>"kk"</code> (Kamada-Kawai), <code>"circle"</code>, <code>"tree"</code>.</li>
+<li><code>geom_edge_link()</code>: dibuja las aristas (conexiones). <code>edge_alpha</code> y <code>edge_width</code> modulan la transparencia y el grosor según la co-ocurrencia.</li>
+<li><code>geom_node_point()</code>: dibuja los nodos (palabras) como puntos.</li>
+<li><code>geom_node_text()</code>: agrega las etiquetas. <code>repel = TRUE</code> evita la superposición.</li>
+</ul>
+
+<div class="note">
+<strong>Conexión con la Clase 12.</strong> La semana que viene construirás redes de <em>personas</em>, no de palabras. Los nodos serán empleados y las aristas serán relaciones de colaboración. Las funciones — <code>igraph</code>, <code>ggraph</code>, <code>graph_from_data_frame()</code> — son exactamente las mismas. Lo que cambia es lo que representan los nodos.
+</div>
+
+<!-- §11 -->
+<h2>§11. Correlación phi entre palabras: <code>pairwise_cor()</code></h2>
+
+<p>Además de la co-ocurrencia cruda (que favorece las palabras frecuentes), puedes calcular la <strong>correlación phi</strong> entre pares de palabras. La phi mide si dos palabras co-ocurren <em>más de lo esperado por azar</em>, controlando por sus frecuencias individuales:</p>
+
+<pre><code><span class="comment"># Correlación phi entre palabras</span>
+cor_palabras &lt;- tokens_limpios <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(word) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(<span class="func">n</span>() &gt;= 10) <span class="pipe">|&gt;</span>  <span class="comment"># solo palabras con frecuencia ≥ 10</span>
+  <span class="func">ungroup</span>() <span class="pipe">|&gt;</span>
+  <span class="func">pairwise_cor</span>(word, id_empleado, sort = TRUE)
+
+<span class="comment"># Top correlaciones: palabras que aparecen juntas más de lo esperado</span>
+head(cor_palabras, 20)</code></pre>
+
+<p>La correlación phi va de −1 a 1. Un phi alto (e.g., 0,45) entre "carga" y "laboral" significa que estas palabras co-ocurren mucho más de lo que esperarías dada su frecuencia individual. Es la misma lógica de la correlación de Pearson, pero para datos binarios (la palabra aparece o no en cada documento).</p>
+
+<!-- §12 -->
+<h2>§12. Cruce texto × cuantitativo: la triangulación</h2>
+
+<p>El momento más poderoso del análisis es cuando cruzas los resultados del text mining con los datos cuantitativos que ya tienes. El mecanismo es el <code>left_join()</code> que dominas desde la Clase 2:</p>
+
+<pre><code><span class="comment"># Join del tópico dominante con datos de empleados</span>
+topicos_con_datos &lt;- topico_dom <span class="pipe">|&gt;</span>
+  <span class="func">left_join</span>(empleados, by = <span class="string">"id_empleado"</span>)
+
+<span class="comment"># Pregunta 1: ¿Qué tópicos dominan en cada departamento?</span>
+topicos_con_datos <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(departamento, topico) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(departamento) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(pct = n / <span class="func">sum</span>(n) * 100) <span class="pipe">|&gt;</span>
+  <span class="func">ungroup</span>()
+
+<span class="comment"># Pregunta 2: ¿Los que se fueron hablan de temas distintos?</span>
+topicos_con_datos <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(rotacion, topico) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(rotacion) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(pct = n / <span class="func">sum</span>(n) * 100)
+
+<span class="comment"># Pregunta 3: ¿Los jóvenes hablan más de desarrollo?</span>
+topicos_con_datos <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(grupo_edad = <span class="func">if_else</span>(edad &lt; 30, <span class="string">"&lt; 30"</span>, <span class="string">"≥ 30"</span>)) <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(grupo_edad, topico) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(grupo_edad) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(pct = n / <span class="func">sum</span>(n) * 100)</code></pre>
+
+<div class="business">
+<strong>El argumento para el directorio.</strong> La triangulación — encontrar la misma conclusión desde dos fuentes independientes — es más persuasiva que cualquier fuente por separado. Si la encuesta de engagement (Clase 6) dice que Soporte Técnico tiene el peor engagement, y el text mining dice que Soporte Técnico es donde más se habla de liderazgo deficiente, el argumento se fortalece. "No les traemos solo un número ni solo una queja. Les traemos la convergencia de la evidencia."
+</div>
+
+<!-- §13 -->
+<h2>§13. Text mining vs. IA generativa: cuándo usar cada uno</h2>
+
+<p>En 2026, tienes dos herramientas para analizar texto: el text mining algorítmico (lo que aprendiste en estos apuntes) y la IA generativa (pedirle a un LLM que resuma los textos). No son sustitutos; son complementos:</p>
+
+<table>
+<tr><th>Dimensión</th><th>Text mining algorítmico</th><th>Resumen de IA (LLM)</th></tr>
+<tr><td><strong>Reproducibilidad</strong></td><td>Total: mismo código → mismo resultado</td><td>Baja: mismo prompt → respuestas distintas</td></tr>
+<tr><td><strong>Transparencia</strong></td><td>Alta: cada paso es auditable</td><td>Baja: no sabes qué ponderó</td></tr>
+<tr><td><strong>Sensibilidad al matiz</strong></td><td>Baja: bag-of-words</td><td>Alta: entiende sarcasmo, contexto</td></tr>
+<tr><td><strong>Cuantificabilidad</strong></td><td>Alta: frecuencias, proporciones, probabilidades</td><td>Baja: produce texto, no números</td></tr>
+<tr><td><strong>Escalabilidad</strong></td><td>Alta: millones de documentos</td><td>Limitada: ventana de contexto</td></tr>
+</table>
+
+<p>La recomendación práctica: usa text mining para las <strong>métricas</strong> (frecuencias, sentimiento, distribución de tópicos) y la IA para la <strong>interpretación</strong> (nombrar temas, detectar matices, redactar el informe). Pero siempre reporta que usaste ambos y cómo los combinaste.</p>
+
+<!-- §14 -->
+<h2>§14. Resumen del kit técnico</h2>
+
+<table>
+<tr><th>Función</th><th>Paquete</th><th>¿Para qué?</th></tr>
+<tr><td><code>unnest_tokens()</code></td><td>tidytext</td><td>Tokenizar texto (palabras, bigramas, oraciones)</td></tr>
+<tr><td><code>anti_join(stopwords)</code></td><td>dplyr</td><td>Eliminar stopwords</td></tr>
+<tr><td><code>count(word)</code></td><td>dplyr</td><td>Frecuencia de palabras</td></tr>
+<tr><td><code>wordcloud2()</code></td><td>wordcloud2</td><td>Wordcloud interactiva</td></tr>
+<tr><td><code>separate() / unite()</code></td><td>tidyr</td><td>Manipular bigramas</td></tr>
+<tr><td><code>inner_join(lexico)</code></td><td>dplyr</td><td>Análisis de sentimiento</td></tr>
+<tr><td><code>cast_dtm()</code></td><td>tidytext</td><td>Tidy → Document-Term Matrix</td></tr>
+<tr><td><code>LDA()</code></td><td>topicmodels</td><td>Ajustar modelo de tópicos</td></tr>
+<tr><td><code>tidy(lda, "beta")</code></td><td>tidytext</td><td>Palabras por tópico</td></tr>
+<tr><td><code>tidy(lda, "gamma")</code></td><td>tidytext</td><td>Documentos por tópico</td></tr>
+<tr><td><code>reorder_within()</code></td><td>tidytext</td><td>Reordenar en facetas</td></tr>
+<tr><td><code>pairwise_count()</code></td><td>widyr</td><td>Co-ocurrencia de palabras</td></tr>
+<tr><td><code>pairwise_cor()</code></td><td>widyr</td><td>Correlación phi entre palabras</td></tr>
+<tr><td><code>graph_from_data_frame()</code></td><td>igraph</td><td>Crear grafo</td></tr>
+<tr><td><code>ggraph() + geom_edge_link() + geom_node_point()</code></td><td>ggraph</td><td>Visualizar redes</td></tr>
+</table>
+
+<p><strong>Todas las funciones de análisis</strong> (<code>count()</code>, <code>filter()</code>, <code>group_by()</code>, <code>left_join()</code>, <code>ggplot()</code>) <strong>son las mismas que usas desde la Clase 1.</strong> Lo nuevo es la preparación (tokenización, stopwords, DTM) y dos paquetes específicos (<code>topicmodels</code> para LDA, <code>widyr</code>/<code>ggraph</code> para redes). El texto es un dato más; el tidyverse es la gramática.
+
+<footer>
+<p>Apunte 28 · Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · Prof. René Gempp · 2026</p>
+<p><strong>Referencias principales:</strong> Silge, J. y Robinson, D. (2017). <em>Text Mining with R: A Tidy Approach</em>. O'Reilly. — Blei, D. M., Ng, A. Y. y Jordan, M. I. (2003). Latent Dirichlet allocation. <em>JMLR, 3</em>, 993–1022. — Grün, B. y Hornik, K. (2011). topicmodels: An R package for fitting topic models. <em>Journal of Statistical Software, 40</em>(13), 1–30.</p>
+</footer>
+
+</body>
+</html>

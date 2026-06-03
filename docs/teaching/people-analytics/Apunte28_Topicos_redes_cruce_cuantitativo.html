@@ -41,21 +41,21 @@
 <h1>Apunte 28 — Tópicos, redes de co-ocurrencia y cruce texto-cuantitativo</h1>
 <p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 11 · Prof. René Gempp</p>
 
-<!-- §1 -->
-<h2>§1. De las palabras a los temas</h2>
+<!-- 1 -->
+<h2>1. De las palabras a los temas</h2>
 
 <p>En el Apunte 27 aprendiste a contar palabras y a calcular sentimientos. Eso responde a <em>qué palabras se usan</em> y <em>qué tono tienen</em>. Pero no responde a <em>de qué hablan</em>. Para eso necesitas herramientas que descubran <strong>temas</strong> — agrupaciones de palabras que aparecen juntas porque se refieren al mismo asunto.</p>
 
 <p>Este apunte cubre tres herramientas complementarias para descubrir temas:</p>
 
 <ol>
-<li><strong>Redes de co-ocurrencia</strong> (§9–11): un enfoque visual que muestra qué palabras aparecen juntas en las mismas respuestas, revelando clusters temáticos.</li>
-<li><strong>Topic modeling con LDA</strong> (§2–8): un modelo probabilístico que asigna automáticamente cada documento a una mezcla de tópicos.</li>
-<li><strong>Cruce texto × cuantitativo</strong> (§12): la integración de los temas descubiertos con los datos numéricos que ya tienes.</li>
+<li><strong>Redes de co-ocurrencia</strong> (9–11): un enfoque visual que muestra qué palabras aparecen juntas en las mismas respuestas, revelando clusters temáticos.</li>
+<li><strong>Topic modeling con LDA</strong> (2–8): un modelo probabilístico que asigna automáticamente cada documento a una mezcla de tópicos.</li>
+<li><strong>Cruce texto × cuantitativo</strong> (12): la integración de los temas descubiertos con los datos numéricos que ya tienes.</li>
 </ol>
 
-<!-- §2 -->
-<h2>§2. La Document-Term Matrix (DTM)</h2>
+<!-- 2 -->
+<h2>2. La Document-Term Matrix (DTM)</h2>
 
 <p>Antes de ajustar un modelo de tópicos, necesitas convertir tus datos tidy en una <strong>document-term matrix</strong> (DTM): una matriz donde cada fila es un documento (una respuesta), cada columna es un término (una palabra), y cada celda contiene la frecuencia de ese término en ese documento. La mayoría de las celdas son 0 (cada respuesta usa una fracción pequeña del vocabulario total), por eso la DTM se almacena como una <strong>matriz dispersa</strong>.</p>
 
@@ -78,8 +78,8 @@ dtm
 <strong>La operación inversa.</strong> Si alguna vez recibes una DTM y necesitas volver al formato tidy, usa <code>tidy(dtm)</code>. La función <code>tidy()</code> de <code>tidytext</code> funciona con objetos de <code>tm</code> y <code>topicmodels</code>, igual que <code>broom::tidy()</code> funciona con modelos estadísticos.
 </div>
 
-<!-- §3 -->
-<h2>§3. LDA: la intuición del modelo generativo</h2>
+<!-- 3 -->
+<h2>3. LDA: la intuición del modelo generativo</h2>
 
 <p>El <strong>Latent Dirichlet Allocation</strong> (LDA; Blei, Ng &amp; Jordan, 2003) es el modelo de tópicos más utilizado. Su intuición generativa es que cada documento fue "escrito" por un proceso en dos pasos:</p>
 
@@ -94,8 +94,8 @@ dtm
 <strong>Analogía con el EFA.</strong> Si hiciste la Clase 6 (engagement), esto te sonará familiar. El EFA descubre factores latentes a partir de las correlaciones entre ítems. El LDA descubre tópicos latentes a partir de las co-ocurrencias entre palabras. La lógica es la misma: reducir muchas variables observadas (ítems/palabras) a pocas dimensiones latentes (factores/tópicos). La diferencia es que el EFA usa correlaciones continuas y el LDA usa frecuencias discretas.
 </div>
 
-<!-- §4 -->
-<h2>§4. Ajustar un LDA con <code>topicmodels::LDA()</code></h2>
+<!-- 4 -->
+<h2>4. Ajustar un LDA con <code>topicmodels::LDA()</code></h2>
 
 <pre><code><span class="comment"># install.packages("topicmodels")</span>
 library(topicmodels)
@@ -119,8 +119,8 @@ lda_modelo
 <strong>La semilla importa.</strong> El LDA es un algoritmo iterativo que parte de una inicialización aleatoria. Diferentes semillas pueden producir tópicos diferentes (aunque usualmente similares si el corpus tiene estructura clara). <strong>Siempre fija la semilla</strong> y repórtala en tu informe. Si los tópicos cambian mucho con distintas semillas, eso indica que la estructura temática del corpus es ambigua.
 </div>
 
-<!-- §5 -->
-<h2>§5. Extraer β: las palabras que definen cada tópico</h2>
+<!-- 5 -->
+<h2>5. Extraer β: las palabras que definen cada tópico</h2>
 
 <p>La distribución <strong>β</strong> (beta) te dice, para cada tópico, la probabilidad de cada palabra. Las palabras con mayor β en un tópico son las que lo definen. Usa <code>tidy()</code> de <code>tidytext</code> para extraerla:</p>
 
@@ -142,8 +142,8 @@ top_beta &lt;- topicos_beta <span class="pipe">|&gt;</span>
   <span class="func">slice_max</span>(beta, n = 10) <span class="pipe">|&gt;</span>
   <span class="func">ungroup</span>()</code></pre>
 
-<!-- §6 -->
-<h2>§6. Visualizar tópicos: <code>facet_wrap()</code> con <code>reorder_within()</code></h2>
+<!-- 6 -->
+<h2>6. Visualizar tópicos: <code>facet_wrap()</code> con <code>reorder_within()</code></h2>
 
 <p>Quieres un gráfico de barras donde cada faceta muestra las top 10 palabras de un tópico, ordenadas por β. El problema: <code>fct_reorder()</code> ordena globalmente, pero necesitas ordenar <em>dentro de cada faceta</em> independientemente. Para eso, <code>tidytext</code> ofrece <code>reorder_within()</code> y <code>scale_y_reordered()</code>:</p>
 
@@ -172,8 +172,8 @@ top_beta &lt;- topicos_beta <span class="pipe">|&gt;</span>
 <strong>Los nombres son tuyos, no del modelo.</strong> El LDA no sabe que el Tópico 2 es sobre liderazgo. Eso es tu interpretación. Dos analistas pueden mirar las mismas palabras y nombrar el tópico de manera diferente. Es una decisión sustantiva, no algorítmica. Defiéndela con las palabras que la respaldan.
 </div>
 
-<!-- §7 -->
-<h2>§7. Extraer γ: a qué tópico pertenece cada documento</h2>
+<!-- 7 -->
+<h2>7. Extraer γ: a qué tópico pertenece cada documento</h2>
 
 <p>La distribución <strong>γ</strong> (gamma) te dice, para cada documento, la probabilidad de pertenecer a cada tópico:</p>
 
@@ -206,8 +206,8 @@ topico_dom <span class="pipe">|&gt;</span>
   <span class="func">count</span>(topico) <span class="pipe">|&gt;</span>
   <span class="func">mutate</span>(pct = n / <span class="func">sum</span>(n) * 100)</code></pre>
 
-<!-- §8 -->
-<h2>§8. Elegir k: ¿cuántos tópicos?</h2>
+<!-- 8 -->
+<h2>8. Elegir k: ¿cuántos tópicos?</h2>
 
 <p>El número de tópicos (k) es la decisión más influyente del análisis y no tiene una respuesta única. Opciones:</p>
 
@@ -241,8 +241,8 @@ tibble(k = ks, perplexity = perp) <span class="pipe">|&gt;</span>
 <strong>Regla práctica.</strong> Para un corpus de 800 respuestas cortas, k entre 3 y 6 suele funcionar. Con k = 2, los tópicos son demasiado genéricos (uno positivo, uno negativo). Con k > 8, los tópicos empiezan a fragmentarse y ser ininterpretables. Para un curso de magíster, el enfoque cualitativo es suficiente y más formativo que la perplexity.
 </div>
 
-<!-- §9 -->
-<h2>§9. Redes de co-ocurrencia: de los pares al grafo</h2>
+<!-- 9 -->
+<h2>9. Redes de co-ocurrencia: de los pares al grafo</h2>
 
 <p>Una <strong>red de co-ocurrencia</strong> es un enfoque complementario al LDA. En vez de asignar cada documento a un tópico, muestra qué palabras aparecen juntas en los mismos documentos. Las palabras que co-ocurren frecuentemente forman clusters visuales que representan temas.</p>
 
@@ -268,8 +268,8 @@ cooc
 
 <p>La función cuenta cuántas veces cada par de palabras aparece en el mismo documento (la misma respuesta). El resultado es simétrico: si "jefatura" co-ocurre con "comunicación" 45 veces, lo mismo al revés.</p>
 
-<!-- §10 -->
-<h2>§10. Crear y visualizar grafos con <code>igraph</code> y <code>ggraph</code></h2>
+<!-- 10 -->
+<h2>10. Crear y visualizar grafos con <code>igraph</code> y <code>ggraph</code></h2>
 
 <p>Para visualizar la red necesitas dos paquetes: <code>igraph</code> (crea y manipula grafos) y <code>ggraph</code> (los visualiza con la gramática de <code>ggplot2</code>).</p>
 
@@ -308,8 +308,8 @@ grafo &lt;- <span class="func">graph_from_data_frame</span>(cooc_filt, directed 
 <strong>Conexión con la Clase 12.</strong> La semana que viene construirás redes de <em>personas</em>, no de palabras. Los nodos serán empleados y las aristas serán relaciones de colaboración. Las funciones — <code>igraph</code>, <code>ggraph</code>, <code>graph_from_data_frame()</code> — son exactamente las mismas. Lo que cambia es lo que representan los nodos.
 </div>
 
-<!-- §11 -->
-<h2>§11. Correlación phi entre palabras: <code>pairwise_cor()</code></h2>
+<!-- 11 -->
+<h2>11. Correlación phi entre palabras: <code>pairwise_cor()</code></h2>
 
 <p>Además de la co-ocurrencia cruda (que favorece las palabras frecuentes), puedes calcular la <strong>correlación phi</strong> entre pares de palabras. La phi mide si dos palabras co-ocurren <em>más de lo esperado por azar</em>, controlando por sus frecuencias individuales:</p>
 
@@ -325,8 +325,8 @@ head(cor_palabras, 20)</code></pre>
 
 <p>La correlación phi va de −1 a 1. Un phi alto (e.g., 0,45) entre "carga" y "laboral" significa que estas palabras co-ocurren mucho más de lo que esperarías dada su frecuencia individual. Es la misma lógica de la correlación de Pearson, pero para datos binarios (la palabra aparece o no en cada documento).</p>
 
-<!-- §12 -->
-<h2>§12. Cruce texto × cuantitativo: la triangulación</h2>
+<!-- 12 -->
+<h2>12. Cruce texto × cuantitativo: la triangulación</h2>
 
 <p>El momento más poderoso del análisis es cuando cruzas los resultados del text mining con los datos cuantitativos que ya tienes. El mecanismo es el <code>left_join()</code> que dominas desde la Clase 2:</p>
 
@@ -358,8 +358,8 @@ topicos_con_datos <span class="pipe">|&gt;</span>
 <strong>El argumento para el directorio.</strong> La triangulación — encontrar la misma conclusión desde dos fuentes independientes — es más persuasiva que cualquier fuente por separado. Si la encuesta de engagement (Clase 6) dice que Soporte Técnico tiene el peor engagement, y el text mining dice que Soporte Técnico es donde más se habla de liderazgo deficiente, el argumento se fortalece. "No les traemos solo un número ni solo una queja. Les traemos la convergencia de la evidencia."
 </div>
 
-<!-- §13 -->
-<h2>§13. Text mining vs. IA generativa: cuándo usar cada uno</h2>
+<!-- 13 -->
+<h2>13. Text mining vs. IA generativa: cuándo usar cada uno</h2>
 
 <p>En 2026, tienes dos herramientas para analizar texto: el text mining algorítmico (lo que aprendiste en estos apuntes) y la IA generativa (pedirle a un LLM que resuma los textos). No son sustitutos; son complementos:</p>
 
@@ -374,8 +374,8 @@ topicos_con_datos <span class="pipe">|&gt;</span>
 
 <p>La recomendación práctica: usa text mining para las <strong>métricas</strong> (frecuencias, sentimiento, distribución de tópicos) y la IA para la <strong>interpretación</strong> (nombrar temas, detectar matices, redactar el informe). Pero siempre reporta que usaste ambos y cómo los combinaste.</p>
 
-<!-- §14 -->
-<h2>§14. Resumen del kit técnico</h2>
+<!-- 14 -->
+<h2>14. Resumen del kit técnico</h2>
 
 <table>
 <tr><th>Función</th><th>Paquete</th><th>¿Para qué?</th></tr>

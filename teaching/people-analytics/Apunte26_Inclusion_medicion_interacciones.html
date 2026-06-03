@@ -45,8 +45,8 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
 <h1>Apunte 26 — Inclusión percibida: medición, brechas e interacciones</h1>
 <p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 10 · Prof. René Gempp</p>
 
-<!-- §1 -->
-<h2>§1. ¿Qué es la inclusión organizacional?</h2>
+<!-- 1 -->
+<h2>1. ¿Qué es la inclusión organizacional?</h2>
 
 <p>La definición más citada es la de Shore, Randel, Chung, Dean, Holcombe Ehrhart y Singh (2011, p. 1265): la inclusión es <em>"el grado en que un empleado percibe que es un miembro valorado del grupo de trabajo a través de un trato que satisface sus necesidades de <strong>pertenencia</strong> y <strong>singularidad</strong>"</em>.</p>
 
@@ -60,8 +60,8 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
 
 <p>La inclusión genuina requiere <em>ambas</em> dimensiones simultáneamente. Un grupo donde todos se sienten aceptados pero no pueden expresar sus diferencias es asimilación, no inclusión.</p>
 
-<!-- §2 -->
-<h2>§2. Escalas de inclusión: Nishii (2013)</h2>
+<!-- 2 -->
+<h2>2. Escalas de inclusión: Nishii (2013)</h2>
 
 <p>Lisa Nishii (2013) desarrolló una escala de <strong>Clima de Inclusión</strong> con 31 ítems en tres dimensiones:</p>
 
@@ -77,8 +77,8 @@ window.MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };
 <strong>Versiones abreviadas.</strong> En la práctica corporativa, 31 ítems es largo. La encuesta de InnovaCo usa 10 ítems que capturan las tres dimensiones más un componente global. Esto es una simplificación didáctica, no un estándar psicométrico. El apunte lo declara; el rigor lo exige.
 </div>
 
-<!-- §3 -->
-<h2>§3. Ítems reversos: por qué existen y cómo recodificar</h2>
+<!-- 3 -->
+<h2>3. Ítems reversos: por qué existen y cómo recodificar</h2>
 
 <p>Los ítems reversos (formulados en dirección negativa) se incluyen para detectar respuestas por aquiescencia y para capturar matices que los ítems positivos no capturan. Los reconoces porque una persona con alta inclusión <em>estaría en desacuerdo</em> con ellos.</p>
 
@@ -94,8 +94,8 @@ datos <span class="pipe">&lt;-</span> datos <span class="pipe">|&gt;</span>
 <strong>Lección de la Clase 6.</strong> ¿Recuerdas qué pasaba con el alpha de Cronbach si olvidabas recodificar los ítems reversos del engagement? Caía de 0,84 a 0,31. Lo mismo pasa aquí. Siempre recodifica antes de calcular promedios o alpha.
 </div>
 
-<!-- §4 -->
-<h2>§4. Puntaje global e ítems por dimensión</h2>
+<!-- 4 -->
+<h2>4. Puntaje global e ítems por dimensión</h2>
 
 <pre><code><span class="comment"># Puntaje global = promedio de los 10 ítems (reversos ya corregidos)</span>
 datos <span class="pipe">&lt;-</span> datos <span class="pipe">|&gt;</span>
@@ -109,8 +109,8 @@ datos <span class="pipe">&lt;-</span> datos <span class="pipe">|&gt;</span>
 
 <p>Usamos la <strong>media</strong> (no la suma) porque mantiene la escala original (1–5) y facilita la interpretación: "una persona con inclusión global de 3,8 tiene, en promedio, un nivel de acuerdo moderado-alto con las afirmaciones de inclusión".</p>
 
-<!-- §5 -->
-<h2>§5. Análisis de brechas</h2>
+<!-- 5 -->
+<h2>5. Análisis de brechas</h2>
 
 <h3>Descriptivos por subgrupo</h3>
 
@@ -146,8 +146,8 @@ brechas <span class="pipe">|&gt;</span>
   <span class="func">geom_point</span>(size = 5) +
   <span class="func">geom_line</span>(<span class="func">aes</span>(group = nivel), color = <span class="string">"grey60"</span>)</code></pre>
 
-<!-- §6 -->
-<h2>§6. Interacciones en regresión lineal</h2>
+<!-- 6 -->
+<h2>6. Interacciones en regresión lineal</h2>
 
 <p>Una <strong>interacción</strong> significa que el efecto de una variable sobre el outcome depende del valor de otra variable. En el contexto de DEI: el efecto del género sobre la inclusión depende del nivel jerárquico.</p>
 
@@ -169,8 +169,8 @@ modelo_1 <span class="pipe">&lt;-</span> <span class="func">lm</span>(inclusion_
 modelo_2 <span class="pipe">&lt;-</span> <span class="func">lm</span>(inclusion_global ~ genero * nivel_jerarquico +
               departamento + antiguedad_anios, data = datos)</code></pre>
 
-<!-- §7 -->
-<h2>§7. Interpretar coeficientes de interacción</h2>
+<!-- 7 -->
+<h2>7. Interpretar coeficientes de interacción</h2>
 
 <p>Este es el punto más difícil conceptualmente. Supongamos que el output del Modelo 2 incluye:</p>
 
@@ -189,8 +189,8 @@ modelo_2 <span class="pipe">&lt;-</span> <span class="func">lm</span>(inclusion_
 <strong>Regla práctica.</strong> Si el coeficiente de interacción tiene el mismo signo que el efecto principal del género (ambos negativos), la brecha se agranda en ese nivel. Si tiene signo opuesto, la brecha se reduce.
 </div>
 
-<!-- §8 -->
-<h2>§8. Visualizar la interacción</h2>
+<!-- 8 -->
+<h2>8. Visualizar la interacción</h2>
 
 <p>La forma más clara de comunicar una interacción es un gráfico con líneas separadas por grupo:</p>
 
@@ -213,8 +213,8 @@ nuevos$pred <span class="pipe">&lt;-</span> <span class="func">predict</span>(mo
 
 <p><strong>Lectura del gráfico:</strong> si las líneas son paralelas, no hay interacción (el efecto del género es constante en todos los niveles). Si las líneas divergen, la interacción es real: la brecha cambia según el nivel.</p>
 
-<!-- §9 -->
-<h2>§9. Comparar modelos con y sin interacción</h2>
+<!-- 9 -->
+<h2>9. Comparar modelos con y sin interacción</h2>
 
 <pre><code><span class="comment"># F-test de restricción (H₀: coeficientes de interacción = 0)</span>
 <span class="func">anova</span>(modelo_1, modelo_2)
@@ -227,8 +227,8 @@ nuevos$pred <span class="pipe">&lt;-</span> <span class="func">predict</span>(mo
 <strong>Criterio para incluir la interacción.</strong> No basta con que sea significativa. Debe tener (1) razón teórica (la literatura sugiere que el efecto del género varía por nivel) Y (2) evidencia empírica (el p-valor y la mejora en AIC lo confirman). Incluir interacciones "por si acaso" infla el modelo y dificulta la interpretación.
 </div>
 
-<!-- §10 -->
-<h2>§10. Ética de la analítica de diversidad</h2>
+<!-- 10 -->
+<h2>10. Ética de la analítica de diversidad</h2>
 
 <p>La misma herramienta que diagnostica puede vigilar. Cinco principios para la práctica responsable:</p>
 
@@ -248,8 +248,8 @@ nuevos$pred <span class="pipe">&lt;-</span> <span class="func">predict</span>(mo
   <li><strong>Ley 20.609</strong> (Ley Zamudio): no discriminación por múltiples motivos incluyendo sexo, orientación sexual, identidad de género, edad, apariencia.</li>
 </ul>
 
-<!-- §11 -->
-<h2>§11. Errores frecuentes</h2>
+<!-- 11 -->
+<h2>11. Errores frecuentes</h2>
 
 <table>
 <tr><th>Error</th><th>Corrección</th></tr>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 29 — Redes organizacionales: igraph y tidygraph | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 29 — Redes organizacionales: igraph y tidygraph</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 12 · Prof. René Gempp</p>
+
+<!-- 1 -->
+<h2>1. ¿Por qué las relaciones importan?</h2>
+
+<p>Durante 11 semanas has analizado datos donde cada fila era un empleado y cada columna un atributo: edad, departamento, satisfacción, salario. Esa perspectiva — llamada <strong>centrada en variables</strong> — es la columna vertebral de la estadística aplicada. Pero tiene un punto ciego: no ve las <strong>relaciones entre personas</strong>.</p>
+
+<p>Un empleado puede tener alta satisfacción, buen desempeño y bajo riesgo de rotación según todos tus modelos — y ser, al mismo tiempo, el único canal de comunicación entre dos departamentos. Si se va, tu modelo de rotación no detecta el problema. Lo que necesitas es una herramienta que mire la <em>estructura de las relaciones</em>, no solo los <em>atributos individuales</em>.</p>
+
+<p>Esa herramienta es el <strong>análisis de redes sociales</strong> (Social Network Analysis, SNA), y su aplicación en organizaciones se llama <strong>ONA</strong> (Organizational Network Analysis). En esta clase pasamos del paradigma centrado en variables al <strong>paradigma reticular</strong> — centrado en relaciones (Borgatti, Mehra, Brass & Labianca, 2009).</p>
+
+<table>
+<tr><th>Dimensión</th><th>Centrado en variables</th><th>Centrado en relaciones</th></tr>
+<tr><td><strong>Unidad de análisis</strong></td><td>La persona</td><td>La relación (díada)</td></tr>
+<tr><td><strong>Estructura de datos</strong></td><td>Tabla rectangular (CSV)</td><td>Grafo (nodos + aristas)</td></tr>
+<tr><td><strong>Pregunta típica</strong></td><td>¿Qué variables predicen Y?</td><td>¿Qué posición en la red se asocia con Y?</td></tr>
+<tr><td><strong>Supuesto clave</strong></td><td>Observaciones independientes</td><td>Las personas conectadas se influyen</td></tr>
+<tr><td><strong>Software</strong></td><td><code>lm()</code>, <code>glm()</code>, <code>psych</code></td><td><code>igraph</code>, <code>tidygraph</code>, <code>ggraph</code></td></tr>
+</table>
+
+<div class="tip">
+<strong>Conexión con la Clase 11.</strong> La semana pasada construiste una red de co-ocurrencia de <em>palabras</em> con <code>igraph</code> y <code>ggraph</code>. Esta semana construyes una red de <em>personas</em>. Las herramientas son las mismas; lo que cambia es lo que representan los nodos.
+</div>
+
+<!-- 2 -->
+<h2>2. ¿Qué es un grafo?</h2>
+
+<p>Un <strong>grafo</strong> es un objeto matemático compuesto por:</p>
+<ul>
+<li><strong>Nodos</strong> (o vértices): las entidades. En ONA, los empleados.</li>
+<li><strong>Aristas</strong> (o enlaces): las relaciones entre nodos. En ONA, las conexiones de colaboración, consejo o confianza.</li>
+</ul>
+
+<p>Cada arista puede tener propiedades adicionales:</p>
+<ul>
+<li><strong>Dirección:</strong> ¿la relación es unidireccional (Ana consulta a Pedro) o bidireccional (Ana y Pedro colaboran mutuamente)?</li>
+<li><strong>Peso:</strong> ¿la interacción es diaria, semanal o mensual? El peso codifica la intensidad.</li>
+</ul>
+
+<p>En R, el paquete <code>igraph</code> representa grafos como objetos especiales que almacenan nodos, aristas y sus propiedades. No son data frames — son estructuras propias que requieren funciones específicas para manipular.</p>
+
+<!-- 3 -->
+<h2>3. Tipos de redes organizacionales</h2>
+
+<p>Cross y Parker (2004) identificaron cuatro redes que coexisten en toda organización:</p>
+
+<table>
+<tr><th>Tipo de red</th><th>Pregunta generadora</th><th>¿Qué mide?</th></tr>
+<tr><td><strong>Comunicación</strong></td><td>"¿Con quién hablas regularmente de trabajo?"</td><td>Flujo de información operativa</td></tr>
+<tr><td><strong>Consejo</strong></td><td>"¿A quién acudes cuando necesitas consejo técnico?"</td><td>Flujo de conocimiento experto</td></tr>
+<tr><td><strong>Confianza</strong></td><td>"¿En quién confías para compartir información delicada?"</td><td>Capital social relacional</td></tr>
+<tr><td><strong>Energía</strong></td><td>"¿Después de interactuar con quién te sientes más motivado?"</td><td>Contagio emocional positivo</td></tr>
+</table>
+
+<div class="warning">
+<strong>Una misma organización tiene múltiples redes.</strong> La persona a quien acudes para consejo técnico puede no ser la misma en quien confías para temas delicados. Si solo mapeas una red, estás viendo solo una capa de la realidad relacional.
+</div>
+
+<!-- 4 -->
+<h2>4. Crear un grafo: <code>graph_from_data_frame()</code></h2>
+
+<p>El punto de entrada más común es un <strong>edgelist</strong>: una tabla con dos columnas (<code>from</code>, <code>to</code>) donde cada fila es una relación. Opcionalmente, una segunda tabla contiene los atributos de los nodos.</p>
+
+<pre><code><span class="func">library</span>(igraph)
+
+<span class="comment"># Edgelist: quién colabora con quién</span>
+aristas &lt;- <span class="func">read_csv</span>(<span class="string">"innovaco_red_colaboracion.csv"</span>)
+
+<span class="comment"># Atributos de nodos: departamento, cargo, etc.</span>
+nodos &lt;- empleados <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(rotacion == <span class="string">"No"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(id_empleado, nombre, departamento, cargo, antiguedad_anios)
+
+<span class="comment"># Crear el grafo</span>
+red &lt;- <span class="func">graph_from_data_frame</span>(
+  d        = aristas,   <span class="comment"># edgelist</span>
+  directed = FALSE,     <span class="comment"># colaboración = recíproca</span>
+  vertices = nodos      <span class="comment"># atributos de nodos</span>
+)
+
+red
+<span class="comment"># → IGRAPH UN-- 874 2464 --</span>
+<span class="comment"># → U = undirected, N = named</span>
+</code></pre>
+
+<div class="note">
+<strong>directed = FALSE</strong> crea una red no dirigida: si A colabora con B, se asume que B colabora con A. Para redes de consejo (donde la dirección importa: "yo consulto a X" no implica "X me consulta"), usa <code>directed = TRUE</code>.
+</div>
+
+<!-- 5 -->
+<h2>5. Explorar un grafo: funciones básicas de igraph</h2>
+
+<pre><code><span class="comment"># ¿Cuántos nodos y aristas?</span>
+<span class="func">vcount</span>(red)   <span class="comment"># → 874 nodos</span>
+<span class="func">ecount</span>(red)   <span class="comment"># → 2464 aristas</span>
+
+<span class="comment"># Acceder a nodos y aristas</span>
+<span class="func">V</span>(red)        <span class="comment"># los vértices (nodos)</span>
+<span class="func">E</span>(red)        <span class="comment"># las aristas (edges)</span>
+
+<span class="comment"># Ver atributos de un nodo específico</span>
+<span class="func">V</span>(red)[<span class="string">"INN-0343"</span>]$nombre
+<span class="func">V</span>(red)[<span class="string">"INN-0343"</span>]$departamento
+
+<span class="comment"># ¿Cuántos contactos tiene un nodo?</span>
+<span class="func">degree</span>(red, v = <span class="string">"INN-0343"</span>)
+</code></pre>
+
+<!-- 6 -->
+<h2>6. Métricas globales de la red</h2>
+
+<p>Antes de analizar nodos individuales, necesitas entender la red completa.</p>
+
+<pre><code><span class="comment"># Densidad: aristas existentes / aristas posibles</span>
+<span class="func">graph.density</span>(red)
+<span class="comment"># → ~0.006 → red muy dispersa</span>
+
+<span class="comment"># Diámetro: camino más largo entre cualquier par</span>
+<span class="func">diameter</span>(red)
+<span class="comment"># → 9 → máximo 9 saltos entre las personas más lejanas</span>
+
+<span class="comment"># ¿La red tiene un solo componente?</span>
+<span class="func">is_connected</span>(red)
+<span class="func">components</span>(red)$no
+
+<span class="comment"># Transitividad (clustering): ¿los amigos de mis amigos son mis amigos?</span>
+<span class="func">transitivity</span>(red, type = <span class="string">"global"</span>)
+
+<span class="comment"># Distancia promedio entre todos los pares</span>
+<span class="func">mean_distance</span>(red)
+</code></pre>
+
+<div class="business">
+<strong>Interpretación ejecutiva.</strong> Una densidad de 0.006 significa que cada persona colabora con menos del 1% de la organización. Un diámetro de 9 significa que la información tarda hasta 9 "saltos" en llegar de un extremo al otro. Para un CEO, esto implica que un comunicado enviado por email puede necesitar hasta 9 intermediarios para llegar a quien más lo necesita — si la vía es informal.
+</div>
+
+<!-- 7 -->
+<h2>7. tidygraph: la interfaz tidy para grafos</h2>
+
+<p>El paquete <code>tidygraph</code> envuelve un objeto <code>igraph</code> en una interfaz compatible con <code>dplyr</code>. El grafo tiene dos "tablas" internas — una de nodos y una de aristas — y puedes operar sobre cada una con los verbos que ya conoces: <code>mutate()</code>, <code>filter()</code>, <code>arrange()</code>, <code>select()</code>.</p>
+
+<pre><code><span class="func">library</span>(tidygraph)
+
+red_tidy &lt;- <span class="func">as_tbl_graph</span>(red)
+red_tidy
+<span class="comment"># → # A tbl_graph: 874 nodes and 2464 edges</span>
+
+<span class="comment"># Activar la tabla de nodos</span>
+red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">as_tibble</span>() <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(departamento, sort = TRUE)
+
+<span class="comment"># Activar la tabla de aristas</span>
+red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(edges) <span class="pipe">|&gt;</span>
+  <span class="func">as_tibble</span>() <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(tipo, sort = TRUE)
+
+<span class="comment"># Agregar columnas a los nodos (como mutate en un df)</span>
+red_tidy &lt;- red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(n_contactos = <span class="func">centrality_degree</span>())
+</code></pre>
+
+<div class="tip">
+<strong>activate() es la clave.</strong> Siempre debes decirle a tidygraph sobre cuál tabla quieres operar: <code>activate(nodes)</code> o <code>activate(edges)</code>. Si no activas, opera sobre la última tabla activada (por defecto, nodos).
+</div>
+
+<!-- 8 -->
+<h2>8. Operar con dplyr sobre el grafo</h2>
+
+<p>Una vez activada la tabla de nodos, puedes usar cualquier verbo de <code>dplyr</code>:</p>
+
+<pre><code><span class="comment"># Top 10 nodos por grado</span>
+red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">as_tibble</span>() <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(n_contactos)) <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(nombre, departamento, cargo, n_contactos) <span class="pipe">|&gt;</span>
+  <span class="func">head</span>(10)
+
+<span class="comment"># Filtrar: solo nodos de Desarrollo de Software</span>
+red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(departamento == <span class="string">"Desarrollo de Software"</span>)
+<span class="comment"># → Devuelve un subgrafo con solo esos nodos y sus aristas internas</span>
+</code></pre>
+
+<!-- 9 -->
+<h2>9. Degree centrality: ¿quién tiene más contactos?</h2>
+
+<p>La centralidad de <strong>grado</strong> (degree) es la métrica más simple: cuenta cuántas conexiones directas tiene un nodo. Normalizada, divide por el máximo posible (n − 1).</p>
+
+<div class="formula">C<sub>D</sub>(i) = k<sub>i</sub> / (n − 1)</div>
+
+<pre><code>red_tidy &lt;- red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(cent_degree = <span class="func">centrality_degree</span>(normalized = TRUE))
+</code></pre>
+
+<div class="business">
+<strong>¿Cuándo importa el degree?</strong> Cuando necesitas difundir información rápidamente. Las personas con alto degree conocen a mucha gente y son amplificadores naturales. Pero tener muchos contactos no garantiza tener los contactos <em>correctos</em>.
+</div>
+
+<!-- 10 -->
+<h2>10. Betweenness centrality: ¿quién es un puente?</h2>
+
+<p>La centralidad de <strong>intermediación</strong> (betweenness) cuenta cuántos caminos más cortos entre <em>otros</em> pares de nodos pasan por un nodo dado. Es la métrica más importante para identificar <strong>brokers</strong> y evaluar <strong>key person risk</strong>.</p>
+
+<div class="formula">C<sub>B</sub>(i) = Σ<sub>s≠i≠t</sub> σ<sub>st</sub>(i) / σ<sub>st</sub></div>
+
+<pre><code>red_tidy &lt;- red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(cent_betweenness = <span class="func">centrality_betweenness</span>(normalized = TRUE))
+</code></pre>
+
+<div class="warning">
+<strong>Degree ≠ betweenness.</strong> Una persona puede tener 5 contactos (bajo degree) pero ser el único puente entre 200 personas (alta betweenness). Si esa persona se va, se fragmenta la red. Es la diferencia entre ser <em>popular</em> y ser <em>imprescindible</em>.
+</div>
+
+<!-- 11 -->
+<h2>11. Closeness centrality: ¿quién está más cerca de todos?</h2>
+
+<p>La centralidad de <strong>cercanía</strong> (closeness) es el inverso de la suma de las distancias más cortas desde un nodo a todos los demás. Las personas con alta closeness están "geográficamente" en el centro de la red.</p>
+
+<pre><code>red_tidy &lt;- red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(cent_closeness = <span class="func">centrality_closeness</span>(normalized = TRUE))
+</code></pre>
+
+<p><strong>Cuándo importa:</strong> cuando necesitas que un mensaje llegue a todos con la menor distorsión posible (comunicación de crisis).</p>
+
+<!-- 12 -->
+<h2>12. Eigenvector centrality: ¿quién conoce a los importantes?</h2>
+
+<p>La centralidad de <strong>vector propio</strong> (eigenvector) no solo cuenta cuántas conexiones tienes, sino cuán conectados están tus contactos. Si tus pocos contactos son a su vez muy centrales, tu eigenvector centrality es alta. Es una medida de <strong>influencia por asociación</strong>.</p>
+
+<pre><code>red_tidy &lt;- red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(cent_eigenvector = <span class="func">centrality_eigen</span>(scale = TRUE))
+</code></pre>
+
+<p><strong>Cuándo importa:</strong> cuando buscas influencia indirecta. El PageRank de Google es una variante de eigenvector centrality: una página es "importante" si otras páginas "importantes" la enlazan.</p>
+
+<!-- 13 -->
+<h2>13. Comparación de métricas: no miden lo mismo</h2>
+
+<table>
+<tr><th>Métrica</th><th>Pregunta</th><th>Metáfora</th><th>Si sale de la empresa...</th></tr>
+<tr><td><strong>Degree</strong></td><td>¿Quién conoce a más gente?</td><td>El "gregario"</td><td>Se pierde un nodo activo, pero hay redundancia</td></tr>
+<tr><td><strong>Betweenness</strong></td><td>¿Quién conecta partes separadas?</td><td>El "puente"</td><td><strong>Se fragmenta la red</strong> — riesgo máximo</td></tr>
+<tr><td><strong>Closeness</strong></td><td>¿Quién alcanza a todos más rápido?</td><td>El "centro geográfico"</td><td>Se alarga la distancia promedio</td></tr>
+<tr><td><strong>Eigenvector</strong></td><td>¿Quién conoce a los importantes?</td><td>El "bien conectado"</td><td>Se pierde acceso a la red de influencia</td></tr>
+</table>
+
+<pre><code><span class="comment"># Correlación entre métricas</span>
+metricas <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(<span class="func">starts_with</span>(<span class="string">"cent_"</span>)) <span class="pipe">|&gt;</span>
+  <span class="func">cor</span>() <span class="pipe">|&gt;</span>
+  <span class="func">round</span>(3)
+<span class="comment"># → Si r es baja entre degree y betweenness,</span>
+<span class="comment">#   "popular" y "puente" son roles distintos</span>
+</code></pre>
+
+<!-- 14 -->
+<h2>14. Key person risk: simular la eliminación de un nodo</h2>
+
+<p>La forma más directa de evaluar el riesgo de persona clave es <strong>eliminar el nodo del grafo</strong> y comparar las métricas antes y después. Si el diámetro sube, la red se alarga. Si aparecen componentes nuevos, la red se fragmentó. Si la distancia promedio sube mucho más de lo esperado, la persona era un puente crítico.</p>
+
+<pre><code><span class="comment"># Identificar al broker principal</span>
+top_broker &lt;- metricas <span class="pipe">|&gt;</span>
+  <span class="func">slice_max</span>(cent_betweenness, n = 1)
+
+<span class="comment"># Métricas originales</span>
+<span class="func">mean_distance</span>(red)      <span class="comment"># distancia promedio original</span>
+
+<span class="comment"># Eliminar al broker</span>
+red_sin &lt;- <span class="func">delete_vertices</span>(red, top_broker$name)
+
+<span class="comment"># Métricas post-eliminación</span>
+<span class="func">mean_distance</span>(red_sin)  <span class="comment"># ¿cuánto subió?</span>
+<span class="func">components</span>(red_sin)$no  <span class="comment"># ¿se fragmentó?</span>
+<span class="func">diameter</span>(red_sin)       <span class="comment"># ¿se alargó?</span>
+
+<span class="comment"># Comparar con un nodo aleatorio</span>
+red_random &lt;- <span class="func">delete_vertices</span>(red, <span class="func">sample</span>(<span class="func">V</span>(red)$name, 1))
+<span class="func">mean_distance</span>(red_random)
+<span class="comment"># → Si la diferencia es grande, el broker era crítico</span>
+</code></pre>
+
+<div class="business">
+<strong>Plan de sucesión relacional.</strong> El plan de sucesión clásico se enfoca en las <em>competencias</em> del sucesor. El plan de sucesión <em>relacional</em> se enfoca en que el sucesor construya las <em>relaciones</em> que la persona clave tiene — antes de que se vaya. Esto requiere un periodo de transición donde el sucesor asiste a reuniones, proyectos y espacios informales junto con la persona que se va.
+</div>
+
+<!-- 15 -->
+<h2>15. Resumen y conexión con el Apunte 30</h2>
+
+<p>En este apunte aprendiste a construir grafos (<code>graph_from_data_frame()</code>), explorarlos (<code>vcount()</code>, <code>ecount()</code>, <code>graph.density()</code>, <code>diameter()</code>), operar sobre ellos con la interfaz tidy (<code>tidygraph</code>), calcular las cuatro métricas de centralidad (<code>centrality_degree()</code>, <code>centrality_betweenness()</code>, <code>centrality_closeness()</code>, <code>centrality_eigen()</code>), y simular la eliminación de nodos para evaluar el <em>key person risk</em>.</p>
+
+<p>En el <strong>Apunte 30</strong> aprenderás a <strong>visualizar</strong> estas redes con <code>ggraph</code> (layouts, colores, tamaños), a <strong>detectar comunidades</strong> (Louvain, walktrap) y a compararlas con la estructura formal (organigrama), y a conectar todo con los marcos teóricos de Granovetter, Burt y Coleman.</p>
+
+<footer>
+Apunte 29 · Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · Semestre otoño 2026<br>
+Profesor: René Gempp · Contacto: rene.gempp@udp.cl
+</footer>
+
+</body>
+</html>

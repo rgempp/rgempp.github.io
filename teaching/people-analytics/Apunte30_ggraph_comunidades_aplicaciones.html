@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 30 — Visualización de redes con ggraph y detección de comunidades | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 30 — Visualización de redes con ggraph y detección de comunidades</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 12 · Prof. René Gempp</p>
+
+<!-- 1 -->
+<h2>1. ¿Por qué visualizar redes?</h2>
+
+<p>Las métricas de centralidad que calculaste en el Apunte 29 son números. Un número te dice que la persona X tiene betweenness = 0.117. Pero no te dice <em>dónde</em> está X en la estructura, ni <em>entre qué grupos</em> funciona como puente, ni <em>cuán aislado</em> está un departamento del resto. Para eso necesitas un <strong>sociograma</strong>: la representación visual del grafo.</p>
+
+<p>El paquete <code>ggraph</code> extiende <code>ggplot2</code> para graficar redes. Su sintaxis es análoga: <code>ggraph()</code> reemplaza a <code>ggplot()</code>, <code>geom_node_point()</code> reemplaza a <code>geom_point()</code>, y <code>geom_edge_link()</code> es un geom nuevo para las aristas. Si sabes usar <code>ggplot2</code>, ya sabes la mitad de <code>ggraph</code>.</p>
+
+<!-- 2 -->
+<h2>2. <code>ggraph()</code>: la gramática de los gráficos para redes</h2>
+
+<p>Un gráfico de red con <code>ggraph</code> tiene tres capas obligatorias:</p>
+<ol>
+<li><code>ggraph(grafo, layout = "...")</code> — inicializa el gráfico y elige el layout.</li>
+<li><code>geom_edge_*()</code> — dibuja las aristas.</li>
+<li><code>geom_node_*()</code> — dibuja los nodos.</li>
+</ol>
+
+<pre><code><span class="func">library</span>(ggraph)
+
+<span class="func">set.seed</span>(42)  <span class="comment"># reproducibilidad del layout</span>
+
+<span class="func">ggraph</span>(red_tidy, layout = <span class="string">"fr"</span>) +
+  <span class="func">geom_edge_link</span>(alpha = 0.05, color = <span class="string">"grey60"</span>) +
+  <span class="func">geom_node_point</span>(aes(color = departamento), size = 2) +
+  <span class="func">theme_graph</span>()
+</code></pre>
+
+<div class="tip">
+<strong>set.seed() es obligatorio.</strong> Los layouts de fuerza (Fruchterman-Reingold, Kamada-Kawai) usan posiciones iniciales aleatorias. Si no fijas la semilla, cada vez que ejecutes el código obtendrás un gráfico distinto. Para que tu informe sea reproducible, siempre incluye <code>set.seed()</code> antes de <code>ggraph()</code>.
+</div>
+
+<!-- 3 -->
+<h2>3. Layouts: cómo posicionar los nodos</h2>
+
+<p>El <strong>layout</strong> determina la posición espacial de cada nodo. No hay un layout "correcto" — cada uno revela aspectos distintos de la estructura.</p>
+
+<table>
+<tr><th>Layout</th><th>Algoritmo</th><th>Cuándo usarlo</th></tr>
+<tr><td><code>"fr"</code></td><td>Fruchterman-Reingold</td><td>El más popular. Nodos conectados se atraen, no conectados se repelen. Bueno para ver clusters.</td></tr>
+<tr><td><code>"kk"</code></td><td>Kamada-Kawai</td><td>Minimiza la diferencia entre la distancia visual y la distancia en el grafo. Más estable que FR.</td></tr>
+<tr><td><code>"stress"</code></td><td>Stress majorization</td><td>Similar a KK pero más robusto para redes grandes. Recomendado como alternativa a FR.</td></tr>
+<tr><td><code>"circle"</code></td><td>Circular</td><td>Nodos en un círculo. Útil para ver la densidad de aristas sin que los clusters dominen.</td></tr>
+<tr><td><code>"linear"</code></td><td>En línea</td><td>Nodos en una línea horizontal. Útil para comparar dos mitades o para redes bipartitas.</td></tr>
+</table>
+
+<pre><code><span class="comment"># Comparar dos layouts</span>
+p1 &lt;- <span class="func">ggraph</span>(red_tidy, layout = <span class="string">"fr"</span>) +
+  <span class="func">geom_edge_link</span>(alpha = 0.03) +
+  <span class="func">geom_node_point</span>(size = 1) +
+  <span class="func">labs</span>(title = <span class="string">"Fruchterman-Reingold"</span>) +
+  <span class="func">theme_graph</span>()
+
+p2 &lt;- <span class="func">ggraph</span>(red_tidy, layout = <span class="string">"kk"</span>) +
+  <span class="func">geom_edge_link</span>(alpha = 0.03) +
+  <span class="func">geom_node_point</span>(size = 1) +
+  <span class="func">labs</span>(title = <span class="string">"Kamada-Kawai"</span>) +
+  <span class="func">theme_graph</span>()
+
+p1 + p2  <span class="comment"># requiere library(patchwork)</span>
+</code></pre>
+
+<!-- 4 -->
+<h2>4. Aristas: <code>geom_edge_link()</code></h2>
+
+<p>Las aristas se dibujan con <code>geom_edge_link()</code> (líneas rectas) o <code>geom_edge_arc()</code> (arcos curvos). Los parámetros estéticos más útiles:</p>
+
+<pre><code><span class="func">geom_edge_link</span>(
+  alpha = 0.06,              <span class="comment"># transparencia (bajo = menos ruido visual)</span>
+  color = <span class="string">"grey60"</span>,           <span class="comment"># color fijo</span>
+  aes(width = peso)          <span class="comment"># grosor por peso (si la arista tiene peso)</span>
+)
+</code></pre>
+
+<div class="warning">
+<strong>Las aristas dominan el gráfico.</strong> Con 2.464 aristas, si no bajas la transparencia (alpha ≈ 0.03–0.08), el gráfico será una maraña ilegible. La transparencia es tu herramienta principal para controlar la legibilidad.
+</div>
+
+<!-- 5 -->
+<h2>5. Nodos: <code>geom_node_point()</code> y etiquetas</h2>
+
+<pre><code><span class="func">geom_node_point</span>(
+  aes(
+    color = departamento,        <span class="comment"># color por atributo categórico</span>
+    size  = cent_betweenness     <span class="comment"># tamaño por centralidad</span>
+  ),
+  alpha = 0.7
+)
+
+<span class="comment"># Etiquetas solo para los nodos más centrales</span>
+<span class="func">geom_node_text</span>(
+  aes(label = <span class="func">ifelse</span>(
+    cent_betweenness > <span class="func">quantile</span>(cent_betweenness, 0.99),
+    nombre, <span class="string">""</span>
+  )),
+  size = 2.5,
+  repel = TRUE,           <span class="comment"># evita superposición de etiquetas</span>
+  max.overlaps = 15
+)
+</code></pre>
+
+<div class="tip">
+<strong>No etiquetes todos los nodos.</strong> Con 874 nodos, si pones etiquetas a todos, el gráfico será ilegible. Usa <code>ifelse()</code> para etiquetar solo los nodos con centralidad por encima de un umbral (e.g., percentil 99).
+</div>
+
+<!-- 6 -->
+<h2>6. Facetas: <code>facet_nodes()</code></h2>
+
+<p>Al igual que <code>ggplot2</code> tiene <code>facet_wrap()</code>, <code>ggraph</code> tiene <code>facet_nodes()</code> para crear un panel por cada valor de un atributo de nodo:</p>
+
+<pre><code><span class="func">ggraph</span>(red_tidy, layout = <span class="string">"fr"</span>) +
+  <span class="func">geom_edge_link</span>(alpha = 0.05) +
+  <span class="func">geom_node_point</span>(aes(color = departamento), size = 1) +
+  <span class="func">facet_nodes</span>(~ departamento, scales = <span class="string">"free"</span>) +
+  <span class="func">theme_graph</span>()
+</code></pre>
+
+<p>Cada panel muestra la subred de un departamento. Las aristas que cruzan paneles se dibujan tenuemente. Esto permite comparar la estructura interna de cada departamento.</p>
+
+<!-- 7 -->
+<h2>7. ¿Qué es una comunidad?</h2>
+
+<p>Una <strong>comunidad</strong> en una red es un subgrupo de nodos que están más densamente conectados entre sí que con el resto de la red. Es el equivalente reticular de un cluster.</p>
+
+<p>La calidad de una partición en comunidades se mide con la <strong>modularidad</strong> (Q): compara la densidad de aristas dentro de cada comunidad con la que se esperaría al azar.</p>
+
+<div class="formula">Q = Σ<sub>c</sub> [ (aristas dentro de c / total aristas) − (aristas esperadas dentro de c / total aristas)² ]</div>
+
+<p>Valores de Q por encima de 0.3–0.4 indican estructura comunitaria fuerte (Newman, 2006). Una Q ≈ 0.54 como la de InnovaCo indica comunidades muy marcadas.</p>
+
+<!-- 8 -->
+<h2>8. Louvain: <code>cluster_louvain()</code></h2>
+
+<p>El algoritmo de <strong>Louvain</strong> (Blondel, Guillaume, Lambiotte & Lefebvre, 2008) optimiza la modularidad de forma iterativa. Es rápido, escalable, y es el algoritmo más utilizado en la práctica.</p>
+
+<pre><code><span class="func">set.seed</span>(42)
+comunidades &lt;- <span class="func">cluster_louvain</span>(red)
+
+<span class="comment"># ¿Cuántas comunidades?</span>
+<span class="func">length</span>(<span class="func">unique</span>(<span class="func">membership</span>(comunidades)))
+
+<span class="comment"># ¿Qué tan buena es la partición?</span>
+<span class="func">modularity</span>(comunidades)
+<span class="comment"># → Q ≈ 0.54 → estructura comunitaria fuerte</span>
+
+<span class="comment"># Agregar al grafo</span>
+red_tidy &lt;- red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(comunidad = <span class="func">as.factor</span>(<span class="func">membership</span>(comunidades)))
+
+<span class="comment"># Visualizar</span>
+<span class="func">ggraph</span>(red_tidy, layout = <span class="string">"fr"</span>) +
+  <span class="func">geom_edge_link</span>(alpha = 0.04) +
+  <span class="func">geom_node_point</span>(aes(color = comunidad), size = 1.5) +
+  <span class="func">labs</span>(title = <span class="string">"Comunidades detectadas por Louvain"</span>) +
+  <span class="func">theme_graph</span>()
+</code></pre>
+
+<!-- 9 -->
+<h2>9. Walktrap: <code>cluster_walktrap()</code></h2>
+
+<p>El algoritmo <strong>walktrap</strong> (Pons & Latapy, 2006) detecta comunidades basándose en <strong>caminatas aleatorias</strong>: una caminata que empieza dentro de una comunidad tiende a quedarse ahí antes de salir.</p>
+
+<pre><code>com_walktrap &lt;- <span class="func">cluster_walktrap</span>(red)
+<span class="func">modularity</span>(com_walktrap)
+</code></pre>
+
+<div class="note">
+<strong>Louvain vs. walktrap.</strong> Diferentes algoritmos pueden producir diferentes comunidades. No hay una partición "verdadera" — hay particiones más o menos útiles. En la práctica, se prueban ambos y se evalúa cuál produce comunidades más interpretables organizacionalmente.
+</div>
+
+<!-- 10 -->
+<h2>10. Comparar comunidades con la estructura formal</h2>
+
+<p>La pregunta central del ONA es: ¿la estructura <strong>informal</strong> (comunidades detectadas) coincide con la estructura <strong>formal</strong> (departamentos del organigrama)?</p>
+
+<pre><code><span class="comment"># Tabla cruzada: comunidad × departamento</span>
+red_tidy <span class="pipe">|&gt;</span>
+  <span class="func">activate</span>(nodes) <span class="pipe">|&gt;</span>
+  <span class="func">as_tibble</span>() <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(comunidad, departamento) <span class="pipe">|&gt;</span>
+  <span class="func">pivot_wider</span>(names_from = departamento, values_from = n, values_fill = 0)
+</code></pre>
+
+<p>Tres escenarios posibles:</p>
+<ul>
+<li><strong>Coincidencia:</strong> cada comunidad corresponde a un departamento → la estructura informal replica la formal.</li>
+<li><strong>Cruce:</strong> una comunidad incluye personas de varios departamentos → hay integración interdepartamental que el organigrama no captura.</li>
+<li><strong>Fragmentación:</strong> un departamento se divide en varias comunidades → hay fracturas internas que el organigrama esconde.</li>
+</ul>
+
+<div class="business">
+<strong>Lo más valioso para el CEO es lo que NO coincide.</strong> Si las comunidades replican exactamente los departamentos, el ONA solo confirma lo que ya sabían. El hallazgo valioso es la discrepancia: el departamento que se fragmenta, el puente informal que cruza departamentos, o el silo que la reorganización no logró romper.
+</div>
+
+<!-- 11 -->
+<h2>11. Marcos teóricos: Granovetter, Burt, Coleman</h2>
+
+<h3>Granovetter (1973): la fuerza de los lazos débiles</h3>
+<p>La información novedosa no fluye por los lazos fuertes (amigos cercanos, colegas directos) sino por los <strong>lazos débiles</strong> (conocidos de otros departamentos). Los lazos fuertes conectan personas similares que comparten la misma información. Los lazos débiles cruzan círculos sociales y traen información nueva. Implicancia: las conexiones <em>entre</em> departamentos son potencialmente más valiosas para la innovación que las conexiones <em>dentro</em> del departamento.</p>
+
+<h3>Burt (1992): los huecos estructurales</h3>
+<p>Un <strong>hueco estructural</strong> (<em>structural hole</em>) es una brecha en la red entre dos grupos desconectados. Las personas que cierran estos huecos — los <strong>brokers</strong> — obtienen ventajas competitivas: acceso a información no redundante, control del flujo, y visibilidad ante múltiples audiencias. La betweenness centrality captura exactamente esta posición.</p>
+
+<h3>Coleman (1988): closure y capital social</h3>
+<p>James Coleman argumentó que las redes densas y cerradas (<em>closure</em>) facilitan la confianza, las normas compartidas y la cooperación. Burt argumentó que las redes abiertas con huecos (<em>brokerage</em>) facilitan la innovación. Ambos tienen razón: los equipos necesitan cohesión interna (closure) <strong>y</strong> conexiones externas (brokerage). Una red que solo tiene una u otra es disfuncional.</p>
+
+<div class="tip">
+<strong>Para el memo ejecutivo.</strong> No necesitas citar a Granovetter o Burt por nombre. Pero sí necesitas el concepto: "los puentes interdepartamentales son más valiosos que las conexiones redundantes dentro del departamento" es Granovetter traducido a lenguaje de negocio.
+</div>
+
+<!-- 12 -->
+<h2>12. Aplicaciones de ONA en people analytics</h2>
+
+<table>
+<tr><th>Aplicación</th><th>Pregunta</th><th>Métrica clave</th></tr>
+<tr><td><strong>Diagnóstico de silos</strong></td><td>¿Qué departamentos no se hablan?</td><td>Densidad interdepartamental, comunidades vs. organigrama</td></tr>
+<tr><td><strong>Key person risk</strong></td><td>¿Qué pasa si X se va?</td><td>Betweenness, simulación de eliminación de nodo</td></tr>
+<tr><td><strong>Integración post-fusión</strong></td><td>¿Se integraron las dos empresas?</td><td>Comunidades antes/después, aristas inter-empresa</td></tr>
+<tr><td><strong>Identificar influencers</strong></td><td>¿Quién mueve la opinión?</td><td>Eigenvector centrality</td></tr>
+<tr><td><strong>Onboarding</strong></td><td>¿Los nuevos se están integrando?</td><td>Degree y closeness de empleados nuevos a los 3, 6, 12 meses</td></tr>
+<tr><td><strong>DEI relacional</strong></td><td>¿Los grupos minoritarios están integrados en la red?</td><td>Centralidad por grupo demográfico</td></tr>
+</table>
+
+<!-- 13 -->
+<h2>13. Ética del ONA: privacidad, consentimiento y los límites del mapeo</h2>
+
+<p>Un mapa de red organizacional es una herramienta de poder. Saber quién conecta con quién, quién está aislado, quién es periférico — esa información puede usarse para <strong>apoyar</strong> o para <strong>controlar</strong>. La ética del ONA requiere tres condiciones:</p>
+
+<ol>
+<li><strong>Consentimiento informado:</strong> los empleados deben saber que la encuesta de redes se va a analizar y para qué.</li>
+<li><strong>Anonimización en los reportes:</strong> el mapa de red con nombres reales es una herramienta interna del equipo de analytics, no un entregable para el directorio. Los reportes ejecutivos deben referirse a roles, departamentos y patrones, no a personas identificables.</li>
+<li><strong>Uso para mejorar, no para controlar:</strong> la finalidad del ONA es diagnosticar silos, planificar sucesiones y facilitar la colaboración — no identificar "resistentes al cambio" ni vigilar la comunicación informal.</li>
+</ol>
+
+<div class="warning">
+<strong>La línea entre diagnóstico y vigilancia es delgada.</strong> Un CEO que pide "un mapa de quién habla con quién" puede estar buscando diagnóstico organizacional o puede estar buscando control social. El analista de people analytics tiene la responsabilidad de establecer los límites: qué preguntas se responden con datos de red y cuáles no se deben responder, aunque técnicamente se pueda.
+</div>
+
+<!-- 14 -->
+<h2>14. Resumen del kit técnico y referencias</h2>
+
+<table>
+<tr><th>Función / paquete</th><th>Uso</th><th>Apunte</th></tr>
+<tr><td><code>igraph::graph_from_data_frame()</code></td><td>Crear grafo desde edgelist + nodos</td><td>29 4</td></tr>
+<tr><td><code>igraph::vcount()</code>, <code>ecount()</code></td><td>Número de nodos y aristas</td><td>29 5</td></tr>
+<tr><td><code>igraph::graph.density()</code>, <code>diameter()</code></td><td>Métricas globales de la red</td><td>29 6</td></tr>
+<tr><td><code>tidygraph::as_tbl_graph()</code></td><td>Convertir igraph a formato tidy</td><td>29 7</td></tr>
+<tr><td><code>tidygraph::activate()</code></td><td>Seleccionar tabla activa (nodos o aristas)</td><td>29 7</td></tr>
+<tr><td><code>centrality_degree()</code></td><td>Centralidad de grado</td><td>29 9</td></tr>
+<tr><td><code>centrality_betweenness()</code></td><td>Centralidad de intermediación</td><td>29 10</td></tr>
+<tr><td><code>centrality_closeness()</code></td><td>Centralidad de cercanía</td><td>29 11</td></tr>
+<tr><td><code>centrality_eigen()</code></td><td>Centralidad de vector propio</td><td>29 12</td></tr>
+<tr><td><code>igraph::delete_vertices()</code></td><td>Simular eliminación de un nodo</td><td>29 14</td></tr>
+<tr><td><code>ggraph::ggraph()</code></td><td>Inicializar gráfico de red</td><td>30 2</td></tr>
+<tr><td><code>ggraph::geom_edge_link()</code></td><td>Dibujar aristas</td><td>30 4</td></tr>
+<tr><td><code>ggraph::geom_node_point()</code></td><td>Dibujar nodos</td><td>30 5</td></tr>
+<tr><td><code>ggraph::facet_nodes()</code></td><td>Paneles por atributo de nodo</td><td>30 6</td></tr>
+<tr><td><code>igraph::cluster_louvain()</code></td><td>Detección de comunidades (Louvain)</td><td>30 8</td></tr>
+<tr><td><code>igraph::cluster_walktrap()</code></td><td>Detección de comunidades (walktrap)</td><td>30 9</td></tr>
+<tr><td><code>igraph::membership()</code></td><td>Asignación de comunidad por nodo</td><td>30 8</td></tr>
+<tr><td><code>igraph::modularity()</code></td><td>Calidad de la partición</td><td>30 7</td></tr>
+</table>
+
+<h3>Referencias</h3>
+<ul>
+<li>Blondel, V. D., Guillaume, J.-L., Lambiotte, R. & Lefebvre, E. (2008). Fast unfolding of communities in large networks. <em>Journal of Statistical Mechanics</em>, P10008.</li>
+<li>Borgatti, S. P., Mehra, A., Brass, D. J. & Labianca, G. (2009). Network analysis in the social sciences. <em>Science, 323</em>(5916), 892–895.</li>
+<li>Burt, R. S. (1992). <em>Structural holes: The social structure of competition.</em> Harvard University Press.</li>
+<li>Coleman, J. S. (1988). Social capital in the creation of human capital. <em>American Journal of Sociology, 94</em>(Suppl.), S95–S120.</li>
+<li>Cross, R. & Parker, A. (2004). <em>The hidden power of social networks.</em> Harvard Business School Press.</li>
+<li>Freeman, L. C. (1979). Centrality in social networks: Conceptual clarification. <em>Social Networks, 1</em>(3), 215–239.</li>
+<li>Granovetter, M. S. (1973). The strength of weak ties. <em>American Journal of Sociology, 78</em>(6), 1360–1380.</li>
+<li>McNulty, K. (2021). <em>Handbook of graphs and networks in people analytics.</em> Chapman & Hall/CRC. Disponible en: <a href="https://ona-book.org">https://ona-book.org</a></li>
+<li>Newman, M. E. J. (2006). Modularity and community structure in networks. <em>Proceedings of the National Academy of Sciences, 103</em>(23), 8577–8582.</li>
+<li>Pons, P. & Latapy, M. (2006). Computing communities in large networks using random walks. <em>Journal of Graph Algorithms and Applications, 10</em>(2), 191–218.</li>
+</ul>
+
+<footer>
+Apunte 30 · Analítica de Personas · Magíster en Gestión de Personas · Universidad Diego Portales · Semestre otoño 2026<br>
+Profesor: René Gempp · Contacto: rene.gempp@udp.cl
+</footer>
+
+</body>
+</html>

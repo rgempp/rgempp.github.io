@@ -41,8 +41,8 @@
 <h1>Apunte 27 — Text mining con tidytext: tokenización, frecuencia y sentimiento</h1>
 <p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 11 · Prof. René Gempp</p>
 
-<!-- §1 -->
-<h2>§1. ¿Por qué analizar texto en people analytics?</h2>
+<!-- 1 -->
+<h2>1. ¿Por qué analizar texto en people analytics?</h2>
 
 <p>Hasta ahora, todos los datos que has analizado eran <strong>estructurados</strong>: columnas con tipos definidos (numérico, categórico, fecha), filas con observaciones (un empleado, una postulación, un ítem de encuesta). El texto libre — la respuesta que alguien escribe cuando le preguntas "¿hay algo que quieras agregar?" — es un dato <strong>no estructurado</strong>. No tiene columnas. No tiene categorías predefinidas. No tiene escala. Es lenguaje natural, con toda su riqueza y toda su ambigüedad.</p>
 
@@ -52,8 +52,8 @@
 <strong>En la práctica.</strong> Una encuesta de clima con 1.200 empleados puede generar 800 respuestas abiertas. Leerlas todas tomaría ~8 horas de trabajo concentrado. Clasificarlas manualmente, ~20 horas. Con text mining, el pipeline completo toma ~30 minutos de código R y produce frecuencias, temas y sentimientos cuantificables. No es perfecto, pero escala.
 </div>
 
-<!-- §2 -->
-<h2>§2. El principio tidy text: un token por fila</h2>
+<!-- 2 -->
+<h2>2. El principio tidy text: un token por fila</h2>
 
 <p>Silge y Robinson (2017) propusieron un framework elegante: tratar el texto como un data frame donde cada fila es un <strong>token</strong> — la unidad mínima de análisis. Un token puede ser una palabra (lo más común), un bigrama, una oración o un párrafo. La idea es que una vez que el texto está en formato tidy, puedes usar todas las herramientas de <code>dplyr</code> y <code>ggplot2</code> que ya conoces.</p>
 
@@ -88,8 +88,8 @@
 <strong>Instalación.</strong> El paquete <code>tidytext</code> se instala con <code>install.packages("tidytext")</code>. Depende de <code>dplyr</code>, <code>tidyr</code> y otros paquetes del tidyverse que ya tienes. Cárgalo con <code>library(tidytext)</code>.
 </div>
 
-<!-- §3 -->
-<h2>§3. <code>unnest_tokens()</code>: la puerta de entrada</h2>
+<!-- 3 -->
+<h2>3. <code>unnest_tokens()</code>: la puerta de entrada</h2>
 
 <p>La función <code>unnest_tokens()</code> es la piedra angular de <code>tidytext</code>. Toma un data frame con una columna de texto y devuelve un data frame con una fila por token.</p>
 
@@ -140,8 +140,8 @@ tokens
 <strong>Transformaciones automáticas.</strong> <code>unnest_tokens()</code> hace varias cosas por ti: convierte a minúsculas, elimina la puntuación, elimina los números (por defecto). Puedes desactivar estas opciones con <code>to_lower = FALSE</code>, <code>strip_punct = FALSE</code> y <code>strip_numeric = FALSE</code>, pero en la mayoría de los casos las opciones por defecto son las correctas.
 </div>
 
-<!-- §4 -->
-<h2>§4. Stopwords: las palabras que sobran</h2>
+<!-- 4 -->
+<h2>4. Stopwords: las palabras que sobran</h2>
 
 <p>Si cuentas las palabras del ejemplo anterior sin limpiar, las más frecuentes serán "de", "la", "mi", "es" — palabras funcionales que no aportan significado temático. Estas son las <strong>stopwords</strong> (palabras vacías). Eliminarlas es esencial para que emerjan los términos sustantivos.</p>
 
@@ -190,8 +190,8 @@ tokens_limpios &lt;- tokens <span class="pipe">|&gt;</span>
 <strong>No hay lista perfecta.</strong> Curar stopwords es una decisión del analista. Si eliminas demasiadas, pierdes señal. Si eliminas pocas, el ruido oscurece los temas. La regla: ejecuta el pipeline, mira las frecuencias, y si una palabra aparece en el top 10 sin aportar información temática, agrégala a la lista y vuelve a correr. Es un proceso iterativo, no un paso único.
 </div>
 
-<!-- §5 -->
-<h2>§5. Frecuencia de palabras: el <code>count()</code> que ya conoces</h2>
+<!-- 5 -->
+<h2>5. Frecuencia de palabras: el <code>count()</code> que ya conoces</h2>
 
 <p>Una vez que tienes los tokens limpios, calcular frecuencias es literalmente <code>count(word, sort = TRUE)</code> — la misma función que usas desde la Clase 1 para contar empleados por departamento. Solo que ahora cuentas palabras.</p>
 
@@ -224,8 +224,8 @@ freq_palabras
 
 <p>El <code>fct_reorder(word, n)</code> ordena las barras de menor a mayor frecuencia (el más frecuente arriba). Es un patrón de <code>ggplot2</code> que ya usaste en la Clase 2 para ordenar departamentos.</p>
 
-<!-- §6 -->
-<h2>§6. Wordclouds: bonitas pero limitadas</h2>
+<!-- 6 -->
+<h2>6. Wordclouds: bonitas pero limitadas</h2>
 
 <p>Una <strong>wordcloud</strong> (nube de palabras) es una visualización donde el tamaño de cada palabra es proporcional a su frecuencia. Es visualmente atractiva y funciona bien para presentaciones ejecutivas, pero tiene limitaciones serias como herramienta analítica: no muestra la frecuencia exacta, dificulta las comparaciones precisas, y privilegia las palabras largas (que ocupan más espacio visual).</p>
 
@@ -244,8 +244,8 @@ freq_palabras <span class="pipe">|&gt;</span>
 <strong>Regla de uso.</strong> La wordcloud es un <em>complemento</em> visual, no un sustituto del gráfico de barras. En un informe, muestra primero la tabla de frecuencias (datos duros) y luego la wordcloud (impacto visual). Nunca al revés.
 </div>
 
-<!-- §7 -->
-<h2>§7. Bigramas: capturar el contexto local</h2>
+<!-- 7 -->
+<h2>7. Bigramas: capturar el contexto local</h2>
 
 <p>Un <strong>bigrama</strong> es un par de palabras consecutivas. Los bigramas capturan expresiones compuestas que los unigramas destruyen. "Jefatura directa" es un concepto distinto de "jefatura" + "directa" por separado. "No escuchan" es una negación que el análisis de unigramas clasificaría incorrectamente.</p>
 
@@ -266,8 +266,8 @@ bigramas
 
 <p>El problema: muchos bigramas contienen stopwords ("de trabajo", "la carga", "es excesiva"). Necesitas filtrarlos.</p>
 
-<!-- §8 -->
-<h2>§8. Filtrar bigramas: <code>separate()</code>, <code>filter()</code>, <code>unite()</code></h2>
+<!-- 8 -->
+<h2>8. Filtrar bigramas: <code>separate()</code>, <code>filter()</code>, <code>unite()</code></h2>
 
 <p>El truco es separar el bigrama en sus dos palabras, filtrar las filas donde alguna de las dos es una stopword, y volver a unirlas:</p>
 
@@ -302,8 +302,8 @@ bigramas_freq
 <strong>Bigramas accionables.</strong> Un bigrama es "accionable" si sugiere una intervención concreta. "Jefatura directa" señala un problema de supervisión. "Carga laboral" señala un problema de volumen de trabajo. "Horario flexible" señala una aspiración de beneficios. Identifica los bigramas accionables y destácalos en tu informe. Los bigramas que son solo descripciones genéricas ("buen ambiente", "buena empresa") son contexto, no recomendación.
 </div>
 
-<!-- §9 -->
-<h2>§9. Trigramas y más allá: cuándo ir más allá del par</h2>
+<!-- 9 -->
+<h2>9. Trigramas y más allá: cuándo ir más allá del par</h2>
 
 <p>Un <strong>trigrama</strong> es una secuencia de tres palabras. Se construye igual que el bigrama, cambiando <code>n = 2</code> por <code>n = 3</code>:</p>
 
@@ -312,8 +312,8 @@ bigramas_freq
 
 <p>Los trigramas son más informativos ("falta de comunicación" es más claro que "falta comunicación"), pero son mucho más escasos. Con 800 respuestas, la mayoría de los trigramas aparecen solo 1–2 veces. La regla práctica: usa unigramas para el panorama general, bigramas para las expresiones compuestas, y trigramas solo si tienes un corpus grande (> 5.000 documentos).</p>
 
-<!-- §10 -->
-<h2>§10. ¿Qué es el análisis de sentimiento?</h2>
+<!-- 10 -->
+<h2>10. ¿Qué es el análisis de sentimiento?</h2>
 
 <p>El <strong>análisis de sentimiento</strong> intenta clasificar un texto como positivo, negativo o neutro. El enfoque más simple — y el que usaremos — es el basado en <strong>léxicos</strong>: una lista de palabras con su polaridad pre-asignada. Cada palabra del texto se busca en el léxico; si está, se suma su polaridad; si no está, se ignora. El sentimiento del documento es la agregación de las polaridades de sus palabras.</p>
 
@@ -326,8 +326,8 @@ bigramas_freq
 <tr><td><strong>NRC</strong> (Mohammad &amp; Turney, 2013)</td><td>8 emociones + pos/neg</td><td>Granularidad emocional</td><td>Clasificaciones discutibles</td></tr>
 </table>
 
-<!-- §11 -->
-<h2>§11. Léxicos en español: NRC traducido</h2>
+<!-- 11 -->
+<h2>11. Léxicos en español: NRC traducido</h2>
 
 <p>Ninguno de los léxicos principales fue creado en español. Para esta clase usamos una traducción del NRC al español. La operación es un <code>inner_join()</code> entre los tokens limpios y el léxico:</p>
 
@@ -351,8 +351,8 @@ n_match &lt;- nrow(sentimiento)
 n_total &lt;- nrow(tokens_limpios)
 cat(<span class="string">"Cobertura del léxico:"</span>, <span class="func">round</span>(n_match / n_total * 100, 1), <span class="string">"%\n"</span>)</code></pre>
 
-<!-- §12 -->
-<h2>§12. Sentimiento neto: <code>pivot_wider()</code> y resta</h2>
+<!-- 12 -->
+<h2>12. Sentimiento neto: <code>pivot_wider()</code> y resta</h2>
 
 <p>Para calcular el sentimiento neto de cada respuesta (palabras positivas menos negativas), necesitas pivotar y restar:</p>
 
@@ -376,8 +376,8 @@ sent_neto
 
 <p>Un sentimiento neto > 0 indica que la respuesta tiene más palabras positivas que negativas. Un neto < 0, lo contrario. Un neto = 0 puede significar equilibrio o ausencia de palabras en el léxico.</p>
 
-<!-- §13 -->
-<h2>§13. Sentimiento por grupo: cruce con datos cuantitativos</h2>
+<!-- 13 -->
+<h2>13. Sentimiento por grupo: cruce con datos cuantitativos</h2>
 
 <p>El verdadero poder del análisis de sentimiento aparece cuando lo cruzas con las variables que ya tienes. Usa <code>left_join()</code> para agregar las variables del dataset de empleados:</p>
 
@@ -402,8 +402,8 @@ sent_con_datos <span class="pipe">|&gt;</span>
 
 <p>Esto te permite responder: "¿los departamentos con peor engagement cuantitativo también tienen peor sentimiento en sus respuestas abiertas?" Si la respuesta es sí, la triangulación refuerza la evidencia. Si es no, hay algo interesante que investigar.</p>
 
-<!-- §14 -->
-<h2>§14. Limitaciones del análisis de sentimiento con léxicos</h2>
+<!-- 14 -->
+<h2>14. Limitaciones del análisis de sentimiento con léxicos</h2>
 
 <p>Antes de reportar resultados, debes conocer (y declarar) las limitaciones:</p>
 
@@ -419,8 +419,8 @@ sent_con_datos <span class="pipe">|&gt;</span>
 <strong>En el informe.</strong> Siempre incluye un párrafo de limitaciones: "El análisis de sentimiento se basó en el léxico NRC traducido al español. La cobertura del léxico fue del X %. Las limitaciones principales incluyen la incapacidad de capturar negaciones y sarcasmo, y la pérdida de matices culturales en la traducción. Los resultados deben interpretarse como una tendencia, no como una medición precisa."
 </div>
 
-<!-- §15 -->
-<h2>§15. Resumen y conexión con el Apunte 28</h2>
+<!-- 15 -->
+<h2>15. Resumen y conexión con el Apunte 28</h2>
 
 <p>En este apunte aprendiste el pipeline básico de text mining con <code>tidytext</code>:</p>
 

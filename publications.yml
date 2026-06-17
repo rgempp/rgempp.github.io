@@ -4,6 +4,15 @@
 # Optional link fields: doi, preprint, code, data, pdf, osf
 
 - citation: >
+    Gempp, R. (2025). csemGT: An R Package for Estimating Raw-Score 
+    Conditional Standard Errors of Measurement in Generalizability Theory. 
+    *Applied Psychological Measurement*, *online first*.
+  type: article
+  doi: https://doi.org/10.1177/014662162614615
+  code: https://CRAN.R-project.org/package=csemGT 
+  categories: [Generalizability Theory, conditional measurement error, R package]
+  
+- citation: >
     Gempp, R., & González-Carrasco, M. (2025). Psychometric evaluation of the brief
     multidimensional students' life satisfaction scale (BMSLSS) in Chilean early
     adolescents: An item response theory analysis. *Frontiers in Psychology*, *16*,

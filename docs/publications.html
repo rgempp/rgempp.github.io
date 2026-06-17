@@ -82,10 +82,10 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-citation','listing-type','listing-doi','listing-categories',{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-citation','listing-type','listing-doi','listing-code','listing-categories',{ data: ['index'] },{ data: ['categories'] }],
       page: 25,
     pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
-      searchColumns: ["listing-citation","listing-type","listing-doi","listing-categories"],
+      searchColumns: ["listing-citation","listing-type","listing-doi","listing-code","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -278,6 +278,9 @@ window.Quarto = {
 <section id="journal-articles-book-chapters" class="level2">
 <h2 class="anchored" data-anchor-id="journal-articles-book-chapters">Journal Articles &amp; Book Chapters</h2>
 <div id="listing-pub-listing" class="quarto-listing quarto-listing-container-custom">
+<div class="pub-entry">
+<span class="pub-citation">Gempp, R. (2025). csemGT: An R Package for Estimating Raw-Score Conditional Standard Errors of Measurement in Generalizability Theory. <em>Applied Psychological Measurement</em>, <em>online first</em>. </span> <a href="https://doi.org/10.1177/014662162614615" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a> <a href="https://CRAN.R-project.org/package=csemGT" class="pub-link" target="_blank"><i class="bi bi-code-slash"></i> Code</a>
+</div>
 <div class="pub-entry">
 <span class="pub-citation">Gempp, R., &amp; González-Carrasco, M. (2025). Psychometric evaluation of the brief multidimensional students’ life satisfaction scale (BMSLSS) in Chilean early adolescents: An item response theory analysis. <em>Frontiers in Psychology</em>, <em>16</em>, 1638017. </span> <a href="https://doi.org/10.3389/fpsyg.2025.1638017" class="pub-link" target="_blank"><i class="bi bi-journal-text"></i> DOI</a>
 </div>

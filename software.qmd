@@ -8,7 +8,7 @@ title: "Software & Code"
 
 `personnelSelectionUtility` implements classical and contemporary utility-analysis methods for personnel selection under a unified notation, organized by criterion scale (classificatory or continuous/monetary) and selection structure (compensatory or multiple-hurdle). The package covers Taylor–Russell univariate and Thomas–Owen–Gunst multivariate classification models, Brogden–Cronbach–Gleser and Boudreau-style continuous and monetary utility, Schmidt–Hunter–Pearlman intervention utility, Sturman-style incremental validity for multiple predictors and outcomes, simulation tools for compensatory and staged multiple-hurdle systems, Pareto frontiers for validity–diversity trade-offs, AUC-to-effect-size conversions, and Monte Carlo uncertainty propagation.
 
-[Package website](https://gempp.cl/personnelSelectionUtility/){.btn .btn-outline-primary .btn-sm} [GitHub](https://github.com/rgempp/personnelSelectionUtility){.btn .btn-outline-secondary .btn-sm}
+[Package website](https://gempp.cl/personnelSelectionUtility/){.btn .btn-outline-primary .btn-sm} [<i class="bi bi-box-seam"></i> CRAN](https://cran.r-project.org/package=personnelSelectionUtility){.btn .btn-outline-secondary .btn-sm} [<i class="bi bi-github"></i> GitHub](https://github.com/rgempp/personnelSelectionUtility){.btn .btn-outline-secondary .btn-sm}
 
 **Installation:**
 
@@ -26,7 +26,8 @@ remotes::install_github("rgempp/personnelSelectionUtility", build_vignettes = TR
 
 The package implements the absolute-error estimator and the three relative-error estimators (`full, large_a, uncorrelated`) developed by Brennan (1998), together with optional polynomial smoothing of the conditional error variances across the score scale and analytical or bootstrap standard errors for the per-person estimates. `csemGT` is the R companion to the Stata `gtcsem` command and reproduces its numerical results.
 
-[Package website](https://gempp.cl/csemGT/){.btn .btn-outline-primary .btn-sm} [GitHub](https://github.com/rgempp/csemGT){.btn .btn-outline-secondary .btn-sm}
+
+[Package website](https://gempp.cl/csemGT/){.btn .btn-outline-primary .btn-sm} [<i class="bi bi-box-seam"></i> CRAN](https://CRAN.R-project.org/package=csemGT){.btn .btn-outline-secondary .btn-sm} [<i class="bi bi-github"></i> GitHub](https://github.com/rgempp/csemGT){.btn .btn-outline-secondary .btn-sm}
 
 **Installation:**
 

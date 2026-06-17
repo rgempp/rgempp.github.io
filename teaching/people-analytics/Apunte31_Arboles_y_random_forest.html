@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 31 — Clasificación supervisada: árboles y random forest | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 31 — Clasificación supervisada: árboles de decisión y random forest</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 14 · Prof. René Gempp</p>
+
+<!-- 1 -->
+<h2>1. El gran mapa: aprendizaje supervisado y no supervisado</h2>
+
+<p>Durante trece semanas has aprendido técnicas una por una. Es hora de ordenarlas con una sola pregunta: <strong>¿hay una variable respuesta (Y) que quieras predecir o explicar?</strong></p>
+
+<ul>
+<li>Si <strong>sí la hay</strong> —la rotación, el sueldo, el tiempo hasta la renuncia—, estás en el terreno del <strong>aprendizaje supervisado</strong>. El algoritmo "ve" la respuesta correcta durante el entrenamiento y se corrige contra ella. La regresión lineal, la logística, el modelo de Cox, los árboles y el random forest son todos supervisados.</li>
+<li>Si <strong>no la hay</strong> —solo tienes un montón de variables y quieres descubrir patrones—, estás en el <strong>aprendizaje no supervisado</strong>. Nadie le dice al algoritmo cuál es la respuesta correcta, porque no existe. El análisis factorial (Clase 6) y el clustering (Apunte 32) son no supervisados.</li>
+</ul>
+
+<table>
+<tr><th>Dimensión</th><th>Supervisado</th><th>No supervisado</th></tr>
+<tr><td><strong>¿Hay variable respuesta Y?</strong></td><td>Sí (conocida)</td><td>No</td></tr>
+<tr><td><strong>Objetivo</strong></td><td>Predecir / explicar Y</td><td>Descubrir estructura</td></tr>
+<tr><td><strong>¿Cómo se evalúa?</strong></td><td>Predicción vs. Y real (AUC, error de prueba)</td><td>Interpretabilidad, estabilidad, validación externa</td></tr>
+<tr><td><strong>Ejemplos en el curso</strong></td><td>Logística, Cox, árbol, random forest</td><td>EFA, clustering</td></tr>
+</table>
+
+<div class="tip">
+<strong>Esta es la pregunta más portátil del curso.</strong> Frente a cualquier problema de negocio, antes de elegir una herramienta, pregúntate: <em>¿esto tiene etiqueta o no?</em> Esa sola pregunta descarta la mitad de las técnicas equivocadas. Este apunte cubre dos técnicas supervisadas; el Apunte 32 cubre la cara no supervisada.</p>
+</div>
+
+<p>El problema de hoy en InnovaCo es supervisado: el CEO quiere predecir la <strong>rotación</strong> (la Y), pero con dos exigencias nuevas —reglas que sus gerentes entiendan y mayor poder predictivo que la regresión logística de la Clase 3.</p>
+
+<!-- 2 -->
+<h2>2. ¿Qué es un árbol de decisión?</h2>
+
+<p>Un <strong>árbol de decisión</strong> (algoritmo CART; Breiman, Friedman, Olshen &amp; Stone, 1984) predice la respuesta dividiendo el conjunto de empleados en grupos cada vez más homogéneos. En cada paso busca la <strong>variable y el punto de corte</strong> que mejor separan a quienes rotan de quienes no.</p>
+
+<p>"Mejor separar" significa reducir la <strong>impureza</strong> del nodo. La medida más común es el <strong>índice de Gini</strong>:</p>
+
+<div class="formula">
+G = Σ<sub>k</sub> p&#770;<sub>k</sub> (1 − p&#770;<sub>k</sub>)
+</div>
+
+<p>donde p&#770;<sub>k</sub> es la proporción de la clase <em>k</em> en el nodo. Gini vale 0 cuando el nodo es puro (todos rotan o nadie rota) y es máximo cuando las clases están mitad y mitad. El árbol elige, en cada división, el corte que produce los nodos hijos más puros.</p>
+
+<p>El resultado es un conjunto de <strong>reglas legibles</strong>: <em>"Si antigüedad &lt; 2 años Y satisfacción ≤ 2, entonces riesgo alto de rotación."</em> Esto es exactamente lo que pidió el CEO: comunicable, sin odds ratios, accionable por un jefe de línea.</p>
+
+<table>
+<tr><th>Virtud del árbol</th><th>Limitación del árbol</th></tr>
+<tr><td>Reglas interpretables por no técnicos</td><td><strong>Inestable:</strong> pequeños cambios en los datos cambian el árbol (alta varianza)</td></tr>
+<tr><td>No asume linealidad ni distribución</td><td>Tiende a <strong>sobreajustar</strong> si no se poda</td></tr>
+<tr><td>Captura interacciones automáticamente</td><td>Predice menos que los métodos de <em>ensemble</em></td></tr>
+<tr><td>No necesita estandarizar variables</td><td>Sesgo hacia variables con muchos cortes posibles</td></tr>
+</table>
+
+<!-- 3 -->
+<h2>3. Ajustar y leer un árbol en R</h2>
+
+<pre><code><span class="func">library</span>(rpart)
+<span class="func">library</span>(rpart.plot)
+
+<span class="func">set.seed</span>(<span class="string">2026</span>)
+arbol &lt;- <span class="func">rpart</span>(
+  rotacion ~ .,                 <span class="comment"># Y ~ todos los predictores</span>
+  data    = train,
+  method  = <span class="string">"class"</span>,            <span class="comment"># clasificación (no regresión)</span>
+  control = <span class="func">rpart.control</span>(cp = <span class="string">0.005</span>, minbucket = <span class="string">20</span>)
+)
+
+<span class="comment"># Visualizar: el árbol como reglas</span>
+<span class="func">rpart.plot</span>(arbol, type = <span class="string">2</span>, extra = <span class="string">104</span>,
+           box.palette = <span class="func">list</span>(<span class="string">"#A7BEAE"</span>, <span class="string">"#B85042"</span>),
+           main = <span class="string">"¿Quién está en riesgo de rotar?"</span>)
+
+<span class="comment"># Las reglas en texto</span>
+<span class="func">rpart.rules</span>(arbol, cover = TRUE)</code></pre>
+
+<p>Cómo leer el gráfico: cada <strong>nodo</strong> muestra la clase mayoritaria, la probabilidad de rotación y el porcentaje de empleados que caen ahí. Sigues las ramas según se cumplan o no las condiciones, y llegas a una <strong>hoja</strong> con una predicción. <code>extra = 104</code> muestra la proporción de cada clase y el porcentaje del total en cada nodo.</p>
+
+<div class="note">
+<strong>Un árbol pequeño también es un hallazgo.</strong> En InnovaCo, la rotación es difícil de predecir con las variables disponibles. Si el árbol queda muy chico (a veces apenas la raíz), eso <em>ya dice algo</em>: ninguna variable separa bien a quienes rotan. No fuerces un árbol grande; reporta lo que los datos permiten.
+</div>
+
+<!-- 4 -->
+<h2>4. El problema del sobreajuste</h2>
+
+<p>Un árbol sin restricciones puede crecer hasta clasificar <em>perfectamente</em> los datos con los que se entrenó —memorizando incluso el ruido. Eso es <strong>sobreajuste</strong> (<em>overfitting</em>): el modelo se ajusta tan bien a la muestra que falla con datos nuevos.</p>
+
+<p>Detrás está el compromiso <strong>sesgo–varianza</strong>:</p>
+<ul>
+<li>Modelos <strong>muy simples</strong> → alto <strong>sesgo</strong> (subajuste): no capturan el patrón.</li>
+<li>Modelos <strong>muy flexibles</strong> → alta <strong>varianza</strong> (sobreajuste): capturan el ruido como si fuera señal.</li>
+</ul>
+<p>El punto óptimo está en el medio (James, Witten, Hastie &amp; Tibshirani, 2021, cap. 2). La pregunta es: ¿cómo lo encontramos sin engañarnos? La respuesta es la sección siguiente.</p>
+
+<!-- 5 -->
+<h2>5. La partición entrenamiento/prueba</h2>
+
+<p>El estándar mínimo para evaluar honestamente cualquier modelo predictivo es <strong>separar los datos en dos</strong>:</p>
+<ul>
+<li><strong>Entrenamiento</strong> (<em>train</em>, ~80%): se usa para ajustar el modelo.</li>
+<li><strong>Prueba</strong> (<em>test</em>, ~20%): se reserva; el modelo no lo ve durante el ajuste y solo se usa al final para estimar el error con datos nuevos.</li>
+</ul>
+
+<pre><code><span class="func">set.seed</span>(<span class="string">2026</span>)
+idx_train &lt;- <span class="func">sample</span>(<span class="func">seq_len</span>(<span class="func">nrow</span>(datos)), size = <span class="string">0.8</span> * <span class="func">nrow</span>(datos))
+train &lt;- datos[idx_train, ]
+test  &lt;- datos[-idx_train, ]</code></pre>
+
+<div class="warning">
+<strong>Confesión metodológica.</strong> En la Clase 3 ajustamos la regresión logística sobre <em>todos</em> los datos y miramos la matriz de confusión sobre <em>esos mismos</em> datos. Era una simplificación pedagógica. Desde hoy corregimos el estándar: <strong>predicción honesta = evaluación sobre datos que el modelo nunca vio.</strong> El error de entrenamiento siempre se ve mejor de lo que el modelo realmente es.
+</div>
+
+<h3>Poda del árbol</h3>
+<p>En los árboles, el control del sobreajuste se hace <strong>podando</strong>: se deja crecer el árbol y luego se recorta con el <strong>parámetro de complejidad</strong> (<code>cp</code>). Se elige el <code>cp</code> que minimiza el error de validación cruzada (<code>xerror</code>).</p>
+
+<pre><code><span class="func">printcp</span>(arbol)    <span class="comment"># tabla de complejidad: buscar el menor xerror</span>
+<span class="func">plotcp</span>(arbol)
+
+cp_opt &lt;- arbol$cptable[<span class="func">which.min</span>(arbol$cptable[, <span class="string">"xerror"</span>]), <span class="string">"CP"</span>]
+arbol_podado &lt;- <span class="func">prune</span>(arbol, cp = cp_opt)</code></pre>
+
+<!-- 6 -->
+<h2>6. Random forest: muchos árboles en vez de uno</h2>
+
+<p>Si el problema del árbol es la alta varianza, la solución de Breiman (2001) es elegante: <strong>construir cientos de árboles y promediarlos</strong>. Un <strong>random forest</strong> combina dos ideas:</p>
+
+<ol>
+<li><strong>Bagging (<em>bootstrap aggregating</em>):</strong> cada árbol se entrena sobre una muestra <em>bootstrap</em> (con reemplazo) de los datos. Promediar muchos árboles entrenados sobre muestras distintas reduce la varianza.</li>
+<li><strong>Submuestreo de predictores:</strong> en cada división, el árbol solo considera un subconjunto aleatorio de las variables. Esto "decorrelaciona" los árboles para que no se parezcan todos por usar el mismo predictor dominante.</li>
+</ol>
+
+<p>La predicción final es el voto mayoritario (o el promedio de probabilidades) de todos los árboles. Como cada empleado queda <em>fuera</em> de la muestra de aproximadamente un tercio de los árboles, el bosque estima su propio error sin necesidad de un test separado: el <strong>error out-of-bag (OOB)</strong>.</p>
+
+<pre><code><span class="func">library</span>(ranger)
+
+<span class="func">set.seed</span>(<span class="string">2026</span>)
+rf &lt;- <span class="func">ranger</span>(
+  rotacion ~ .,
+  data        = train,
+  num.trees   = <span class="string">500</span>,
+  importance  = <span class="string">"permutation"</span>,   <span class="comment"># menos sesgada que "impurity"</span>
+  probability = TRUE             <span class="comment"># devuelve probabilidades</span>
+)
+
+rf$prediction.error              <span class="comment"># error out-of-bag</span></code></pre>
+
+<div class="tip">
+<strong>¿Por qué <code>ranger</code> y no <code>randomForest</code>?</strong> <code>ranger</code> (Wright &amp; Ziegler, 2017) es una implementación en C++ mucho más rápida, ideal para datasets grandes, con la misma lógica. Para 1.200 empleados la diferencia es trivial, pero es la herramienta estándar hoy.
+</div>
+
+<!-- 7 -->
+<h2>7. Importancia de variables (y cómo no sobreinterpretarla)</h2>
+
+<p>El bosque no entrega un árbol legible, pero sí ordena las variables por <strong>importancia</strong>:</p>
+<ul>
+<li><strong>Por impureza (Gini):</strong> suma la reducción de impureza que aporta cada variable en todo el bosque.</li>
+<li><strong>Por permutación:</strong> mide cuánto empeora la predicción OOB al permutar aleatoriamente los valores de una variable. Es la recomendada por ser menos sesgada.</li>
+</ul>
+
+<pre><code>importancia &lt;- <span class="func">tibble</span>(
+  variable    = <span class="func">names</span>(rf$variable.importance),
+  importancia = rf$variable.importance
+) <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(<span class="func">desc</span>(importancia))
+
+<span class="func">ggplot</span>(importancia, <span class="func">aes</span>(<span class="func">reorder</span>(variable, importancia), importancia)) +
+  <span class="func">geom_col</span>(fill = col_teal) +
+  <span class="func">coord_flip</span>()</code></pre>
+
+<div class="warning">
+<strong>Importancia ≠ causalidad (Strobl, Boulesteix, Zeileis &amp; Hothorn, 2007).</strong> Tres advertencias: (1) que una variable prediga bien <em>no</em> significa que <em>cause</em> la rotación; (2) la importancia por impureza está sesgada hacia variables con muchos valores distintos; (3) cuando dos predictores están correlacionados, el bosque <strong>reparte</strong> la importancia entre ellos. En InnovaCo, <code>ingreso_mensual</code> está casi determinado por <code>nivel_jerarquico</code> (la colinealidad que diagnosticamos con VIF en la Clase 5): el ingreso "se lleva" la importancia y la jerarquía aparece baja, aunque ambos midan casi lo mismo.
+</div>
+
+<!-- 8 -->
+<h2>8. Evaluar un clasificador: matriz de confusión y AUC</h2>
+
+<p>Para comparar modelos necesitamos métricas calculadas <strong>sobre el test</strong>. La <strong>matriz de confusión</strong> cruza lo real con lo predicho:</p>
+
+<table>
+<tr><th></th><th>Predicho: No rota</th><th>Predicho: Rota</th></tr>
+<tr><td><strong>Real: No rota</strong></td><td>Verdadero negativo</td><td>Falso positivo</td></tr>
+<tr><td><strong>Real: Rota</strong></td><td>Falso negativo</td><td>Verdadero positivo</td></tr>
+</table>
+
+<p>De ahí salen la <strong>sensibilidad</strong> (proporción de quienes rotan que el modelo detecta) y la <strong>especificidad</strong> (proporción de quienes se quedan que el modelo identifica). El <strong>AUC</strong> (área bajo la curva ROC) resume el desempeño en un solo número entre 0,5 (azar) y 1 (perfecto), y es <strong>insensible al punto de corte y al desbalance</strong>.</p>
+
+<pre><code><span class="func">library</span>(pROC)
+
+p_logit &lt;- <span class="func">predict</span>(logit, newdata = test, type = <span class="string">"response"</span>)
+p_arbol &lt;- <span class="func">predict</span>(arbol_podado, newdata = test, type = <span class="string">"prob"</span>)[, <span class="string">"Sí"</span>]
+p_rf    &lt;- <span class="func">predict</span>(rf, data = test)$predictions[, <span class="string">"Sí"</span>]
+
+<span class="func">auc</span>(test$rotacion, p_rf)   <span class="comment"># AUC del random forest</span></code></pre>
+
+<div class="note">
+<strong>El desbalance engaña la <em>accuracy</em>.</strong> Con 73% "No" y 27% "Sí", un modelo que prediga siempre "No" acierta el 73% —y no sirve para nada, porque no detecta a nadie en riesgo. Por eso miramos sensibilidad y AUC, no <em>accuracy</em> a secas. (Esta es la misma discusión de la Clase 3.)
+</div>
+
+<!-- 9 -->
+<h2>9. Comparar los tres modelos: explicar, comunicar, predecir</h2>
+
+<p>El corazón de la clase es comparar la logística, el árbol y el random forest sobre el mismo problema y el mismo test:</p>
+
+<table>
+<tr><th>Modelo</th><th>Fortaleza</th><th>Salida</th><th>Cuándo usarlo</th></tr>
+<tr><td><strong>Logística</strong></td><td><strong>Explicar</strong></td><td>Odds ratios, IC, <em>p</em>-value</td><td>Cuantificar el efecto ajustado de cada predictor</td></tr>
+<tr><td><strong>Árbol</strong></td><td><strong>Comunicar</strong></td><td>Reglas "si–entonces"</td><td>Audiencia no técnica; protocolo de acción simple</td></tr>
+<tr><td><strong>Random forest</strong></td><td><strong>Predecir</strong></td><td>Probabilidad + importancia</td><td>Máxima precisión predictiva</td></tr>
+</table>
+
+<div class="business">
+<strong>Resultado en InnovaCo (ilustrativo).</strong> Sobre el test, el random forest (AUC ≈ 0,58) supera levemente a la logística y al árbol (AUC ≈ 0,54). El RF gana, <strong>pero por poco</strong>, y ningún AUC es alto. La lección de negocio es doble: el <em>machine learning</em> no es magia —la ganancia sobre la regresión en datos de RRHH suele ser modesta— y, sobre todo, la rotación de InnovaCo no se predice bien con las variables disponibles. A veces el hallazgo más honesto es "necesitamos mejores datos", no "necesitamos un modelo más complejo".
+</div>
+
+<!-- 10 -->
+<h2>10. La regla práctica y sus límites</h2>
+
+<p>De aquí se decanta la regla que guía la elección:</p>
+<div class="formula">
+Logística para <strong>explicar</strong> · Árbol para <strong>comunicar</strong> · Random forest para <strong>predecir</strong>
+</div>
+
+<p>No existe el "mejor modelo" en abstracto; existe el modelo correcto para el propósito. Si el directorio necesita entender <em>por qué</em>, la logística gana aunque prediga un poco menos. Si un jefe necesita un protocolo, el árbol gana aunque sea inestable. Si lo único que importa es anticipar, el random forest gana aunque sea una caja negra.</p>
+
+<!-- 11 -->
+<h2>11. Aplicaciones y límites en RRHH</h2>
+
+<div class="advanced">
+<strong>La frontera.</strong> El aprendizaje estadístico contemporáneo ofrece extensiones que este curso no cubre pero conviene conocer: <em>gradient boosting</em> (<code>xgboost</code>, <code>lightgbm</code>), que suele superar al random forest; validación cruzada <em>k-fold</em> en vez de una sola partición train/test; flujos reproducibles con <code>tidymodels</code>; e interpretabilidad de modelos de caja negra con valores de Shapley (<code>fastshap</code>) o LIME, que explican predicciones individuales. La postura del curso es la de siempre: enseñar bien lo estándar, declarar la frontera y dar las referencias.
+</div>
+
+<p>Una nota ética que prepara la Clase 17: un modelo que predice quién va a renunciar es también un modelo que puede usarse para <em>etiquetar</em> personas. Predecir no obliga a actuar, y actuar sobre una predicción (no promover a alguien "porque el modelo dice que se irá") puede volverse una profecía autocumplida. La técnica es poderosa; el juicio sobre cómo usarla es responsabilidad del analista.</p>
+
+<!-- 12 -->
+<h2>12. Síntesis</h2>
+
+<p>Los árboles y el random forest amplían tu repertorio supervisado más allá de la regresión: los árboles aportan <strong>comunicabilidad</strong> (reglas legibles) y el random forest aporta <strong>poder predictivo</strong> (a costa de la interpretabilidad). Pero el aprendizaje más importante del apunte no es técnico: es la disciplina de <strong>evaluar la predicción sobre datos no vistos</strong> y la humildad de reconocer que más complejidad no garantiza mejor predicción. En el Apunte 32 cruzamos la frontera hacia el aprendizaje no supervisado, donde el problema deja de tener etiqueta.</p>
+
+<div class="tip">
+<strong>Kit técnico del apunte.</strong> <code>rpart()</code>, <code>rpart.plot()</code>, <code>rpart.rules()</code>, <code>printcp()</code>, <code>prune()</code>, <code>sample()</code> (train/test), <code>ranger()</code>, <code>rf$variable.importance</code>, <code>pROC::auc()</code>, <code>predict(type = "prob")</code>.
+</div>
+
+<h2>Referencias</h2>
+<p style="font-size:0.88rem;">
+Breiman, L. (2001). Random forests. <em>Machine Learning, 45</em>(1), 5–32. https://doi.org/10.1023/A:1010933404324<br><br>
+Breiman, L., Friedman, J. H., Olshen, R. A., &amp; Stone, C. J. (1984). <em>Classification and regression trees</em>. Wadsworth.<br><br>
+James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). <em>An introduction to statistical learning with applications in R</em> (2.ª ed.). Springer. https://www.statlearning.com<br><br>
+Kuhn, M., &amp; Johnson, K. (2013). <em>Applied predictive modeling</em>. Springer.<br><br>
+Putka, D. J., Beatty, A. S., &amp; Reeder, M. C. (2018). Modern prediction methods: New perspectives on a common problem. <em>Organizational Research Methods, 21</em>(3), 689–732. https://doi.org/10.1177/1094428117697041<br><br>
+Strobl, C., Boulesteix, A.-L., Zeileis, A., &amp; Hothorn, T. (2007). Bias in random forest variable importance measures: Illustrations, sources and a solution. <em>BMC Bioinformatics, 8</em>, 25. https://doi.org/10.1186/1471-2105-8-25<br><br>
+Wright, M. N., &amp; Ziegler, A. (2017). ranger: A fast implementation of random forests for high dimensional data in C++ and R. <em>Journal of Statistical Software, 77</em>(1), 1–17. https://doi.org/10.18637/jss.v077.i01
+</p>
+
+<footer>
+Apunte 31 · Analítica de Personas (People Analytics con R) · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+</footer>
+
+</body>
+</html>

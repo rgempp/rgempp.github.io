@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 32 — Clasificación no supervisada: clustering y segmentación | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 32 — Clasificación no supervisada: clustering y segmentación de personas</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 14 · Prof. René Gempp</p>
+
+<!-- 1 -->
+<h2>1. De predecir a descubrir</h2>
+
+<p>El Apunte 31 cubrió el aprendizaje supervisado: había una Y conocida —la rotación— y el objetivo era predecirla. Ahora le <strong>quitamos la Y al problema</strong>. El CEO no pregunta "¿quién va a rotar?" sino algo distinto: <em>"¿qué tipos de empleado tenemos? Descúbranlos sin que yo les diga cuáles son ni cuántos hay."</em></p>
+
+<p>Eso es <strong>aprendizaje no supervisado</strong>: no hay variable respuesta, no hay "respuesta correcta" contra la cual corregirse. El objetivo es <strong>descubrir estructura</strong> que está latente en los datos. La técnica que usaremos es el <strong>análisis de conglomerados</strong> (<em>cluster analysis</em>): agrupar empleados de modo que los de un mismo grupo se parezcan mucho entre sí y se diferencien de los de otros grupos.</p>
+
+<p>La pregunta cambia de raíz: ya no es "¿qué predice Y?" sino <strong>"¿quién se parece a quién?"</strong>.</p>
+
+<!-- 2 -->
+<h2>2. El paralelo con el análisis factorial</h2>
+
+<p>Si hiciste el EFA de la Clase 6, ya entiendes el clustering mejor de lo que crees. Toda matriz de datos tiene dos márgenes: las <strong>columnas</strong> (variables) y las <strong>filas</strong> (casos).</p>
+
+<table>
+<tr><th>Técnica</th><th>¿Qué reduce?</th><th>¿Qué descubre?</th></tr>
+<tr><td><strong>Análisis factorial (EFA)</strong></td><td>Las <strong>columnas</strong> (variables)</td><td>Factores latentes que explican la covarianza entre variables</td></tr>
+<tr><td><strong>Clustering</strong></td><td>Las <strong>filas</strong> (casos)</td><td>Grupos latentes que explican la similitud entre personas</td></tr>
+</table>
+
+<div class="advanced">
+<strong>Para quien viene de la psicometría.</strong> El paralelo es literal: existe el <em>Q-factor analysis</em>, que es un análisis factorial sobre la matriz transpuesta para agrupar personas en vez de variables. Y el primo basado en modelos del <em>k</em>-means —el <strong>Latent Profile Analysis</strong>— es un modelo de mezcla de gaussianas que reconocerás del mundo SEM (ver sección 13). El EFA y el clustering no son técnicas inconexas: son la misma idea de "descubrir lo que no se ve" aplicada a los dos lados de la matriz.
+</div>
+
+<!-- 3 -->
+<h2>3. La medida de distancia y por qué estandarizar es obligatorio</h2>
+
+<p>Todo el clustering descansa sobre una <strong>medida de distancia</strong> entre personas. La más común para variables continuas es la <strong>distancia euclidiana</strong>:</p>
+
+<div class="formula">
+d(i, j) = &radic; [ Σ<sub>p</sub> (x<sub>ip</sub> − x<sub>jp</sub>)² ]
+</div>
+
+<p>De aquí surge la decisión más importante y más olvidada: <strong>la estandarización</strong>. Mira las escalas de InnovaCo: el ingreso está en millones (≈ 1.600.000) y la satisfacción en una escala de 1 a 5. Si calculas la distancia euclidiana sin estandarizar, el ingreso <strong>aplasta</strong> todo lo demás: una diferencia de \$200.000 pesa 200.000 unidades, mientras que toda la escala de satisfacción pesa, como mucho, 4 unidades. La satisfacción se vuelve irrelevante <em>por su escala</em>, no por su importancia.</p>
+
+<pre><code><span class="comment"># Variables de perfil del empleado</span>
+seg_vars &lt;- empleados <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(edad, antiguedad_anios, ingreso_mensual,
+         satisfaccion_laboral, evaluacion_desempeno, horas_capacitacion)
+
+<span class="comment"># CRÍTICO: estandarizar a puntajes z (media 0, desviación 1)</span>
+seg_z &lt;- <span class="func">scale</span>(seg_vars)</code></pre>
+
+<div class="warning">
+<strong>Regla sin excepciones prácticas.</strong> Antes de cualquier clustering por distancia, <strong>estandariza</strong> (salvo que tengas una razón sustantiva fuerte para no hacerlo). Olvidar <code>scale()</code> es el error más común y el más caro en segmentación.
+</div>
+
+<!-- 4 -->
+<h2>4. Advertencia: los algoritmos siempre devuelven grupos</h2>
+
+<p>Esta es la advertencia conceptual central del apunte. Un algoritmo de clustering <strong>siempre</strong> devuelve conglomerados, incluso si los datos no tienen ninguna estructura de grupos —incluso en una nube uniforme y aleatoria. El algoritmo no pregunta "¿hay grupos?"; pregunta "si tuviera que partir esto en <em>k</em> grupos, ¿cuál es la mejor partición?".</p>
+
+<p>Por lo tanto, <strong>encontrar conglomerados no prueba que existan grupos "reales"</strong>. La validez de una solución se evalúa por su estabilidad, su interpretabilidad y, sobre todo, por validación externa (sección 9). La tendencia a agrupar puede chequearse antes con el estadístico de Hopkins:</p>
+
+<pre><code><span class="func">set.seed</span>(<span class="string">2026</span>)
+<span class="func">get_clust_tendency</span>(seg_z, n = <span class="string">50</span>)$hopkins_stat
+<span class="comment"># &gt; 0.5 sugiere alguna estructura agrupable</span></code></pre>
+
+<!-- 5 -->
+<h2>5. k-means: el algoritmo</h2>
+
+<p><strong>k-means</strong> (Hartigan &amp; Wong, 1979) parte el conjunto en <em>k</em> grupos minimizando la dispersión interna total (la suma de cuadrados intra-conglomerado). El algoritmo:</p>
+<ol>
+<li>Elige <em>k</em> centroides iniciales al azar.</li>
+<li>Asigna cada persona al centroide más cercano.</li>
+<li>Recalcula cada centroide como la media de su grupo.</li>
+<li>Repite 2–3 hasta que las asignaciones se estabilizan.</li>
+</ol>
+
+<pre><code><span class="func">set.seed</span>(<span class="string">2026</span>)
+km &lt;- <span class="func">kmeans</span>(seg_z, centers = <span class="string">4</span>, nstart = <span class="string">25</span>)
+
+km$size           <span class="comment"># tamaño de cada conglomerado</span>
+km$tot.withinss   <span class="comment"># dispersión intra-conglomerado total</span></code></pre>
+
+<table>
+<tr><th>Característica</th><th>Implicancia práctica</th></tr>
+<tr><td>Requiere fijar <em>k</em> de antemano</td><td>Hay que elegirlo con diagnósticos (sección 6)</td></tr>
+<tr><td>Sensible a la inicialización</td><td>Usar <code>nstart = 25</code> o más: corre muchas veces y se queda con la mejor</td></tr>
+<tr><td>Sensible a la escala</td><td>Estandarizar siempre (sección 3)</td></tr>
+<tr><td>Asume grupos esféricos y de tamaño similar</td><td>Falla con grupos alargados o de densidades muy distintas</td></tr>
+<tr><td>Solo variables continuas</td><td>Para categóricas, usar Gower + PAM (sección 12)</td></tr>
+</table>
+
+<!-- 6 -->
+<h2>6. ¿Cuántos grupos? Codo y silueta</h2>
+
+<p>No hay una respuesta única a "¿cuántos grupos hay?". Hay <strong>diagnósticos</strong> que sugieren:</p>
+<ul>
+<li><strong>Método del codo:</strong> grafica la dispersión intra-conglomerado contra <em>k</em>. Se busca el "codo": el punto donde agregar más grupos deja de reducir sustancialmente la dispersión.</li>
+<li><strong>Coeficiente de silueta (Rousseeuw, 1987):</strong> para cada persona compara cuán cerca está de su propio grupo vs. del grupo vecino más próximo. Va de −1 a 1; se elige el <em>k</em> que maximiza la silueta promedio.</li>
+<li><strong>Estadístico gap (Tibshirani, Walther &amp; Hastie, 2001):</strong> compara la dispersión observada con la esperada si no hubiera estructura.</li>
+</ul>
+
+<pre><code><span class="func">library</span>(factoextra)
+
+<span class="func">fviz_nbclust</span>(seg_z, kmeans, method = <span class="string">"wss"</span>)         <span class="comment"># codo</span>
+<span class="func">fviz_nbclust</span>(seg_z, kmeans, method = <span class="string">"silhouette"</span>)  <span class="comment"># silueta</span></code></pre>
+
+<div class="note">
+<strong>Honestidad con datos reales.</strong> En InnovaCo la silueta promedio es <strong>modesta</strong> (alrededor de 0,13–0,18): los grupos existen pero no están nítidamente separados. Esto es lo normal en datos de RRHH —las personas no vienen en cajas limpias. El codo y la silueta <em>sugieren</em>, no <em>deciden</em>. A veces <em>k</em> = 3 y <em>k</em> = 4 son ambos defendibles, y la elección final mezcla estadística con sentido de negocio (¿cuántos segmentos puede gestionar realmente la organización?).
+</div>
+
+<!-- 7 -->
+<h2>7. Visualizar los conglomerados</h2>
+
+<p>Con seis variables no podemos graficar en seis dimensiones. <code>fviz_cluster()</code> proyecta los grupos sobre las dos primeras <strong>componentes principales</strong> (un resumen bidimensional que conserva la mayor varianza posible):</p>
+
+<pre><code><span class="func">fviz_cluster</span>(km, data = seg_z, geom = <span class="string">"point"</span>,
+             ellipse.type = <span class="string">"norm"</span>,
+             palette = <span class="func">c</span>(col_teal, col_terracotta, col_gold, col_purple),
+             main = <span class="string">"Segmentos de empleados (k-means, k = 4)"</span>)</code></pre>
+
+<p>Las elipses muestran la dispersión de cada grupo. Si se superponen mucho, es otra señal de que la separación es débil —coherente con una silueta modesta.</p>
+
+<!-- 8 -->
+<h2>8. Perfilar y nombrar: del número a la persona</h2>
+
+<p>El algoritmo entrega una etiqueta numérica por persona (1, 2, 3, 4). <strong>Ese número no significa nada por sí solo.</strong> El valor lo agregas tú al <em>perfilar</em>: calcular, para cada grupo, el promedio de las variables en su <strong>escala original</strong> (no la estandarizada) y construir un retrato.</p>
+
+<pre><code>perfil &lt;- empleados <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(segmento = <span class="func">factor</span>(km$cluster)) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(segmento) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(
+    n            = <span class="func">n</span>(),
+    edad         = <span class="func">mean</span>(edad),
+    antiguedad   = <span class="func">mean</span>(antiguedad_anios),
+    ingreso      = <span class="func">mean</span>(ingreso_mensual),
+    satisfaccion = <span class="func">mean</span>(satisfaccion_laboral),
+    desempeno    = <span class="func">mean</span>(evaluacion_desempeno),
+    capacitacion = <span class="func">mean</span>(horas_capacitacion)
+  )</code></pre>
+
+<p>A partir de la tabla de perfiles, los segmentos de InnovaCo que tienden a emerger se pueden nombrar así (los nombres son tu interpretación, no salida del algoritmo):</p>
+<ul>
+<li><strong>"Estrellas":</strong> satisfacción alta y desempeño alto.</li>
+<li><strong>"Satisfechos de bajo desempeño":</strong> contentos pero con evaluación baja.</li>
+<li><strong>"Insatisfechos":</strong> satisfacción baja (≈ 2) — el grupo a vigilar.</li>
+<li><strong>"Veteranos consolidados":</strong> antigüedad alta (≈ 9–10 años) e ingreso alto.</li>
+</ul>
+
+<div class="tip">
+<strong>El algoritmo encuentra; el analista nombra.</strong> Un buen nombre de segmento es corto, memorable y accionable. "Cluster 3" no le sirve a nadie; "profesionales jóvenes en riesgo de fuga" orienta una decisión.
+</div>
+
+<!-- 9 -->
+<h2>9. Validación externa: la prueba de fuego</h2>
+
+<p>¿Cómo sabemos que los segmentos son útiles y no artefactos del algoritmo? <strong>Cruzándolos con una variable que no se usó para formarlos.</strong> Formamos los grupos con edad, antigüedad, ingreso, satisfacción, desempeño y capacitación. La <strong>rotación</strong> quedó fuera. Si los segmentos difieren marcadamente en su tasa de rotación, capturan algo real.</p>
+
+<pre><code>empleados <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(segmento = <span class="func">factor</span>(km$cluster)) <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(segmento, rotacion) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(segmento) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(prop = n / <span class="func">sum</span>(n)) <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(rotacion == <span class="string">"Sí"</span>)</code></pre>
+
+<div class="business">
+<strong>El cierre del arco.</strong> El segmento "insatisfecho" concentra la rotación (≈ 33%) frente al más estable (≈ 21%). Esa brecha convierte una curiosidad estadística en una <strong>prioridad de negocio</strong>. Y fíjate en lo elegante del resultado: encontramos —sin etiqueta, sin decirle al algoritmo qué buscar— la misma "persona de riesgo" que el árbol del Apunte 31 intentaba predecir <em>con</em> etiqueta. Predecir y descubrir convergen en el mismo empleado.
+</div>
+
+<!-- 10 -->
+<h2>10. Clustering jerárquico y el dendrograma</h2>
+
+<p>El <strong>clustering jerárquico aglomerativo</strong> ofrece una lógica distinta: empieza con cada persona como su propio grupo y, en cada paso, fusiona los dos grupos más cercanos, hasta dejar todo en uno solo. El resultado es un <strong>dendrograma</strong>: un árbol que muestra el orden y la distancia de las fusiones.</p>
+
+<p>Ventajas frente a <em>k</em>-means: no requiere fijar <em>k</em> de antemano (cortas el dendrograma a la altura que quieras) y es determinista (no depende de inicialización aleatoria). La decisión clave es el <strong>método de enlace</strong>: cómo se mide la distancia entre grupos. El <strong>enlace de Ward</strong> (<code>ward.D2</code>) produce grupos compactos y de tamaño similar, y es el más usado en segmentación de personas.</p>
+
+<pre><code>d  &lt;- <span class="func">dist</span>(seg_z, method = <span class="string">"euclidean"</span>)
+hc &lt;- <span class="func">hclust</span>(d, method = <span class="string">"ward.D2"</span>)
+
+<span class="func">fviz_dend</span>(hc, k = <span class="string">4</span>, cex = <span class="string">0.4</span>)   <span class="comment"># dendrograma coloreado</span>
+grupos_hc &lt;- <span class="func">cutree</span>(hc, k = <span class="string">4</span>)      <span class="comment"># cortar en 4 grupos</span></code></pre>
+
+<!-- 11 -->
+<h2>11. Comparar soluciones: ¿es estable?</h2>
+
+<p>Una solución de clustering es más creíble si <strong>distintos métodos coinciden</strong>. Cruzamos las etiquetas de <em>k</em>-means con las del jerárquico:</p>
+
+<pre><code><span class="func">table</span>(kmeans = km$cluster, jerarquico = grupos_hc)</code></pre>
+
+<p>Si la tabla muestra una correspondencia clara (cada grupo de un método cae mayormente en un grupo del otro), la solución es estable. Si las etiquetas se mezclan, conviene ser cauto: la estructura es débil y la segmentación, frágil.</p>
+
+<!-- 12 -->
+<h2>12. Datos mixtos: distancia de Gower y PAM</h2>
+
+<p>El <em>k</em>-means solo admite variables continuas (usa medias y distancia euclidiana). ¿Y si quieres segmentar incluyendo el <strong>departamento</strong> o el <strong>género</strong>? Para datos mixtos (continuos + categóricos) se usa la <strong>distancia de Gower</strong> (Gower, 1971), que combina una métrica apropiada por tipo de variable, junto con <strong>PAM</strong> (<em>Partitioning Around Medoids</em>; Kaufman &amp; Rousseeuw, 1990) —una variante de <em>k</em>-means que opera sobre una matriz de distancias.</p>
+
+<pre><code><span class="func">library</span>(cluster)
+
+seg_mix &lt;- empleados <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(edad, antiguedad_anios, ingreso_mensual,
+         satisfaccion_laboral, departamento, genero) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(<span class="func">across</span>(<span class="func">c</span>(departamento, genero), as.factor))
+
+d_gower &lt;- <span class="func">daisy</span>(seg_mix, metric = <span class="string">"gower"</span>)
+pam_fit &lt;- <span class="func">pam</span>(d_gower, k = <span class="string">4</span>)</code></pre>
+
+<div class="note">
+<strong>Simplificación declarada.</strong> En el <em>k</em>-means tratamos <code>satisfaccion_laboral</code> y <code>evaluacion_desempeno</code> (Likert de 1 a 5) como continuas. Como psicómetras sabemos que la distancia entre "1" y "2" no es necesariamente igual a la de "4" a "5". Es una simplificación pedagógica que <strong>declaramos</strong>; un proyecto riguroso usaría Gower o un modelo para datos ordinales. Lo mismo con <code>ingreso_mensual</code>, fuertemente sesgado a la derecha: convendría transformarlo (log) para que un puñado de gerentes muy bien pagados no domine la solución.
+</div>
+
+<!-- 13 -->
+<h2>13. La frontera: Latent Profile Analysis y mixture models</h2>
+
+<div class="advanced">
+<strong>El primo basado en modelos.</strong> El <em>k</em>-means es un algoritmo <em>heurístico</em>: parte rígidamente, sin un modelo probabilístico que lo respalde, y no ofrece una forma principista de elegir <em>k</em>. Su contraparte basada en modelos es el <strong>Latent Profile Analysis (LPA)</strong> —un modelo de mezcla de gaussianas finitas (Vermunt &amp; Magidson, 2002; paquete <code>mclust</code>, Scrucca, Fop, Murphy &amp; Raftery, 2016). El LPA entrega lo que el <em>k</em>-means no: asignación <strong>probabilística</strong> a los perfiles (cada persona tiene una probabilidad de pertenecer a cada grupo), criterios de información (BIC, AIC) para elegir el número de perfiles, y pruebas formales de ajuste. Para quien viene del mundo SEM, el LPA es el marco natural y se ha vuelto estándar en la investigación organizacional y vocacional (Spurk, Hirschi, Wang, Valero &amp; Kauffeld, 2020). En R: <code>tidyLPA</code>. Otras fronteras: el clustering por densidad (DBSCAN), que detecta grupos de forma arbitraria y aísla <em>outliers</em>, y la reducción no lineal (UMAP, t-SNE) para visualizar estructura de alta dimensión.</p>
+</div>
+
+<p>La postura del curso, una vez más: <strong>enseñar bien lo estándar, declarar la frontera y dar las referencias.</strong> Sabes ejecutar y validar un <em>k</em>-means; sabes que existe el LPA y por qué es más principista. Eso es suficiente para ser un consumidor crítico y un practicante competente.</p>
+
+<h2>Síntesis</h2>
+<p>El clustering descubre, sin etiqueta, la estructura latente <em>entre las personas</em>, como el EFA la descubrió <em>entre las variables</em>. Sus claves: estandarizar siempre, recordar que el algoritmo siempre devuelve grupos (y que eso no prueba que existan), elegir <em>k</em> con codo y silueta sin tratarlos como oráculos, y —sobre todo— perfilar, nombrar y validar externamente. El mensaje de fondo que cierra la clase: <strong>los algoritmos no descubren verdades, proponen estructuras; el analista las valida y les da sentido.</strong></p>
+
+<div class="tip">
+<strong>Kit técnico del apunte.</strong> <code>scale()</code>, <code>dist()</code>, <code>get_clust_tendency()</code>, <code>kmeans()</code>, <code>fviz_nbclust()</code>, <code>fviz_cluster()</code>, <code>hclust()</code>, <code>cutree()</code>, <code>fviz_dend()</code>, <code>cluster::daisy(metric = "gower")</code>, <code>cluster::pam()</code>.
+</div>
+
+<h2>Referencias</h2>
+<p style="font-size:0.88rem;">
+Everitt, B. S., Landau, S., Leese, M., &amp; Stahl, D. (2011). <em>Cluster analysis</em> (5.ª ed.). Wiley.<br><br>
+Gower, J. C. (1971). A general coefficient of similarity and some of its properties. <em>Biometrics, 27</em>(4), 857–871. https://doi.org/10.2307/2528823<br><br>
+Hartigan, J. A., &amp; Wong, M. A. (1979). Algorithm AS 136: A k-means clustering algorithm. <em>Journal of the Royal Statistical Society. Series C, 28</em>(1), 100–108. https://doi.org/10.2307/2346830<br><br>
+James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2021). <em>An introduction to statistical learning with applications in R</em> (2.ª ed.). Springer. https://www.statlearning.com<br><br>
+Kaufman, L., &amp; Rousseeuw, P. J. (1990). <em>Finding groups in data: An introduction to cluster analysis</em>. Wiley.<br><br>
+Rousseeuw, P. J. (1987). Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. <em>Journal of Computational and Applied Mathematics, 20</em>, 53–65. https://doi.org/10.1016/0377-0427(87)90125-7<br><br>
+Scrucca, L., Fop, M., Murphy, T. B., &amp; Raftery, A. E. (2016). mclust 5: Clustering, classification and density estimation using Gaussian finite mixture models. <em>The R Journal, 8</em>(1), 289–317.<br><br>
+Spurk, D., Hirschi, A., Wang, M., Valero, D., &amp; Kauffeld, S. (2020). Latent profile analysis: A review and "how to" guide of its application within vocational behavior research. <em>Journal of Vocational Behavior, 120</em>, 103445. https://doi.org/10.1016/j.jvb.2020.103445<br><br>
+Tibshirani, R., Walther, G., &amp; Hastie, T. (2001). Estimating the number of clusters in a data set via the gap statistic. <em>Journal of the Royal Statistical Society. Series B, 63</em>(2), 411–423. https://doi.org/10.1111/1467-9868.00293<br><br>
+Vermunt, J. K., &amp; Magidson, J. (2002). Latent class cluster analysis. En J. A. Hagenaars &amp; A. L. McCutcheon (Eds.), <em>Applied latent class analysis</em> (pp. 89–106). Cambridge University Press.
+</p>
+
+<footer>
+Apunte 32 · Analítica de Personas (People Analytics con R) · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+</footer>
+
+</body>
+</html>

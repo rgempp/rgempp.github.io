@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 33 — Workforce planning y cadenas de Markov | Analítica de Personas</title>
+<style>
+  :root{--teal:#0D9488;--navy:#1B2A4A;--coral:#EF4444;--green:#16A34A;--slate:#475569;--bg:#F8FAFC;--code-bg:#1E293B;--terra:#B85042}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Calibri,sans-serif;color:#1E293B;background:var(--bg);line-height:1.6;max-width:850px;margin:0 auto;padding:2rem 1.5rem}
+  h1{font-family:Georgia,serif;color:var(--navy);font-size:1.8rem;border-bottom:3px solid var(--teal);padding-bottom:.5rem;margin-bottom:.3rem}
+  .subtitle{color:var(--slate);font-size:.95rem;margin-bottom:2rem}
+  h2{font-family:Georgia,serif;color:var(--navy);font-size:1.3rem;margin-top:2rem;margin-bottom:.8rem;padding-left:.5rem;border-left:4px solid var(--teal)}
+  h3{color:var(--teal);font-size:1.05rem;margin-top:1.3rem;margin-bottom:.5rem}
+  p{margin-bottom:.8rem}
+  ul,ol{margin:.5rem 0 1rem 1.5rem}
+  li{margin-bottom:.3rem}
+  code{font-family:'Consolas','Fira Code',monospace;background:#E2E8F0;padding:.15rem .4rem;border-radius:3px;font-size:.9rem}
+  pre{background:var(--code-bg);color:#E2E8F0;padding:1rem 1.2rem;border-radius:8px;overflow-x:auto;margin:.8rem 0 1.2rem 0;font-size:.88rem;line-height:1.5}
+  pre code{background:none;padding:0;color:inherit}
+  .comment{color:#94A3B8}.string{color:#4ADE80}.func{color:#38BDF8}.pipe{color:#F59E0B;font-weight:bold}.num{color:#FBBF24}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+  th{background:var(--navy);color:white;padding:.6rem .8rem;text-align:left;font-weight:600}
+  td{padding:.5rem .8rem;border-bottom:1px solid #E2E8F0;vertical-align:top}
+  tr:nth-child(even){background:#F1F5F9}
+  .tip{background:#CCFBF1;border-left:4px solid var(--teal);padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .warning{background:#FEE2E2;border-left:4px solid var(--coral);padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .note{background:#FEF3C7;border-left:4px solid #F59E0B;padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .advanced{background:#EDE9FE;border-left:4px solid #7C3AED;padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .business{background:#FFF7ED;border-left:4px solid #EA580C;padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .tip strong,.warning strong,.note strong,.advanced strong,.business strong{display:block;margin-bottom:.3rem}
+  .formula{background:#F1F5F9;border:1px solid #CBD5E1;padding:1rem;border-radius:6px;margin:1rem 0;text-align:center;font-family:Georgia,serif;font-size:1.1rem}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #E2E8F0;color:var(--slate);font-size:.85rem}
+  .refs{font-size:.85rem}
+  .refs p{padding-left:1.5rem;text-indent:-1.5rem;margin-bottom:.5rem}
+</style>
+</head>
+<body>
+
+<h1>Apunte 33 — Workforce planning y cadenas de Markov</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 15 · Prof. René Gempp</p>
+
+<!-- 1 -->
+<h2>1. Del diagnóstico a la proyección</h2>
+
+<p>Durante catorce semanas miramos al pasado y al presente: por qué se va la gente, quién está en riesgo, cuánto se les paga, cuán comprometidos están, cuánto tiempo se quedan. Todo ese trabajo es <strong>diagnóstico</strong>. Hoy hacemos algo distinto: usamos el pasado para <strong>proyectar el futuro</strong>. La pregunta de Carolina Tagle no es "¿qué pasó?" sino "¿cuánta gente vamos a necesitar?".</p>
+
+<p>El gancho del problema está en el error que cometió el directorio. InnovaCo quiere crecer 40% en dotación en dos años, y la reacción fue: <em>"40% más, obvio"</em> — es decir, contratar 480 personas (el 40% de 1.200). Pero eso ignora dos flujos que erosionan la dotación todos los años:</p>
+<ul>
+<li><strong>Salidas:</strong> cada año perdemos gente por rotación (lo modelaste en la Clase 9).</li>
+<li><strong>Promociones:</strong> algunos profesionales suben a jefatura — lo que queremos — pero eso vacía la base y exige reponer.</li>
+</ul>
+<p>La <strong>necesidad bruta de contratación</strong> (~813) es bastante mayor que el <strong>crecimiento neto</strong> (~480). Cuantificar esa diferencia es el corazón del <em>workforce planning</em>.</p>
+
+<div class="business">
+<strong>El cambio de postura epistemológica.</strong> Un diagnóstico se valida contra los datos: si dices que las mujeres ganan menos, se puede comprobar. Una proyección <em>no se puede validar contra nada</em>, porque el futuro todavía no existe. La única integridad disponible es la <strong>transparencia sobre los supuestos</strong>. Este apunte te enseña el modelo; el Apunte 34 te enseña a comunicar su incertidumbre con honestidad.
+</div>
+
+<!-- 2 -->
+<h2>2. El modelo oferta–demanda–brecha</h2>
+
+<p>Todo <em>workforce planning</em> se apoya en un balance entre tres cantidades, calculado idealmente por segmento (aquí: por nivel jerárquico):</p>
+
+<div class="formula">Brecha<sub>nivel</sub> = Demanda<sub>nivel</sub> − Oferta interna proyectada<sub>nivel</sub></div>
+
+<ul>
+<li><strong>Demanda:</strong> ¿cuántas personas necesitará la organización al final del horizonte? Es función de la estrategia del negocio.</li>
+<li><strong>Oferta interna proyectada:</strong> ¿cuántas de las personas que hoy tenemos seguirán aquí —y en qué nivel— en dos años, descontando salidas y movilidad? <em>Esta es la cantidad que el modelo de Markov estima.</em></li>
+<li><strong>Brecha:</strong> la diferencia. Positiva = <strong>déficit</strong> (hay que contratar o desarrollar); negativa = <strong>superávit</strong> (hay que redesplegar o congelar contratación).</li>
+</ul>
+
+<p>La acción que sigue suele organizarse con el marco <strong>build / buy / borrow</strong>: construir talento internamente (desarrollo, promoción), comprarlo en el mercado externo (contratación) o pedirlo prestado (contingentes). La decisión entre construir y comprar es el núcleo estratégico de la gestión de talento (Cappelli, 2008): comprar es rápido pero caro; construir es barato pero lento, y solo funciona si existe un <em>pipeline</em> interno — justo lo que el modelo de Markov nos permite ver.</p>
+
+<h3>Planificación operacional vs. estratégica</h3>
+<table>
+<tr><th>Dimensión</th><th>Operacional</th><th>Estratégica</th></tr>
+<tr><td><strong>Horizonte</strong></td><td>0–12 meses</td><td>2–5 años</td></tr>
+<tr><td><strong>Pregunta</strong></td><td>¿Qué vacantes cubrimos?</td><td>¿Qué fuerza laboral exige la estrategia?</td></tr>
+<tr><td><strong>Incertidumbre</strong></td><td>Baja</td><td>Alta → exige escenarios</td></tr>
+<tr><td><strong>Herramienta</strong></td><td>Seguimiento de vacantes</td><td>Modelos de flujo y simulación</td></tr>
+</table>
+
+<div class="note">
+<strong>Simplificación declarada.</strong> En InnovaCo la demanda es <em>top-down</em>: el directorio fijó +40% uniforme para todos los niveles. La tomamos como dada. En la práctica, la demanda debería diferenciarse por nivel: no es obvio que las jefaturas crezcan al mismo ritmo que los operativos.
+</div>
+
+<!-- 3 -->
+<h2>3. Pronosticar la demanda</h2>
+<ul>
+<li><strong>Juicio gerencial:</strong> rápido y barato, pero sesgado. Útil como complemento.</li>
+<li><strong>Análisis de razones (<em>ratio analysis</em>):</strong> relación estable entre dotación y un <em>driver</em> de negocio (ingresos por empleado, <em>span of control</em>).</li>
+<li><strong>Modelos de regresión sobre <em>drivers</em>:</strong> más rigurosos, exigen series históricas.</li>
+<li><strong>Planificación por escenarios:</strong> en vez de un pronóstico único, varios futuros plausibles (Schoemaker, 1995). No busca acertar el futuro, sino preparar a la organización para un rango de futuros. Es la postura que adoptamos en el Apunte 34.</li>
+</ul>
+
+<!-- 4 -->
+<h2>4. Cadenas de Markov: el modelo</h2>
+
+<p>Una <strong>cadena de Markov</strong> es un proceso que se mueve entre un conjunto finito de <strong>estados</strong> en pasos de tiempo discretos, bajo la <strong>propiedad markoviana</strong>: la probabilidad de pasar al estado siguiente depende <em>solo del estado actual</em>, no de cómo se llegó a él.</p>
+
+<div class="formula">P(X<sub>t+1</sub> = j | X<sub>t</sub> = i, historia) = P(X<sub>t+1</sub> = j | X<sub>t</sub> = i) = p<sub>ij</sub></div>
+
+<p>En la dotación de InnovaCo, los <strong>estados</strong> son los cuatro niveles jerárquicos más la Salida:</p>
+<p style="text-align:center"><code>{ Operativo, Profesional, Jefatura, Gerencia, Salida }</code></p>
+
+<h3>La matriz de transición P</h3>
+<p>El corazón del modelo: la celda <em>p<sub>ij</sub></em> es la probabilidad de pasar del estado <em>i</em> al <em>j</em> en un año. <strong>Cada fila suma 1.</strong> A continuación, la matriz estimada del panel histórico de InnovaCo (cifras ilustrativas, semilla 2026):</p>
+
+<table>
+<tr><th>Desde \ Hacia</th><th>Operativo</th><th>Profesional</th><th>Jefatura</th><th>Gerencia</th><th>Salida</th></tr>
+<tr><td><strong>Operativo</strong></td><td>0,703</td><td>0,128</td><td>0,000</td><td>0,000</td><td>0,169</td></tr>
+<tr><td><strong>Profesional</strong></td><td>0,000</td><td>0,835</td><td>0,017</td><td>0,000</td><td>0,148</td></tr>
+<tr><td><strong>Jefatura</strong></td><td>0,000</td><td>0,000</td><td>0,873</td><td>0,005</td><td>0,122</td></tr>
+<tr><td><strong>Gerencia</strong></td><td>0,000</td><td>0,000</td><td>0,000</td><td>0,864</td><td>0,136</td></tr>
+<tr><td><strong>Salida</strong></td><td>0,000</td><td>0,000</td><td>0,000</td><td>0,000</td><td>1,000</td></tr>
+</table>
+
+<p>Lectura en lenguaje de negocio:</p>
+<ul>
+<li><strong>Diagonal (permanencia):</strong> un operativo tiene 70% de probabilidad de seguir siéndolo al año; una jefatura, 87%. La permanencia <em>sube</em> con el nivel.</li>
+<li><strong>Sobre la diagonal (promoción):</strong> ~13% de operativos suben a profesional; ~1,7% de profesionales a jefatura; ~0,5% de jefaturas a gerencia. El embudo se angosta drásticamente hacia arriba: las promociones son cada vez más raras.</li>
+<li><strong>Bajo la diagonal (descenso):</strong> todo en cero. Simplificación declarada: no modelamos degradaciones de nivel.</li>
+<li><strong>Columna Salida:</strong> probabilidad anual de irse — 17% operativos, 15% profesionales, 12% jefaturas. La rotación <em>baja</em> con el nivel (es el <em>hazard</em> de la Clase 9, ahora agregado por nivel).</li>
+<li><strong>Fila Salida:</strong> (0,0,0,0,1). Un <strong>estado absorbente</strong>: una vez alcanzado, no se abandona.</li>
+</ul>
+
+<h3>La proyección</h3>
+<p>Si <em>n<sub>t</sub></em> es el <strong>vector de estado</strong> —la dotación distribuida por nivel en el año <em>t</em>— la proyección a un año es simplemente una multiplicación matricial:</p>
+<div class="formula">n<sub>t+1</sub> = n<sub>t</sub> · P</div>
+<p>Una sola operación matricial captura simultáneamente las salidas y las promociones de toda la organización. Iterando dos veces sobre <em>n</em><sub>0</sub> = [265, 830, 98, 7]:</p>
+<ul>
+<li>Año 1: Operativo 186 · Profesional 727 · Jefatura 100 · Gerencia 7 — total activos <strong>1.020</strong></li>
+<li>Año 2: Operativo 131 · Profesional 631 · Jefatura 99 · Gerencia 6 — total activos <strong>867</strong></li>
+</ul>
+<p>Sin contratar, la organización pierde <strong>~333 personas netas en dos años</strong>. Ese es el costo invisible que el directorio ignoraba.</p>
+
+<!-- 5 -->
+<h2>5. Construir la matriz desde datos en R</h2>
+
+<p>La matriz <em>P</em> no se inventa: se <strong>estima</strong> de datos longitudinales. El procedimiento: <strong>contar y dividir</strong>.</p>
+
+<h3>Paso 1: emparejar año t con año t+1 con <code>lead()</code></h3>
+<pre><code><span class="comment"># lead() mira "la fila siguiente" dentro de cada persona (group_by)</span>
+pares &lt;- dotacion <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(id_empleado, anio) <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(id_empleado) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(nivel_sig = <span class="func">lead</span>(nivel_jerarquico)) <span class="pipe">|&gt;</span>
+  <span class="func">ungroup</span>() <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(nivel_jerarquico <span class="pipe">%in%</span> NIVELES, !<span class="func">is.na</span>(nivel_sig))
+<span class="comment"># nivel_sig == "Salida" cuando la persona dejó la empresa al año siguiente</span>
+</code></pre>
+
+<h3>Paso 2: contar y controlar el n de cada fila</h3>
+<pre><code><span class="comment"># CRUCIAL: ¿cuántas transiciones sustentan cada fila?</span>
+pares <span class="pipe">|&gt;</span> <span class="func">count</span>(nivel_jerarquico)
+<span class="comment">#&gt;   Operativo   ~987   (robusto)</span>
+<span class="comment">#&gt;   Profesional ~2903  (muy robusto)</span>
+<span class="comment">#&gt;   Jefatura    ~393   (aceptable)</span>
+<span class="comment">#&gt;   Gerencia      22   (&lt;-- muy pocos; tenlo en mente)</span>
+</code></pre>
+
+<h3>Paso 3: construir la matriz y normalizar</h3>
+<pre><code>P_wide &lt;- pares <span class="pipe">|&gt;</span>
+  <span class="func">count</span>(nivel_jerarquico, nivel_sig) <span class="pipe">|&gt;</span>
+  <span class="func">pivot_wider</span>(names_from = nivel_sig, values_from = n, values_fill = <span class="num">0</span>) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(nivel_jerarquico = <span class="func">factor</span>(nivel_jerarquico, levels = NIVELES)) <span class="pipe">|&gt;</span>
+  <span class="func">arrange</span>(nivel_jerarquico) <span class="pipe">|&gt;</span>
+  <span class="func">column_to_rownames</span>(<span class="string">"nivel_jerarquico"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(<span class="func">all_of</span>(<span class="func">c</span>(NIVELES, <span class="string">"Salida"</span>))) <span class="pipe">|&gt;</span>
+  <span class="func">as.matrix</span>()
+
+<span class="comment"># prop.table(margin = 1): normaliza por FILAS -> cada fila suma 1</span>
+P &lt;- <span class="func">prop.table</span>(P_wide, margin = <span class="num">1</span>)
+<span class="func">rowSums</span>(P)   <span class="comment"># 1 1 1 1  ← verificación obligatoria</span>
+
+<span class="comment"># Agregar fila absorbente y usar %*% para proyectar</span>
+P5 &lt;- <span class="func">rbind</span>(P, Salida = <span class="func">c</span>(<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">0</span>,<span class="num">1</span>))
+n0 &lt;- <span class="func">c</span>(Operativo=<span class="num">265</span>, Profesional=<span class="num">830</span>, Jefatura=<span class="num">98</span>, Gerencia=<span class="num">7</span>, Salida=<span class="num">0</span>)
+n1 &lt;- n0 <span class="pipe">%*%</span> P5    <span class="comment"># año 1</span>
+n2 &lt;- n1 <span class="pipe">%*%</span> P5    <span class="comment"># año 2</span>
+</code></pre>
+
+<div class="tip">
+<strong>Función nueva: <code>prop.table(x, margin = 1)</code>.</strong> Convierte una tabla de conteos en proporciones. Con <code>margin = 1</code>, divide cada celda por el total de su <strong>fila</strong> (la fila suma 1 → es una distribución de probabilidad). Es el paso que transforma "cuántos pasaron" en "con qué probabilidad pasan".
+</div>
+
+<!-- 6 -->
+<h2>6. Proyectar la dotación</h2>
+
+<p>Encapsulamos la proyección en una función reutilizable, necesaria para los escenarios del Apunte 34:</p>
+<pre><code>proyectar_dotacion &lt;- <span class="func">function</span>(P5, n0, horizonte) {
+  estado &lt;- n0
+  filas  &lt;- <span class="func">list</span>(<span class="func">tibble</span>(anio = <span class="num">0</span>L, nivel = <span class="func">names</span>(n0), headcount = <span class="func">as.numeric</span>(n0)))
+  <span class="func">for</span> (h <span class="func">in</span> <span class="func">seq_len</span>(horizonte)) {
+    estado &lt;- <span class="func">as.numeric</span>(estado <span class="pipe">%*%</span> P5)
+    <span class="func">names</span>(estado) &lt;- <span class="func">colnames</span>(P5)
+    filas[[h + <span class="num">1</span>L]] &lt;- <span class="func">tibble</span>(anio = h, nivel = <span class="func">names</span>(estado), headcount = estado)
+  }
+  <span class="func">bind_rows</span>(filas) <span class="pipe">|&gt;</span> <span class="func">filter</span>(nivel != <span class="string">"Salida"</span>)
+}
+</code></pre>
+
+<!-- 7 -->
+<h2>7. La matriz fundamental: tiempo esperado de permanencia</h2>
+
+<p>Una cadena de Markov absorbente esconde un resultado precioso. Si <em>Q</em> es la submatriz de transiciones entre estados transitorios (los cuatro niveles), la <strong>matriz fundamental</strong> se define como:</p>
+<div class="formula">N = (I − Q)<sup>−1</sup></div>
+<p>La celda <em>N<sub>ij</sub></em> es el número esperado de años que una persona en el nivel <em>i</em> pasará en el nivel <em>j</em> antes de salir. La <strong>suma de cada fila</strong> es la permanencia total esperada según el nivel de ingreso.</p>
+
+<pre><code>Q &lt;- P_corr[NIVELES, NIVELES]           <span class="comment"># submatriz sin la columna Salida</span>
+N &lt;- <span class="func">solve</span>(<span class="func">diag</span>(<span class="num">4</span>) - Q)                <span class="comment"># (I - Q)^{-1}</span>
+<span class="func">tibble</span>(nivel = NIVELES, permanencia = <span class="func">round</span>(<span class="func">rowSums</span>(N), <span class="num">1</span>))
+<span class="comment">#&gt; Operativo   6.4 años   (nivel de entrada; el que más rota)</span>
+<span class="comment">#&gt; Profesional 6.9 años</span>
+<span class="comment">#&gt; Jefatura    8.4 años</span>
+<span class="comment">#&gt; Gerencia   12.5 años   (el que más se queda)</span>
+</code></pre>
+
+<div class="tip">
+<strong>Función nueva: <code>solve(A)</code>.</strong> Calcula la inversa de la matriz <code>A</code>. Aquí <code>A = diag(4) - Q</code>: la matriz identidad menos la submatriz de transición entre niveles. Si la matriz es singular (no invertible), R lanza un error — es señal de que los estados no son independientes o hay celdas perfectamente vacías.
+</div>
+
+<div class="business">
+<strong>Conexión con la Clase 9.</strong> El tiempo esperado de permanencia es el análogo markoviano del <strong>tiempo medio de supervivencia</strong>. La antigüedad media observada en <code>innovaco_empleados.csv</code> (~3,5 años) es una medida <strong>censurada</strong>: muchos empleados siguen activos y su duración final es desconocida. Las cifras de la matriz fundamental (~6–12 años) son la permanencia <strong>completa</strong> esperada bajo las tasas del modelo — por eso son mayores. La diferencia no es una contradicción; es la diferencia entre medir el tiempo ya vivido (censurado) y el tiempo total que vivirán (esperado).
+</div>
+
+<h3>El problema de las celdas pequeñas: Gerencia y la corrección P_corr</h3>
+<p>Si calculamos la permanencia usando la matriz estimada directamente (sin corrección), obtenemos:</p>
+<pre><code><span class="comment"># Con P estimada SIN corrección:</span>
+<span class="func">round</span>(<span class="func">rowSums</span>(<span class="func">solve</span>(<span class="func">diag</span>(<span class="num">4</span>) - P[NIVELES, NIVELES])), <span class="num">1</span>)
+<span class="comment">#&gt; Operativo   6.3    Profesional  6.9    Jefatura  8.2    Gerencia  7.4</span>
+</code></pre>
+<p>¿Notaste? La permanencia de <strong>Gerencia (7,4 años) es menor que la de Jefatura (8,2 años)</strong>. Organizacionalmente es absurdo: los gerentes son los que más se quedan, no menos. Es el mismo fenómeno que rompió el <code>cox.zph()</code> en la Clase 9:</p>
+<ul>
+<li>La fila de Gerencia se estimó con solo <strong>n = 22 transiciones</strong>.</li>
+<li>Con tan pocos datos, basta que dos o tres gerentes salgan "en mala racha" para que la tasa de salida estimada (13,6%) supere a la real (~8%).</li>
+<li>Una tasa de salida inflada comprime la permanencia.</li>
+</ul>
+
+<div class="warning">
+<strong>El problema de las celdas pequeñas.</strong> Con n pequeño, el error de muestreo domina sobre la señal. Una sola salida de gerencia cambia la probabilidad estimada en varios puntos porcentuales, y el efecto se amplifica en la matrix fundamental (porque la inversa es sensible a pequeños cambios en la diagonal). Nunca presentes las cifras de Gerencia al directorio sin advertir este límite.
+</div>
+
+<p>La solución práctica: <strong>reemplazar la fila de Gerencia por un supuesto experto razonable</strong> (permanencia ~92%, salida ~8%), creando una matriz corregida <code>P_corr</code>:</p>
+<pre><code>P_corr &lt;- P
+P_corr[<span class="string">"Gerencia"</span>, ] &lt;- <span class="func">c</span>(Operativo=<span class="num">0</span>, Profesional=<span class="num">0</span>, Jefatura=<span class="num">0</span>,
+                           Gerencia=<span class="num">0.92</span>, Salida=<span class="num">0.08</span>)
+<span class="comment"># Ahora la permanencia de Gerencia es 12.5 años: más alta que Jefatura. ✓</span>
+</code></pre>
+<p>La lección de fondo es la misma de siempre: los modelos solo son tan buenos como los datos que los alimentan. Declarar la corrección y su justificación es parte de la honestidad profesional.</p>
+
+<!-- 8 -->
+<h2>8. La brecha por nivel</h2>
+
+<p>Con la proyección a dos años y la demanda del 40%:</p>
+<pre><code>demanda     &lt;- n0[NIVELES] * <span class="num">1.40</span>
+oferta_int  &lt;- n2[, NIVELES]        <span class="comment"># año 2 sin contratar</span>
+brecha      &lt;- demanda - oferta_int
+
+<span class="func">tibble</span>(nivel = NIVELES, demanda = <span class="func">round</span>(demanda), oferta = <span class="func">round</span>(oferta_int),
+       brecha = <span class="func">round</span>(brecha))
+<span class="comment">#&gt; Operativo    371  131  +240</span>
+<span class="comment">#&gt; Profesional 1162  631  +531</span>
+<span class="comment">#&gt; Jefatura     137   99   +38</span>
+<span class="comment">#&gt; Gerencia      10    6    +4</span>
+<span class="comment">#&gt; TOTAL       1680  867  +813</span>
+</code></pre>
+
+<div class="business">
+<strong>El hallazgo central.</strong> La brecha total es ~813 contrataciones — casi el doble de los 480 "intuitivos" del directorio. Y no está pareja: el 95% se concentra en Operativo y Profesional, los niveles de entrada. Las jefaturas y gerencias también muestran un déficit modesto (~42), porque el pipeline de promoción interna no alcanza a cubrir la demanda de crecimiento de esos niveles. El plan de acción: <em>reclutar masivamente en la base; el cuello de botella hacia arriba es que hay muy pocos candidatos internos —solo 1,7% de profesionales son promovidos a jefatura por año—, lo que convierte en crítico el programa de desarrollo.</em>
+</div>
+
+<!-- 9 -->
+<h2>9. Aplicaciones organizacionales del modelo</h2>
+<ol>
+<li><strong>Planificación de sucesión:</strong> cuantifica el <em>pipeline</em> que la Clase 12 identificó persona a persona.</li>
+<li><strong>Pipeline de diversidad:</strong> matrices separadas por género revelan si las mujeres tienen menor probabilidad de promoción. En nuestros datos, la promoción Profesional→Jefatura es 2,3% en hombres y 1,1% en mujeres: una brecha real que conviene vigilar. Si el patrón persiste, la composición futura de los niveles altos se deteriora aunque la contratación de entrada sea paritaria. (<em>Leaky pipeline.</em>)</li>
+<li><strong>Proyección de costos:</strong> multiplicar la dotación proyectada por nivel por el salario promedio da la proyección del gasto en remuneraciones (puente con la Clase 5).</li>
+<li><strong>Análisis de trayectorias:</strong> la matriz fundamental muestra cuánto tarda en promedio un operativo en llegar a jefatura, y qué proporción llega a gerencia.</li>
+</ol>
+
+<h3>Empuje (<em>push</em>) vs. arrastre (<em>pull</em>)</h3>
+<ul>
+<li><strong>Empuje (<em>push</em>):</strong> las personas son "empujadas" por probabilidades individuales, haya o no vacantes. Apropiado para organizaciones en <strong>expansión</strong> (como InnovaCo).</li>
+<li><strong>Arrastre (<em>pull</em>) o renovación:</strong> las promociones son "arrastradas" por la apertura de vacantes. Apropiado para organizaciones <strong>estables o en contracción</strong>.</li>
+</ul>
+<p>La elección es un <strong>supuesto sustantivo</strong>: en una organización estable, un modelo de empuje sobreestimaría las promociones.</p>
+
+<!-- 10 -->
+<h2>10. Ventajas y límites del modelo</h2>
+<table>
+<tr><th>Ventajas</th><th>Límites / supuestos</th></tr>
+<tr><td>Transparente y auditable: cada celda tiene un significado de negocio directo.</td><td><strong>Ausencia de memoria:</strong> la transición depende solo del nivel actual, no del tiempo en el nivel ni del desempeño.</td></tr>
+<tr><td>Captura la movilidad interna, no solo las salidas.</td><td><strong>Estacionariedad:</strong> se asume P constante en el tiempo.</td></tr>
+<tr><td>Solo requiere conteos agregados de transiciones.</td><td><strong>Homogeneidad:</strong> todos en un nivel comparten las mismas probabilidades.</td></tr>
+<tr><td>Entrega proyecciones por nivel, no un único número global.</td><td><strong>Celdas pequeñas:</strong> la fila de Gerencia (n = 22) es poco confiable; requiere corrección por supuesto experto.</td></tr>
+<tr><td>Facilita escenarios: cambiar un supuesto = cambiar una celda.</td><td><strong>Ignora el mercado externo:</strong> dice cuántos contratar, no si están disponibles ni a qué costo.</td></tr>
+</table>
+
+<div class="warning">
+<strong>El supuesto más débil: la ausencia de memoria.</strong> El modelo asume un <em>hazard</em> de salida constante dentro de cada nivel. Pero la Clase 9 mostró que el <em>hazard</em> <strong>varía con la antigüedad</strong>. Los <strong>modelos semi-markovianos</strong> relajan esto haciendo que las tasas dependan del tiempo en el estado — son el puente formal entre Markov y la supervivencia de la Clase 9.
+</div>
+
+<!-- 11 -->
+<h2>11. La frontera (saber que existe)</h2>
+<ul>
+<li><strong>Modelos semi-markovianos:</strong> tasas que dependen del tiempo en el estado.</li>
+<li><strong>Modelos de renovación (<em>pull</em>):</strong> cuando las vacantes, no las probabilidades, dirigen las transiciones.</li>
+<li><strong>Microsimulación:</strong> simular individuo por individuo; permite heterogeneidad total.</li>
+<li><strong>Dinámica de sistemas</strong> (Sterman, 2000): <em>stocks</em> y <em>flows</em> con retroalimentación.</li>
+<li><strong>Paquete <code>markovchain</code></strong> (Spedicato, 2017): infraestructura de objetos R para cadenas de Markov. En clase usamos el álgebra base (<code>%*%</code>, <code>solve()</code>) por transparencia.</li>
+</ul>
+
+<!-- 12 -->
+<h2>12. Glosario</h2>
+<table>
+<tr><th>Término</th><th>Significado</th></tr>
+<tr><td><strong>Estado</strong></td><td>Cada situación posible en el modelo (nivel jerárquico o Salida).</td></tr>
+<tr><td><strong>Propiedad markoviana</strong></td><td>La transición depende solo del estado actual, no de la historia.</td></tr>
+<tr><td><strong>Matriz de transición (P)</strong></td><td>Probabilidades de pasar de cada estado a cada otro; filas suman 1.</td></tr>
+<tr><td><strong>Estado absorbente</strong></td><td>Estado del que no se sale (Salida en nuestro modelo).</td></tr>
+<tr><td><strong>Vector de estado (n<sub>t</sub>)</strong></td><td>Dotación distribuida por estado en el año t.</td></tr>
+<tr><td><strong>Matriz fundamental (N)</strong></td><td>(I−Q)<sup>−1</sup>: tiempo esperado en cada estado antes de salir.</td></tr>
+<tr><td><strong>Brecha</strong></td><td>Demanda − oferta interna proyectada, por nivel.</td></tr>
+<tr><td><strong>P_corr</strong></td><td>Matriz corregida: la fila de Gerencia reemplazada por supuesto experto.</td></tr>
+<tr><td><strong>Push / pull</strong></td><td>Transiciones dirigidas por probabilidades individuales vs. por vacantes.</td></tr>
+</table>
+
+<h2>Referencias</h2>
+<div class="refs">
+<p>Bartholomew, D. J. (1982). <em>Stochastic models for social processes</em> (3.ª ed.). Wiley.</p>
+<p>Bartholomew, D. J., Forbes, A. F., &amp; McClean, S. I. (1991). <em>Statistical techniques for manpower planning</em> (2.ª ed.). Wiley.</p>
+<p>Cappelli, P. (2008). Talent management for the twenty-first century. <em>Harvard Business Review, 86</em>(3), 74–81.</p>
+<p>Doeringer, P. B., &amp; Piore, M. J. (1971). <em>Internal labor markets and manpower analysis</em>. Heath.</p>
+<p>Edwards, M. R., &amp; Edwards, K. (2019). <em>Predictive HR analytics: Mastering the HR metric</em> (2.ª ed.). Kogan Page.</p>
+<p>Guenole, N., Ferrar, J., &amp; Feinzig, S. (2017). <em>The power of people</em>. Pearson FT Press.</p>
+<p>Schoemaker, P. J. H. (1995). Scenario planning: A tool for strategic thinking. <em>Sloan Management Review, 36</em>(2), 25–40.</p>
+<p>Spedicato, G. A. (2017). Discrete time Markov chains with R. <em>The R Journal, 9</em>(2), 84–104.</p>
+<p>Sterman, J. D. (2000). <em>Business dynamics: Systems thinking and modeling for a complex world</em>. McGraw-Hill.</p>
+<p>Vroom, V. H., &amp; MacCrimmon, K. R. (1968). Toward a stochastic model of managerial careers. <em>Administrative Science Quarterly, 13</em>(1), 26–46.</p>
+</div>
+
+<footer>
+Apunte 33 · Analítica de Personas (People Analytics con R) · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+<br><br>
+<em>Las salidas numéricas son ilustrativas, validadas con la semilla 2026 del dataset del curso. Pequeñas diferencias de implementación no alteran las conclusiones.</em>
+</footer>
+
+</body>
+</html>

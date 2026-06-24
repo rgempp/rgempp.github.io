@@ -38,3 +38,5 @@ Lecture notes for the People Analytics course, written in Spanish.
 - [Apunte 30: Visualización de redes con ggraph y detección de comunidades](teaching/people-analytics/Apunte30_ggraph_comunidades_aplicaciones.html)
 - [Apunte 31: Clasificación supervisada; árboles de decisión y random forest](teaching/people-analytics/Apunte31_Arboles_y_random_forest.html)
 - [Apunte 32: Clasificación no supervisada; clustering y segmentación de personas](teaching/people-analytics/Apunte32_Clustering_segmentacion.html)
+- [Apunte 33: Workforce planning y cadenas de Markov](teaching/people-analytics/Apunte33_Workforce_planning_Markov.html)
+- [Apunte 34: Simulación de escenarios e incertidumbre](teaching/people-analytics/Apunte34_Simulacion_escenarios_incertidumbre.html)

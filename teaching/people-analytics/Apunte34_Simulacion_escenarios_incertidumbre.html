@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 34 — Simulación de escenarios e incertidumbre | Analítica de Personas</title>
+<style>
+  :root{--teal:#0D9488;--navy:#1B2A4A;--coral:#EF4444;--green:#16A34A;--slate:#475569;--bg:#F8FAFC;--code-bg:#1E293B;--terra:#B85042}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Calibri,sans-serif;color:#1E293B;background:var(--bg);line-height:1.6;max-width:850px;margin:0 auto;padding:2rem 1.5rem}
+  h1{font-family:Georgia,serif;color:var(--navy);font-size:1.8rem;border-bottom:3px solid var(--teal);padding-bottom:.5rem;margin-bottom:.3rem}
+  .subtitle{color:var(--slate);font-size:.95rem;margin-bottom:2rem}
+  h2{font-family:Georgia,serif;color:var(--navy);font-size:1.3rem;margin-top:2rem;margin-bottom:.8rem;padding-left:.5rem;border-left:4px solid var(--teal)}
+  h3{color:var(--teal);font-size:1.05rem;margin-top:1.3rem;margin-bottom:.5rem}
+  p{margin-bottom:.8rem}
+  ul,ol{margin:.5rem 0 1rem 1.5rem}
+  li{margin-bottom:.3rem}
+  code{font-family:'Consolas','Fira Code',monospace;background:#E2E8F0;padding:.15rem .4rem;border-radius:3px;font-size:.9rem}
+  pre{background:var(--code-bg);color:#E2E8F0;padding:1rem 1.2rem;border-radius:8px;overflow-x:auto;margin:.8rem 0 1.2rem 0;font-size:.88rem;line-height:1.5}
+  pre code{background:none;padding:0;color:inherit}
+  .comment{color:#94A3B8}.string{color:#4ADE80}.func{color:#38BDF8}.pipe{color:#F59E0B;font-weight:bold}.num{color:#FBBF24}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.9rem}
+  th{background:var(--navy);color:white;padding:.6rem .8rem;text-align:left;font-weight:600}
+  td{padding:.5rem .8rem;border-bottom:1px solid #E2E8F0;vertical-align:top}
+  tr:nth-child(even){background:#F1F5F9}
+  .tip{background:#CCFBF1;border-left:4px solid var(--teal);padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .warning{background:#FEE2E2;border-left:4px solid var(--coral);padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .note{background:#FEF3C7;border-left:4px solid #F59E0B;padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .advanced{background:#EDE9FE;border-left:4px solid #7C3AED;padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .business{background:#FFF7ED;border-left:4px solid #EA580C;padding:.8rem 1rem;border-radius:0 6px 6px 0;margin:1rem 0}
+  .tip strong,.warning strong,.note strong,.advanced strong,.business strong{display:block;margin-bottom:.3rem}
+  .formula{background:#F1F5F9;border:1px solid #CBD5E1;padding:1rem;border-radius:6px;margin:1rem 0;text-align:center;font-family:Georgia,serif;font-size:1.1rem}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid #E2E8F0;color:var(--slate);font-size:.85rem}
+  .refs{font-size:.85rem}
+  .refs p{padding-left:1.5rem;text-indent:-1.5rem;margin-bottom:.5rem}
+</style>
+</head>
+<body>
+
+<h1>Apunte 34 — Simulación de escenarios e incertidumbre</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 15 · Prof. René Gempp</p>
+
+<!-- 1 -->
+<h2>1. Por qué no existe "el pronóstico correcto"</h2>
+
+<p>El Apunte 33 construyó un modelo que proyecta la dotación año a año. Ese modelo produce números con decimales: 867,3 activos al cabo de dos años; 813,1 contrataciones necesarias. La precisión numérica es una trampa. El modelo es tan bueno como sus supuestos, y los supuestos <em>no se validan contra el futuro porque el futuro no existe todavía</em>.</p>
+
+<p>La respuesta correcta a la incertidumbre <strong>no es buscar el pronóstico más preciso</strong>, sino <strong>mapear el rango de futuros plausibles</strong> (Schoemaker, 1995). Lo que nos interesa de un plan de dotación no es que acierte el número exacto — ninguno lo hace — sino que ayude a Carolina a tomar una <strong>decisión robusta</strong>: una que sea buena a través de los distintos escenarios posibles, no solo óptima para uno.</p>
+
+<div class="business">
+<strong>Del diagnóstico al plan.</strong> Un diagnóstico describe lo que fue. Una proyección declara de qué depende lo que será. Un plan de dotación honesto dice: "si la rotación se mantiene en los niveles históricos, necesitaremos ~812 contrataciones; si mejora un 25% gracias al programa de retención, ~734; si empeora, ~886. Te recomendamos comprometer en firme ~734 y ajustar el resto a medida que tengamos datos." Eso es actuar bajo incertidumbre con integridad profesional.
+</div>
+
+<!-- 2 -->
+<h2>2. Programación funcional con <code>purrr</code></h2>
+
+<p>Simular múltiples escenarios implica correr la misma proyección muchas veces con supuestos distintos. La herramienta del tidyverse para esto es <code>purrr</code>: un paquete de programación funcional que reemplaza los bucles <code>for</code> con funciones limpias y pipelines legibles.</p>
+
+<h3>La idea central: <code>map()</code></h3>
+<p><code>map(lista, función)</code> aplica <code>función</code> a cada elemento de <code>lista</code> y devuelve una <code>list</code> con los resultados. El flujo de trabajo típico:</p>
+<pre><code><span class="comment"># 1. Definir la grilla de supuestos (un tibble, una fila por escenario)</span>
+escenarios &lt;- <span class="func">tibble</span>(
+  escenario     = <span class="func">c</span>(<span class="string">"Optimista"</span>, <span class="string">"Base"</span>, <span class="string">"Pesimista"</span>),
+  factor_salida = <span class="func">c</span>(<span class="num">0.75</span>,       <span class="num">1.00</span>, <span class="num">1.25</span>)
+)
+
+<span class="comment"># 2. map() sobre la columna de supuestos</span>
+<span class="comment">#    \(f) es la sintaxis moderna de función anónima (R 4.1+)</span>
+resultado &lt;- escenarios <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(
+    P_esc = <span class="func">map</span>(factor_salida, \(f) ajustar_rotacion(P5, f)),
+    proy  = <span class="func">map</span>(P_esc, \(Pe) proyectar_dotacion(Pe, n0, horizonte = <span class="num">2</span>))
+  )
+
+<span class="comment"># 3. unnest() despliega la list-column a formato largo</span>
+simulacion &lt;- resultado <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(escenario, proy) <span class="pipe">|&gt;</span>
+  <span class="func">unnest</span>(proy)
+</code></pre>
+
+<div class="tip">
+<strong>List-columns.</strong> Una <em>list-column</em> es una columna de un tibble que contiene listas (o tibbles anidados) en vez de valores atómicos. <code>map()</code> crea list-columns; <code>unnest()</code> las despliega a formato largo. Este patrón — definir grilla → <code>map()</code> → <code>unnest()</code> — es la forma idiomática de simulación en el tidyverse.
+</div>
+
+<h3>La familia completa de <code>map()</code></h3>
+<table>
+<tr><th>Función</th><th>Devuelve</th><th>Cuándo usarla</th></tr>
+<tr><td><code>map()</code></td><td><code>list</code></td><td>Resultado es un objeto complejo (tibble, modelo, gráfico)</td></tr>
+<tr><td><code>map_dbl()</code></td><td>vector <code>double</code></td><td>Resultado es un número (el total de activos, la brecha)</td></tr>
+<tr><td><code>map_chr()</code></td><td>vector <code>character</code></td><td>Resultado es un string</td></tr>
+<tr><td><code>map_dfr()</code></td><td><code>data frame</code> apilado</td><td>Resultado es un tibble; <code>map_dfr</code> los apila por filas</td></tr>
+<tr><td><code>pmap()</code></td><td><code>list</code></td><td>Varios argumentos a la vez (un escenario tiene varias dimensiones)</td></tr>
+</table>
+
+<h3>La función auxiliar: <code>ajustar_rotacion()</code></h3>
+<p>Esta función toma la matriz <em>P</em> y un factor, escala la probabilidad de salida de cada nivel y reajusta las demás para que la fila siga sumando 1:</p>
+<pre><code>ajustar_rotacion &lt;- <span class="func">function</span>(P5, factor_salida) {
+  P2 &lt;- P5
+  <span class="func">for</span> (i <span class="func">in</span> <span class="num">1</span>:<span class="num">4</span>) {
+    sal   &lt;- P2[i, <span class="string">"Salida"</span>] * factor_salida
+    otras &lt;- P2[i, <span class="num">1</span>:<span class="num">4</span>]
+    <span class="func">if</span> (<span class="func">sum</span>(otras) &gt; <span class="num">0</span>) otras &lt;- otras / <span class="func">sum</span>(otras) * (<span class="num">1</span> - sal)
+    P2[i, <span class="num">1</span>:<span class="num">4</span>]      &lt;- otras
+    P2[i, <span class="string">"Salida"</span>] &lt;- sal
+  }
+  P2
+}
+<span class="comment"># factor = 0.75: rotación baja un 25% (programa de retención exitoso)</span>
+<span class="comment"># factor = 1.00: base (sin cambios respecto al histórico)</span>
+<span class="comment"># factor = 1.25: rotación sube un 25% (condiciones adversas)</span>
+</code></pre>
+
+<!-- 3 -->
+<h2>3. Los resultados de la simulación</h2>
+
+<p>Una vez que <code>unnest()</code> despliega la simulación, agrupamos por escenario y año para obtener el total de activos proyectados:</p>
+<pre><code>totales &lt;- simulacion <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(escenario, anio) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(activos = <span class="func">sum</span>(headcount), .groups = <span class="string">"drop"</span>)
+
+<span class="comment"># Brecha total por escenario a 2 años (demanda = 1.680)</span>
+totales <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(anio == <span class="num">2</span>) <span class="pipe">|&gt;</span>
+  <span class="func">mutate</span>(brecha = <span class="func">round</span>(<span class="num">1680</span> - activos))
+<span class="comment">#&gt; escenario   activos  brecha</span>
+<span class="comment">#&gt; Optimista      946     734   ← si el programa de retención funciona</span>
+<span class="comment">#&gt; Base           868     812   ← manteniendo tasas históricas</span>
+<span class="comment">#&gt; Pesimista      794     886   ← si la rotación sube</span>
+</code></pre>
+
+<p>El rango es amplio: entre 734 y 886 contrataciones según cómo evolucione la rotación. Una diferencia de 152 personas — no es un detalle.</p>
+
+<!-- 4 -->
+<h2>4. Visualizar la incertidumbre: <code>geom_ribbon()</code> + <code>geom_line()</code></h2>
+
+<p>La forma honesta de comunicar la proyección es mostrar la <strong>banda de incertidumbre</strong> (optimista–pesimista) junto a la trayectoria base. <code>geom_ribbon()</code> dibuja el área entre dos curvas; <code>geom_line()</code> superpone la línea central.</p>
+
+<pre><code><span class="comment"># 1. Calcular el piso (Pesimista) y techo (Optimista) por año</span>
+banda &lt;- totales <span class="pipe">|&gt;</span>
+  <span class="func">group_by</span>(anio) <span class="pipe">|&gt;</span>
+  <span class="func">summarise</span>(ymin = <span class="func">min</span>(activos), ymax = <span class="func">max</span>(activos), .groups = <span class="string">"drop"</span>)
+
+linea_base &lt;- totales <span class="pipe">|&gt;</span> <span class="func">filter</span>(escenario == <span class="string">"Base"</span>)
+
+<span class="comment"># 2. Graficar</span>
+<span class="func">ggplot</span>() +
+  <span class="func">geom_ribbon</span>(data = banda, <span class="func">aes</span>(x = anio, ymin = ymin, ymax = ymax),
+              fill = <span class="string">"#B85042"</span>, alpha = <span class="num">0.18</span>) +
+  <span class="func">geom_line</span>(data = linea_base, <span class="func">aes</span>(x = anio, y = activos),
+            color = <span class="string">"#1B2A4A"</span>, linewidth = <span class="num">1.3</span>) +
+  <span class="func">geom_point</span>(data = linea_base, <span class="func">aes</span>(x = anio, y = activos),
+             color = <span class="string">"#1B2A4A"</span>, size = <span class="num">2.5</span>) +
+  <span class="func">geom_hline</span>(yintercept = <span class="num">1680</span>, linetype = <span class="string">"dashed"</span>, color = <span class="string">"#E8B96E"</span>) +
+  <span class="func">annotate</span>(<span class="string">"text"</span>, x = <span class="num">0.1</span>, y = <span class="num">1705</span>, hjust = <span class="num">0</span>,
+           label = <span class="string">"Demanda objetivo (+40%) = 1.680"</span>, color = <span class="string">"#E8B96E"</span>) +
+  <span class="func">scale_x_continuous</span>(breaks = <span class="num">0</span>:<span class="num">2</span>) +
+  <span class="func">scale_y_continuous</span>(labels = <span class="func">scales</span>::<span class="func">comma</span>) +
+  <span class="func">labs</span>(title = <span class="string">"Plan de dotación: rango de escenarios"</span>,
+       subtitle = <span class="string">"Banda = optimista–pesimista (rotación ±25%) · línea = base"</span>,
+       x = <span class="string">"Año"</span>, y = <span class="string">"Dotación activa proyectada (sin contratar)"</span>) +
+  <span class="func">theme_minimal</span>()
+</code></pre>
+
+<div class="tip">
+<strong>Anatomía de <code>geom_ribbon()</code>.</strong> Sus argumentos esenciales son <code>ymin</code> y <code>ymax</code>: los límites inferior y superior de la banda. El argumento <code>alpha</code> controla la transparencia (0 = invisible, 1 = opaco). Se combina con <code>geom_line()</code> para superponer la trayectoria central: primero el ribbon (fondo), luego la línea (frente).
+</div>
+
+<p>El resultado muestra que la <strong>brecha</strong> es la distancia vertical entre la línea punteada (demanda) y la banda sombreada. El mensaje visual es inmediato: la organización necesita contratar masivamente para llegar a la meta, y el rango de incertidumbre es considerable.</p>
+
+<!-- 5 -->
+<h2>5. Tablas ejecutivas con <code>gt</code></h2>
+
+<p>Para la presentación al directorio, la visualización se complementa con una tabla que muestra las cifras por escenario:</p>
+
+<pre><code><span class="comment"># Construir la tabla de brechas por escenario</span>
+plan_esc &lt;- totales <span class="pipe">|&gt;</span>
+  <span class="func">filter</span>(anio == <span class="num">2</span>) <span class="pipe">|&gt;</span>
+  <span class="func">transmute</span>(escenario,
+            oferta_interna = <span class="func">round</span>(activos),
+            demanda        = <span class="num">1680</span>,
+            contratar      = <span class="func">round</span>(<span class="num">1680</span> - activos))
+
+<span class="comment"># Formatear con gt</span>
+plan_esc <span class="pipe">|&gt;</span>
+  <span class="func">gt</span>() <span class="pipe">|&gt;</span>
+  <span class="func">tab_header</span>(title    = <span class="string">"Plan de contratación a 2 años — InnovaCo SpA"</span>,
+             subtitle = <span class="string">"Objetivo +40% · tres escenarios de rotación"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">fmt_number</span>(columns = <span class="func">c</span>(oferta_interna, demanda, contratar), decimals = <span class="num">0</span>) <span class="pipe">|&gt;</span>
+  <span class="func">cols_label</span>(escenario = <span class="string">"Escenario"</span>, oferta_interna = <span class="string">"Oferta interna"</span>,
+             demanda = <span class="string">"Demanda"</span>, contratar = <span class="string">"A contratar (neto)"</span>)
+</code></pre>
+
+<p>El resultado es una tabla limpia con los tres escenarios: Optimista (~734), Base (~812), Pesimista (~886).</p>
+
+<!-- 6 -->
+<h2>6. La decisión robusta bajo incertidumbre</h2>
+
+<p>Una <strong>decisión robusta</strong> es buena a través del rango de futuros plausibles, no solo óptima para el escenario más probable. Para el plan de dotación de InnovaCo, la recomendación operativa emerge directamente de los tres escenarios:</p>
+
+<ol>
+<li><strong>Comprometer en firme el piso del rango:</strong> ~734 contrataciones son necesarias incluso en el mejor escenario (si la rotación baja un 25%). Esas se contratan sin condición.</li>
+<li><strong>Escalonar el resto según la rotación observada:</strong> las ~78–152 restantes (Base minus Optimista; Pesimista minus Base) se contratan trimestralmente según si la rotación efectiva está bajando o subiendo.</li>
+<li><strong>Concentrar en la base:</strong> el 95% de la brecha está en Operativo y Profesional. No forzar contratación directa de Jefaturas o Gerencias en el corto plazo: el pipeline interno cubre parcialmente esos niveles; la urgencia es en la base.</li>
+</ol>
+
+<div class="business">
+<strong>La analogía de la cadena de suministro (Cappelli, 2008).</strong> Un fabricante que enfrenta demanda incierta no pide todo el inventario de una vez: pide el mínimo garantizado y hace pedidos adicionales a medida que llega información. La misma lógica aplica al talento: contratar el piso del rango con certeza y ajustar trimestralmente según la rotación observada. La diferencia con el inventario es que las personas no se devuelven fácilmente si se excede la dotación.
+</div>
+
+<!-- 7 -->
+<h2>7. Los supuestos que van en el reporte</h2>
+
+<p>Declarar los supuestos no es una debilidad; es la marca de un análista competente. El directorio de InnovaCo necesita saber de qué depende el plan para poder cuestionar los supuestos con los que está en desacuerdo.</p>
+
+<table>
+<tr><th>#</th><th>Supuesto</th><th>Si es incorrecto…</th></tr>
+<tr><td>1</td><td><strong>Ausencia de memoria:</strong> la probabilidad de salir solo depende del nivel actual, no de la antigüedad.</td><td>El modelo subestima la rotación de nuevos ingresos (mayor hazard en los primeros años).</td></tr>
+<tr><td>2</td><td><strong>Estacionariedad:</strong> las tasas de 2021–2025 seguirán vigentes en 2026–2027.</td><td>Si hay un ciclo económico adverso o el programa de retención funciona, las tasas cambian.</td></tr>
+<tr><td>3</td><td><strong>Homogeneidad:</strong> todos los de un nivel tienen la misma probabilidad de salir o promover.</td><td>El modelo no distingue alto desempeño de bajo desempeño.</td></tr>
+<tr><td>4</td><td><strong>Gerencia corregida:</strong> usamos 92%/8% como supuesto experto, no la estimación empírica de 22 casos.</td><td>Si la tasa real de salida de gerencia es mayor, la proyección sobreestima la estabilidad en el nivel alto.</td></tr>
+<tr><td>5</td><td><strong>Demanda uniforme:</strong> +40% proporcional en todos los niveles.</td><td>Si las jefaturas no necesitan crecer tanto, la brecha real es menor y el plan de desarrollo interno más urgente.</td></tr>
+<tr><td>6</td><td><strong>Mercado externo:</strong> asumimos que los candidatos están disponibles al precio histórico.</td><td>Un mercado laboral apretado para ingenieros (el perfil de Profesional en InnovaCo) puede hacer la contratación más cara o imposible.</td></tr>
+</table>
+
+<div class="note">
+<strong>Buena práctica.</strong> Cuando presentes el plan al directorio, incluye esta tabla (simplificada) en el memo ejecutivo. Que el directorio te cuestione los supuestos es bueno: significa que está evaluando el plan críticamente. Que lo apruebe sin cuestionarlos es una señal de alerta.
+</div>
+
+<!-- 8 -->
+<h2>8. Ética de la planificación de dotación</h2>
+
+<p>El modelo de Markov que construimos está orientado al crecimiento: proyectar cuántos contratar. Pero la misma herramienta puede usarse para proyectar reducciones. Si la demanda cayera un 20% en vez de crecer un 40%, el análisis diría que sobran ~400 personas. El modelo no distingue entre crecimiento y ajuste — produce números en ambos casos con la misma indiferencia matemática.</p>
+
+<p>Esto plantea preguntas que el analista de personas necesita poder sostener:</p>
+<ul>
+<li><strong>¿Quién tiene acceso a estas proyecciones?</strong> Un plan que proyecta reducción de dotación puede afectar decisiones sobre personas específicas antes de que exista un proceso formal.</li>
+<li><strong>¿Cómo se comunica a los empleados?</strong> La transparencia organizacional exige no usar la planificación estratégica como pretexto para decisiones ya tomadas.</li>
+<li><strong>¿Con qué criterios se decide a quiénes desvincular?</strong> El modelo dice "cuántos"; las decisiones sobre "quiénes" son de personas, y deben sostenerse con procesos legítimos y transparentes.</li>
+<li><strong>¿Cuándo se activa la obligación de informar a los trabajadores?</strong> En Chile, la Ley 19.728 obliga a negociar condiciones de desvinculación con las organizaciones sindicales en reestructuraciones de cierta escala.</li>
+</ul>
+
+<div class="warning">
+<strong>La frontera entre planificación y vigilancia.</strong> Un modelo de flujo de personal puede volverse una herramienta de control si se combina con datos individuales de desempeño, red social o comunicaciones. Proyectar cuántos operativos necesitaremos es planificación legítima. Identificar cuáles operativos serán más fáciles de "dejar ir" mediante su perfil predictivo de riesgo es una práctica distinta, con consecuencias éticas y legales propias. Esta semilla germina en la Clase 17.
+</div>
+
+<!-- 9 -->
+<h2>9. Glosario</h2>
+<table>
+<tr><th>Término</th><th>Significado</th></tr>
+<tr><td><strong><code>purrr::map()</code></strong></td><td>Aplica una función a cada elemento de una lista; devuelve una lista.</td></tr>
+<tr><td><strong>List-column</strong></td><td>Columna de un tibble que contiene listas o tibbles anidados.</td></tr>
+<tr><td><strong><code>unnest()</code></strong></td><td>Despliega una list-column a formato largo (filas individuales).</td></tr>
+<tr><td><strong><code>geom_ribbon()</code></strong></td><td>Dibuja un área sombreada entre dos curvas (<code>ymin</code> y <code>ymax</code>).</td></tr>
+<tr><td><strong>Escenario</strong></td><td>Una combinación de supuestos sobre el futuro (rotación, crecimiento).</td></tr>
+<tr><td><strong>Decisión robusta</strong></td><td>Decisión que es buena a través del rango de escenarios, no solo óptima para uno.</td></tr>
+<tr><td><strong>Planificación por escenarios</strong></td><td>Mapear futuros plausibles en lugar de buscar el pronóstico "correcto".</td></tr>
+</table>
+
+<h2>Referencias</h2>
+<div class="refs">
+<p>Cappelli, P. (2008). Talent management for the twenty-first century. <em>Harvard Business Review, 86</em>(3), 74–81.</p>
+<p>Schoemaker, P. J. H. (1995). Scenario planning: A tool for strategic thinking. <em>Sloan Management Review, 36</em>(2), 25–40.</p>
+<p>Sterman, J. D. (2000). <em>Business dynamics: Systems thinking and modeling for a complex world</em>. McGraw-Hill.</p>
+<p>Wickham, H., &amp; Grolemund, G. (2017). <em>R for data science</em>. O'Reilly. Disponible en r4ds.had.co.nz.</p>
+</div>
+
+<footer>
+Apunte 34 · Analítica de Personas (People Analytics con R) · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+<br><br>
+<em>Las salidas numéricas son ilustrativas, validadas con la semilla 2026 del dataset del curso. Pequeñas diferencias de implementación no alteran las conclusiones.</em>
+</footer>
+
+</body>
+</html>

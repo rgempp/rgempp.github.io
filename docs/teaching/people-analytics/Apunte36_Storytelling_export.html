@@ -140,25 +140,40 @@ memo <span class="pipe">&lt;-</span> <span class="func">read_docx</span>() <span
 
 <p>Funciones clave: <code>read_docx()</code> abre un documento (en blanco o una plantilla con el membrete de la empresa); <code>body_add_par()</code> agrega texto con un estilo; <code>body_add_gg()</code> incrusta un <code>ggplot</code>; <code>body_add_table()</code> agrega una tabla; <code>print(target=)</code> escribe el archivo.</p>
 
-<h3>Excel con <code>openxlsx</code></h3>
-<p>Genera un <code>.xlsx</code> con formato — colores, formatos de número, varias hojas — sin depender de Java (a diferencia del viejo paquete <code>xlsx</code>):</p>
+<h3>Excel con <code>openxlsx</code> (varias hojas)</h3>
+<p>Genera un <code>.xlsx</code> con formato — colores, formatos de número y <strong>varias hojas</strong> — sin depender de Java (a diferencia del viejo paquete <code>xlsx</code>). Aquí está la potencia de exportar por código: un libro completo, cada hoja con su formato, reproducible. Un helper evita repetir el estilado en cada hoja:</p>
 
 <pre><code><span class="func">library</span>(openxlsx)
 
-wb <span class="pipe">&lt;-</span> <span class="func">createWorkbook</span>()
-<span class="func">addWorksheet</span>(wb, <span class="string">"KPIs por depto"</span>)
-<span class="func">writeData</span>(wb, <span class="string">"KPIs por depto"</span>, tabla_deptos)
+wb  <span class="pipe">&lt;-</span> <span class="func">createWorkbook</span>()
+hdr <span class="pipe">&lt;-</span> <span class="func">createStyle</span>(fontColour = <span class="string">"#FFFFFF"</span>, fgFill = <span class="string">"#1B2A4A"</span>,
+                   textDecoration = <span class="string">"bold"</span>, halign = <span class="string">"center"</span>)
 
-<span class="comment"># Encabezado con estilo corporativo</span>
-estilo <span class="pipe">&lt;-</span> <span class="func">createStyle</span>(fontColour = <span class="string">"#FFFFFF"</span>, fgFill = <span class="string">"#1B2A4A"</span>,
-                       textDecoration = <span class="string">"bold"</span>, halign = <span class="string">"center"</span>)
-<span class="func">addStyle</span>(wb, <span class="string">"KPIs por depto"</span>, estilo, rows = <span class="string">1</span>,
-         cols = <span class="string">1</span>:<span class="func">ncol</span>(tabla_deptos), gridExpand = <span class="func">TRUE</span>)
+<span class="comment"># helper: agrega una hoja con encabezado, panel congelado y formatos</span>
+add_hoja <span class="pipe">&lt;-</span> <span class="func">function</span>(nombre, df, pct = <span class="func">NULL</span>, clp = <span class="func">NULL</span>) {
+  <span class="func">addWorksheet</span>(wb, nombre)
+  <span class="func">writeData</span>(wb, nombre, df, headerStyle = hdr)
+  <span class="func">freezePane</span>(wb, nombre, firstRow = <span class="func">TRUE</span>)
+  <span class="func">setColWidths</span>(wb, nombre, cols = <span class="string">1</span>:<span class="func">ncol</span>(df), widths = <span class="string">"auto"</span>)
+  <span class="func">if</span> (!<span class="func">is.null</span>(pct)) <span class="func">addStyle</span>(wb, nombre, <span class="func">createStyle</span>(numFmt = <span class="string">"0.0%"</span>),
+    rows = <span class="string">2</span>:(<span class="func">nrow</span>(df)+<span class="string">1</span>), cols = pct, gridExpand = <span class="func">TRUE</span>, stack = <span class="func">TRUE</span>)
+  <span class="func">if</span> (!<span class="func">is.null</span>(clp)) <span class="func">addStyle</span>(wb, nombre, <span class="func">createStyle</span>(numFmt = <span class="string">"$#,##0"</span>),
+    rows = <span class="string">2</span>:(<span class="func">nrow</span>(df)+<span class="string">1</span>), cols = clp, gridExpand = <span class="func">TRUE</span>, stack = <span class="func">TRUE</span>)
+}
 
-<span class="func">saveWorkbook</span>(wb, <span class="string">"KPIs_InnovaCo.xlsx"</span>, overwrite = <span class="func">TRUE</span>)</code></pre>
+<span class="func">add_hoja</span>(<span class="string">"Resumen"</span>,          resumen_kpi)
+<span class="func">add_hoja</span>(<span class="string">"Por departamento"</span>, tabla_deptos, pct = <span class="string">3</span>, clp = <span class="string">4</span>)
+<span class="func">add_hoja</span>(<span class="string">"Panel mensual"</span>,    kpis_mes, pct = <span class="func">c</span>(<span class="string">4</span>, <span class="string">6</span>))
+<span class="func">add_hoja</span>(<span class="string">"Detalle activos"</span>,  detalle, clp = <span class="string">6</span>)
+
+<span class="func">saveWorkbook</span>(wb, <span class="string">"Reporte_InnovaCo.xlsx"</span>, overwrite = <span class="func">TRUE</span>)</code></pre>
+
+<div class="tip">
+<strong>Del libro al botón de descarga.</strong> Ese <code>.xlsx</code> multi-hoja puede ofrecerse en un HTML con <code>downloadthis::download_file(path = "Reporte_InnovaCo.xlsx", ...)</code>, que incrusta el archivo tal cual. Ver <code>clase16_mini_reporte.qmd</code> para el demo completo (tabla <code>gt</code> + <code>DT</code> con botones + <code>downloadthis</code>).
+</div>
 
 <div class="business">
-<strong>¿Cuándo vale la pena automatizar la exportación?</strong> La primera vez, exportar con <code>officer</code> cuesta más que copiar-pegar. Pero el reporte del directorio se actualiza cada trimestre. A la segunda vez, el flujo reproducible ya ganó: vuelves a correr el script con los datos nuevos y el memo se regenera idéntico, con los números frescos, sin errores de transcripción. La pregunta no es "¿cuánto cuesta?" sino "¿cuántas veces voy a repetir esto?".
+<strong>¿Cuándo vale la pena automatizar la exportación?</strong> La primera vez, exportar con <code>officer</code>/<code>openxlsx</code> cuesta más que copiar-pegar. Pero el reporte del directorio se actualiza cada trimestre. A la segunda vez, el flujo reproducible ya ganó: vuelves a correr el script con los datos nuevos y el libro (con sus cuatro hojas formateadas) se regenera idéntico, sin errores de transcripción. La pregunta no es "¿cuánto cuesta?" sino "¿cuántas veces voy a repetir esto?".
 </div>
 
 <!-- 6 -->

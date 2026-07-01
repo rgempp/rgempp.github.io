@@ -319,8 +319,24 @@ activos <span class="pipe">|&gt;</span>
     button_type      = <span class="string">"success"</span>, has_icon = <span class="func">TRUE</span>
   )</code></pre>
 
+<div class="note">
+<strong>Un botón para un archivo YA creado.</strong> Si construiste un libro Excel de <em>varias hojas</em> con <code>openxlsx</code> (Apunte 36, sección 5), no lo vuelvas a armar: ofrécelo con <code>downloadthis::download_file(path = "Reporte.xlsx", ...)</code>, que incrusta el archivo tal cual, con sus hojas y formatos. <code>download_this()</code> es para un objeto de R (una hoja); <code>download_file()</code> es para un archivo en disco (varias hojas).
+</div>
+
+<div class="warning">
+<strong>Estos botones solo aparecen al RENDERIZAR a HTML.</strong> <code>download_this()</code> y <code>download_file()</code> producen un botón HTML: se ven en el <code>.html</code> renderizado (o en el Viewer de RStudio), <strong>no</strong> al correr la línea suelta en la consola. El demo que funciona está en <code>clase16_mini_reporte.qmd</code>.
+</div>
+
 <div class="business">
-<strong>El dashboard autocontenido se convierte en un “mini-portal”.</strong> Con <code>embed-resources: true</code> + botones de descarga, entregas <strong>un solo archivo HTML</strong> por correo o por Canvas. El directorio lo abre sin instalar nada, mira los KPIs, explora la tabla y se baja la planilla que necesita — todo desde el mismo archivo, sin servidor, sin pedirte nada. Esa autonomía es exactamente lo que reduce el ida-y-vuelta de "¿me mandas los datos de…?".
+<strong>El dashboard autocontenido se convierte en un “mini-portal”.</strong> Con <code>embed-resources: true</code> + botones de descarga, entregas <strong>un solo archivo HTML</strong> por correo o por Canvas. El directorio lo abre sin instalar nada, mira los KPIs, explora la tabla y se baja la planilla que necesita — todo desde el mismo archivo, sin servidor, sin pedirte nada.
+</div>
+
+<div class="tip">
+<strong>Cómo obtener ese HTML (y no un "localhost").</strong> Renderiza con <code>quarto render dashboard.qmd</code> o <code>quarto::quarto_render("dashboard.qmd")</code>: se escribe el archivo <code>dashboard.html</code> en disco. El <em>localhost</em> aparece solo con <code>quarto preview</code>, que es la vista previa en vivo. Para compartir, usa el <code>.html</code> generado por <code>render</code> (con <code>embed-resources: true</code> es un único archivo).
+</div>
+
+<div class="advanced">
+<strong>Sin <code>bslib</code> ni <code>bsicons</code>.</strong> Los value boxes de este dashboard se declaran con <code>#| content: valuebox</code> devolviendo una <code>list(value=, icon=, color=)</code>. Quarto resuelve el ícono por su nombre de Bootstrap; <strong>no hay que cargar</strong> <code>bslib</code> ni <code>bsicons</code>. Si ves el error <em>"no hay paquete llamado 'bsicons'"</em>, es porque un <code>library(bsicons)</code> quedó en el setup: bórralo.
 </div>
 
 <div class="note">

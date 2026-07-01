@@ -40,3 +40,5 @@ Lecture notes for the People Analytics course, written in Spanish.
 - [Apunte 32: Clasificación no supervisada; clustering y segmentación de personas](teaching/people-analytics/Apunte32_Clustering_segmentacion.html)
 - [Apunte 33: Workforce planning y cadenas de Markov](teaching/people-analytics/Apunte33_Workforce_planning_Markov.html)
 - [Apunte 34: Simulación de escenarios e incertidumbre](teaching/people-analytics/Apunte34_Simulacion_escenarios_incertidumbre.html)
+- [Apunte 35: Dashboards con Quarto; layout, value boxes, plotly, gt y DT](teaching/people-analytics/Apunte35_Quarto_Dashboards.html)
+- [Apunte 36: Data storytelling para ejecutivos; del output a la decisión](teaching/people-analytics/Apunte36_Storytelling_export.html)

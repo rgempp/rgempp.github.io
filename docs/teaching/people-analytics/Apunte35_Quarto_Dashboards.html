@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 35 — Dashboards con Quarto: layout, value boxes, plotly, gt y DT | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 35 — Dashboards con Quarto: layout, value boxes, plotly, gt y DT</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 16 · Prof. René Gempp</p>
+
+<!-- 1 -->
+<h2>1. Reporte, dashboard y presentación: tres cosas distintas</h2>
+
+<p>Durante quince semanas tu entregable fue un <strong>reporte</strong>: un documento <code>.qmd</code> que documenta un análisis de principio a fin, pensado para que alguien (tu profesor, tu yo del futuro) reconstruya cada paso. Esta semana cambias de vehículo. El directorio de InnovaCo no va a leer once reportes. Necesita un <strong>dashboard</strong>.</p>
+
+<table>
+<tr><th>Vehículo</th><th>Propósito</th><th>Densidad</th><th>Cuándo</th></tr>
+<tr><td><strong>Reporte</strong></td><td>Documentar y reproducir</td><td>Alta</td><td>Las tareas; la trazabilidad importa</td></tr>
+<tr><td><strong>Dashboard</strong></td><td>Monitorear de un vistazo</td><td>Media, jerarquizada</td><td>Indicadores que se revisan periódicamente</td></tr>
+<tr><td><strong>Presentación</strong></td><td>Mover a una decisión</td><td>Baja, una idea por slide</td><td>Una reunión, una decisión</td></tr>
+</table>
+
+<p>La definición canónica de dashboard es la de <strong>Stephen Few (2013)</strong>: <em>una representación visual de la información más importante necesaria para alcanzar un objetivo, consolidada en una sola pantalla para monitorearse de un vistazo</em>. Cada palabra es una restricción: <strong>la más importante</strong> (no todo), <strong>una sola pantalla</strong> (sin scroll infinito), <strong>de un vistazo</strong> (la <em>prueba del vistazo</em>: si necesitas estudiarlo, falló).</p>
+
+<div class="business">
+<strong>La prueba del vistazo (glance test).</strong> Antes de entregar, muéstrale el dashboard a alguien por 10 segundos, tápalo, y pregúntale qué entendió. Si no captó el estado general, tienes demasiada tinta o muy poca jerarquía.
+</div>
+
+<!-- 2 -->
+<h2>2. Quarto Dashboards: un <code>format</code> nuevo, no una herramienta nueva</h2>
+
+<p>La buena noticia: no aprendes una herramienta nueva. Un <strong>Quarto Dashboard</strong> es el mismo <code>.qmd</code> que ya dominas, con una línea distinta en el YAML:</p>
+
+<pre><code><span class="comment">---</span>
+title: <span class="string">"InnovaCo · Dashboard Ejecutivo"</span>
+format:
+  <span class="func">dashboard</span>:           <span class="comment"># &lt;- esta es la magia</span>
+    orientation: rows
+execute:
+  echo: false           <span class="comment"># el directorio no ve código</span>
+  warning: false
+<span class="comment">---</span></code></pre>
+
+<p>Con <code>format: dashboard</code>, Quarto deja de producir un documento que se lee de arriba abajo y produce una <strong>cuadrícula que llena la pantalla</strong>. El contenido se reparte el alto disponible (comportamiento <em>fill</em>): no hay scroll infinito, hay un tablero.</p>
+
+<div class="tip">
+<strong>¿Y <code>flexdashboard</code>?</strong> Si googleas dashboards en R vas a encontrar <code>flexdashboard</code>, su antecesor. Quarto Dashboards lo reemplaza: misma idea, mejor integración, soporte nativo de parámetros. Usa Quarto Dashboards.
+</div>
+
+<!-- 3 -->
+<h2>3. Layout: páginas, filas, columnas y cards</h2>
+
+<p>El layout se controla con encabezados Markdown y atributos entre llaves:</p>
+
+<ul>
+<li><code># Título</code> crea una <strong>página</strong> (aparece en la barra de navegación).</li>
+<li><code>## Título</code> crea una <strong>fila</strong> (con <code>orientation: rows</code>, el defecto) o una <strong>columna</strong> (con <code>orientation: columns</code>).</li>
+<li>Cada <strong>bloque de output</strong> (un chunk con un gráfico, una tabla) es una <strong>card</strong>.</li>
+<li>Atributos: <code>{height="40%"}</code>, <code>{width="50%"}</code> controlan el tamaño; <code>{.tabset}</code> convierte las cards de una fila en pestañas.</li>
+</ul>
+
+<pre><code><span class="comment"># Página principal</span>
+
+<span class="comment">## Row {height="20%"}</span>      <span class="comment"># fila de KPIs (20% del alto)</span>
+
+<span class="comment"># ...aquí van 4 value boxes...</span>
+
+<span class="comment">## Row {height="40%"}</span>      <span class="comment"># fila de gráficos</span>
+
+<span class="comment">### Column {width="50%"}</span>   <span class="comment"># media fila</span>
+<span class="comment">### Column {width="50%"}</span>   <span class="comment"># la otra media</span>
+
+<span class="comment">## Row {height="40%"} {.tabset}</span>  <span class="comment"># cards como pestañas</span></code></pre>
+
+<div class="note">
+<strong>El título de la card.</strong> Para ponerle título a un gráfico o tabla, usa la opción de chunk <code>#| title: "Rotación 12 meses"</code>. Ese texto aparece como encabezado de la card. Es distinto del <code>labs(title=)</code> de ggplot — en un dashboard, deja el título a la card y usa <code>subtitle</code> en el gráfico para el matiz.
+</div>
+
+<!-- 4 -->
+<h2>4. Value boxes: el KPI grande</h2>
+
+<p>Una <strong>value box</strong> es la card estrella del dashboard ejecutivo: un número grande, un ícono, y un color que comunica el estado. La forma más limpia de crearla es un chunk con <code>#| content: valuebox</code> que devuelve una lista:</p>
+
+<pre><code><span class="comment">```{r}</span>
+<span class="comment">#| content: valuebox</span>
+<span class="comment">#| title: "Rotación acumulada"</span>
+<span class="func">list</span>(
+  value = <span class="func">percent</span>(rotacion_global, <span class="string">0.1</span>),
+  icon  = <span class="string">"box-arrow-right"</span>,   <span class="comment"># íconos de Bootstrap</span>
+  color = col_rot                <span class="comment"># "success" | "danger" | "warning"</span>
+)
+<span class="comment">```</span></code></pre>
+
+<p>El <code>color</code> acepta nombres semánticos de Bootstrap: <code>"success"</code> (verde), <code>"danger"</code> (rojo), <code>"warning"</code> (ámbar), <code>"primary"</code> (azul). La gracia es calcular el color <strong>según la lógica de negocio</strong>, de modo que un KPI que está mal se vea mal sin que nadie lo lea:</p>
+
+<pre><code>col_rot  <span class="pipe">&lt;-</span> <span class="func">if</span> (rotacion_global &gt; <span class="string">0.20</span>) <span class="string">"danger"</span> <span class="func">else</span> <span class="string">"success"</span>
+col_enps <span class="pipe">&lt;-</span> <span class="func">if</span> (enps_actual &gt; <span class="string">0</span>)     <span class="string">"success"</span> <span class="func">else</span> <span class="string">"danger"</span></code></pre>
+
+<p>Para íconos con más control, <code>bslib::value_box()</code> + <code>bsicons::bs_icon()</code> ofrecen la versión completa, útil si quieres incrustar un <em>sparkline</em> de fondo o personalizar el tema.</p>
+
+<div class="business">
+<strong>Un value box no es solo el número.</strong> Es número + variación + color. "Headcount = 874" es trivia. "874, +3% vs. el año pasado, dentro del plan" es un KPI. El contexto (la variación y el referente) es lo que convierte un dato en información para decidir.
+</div>
+
+<!-- 5 -->
+<h2>5. Métricas, KPIs y tipos de dashboard</h2>
+
+<p>No todo lo que se mide es clave. Una <strong>métrica</strong> es cualquier número medible. Un <strong>KPI</strong> (Key Performance Indicator) es una métrica que además está <em>vinculada a un objetivo</em>, es <em>accionable</em>, tiene <em>dueño</em> y tiene <em>referente</em>. Un dashboard estratégico bien hecho tiene entre 4 y 8 KPIs: más que eso, deja de ser "lo clave".</p>
+
+<p>Eckerson (2010) distingue tres tipos de dashboard según el horizonte de decisión:</p>
+
+<table>
+<tr><th>Tipo</th><th>Audiencia</th><th>Pregunta</th></tr>
+<tr><td><strong>Estratégico</strong></td><td>Directorio</td><td>¿Vamos por buen camino?</td></tr>
+<tr><td><strong>Operacional</strong></td><td>Jefaturas</td><td>¿Qué pasa ahora que requiere acción?</td></tr>
+<tr><td><strong>Analítico</strong></td><td>Analistas</td><td>¿Por qué está pasando?</td></tr>
+</table>
+
+<p>El de Montt es <strong>estratégico</strong>: pocos KPIs, alto nivel de agregación, foco en la tendencia. Por eso privilegiamos value boxes y líneas de tendencia, y mandamos el detalle al <em>drill-down</em> (pestañas, tablas interactivas).</p>
+
+<h3>Adelantados vs. rezagados</h3>
+<p>Un indicador <strong>rezagado</strong> (<em>lagging</em>) mide algo que ya ocurrió (rotación, brecha): certero pero tardío. Un indicador <strong>adelantado</strong> (<em>leading</em>) predice un resultado futuro (eNPS, satisfacción): menos certero pero permite actuar antes. La rotación es el espejo retrovisor; el eNPS es el parabrisas. El dashboard potente combina ambos (Kaplan &amp; Norton, 1996; Becker, Huselid &amp; Ulrich, 2001).</p>
+
+<!-- 6 -->
+<h2>6. Integridad de métricas: el caso del eNPS</h2>
+
+<p>El <strong>eNPS</strong> (employee Net Promoter Score) adapta el NPS de Reichheld (2003). Se basa en <strong>una</strong> pregunta: <em>"De 0 a 10, ¿qué tan probable es que recomiendes InnovaCo como lugar para trabajar?"</em></p>
+
+<div class="formula">
+eNPS = %Promotores (9–10) − %Detractores (0–6)
+</div>
+
+<p>Va de −100 a +100. Los <em>pasivos</em> (7–8) no suman ni restan.</p>
+
+<div class="warning">
+<strong>No fabriques el eNPS desde la satisfacción 1–5.</strong> Es tentador mapear "5 = promotor, 1–3 = detractor" sobre la <code>satisfaccion_laboral</code> del dataset. <strong>No lo hagas.</strong> El titular cambia por completo según dónde cortes los buckets, así que el número resultante no significa nada. El eNPS requiere su propia pregunta 0–10. En InnovaCo, el eNPS vive en <code>innovaco_kpis_mensuales.csv</code> (la encuesta de pulso); la satisfacción 1–5 se reporta aparte como "índice de satisfacción". Confundirlas es el error de integridad de métrica más común en RRHH — y se evalúa en la tarea.
+</div>
+
+<!-- 7 -->
+<h2>7. ¿Qué tan interactivo es un dashboard de Quarto?</h2>
+
+<p>Conviene ser preciso, porque "interactivo" significa tres cosas distintas. Lo que produce <code>quarto render</code> (sin servidor) es un <strong>HTML estático</strong>; sobre esa base hay tres niveles de interactividad:</p>
+
+<table>
+<tr><th>Nivel</th><th>¿Servidor?</th><th>Qué permite</th><th>Herramientas</th></tr>
+<tr><td><strong>(a) Widget</strong></td><td>No</td><td>Hover, zoom, ordenar, buscar, descargar dentro de cada gráfico/tabla</td><td><code>plotly</code>, <code>DT</code>, <code>leaflet</code></td></tr>
+<tr><td><strong>(b) Crosstalk</strong></td><td>No</td><td>Filtrado cruzado: seleccionar en una tabla filtra un gráfico</td><td><code>crosstalk</code>, <code>ojs</code></td></tr>
+<tr><td><strong>(c) Shiny</strong></td><td>Sí (R vivo)</td><td>Reactividad total: un input vuelve a EJECUTAR código R</td><td><code>server: shiny</code></td></tr>
+</table>
+
+<p>El dashboard de esta clase usa el <strong>nivel (a)</strong>: <code>plotly</code> y <code>DT</code> traen su propia interactividad en JavaScript y funcionan perfectamente en el HTML estático, sin servidor. Puedes hacer hover, zoom, ordenar, buscar y —como veremos— descargar.</p>
+
+<div class="warning">
+<strong>Dos cosas que NO son interactividad reactiva.</strong> (1) La <strong>parametrización</strong> (<code>params$depto</code>) genera un <em>archivo distinto por departamento</em> al renderizar; el usuario no filtra en vivo, abre el archivo de su área. (2) Los widgets <code>plotly</code>/<code>DT</code> son interactivos pero <strong>no recalculan en R</strong>: si quieres que mover un control re-ajuste un modelo o recompute un agregado, necesitas <strong>Shiny</strong> (<code>server: shiny</code>). Para "filtrado cruzado" ligero sin servidor, <code>crosstalk</code> enlaza widgets entre sí del lado del cliente.
+</div>
+
+<pre><code><span class="func">library</span>(plotly)
+
+<span class="comment"># Nivel (a): widget interactivo a partir de un ggplot</span>
+g <span class="pipe">&lt;-</span> kpis_mes <span class="pipe">|&gt;</span> <span class="func">filter</span>(departamento != <span class="string">"Global"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">ggplot</span>(<span class="func">aes</span>(mes, enps, color = departamento)) + <span class="func">geom_line</span>()
+
+<span class="func">ggplotly</span>(g, tooltip = <span class="func">c</span>(<span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"colour"</span>))</code></pre>
+
+<div class="note">
+<strong>Interactivo no siempre es mejor.</strong> Para el directorio que ve la pantalla una vez en una reunión, un gráfico estático que <em>tú</em> controlas cuenta mejor la historia: nadie se distrae haciendo zoom. La interactividad de widget gana cuando el usuario va a <em>explorar</em> repetidamente. Decide por audiencia, no por reflejo.
+</div>
+
+<!-- 8 -->
+<h2>8. Tablas estáticas de presentación: <code>gt</code></h2>
+
+<p>El paquete <code>gt</code> ("grammar of tables") construye tablas de calidad de publicación. Su lógica es la del <code>ggplot</code>: empiezas con <code>gt()</code> y vas agregando capas de formato con el pipe.</p>
+
+<pre><code><span class="func">library</span>(gt)
+
+tabla <span class="pipe">|&gt;</span>
+  <span class="func">gt</span>() <span class="pipe">|&gt;</span>
+  <span class="func">cols_label</span>(rotacion = <span class="string">"Rotación"</span>, ingreso = <span class="string">"Ingreso medio"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">fmt_percent</span>(rotacion, decimals = <span class="string">1</span>) <span class="pipe">|&gt;</span>
+  <span class="func">fmt_currency</span>(ingreso, currency = <span class="string">"CLP"</span>, decimals = <span class="string">0</span>, sep_mark = <span class="string">"."</span>) <span class="pipe">|&gt;</span>
+  <span class="func">data_color</span>(                       <span class="comment"># color condicional</span>
+    columns = rotacion,
+    fn = scales::<span class="func">col_numeric</span>(<span class="func">c</span>(<span class="string">"#0D9488"</span>, <span class="string">"#B85042"</span>), domain = <span class="func">NULL</span>)
+  ) <span class="pipe">|&gt;</span>
+  <span class="func">tab_style</span>(
+    style = <span class="func">cell_text</span>(weight = <span class="string">"bold"</span>),
+    locations = <span class="func">cells_column_labels</span>()
+  )</code></pre>
+
+<p>Funciones clave: <code>fmt_number()</code>, <code>fmt_percent()</code>, <code>fmt_currency()</code> formatean; <code>cols_label()</code> renombra encabezados; <code>data_color()</code> pinta celdas según su valor (el departamento con peor rotación se ve rojo); <code>tab_header()</code> y <code>tab_source_note()</code> agregan título y nota al pie (Iannone et al., 2024).</p>
+
+<div class="tip">
+<strong>Cuándo <code>gt</code>.</strong> Para tablas que van a un informe, un slide o un PDF: el output es una imagen pulida, fija. Es la tabla que tú controlas al 100%.
+</div>
+
+<!-- 9 -->
+<h2>9. Tablas interactivas: <code>DT</code></h2>
+
+<p>El paquete <code>DT</code> envuelve la librería JavaScript DataTables: produce tablas con <strong>búsqueda, ordenamiento, paginación y filtros</strong> por columna. Ideal para que el usuario explore un detalle grande.</p>
+
+<pre><code><span class="func">library</span>(DT)
+
+activos <span class="pipe">|&gt;</span>
+  <span class="func">select</span>(nombre, departamento, cargo, antiguedad_anios) <span class="pipe">|&gt;</span>
+  <span class="func">datatable</span>(
+    filter  = <span class="string">"top"</span>,                 <span class="comment"># filtros por columna</span>
+    options = <span class="func">list</span>(pageLength = <span class="string">10</span>),  <span class="comment"># filas por página</span>
+    rownames = <span class="func">FALSE</span>
+  )</code></pre>
+
+<table>
+<tr><th></th><th><code>gt</code></th><th><code>DT</code></th></tr>
+<tr><td><strong>Naturaleza</strong></td><td>Estática (imagen)</td><td>Interactiva (JS)</td></tr>
+<tr><td><strong>Fortaleza</strong></td><td>Formato fino, publicación</td><td>Buscar, ordenar, filtrar</td></tr>
+<tr><td><strong>Destinatario</strong></td><td>Directorio, informe, PDF</td><td>Analista, exploración</td></tr>
+<tr><td><strong>Tamaño</strong></td><td>Pocas filas, curadas</td><td>Muchas filas, navegables</td></tr>
+</table>
+
+<!-- 10 -->
+<h2>10. Parametrización: un archivo, muchos dashboards</h2>
+
+<p>Montt pidió la versión de Concepción, la de cada gerente, "que se genere sola". Eso son los <strong>parámetros</strong> de Quarto. Se declaran en el YAML:</p>
+
+<pre><code><span class="comment">---</span>
+format: dashboard
+params:
+  depto: <span class="string">"Global"</span>     <span class="comment"># valor por defecto</span>
+<span class="comment">---</span></code></pre>
+
+<p>Dentro del documento, <code>params$depto</code> es un objeto R. Filtras los datos por él <strong>una vez, al inicio</strong>, y todo el dashboard se recalcula para esa área:</p>
+
+<pre><code>es_global <span class="pipe">&lt;-</span> params$depto == <span class="string">"Global"</span>
+
+emp_f <span class="pipe">&lt;-</span> <span class="func">if</span> (es_global) empleados
+         <span class="func">else</span> <span class="func">filter</span>(empleados, departamento == params$depto)</code></pre>
+
+<p>Para generar <strong>todas</strong> las versiones de una vez, renderizas en lote con <code>quarto_render()</code> dentro de un <code>purrr::walk()</code>:</p>
+
+<pre><code><span class="func">library</span>(quarto)
+
+areas <span class="pipe">&lt;-</span> <span class="func">c</span>(<span class="string">"Global"</span>, <span class="string">"Ventas"</span>, <span class="string">"Soporte Técnico"</span>)
+
+purrr::<span class="func">walk</span>(areas, \(d) {
+  <span class="func">quarto_render</span>(
+    input          = <span class="string">"clase16_dashboard.qmd"</span>,
+    execute_params = <span class="func">list</span>(depto = d),
+    output_file    = <span class="func">paste0</span>(<span class="string">"dashboard_"</span>, d, <span class="string">".html"</span>)
+  )
+})</code></pre>
+
+<div class="business">
+<strong>Esta es la diferencia entre copiar-pegar y automatizar.</strong> El analista junior arma siete dashboards a mano y reza para que los siete queden iguales. El analista que automatiza tiene un archivo, lo corrige una vez, y los siete se regeneran idénticos. Cuando los datos del próximo trimestre lleguen, vuelve a correr una línea. La pregunta nunca es "¿cuánto cuesta automatizar?" sino "¿cuántas veces voy a repetir esto?".
+</div>
+
+<!-- 11 -->
+<h2>11. Datos incrustados y descarga: bajar la tabla como Excel</h2>
+
+<p>Pregunta frecuente del directorio: <em>"¿puedo bajarme esta tabla a Excel?"</em>. La respuesta es <strong>sí, sin servidor</strong>. El truco tiene dos piezas: (1) hacer el HTML <strong>autocontenido</strong> con <code>embed-resources: true</code> en el YAML, de modo que los datos viajen <em>dentro</em> del archivo; y (2) ofrecer un mecanismo de descarga del lado del cliente.</p>
+
+<h3>Vía A — botones en la propia tabla (<code>DT</code> + extensión Buttons)</h3>
+<p>La extensión <strong>Buttons</strong> de <code>DT</code> agrega una barra con <em>Copiar / CSV / Excel / PDF</em> sobre la tabla. La descarga ocurre en el navegador (usa JSZip), con los datos ya incrustados en el widget:</p>
+
+<pre><code>tabla <span class="pipe">|&gt;</span>
+  <span class="func">datatable</span>(
+    extensions = <span class="string">"Buttons"</span>,
+    options = <span class="func">list</span>(
+      dom = <span class="string">"Bfrtip"</span>,            <span class="comment"># B = barra de botones</span>
+      buttons = <span class="func">list</span>(
+        <span class="func">list</span>(extend = <span class="string">"excel"</span>, text = <span class="string">"Descargar Excel"</span>),
+        <span class="func">list</span>(extend = <span class="string">"csv"</span>,   text = <span class="string">"CSV"</span>),
+        <span class="func">list</span>(extend = <span class="string">"copy"</span>,  text = <span class="string">"Copiar"</span>)
+      )
+    )
+  )</code></pre>
+
+<h3>Vía B — un botón de descarga para cualquier objeto (<code>downloadthis</code>)</h3>
+<p>Cuando quieres ofrecer "Descargar la base completa (.xlsx)" como un botón independiente (no atado a una tabla visible), <code>downloadthis</code> incrusta el archivo como base64 dentro del HTML:</p>
+
+<pre><code><span class="func">library</span>(downloadthis)
+
+activos <span class="pipe">|&gt;</span>
+  <span class="func">download_this</span>(
+    output_name      = <span class="string">"InnovaCo_activos"</span>,
+    output_extension = <span class="string">".xlsx"</span>,        <span class="comment"># también ".csv"</span>
+    button_label     = <span class="string">"Descargar base (Excel)"</span>,
+    button_type      = <span class="string">"success"</span>, has_icon = <span class="func">TRUE</span>
+  )</code></pre>
+
+<div class="business">
+<strong>El dashboard autocontenido se convierte en un “mini-portal”.</strong> Con <code>embed-resources: true</code> + botones de descarga, entregas <strong>un solo archivo HTML</strong> por correo o por Canvas. El directorio lo abre sin instalar nada, mira los KPIs, explora la tabla y se baja la planilla que necesita — todo desde el mismo archivo, sin servidor, sin pedirte nada. Esa autonomía es exactamente lo que reduce el ida-y-vuelta de "¿me mandas los datos de…?".
+</div>
+
+<div class="note">
+<strong>Cuidado con el peso.</strong> Incrustar datos grandes (decenas de miles de filas) infla el HTML. Para el dashboard ejecutivo —pocas filas curadas— es ideal. Para volúmenes grandes, ofrece la descarga de un agregado, no de la base cruda.
+</div>
+
+<!-- 12 -->
+<h2>12. Checklist del dashboard</h2>
+<ul>
+<li>☐ <code>format: dashboard</code> en el YAML y <code>echo: false</code> (el directorio no ve código).</li>
+<li>☐ Fila de 4 value boxes arriba, con color según estado (un KPI malo se ve rojo).</li>
+<li>☐ Cada KPI con su tendencia: la línea responde "¿sube o baja?".</li>
+<li>☐ Al menos una tabla (<code>gt</code> para presentación o <code>DT</code> para explorar).</li>
+<li>☐ El eNPS proviene de la encuesta 0–10, no de la satisfacción 1–5.</li>
+<li>☐ Parametrización funcional: cambiar <code>params$depto</code> recalcula todo.</li>
+<li>☐ <code>embed-resources: true</code> y, si aplica, botón de descarga a Excel.</li>
+<li>☐ Pasa la prueba del vistazo: estado general claro en 10 segundos.</li>
+</ul>
+
+<div class="advanced">
+<strong>Más allá de Quarto Dashboards.</strong> Cuando necesites cómputo reactivo en vivo del lado del servidor (inputs que disparan modelos pesados), el siguiente escalón es <strong>Shiny</strong> (Wickham, 2021, <em>Mastering Shiny</em>). Quarto Dashboards cubre el 90% de las necesidades ejecutivas sin servidor; Shiny entra cuando el 10% restante lo exige. Y en el mundo corporativo conviven con Power BI, Tableau y Looker: la ventaja del flujo en R/Quarto es la <em>reproducibilidad</em> y la integración con tu análisis.
+</div>
+
+<h2>13. Referencias</h2>
+<p style="font-size:0.85rem;">
+Becker, B. E., Huselid, M. A., &amp; Ulrich, D. (2001). <em>The HR scorecard: Linking people, strategy, and performance</em>. Harvard Business School Press.<br>
+Eckerson, W. W. (2010). <em>Performance dashboards: Measuring, monitoring, and managing your business</em> (2.ª ed.). Wiley.<br>
+Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2.ª ed.). Analytics Press.<br>
+Iannone, R., Cheng, J., Schloerke, B., Hughes, E., Lauer, A., &amp; Seo, J. (2024). <em>gt: Easily create presentation-ready display tables</em> [Paquete de R].<br>
+Kaplan, R. S., &amp; Norton, D. P. (1996). <em>The balanced scorecard: Translating strategy into action</em>. Harvard Business School Press.<br>
+Reichheld, F. F. (2003). The one number you need to grow. <em>Harvard Business Review, 81</em>(12), 46–54.<br>
+Sievert, C. (2020). <em>Interactive web-based data visualization with R, plotly, and shiny</em>. Chapman &amp; Hall/CRC.<br>
+Wickham, H. (2021). <em>Mastering Shiny: Build interactive apps, reports, and dashboards powered by R</em>. O'Reilly.
+</p>
+
+<footer>
+Apunte 35 · Analítica de Personas (People Analytics con R) · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+</footer>
+
+</body>
+</html>

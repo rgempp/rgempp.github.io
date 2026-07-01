@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apunte 36 — Data storytelling para ejecutivos: del output a la decisión | Analítica de Personas</title>
+<style>
+  :root { --teal: #0D9488; --navy: #1B2A4A; --coral: #EF4444; --green: #16A34A; --slate: #475569; --bg: #F8FAFC; --code-bg: #1E293B; --terra: #B85042; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Calibri, sans-serif; color: #1E293B; background: var(--bg); line-height: 1.6; max-width: 850px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-family: Georgia, serif; color: var(--navy); font-size: 1.8rem; border-bottom: 3px solid var(--teal); padding-bottom: 0.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--slate); font-size: 0.95rem; margin-bottom: 2rem; }
+  h2 { font-family: Georgia, serif; color: var(--navy); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.8rem; padding-left: 0.5rem; border-left: 4px solid var(--teal); }
+  h3 { color: var(--teal); font-size: 1.05rem; margin-top: 1.3rem; margin-bottom: 0.5rem; }
+  p { margin-bottom: 0.8rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  code { font-family: 'Consolas', 'Fira Code', monospace; background: #E2E8F0; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9rem; }
+  pre { background: var(--code-bg); color: #E2E8F0; padding: 1rem 1.2rem; border-radius: 8px; overflow-x: auto; margin: 0.8rem 0 1.2rem 0; font-size: 0.88rem; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .comment { color: #94A3B8; }
+  .string { color: #4ADE80; }
+  .func { color: #38BDF8; }
+  .pipe { color: #F59E0B; font-weight: bold; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th { background: var(--navy); color: white; padding: 0.6rem 0.8rem; text-align: left; font-weight: 600; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #E2E8F0; vertical-align: top; }
+  tr:nth-child(even) { background: #F1F5F9; }
+  .tip { background: #CCFBF1; border-left: 4px solid var(--teal); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .warning { background: #FEE2E2; border-left: 4px solid var(--coral); padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .note { background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .advanced { background: #EDE9FE; border-left: 4px solid #7C3AED; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .business { background: #FFF7ED; border-left: 4px solid #EA580C; padding: 0.8rem 1rem; border-radius: 0 6px 6px 0; margin: 1rem 0; }
+  .tip strong, .warning strong, .note strong, .advanced strong, .business strong { display: block; margin-bottom: 0.3rem; }
+  .formula { background: #F1F5F9; border: 1px solid #CBD5E1; padding: 1rem; border-radius: 6px; margin: 1rem 0; text-align: center; font-family: Georgia, serif; font-size: 1.05rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #E2E8F0; color: var(--slate); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>Apunte 36 — Data storytelling para ejecutivos: del output a la decisión</h1>
+<p class="subtitle">Analítica de Personas · Semestre otoño 2026 · Semana 16 · Prof. René Gempp</p>
+
+<!-- 1 -->
+<h2>1. El gráfico no habla solo</h2>
+
+<p>Hay una creencia peligrosa entre analistas: <em>"los datos hablan por sí solos"</em>. No lo hacen. Un gráfico de rotación al 35% no le dice al directorio si eso es bueno o malo, si sube o baja, ni qué hacer al respecto. Esa interpretación la pones <strong>tú</strong>. Cole Nussbaumer Knaflic (2015) lo resume: el analista no presenta datos, <strong>cuenta una historia con datos</strong>.</p>
+
+<p>Esto no es un detalle cosmético. Es la competencia que separa al analista del consultor. La regresión logística más elegante del mundo, si termina en un odds ratio que nadie en la sala sabe leer, no cambió ninguna decisión. Un análisis que el directorio no entiende es un análisis que, para efectos prácticos, no existe.</p>
+
+<div class="business">
+<strong>El cambio de jerarquía de esta semana.</strong> Durante quince semanas lo difícil fue el análisis y comunicar era "el último paso". Hoy se invierte: comunicar es la mitad del trabajo, no su epílogo. El analista que lo entiende tarde descubre que su mejor modelo murió en un slide que nadie comprendió.
+</div>
+
+<!-- 2 -->
+<h2>2. El framework: contexto → hallazgo → implicancia → recomendación</h2>
+
+<p>Toda historia ejecutiva tiene cuatro movimientos. Saltarse cualquiera la rompe.</p>
+
+<table>
+<tr><th>Movimiento</th><th>Pregunta</th><th>Ejemplo (Soporte Técnico)</th></tr>
+<tr><td><strong>Contexto</strong></td><td>¿De qué hablamos y por qué importa <em>ahora</em>?</td><td>"Soporte es el 22% de la dotación y el primer contacto con el cliente."</td></tr>
+<tr><td><strong>Hallazgo</strong></td><td>¿Qué muestran los datos?</td><td>"Su rotación llegó a 35% y su eNPS cayó de +13 a −23 en un año."</td></tr>
+<tr><td><strong>Implicancia</strong></td><td>¿Y qué? ¿Qué pasa si no hacemos nada?</td><td>"A este ritmo perdemos un tercio del equipo de cara al cliente al año."</td></tr>
+<tr><td><strong>Recomendación</strong></td><td>¿Qué hacemos, quién y cuándo?</td><td>"Auditoría de carga y liderazgo en 30 días; bandas salariales en 60."</td></tr>
+</table>
+
+<div class="tip">
+<strong>La prueba del "¿y qué?".</strong> El error clásico es quedarse en el hallazgo ("la rotación es 35%") y creer que el dato habla solo. Toma cada hallazgo y pregúntale "¿y qué?" hasta que llegues a una acción. Un hallazgo sin recomendación es trivia; una recomendación sin hallazgo es opinión. La historia los une.
+</div>
+
+<p>El orden importa por una razón cognitiva: el directorio necesita el <strong>contexto</strong> antes que el número, o el número no significa nada. "35%" sin saber que Soporte atiende al cliente es ruido. Y necesita la <strong>recomendación</strong> al final, porque vino a la reunión a decidir, no a aprender estadística.</p>
+
+<!-- 3 -->
+<h2>3. Diseño visual que comunica</h2>
+
+<p>Tres principios, heredados de las Clases 1–2 y del Apunte 16, que culminan aquí.</p>
+
+<h3>Razón dato-tinta (Tufte, 2001)</h3>
+<p>Cada gota de tinta debe representar un dato. Bordes triples, sombras 3D, fondos degradados, leyendas redundantes: todo eso es <strong>chartjunk</strong> que compite con la información. Maximiza la razón dato-tinta; borra todo lo que no informa. Un dashboard ejecutivo limpio se ve casi vacío — y eso es correcto.</p>
+
+<h3>Percepción gráfica (Cleveland &amp; McGill, 1984)</h3>
+<p>El ojo humano compara <strong>posiciones a lo largo de un eje común</strong> con mucha más precisión que ángulos o áreas. De ahí la jerarquía de gráficos: barras y líneas (posición) &gt; burbujas (área) &gt; tortas (ángulo). El gráfico de torta, salvo para 2–3 categorías, casi siempre pierde contra una barra. Un dashboard de directorio se construye con barras, líneas y números grandes, no con tortas y <em>gauges</em> decorativos.</p>
+
+<h3>Color con propósito</h3>
+<p>En la paleta del curso (<em>Warm Terracotta</em>), el color no decora: codifica. Terracota/rojo para alertas (rotación alta, eNPS negativo), teal/verde para lo saludable, navy para lo neutral. Un KPI que está mal <strong>se ve</strong> mal. El color es el primer canal que procesa el directorio, antes de leer un solo número.</p>
+
+<pre><code><span class="comment"># El formateo también comunica: ejes legibles, no "0.272"</span>
+<span class="func">scale_y_continuous</span>(labels = scales::<span class="func">percent_format</span>(accuracy = <span class="string">1</span>))
+<span class="func">scale_x_continuous</span>(labels = scales::<span class="func">label_comma</span>())
+<span class="func">scale_y_continuous</span>(labels = scales::<span class="func">label_dollar</span>(prefix = <span class="string">"$"</span>))</code></pre>
+
+<div class="note">
+<strong>Un número crudo en un eje es una falta de respeto al lector.</strong> "0.272" obliga al director a traducir mentalmente a "27%". Hazlo tú: <code>scales::percent()</code>. Cada traducción que le ahorras es atención que dedica a tu recomendación.
+</div>
+
+<!-- 4 -->
+<h2>4. Traducir el output estadístico al lenguaje del negocio</h2>
+
+<p>La competencia más rara y más valiosa: convertir el resultado técnico en una frase que un director sin formación estadística entienda y sobre la que pueda decidir.</p>
+
+<table>
+<tr><th>Output técnico</th><th>Traducción ejecutiva</th></tr>
+<tr><td>OR = 2,3 (baja satisfacción)</td><td>"Quien está insatisfecho tiene <strong>más del doble</strong> de probabilidad de renunciar."</td></tr>
+<tr><td>HR = 1,8 (Soporte)</td><td>"La gente de Soporte se va a una tasa <strong>80% mayor</strong> que el resto, mes a mes."</td></tr>
+<tr><td>OR = 0,7 (cada punto de satisfacción)</td><td>"Cada punto de satisfacción reduce <strong>~30%</strong> el riesgo de renuncia."</td></tr>
+<tr><td>p &lt; .001, d = 0,15</td><td>"La diferencia es clara estadísticamente, pero <strong>tan pequeña que no cambia ninguna decisión</strong>."</td></tr>
+<tr><td>R² = 0,12</td><td>"El modelo explica una parte modesta: hay factores que aún no medimos."</td></tr>
+<tr><td>eNPS = −23</td><td>"Por cada persona que recomendaría trabajar aquí, hay <strong>más de dos</strong> que no lo harían."</td></tr>
+</table>
+
+<p>Reglas prácticas de traducción de un <strong>odds ratio</strong> y un <strong>hazard ratio</strong>:</p>
+<ul>
+<li>OR o HR &gt; 1 → "<em>tantas</em> veces más probable / mayor tasa". OR = 2,3 → "2,3 veces", o "más del doble".</li>
+<li>OR o HR &lt; 1 → conviene el complemento: <code>1 − OR</code>. OR = 0,7 → "reduce ~30%".</li>
+<li>Nunca digas "el odds ratio es 2,3" a un directorio. Esa frase no existe en su idioma.</li>
+</ul>
+
+<div class="warning">
+<strong>Traducir no es inflar.</strong> Un <em>d</em> de Cohen de 0,15 con p &lt; .001 es significativo y trivial a la vez; el storyteller honesto dice las dos cosas. La línea entre "comunicar con claridad" y "exagerar para impresionar" es la línea ética de la profesión (se retoma en la Clase 17). Y cuidado con la <strong>brecha salarial</strong>: reportar la cruda (−6,8%) sin la ajustada de la Clase 5 (−7,8%) es técnicamente cierto y comunicacionalmente engañoso. Da ambos números y deja que el contraste cuente la historia.
+</div>
+
+<!-- 5 -->
+<h2>5. Exportar al mundo del directorio: <code>officer</code> y <code>openxlsx</code></h2>
+
+<p>El directorio no abre RStudio. Vive en Word, Excel y PowerPoint. La reproducibilidad termina donde empieza el copy-paste manual — y ahí se rompe. Dos paquetes cierran la brecha.</p>
+
+<h3>Word con <code>officer</code></h3>
+<p>Genera un <code>.docx</code> desde R, capa por capa, con el mismo espíritu del pipe:</p>
+
+<pre><code><span class="func">library</span>(officer)
+
+memo <span class="pipe">&lt;-</span> <span class="func">read_docx</span>() <span class="pipe">|&gt;</span>
+  <span class="func">body_add_par</span>(<span class="string">"Memo ejecutivo — Estado de personas"</span>, style = <span class="string">"heading 1"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">body_add_par</span>(historia_soporte, style = <span class="string">"Normal"</span>) <span class="pipe">|&gt;</span>
+  <span class="func">body_add_gg</span>(value = g_enps_depto, height = <span class="string">3.5</span>) <span class="pipe">|&gt;</span>   <span class="comment"># inserta el gráfico</span>
+  <span class="func">body_add_table</span>(value = tabla_deptos)                  <span class="comment"># inserta una tabla</span>
+
+<span class="func">print</span>(memo, target = <span class="string">"Memo_Ejecutivo_InnovaCo.docx"</span>)</code></pre>
+
+<p>Funciones clave: <code>read_docx()</code> abre un documento (en blanco o una plantilla con el membrete de la empresa); <code>body_add_par()</code> agrega texto con un estilo; <code>body_add_gg()</code> incrusta un <code>ggplot</code>; <code>body_add_table()</code> agrega una tabla; <code>print(target=)</code> escribe el archivo.</p>
+
+<h3>Excel con <code>openxlsx</code></h3>
+<p>Genera un <code>.xlsx</code> con formato — colores, formatos de número, varias hojas — sin depender de Java (a diferencia del viejo paquete <code>xlsx</code>):</p>
+
+<pre><code><span class="func">library</span>(openxlsx)
+
+wb <span class="pipe">&lt;-</span> <span class="func">createWorkbook</span>()
+<span class="func">addWorksheet</span>(wb, <span class="string">"KPIs por depto"</span>)
+<span class="func">writeData</span>(wb, <span class="string">"KPIs por depto"</span>, tabla_deptos)
+
+<span class="comment"># Encabezado con estilo corporativo</span>
+estilo <span class="pipe">&lt;-</span> <span class="func">createStyle</span>(fontColour = <span class="string">"#FFFFFF"</span>, fgFill = <span class="string">"#1B2A4A"</span>,
+                       textDecoration = <span class="string">"bold"</span>, halign = <span class="string">"center"</span>)
+<span class="func">addStyle</span>(wb, <span class="string">"KPIs por depto"</span>, estilo, rows = <span class="string">1</span>,
+         cols = <span class="string">1</span>:<span class="func">ncol</span>(tabla_deptos), gridExpand = <span class="func">TRUE</span>)
+
+<span class="func">saveWorkbook</span>(wb, <span class="string">"KPIs_InnovaCo.xlsx"</span>, overwrite = <span class="func">TRUE</span>)</code></pre>
+
+<div class="business">
+<strong>¿Cuándo vale la pena automatizar la exportación?</strong> La primera vez, exportar con <code>officer</code> cuesta más que copiar-pegar. Pero el reporte del directorio se actualiza cada trimestre. A la segunda vez, el flujo reproducible ya ganó: vuelves a correr el script con los datos nuevos y el memo se regenera idéntico, con los números frescos, sin errores de transcripción. La pregunta no es "¿cuánto cuesta?" sino "¿cuántas veces voy a repetir esto?".
+</div>
+
+<!-- 6 -->
+<h2>6. La presentación de tres minutos</h2>
+
+<p>El ejercicio de la clase: toma tu mejor análisis del semestre y cuéntalo en tres minutos. Estructura sugerida, un minuto por bloque más cierre:</p>
+
+<ol>
+<li><strong>(0:00–0:30) Contexto + hallazgo en una frase.</strong> "Soporte Técnico, que atiende a nuestros clientes, está perdiendo gente a un ritmo del 35% anual."</li>
+<li><strong>(0:30–1:30) Una visualización, una idea.</strong> El gráfico de eNPS desagregado. No expliques cómo lo hiciste; muestra qué dice.</li>
+<li><strong>(1:30–2:30) Implicancia cuantificada.</strong> "Eso significa reemplazar a uno de cada tres cada año; el costo de reemplazo ronda los $X."</li>
+<li><strong>(2:30–3:00) Recomendación accionable.</strong> Qué, quién, cuándo. Tres acciones máximo.</li>
+</ol>
+
+<div class="tip">
+<strong>Una idea por slide.</strong> Duarte (2010) y Knaflic (2015) coinciden: si un slide tiene dos ideas, tiene una de más. El directorio recuerda una cosa por lámina, en el mejor de los casos. Decide cuál es esa cosa y borra el resto.
+</div>
+
+<!-- 7 -->
+<h2>7. La línea ética: comunicar vs. manipular</h2>
+
+<p>Un dashboard es un instrumento de poder: decide qué se ve y qué no, qué número va arriba y grande, cuál queda escondido en una pestaña que nadie abre. Las mismas herramientas que comunican con claridad pueden manipular:</p>
+
+<ul>
+<li>Cortar el eje Y para exagerar una caída (o aplanarla).</li>
+<li>Reportar la brecha cruda y omitir la ajustada (o al revés), según convenga.</li>
+<li>Esconder el departamento incómodo en un <em>drill-down</em> que el directorio nunca abrirá.</li>
+<li>Elegir el período que cuenta la historia que uno quiere contar.</li>
+</ul>
+
+<p>Todo eso es técnicamente posible. <code>ggplotly()</code> no tiene moral; el criterio lo pones tú. La diferencia entre informar y manipular no está en la herramienta sino en la intención y la honestidad de quien la usa. El curso planta aquí la pregunta que la Clase 17 desarrolla: <em>¿es ético todo lo que podemos hacer con estos datos?</em></p>
+
+<!-- 8 -->
+<h2>8. Checklist de storytelling</h2>
+<ul>
+<li>☐ Cada historia tiene los cuatro movimientos: contexto, hallazgo, implicancia, recomendación.</li>
+<li>☐ Cada hallazgo sobrevive a la pregunta "¿y qué?" hasta una acción.</li>
+<li>☐ Cada OR/HR está traducido a lenguaje de negocio (nada de "el odds ratio es...").</li>
+<li>☐ Sin chartjunk; barras y líneas antes que tortas; ejes formateados (%, $, miles).</li>
+<li>☐ Color con propósito: lo que está mal se ve rojo.</li>
+<li>☐ La brecha se reporta con su matiz cruda/ajustada.</li>
+<li>☐ Una idea por slide; recomendación accionable (qué, quién, cuándo).</li>
+<li>☐ Honestidad: lo trivial se declara trivial; nada se infla.</li>
+</ul>
+
+<h2>9. Referencias</h2>
+<p style="font-size:0.85rem;">
+Cleveland, W. S., &amp; McGill, R. (1984). Graphical perception: Theory, experimentation, and application to the development of graphical methods. <em>Journal of the American Statistical Association, 79</em>(387), 531–554.<br>
+Duarte, N. (2010). <em>Resonate: Present visual stories that transform audiences</em>. Wiley.<br>
+Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.<br>
+Tufte, E. R. (2001). <em>The visual display of quantitative information</em> (2.ª ed.). Graphics Press.<br>
+Wilke, C. O. (2019). <em>Fundamentals of data visualization</em>. O'Reilly.
+</p>
+
+<footer>
+Apunte 36 · Analítica de Personas (People Analytics con R) · Magíster en Gestión de Personas · Facultad de Administración y Economía · Universidad Diego Portales · Prof. René Gempp · Semestre otoño 2026.
+</footer>
+
+</body>
+</html>

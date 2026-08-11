@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión basada en evidencia y mitos gerenciales · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 1</p>
+  <h1>Gestión basada en evidencia y mitos gerenciales</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario a la Clase 2 (miércoles 12-08-2026) · Complementa R&amp;J cap. 1 y la lectura de Arnold (cap. 2)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a> · Facultad de Economía y Empresa, Universidad Diego Portales<br><a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>El manual del curso define el comportamiento organizacional como un "campo de estudio" y menciona que se apoya en el "estudio sistemático" del comportamiento. Hasta ahí llega. Lo que el manual no desarrolla es la pregunta más práctica de todas: cuando dos afirmaciones sobre gestión se contradicen (tu jefe dice una cosa, un influencer de LinkedIn dice otra), ¿cómo decides a cuál creerle?</p>
+<p>Ese es exactamente el problema que resuelve la <strong>gestión basada en evidencia</strong> (<em>evidence-based management</em>), un movimiento que llegó al management desde la medicina hace unos veinte años y que este curso adopta como enfoque transversal. Este apunte te da el marco completo: qué es una teoría y qué no lo es, cómo se ordena la evidencia según su calidad, por qué la correlación no basta para hablar de causa, y qué pasa cuando los profesionales toman decisiones sin mirar la evidencia (adelanto: les va peor de lo que creen).</p>
+<p>Además, este apunte deja registrado el hilo que abrimos en la clase 1 con el pretest de mitos y que cerraremos en la última clase de diciembre.</p>
+
+<h2>B. La idea en tres minutos</h2>
+<div class="resumen">
+<p>Gestionar personas es tomar decisiones bajo incertidumbre: a quién contratar, cómo pagar, cómo organizar el trabajo. Esas decisiones pueden basarse en la intuición, la tradición, la moda o la evidencia. La gestión basada en evidencia propone algo simple de enunciar y difícil de practicar: usar conscientemente la mejor evidencia disponible, de múltiples fuentes, para aumentar la probabilidad de acertar.</p>
+<p>No toda la evidencia vale lo mismo. Una anécdota vale menos que un estudio con datos; un estudio aislado vale menos que un experimento; y la mejor síntesis disponible suele ser el metaanálisis, que combina estadísticamente decenas o cientos de estudios. Tampoco da lo mismo el tipo de dato: que dos cosas ocurran juntas (correlación) no demuestra que una cause la otra; para hablar de causa con propiedad se necesita, idealmente, un experimento con asignación aleatoria.</p>
+<p>¿Y funciona? En el experimento de campo más citado sobre el tema, mejorar las prácticas de gestión de plantas textiles redujo los defectos de calidad en 43% y aumentó la productividad total en 17%. Mientras tanto, cuando a 959 profesionales de RRHH de Estados Unidos les preguntaron por hallazgos bien establecidos de la investigación, el promedio acertó apenas el 57% de los ítems. La brecha entre lo que se sabe y lo que se practica es real, y ahí hay una ventaja competitiva para el gerente que sí lee la evidencia.</p>
+</div>
+
+<h2>C. Los conceptos</h2>
+
+<h3>Teoría (y lo que no es teoría)</h3>
+<p>En ciencia, una <strong>teoría</strong> es un sistema de conceptos y relaciones que explica <em>por qué</em> ocurre algo, y que genera predicciones que podrían resultar falsas al contrastarlas con datos. Sutton y Staw (1995) escribieron un artículo clásico aclarando lo que <em>no</em> es teoría: las referencias a autores famosos no son teoría, los datos no son teoría, las listas de variables no son teoría, los diagramas con flechas no son teoría, y las hipótesis sueltas tampoco. Teoría es la explicación del mecanismo: la cadena de razones que conecta causas con efectos.</p>
+<p>Esto importa en la práctica: buena parte del material de gestión que circula (charlas, best sellers, frameworks de consultora) ofrece listas y diagramas sin mecanismo ni predicciones contrastables. Si no puede estar equivocado, no es teoría: es marketing.</p>
+
+<h3>Gestión basada en evidencia</h3>
+<p>La <strong>gestión basada en evidencia</strong> (<em>evidence-based management</em>) es el uso concienzudo, explícito y juicioso de la mejor evidencia disponible, proveniente de múltiples fuentes, para tomar decisiones de gestión (Rousseau, 2006). Las fuentes típicas son cuatro: la literatura científica, los datos internos de la organización, la experiencia profesional y los valores e intereses de los afectados. El punto no es reemplazar el juicio del gerente por papers: es disciplinar ese juicio, igual que un médico integra la investigación clínica con lo que ve en su paciente.</p>
+
+<h3>Jerarquía de la evidencia</h3>
+<p>No toda la evidencia pesa lo mismo. Una ordenación simple, de menor a mayor confiabilidad:</p>
+<table>
+  <tr><th>Nivel</th><th>Tipo</th><th>Qué permite</th></tr>
+  <tr><td>1</td><td><strong>Anécdota u opinión</strong> ("a mí me funcionó")</td><td>Punto de partida, jamás de llegada</td></tr>
+  <tr><td>2</td><td><strong>Caso o estudio descriptivo</strong></td><td>Describir bien una situación; no generalizar</td></tr>
+  <tr><td>3</td><td><strong>Estudio correlacional</strong></td><td>Descubrir y descartar asociaciones; no establecer causas</td></tr>
+  <tr><td>4</td><td><strong>Experimento aleatorizado</strong></td><td>Hablar de causa con propiedad</td></tr>
+  <tr><td>5</td><td><strong>Metaanálisis</strong></td><td>La mejor estimación disponible del estado del conocimiento</td></tr>
+</table>
+
+<h3>Correlación y causalidad</h3>
+<p>Una <strong>correlación</strong> indica que dos variables se mueven juntas; se expresa con un coeficiente <em>r</em> entre −1 y +1. En comportamiento organizacional, correlaciones en torno a .10 son pequeñas, .20 a .30 moderadas y útiles, y sobre .40, grandes. Que la satisfacción se asocie con el desempeño (r ≈ .30; Judge et al., 2001) no dice si la satisfacción mejora el desempeño, si rendir bien pone contento, o si una tercera variable (un buen jefe, un buen puesto) explica ambas. Para separar esas posibilidades se necesita diseño: experimentos con <strong>asignación aleatoria</strong> (<em>random assignment</em>), donde el azar garantiza que los grupos comparados sean equivalentes antes de la intervención. Regla de oro del curso: si la evidencia es correlacional, decimos "se asocia con"; solo si es experimental decimos "causa".</p>
+
+<h2>D. Qué dice la evidencia</h2>
+<p><strong>La gestión causa desempeño: el experimento de India.</strong> Bloom et al. (2013) tomaron 28 plantas textiles de 17 empresas indias y asignaron por azar cuáles recibirían cinco meses de consultoría intensiva en 38 prácticas concretas de gestión (calidad, inventario, incentivos, planificación) y cuáles solo el diagnóstico inicial. Un año después, las plantas tratadas habían reducido sus defectos de calidad en 43%, bajado su inventario inmovilizado en 22% y aumentado su productividad total en 17%, lo que los autores traducen en unos 325 mil dólares de utilidad adicional por planta al año. Como la asignación fue aleatoria, la diferencia no puede atribuirse a que las plantas tratadas fueran mejores de antemano: la gestión <em>causó</em> el desempeño. Es un solo estudio, en una industria y un país; su valor está en que replica con diseño experimental lo que cientos de estudios correlacionales venían sugiriendo.</p>
+<p><strong>Chile en el mapa: el World Management Survey.</strong> El mismo equipo lleva dos décadas midiendo prácticas de gestión con entrevistas dobles-ciegas en miles de empresas manufactureras de tamaño medio y grande en 20 países. En una escala de 1 a 5, Chile promedia 2.83 (316 empresas entrevistadas): sobre Argentina (2.76) y Brasil (2.71), bajo México (2.92) y lejos de Estados Unidos (3.35) o Alemania (3.23) (Bloom et al., 2012). El detalle interesante para este curso: de los tres dominios medidos, Chile puntúa mejor en monitoreo de procesos (3.14) y peor en gestión de metas (2.72) e incentivos y personas (2.67). La brecha chilena está, precisamente, en la gestión de personas. La precaución también importa: es una muestra de manufactura mediana-grande, y el dato es descriptivo, no experimental.</p>
+<p><strong>La brecha saber-hacer.</strong> Rynes et al. (2002) aplicaron un test de 35 afirmaciones de verdadero o falso, todas con respuesta establecida por la investigación, a 959 profesionales de RRHH en Estados Unidos. El promedio acertó 20 ítems (57%), con un rango entre 26% y 86%. Las mayores brechas aparecieron justamente en selección de personas: por ejemplo, la mayoría subestimaba la validez de los test de habilidad cognitiva y sobreestimaba la de otras herramientas populares. Si esto les pasa a los especialistas, la moraleja no es la burla: es que la intuición gerencial, sin contrapeso de evidencia, falla de manera sistemática y predecible.</p>
+<p><strong>Qué está en debate.</strong> La gestión basada en evidencia tiene críticas serias que conviene conocer: la evidencia disponible proviene mayoritariamente de países anglosajones y su generalización a contextos como el chileno debe examinarse caso a caso; los metaanálisis heredan los defectos de los estudios que combinan; y hay preguntas gerenciales legítimas para las cuales todavía no existe evidencia de calidad. Honestidad epistémica: usar evidencia no garantiza acertar; aumenta la probabilidad de acertar, que es distinto y suficiente.</p>
+
+<h2>E. Mito versus evidencia</h2>
+
+<div class="mito">
+<p><span class="etiqueta">Se dice que...</span> el dinero es el principal motivador de los trabajadores.</p>
+<p><span class="etiqueta ev">La evidencia muestra que...</span> incentivos y motivación intrínseca predicen resultados distintos: los incentivos se asocian más con la cantidad de desempeño y la motivación intrínseca con su calidad (metaanálisis de 40 años; Cerasoli et al., 2014). El dinero importa, pero "principal" es insostenible como afirmación general.</p>
+<p><span class="etiqueta pq">Por qué persiste el mito:</span> el dinero es visible, contable y fácil de administrar; la motivación intrínseca no. Y quien paga tiende a sobreestimar lo que compra.</p>
+</div>
+
+<div class="mito">
+<p><span class="etiqueta">Se dice que...</span> el trabajador feliz es siempre más productivo.</p>
+<p><span class="etiqueta ev">La evidencia muestra que...</span> la correlación media entre satisfacción laboral y desempeño es r ≈ .30 (Judge et al., 2001): una relación moderada, útil y probablemente bidireccional. Ni "siempre", ni automática, ni de tamaño espectacular.</p>
+<p><span class="etiqueta pq">Por qué persiste el mito:</span> confirma lo que queremos creer y vende programas de "felicidad organizacional". La versión matizada no cabe en un eslogan.</p>
+</div>
+
+<div class="mito">
+<p><span class="etiqueta">Se dice que...</span> la lluvia de ideas en grupo produce más y mejores ideas que pensar por separado.</p>
+<p><span class="etiqueta ev">La evidencia muestra que...</span> los grupos interactivos generan menos ideas, y no de mejor calidad, que el mismo número de personas trabajando primero en forma individual (metaanálisis de Mullen et al., 1991). La secuencia "primero solo, después juntos" rinde más.</p>
+<p><span class="etiqueta pq">Por qué persiste el mito:</span> las sesiones grupales se sienten productivas y nadie mide el contrafactual: cuántas ideas habrían salido trabajando solos.</p>
+</div>
+
+<div class="mito">
+<p><span class="etiqueta">Se dice que...</span> para que alguien rinda, basta pedirle que "haga su mejor esfuerzo".</p>
+<p><span class="etiqueta ev">La evidencia muestra que...</span> las metas específicas y difíciles producen mejor desempeño que las metas vagas tipo "hazlo lo mejor posible", uno de los hallazgos más replicados de la psicología organizacional (Locke &amp; Latham, 2002). Lo replicaremos en vivo, con ustedes como participantes, en la clase 7.</p>
+<p><span class="etiqueta pq">Por qué persiste el mito:</span> pedir "el mejor esfuerzo" es cómodo: no exige definir qué es un buen resultado ni comprometerse con un número.</p>
+</div>
+
+<h2>F. Qué significa para un administrador</h2>
+<p><strong>Pide la evidencia antes de comprar.</strong> Frente a cualquier práctica, test, capacitación o consultoría, tres preguntas bastan para filtrar la mayoría de la pseudociencia: ¿qué evidencia existe de que esto funciona?, ¿de qué tipo es (anécdotas, correlaciones, experimentos)?, ¿fue publicada en algún medio con revisión de pares o solo en el material de venta del proveedor?</p>
+<p><strong>Distingue el nivel de la afirmación.</strong> Cuando leas "X aumenta la productividad", pregunta si el estudio detrás permite ese verbo. Si es correlacional, la afirmación honesta es "X se asocia con productividad". Este hábito, solo, te pondrá por encima del 57% de Rynes et al. (2002).</p>
+<p><strong>Usa tus datos internos.</strong> La gestión basada en evidencia no es solo leer papers: tu organización produce datos de rotación, ausentismo, desempeño y clima que casi nadie analiza en serio. Antes de importar una moda, mide tu problema.</p>
+<p><strong>Desconfía del "a mí me funcionó".</strong> Incluida tu propia experiencia. La memoria selecciona éxitos, olvida fracasos y no observa contrafactuales. La experiencia profesional es una fuente legítima de evidencia, pero es una entre cuatro, no la única.</p>
+<p><strong>Recomendación</strong>: siempre hazte preguntas del tipo "¿cómo sé que esto es verdadero?" y/o "¿cómo sabemos que funcionará?". No para desconfiar de todo o para discutir innecesariamente, sino porque las organizaciones donde esa pregunta es normal toman mejores decisiones que aquellas donde incomoda.</p>
+
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol>
+<li>Explicar qué es la gestión basada en evidencia y cuáles son sus cuatro fuentes de evidencia.</li>
+<li>Distinguir teoría de no-teoría (listas, diagramas, citas de autoridad) usando los criterios de Sutton y Staw (1995).</li>
+<li>Ordenar afirmaciones gerenciales según la jerarquía de evidencia y justificar por qué un metaanálisis pesa más que un caso de éxito.</li>
+<li>Explicar, con el ejemplo de Bloom et al. (2013), por qué la asignación aleatoria permite usar lenguaje causal y una correlación no.</li>
+<li>Analizar críticamente una afirmación popular de management ("el dinero no motiva", "la lluvia de ideas funciona") contrastándola con la evidencia citada.</li>
+</ol>
+
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Bloom, N., Eifert, B., Mahajan, A., McKenzie, D., &amp; Roberts, J. (2013). Does management matter? Evidence from India. <em>The Quarterly Journal of Economics, 128</em>(1), 1–51. <a href="https://doi.org/10.1093/qje/qjs044">https://doi.org/10.1093/qje/qjs044</a></p>
+<p>Bloom, N., Genakos, C., Sadun, R., &amp; Van Reenen, J. (2012). Management practices across firms and countries. <em>Academy of Management Perspectives, 26</em>(1), 12–33. <a href="https://doi.org/10.5465/amp.2011.0077">https://doi.org/10.5465/amp.2011.0077</a></p>
+<p>Cerasoli, C. P., Nicklin, J. M., &amp; Ford, M. T. (2014). Intrinsic motivation and extrinsic incentives jointly predict performance: A 40-year meta-analysis. <em>Psychological Bulletin, 140</em>(4), 980–1008.</p>
+<p>Judge, T. A., Thoresen, C. J., Bono, J. E., &amp; Patton, G. K. (2001). The job satisfaction–job performance relationship: A qualitative and quantitative review. <em>Psychological Bulletin, 127</em>(3), 376–407.</p>
+<p>Locke, E. A., &amp; Latham, G. P. (2002). Building a practically useful theory of goal setting and task motivation: A 35-year odyssey. <em>American Psychologist, 57</em>(9), 705–717.</p>
+<p>Mullen, B., Johnson, C., &amp; Salas, E. (1991). Productivity loss in brainstorming groups: A meta-analytic integration. <em>Basic and Applied Social Psychology, 12</em>(1), 3–23. <a href="https://doi.org/10.1207/s15324834basp1201_1">https://doi.org/10.1207/s15324834basp1201_1</a></p>
+<p>Rousseau, D. M. (2006). Is there such a thing as "evidence-based management"? <em>Academy of Management Review, 31</em>(2), 256–269.</p>
+<p>Rynes, S. L., Colbert, A. E., &amp; Brown, K. G. (2002). HR professionals' beliefs about effective human resource practices: Correspondence between research and practice. <em>Human Resource Management, 41</em>(2), 149–174. <a href="https://doi.org/10.1002/hrm.10029">https://doi.org/10.1002/hrm.10029</a></p>
+<p>Sutton, R. I., &amp; Staw, B. M. (1995). What theory is not. <em>Administrative Science Quarterly, 40</em>(3), 371–384. <a href="https://doi.org/10.2307/2393788">https://doi.org/10.2307/2393788</a></p>
+</div>
+
+<h3>Para profundizar</h3>
+<ul>
+<li>Rousseau, D. M. (Ed.). (2012). <em>The Oxford handbook of evidence-based management</em>. Oxford University Press. El tratamiento más completo del enfoque, capítulo a capítulo.</li>
+<li>Bloom et al. (2013), el paper completo: sorprendentemente legible, y las fotos de las plantas antes y después valen solas la visita.</li>
+</ul>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

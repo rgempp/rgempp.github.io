@@ -1,0 +1,110 @@
+---
+title: "Personas y Equipos"
+subtitle: "Ingeniería Comercial · FAE, Universidad Diego Portales · 2-2026"
+---
+
+::: callout-important
+## Página oficial del curso
+
+Todo el material oficial del curso (programa, lecturas obligatorias, actividades evaluadas, avisos) está disponible en la página del curso en Canvas. <!-- TODO: agregar URL de Canvas cuando esté creada la página del curso -->
+:::
+
+## Descripción
+
+Las organizaciones se conforman por personas que trabajan coordinadamente para la consecución de objetivos. Como futuro gerente, el eje de tu labor será definir metas, organizar tareas, motivar e influir sobre otras personas para conseguir que esa coordinación se logre en forma saludable: maximizar el desempeño y cuidar el bienestar de personas, equipos y organizaciones.
+
+Este curso profundiza en las teorías, los modelos y la evidencia empírica disponible sobre el comportamiento de las personas, los equipos y las organizaciones en contextos laborales, con el propósito de contribuir a mejorar el desempeño, las actitudes y la calidad de vida laboral de los trabajadores. El curso adopta el modelo de administración basada en evidencia: cada tema parte de la pregunta "¿qué dice la investigación acumulada?" y, cuando corresponde, desmonta algún mito gerencial en el camino.
+
+Es el segundo curso de la línea de administración del Plan 9 y el primero del área de gestión del capital humano (código ICO09224, 6 créditos, IV nivel).
+
+**Profesor**: [René Gempp](https://www.gempp.cl) ([rene.gempp\@udp.cl](mailto:rene.gempp@mail.udp.cl)) **Secciones**: 02 (lunes y miércoles, 13:00 a 14:20 hrs) y 03 (lunes y miércoles, 14:30 a 15:50 hrs) **Ayudantía**: viernes, 11:30 a 12:50 hrs, semana por medio **Texto guía**: Robbins & Judge, *Comportamiento Organizacional* (cualquier edición reciente, en inglés o castellano)
+
+## Resultados de Aprendizaje
+
+Al aprobar el curso, los estudiantes serán capaces de:
+
+- Explicar el desempeño de personas y equipos en una situación dada, a través de modelos y conceptos contemporáneos de comportamiento organizacional.
+- Escoger, frente a diferentes alternativas de acción propuestas en un caso, aquellas que, según la evidencia, maximizan las actitudes positivas, la motivación, el desempeño y la calidad de vida laboral de los trabajadores.
+- Proponer, frente a una situación dada, mecanismos conductuales para gestionar actitudes, motivación, comunicación y conflicto, con el propósito de mejorar el desempeño y la calidad de vida laboral.
+- Reconocer en sí mismos características personales que constituyan fortalezas y debilidades laborales.
+- Colaborar en equipo para realizar exitosamente actividades evaluativas durante el curso.
+- Argumentar utilizando adecuadamente conceptos, teorías y modelos de comportamiento organizacional.
+
+## Calendario de Clases
+
+*Este calendario es tentativo y puede estar sujeto a cambios en caso de imprevistos.*
+
+| Clase | Fecha | Contenido | Lecturas y material complementario\* |
+|:------------:|:-------------|:-------------|:-------------------------------|
+| **Ciclo 1** |  | **Introducción, actitudes y motivación** |  |
+| 1 | lun 10-08 | Introducción al curso: ¿qué es el CO y por qué le importa a un ingeniero comercial? | Programa del curso |
+| 2 | mié 12-08 | El uso de la teoría y la investigación en CO | [Apunte 1: Gestión basada en evidencia y mitos gerenciales](apunte_clase02_evidencia_y_mitos.html) |
+| 3 | lun 17-08 | Variables claves del CO: actitudes | R&J cap. 3 |
+| 4 | mié 19-08 | Variables claves del CO: desempeño y bienestar (CEAL-SM/SUSESO) | R&J cap. 3 |
+| 5 | lun 24-08 | Motivación 1: teorías clásicas y sus debilidades | R&J caps. 7 y 8 |
+| 6 | mié 26-08 | Motivación 2: teoría de la autodeterminación | R&J caps. 7 y 8 |
+| 7 | lun 31-08 | Motivación 3: equidad, expectativas y metas | R&J caps. 7 y 8 |
+| 8 | mié 02-09 | Motivación 4: justicia organizacional | R&J caps. 7 y 8 |
+| 9 | lun 07-09 | Motivación 5: diseño del trabajo y job crafting | R&J caps. 7 y 8 |
+| 10 | mié 09-09 | Motivación 6: integración y cierre del ciclo 1 |  |
+|  | 14 al 19-09 | *Receso de Fiestas Patrias (no hay clases)* |  |
+|  | 22 al 28-09 | *Semana de Prueba Ciclo 1* |  |
+| **Ciclo 2** |  | **Emociones, diversidad y diferencias individuales** |  |
+| 11 | mié 30-09 | Emociones en el trabajo 1: procesos afectivos | R&J cap. 4 |
+| 12 | lun 05-10 | Emociones en el trabajo 2: contagio y trabajo emocional | R&J cap. 4 |
+| 13 | mié 07-10 | Gestión de la diversidad 1: qué es y por qué nos importa | R&J caps. 2 y 5 |
+|  | lun 12-10 | *Feriado (no hay clases)* |  |
+| 14 | mié 14-10 | Muestra de Prueba 1 |  |
+| 15 | lun 19-10 | Gestión de la diversidad 2: categorización y elaboración | R&J caps. 2 y 5 |
+| 16 | mié 21-10 | Diferencias individuales 1: habilidades cognitivas y conocimiento | R&J caps. 2 y 5 |
+| 17 | lun 26-10 | Diferencias individuales 2: personalidad | R&J caps. 2 y 5 |
+| 18 | mié 28-10 | Diferencias individuales 3: autoevaluaciones esenciales y valores | R&J caps. 2 y 5 |
+| 19 | lun 02-11 | Diferencias individuales 4: mitos y pseudociencia de la evaluación de personas | R&J caps. 2 y 5 |
+| 20 | mié 04-11 | Diferencias individuales 5: integración y cierre del ciclo 2 |  |
+|  | 09 al 13-11 | *Semana de Prueba Ciclo 2* |  |
+| **Ciclo 3** |  | **Equipos y liderazgo** |  |
+| 21 | lun 16-11 | Equipos 1: de grupos a equipos | R&J caps. 9 y 10 |
+| 22 | mié 18-11 | Equipos 2: dinámicas, beneficios y peligros | R&J caps. 9 y 10 |
+| 23 | lun 23-11 | Equipos 3: seguridad psicológica | R&J caps. 9 y 10 |
+| 24 | mié 25-11 | Muestra de Prueba 2 |  |
+| 25 | lun 30-11 | Liderazgo 1: ¿los líderes nacen, se hacen o emergen? | R&J caps. 12 y 13 |
+| 26 | mié 02-12 | Liderazgo 2: conductas y liderazgo transformacional | R&J caps. 12 y 13 |
+| 27 | lun 07-12 | Liderazgo 3: el lado oscuro | R&J caps. 12 y 13 |
+| 28 | mié 09-12 | Liderazgo 4: integración y cierre del curso |  |
+|  | jue 10-12 | *Inicio del período de exámenes (evaluación final integrativa)* |  |
+
+\* El texto guía y las lecturas obligatorias de cada ciclo se detallan en el programa oficial (Canvas). En esta columna se agregan los apuntes complementarios de la sección a medida que se publican; son notas de clases y material de profundización que no reemplaza las clases ni las lecturas obligatorias.
+
+**Ayudantías** (viernes, semana por medio): 28-08, 11-09, 09-10, 23-10, 06-11 y 27-11.
+
+## Evaluación
+
+| Componente | Cuándo | Formato | Peso |
+|:----------------------|:---------------:|:----------------|:---------------:|
+| Prueba individual, fin de ciclo 1 | 22 al 28-09 | Individual, presencial | 20% |
+| Prueba individual, fin de ciclo 2 | 09 al 13-11 | Individual, presencial | 20% |
+| Actividades evaluadas en ayudantía | Continuo | Individual (se borra la nota más baja) | 30% |
+| Evaluación final integrativa (portafolio) | Desde el 10-12 | Individual, presencial | 30% |
+
+Las pruebas de fin de ciclo y la evaluación final son comunes a todas las secciones del curso y evalúan todos los contenidos del ciclo respectivo: clases, lecturas, ayudantías, foros y ejercicios. La nota de presentación a examen es 3.5.
+
+## Política de Uso de Inteligencia Artificial (IA)
+
+Salvo indicación explícita del profesor para alguna actividad específica, todas las actividades evaluadas de esta asignatura operan en **Nivel 1 (uso no autorizado)** según las Orientaciones sobre el uso de Sistemas de Inteligencia Artificial de la Facultad. El uso inapropiado de IA en evaluaciones puede ser objeto de sanciones y denuncia al Comité de Ética. Fuera de las evaluaciones, aprender a usar bien estas herramientas es parte de tu formación profesional.
+
+## Comunicación
+
+Para dudas puntuales, escribe a [rene.gempp\@mail.udp.cl](mailto:rene.gempp@mail.udp.cl) desde tu correo institucional, con asunto **PERSONAS Y EQUIPOS SECCIÓN 0X** (indicando tu sección). Horario de recepción de correos: lunes a viernes, 9:00 a 18:30 hrs. Atención presencial: oficina 612 (edificio Cubo), idealmente coordinada por correo.
+
+## Bibliografía
+
+### Texto guía
+
+- Robbins, S. & Judge, T. A. *Organizational Behavior* (ediciones recientes en inglés). Pearson.
+- Robbins, S. & Judge, T. A. *Comportamiento Organizacional* (ediciones recientes en castellano). Pearson.
+
+Puedes usar cualquier edición disponible en biblioteca, verificando que el tema del capítulo (no solo el número) corresponda al tema visto en clases. El texto guía es el contenido mínimo obligatorio y no sustituye el contenido de clases y ayudantías.
+
+### Lecturas obligatorias adicionales
+
+Durante el semestre se subirá material adicional obligatorio a Canvas (casos, videos, lecturas). Los apuntes complementarios de esta página son material de profundización de la sección.

@@ -4,26 +4,44 @@ title: "Courses"
 
 Teaching is one of the most rewarding aspects of my academic work. My approach emphasizes data-driven decision-making and the critical evaluation of empirical evidence in organizational contexts.
 
-## Current Courses (Fall 2026)
+## Spring 2026
 
-### [Analítica de Personas [People Analytics]](teaching/people-analytics/)
+### [Personas y Equipos \[Organizational Behavior\]](teaching/pye/)
+
+**Program**: Ingeniería Comercial (undergraduate) · FAE, Universidad Diego Portales
+
+Introductory course covering core topics in human behavior within organizations: personality, emotions, motivation, diversity, group dynamics, and leadership.
+
+## Fall 2026
+
+### [Analítica de Personas \[People Analytics\]](teaching/people-analytics/)
+
 **Program**: Magíster en Gestión de Personas · FAE, Universidad Diego Portales
 
 A case-based graduate course that introduces the use of R for solving applied problems in people analytics. Students work through real-world organizational cases, learning to frame HR questions as data problems and to communicate evidence-based recommendations to stakeholders.
 
 ## Regular Courses
 
-### Personas y Equipos [Organizational Behavior]
+### Personas y Equipos \[Organizational Behavior\]
+
 **Program**: Ingeniería Comercial (undergraduate) · FAE, Universidad Diego Portales
 
 Introductory course covering core topics in human behavior within organizations: personality, emotions, motivation, diversity, group dynamics, and leadership.
 
+### Analítica de Personas \[People Analytics\]
+
+**Program**: Magíster en Gestión de Personas · FAE, Universidad Diego Portales
+
+A case-based graduate course that introduces the use of R for solving applied problems in people analytics. Students work through real-world organizational cases, learning to frame HR questions as data problems and to communicate evidence-based recommendations to stakeholders.
+
 ### Organizational Diagnosis
+
 **Program**: Magíster en Dirección de Personas & Magíster en Control de Gestión · FAE, Universidad Diego Portales
 
 Graduate course that prepares students to design and conduct rigorous organizational diagnoses. Students work with real-world cases applying theoretical frameworks and organizational analysis tools.
 
 ### Motivation & Incentives
+
 **Program**: Magíster en Control de Gestión · FAE, Universidad Diego Portales
 
 Graduate course exploring models of intrinsic and extrinsic motivation, applied to the design of incentive systems in organizations.

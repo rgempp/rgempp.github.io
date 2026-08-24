@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El desempeño: conductas, no resultados · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 2</p>
+  <h1>El desempeño: conductas, no resultados (y sus cuatro dimensiones)</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario a la Clase 3 (lunes 17-08-2026) · Complementa y actualiza R&amp;J cap. 3 (y anticipa el cap. 17)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a> · Facultad de Economía y Empresa, Universidad Diego Portales<br><a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>"Desempeño" es una de las palabras que más vas a escuchar en tu vida profesional pero habitualmente es definida de manera incorrecta. El manual del curso la usa por todas partes, pero dedica poco espacio a la pregunta previa: ¿qué es exactamente el desempeño? Como vimos en clases, la respuesta técnica tiene consecuencias: el desempeño son conductas, no resultados; es multidimensional (se puede brillar en una cara y fallar en otra); y no es un rasgo fijo de las personas, sino algo que varía con el tiempo y con las condiciones.</p>
+<p>Este apunte sintetiza esos conceptos, que en clases presentamos con la ayuda de Homero Simpson, y agrega la evidencia que la clase no alcanzó a detallar: cómo sabemos que las dimensiones del desempeño son realmente distintas, cuánto pesa cada una cuando un jefe pone la nota, y qué mueve el desempeño de verdad.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>El <strong>desempeño laboral</strong> es el conjunto de conductas de una persona que son relevantes para los objetivos de la organización (Campbell, 1990). La palabra clave es conductas: cosas que la persona hace y que están bajo su control. Los resultados (la venta cerrada, la utilidad del trimestre) dependen del desempeño, además de otros factores que la persona no controla: mercado, precios, territorio, suerte. Evaluar personas por resultados que no controlan es complejo, porque hay un componente de azar. En cambio, definir el desempeño como conducta es lo que permite observarlo, retroalimentarlo y desarrollarlo (Campbell & Wiernik, 2015).</p>
+<p>El desempeño además tiene caras distintas: el de <strong>tarea</strong> (el núcleo técnico del puesto), el <strong>contextual</strong> o de ciudadanía (ayudar, cooperar, proponer: lo que sostiene el ambiente), el <strong>adaptativo</strong> (ajustarse a cambios) y el <strong>contraproductivo o contraproducente</strong> (conductas que dañan: atrasos, incivilidad, robo). La evidencia muestra que cada tipo de desempeño contribuye por separado a la evaluación global, que se predicen por factores distintos, y que cuando un jefe pone una nota general, las conductas contraproducentes pesan tanto como el trabajo técnico bien hecho (Motowidlo & Van Scotter, 1994; Rotundo & Sackett, 2002).</p>
+<p>¿Y qué mueve el desempeño? La evidencia causal más fuerte del curso apunta a la gestión: en el experimento de India, mejorar las prácticas de gestión redujo los defectos de calidad en 43% (Bloom et al., 2013). En cambio, las actitudes se asocian de forma moderada (r ≈ .30 de desempeño con satisfacción laboral; Judge et al., 2001). Y el cumplimiento de horas sólo por cumplir (que en Chile suelen llamarse, en tono burlón, de una manera que acá prefiero sustuir por "horas silla"), no es desempeño: el total de horas asistidas es un insumo, distinción que Chile está poniendo a prueba a escala nacional con la Ley de 40 horas.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Desempeño: conductas relevantes y bajo control</h3>
+<p>La definición técnica: el desempeño son las <strong>conductas</strong> de una persona que son relevantes para los objetivos de la organización (Campbell, 1990); en términos de valor, el valor total esperado de esas conductas en un período de tiempo (Motowidlo & Kell, 2013). Dos condiciones importan. Relevantes: no toda conducta en el trabajo es desempeño; contar chistes buenos no lo es (salvo que seas comediante). Bajo control de la persona: si el resultado dependió del tipo de cambio o de que el cliente no hubiera peleado con su esposa, esa parte del resultado no refleja desempeño.</p>
+<h3>Desempeño, resultados y productividad: tres cosas distintas</h3>
+<p>El <strong>desempeño</strong> son conductas (visitar clientes, preparar bien la propuesta, cooperar con el equipo). Los <strong>resultados</strong> (<em>effectiveness</em>) son los estados del mundo que esas conductas buscan producir (la venta, la utilidad), y dependen del desempeño más factores externos. La <strong>productividad</strong> es un ratio: resultados por unidad de insumo (ventas por hora, unidades por trabajador). La cadena es desempeño → resultados → productividad, con contaminación externa en cada eslabón (Campbell & Wiernik, 2015). Un vendedor con conductas impecables puede tener malos resultados en un mal territorio; una planta puede subir su productividad comprando una máquina, sin que nadie haya rendido más. Cada palabra responde una pregunta distinta, y las tres se confunden a diario en las reuniones de gestión.</p>
+<h3>Las cuatro caras del desempeño</h3>
+<table><tr><th>Cara</th><th>Qué incluye</th><th>Ejemplos</th></tr><tr><td><strong>De tarea</strong> (<em>task performance</em>)</td><td>El núcleo técnico del puesto: qué tan bien se hacen las tareas centrales</td><td>Calidad y cantidad de trabajo, precisión, conocimiento actualizado, resolución de problemas</td></tr><tr><td><strong>Contextual / ciudadanía</strong> (<em>contextual performance, OCB</em>)</td><td>Conductas que sostienen el entorno social y organizacional en que ocurre el trabajo técnico</td><td>Ayudar a otros, cooperar, proponer mejoras, esfuerzo extra, representar bien a la organización</td></tr><tr><td><strong>Adaptativo</strong> (<em>adaptive performance</em>)</td><td>Ajustarse con eficacia a cambios en el trabajo o sus condiciones</td><td>Aprender tecnologías y roles nuevos, manejar crisis e incertidumbre, adaptarse a otras culturas y personas</td></tr><tr><td><strong>Contraproductiva/Contraproducente</strong> (<em>counterproductive work behavior, CWB</em>)</td><td>Conductas voluntarias que dañan a la organización o a sus miembros</td><td>Ausentismo y atrasos evitables, desidia, incivilidad, ocultar información, robo, sabotaje</td></tr></table>
+<p>El desempeño de tarea viene de la tradición clásica; el contextual fue bautizado por la investigación sobre ciudadanía organizacional (Organ, 1988); el adaptativo se formalizó cuando el cambio tecnológico lo volvió urgente, con una taxonomía de ocho dimensiones (Pulakos et al., 2000); y el contraproductivo/contraproducente tiene su propia tipología, desde las faltas menores hasta la agresión (Robinson & Bennett, 1995). Una misma persona puede ser excelente en un ámbito y débil en otro: por eso "buen trabajador", sin apellido, es una descripción incompleta.</p>
+<h3>¿El desempeño es un rasgo de la persona?</h3>
+<p>No. El desempeño es conducta situada: varía entre personas, pero también dentro de la misma persona a lo largo del tiempo (semanas buenas y malas, curvas de aprendizaje, fatiga) y entre condiciones (con buen equipo y buenas herramientas, la misma persona rinde distinto). Esto implica que el desempeño no solo se selecciona; se produce. La evidencia experimental que viste en la clase 1 va exactamente en esa línea: cambiar las prácticas de gestión cambió el desempeño de las mismas plantas, con la misma gente (Bloom et al., 2013).</p>
+<h2>D. Qué dice la evidencia</h2>
+<p><strong>Las caras son realmente distintas (y se predicen por cosas distintas).</strong> En un estudio clásico con 421 mecánicos de la Fuerza Aérea estadounidense, el desempeño de tarea y el contextual contribuyeron por separado a la evaluación global de los supervisores: cada uno aportaba información propia, no redundante. Y sus antecedentes eran distintos: la experiencia predecía mejor el desempeño de tarea, mientras que la personalidad predecía mejor el contextual (Motowidlo & Van Scotter, 1994). La moraleja gerencial: si solo evalúas lo técnico, estás midiendo la mitad de lo que tus propios jefes consideran importante.</p>
+<p><strong>Cuando el jefe pone la nota global, lo contraproducente pesa tanto como lo técnico.</strong> Rotundo y Sackett (2002) pidieron a gerentes evaluar perfiles hipotéticos de trabajadores que variaban en desempeño de tarea, ciudadanía y conductas contraproducentes (un diseño de captura de políticas: permite estimar cuánto pesa cada dimensión en el juicio). Resultado: las conductas contraproducentes pesaron tanto como el desempeño de tarea en la nota global, y más que la ciudadanía. En la práctica: una persona técnicamente brillante con conductas dañinas no es "un crack con mal genio"; para el evaluador promedio, es un mal desempeño.</p>
+<p><strong>Lo adaptativo tiene estructura propia.</strong> La taxonomía de Pulakos et al. (2000), construida a partir de miles de incidentes críticos reales, identificó ocho dimensiones del desempeño adaptativo: manejar emergencias y crisis, manejar el estrés, resolver problemas creativamente, lidiar con situaciones inciertas, aprender tareas y tecnologías nuevas, y adaptarse interpersonal, cultural y físicamente. Si esa lista te suena a "lo que piden todos los avisos de trabajo desde la pandemia", es exactamente por eso: el mundo del trabajo se volvió un generador de situaciones nuevas, y la capacidad de ajuste pasó de deseable a central.</p>
+<p><strong>Qué mueve el desempeño (y qué no).</strong> Primero: la gestión. Ya vimos el experimento de India que obtuvo 43% menos defectos y 17% más productividad mejorando prácticas concretas de gestión (Bloom et al., 2013), y el diagnóstico del World Management Survey según el cual la brecha chilena está precisamente en la gestión de personas (2.67 sobre 5, contra 3.14 en monitoreo; Bloom et al., 2012). Segundo, las actitudes se asocian de forma moderada pero consistente con el desempeño (r ≈ .30; Judge et al., 2001), y la actitud general predice mejor el desempeño general que cualquier conducta aislada (Harrison et al., 2006). Tercero, las horas no son la variable: el desempeño son conductas, las horas son un insumo, y la reducción chilena de jornada (45 a 40 horas entre 2024 y 2028, Ley 21.561) es una apuesta pública a que la producción no depende linealmente de las "horas silla".</p>
+<p><strong>Qué está en debate.</strong> Aunque hemos hablado de cuatro ámbitos o caras del desempeño, la estructura del desempeño no es un tema totalmente cerrado y sigue en discusión, especialmente cuántas dimensiones deben incluirse y cómo se relacionan la ciudadanía organizacional con la conducta contraproducente (si son realmente dimensiones distintas o polos opuestos de una misma dimensión). La medición es el otro frente: las evaluaciones hechas por la jefatura, el indicador más usado, mezclan el desempeño real con sesgos del evaluador; ese problema (y cómo mitigarlo) será tema de otra clase.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el desempeño de alguien son sus resultados: sus ventas, sus cifras, su cumplimiento de metas.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el desempeño se define como conductas bajo control de la persona; los resultados dependen además de factores externos (mercado, territorio, azar). La distinción no es pedantería académica: es la diferencia entre evaluar lo que la persona hizo y evaluar la suerte que tuvo (Campbell, 1990; Campbell & Wiernik, 2015).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> los resultados son visibles y contables, las conductas hay que observarlas. Medir lo fácil siempre tienta más que medir lo correcto.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> quien es excelente en lo técnico es un buen trabajador, punto.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el desempeño tiene al menos cuatro caras que aportan información independiente (Motowidlo & Van Scotter, 1994), y en el juicio global de los jefes las conductas contraproducentes pesan tanto como la excelencia técnica (Rotundo & Sackett, 2002). El "crack tóxico" no es un buen trabajador con un defecto: es un perfil de desempeño mixto, con una cara en rojo.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> lo técnico es lo más visible y lo más fácil de defender en un comité. Y las organizaciones toleran conductas dañinas de sus estrellas técnicas hasta que el costo se hace insoportable (el turno de ese tema llega con liderazgo y equipos).</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> más horas trabajadas es más desempeño: el que se queda hasta tarde es el que más rinde.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las horas son un insumo, el desempeño son conductas y la productividad es resultado por hora: tres cosas distintas. Quedarse hasta tarde puede reflejar carga mal diseñada, ineficiencia o presentismo, no mejores conductas. La Ley 21.561 chilena apuesta exactamente a esa distinción: producir lo mismo o más con menos horas.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> las horas se ven desde el escritorio del jefe y las conductas hay que ir a mirarlas. Premiar la silla ocupada es la métrica del supervisor que no observa el trabajo.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el desempeño es un rasgo: hay gente buena y gente mala trabajando, y eso no cambia.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el desempeño varía dentro de la misma persona en el tiempo y entre condiciones, y responde causalmente a la gestión: en el experimento de India, las mismas plantas con la misma gente redujeron sus defectos 43% cuando mejoraron las prácticas (Bloom et al., 2013). Las diferencias individuales existen y importan (lo verás en el ciclo 2), pero el desempeño también se produce con diseño, herramientas y dirección.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> atribuir el desempeño a la persona (y no a las condiciones) es el error de atribución más cómodo para la gestión: si el problema es la gente, la solución es cambiarla; si el problema es el diseño, la solución es trabajo propio.</p></div>
+<h2>F. Qué significa para un ingeniero comercial</h2>
+<p><strong>Define conductas antes de evaluar.</strong> Antes de opinar sobre el desempeño de alguien, pregúntate qué conductas concretas esperabas y cuáles observaste. "No está comprometido" no es una observación; "no entregó tres informes a tiempo y no avisó" sí. Este hábito, además, es el prerrequisito del feedback útil.</p>
+<p><strong>Evalúa las cuatro caras del desempeño por separado.</strong> Una nota global esconde perfiles opuestos: el técnico brillante que envenena al equipo y el colaborador promedio que sostiene a todos. Pregunta por tarea, ciudadanía, adaptación y conductas dañinas como dimensiones distintas, porque lo son.</p>
+<p><strong>No premies ni castigues azar.</strong> Si el resultado dependió del territorio, del mercado o de la lotería de clientes, corrígelo antes de evaluar: compara contra pares en condiciones similares, mira la conducta y no solo el número. Evaluar resultados brutos es injusto hacia abajo y regala mérito hacia arriba.</p>
+<p><strong>Tómate en serio lo contraproducente.</strong> La evidencia dice que pesa tanto como lo técnico en el juicio global y que a menudo se tolera demasiado tiempo antes de actuar. Las conductas dañinas menores (incivilidad, ocultar información, "cahuineo", etc) son el mejor predictor disponible de problemas mayores, y gestionarlas temprano es siempre más eficiente.</p>
+<p><strong>Cuando quieras mover el desempeño, mira primero las condiciones.</strong> La palanca con evidencia causal es la gestión: metas claras, monitoreo con sentido, incentivos bien diseñados, herramientas, capacitación. Antes de concluir que "la gente no da", pregunta qué estás haciendo tú con el diseño del trabajo.</p>
+<p><strong>Recomendación</strong>: cada vez que escuches una afirmación sobre el desempeño de alguien, hazte las preguntas del curso: "¿estamos hablando de conductas o de resultados?", "¿de qué cara del desempeño?". La idea es evitar conversaciones de pasillo y formarse un juicio claro sobre el desempeño.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Definir desempeño como conducta y distinguirlo de resultados y productividad, con ejemplos donde las tres divergen.</li><li>Describir las cuatro dimensiones del desempeño con ejemplos, e identificarlas en viñetas o casos (como en la actividad de la clase 3).</li><li>Explicar, con Motowidlo y Van Scotter (1994) y Rotundo y Sackett (2002), por qué las dimensiones aportan información independiente y cuánto pesa cada una en la evaluación global.</li><li>Argumentar por qué el desempeño no es un rasgo fijo, usando la evidencia experimental de Bloom et al. (2013) y la distinción horas-insumo versus conductas.</li><li>Analizar críticamente una práctica de evaluación (por ejemplo, evaluar solo por cumplimiento de metas) usando los conceptos del apunte.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Bloom, N., Eifert, B., Mahajan, A., McKenzie, D., & Roberts, J. (2013). Does management matter? Evidence from India. <em>The Quarterly Journal of Economics, 128</em>(1), 1–51. https://doi.org/10.1093/qje/qjs044</p>
+<p>Bloom, N., Genakos, C., Sadun, R., & Van Reenen, J. (2012). Management practices across firms and countries. <em>Academy of Management Perspectives, 26</em>(1), 12–33. https://doi.org/10.5465/amp.2011.0077</p>
+<p>Campbell, J. P. (1990). Modeling the performance prediction problem in industrial and organizational psychology. En M. D. Dunnette & L. M. Hough (Eds.), <em>Handbook of industrial and organizational psychology</em> (2.ª ed., Vol. 1, pp. 687–732). Consulting Psychologists Press.</p>
+<p>Campbell, J. P., & Wiernik, B. M. (2015). The modeling and assessment of work performance. <em>Annual Review of Organizational Psychology and Organizational Behavior, 2</em>, 47–74. https://doi.org/10.1146/annurev-orgpsych-032414-111427</p>
+<p>Harrison, D. A., Newman, D. A., & Roth, P. L. (2006). How important are job attitudes? Meta-analytic comparisons of integrative behavioral outcomes and time sequences. <em>Academy of Management Journal, 49</em>(2), 305–325.</p>
+<p>Judge, T. A., Thoresen, C. J., Bono, J. E., & Patton, G. K. (2001). The job satisfaction–job performance relationship: A qualitative and quantitative review. <em>Psychological Bulletin, 127</em>(3), 376–407.</p>
+<p>Ley 21.561. (2023). Modifica el Código del Trabajo con el objeto de reducir la jornada laboral. Diario Oficial de la República de Chile.</p>
+<p>Motowidlo, S. J., & Kell, H. J. (2013). Job performance. En N. W. Schmitt & S. Highhouse (Eds.), <em>Handbook of psychology: Vol. 12. Industrial and organizational psychology</em> (2.ª ed., pp. 82–103). Wiley.</p>
+<p>Motowidlo, S. J., & Van Scotter, J. R. (1994). Evidence that task performance should be distinguished from contextual performance. <em>Journal of Applied Psychology, 79</em>(4), 475–480.</p>
+<p>Organ, D. W. (1988). <em>Organizational citizenship behavior: The good soldier syndrome</em>. Lexington Books.</p>
+<p>Pulakos, E. D., Arad, S., Donovan, M. A., & Plamondon, K. E. (2000). Adaptability in the workplace: Development of a taxonomy of adaptive performance. <em>Journal of Applied Psychology, 85</em>(4), 612–624.</p>
+<p>Robinson, S. L., & Bennett, R. J. (1995). A typology of deviant workplace behaviors: A multidimensional scaling study. <em>Academy of Management Journal, 38</em>(2), 555–572.</p>
+<p>Rotundo, M., & Sackett, P. R. (2002). The relative importance of task, citizenship, and counterproductive performance to global ratings of job performance: A policy-capturing approach. <em>Journal of Applied Psychology, 87</em>(1), 66–80.</p>
+</div>
+<h3>Para profundizar</h3>
+<ul><li>Campbell y Wiernik (2015): la revisión de referencia sobre qué es y cómo se modela el desempeño; el mapa completo del que este apunte es un resumen.</li><li>Rotundo y Sackett (2002): corto, elegante y con un diseño (captura de políticas) que vale la pena conocer por sí mismo.</li><li>Pulakos et al. (2000): la taxonomía del desempeño adaptativo; útil para pensar descripciones de cargo modernas.</li></ul>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

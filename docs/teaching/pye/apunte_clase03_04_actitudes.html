@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actitudes laborales: qué son, cómo se miden y por qué importan · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  /* Componentes del apunte 10 */
+  .abc{display:flex; gap:.7rem; flex-wrap:wrap; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .abc div{flex:1 1 10rem; background:var(--gris-claro); border-radius:.5rem;
+    padding: .8rem .9rem; font-size:.9rem; line-height:1.5}
+  .abc b{color:var(--rojo); display:block; margin-bottom:.25rem}
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 3</p>
+  <h1>Actitudes laborales: qué son, cómo se miden y por qué importan</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario a las Clases 3 y 4 (lunes 17-08 y miércoles 19-08-2026) · Complementa y actualiza R&amp;J cap. 3<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a> · Facultad de Economía y Empresa, Universidad Diego Portales<br><a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>En el capítulo 3 del manual se abordan la satisfacción laboral y el compromiso organizacional como tipos de actitud laboral. Sin embargo, hay cuestiones que, como dije en clases, me parece necesario enfatizar. Primero, que el significado de la palabra "actitud" en comportamiento organizacional es distinto de lo que significa en las conversaciones cotidianas, y esa confusión suele acarrear problemas en las empresas. Segundo, el manual no explica cómo se miden las actitudes en la práctica, pese a que medirlas es una de las actividades rutinarias de muchas organizaciones. De hecho, es probable que respondas tu primera encuesta de clima antes de cumplir un mes en tu primer trabajo. Por último, hay tantos "tipos" de actitud laboral (satisfacción, compromiso, involucramiento, engagement, apoyo percibido, identificación...) que conviene saber de dónde salió cada uno de esos conceptos y hasta qué punto son distintos o similares.</p>
+<p>Este breve apunte se basa, en el material de las clases 3 y 4 y dos revisiones de referencia más recientes del área: la revisión del centenario del <em>Journal of Applied Psychology</em> (Judge et al., 2017) y la revisión sobre actitudes y conducta del <em>Annual Review of Organizational Psychology and Organizational Behavior</em> (Kammeyer-Mueller et al., 2024).</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>Una <strong>actitud</strong> es una evaluación: un juicio favorable o desfavorable hacia algo. Las <strong>actitudes laborales</strong> son esas evaluaciones cuando el objeto es el trabajo, el jefe, el equipo o la organización. No son "energía" ni "disposición al esfuerzo", como sugiere el uso cotidiano de la palabra, ni mucho menos "aura" (para usar la terminología que se ha puesto de moda estas últimas semanas); son juicios internos, no observables, que se miden con encuestas, y medirlas es una práctica organizacional masiva: las encuestas de pulso mensuales o semanales son hoy ubicuas en las empresas (Kammeyer-Mueller et al., 2024). Entonces, recuérdenlo: una actitud es una predisposición evaluativa (y no se puede "farmear"). </p>
+<p>Existen muchos tipos de actitud laboral, cada uno con su autor fundacional y su década de moda. Sin embargo la evidencia muestra que se superponen de manera notable. Por ejemplo, corrigiendo el error de medición, la satisfacción laboral y el compromiso organizacional correlacionan .91, es decir, son casi indistinguibles empíricamente (Le et al., 2010). Por eso conviene pensar menos en el nombre del constructo y más en la pregunta que responde (juicio evaluativo respecto a la organización).</p>
+<p>¿Y por qué importan? Porque predicen conducta, con reglas conocidas: las actitudes generales predicen bien conjuntos amplios de conductas, las actitudes específicas predicen bien conductas específicas, y las intenciones son el mejor antecedente inmediato de la acción (Harrison et al., 2006; Kammeyer-Mueller et al., 2024). La intención de renunciar predice la renuncia real mejor que el sueldo, las alternativas de mercado o el estrés (Rubenstein et al., 2018). Y en contextos específicos hay incluso evidencia causal: en los call centers de British Telecom, semanas más felices produjeron más ventas (Bellet et al., 2024).</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Actitud: el concepto técnico en CO</h3>
+<p>En comportamiento organizacional, una <strong>actitud</strong> (<em>attitude</em>) es una predisposición <strong>evaluativa</strong>: un juicio favorable o desfavorable hacia un objeto, que puede ser una cosa, una persona, una idea o una situación (Judge et al., 2017). Se describe con tres componentes que se refuerzan entre sí: el <strong>cognitivo</strong> (lo que pienso o creo: "mi jefe es injusto"), el <strong>afectivo</strong> (lo que siento: "mi jefe me da rabia") y la <strong>disposición conductual</strong> (lo que me dan ganas de hacer: "quiero cambiarme de trabajo"). Nota la palabra "disposición": el tercer componente es una intención, no la conducta misma.</p>
+<div class="abc">
+<div><b>Cognitivo</b>lo que pienso: "mi jefe es injusto"</div>
+<div><b>Afectivo</b>lo que siento: "mi jefe me da rabia"</div>
+<div><b>Disposición conductual</b>lo que me dan ganas de hacer: "quiero cambiarme de trabajo"</div>
+</div>
+<p>En el lenguaje cotidiano, en cambio, "actitud" suele significar energía, empuje o buena disposición ("ponle más actitud", "llegó con mala actitud"). Esa acepción no es la misma que usamos en CO, y confundirlas tiene costos: cuando un jefe dice que alguien "tiene mala actitud", casi siempre está describiendo conductas (atrasos, desgano, malas respuestas) y no el juicio interno de la persona. De hecho, no podemos "ver" la actitud de una persona; lo que observamos es su conducta. El diagnóstico correcto exige separar qué HACE la persona (desempeño, observable) de qué PIENSA Y SIENTE de su trabajo (actitud, hay que medirla) y de cómo LO PASA (bienestar, también hay que medirlo).</p>
+<h3>Actitudes laborales</h3>
+<p>Las <strong>actitudes laborales</strong> (<em>job attitudes</em>) son "evaluaciones del propio trabajo que expresan sentimientos, creencias y apego hacia él" (Judge & Kammeyer-Mueller, 2012). Es el mismo concepto general de actitud, con el objeto fijado en el mundo del trabajo: el puesto, las tareas, el jefe, los compañeros, la organización completa o la propia carrera. Como cualquier actitud, se expresan en un continuo favorable-desfavorable, se aprenden con la experiencia y tienden a ser estables una vez formadas.</p>
+<h3>El principio de compatibilidad: cuándo las actitudes predicen conducta</h3>
+<p>El estudio clásico de LaPiere (1934) mostró por qué es difícil predecir la conducta a partir de la actitud: recorrió Estados Unidos con una pareja china y fue atendido en 250 de 251 establecimientos; seis meses después, el 92% de esos mismos establecimientos respondió por carta que "no aceptaría" clientes chinos. Decir no es hacer. La solución moderna se llama <strong>principio de compatibilidad</strong>: las actitudes predicen conducta cuando ambas se miden en el mismo nivel de especificidad. Las actitudes generales (como la satisfacción global) predicen bien los agregados amplios de conducta, y las actitudes específicas predicen bien las conductas específicas correspondientes; el eslabón más próximo a la acción son las intenciones (Kammeyer-Mueller et al., 2024). Por eso la satisfacción general predice modestamente una conducta aislada cualquiera, pero predice bien el paquete completo de contribuciones de una persona, y por eso la intención de renunciar es el mejor predictor individual de la renuncia.</p>
+<h3>Cómo se miden (y por qué la técnica importa)</h3>
+<p>Las actitudes se miden por <strong>autoinforme</strong>: la persona indica su grado de acuerdo con afirmaciones (ítems), típicamente en escalas graduadas de 5 o 7 puntos en formato Likert (items con formato bipolar, propuesto por Rensis Likert, donde cada item plantea una afirmación hacia el objeto de actitud y las alternativas de respuesta están graduadas entre "Totalmente en Desacuerdo" hasta "Totalmente de Acuerdo") o alguna escala equivalente. Hay dos estrategias complementarias: la medición <strong>global</strong> ("en general, ¿qué tan satisfecho estás con tu trabajo?"), simple y sorprendentemente confiable incluso con un solo ítem bien construido (Ock, 2020), y la medición <strong>por facetas</strong> (satisfacción con el sueldo, el jefe, las tareas, las oportunidades), más larga pero más diagnóstica: dice dónde está el problema, no solo cuánto. Como vimos con ejemplos empíricos en clases, es habitual que la medición global correlacione bastante alto con el un índice construido como el promedio de las facetas.</p>
+<p>La calidad del instrumento no es un detalle académico. Un ítem que pregunta dos cosas a la vez ("las asignaturas son interesantes y los profesores enseñan bien") produce datos ininterpretables, como comprobamos con nuestra propia encuesta del curso. Y las condiciones de aplicación importan tanto como los ítems: el anonimato real es la diferencia entre medir actitudes y medir miedo.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>Los tipos de actitud laboral y su genealogía</h3>
+<p>La investigación fue acuñando constructos actitudinales a medida que cambiaban las preguntas de cada época. Esta tabla resume los principales, con su referencia fundacional y el período en que cada uno estuvo de moda:</p>
+<table><tr><th>Constructo</th><th>Qué evalúa</th><th>Referencia fundacional</th><th>Época de auge</th></tr><tr><td><strong>Satisfacción laboral</strong> (<em>job satisfaction</em>)</td><td>Evaluación global (o por facetas) del propio trabajo</td><td>Hoppock (1935); definición canónica en Locke (1976)</td><td>Desde los años 30; nunca ha pasado de moda: es la actitud más estudiada del campo</td></tr><tr><td><strong>Involucramiento en el trabajo</strong> (<em>job involvement</em>)</td><td>Cuán central es el trabajo para la identidad y autoestima de la persona</td><td>Lodahl y Kejner (1965)</td><td>Años 60 y 70</td></tr><tr><td><strong>Compromiso organizacional</strong> (<em>organizational commitment</em>)</td><td>El lazo psicológico con la organización: apego, lealtad, intención de permanecer</td><td>Porter et al. (1974); modelo de tres componentes en Meyer y Allen (1991)</td><td>Años 80 y 90</td></tr><tr><td><strong>Apoyo organizacional percibido</strong> (<em>perceived organizational support</em>)</td><td>El juicio de cuánto la organización valora mi aporte y se preocupa por mi bienestar</td><td>Eisenberger et al. (1986)</td><td>Años 90 y 2000</td></tr><tr><td><strong>Identificación organizacional</strong> (<em>organizational identification</em>)</td><td>Cuánto la pertenencia a la organización define quién soy ("nosotros" en vez de "ellos")</td><td>Ashforth y Mael (1989)</td><td>Años 90 hasta hoy</td></tr><tr><td><strong>Engagement</strong> (<em>work engagement</em>)</td><td>Estado positivo de energía (vigor), dedicación y absorción en el trabajo</td><td>Kahn (1990); escala de referencia en Schaufeli et al. (2002)</td><td>Años 2000 hasta hoy: la estrella del marketing de consultoría</td></tr><tr><td><strong>Intención de renunciar</strong> (<em>turnover intention</em>)</td><td>Pensamientos y planes de dejar la organización</td><td>Mobley (1977)</td><td>Transversal a todas las épocas; pieza central de los modelos de rotación</td></tr></table>
+<h3>...y al final, todas muy parecidas</h3>
+<p>Los nombres sugieren siete cosas distintas. Los datos muestran otra cosa: estas actitudes correlacionan tan fuerte entre sí que en buena parte miden lo mismo con etiquetas diferentes (Woznyj et al., 2022). El dato más citado es contundente: corrigiendo por confiabilidad, la correlación entre satisfacción laboral y compromiso organizacional es .91 (Le et al., 2010); en la práctica, casi la misma variable. De hecho Harrison et al. (2006) propusieron desenfatizar la importancia de los "tipos" específicos de actitud y admitir que  existe una <strong>actitud laboral general</strong>, es decir, una "evaluación fundamental de la propia experiencia de trabajo", de la cual los constructos específicos representan variaciones o matices.</p>
+<p>Esto tiene consecuencias prácticas. Cuando un consultor propone medir "el engagement" de tu empresa como si fuera algo distinto de la satisfacción que ya mides, la pregunta correcta es psicométrica: ¿qué agrega este constructo sobre los que ya tenemos? A veces la respuesta es "algo" (el engagement enfatiza la energía; el apoyo percibido enfatiza la reciprocidad); aunque muchas veces la respuesta honesta es "el nombre".</p>
+<h3>Por qué las actitudes son un resultado que importa</h3>
+<p>Primero, porque son masivamente medidas y gestionadas: las organizaciones invierten millones en evaluarlas y en programas para mejorarlas, y las encuestas de pulso frecuentes son ya la norma (Kammeyer-Mueller et al., 2024). Segundo, y más importante, porque predicen cosas que a cualquier administrador le importan o le deberían importar:</p>
+<table><tr><th>Relación</th><th>Magnitud</th><th>Fuente</th></tr><tr><td>Satisfacción laboral y desempeño individual</td><td>r ≈ .30: moderada, replicada por décadas</td><td>Judge et al. (2001)</td></tr><tr><td>Actitud general y el paquete completo de contribuciones (desempeño, ciudadanía, asistencia, permanencia, combinados)</td><td>Sustancialmente mayor que con cualquier conducta aislada: la actitud general predice el agregado</td><td>Harrison et al. (2006)</td></tr><tr><td>Satisfacción y compromiso con la renuncia real</td><td>ρ ≈ .28 y .29; el sueldo, en contraste, ρ ≈ .17</td><td>Rubenstein et al. (2018)</td></tr><tr><td>Intención de renunciar y renuncia real</td><td>ρ ≈ .56: el mejor predictor individual conocido</td><td>Rubenstein et al. (2018)</td></tr><tr><td>Actitudes de la unidad y resultados de negocio (clientes, productividad, utilidades, rotación, accidentes)</td><td>ρ entre .17 y .38 a nivel de unidades: real, modesta, generalizable</td><td>Harter et al. (2002)</td></tr><tr><td>Felicidad semanal y ventas (evidencia causal en call centers)</td><td>Un punto más de felicidad (escala 0 a 10) produjo alrededor de 12% más de productividad en ventas</td><td>Bellet et al. (2024)</td></tr></table>
+<figure class="figura">
+<svg viewBox="0 0 640 240" role="img" aria-label="Magnitud de las asociaciones de las actitudes con distintos resultados" style="width:100%;height:auto">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <g font-size="12.5" fill="#1F2937">
+    <text x="0" y="26">Intención de renunciar → renuncia real</text>
+    <text x="0" y="72">Actitudes de la unidad → desempeño compuesto</text>
+    <text x="0" y="118">Satisfacción → desempeño individual</text>
+    <text x="0" y="164">Satisfacción → renuncia real</text>
+    <text x="0" y="210">Sueldo → satisfacción laboral</text>
+  </g>
+  <g>
+    <rect x="0" y="32" width="493" height="16" rx="3" fill="#C8102E"/>
+    <rect x="0" y="78" width="334" height="16" rx="3" fill="#475569"/>
+    <rect x="0" y="124" width="264" height="16" rx="3" fill="#475569"/>
+    <rect x="0" y="170" width="246" height="16" rx="3" fill="#475569"/>
+    <rect x="0" y="216" width="132" height="16" rx="3" fill="#9CA3AF"/>
+  </g>
+  <g font-size="12.5" font-weight="700" fill="#1F2937">
+    <text x="501" y="45">.56</text>
+    <text x="342" y="91">.38</text>
+    <text x="272" y="137">.30</text>
+    <text x="254" y="183">.28</text>
+    <text x="140" y="229">.15</text>
+  </g>
+</svg>
+<figcaption>Fuerza de las asociaciones (correlaciones, en valor absoluto). Elaborado a partir de Rubenstein et al. (2018), Harter et al. (2002), Judge et al. (2001) y Judge et al. (2010). El sueldo se incluye como contraste: pesa menos que las actitudes en los resultados que la intuición gerencial le atribuye.</figcaption>
+</figure>
+<p>Hay cuando menos dos cuestiones importantes a tener en cuenta mirando estos datos. Lo primero: la verdad es que ninguna de estas correlaciones es gigante, y la evidencia longitudinal sugiere que el efecto promedio de las actitudes sobre el desempeño posterior es pequeño (Riketta, 2008). En otras palabras: las actitudes mueven la aguja pero no hacen magia. Sin embargo, las actitudes son de las agujas más baratas de mover que existen, se miden rápidamente en apenas unos minutos, y el estudio de Bellet et al. (2024) muestra que al menos en tareas de interacción con clientes el efecto es causal, no solo correlacional.</p>
+<p>Falta el mapa de conductas. Cuando la insatisfacción se instala, las personas responden por cuatro vías, ordenadas en dos dimensiones (activo-pasivo, constructivo-destructivo): <strong>salida</strong> (renunciar o buscar otro trabajo), <strong>voz</strong> (intentar mejorar las cosas), <strong>lealtad</strong> (esperar con confianza a que mejore) y <strong>negligencia</strong> (dejar que la calidad del propio trabajo caiga) (Farrell, 1983, sobre el marco de Hirschman, 1970). Para la gestión, la voz es la respuesta valiosa: es la única que entrega información. La "renuncia silenciosa" que se discute hoy en redes es, en este modelo, negligencia con otro nombre.</p>
+<p>Recordemos el ejemplo de clases. En nuestra encuesta de satisfacción con la carrera (46 respuestas anónimas), la media del ítem global fue 6.33 sobre 7, con 26 personas en el máximo: una distribución pegada al techo. Pero el ítem "elegiría la misma carrera de nuevo" mostró lo que el promedio esconde: media parecida (5.87) con una cola real de respuestas en el mínimo. Y el ítem de pertenencia a la comunidad resultó el más bajo y el más disperso del set: satisfacción con la carrera no es lo mismo que sentirse parte. En un país donde la rotación del empleo formal ronda el 30% anual (INE, 2024), aprender a leer estas distribuciones no es un ejercicio académico: es la alerta temprana más barata que existe.</p>
+<h3>Qué está en debate</h3>
+<p>La dirección causal sigue siendo la pregunta difícil: los diseños de panel sugieren que la vía "actitud hoy, desempeño mañana" existe pero es débil en promedio (Riketta, 2008), y la evidencia causal fuerte es de contextos específicos (Bellet et al., 2024). La redundancia entre constructos está documentada, pero no resuelta: el campo sigue publicando actitudes "nuevas". Y la agenda más activa hoy mira la dinámica temporal: las actitudes cambian dentro de la semana e incluso del día, y esas fluctuaciones también predicen conducta (Kammeyer-Mueller et al., 2024).</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> "actitud" es sinónimo de energía o disposición al esfuerzo, y que la mala actitud se corrige pidiendo "más compromiso".</p><p><span class="etiqueta ev">La evidencia muestra que...</span> en CO la actitud es una evaluación (favorable o desfavorable) hacia un objeto, con componentes cognitivo, afectivo y de intención (Judge et al., 2017). Lo que el lenguaje gerencial llama "mala actitud" suele ser conducta observable, y lo que llama "falta de compromiso" suele ser una actitud desfavorable que tiene causas medibles en las condiciones del trabajo.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> el uso cotidiano de la palabra es más antiguo y más intuitivo que el técnico, y atribuir el problema a la "actitud" de la persona es más cómodo que revisar las condiciones que la organización controla.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el engagement es un constructo revolucionario, distinto de la vieja satisfacción laboral.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las actitudes laborales se superponen de manera masiva: satisfacción y compromiso corregidos correlacionan .91 (Le et al., 2010) y las revisiones meta-analíticas documentan solapamientos similares en toda la familia (Woznyj et al., 2022). El engagement aporta un énfasis (la energía) pero comparte la mayor parte de su varianza con las actitudes clásicas.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> los constructos nuevos venden servicios nuevos. Un nombre fresco permite ofrecer otra medición, otro informe y otra intervención sobre lo que en buena parte ya se estaba midiendo.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> las encuestas de actitudes no sirven porque la gente no contesta la verdad.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los autoinformes tienen sesgos conocidos y aun así, agregados y bien medidos, predicen conducta real: las actitudes autoinformadas predicen renuncias efectivas (Rubenstein et al., 2018) y las actitudes de las unidades predicen sus resultados de negocio (Harter et al., 2002). LaPiere (1934) no enseñó que medir sea inútil; enseñó las condiciones para medir bien: anonimato, especificidad y compatibilidad entre lo que se pregunta y lo que se quiere predecir.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> todos hemos contestado encuestas con desconfianza (o con un jefe mirando), y esa experiencia se generaliza. La conclusión correcta era "así no se mide", no "no se puede medir".</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el sueldo es lo que más pesa en las actitudes hacia el trabajo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el nivel de sueldo correlaciona apenas .15 con la satisfacción laboral (Judge et al., 2010) y .17 con la renuncia real, menos que las actitudes y que el estrés (Rubenstein et al., 2018). El sueldo importa para aceptar un trabajo y como piso de justicia; una vez dentro, la experiencia diaria pesa más.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> el sueldo es visible, contable y negociable; la calidad del trabajo diario no. Y quien paga tiende a sobreestimar lo que compra.</p></div>
+<h2>F. Qué significa para un ingeniero comercial</h2>
+<p><strong>Traduce "actitud" antes de actuar.</strong> Cuando escuches "tiene mala actitud", pregunta qué conductas concretas se observaron y qué evaluación interna se está suponiendo. La mitad de los problemas de gestión de personas se diagnostican mal por mezclar esas dos cosas.</p>
+<p><strong>Aprende a leer una encuesta de clima, aunque no trabajes en RRHH.</strong> Vas a responder encuestas y recibir resultados de encuestas toda tu carrera profesional. Las tres preguntas que aprendimos con nuestros propios datos aplican siempre: ¿cuál es la media?, ¿cómo es la distribución (la media esconde colas)?, ¿qué ítems están mal construidos? Un promedio alto con un 10% de gente en el mínimo no es una buena noticia: es un grupo en riesgo que el dashboard no muestra.</p>
+<p><strong>Compra constructos, no nombres.</strong> Antes de pagar por medir "engagement", "experiencia del colaborador" o la etiqueta que esté de moda, pide la evidencia de qué agrega sobre la satisfacción y el compromiso que probablemente ya mides. La redundancia documentada entre actitudes (Le et al., 2010; Woznyj et al., 2022) es tu mejor argumento de negociación con proveedores.</p>
+<p><strong>Usa el principio de compatibilidad.</strong> Si quieres predecir una conducta específica (que la gente se quede, que use el nuevo sistema, que refiera candidatos), mide la actitud y la intención específicas hacia esa conducta, no solo el clima general. Y si quieres predecir la contribución global de las personas, la actitud general es exactamente la herramienta correcta (Harrison et al., 2006).</p>
+<p><strong>Gestiona para la voz.</strong> De las cuatro respuestas a la insatisfacción, tres (salida, lealtad silenciosa, negligencia) te dejan sin información. La única ventana es la voz, y la voz solo aparece donde no se castiga. Si en tu equipo nadie reclama nunca, no tienes un equipo satisfecho: tienes un canal cerrado.</p>
+<p><strong>Recomendación</strong>: cuando veas un resultado de actitudes (el de tu empresa o el de una consultora), hazte siempre las preguntas del curso: "¿cómo sé que esto es verdadero?", "¿qué se midió exactamente y con qué calidad?", "¿esta evidencia permite el verbo que están usando?". Las actitudes se asocian con casi todo lo que importa; convertir esa asociación en decisiones sensatas exige exactamente el tipo de lectura crítica que estamos entrenando.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Definir actitud en el sentido técnico del CO (componentes y objeto) y distinguirla del uso cotidiano de la palabra, con ejemplos.</li><li>Explicar cómo se miden las actitudes laborales (autoinforme, global versus facetas, calidad de ítems, anonimato) y por qué la medición es una práctica organizacional habitual.</li><li>Nombrar al menos cinco tipos de actitud laboral con su idea central y su período de auge, y explicar el problema de la redundancia entre constructos usando el dato de Le et al. (2010).</li><li>Argumentar, con al menos tres magnitudes de la tabla de evidencia, por qué las actitudes son una variable de resultado importante, usando lenguaje causal solo donde corresponde.</li><li>Aplicar el principio de compatibilidad y el modelo salida-voz-lealtad-negligencia al análisis de un caso de insatisfacción laboral.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Ashforth, B. E., & Mael, F. (1989). Social identity theory and the organization. <em>Academy of Management Review, 14</em>(1), 20–39.</p>
+<p>Bellet, C. S., De Neve, J.-E., & Ward, G. (2024). Does employee happiness have an impact on productivity? <em>Management Science, 70</em>(3), 1656–1679. https://doi.org/10.1287/mnsc.2023.4766</p>
+<p>Eisenberger, R., Huntington, R., Hutchison, S., & Sowa, D. (1986). Perceived organizational support. <em>Journal of Applied Psychology, 71</em>(3), 500–507.</p>
+<p>Farrell, D. (1983). Exit, voice, loyalty, and neglect as responses to job dissatisfaction: A multidimensional scaling study. <em>Academy of Management Journal, 26</em>(4), 596–607.</p>
+<p>Harrison, D. A., Newman, D. A., & Roth, P. L. (2006). How important are job attitudes? Meta-analytic comparisons of integrative behavioral outcomes and time sequences. <em>Academy of Management Journal, 49</em>(2), 305–325.</p>
+<p>Harter, J. K., Schmidt, F. L., & Hayes, T. L. (2002). Business-unit-level relationship between employee satisfaction, employee engagement, and business outcomes: A meta-analysis. <em>Journal of Applied Psychology, 87</em>(2), 268–279.</p>
+<p>Hirschman, A. O. (1970). <em>Exit, voice, and loyalty: Responses to decline in firms, organizations, and states</em>. Harvard University Press.</p>
+<p>Hoppock, R. (1935). <em>Job satisfaction</em>. Harper.</p>
+<p>Instituto Nacional de Estadísticas. (2024). <em>Tasa de Rotación Laboral, junio 2024</em> (Registros administrativos, SUSESO). INE, Chile.</p>
+<p>Judge, T. A., & Kammeyer-Mueller, J. D. (2012). Job attitudes. <em>Annual Review of Psychology, 63</em>, 341–367. https://doi.org/10.1146/annurev-psych-120710-100511</p>
+<p>Judge, T. A., Piccolo, R. F., Podsakoff, N. P., Shaw, J. C., & Rich, B. L. (2010). The relationship between pay and job satisfaction: A meta-analysis of the literature. <em>Journal of Vocational Behavior, 77</em>(2), 157–167.</p>
+<p>Judge, T. A., Thoresen, C. J., Bono, J. E., & Patton, G. K. (2001). The job satisfaction–job performance relationship: A qualitative and quantitative review. <em>Psychological Bulletin, 127</em>(3), 376–407.</p>
+<p>Judge, T. A., Weiss, H. M., Kammeyer-Mueller, J. D., & Hulin, C. L. (2017). Job attitudes, job satisfaction, and job affect: A century of continuity and of change. <em>Journal of Applied Psychology, 102</em>(3), 356–374.</p>
+<p>Kahn, W. A. (1990). Psychological conditions of personal engagement and disengagement at work. <em>Academy of Management Journal, 33</em>(4), 692–724.</p>
+<p>Kammeyer-Mueller, J. D., Rubenstein, A. L., & Barnes, T. S. (2024). The role of attitudes in work behavior. <em>Annual Review of Organizational Psychology and Organizational Behavior, 11</em>, 221–250. https://doi.org/10.1146/annurev-orgpsych-101022-101333</p>
+<p>LaPiere, R. T. (1934). Attitudes vs. actions. <em>Social Forces, 13</em>(2), 230–237. https://doi.org/10.2307/2570339</p>
+<p>Le, H., Schmidt, F. L., Harter, J. K., & Lauver, K. J. (2010). The problem of empirical redundancy of constructs in organizational research: An empirical investigation. <em>Organizational Behavior and Human Decision Processes, 112</em>(2), 112–125.</p>
+<p>Locke, E. A. (1976). The nature and causes of job satisfaction. En M. D. Dunnette (Ed.), <em>Handbook of industrial and organizational psychology</em> (pp. 1297–1349). Rand McNally.</p>
+<p>Lodahl, T. M., & Kejner, M. (1965). The definition and measurement of job involvement. <em>Journal of Applied Psychology, 49</em>(1), 24–33.</p>
+<p>Meyer, J. P., & Allen, N. J. (1991). A three-component conceptualization of organizational commitment. <em>Human Resource Management Review, 1</em>(1), 61–89.</p>
+<p>Mobley, W. H. (1977). Intermediate linkages in the relationship between job satisfaction and employee turnover. <em>Journal of Applied Psychology, 62</em>(2), 237–240.</p>
+<p>Ock, J. (2020). How satisfied are you with your job? Estimating the reliability of scores on a single-item job satisfaction measure. <em>International Journal of Selection and Assessment, 28</em>(3), 297–309. https://doi.org/10.1111/ijsa.12285</p>
+<p>Porter, L. W., Steers, R. M., Mowday, R. T., & Boulian, P. V. (1974). Organizational commitment, job satisfaction, and turnover among psychiatric technicians. <em>Journal of Applied Psychology, 59</em>(5), 603–609.</p>
+<p>Riketta, M. (2008). The causal relation between job attitudes and performance: A meta-analysis of panel studies. <em>Journal of Applied Psychology, 93</em>(2), 472–481.</p>
+<p>Rubenstein, A. L., Eberly, M. B., Lee, T. W., & Mitchell, T. R. (2018). Surveying the forest: A meta-analysis, moderator investigation, and future-oriented discussion of the antecedents of voluntary employee turnover. <em>Personnel Psychology, 71</em>(1), 23–65. https://doi.org/10.1111/peps.12226</p>
+<p>Schaufeli, W. B., Salanova, M., González-Romá, V., & Bakker, A. B. (2002). The measurement of engagement and burnout: A two sample confirmatory factor analytic approach. <em>Journal of Happiness Studies, 3</em>(1), 71–92.</p>
+<p>Woznyj, H. M., Banks, G. C., Whelpley, C. E., Batchelor, J. H., & Bosco, F. A. (2022). Job attitudes: A meta-analytic review and an agenda for future research. <em>Journal of Organizational Behavior, 43</em>(5), 946–964. https://doi.org/10.1002/job.2598</p>
+</div>
+<h3>Para profundizar</h3>
+<ul><li>Judge et al. (2017): cien años de investigación sobre actitudes laborales contados por sus protagonistas; la mejor panorámica histórica disponible.</li><li>Kammeyer-Mueller et al. (2024): la revisión más actual del vínculo actitud-conducta, con una tabla de implicancias prácticas directamente aprovechable para gestión.</li><li>Woznyj et al. (2022): el metaanálisis de la redundancia; útil como vacuna permanente contra el marketing de constructos.</li></ul>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bienestar laboral en Chile: el CEAL-SM/SUSESO · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 4</p>
+  <h1>Bienestar laboral en Chile: el CEAL-SM/SUSESO y la vigilancia de riesgos psicosociales</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario a la Clase 4 (miércoles 19-08-2026) · Complementa y actualiza R&amp;J cap. 3 (y anticipa el cap. 18)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a> · Facultad de Economía y Empresa, Universidad Diego Portales<br><a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>El manual del curso trata el estrés laboral como un tema entre muchos, con evidencia mayormente norteamericana. Pero si vas a trabajar en Chile hay cuestiones específicas de la realidad local que cubrimos en este apunte. Desde mi punto de vista (otras personas podrían discrepar) la idea clave es que acá, en Chile, el bienestar no es un tema que estudiemos por curiosidad o por altruismo: desde 2023, evaluar los riesgos psicosociales del trabajo es una obligación legal para casi cualquier organización, con un instrumento oficial (el CEAL-SM/SUSESO) que vas a encontrar sí o sí en tu vida profesional, seas o no del área de personas. Lo anterior, poque desde 2019 la OMS reconoce el burnout como un fenómeno ocupacional. Y luego de décadas intentado prevenir el malestar y hoy también se ha comenzado a estudiar qué construye bienestar, porque la salud es más que no estar enfermo. De hecho, en Chile hay varios investigadores trabajando en este último enfoque,</p>
+<p>Este apunte queda alineado con la clase 4 y profundiza en qué mide exactamente el CEAL-SM, de dónde viene, cómo se aplica y qué obliga a hacer.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>El <strong>bienestar laboral</strong> es la tercera variable de resultado del curso, junto al desempeño y las actitudes: cómo lo pasa la gente trabajando, en el sentido amplio de salud física, mental y social. Su cara negativa incluye el estrés y el burnout; sus causas organizacionales se llaman <strong>riesgos psicosociales</strong>: condiciones del trabajo (carga, control, apoyo, trato, inseguridad) que pueden dañar la salud. Nota que cuando hablamos de "condiciones del trabajo" estamos enfatizando que los riesgos psicosociales no son atributos de las personas sino del cómo está diseñado el trabajo. Como consecuencia, para promover el bienestar y/o prevenir el malestar lo correcto es gestionar las condiciones del trabajo (cambiándolas, rediseñándolas) en lugar de dar consejos de relajación.</p>
+<p>Se estimar que el 67% de las enfermedades profesionales diagnosticadas en Chile durante 2022 fue de salud mental (en mujeres, el 77%), lo que representa un incremento importante desde el 52% de 2021 (SUSESO, 2023). Para afrontar este problema en Chile existe un Protocolo de Vigilancia del Ministerio de Salud que obliga a medir los riesgos psicosociales cada dos años, con un cuestionario oficial, el <strong>CEAL-SM/SUSESO</strong>, en toda organización con 10 o más personas. El resultado clasifica a las organizaciones en un nivel de riesgo que, en caso de ser alto, obliga a la organización a intervenir con acciones remediales, con participación de los propios trabajadores.</p>
+<p>Algo que también dije en clases y que puede ayudar a entender la aproximación que damos al tema: prevenir el malestar te lleva hasta el cero; construir bienestar es lo que produce mejoras, "la salud es un estado de completo bienestar físico, mental y social, y no solamente la ausencia de afecciones o enfermedades" (Constitución de la OMS, 1946).</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Bienestar laboral: más que no estar enfermo</h3>
+<p>El <strong>bienestar laboral</strong> (<em>employee well-being</em>) abarca la salud física, mental y social de las personas en su trabajo. La definición de salud de la OMS citada arriba tiene casi 80 años y sigue siendo importante; la salud es más que la ausencia de enfermedad. En la investigación sobre el área esto se tradujo en dos agendas de trabajo. La más tradicional, se ha concentrado en estudiando el malestar (<em>ill-being</em>): estrés, burnout, síntomas, accidentes riesgos, y cómo prevenirlos. La más reciente, impulsada por el giro de la psicología hacia lo positivo (Seligman & Csikszentmihalyi, 2000), estudia el bienestar propiamente tal: energía y compromiso genuinos, sentido del trabajo, desarrollo, buenos vínculos. Cuando estudiemos motivación veremos que las necesidades psicológicas de autonomía, competencia y relación sirven de puente entre ambas tradiciones.</p>
+<h3>Estrés y burnout: no son lo mismo, y ninguno es "flojera"</h3>
+<p>El <strong>estrés laboral</strong> es la respuesta del organismo cuando las demandas del trabajo exceden los recursos de la persona para enfrentarlas; sostenido en el tiempo, enferma. El <strong>burnout</strong> (estar fundido, quemado) es un síndrome específico, resultado del estrés laboral crónico mal gestionado, con tres componentes: agotamiento (la energía se acaba), distancia mental o cinismo hacia el propio trabajo, y sensación de eficacia reducida (Maslach et al., 2001). Desde 2019 la OMS lo incluye en la CIE-11 como <strong>fenómeno ocupacional</strong>: no es una enfermedad en sí, pero es un problema legítimo asociado al empleo, con esas tres dimensiones definidas (OMS, 2019). Esa distinción es importante porque a veces se usa el término burnout para describir un estado de agotamiento pero el burnout propiamente tal es un cuadro serio, ligado al trabajo, que no se arregla durmiendo un fin de semana.</p>
+<h3>Riesgos psicosociales: condiciones, no personas</h3>
+<p>Los <strong>riesgos psicosociales</strong> son características de la organización del trabajo (la carga y su distribución, el control que tienes sobre tu tarea, el apoyo de jefaturas y pares, el reconocimiento, la seguridad de las condiciones, el trato, entre otras) que pueden dañar la salud de quienes trabajan. La idea central viene de dos modelos clásicos que más adelante conoceremos un poco más, junto con sus desarrollos recientes: el modelo de <strong>demanda-control</strong> (Karasek, 1979), que mostró que el mayor riesgo se produce cuando se combinan de alta exigencia con poco control sobre el propio trabajo, y el modelo <strong>esfuerzo-recompensa</strong> (Siegrist, 1996), que pone el foco en el desbalance entre lo que se entrega (esfuerzo, compromiso, etc) y lo que se recibe (sueldo, estima, seguridad, etc). El CEAL-SM hereda esta tradición: es descendiente del cuestionario danés COPSOQ, construido justamente para medir estas condiciones.</p>
+<h3>Vigilancia: por qué la ley obliga a medir</h3>
+<p><strong>Vigilar</strong> un riesgo significa medirlo periódicamente, con un instrumento estandarizado, y actuar según el resultado. El Protocolo chileno aplica al riesgo psicosocial la misma lógica que ya se aplicaba al ruido o a los químicos: si una condición del trabajo puede enfermar, el empleador tiene el deber legal de evaluarla y controlarla (el marco es el seguro de la Ley 16.744). Acá hay una sutileza importante: lo que se vigila son las condiciones del centro de trabajo, no la salud mental de los individuos. Por eso el cuestionario es anónimo, se analiza por centro de trabajo y no sirve (ni puede usarse) para diagnosticar o evaluar personas.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>El problema</h3>
+<p>Las enfermedades profesionales de salud mental son hoy el problema número uno de la salud laboral chilena. Con datos del sistema de la Ley 16.744, la SUSESO reportó que en 2022 el 67% de los diagnósticos de enfermedad profesional correspondió a salud mental, contra 52% en 2021; en mujeres la cifra llegó al 77% y en hombres al 55% (versus 40% antes de la pandemia). El total de enfermedades profesionales (excluido el COVID-19) subió de 5.325 a 8.700 casos, es decir, de 1.0 a 1.6 por cada mil personas trabajadoras (SUSESO, 2023). A esto se sumas los costos directos e indirectos que ya mencioné en clases: rotación, ausentismo, licencias y accidentes asociados con las condiciones y actitudes del trabajo (Harter et al., 2002). Quiero insistir en que poner focos sobre el bienestar no es filantropía; es gestión de un riesgo con altos costos tanto para los trabajadores como para la propia organización y para el sistema laboral en su conjunto (recuerda lo que hablamos en clases: licencias médicas, costos de reemplazo, etc).</p>
+<h3>El instrumento: desde Copenhague a Chile</h3>
+<p>La historia del CEAL-SM/SUSESO es un buen mini caso de cómo se construye un instrumento serio:</p>
+<table><tr><th>Año</th><th>Hito</th></tr><tr><td>2008</td><td>Se valida en Chile el <strong>SUSESO/ISTAS21</strong>, adaptación chilena del ISTAS21 español, a su vez derivado del cuestionario danés COPSOQ: la medición de riesgos psicosociales llega al país</td></tr><tr><td>2012-2013</td><td>El Ministerio de Salud instala el <strong>Protocolo de Vigilancia de Riesgos Psicosociales</strong> con ese cuestionario como instrumento oficial (renovado en 2017): de cuestionario académico a política pública</td></tr><tr><td>2019-2020</td><td>Se desarrolla y valida el <strong>CEAL-SM</strong>, sobre la base del COPSOQ III: estudio en 5 ciudades chilenas con 1.942 participantes</td></tr><tr><td>2022</td><td>La Circular N° 3709 de SUSESO y el nuevo Protocolo (Resolución 1.448) formalizan la versión vigente</td></tr><tr><td>2023</td><td>Desde el 1 de enero, aplicación <strong>obligatoria</strong> para organizaciones públicas y privadas con 10 o más personas, vía plataforma electrónica de SUSESO, con reevaluación cada 2 años</td></tr></table>
+<p>Algo que me gusta subrayar: los cuestionarios serios se adaptan y se validan con datos locales, no se traducen con diccionario. Cada eslabón de esa cadena (COPSOQ → ISTAS21 → SUSESO/ISTAS21 → CEAL-SM) fue un estudio de validación.</p>
+<h3>Qué mide: las 12 dimensiones</h3>
+<p>El cuestionario tiene una versión única de 88 preguntas, de las cuales 54 miden las 12 dimensiones de riesgo (el resto son antecedentes demográficos y de salud). Las dimensiones, con su idea central:</p>
+<table><tr><th>Dimensión</th><th>Qué evalúa</th></tr><tr><td>Carga de trabajo</td><td>Si las exigencias exceden el tiempo disponible</td></tr><tr><td>Exigencias emocionales</td><td>El desgaste de trabajar con emociones intensas de otras personas</td></tr><tr><td>Desarrollo profesional</td><td>Oportunidades de aprender y aplicar lo que sabes</td></tr><tr><td>Reconocimiento y claridad de rol</td><td>Si el trabajo se valora y se sabe qué se espera de cada quien</td></tr><tr><td>Conflicto de rol</td><td>Exigencias contradictorias o tareas percibidas como innecesarias</td></tr><tr><td>Calidad del liderazgo</td><td>Planificación, resolución de conflictos y apoyo de la jefatura</td></tr><tr><td>Compañerismo</td><td>Apoyo entre pares y sentido de pertenencia al equipo</td></tr><tr><td>Inseguridad en las condiciones de trabajo</td><td>Cambios arbitrarios de tareas, horarios o condiciones</td></tr><tr><td>Equilibrio trabajo y vida privada</td><td>Si el trabajo invade la vida personal más allá de lo razonable</td></tr><tr><td>Confianza y justicia organizacional</td><td>Si la organización es percibida como justa y confiable</td></tr><tr><td>Vulnerabilidad</td><td>Miedo, indefensión o discriminación en el trabajo</td></tr><tr><td>Violencia y acoso</td><td>Exposición a intimidación, acoso u otras conductas no deseadas</td></tr></table>
+<p>Estos son ejemplos de preguntas (ítems textuales del cuestionario; se responden con las alternativas Siempre, A menudo, A veces, Rara vez, Nunca o casi nunca): "¿Con qué frecuencia le falta tiempo para completar sus tareas?" (carga de trabajo); "Su trabajo, ¿es reconocido y valorado por sus superiores?" (reconocimiento); "¿Tiene miedo a pedir mejores condiciones de trabajo?" (vulnerabilidad); "¿Siente que su trabajo le consume demasiada energía, con un efecto negativo en su vida privada?" (equilibrio trabajo-vida); "¿Ha estado expuesta/o a acoso sexual?" (violencia y acoso, últimos 12 meses). Fíjate cómo cada ítem pregunta una sola cosa, sobre condiciones y experiencias concretas, nunca diagnósticos.</p>
+<h3>Cómo se aplica y qué obliga el resultado</h3>
+<p>La aplicación la conduce un <strong>Comité de Aplicación</strong> paritario (entre 4 y 10 integrantes, con representación equivalente de la empresa y de los trabajadores), a través de la plataforma electrónica de SUSESO, con un plazo de respuesta de 30 días por centro de trabajo y una meta de participación de al menos 60% para asegurar representatividad. El anonimato es obligatorio: las unidades de análisis deben tener un mínimo de personas para que nadie sea identificable.</p>
+<p>El puntaje del centro de trabajo se convierte en un nivel de riesgo (los cortes se derivaron de los terciles de los datos de validación), y cada nivel suponen ciertas obligaciones:</p>
+<table><tr><th>Nivel</th><th>Puntaje</th><th>Qué obliga</th></tr><tr><td>Riesgo bajo</td><td>−24 a +1</td><td>Mantener y reforzar los factores protectores; reevaluar en 2 años</td></tr><tr><td>Riesgo medio</td><td>+2 a +12</td><td>Diseñar intervenciones con grupos de discusión participativos</td></tr><tr><td>Riesgo alto</td><td>+13 o más</td><td>Intervención obligatoria sobre las condiciones, con apoyo del organismo administrador del seguro (la mutualidad)</td></tr></table>
+<figure class="figura">
+<svg viewBox="0 0 640 120" role="img" aria-label="Semáforo de niveles de riesgo del CEAL-SM" style="width:100%;height:auto">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <rect x="0" y="30" width="260" height="34" rx="6" fill="#15803D"/>
+  <rect x="266" y="30" width="180" height="34" rx="6" fill="#D97706"/>
+  <rect x="452" y="30" width="188" height="34" rx="6" fill="#C8102E"/>
+  <g font-size="14" font-weight="700" fill="#fff">
+    <text x="14" y="52">RIESGO BAJO</text>
+    <text x="280" y="52">RIESGO MEDIO</text>
+    <text x="466" y="52">RIESGO ALTO</text>
+  </g>
+  <g font-size="12.5" fill="#1F2937">
+    <text x="14" y="86">−24 a +1 puntos</text>
+    <text x="280" y="86">+2 a +12 puntos</text>
+    <text x="466" y="86">+13 puntos o más</text>
+  </g>
+  <g font-size="12" fill="#6B7280">
+    <text x="0" y="18">Puntaje del centro de trabajo → nivel de riesgo → obligación (reevaluación cada 2 años)</text>
+  </g>
+</svg>
+<figcaption>El semáforo del CEAL-SM: el puntaje del centro de trabajo cae en un nivel y cada nivel obliga. Elaborado a partir del Manual del método CEAL-SM/SUSESO.</figcaption>
+</figure>
+<p>Dos observaciones en el espíritu crítico en el que he insistido, majaderamente, en clases. Primero, obseva cómo la lógica de intervención es participativa por diseño (grupos de discusión que analizan causas y proponen cambios organizacionales), lo que la hace completamente distinta del espíritu de "mandar a la gente a un taller de manejo del estrés". Segundo (y acá me pongo el sombrero de psicometrista): el manual del método documenta la validación (5 ciudades, 1.942 casos, estructura de 12 dimensiones) pero no reporta en detalle los coeficientes psicométricos habituales; para uso profesional avanzado conviene ir a las publicaciones técnicas del instrumento. Medir por obligación legal no exime de las preguntas de siempre: ¿qué mide?, ¿qué tan bien lo mide?</p>
+<h3>La agenda positiva: del cero hacia arriba</h3>
+<p>El CEAL-SM representa es la agenda preventiva: detectar y reducir daño para evitar malestar. La agenda complementaria pregunta qué hace que la gente florezca en el trabajo: energía y dedicación genuinas, sentido, desarrollo, relaciones de calidad, autonomía. Aunque esto último no es una obligación legal y más de alguien podría considerarlo una moda "buena onda", la evidencia que vimos en clases muestra que las actitudes y los estados positivos se asocian con resultados objetivos para las organizaciones (demostrado hace dos décadas por Harter et al., 2002) y que, al menos en contextos específicos, el bienestar puede tener efectos positivos sobre el desempeño (por ejemplo, en los call centers de British Telecom, un punto más de felicidad semanal produjo alrededor de 12% más de productividad en ventas; Bellet et al., 2024). En ese sentido, la promoción del bienestar también tiene valor para las organizaciones. Como conversamos en clases, la Ley 21.561, que está reduciendo la jornada chilena de 45 a 40 horas entre 2024 y 2028, se puede vincular a esta misma conversación; algunos opinan que el impacto es negativo para las empresas y otros creen que, en el agregado, el impacto potencial en calidad de vida puede ser bueno para las organizaciones y el país. Como dije en clases no tenemos una respuesta clara; fue una decisiónde de política pública sostenida en la idea de que se puede producir igual trabajando menos horas, con mejor vida, pero tendremos que esperar a ver cuál será el resultado.</p>
+<h3>Qué está en debate</h3>
+<p>Como siempre, estos son temas en desarrollo y hay cuestiones que podrían cambiar de aquí a que ustedes egresen. Creo que lo más importante es que el estatus del burnout sigue en discusión técnica; la CIE-11 lo reconoce como fenómeno ocupacional, no como enfermedad, pero el tema todavía no está cerrado. Para algunos autores no está clara la diferencia entre el burnout y ciertos tipos de depresión. Otro tema relaciones es que tampoco hay consenso absoluto sobre cuál es la mejor manera de medir o diagnosticar el burnout. Otra cuestión espinuda es cómo intervenir. Detectar que existe burnout (medir) no basta, sino que se necesita tomar acciones remediales para reducirlo (intervenir). El problema acá es que la evidencia sobre qué intervenciones organizacionales funcionan mejor es más débil que la evidencia sobre los riesgos, y la calidad de la implementación varía mucho entre empresas. Es tema importante y por eso tenemos destinada una ayudantía y un paper especializado para ese tema (revisa el calendario de ayudantías). Una cuestión relacionada es riesgo del <em>wellness washing</em>: organizaciones que compran apps de meditación, o hacen talleres para abrazar árboles, mientras dejan intactas la carga, el trato y la inseguridad que el CEAL les mostró en rojo. Recuerda lo que venimos diciendo en todas las clases (¡administración basada en evidencia!): ante cualquier programa de bienestar, pregunta qué condición modifica y qué evidencia lo respalda.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el estrés es un problema personal: el que se estresa es porque no aguanta la presión.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los determinantes más potentes del estrés laboral son condiciones del trabajo: la combinación de alta exigencia con bajo control (Karasek, 1979) y el desbalance entre esfuerzo y recompensa (Siegrist, 1996). Por eso la ley chilena obliga a evaluar e intervenir las condiciones organizacionales, no a entrenar la resistencia de las personas.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> atribuir el estrés al individuo es más barato para la organización y calza con la ilusión de que todo depende de la actitud. Además, la variación individual existe (no todos respondemos igual), y esa parte visible tapa la parte estructural.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> burnout es estar muy cansado, y se pasa con vacaciones.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el burnout es un síndrome de tres dimensiones (agotamiento, cinismo, eficacia reducida) producido por estrés laboral crónico mal gestionado (Maslach et al., 2001), reconocido por la OMS en la CIE-11 como fenómeno ocupacional (OMS, 2019). El descanso alivia el agotamiento transitorio; el burnout requiere cambiar las condiciones que lo producen.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> el lenguaje cotidiano usa "burnout" para cualquier fatiga, y las organizaciones prefieren leer el burnout como cansancio individual antes que como señal de diseño del trabajo.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el CEAL es la encuesta de clima de la empresa, y sirve para saber qué jefaturas andan mal.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el CEAL-SM mide condiciones de la organización del trabajo, por centro de trabajo, en forma anónima, y sus resultados obligan a intervenir según el nivel de riesgo. No es una encuesta de satisfacción, no diagnostica personas y no puede usarse para evaluar ni sancionar individuos (SUSESO, 2022).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> ambos son cuestionarios anónimos que se responden en el trabajo, y la tentación gerencial de convertir cualquier dato en ranking de personas es fuerte. Resistirla es parte de usar bien el instrumento (y de cumplir la norma).</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el bienestar laboral se gestiona con fruta, yoga y un día de la felicidad.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la salud es más que la ausencia de enfermedad (OMS, 1946) y el bienestar se juega en las condiciones y recursos del trabajo: carga manejable, control, apoyo, reconocimiento, desarrollo, equilibrio. Los programas periféricos no modifican ninguna de las 12 dimensiones que la evidencia y la norma chilena consideran críticas.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> los programas periféricos son visibles, baratos y fotografiables; rediseñar la carga o mejorar jefaturas es caro y lento. El <em>wellness washing</em> es la versión corporativa de pintar la fachada.</p></div>
+<h2>F. Qué significa para un ingeniero comercial</h2>
+<p><strong>Vas a recibir resultados del CEAL: aprende a leerlos como mapa de condiciones.</strong> El informe te dirá en qué dimensiones y en qué centros de trabajo está el riesgo. La lectura correcta es organizacional ("la carga y el equilibrio trabajo-vida están en rojo en la planta norte"), nunca individual ("qué jefe es el problema" o "qué trabajadores están mal").</p>
+<p><strong>Tómate en serio el proceso participativo.</strong> La norma exige comités paritarios y grupos de discusión, y eso no es burocracia: es la voz de la clase 4 institucionalizada. Los grupos que analizan causas y proponen cambios son tu mejor fuente de información sobre condiciones que ningún dashboard muestra.</p>
+<p><strong>Nunca uses datos de bienestar para evaluar o sancionar personas.</strong> Además de incumplir la norma, destruye lo único que hace funcionar estas mediciones: la confianza. Un CEAL respondido con miedo mide miedo.</p>
+<p><strong>Gestiona las dos agendas.</strong> Reducir el riesgo (lo que la ley exige) y construir recursos (lo que la evidencia recomienda): carga razonable Y desarrollo profesional; cero acoso Y compañerismo. El nivel "riesgo bajo" no es la meta final; es el piso desde donde empieza la agenda positiva.</p>
+<p><strong>Presupuesta la intervención, no solo la medición.</strong> El error típico es gastar en medir y no dejar recursos para intervenir. Si el resultado sale medio o alto, la organización queda obligada a actuar; llegar a esa obligación sin plan ni presupuesto es gestión reactiva de manual.</p>
+<p><strong>Recomendación</strong>: cuando te presenten cualquier iniciativa de bienestar (interna o de un proveedor), hazte las preguntas del curso: "¿qué condición del trabajo modifica esto?", "¿cómo sabemos que funcionará?", "¿qué dimensión del CEAL esperamos mover, y cómo lo vamos a verificar en la próxima medición?". Si la iniciativa no puede responder ninguna de las tres, es fachada.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Definir bienestar laboral y explicar la diferencia entre prevenir el malestar y promover el bienestar, usando la definición de salud de la OMS.</li><li>Distinguir estrés, burnout (con sus tres dimensiones y su estatus en la CIE-11) y riesgos psicosociales, y explicar por qué estos últimos son condiciones y no rasgos personales.</li><li>Describir qué mide el CEAL-SM/SUSESO (dimensiones, tipo de ítems), cómo se aplica (comité paritario, anonimato, centro de trabajo) y qué obliga cada nivel de riesgo.</li><li>Situar el instrumento en su historia (del COPSOQ danés a la obligatoriedad chilena de 2023) y en sus modelos teóricos de origen (demanda-control y esfuerzo-recompensa).</li><li>Analizar críticamente una iniciativa de bienestar organizacional distinguiendo intervención sobre condiciones de <em>wellness washing</em>.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Bellet, C. S., De Neve, J.-E., & Ward, G. (2024). Does employee happiness have an impact on productivity? <em>Management Science, 70</em>(3), 1656–1679. https://doi.org/10.1287/mnsc.2023.4766</p>
+<p>Harter, J. K., Schmidt, F. L., & Hayes, T. L. (2002). Business-unit-level relationship between employee satisfaction, employee engagement, and business outcomes: A meta-analysis. <em>Journal of Applied Psychology, 87</em>(2), 268–279.</p>
+<p>Karasek, R. A. (1979). Job demands, job decision latitude, and mental strain: Implications for job redesign. <em>Administrative Science Quarterly, 24</em>(2), 285–308.</p>
+<p>Ley 21.561. (2023). Modifica el Código del Trabajo con el objeto de reducir la jornada laboral. Diario Oficial de la República de Chile.</p>
+<p>Maslach, C., Schaufeli, W. B., & Leiter, M. P. (2001). Job burnout. <em>Annual Review of Psychology, 52</em>, 397–422.</p>
+<p>Ministerio de Salud. (2022). <em>Protocolo de Vigilancia de Riesgos Psicosociales en el Trabajo</em> (Resolución Exenta N° 1.448; vigente desde el 01-01-2023). Gobierno de Chile.</p>
+<p>Organización Mundial de la Salud. (1946). <em>Constitución de la Organización Mundial de la Salud</em> (preámbulo: definición de salud).</p>
+<p>Organización Mundial de la Salud. (2019). <em>Burn-out an "occupational phenomenon": International Classification of Diseases</em> (CIE-11). OMS.</p>
+<p>Seligman, M. E. P., & Csikszentmihalyi, M. (2000). Positive psychology: An introduction. <em>American Psychologist, 55</em>(1), 5–14.</p>
+<p>Siegrist, J. (1996). Adverse health effects of high-effort/low-reward conditions. <em>Journal of Occupational Health Psychology, 1</em>(1), 27–41.</p>
+<p>Superintendencia de Seguridad Social. (2022). <em>Cuestionario de Evaluación del Ambiente Laboral - Salud Mental (CEAL-SM/SUSESO)</em> (Circular N° 3709). Gobierno de Chile. Manual del método disponible en cealsm.suseso.cl</p>
+<p>Superintendencia de Seguridad Social. (2023). <em>Adelanto de cifras del Informe de Seguridad y Salud en el Trabajo: 67% de diagnósticos de enfermedades profesionales en Chile corresponden a salud mental</em> [nota de prensa]. suseso.gob.cl</p>
+</div>
+<h3>Para profundizar</h3>
+<ul><li>El Manual del método CEAL-SM/SUSESO (cealsm.suseso.cl): el documento oficial completo, con los 88 ítems, las normas de puntaje y el procedimiento de intervención; lectura obligada si te toca administrar una aplicación.</li><li>Maslach et al. (2001): la revisión clásica sobre burnout; sigue siendo el mejor punto de partida sobre el síndrome.</li><li>Bellet et al. (2024): la mejor evidencia causal disponible de que el bienestar también es un buen negocio.</li></ul>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

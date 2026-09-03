@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motivación autónoma y controlada: la teoría de la autodeterminación · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 6</p>
+  <h1>Motivación autónoma y controlada: la teoría de la autodeterminación en el trabajo</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>Apunte complementario N° 6 · Clase 6 (miércoles 26-08-2026)<br>Complementa y actualiza R&J cap. 7<br>Prof. <a href="https://www.gempp.cl">René Gempp</a><br><a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2><p>Me pareció necesario dedicar un apunte a sistematizar las ideas básicas de la Teoría de la Audeterminación (SDT)porque el capítulo 7 de texto guía le dedica apenas una página y enfatiza uno de sus planteamientos clásico (la subteoría de la evaluación cognitiva, es decir, el debate sobre si las recompensas dañan el interés). Sin embargo, no discute el continuo completo de tipos de motivación, que es justamente el planteamiento moderno y más útil de esta teoría para gestionar personas. Además, me parece importante enfatizar que la SDT es sólo una teoría más: es LA teoría çontemporánea más importante, más estudiada, más validada y con más evidencia acumulada. Por ese le hemos dedicado dos clases completas y la usamos como marco organizador de esta unidad. Las clases de metas, de incentivos y de diseño del trabajo son, todas, formas de responder a la misma pregunta: cómo se mueve a una persona desde una motivación movilizada por factores externos hacia una motivación autodeterminada. </p>
+<p>También hay una cuestión empírica que he venido destacando en clases y sobre la que voy a insistir aquí: el management basado en evidencia debe recoger la evidencia más relevante y reciente, y las investigaciones científicas acumuladas en los últimos cinco años nos permiten concluir cuestiones bastante novedosas. En clases he citado varias veces tres meta-análisis publicados en 2021, 2024 y 2026, varios de cuyos resultados contradicen lo que enseñan los manuales, incluyendo un resultado que contradice algunas intuiciones.</p>
+
+<h2>B. La idea en breve</h2>
+<div class="resumen"><p>La pregunta con la que trabaja la mayoría de las empresas es cuánta motivación tiene una persona. La teoría de la autodeterminación propone cambiarla por otra: <strong>de qué tipo</strong> es esa motivación. Dos personas igual de "motivadas" producen resultados muy distintos según de dónde venga esa motivación.</p><p>El punto de partida es una distinción con más de setenta años: la motivación es <strong>intrínseca</strong> cuando la actividad en sí misma resulta interesante y satisfactoria, y es <strong>extrínseca</strong> cuando lo que mueve es una consecuencia esperada de la actividad, sea obtener algo deseado o evitar algo desagradable (Gagné y Deci, 2005). Como a través de los años me he dado cuenta estos los conceptos generan alguna confusión, voy a volver a insistir aquí en algo que dije en clases: "intrínseco" o "extrínseco" no se refieren a la persona (porque toda motivación es de la persona) sino a la <strong>tarea</strong>: motivación intrínseca a la tarea (la tarea es motivante por sí misma) y extrínseca a la tarea (la motivación se moviliza en función del resultado, placenteo o displacentero, que espero de la tarea).  Esa dicotomía es útil, pero es insuficiente: alguien puede que realizar una tarea por culpa o sentido del deber, en lugar de movido por un premio o castigo externo, y otra persona podría realizar una tarea porque le ve sentido a lo que hace aunque no esté disfrutando hacerla. Por eso la SDT reemplazó la dicotomía por un <strong>continuo</strong> de seis maneras de estar motivado, que se agrupan en dos grandes tipos: <strong>motivación autónoma</strong> (movilizada por decisión propia, voluntaria) y <strong>motivación controlada</strong> (presionada por fuerzas externas o de uno mismo). La amotivación, la ausencia de motivación, queda fuera de ambos.</p>
+
+<p>¿Y qué mueve a alguien por ese continuo? La satisfacción de tres necesidades psicológicas básicas: <strong>autonomía</strong> (sentir que lo que hago nace de mí), <strong>competencia o maestría</strong> (sentir que soy capaz y que mejoro) y <strong>pertenencia o relación</strong> (sentir que pertenezco y que le importo a alguien). Cuando el trabajo satisface estas necesidades, la motivación se vuelve más autónoma. Cuando las frustra, no queda menos motivación: queda motivación de otro tipo, y peor.</p><p>La evidencia metaanalítica acumulada dice tres cosas. Primera: mientras más autónoma es la motivación, mejor le va simultáneamente al desempeño, a las actitudes y al bienestar. Segunda, y contraintuitiva: para el desempeño, el mejor predictor no es que a la persona le apasione lo que hace, sino que le vea sentido. Tercera: la evidencia prueba que la fuente más importante de satisfacción y frustración de necesidades básicas en el trabajo es la conducta de la jefatura, con efectos totales que están entre los más grandes que se reportan en este campo.</p></div>
+
+<h2>C. Los conceptos</h2>
+
+<h3>Dos maneras de estar motivado: intrínseca y extrínseca</h3><p>El concepto de motivación intrínseca nació de una observación incómoda para el conductismo. A Harlow (1950) se le suele atribuir el primer uso del término, al describir monos rhesus que resolvían rompecabezas mecánicos una y otra vez sin recibir recompensa alguna: el placer obtenido por actividad misma parecía ser el premio. White (1959) le dio forma teórica al concepto con la idea de una motivación de eficacia, el impulso a interactuar competentemente con el entorno por la pura experiencia de lograrlo, y deCharms (1968) agregó la pieza de la causa personal: la diferencia entre sentirse origen de la propia conducta y sentirse peón de fuerzas externas. El salto experimental lo dio Deci (1971): pagar por armar un rompecabezas que la gente armaba por gusto redujo la disposición a seguir armándolo cuando el pago desapareció, mientras que el elogio la mantuvo. Ese resultado abrió cinco décadas de investigación.</p>
+<p>Las definiciones de trabajo que usa el curso son las de Gagné y Deci (2005). La motivación <strong>intrínseca</strong> consiste en hacer una actividad porque resulta interesante y produce satisfacción espontánea por sí misma. La motivación <strong>extrínseca</strong> requiere una instrumentalidad entre la actividad y alguna <strong>consecuencia separable</strong> de ella: la satisfacción no viene de la actividad sino de la consecuencia a la que conduce, sea obtener algo valorado o evitar algo desagradable. El concepto de "instrumentalidad" viene de algo llamado aprendizando por "condicionamento instrumental" u "operante" en la corriente conductista de la psicología: la idea de que la conducta se utiliza como un "instrumento" para obtener una recompensa (consecuencia agradadable o placentera) o evitar un castigo (consecuencia desagradable o displacentera)</p>
+
+<h3>La dicotomía intrínseco-extrínseca no es suficiente</h3>
+<p>En clases les propuse intente clasificar los siguientes dos ejemplos como motivación intrínseca o extrínseca. En el primero, una analista se queda hasta tarde terminando un informe porque, si no lo hace, la culpa no la deja tranquila. No hay premio ni castigo externo a la vista, así que no calza bien como extrínseca clásica; pero difícilmente diría que el informe le resulta interesante en sí mismo. En el segundo ejemplo, un enfermero encuentra su trabajo agotador y con frecuencia ingrato, y sin embargo lo hace con dedicación completa porque cree que su trabajo hace una contribución importante en la vida de otras personas. La actividad no le gusta (no es motivación intrínseca) pero no lo hace movido por premios o castigos; la razón es propia (así que no es motivación extrínseca propiamente tal.</p>
+<p>Ambos casos sugieren lo mismo: dentro de la motivación extrínseca hay diferencias enormes según <strong>cuán propia</strong> es la razón de actuar. Eso es exactamente lo que la teoría de la autodeterminación formalizó: no dos categorías, sino un continuo de internalización.</p>
+
+<h3>El continuo: seis maneras de estar motivado</h3><table><tr><th>Tipo</th><th>La razón de actuar</th><th>Cómo suena</th></tr><tr><td>Amotivación</td><td>No hay razón, o la persona no ve conexión entre lo que hace y lo que pasa</td><td>"Sinceramente no sé para qué estoy acá"</td></tr><tr><td>Regulación externa</td><td>Un premio o un castigo administrado por otro</td><td>"Lo hago porque de eso depende el bono"</td></tr><tr><td>Regulación introyectada</td><td>Un premio o un castigo administrado por uno mismo: culpa, vergüenza, orgullo</td><td>"Me sentiría pésimo si no lo hiciera"</td></tr><tr><td>Regulación identificada</td><td>La persona valora el resultado de la actividad, aunque la actividad no le guste</td><td>"No me entretiene, pero le veo sentido"</td></tr><tr><td>Regulación integrada</td><td>El motivo ya forma parte de la identidad de la persona</td><td>"Esto es parte de quién soy"</td></tr><tr><td>Regulación intrínseca (motivación intrínseca)</td><td>La actividad en sí misma resulta interesante o satisfactoria</td><td>"Lo haría igual aunque no me pagaran"</td></tr></table>
+
+<p>Fíjate en el énfasis que se pone en el concepto de <strong>regulación</strong>: cómo la persona regula u ordena su comportamiento para realizada la tarea. Los tres últimos tipos de regulación (identificada, integrada e intrínseca) se agrupan como <strong>motivación autónoma</strong> y las dos primeros (externa e introyectada) como <strong>motivación controlada</strong>. La amotivación queda fuera de ambas: no es un tipo de motivación, es su ausencia.</p>
+
+<p>Nota que la regulación identificada es <strong>extrínseca</strong>, porque la razón de actuar está fuera de la actividad (el resultado que se valora), y sin embargo es autónoma (movilizada por la persona misma). En este sentido, intrínseco y autónomo no son sinónimos. Otra aclaración que vale la pena: la regulación integrada casi no se mide bien en el trabajo, porque cuesta distinguirla empíricamente de la identificada y de la intrínseca, y por eso varios metaanálisis recomiendan omitirla hasta tener mejores instrumentos (Van den Broeck et al., 2021).</p>
+
+<h3>La categoría que confunde a todo el mundo: la introyección</h3>
+
+<p>La regulación introyectada viene "desde adentro" de la persona, y por eso casi todos los estudiantes la clasifican como motivación "buena". No lo es. Lo que ocurrió ahí es que el premio y el castigo se internalizaron: siguen operando, pero ahora los administra uno mismo. Suena así: "tengo que hacerlo bien, si no voy a quedar como un inútil", "si me voy antes que el equipo me va a dar culpa", "no puedo defraudar a mi jefe".</p>
+
+<p>Y acá viene algo muy importante (especialmente para la prueba solemne): En la gestión de personas, <strong>la introyección es el tipo de motivación que más se confunde (erróneamente) con compromiso</strong>. La persona rinde, hace horas extra, no reclama y suele ser considerada el mejor recurso del equipo. El dato que la delata aparece en la sección D.</p>
+
+<h3>El motor del continuo: las tres necesidades psicológicas básicas</h3>
+
+<p>¿Qué hace que una persona se mueva de una casilla a otra? La respuesta de la SDTson tres necesidades psicológicas básicas, universales, que no son preferencias ni gustos personales, sino <strong>nutrientes</strong>: si faltan, algo se deteriora, del mismo modo que la falta de hierro produce anemia independientemente de si a uno le gustan las legumbres (Deci et al., 2017). Y aunque palabra "necesidad" te pueda sonar a la pirámide que dimos por muerta al comenzar la unidad, el parentesco es solo de nombre: acá no hay jerarquía, no hay orden de activación y no son deseos que se satisfacen y desaparecen; son condiciones de funcionamiento, permanentes, cuya satisfacción o frustración se puede medir y cuyos efectos están ampliamente investigados.</p>
+
+<p><strong>Autonomía</strong> es la experiencia de que la propia conducta nace de uno mismo, con sentido de voluntad. Y, por favor, recuerda lo que enfaticé en clases: autonomía <strong>no</strong> es independencia, ni ausencia de reglas, ni hacer lo que a uno se le antoje. Una cirujana que sigue un protocolo estricto puede tener altísima autonomía si entiende el porqué del protocolo y lo suscribe. El opuesto de la autonomía no es la estructura: es el control y la presión.</p><p><strong>Competencia o maestría</strong> es la experiencia de ser capaz, de estar mejorando y de ver el efecto de lo que uno hace. Necesita dos cosas que las organizaciones suelen administrar mal: desafío calibrado (ni tan fácil que aburra ni tan difícil que aplaste) y retroalimentación oportuna (frecuente y contingente al desempeño) e informativa (que permita saber cómo mejorar).</p>
+<p><strong>Pertencia o Relación</strong> es la experiencia de pertenecer, de importarle a alguien y de que lo que uno hace le sirve a otros. Es la que más se descuida cuando se diseñan puestos de trabajo y la que más se nota cuando falta.</p>
+
+<h3>Internalización: cómo lo externo se vuelve propio</h3>
+<p>El proceso por el cual la persona toma razones, valores, reglas o requerimientos externos y las hace propias, transformándolas en guía personal de su conducta, se llama <strong>internalización</strong>, y es el mecanismo central de la SDT para la gestión de personas. Nadie nace queriendo hacer cuadraturas de caja. Pero una persona puede llegar a hacerlas con motivación autónoma si entiende para qué sirven, si le dan voz sobre el cómo, si se siente capaz de hacerlas bien y si trabaja con gente que le importa.</p>
+
+<p>Ese es el punto útil de toda la SDT: la mayoría de los trabajos no puede volverse apasionante, pero casi cualquier trabajo puede volverse comprensible. Y como expliqué en clases y reiteraré la siguente sección, la evidencia indicar que esto es clave para el desempeño.</p>
+
+<h2>D. Qué dice la evidencia</h2>
+<h3>El patrón general del continuo</h3>
+<p>El metaanálisis de referencia sobre el continuo en contextos de trabajo reunió 104 artículos con 124 muestras de trabajadores (Van den Broeck et al., 2021). Excluyó a propósito estudios de laboratorio, estudiantes, deportistas y voluntarios: es evidencia de gente en su trabajo. Las correlaciones están corregidas por falta de confiabilidad de los instrumentos, que es la práctica estándar en este tipo de síntesis.</p><table><tr><th>Tipo de motivación</th><th>Desempeño</th><th>Satisfacción laboral</th><th>Burnout</th></tr><tr><td>Amotivación</td><td>−.28</td><td>−.32</td><td>+.44</td></tr><tr><td>Regulación externa</td><td>+.04</td><td>+.03</td><td>+.08</td></tr><tr><td>Regulación introyectada</td><td>+.28</td><td>+.17</td><td>+.08</td></tr><tr><td>Regulación identificada</td><td><strong>+.43</strong></td><td>+.47</td><td>−.25</td></tr><tr><td>Motivación intrínseca</td><td>+.36</td><td><strong>+.57</strong></td><td><strong>−.40</strong></td></tr></table><p style="font-size:.86rem;color:var(--gris);margin-top:-.6rem">Correlaciones metaanalíticas corregidas (ρ). Elaborado a partir de Van den Broeck et al. (2021), Tablas 2 y 3. En este campo, una correlación de .30 es una relación moderada y útil, y .50 es fuerte.</p>
+
+<p>La tabla muestra que a medida que la razón de actuar se vuelve más interna (más <strong>autodeterminada</strong>), sube lo deseable y baja lo indeseable, y lo hace en las tres variables criterio al mismo tiempo.</p>
+<p>Observa también en la fila de la regulación externa, que es casi una línea plana. Trabajar por el premio o por el castigo no se asocia de forma apreciable con casi nada de lo que a una organización le importa.</p>
+
+<h3>La sorpresa: para el desempeño no manda la pasión</h3>
+<p>Contrario a lo que dicta la intuición o a lo que dicen los gurúes de RRHH o personas bien intencionadas pero mal informadas, la tabla anterior muestra que el mejor predictor del desempeño <strong>no</strong> es la motivación intrínseca (.36) sino la <strong>regulación identificada</strong> (.43). El mismo estudio también aplicó una técnica llamada "análisis de pesos relativos", que sirve permite expresar la importancia de cada variable predictora cuando los predictores correlacionan alto entre sí. El resultado es que, de todo lo que la motivación explica del desempeño, la <strong>regulación identificada</strong> aporta el 35.3% mientras que la regulación intrínseca explicar el 23.7%.</p>
+
+<p>La aplicación práctica es muy importante. No hace falta que a alguien le apasione hacer informes de gestión. Hace falta que <strong>entienda para qué sirven</strong>. Lo primero casi nunca está en manos de la jefatura; lo segundo, casi siempre. Ahora bien, los resultados no indican que la motivación intrísenca no sea muy importante, sino que a menudo no es el tipo de motivación <strong>más</strong> importante para explicar el desempeño</p>
+
+<h3>¿Dónde importa la regulación externa?</h3>
+<p>Según el mismo estudio, de todo lo que la motivación explica del desempeño, la regulación externa aporta apenas el <strong>0.8%</strong>. Sin embargo, cuando hablamos de actitudes, encontramos que esta motivación explica el <strong>76.8%</strong> del <strong>compromiso de continuidad</strong> (Van den Broeck et al., 2021).</p>
+<p>Como ya vimos, el compromiso de continuidad, es uno de los tres tipos de compromiso organizacional y consiste en quedarse en una organización porque no hay opciones o porque irse sale caro: perder antigüedad, beneficios, el crédito hipotecario, etc. No es lealtad, es costo de salida. Un sistema construido solo sobre premios y castigos compra permanencia, no desempeño, y la permanencia que compra es la de quien se queda sin querer estar.</p>
+
+<h3>¿Por qué la introyección encierra un riesgo?</h3>
+<p>En el meta-análisis más reciente, de Hagger y Star (2026), que reunió 192 estudios y 93.552 trabajadores, la regulación introyectada es el tipo de motivación que <strong>más</strong> predice la intención de renunciar (β = .515), por sobre cualquier otro. Es decir: estadísticamente hablando, los datos indican que la persona que trabaja movida fundamentalmente por  culpa o sentido del deber es la que más probabilidad tiene de irse. Y esto también tienen consecuencias prácticas importantes: a menudo la persona motivada por regulación introyectada <strong>parece</strong> muy motivada, porque hace horas extras, cumple con todo, acepta todo tipo de desafíos. Por lo mismo, suele ser considerada imprescindible por las jefaturas, que no se percatan que la persona está actuando por motivación controlada y no externa. Como comenté en clases, hay varias explicaciones posibles para entender porque la regulación introyectada predice la intención de renuncia, pero es un tema aún por resolver</p>
+
+<p>El mismo paper estima el efecto directo de cada tipo de regulación sobre el desempeño, ceteris paribus los demás tipos: identificada β = .358, intrínseca β = .300, externa β = .127 e introyectada β = −.271. Hay dos resultados que creo vale la pena considerar con cuidado. Primero, que la regulación externa tiene un efecto levemente <strong>positivo</strong> sobre el desempeño, contra la hipótesis de los propios autores (¡y de la SDT!). Esto permite matizar el famoso efecto del "crowding out" motivacional (que la SDT incorpora como la subteoría de la evaluación cognitiva) en contextos laborales reales. Segundo, la regulación introyectada, que en correlaciones simples parece inofensiva, es la única que <strong>resta</strong> efecto de desempeño cuando se la separa de las demás. Si sumamos este hallazgo al anterior, tenemos que <strong> la culpa o sentido del deber como motor primario de la motivación laboral, termina produciendo que las personas rindan menos y quieran irse más.</strong></p>
+
+<h3>De dónde sale la motivación autónoma</h3>
+<p>Ya sabemos que, según la SDT, la motivación se vuelve más autodeterminada (y, por lo tanto, más autónoma) en la medida que se satisfacen las tres necesidades básicas de autonomía, competencia y relación. Algo interesante del meta-análisis de Hagger y Star (2026) es que se preguntan qué factores organizacionales influyen en la satisfacción de estas necesidades. Para ello, modelaron la cadena completa de efectos causales utilizando una técnica llamada Modelos de Ecuaciones Estructurales Meta-analíticos (MASEM, por su sigla en inglés) sobre las matrices de correlación meta-analíticas. Resumiendo, el resultado, en coeficientes estandarizados, fue:</p>
+<p><strong>Apoyo de la jefatura a las necesidades</strong> (β = .720) → <strong>satisfacción de las tres necesidades</strong> (β = .575) → <strong>motivación autónoma</strong> (β = .355) → <strong>resultados adaptativos</strong> (desempeño, engagement, satisfacción, bienestar).</p>
+
+<p>El efecto total del apoyo de la jefatura sobre los resultados adaptativos es <strong>β = .591</strong>, de los más grandes que se reportan en los estudios sobre motivación labora. Otro resultado es que la motivación controlada no aporta nada a los resultados adaptativos (β = .038, no significativo) pero sí influye sobre el burnout y la rotación (β = .282).</p>
+
+<p>En otras palabras, el apoyo de la jefatura influye significativamente en la motivación autónoma, por la vía de facilitar la satisfacción de las tres necesidades psicológicas básicas (ese es el "mecanismo", para usar los conceptos del apunte 1). ¿Y qué es concretamente "apoyar las necesidades"? El metaanálisis más grande sobre el tema, con 881 muestras independientes y 443.556 personas (Slemp et al., 2024), lo desglosa así:</p>
+
+<table><tr><th>Lo que hace la jefatura</th><th>En qué consiste</th><th>Con qué se asocia</th></tr><tr><td>Apoyo a la autonomía</td><td>Dar opciones reales, explicar el porqué de las decisiones, reconocer el punto de vista del otro, minimizar la presión</td><td>ρ = .57 con la satisfacción de autonomía</td></tr><tr><td>Apoyo a la competencia</td><td>Fijar desafíos calibrados, dar estructura y expectativas claras, entregar retroalimentación informativa y no evaluativa</td><td>ρ = .48 con la satisfacción de competencia</td></tr><tr><td>Apoyo a la relación</td><td>Mostrar interés genuino, estar disponible, crear condiciones para que la gente se conozca y colabore</td><td>ρ = .62 con la satisfacción de relación</td></tr></table><p>Y un hallazgo que corrige la moda: no basta con dar autonomía. Agregar el apoyo a la relación por sobre el apoyo a la autonomía suma casi veinte puntos de varianza explicada en el sentido de pertenencia (ΔR² = .194). Un jefe que solo te deja tranquilo no te está apoyando: te está dejando solo.</p>
+
+<h3>Chile: lo que sabemos y no sabemos</h3>
+<p>El indicador internacional más comparable es el engagement que mide Gallup todos los años. En su medición de 2026, Chile aparece con <strong>33%</strong> de trabajadores con engagement, frente a 30% en América Latina y <strong>20%</strong> en el mundo. Es una buena noticia, aunque solo el 42% de los trabajadores chilenos cree que es un buen momento para buscar empleo, contra 60% en la región, y el 41% reporta haber sentido estrés el día anterior (Gallup, 2026). Motivación alta y mercado percibido como cerrado es una combinación que se parece bastante a la introyección.</p><p>Un caso chileno útil para ver el continuo funcionando: los <strong>63.618 bomberos voluntarios</strong> que hay en el país, distribuidos en 314 cuerpos y 1.262 compañías, que atendieron 161.213 actos de servicio durante 2025 sin recibir remuneración alguna (Junta Nacional de Cuerpos de Bomberos de Chile, 2026). Ninguna teoría basada en premios y castigos explica ese número.</p>
+
+<p>Al preparar este apunte no encontré validaciones publicadas de las escalas de motivación laboral de la familia de la autodeterminación en muestras de <strong>trabajadores chilenos</strong>. Lo que hay son estudios en universitarios o en otros países de la región. El estudio chileno más cercano es el de Pradenas et al. (2021) con 75 gerentes de alto desempeño de empresas medianas y grandes de Santiago, donde la satisfacción intrínseca fue significativamente mayor que la extrínseca, pero fueron la satisfacción extrínseca y familiar, y no la intrínseca, las que predijeron el bienestar general. Es un n pequeño y transversal: sirve para matizar, no para concluir.</p>
+
+<h3>Una nota crítica sobre la calidad de la evidencia</h3>
+<p>Primero, <strong>casi todo es correlacional</strong>. De los 192 estudios de Hagger y Star, 157 son transversales: todo se midió el mismo día. Van den Broeck excluyó los experimentos por diseño. Nada en estos datos impide que rendir bien te haga sentir competente, en vez de al revés. Los propios autores describen su modelo como "una secuencia posible entre otras igualmente ajustadas" y dicen expresamente que son reacios a recomendar intervenciones a partir de estos datos.</p><p>Segundo, <strong>casi todo es autorreporte</strong>. La misma persona responde por su motivación y por su desempeño, en el mismo cuestionario, lo que infla las correlaciones por varianza de método común.</p><p>Tercero, <strong>la evidencia se atenúa con el tiempo</strong>. En Slemp et al. (2024), mientras mayor es el intervalo entre las mediciones, más pequeños son los efectos, lo que los autores interpretan como un sesgo al alza en los diseños transversales.</p><p>Lo que sí es fuerte es la convergencia. Cientos de estudios, decenas de países, instrumentos distintos, y el patrón del continuo aparece una y otra vez. Eso no prueba causalidad, pero no es poco.</p><h2>E. Mito versus evidencia</h2><div class="mito"><p><span class="etiqueta">Se dice que...</span> la motivación intrínseca es la buena y la extrínseca es la mala.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el continuo tiene seis casillas, no dos. La regulación identificada es extrínseca por definición (la razón está fuera de la actividad) y es el <strong>mejor</strong> predictor del desempeño de todo el continuo (ρ = .43 frente a .36 de la intrínseca; Van den Broeck et al., 2021). La distinción que importa no es intrínseco versus extrínseco, sino autónomo versus controlado.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque es más fácil de recordar y porque coincide con una intuición romántica sobre el trabajo. También porque los manuales presentan el par intrínseco/extrínseco antes que el continuo, y muchos cursos se quedan ahí.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> dar autonomía es dejar que cada uno haga lo que quiera.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> en esta teoría autonomía significa volición, no independencia. El opuesto de la autonomía no es la estructura sino el control. De hecho, el apoyo a la competencia consiste precisamente en dar estructura, expectativas claras y retroalimentación, y se asocia fuerte con la satisfacción de las tres necesidades (Slemp et al., 2024). Un equipo sin reglas ni dirección no experimenta más autonomía: experimenta abandono.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> por una traducción floja de la palabra y por una lectura ideológica de las prácticas de trabajo flexible, que confunde autonomía con ausencia de supervisión.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> el que se queda hasta tarde es el más comprometido.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> ese perfil corresponde muchas veces a la regulación introyectada, que en el modelo metaanalítico de Hagger y Star (2026) es el tipo de motivación que más predice la intención de renunciar (β = .515), y que en Van den Broeck et al. (2021) se asocia con burnout y distrés. La persona rinde, pero paga un costo que no aparece en la planilla de asistencia.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque la conducta visible (horas, disponibilidad, no reclamar) es idéntica a la de alguien con motivación autónoma. Lo que difiere es el motivo, y el motivo no se ve.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> la autodeterminación es un valor occidental que no aplica en culturas como la chilena.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> Hagger y Star (2026) probaron la moderación cultural con el índice de individualismo de Hofstede y no encontraron diferencias en las vías autónomas. Slemp et al. (2024) encontraron incluso que el apoyo a la autonomía se asocia algo <strong>más</strong> fuerte con la motivación autónoma en culturas colectivistas. La única diferencia cultural clara va en el otro sentido: la motivación controlada daña más en países individualistas.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque se confunde autonomía con individualismo. Son cosas distintas: una persona puede actuar con plena volición al servicio de su familia, su equipo o su comunidad.</p></div>
+
+<h2>F. Qué significa para un Ingeniero(a) Comercial</h2>
+<p><strong>Deja de preguntar cuánta motivación tiene el equipo.</strong> Pregunta de qué tipo. Dos personas con el mismo nivel de esfuerzo pueden estar en trayectorias opuestas, y solo una de ellas va a seguir ahí en un año.</p>
+<p><strong>Antes de intentar que algo guste, haz que se entienda.</strong> La palanca con mejor rendimiento sobre el desempeño es la regulación identificada, y se construye explicando el para qué: a quién le sirve esta tarea, qué pasa si sale mal, cómo se conecta con algo que la persona valora. Es más barato y más replicable que fabricar pasión.</p>
+<p><strong>Recuerda que la retroalimentación es información</strong> El apoyo a la competencia se juega ahí. La diferencia entre "esto está mal" y "esto tiene este problema y se resuelve así" no es de cortesía: es de necesidad psicológica satisfecha o frustrada.</p>
+<p><strong>No confundas dejar hacer con dar autonomía.</strong> Recomendación: si vas a aumentar la autonomía de alguien, aumenta al mismo tiempo el contacto. La evidencia sobre apoyo a la relación es contundente y es la que más se descuida.</p>
+<p><strong>Desconfía de la persona más valiosa, con cariño.</strong> Si tienes a alguien que nunca dice que no, que se queda siempre y que se hace responsable de todo, hay una probabilidad razonable de que estés viendo introyección y no compromiso. Preguntas útiles: ¿por qué te quedaste ayer? ¿Qué habría pasado si te ibas?</p>
+<p><strong>Antes de comprar una consultoría o charla sobre "motivación", pregunat dos cosas.</strong> Primero, que te digan sobre qué necesidad psicológica actúa y con qué mecanismo. Segundo, qué evidencia tienen de que funciona en condiciones parecidas a las de tu organización. La mayoría de los talleres de motivación no pasa el primer filtro.</p>
+
+<h2>G. Para la evaluación</h2><p>Después de leer este apunte deberías poder:</p><ol><li>Explicar en qué consiste cada una de las tres necesidades psicológicas básicas y por qué la autonomía no es lo mismo que la independencia.</li><li>Ubicar un caso concreto en las seis casillas del continuo, justificando con la razón que la persona declara y no con su conducta visible.</li><li>Distinguir motivación autónoma de motivación controlada, y explicar por qué la regulación identificada es extrínseca y autónoma al mismo tiempo.</li><li>Analizar un caso de gestión identificando qué necesidad está siendo frustrada y proponiendo una acción concreta de la jefatura que apunte a ella.</li><li>Explicar qué tipo de conclusiones permite y qué tipo de conclusiones no permite la evidencia metaanalítica disponible sobre esta teoría.</li></ol><h2>H. Referencias</h2><div class="referencias"><p>deCharms, R. (1968). <em>Personal causation: The internal affective determinants of behavior</em>. Academic Press.</p><p>Deci, E. L. (1971). Effects of externally mediated rewards on intrinsic motivation. <em>Journal of Personality and Social Psychology, 18</em>(1), 105–115. <a href="https://doi.org/10.1037/h0030644">https://doi.org/10.1037/h0030644</a></p><p>Deci, E. L., Olafsen, A. H., & Ryan, R. M. (2017). Self-determination theory in work organizations: The state of a science. <em>Annual Review of Organizational Psychology and Organizational Behavior, 4</em>(1), 19–43. <a href="https://doi.org/10.1146/annurev-orgpsych-032516-113108">https://doi.org/10.1146/annurev-orgpsych-032516-113108</a></p><p>Gagné, M., & Deci, E. L. (2005). Self-determination theory and work motivation. <em>Journal of Organizational Behavior, 26</em>(4), 331–362. <a href="https://doi.org/10.1002/job.322">https://doi.org/10.1002/job.322</a></p><p>Gagné, M., Forest, J., Vansteenkiste, M., Crevier-Braud, L., van den Broeck, A., Aspeli, A. K., Bellerose, J., Benabou, C., Chemolli, E., Güntert, S. T., Halvari, H., Indiyastuti, D. L., Johnson, P. A., Molstad, M. H., Naudin, M., Ndao, A., Olafsen, A. H., Roussel, P., Wang, Z., & Westbye, C. (2015). The Multidimensional Work Motivation Scale: Validation evidence in seven languages and nine countries. <em>European Journal of Work and Organizational Psychology, 24</em>(2), 178–196.</p><p>Gallup. (2026). <em>State of the Global Workplace 2026: Chile country-level data</em>. Gallup.</p><p>Hagger, M. S., & Star, K. M. (2026). Self-determination theory and workplace outcomes: A meta-analysis. <em>Stress and Health, 42</em>, e70151. <a href="https://doi.org/10.1002/smi.70151">https://doi.org/10.1002/smi.70151</a></p><p>Harlow, H. F. (1950). Learning and satiation of response in intrinsically motivated complex puzzle performance by monkeys. <em>Journal of Comparative and Physiological Psychology, 43</em>(4), 289–294. <a href="https://doi.org/10.1037/h0058114">https://doi.org/10.1037/h0058114</a></p><p>Junta Nacional de Cuerpos de Bomberos de Chile. (2026). <em>Memoria anual 2025</em>. Bomberos de Chile.</p><p>Pradenas, D., Oyanedel, J. C., da Costa, S., Rubio, A., & Páez, D. (2021). Subjective well-being and its intrinsic and extrinsic motivational correlates in high performance executives: A study in Chilean managers empirically revisiting the bifactor model. <em>International Journal of Environmental Research and Public Health, 18</em>(15), 8082. <a href="https://doi.org/10.3390/ijerph18158082">https://doi.org/10.3390/ijerph18158082</a></p><p>Ryan, R. M., & Deci, E. L. (2000). Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being. <em>American Psychologist, 55</em>(1), 68–78.</p><p>Slemp, G. R., Field, J. G., Ryan, R. M., Forner, V. W., Van den Broeck, A., & Lewis, K. J. (2024). Interpersonal supports for basic psychological needs and their relations with motivation, well-being, and performance: A meta-analysis. <em>Journal of Personality and Social Psychology, 127</em>(5), 1012–1037. <a href="https://doi.org/10.1037/pspi0000459">https://doi.org/10.1037/pspi0000459</a></p><p>Van den Broeck, A., Howard, J. L., Van Vaerenbergh, Y., Leroy, H., & Gagné, M. (2021). Beyond intrinsic and extrinsic motivation: A meta-analysis on self-determination theory's multidimensional conceptualization of work motivation. <em>Organizational Psychology Review, 11</em>(3), 240–273. <a href="https://doi.org/10.1177/20413866211006173">https://doi.org/10.1177/20413866211006173</a></p><p>White, R. W. (1959). Motivation reconsidered: The concept of competence. <em>Psychological Review, 66</em>(5), 297–333. <a href="https://doi.org/10.1037/h0040934">https://doi.org/10.1037/h0040934</a></p></div><h3>Para profundizar</h3><ul><li>Deci, Olafsen y Ryan (2017): la mejor puerta de entrada a la teoría aplicada al trabajo, escrita por sus propios autores y en un formato de revisión anual, es decir, pensada para quien viene de fuera.</li><li>Van den Broeck et al. (2021): si vas a leer un solo estudio empírico de este apunte, que sea este. Las tablas 2 y 3 son la fuente de casi todos los números que viste acá.</li><li>Gagné et al. (2015): la escala con la que se miden los seis tipos de motivación, validada en siete idiomas. Útil si alguna vez te toca medir esto en una organización de verdad.</li></ul>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

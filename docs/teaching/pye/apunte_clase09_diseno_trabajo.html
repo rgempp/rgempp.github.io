@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diseño del trabajo y job crafting · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 8</p>
+  <h1>Diseño del trabajo y job crafting</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Complementa y actualiza R&J cap. 8 · Material de la Ayudantía 2 (11-09)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br><a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Si tuviera que elegir temas clave para el curso, este estaría entre los principales. Y no por gusto, si no por magnitud: El diseño del trabajo es la variable de gestión de personas con el respaldo empírico más grande y más consistente, y es, al mismo tiempo, la que menos se usa. Las organizaciones invierten en selección, en capacitación, en clima y en compensaciones, y casi nunca en cambiar el trabajo mismo.</p>
+<p>El capítulo 8 de R&J manual explica los elementos clave del modelo de características del puesto de trabajo y algunas estrategias de rediseño, pero no profundiza en el modelo de demandas y recursos, que es el marco dominante en la investigación en el sigle XXI y el que la SUSESO adoptó de hecho con el CEL-SM. El cápítulo tampoco aborda el el job crafting, que es la estrategia de rediseño que adoptan los propios trabajadores. </p>
+<p>En clases anteriores ya vimos que la motivación autónoma predice mejor los tres resultados que nos interesan (desempeño, actitudes y bienestar), y que el salario explica alrededor del 10% de lo que se puede explicar de esa motivación autónoma cuando se controla por diseño del trabajo. Este apunte trata del otro 90%.</p>
+<p>Y como como ya advertí en clases, una de las cifras más citadas de este campo circula sistemáticamente mal atribuida. Volveremos a eso en la sección D.</p>
+
+<h2>B. La idea en breve</h2><div class="resumen"><p>Como discutimos en clases, casi todo lo que la gente dice sobre su trabajo puede clasificarse en dos columnas. En una están las <strong>características del trabajo</strong>: cuánta autonomía tiene, si ve el resultado de lo que hace, si le llegan señales de cómo va, con quién trabaja, para quién sirve lo que produce. Son propiedades del puesto, existen antes de que llegue la persona y alguien las decidió. En la otra están los <strong>resultados del trabajo</strong>: si la persona está agotada, satisfecha, comprometida, si rinde, si quiere irse. Son estados de la persona.</p><p>La primera columna causa la segunda. Y esa es la razón por la cual el error de gestión más común en este tema consiste en intervenir sobre la segunda: talleres de motivación, encuestas de clima con plan de acción, desayunos con el gerente. Todo eso apunta al efecto.</p>
+<p>El <strong>modelo de características del puesto</strong> ordena la primera columna en cinco dimensiones: variedad, identidad, significancia, autonomía y retroalimentación. El modelo de <strong>demandas y recursos</strong> la ordena de otra manera, en dos familias que operan por caminos distintos y simultáneos: las demandas agotan y los recursos motivan. El <strong>job crafting</strong> agrega que la persona no es un receptor pasivo: modifica su propio puesto todos los días, con o sin autorización.</p>
+<p>El efecto de estas variables es considerable, para el estándar de la investigación en el área. Catorce características del trabajo explican en promedio el 43% de la varianza en 19 resultados laborales distintos. Y hay un hallazgo que suele sorprender: el lado <strong>social</strong> del trabajo (con quién, para quién) agrega más varianza que el lado motivacional en compromiso organizacional y en intención de renuncia. La gente no renuncia a un puesto aburrido. Renuncia a un lugar.</p>
+<p>Sin embargo, hay dos advertencias. Primero, que ninguna demanda sale gratis: las de desafío también se asocian con tensión. Y, segundo, que enriquecer una parte del puesto vuelve el resto más aburrido por contraste, con costo medible sobre el desempeño.</p></div>
+
+<h2>C. Los conceptos</h2><h3>El modelo de características del puesto</h3><p>Hace ya medio siglo, Hackman y Oldham (1976) propusieron que cinco propiedades del puesto producen tres estados psicológicos, y que esos estados psicológicos producen los resultados que nos interesan en el curso.</p>
+
+<table><tr><th>Dimensión</th><th>Qué es</th><th>Pregunta de diagnóstico</th></tr><tr><td>Variedad de habilidades</td><td>Cuántas habilidades y talentos distintos exige el trabajo</td><td>¿Se usa más de una cosa que la persona sabe hacer?</td></tr><tr><td>Identidad de la tarea</td><td>Si se completa una pieza identificable de trabajo, de principio a fin</td><td>¿Se hace algo completo o un pedazo de algo?</td></tr><tr><td>Significancia de la tarea</td><td>Cuánto impacta el trabajo en la vida de otras personas</td><td>¿A quién le cambia algo lo que esta persona hace?</td></tr><tr><td>Autonomía</td><td>Cuánta libertad hay sobre el cómo, el cuándo y el orden</td><td>¿Quién decide la manera de hacerlo?</td></tr><tr><td>Retroalimentación del puesto</td><td>Si la ejecución misma entrega información sobre el desempeño</td><td>¿El trabajo le avisa a la persona, o depende de que alguien le diga?</td></tr></table>
+
+<p>Las cinco características producen tres estados estados psicológicos clave. Las tres primeras (variedad de habilidad, identidad de la tarea, significancia de la tarea) producen <strong>significado experimentado</strong>. La autonomía produce <strong>responsabilidad experimentada</strong> sobre los resultados. La retroalimentación produce <strong>conocimiento de los resultados</strong>. Los tres estados juntos son el mecanismo del modelo: las características no actúan directamente, actúan a través de ellos.</p><p>Algo que suele olvidarse es que el modelo también declara un moderador: la <strong>necesidad de desarrollo</strong> de la persona. Enriquecer el puesto de alguien que no busca crecer ahí no produce el mismo efecto. </p>
+
+<h3>El puntaje potencial motivador (y por qué no creerle)</h3>
+<p>En su versión clásica, el modelo propone una fórmula para resumir las cinco dimensiones en un número:</p><div class="mito"><p>PPM = [(variedad + identidad + significancia) / 3] × autonomía × retroalimentación</p></div><p>Lo interesante de la fórmula es su estructura. Las tres primeras se promedian, es decir, se compensan entre sí. La autonomía y la retroalimentación se <strong>multiplican</strong>, lo que implica una afirmación fuerte: si cualquiera de las dos es cero, el potencial motivador del puesto es cero, por muy variado y significativo que sea.</p>
+<p>Es una afirmación elegante. Pero también es la parte del modelo con menos respaldo empírico: la evidencia acumulada sugiere que un promedio simple de las cinco dimensiones predice tan bien o mejor que la forma multiplicativa. Como dije en clases, piensen en la fórmula como herramienta para ordenar la discusión pero NO como un indicador con propiedades métricas.</p>
+
+<p>Y eso me lleva a otra advertencia que hice en clases: en general, cuando una teoría en management propone una fórmula, pregúntense si realmente puede usarse o sólo sirve como ejemplo. La mayoría de las veces la fórmula no es válida desde un punto de vista estrictamente económétrico.</p>
+
+<h3>La conexión con la teoría de la autodeterminación</h3>
+<p>Las características del puesto no motivan por magia; satisfacen o frustran las tres necesidades psicológicas básicas propustas por la SDT.</p>
+
+<table><tr><th>Necesidad</th><th>Característica del puesto que la influye</th></tr><tr><td>Autonomía</td><td>La autonomía del puesto y la identidad de la tarea</td></tr><tr><td>Competencia</td><td>La retroalimentación del puesto y la variedad de habilidades</td></tr><tr><td>Relación</td><td>La significancia de la tarea y las características sociales del trabajo</td></tr></table>
+<p>Leído así, el diseño del trabajo deja de ser un tema de ingeniería industrial; es la vía más concreta que tiene una organización para producir motivación autónoma, que es la que predice bien los tres resultados clave (desempeño, actitudes y bienestar).</p>
+
+<h3>Demandas y recursos</h3><p>El modelo JD-R (Demerouti et al., 2001) aborda las características del puesto con una lógica distinta y más general. Todo aspecto del trabajo se clasifica como demanda o como recurso, y cada familia opera por un camino propio.</p><p>Las <strong>demandas</strong> son aspectos que exigen esfuerzo sostenido y tienen un costo: carga de trabajo, presión de tiempo, exigencias emocionales, conflicto de rol, ambiente físico adverso. Alimentan el <strong>proceso de deterioro del bienestar</strong>, ocasionando agotamiento, cinismo, problemas de salud, ausentismo y licencias.</p><p>Los <strong>recursos</strong> son aspectos que ayudan a lograr las metas, reducen el costo de las demandas y estimulan el desarrollo: autonomía, retroalimentación, apoyo social, apoyo de la jefatura, oportunidades de aprender. Alimentan el <strong>proceso motivacional</strong>, cuyas salidas son engagement, compromiso, desempeño y conducta extra-rol.</p>
+<p>La proposición interesante del modelo es la <strong>interacción</strong>: los recursos amortiguan el efecto de las demandas. De ahí se sigue algo que contradice la intuición: un trabajo muy demandante con muchos recursos puede ser un buen trabajo, y uno poco demandante sin ningún recurso puede no serlo.</p>
+
+<p>Una ventaja práctica del JD-R sobre el modelo clásico de características del puesto de trabajo es que acepta cualquier variable. No hay una lista cerrada de cinco dimensiones: cada ocupación tiene sus propias demandas y sus propios recursos, y el modelo se adapta.</p>
+
+<h3>Demandas de desafío y demandas de bloqueo o de obstáculo</h3>
+<p>No todas las demandas son iguales. La investigación sobre estrés laboral permite distinguir dos tipos.</p>
+<p>Las <strong>demandas de desafío (challenge demands)</strong> exigen esfuerzo pero permiten logro y crecimiento: responsabilidad, complejidad, carga alta con sentido, plazos exigentes pero alcanzables.</p>
+<p>Las <strong>demandas de bloqueo o de obstáculo (hindrance demands) </strong> exigen esfuerzo y además estorban el logro: ambigüedad de rol, conflicto de rol, burocracia inútil, política interna, inseguridad laboral, trabas que no dependen de la persona.</p>
+<p>La evidencia que revisamos en clases (y retomo abajo en la sección D) muestra que ambas se asocian con tensión. Lo que las diferencia es el signo con la motivación y con el desempeño. Esto importa porque en algunas organizaciones (y entre algunos consultores) circula una versión romántica del estrés de desafío, según la cual la presión con propósito no tiene efectos negativos. Pero sí los tiene.</p>
+
+<h3>Estrategias de rediseño desde arriba (top-down)</h3>
+<p>Los directivos o la organización pueden aplicar varias estrategias (o una mezcla de ellas) para rediseñar el puesto de trabajo con el fin de hacerlo menos demandante y dotarlo con más recursos y/o, en la lógica de Hackman y Oldham (1976), optimizar las cinco características clave del puesto de trabajo. Como estas estrategias son iniciadas por la organización o la jefatura, decimos que es un rediseño "desde arriba" (top-down).  </p>
+
+<table><tr><th>Estrategia</th><th>Qué característica mueve</th><th>Advertencia</th></tr><tr><td>Rotación de puestos</td><td>Variedad</td><td>Barata y rápida, pero no cambia ningún puesto</td></tr><tr><td>Ampliación horizontal</td><td>Variedad, identidad</td><td>Riesgo de producir "más de lo mismo"</td></tr><tr><td>Enriquecimiento vertical</td><td>Autonomía, retroalimentación</td><td>La de mayor efecto y la más costosa políticamente</td></tr><tr><td>Horario flexible</td><td>Autonomía</td><td>Sobre el cuándo, no sobre el qué ni el cómo</td></tr><tr><td>Teletrabajo</td><td>Sube autonomía, puede bajar relación</td><td>No es neutro ni uniforme</td></tr><tr><td>Equipos autoadministrados</td><td>Autonomía, identidad, relación</td><td>El rediseño más completo y el más difícil de instalar</td></tr></table>
+<p>Antes de elegir qué estrategia priorizar se debe evaluar qué característica es la que está baja y partir por ahí. Rotar puestos cuando el problema es la falta de autonomía no arregla nada y quema el capital político de la intervención.</p>
+
+<h3>El rediseño desde abajo (bottom-up): Job crafting</h3>
+<p>Wrzesniewski y Dutton (2001) propusieron algo que en retrospectiva parece obvio y que la literatura no había tomado en serio: los trabajadores modifican activamente su propio puesto. Lo hacen cambiando tres tipos de frontera.</p><p><strong>Frontera de tarea.</strong> Cambiar qué se hace: agregar tareas, sacar otras, cambiar el orden o el tiempo dedicado a cada una. Por ejemplo, la cajera que además ordena la góndola porque le gusta ver el pasillo bien.</p><p><strong>Frontera relacional.</strong> Cambiar con quién y cuánto: buscar a ciertas personas, evitar a otras, construir vínculos nuevos. Por ejemplo, el ejecutivo de call center que se hace amigo del área técnica para resolver más rápido.</p><p><strong>Frontera cognitiva.</strong> Cambiar cómo se entiende el trabajo: qué significa, para qué sirve, de qué es parte. Por ejemplo, el auxiliar de aseo del hospital que se define como parte del equipo que cura.</p><p>Una advertencia de vocabulario que importa para las pruebas: estas tres fronteras <strong>no</strong> son las cuatro dimensiones que usan los cuestionarios más difundidos (aumentar recursos estructurales, aumentar recursos sociales, aumentar demandas desafiantes, disminuir demandas obstaculizadoras), que provienen de la tradición del JD-R. Son dos tradiciones distintos dentro del mismo tema y conviene no mezclarlos.</p>
+
+<h2>D. Qué dice la evidencia</h2>
+<h3>La magnitud, con las cifras correctas</h3><p>El metaanálisis de referencia es Humphrey, Nahrgang y Morgeson (2007): 259 estudios, N = 219.625, catorce características del trabajo y diecinueve resultados. Las catorce características explican en promedio el <strong>43% de la varianza</strong> en esos diecinueve resultados.</p><p>El aporte del estudio fue integrar tres familias de características: <strong>motivacionales</strong> (el puesto en sí), <strong>sociales</strong> (con quién y para quién se trabaja) y de <strong>contexto</strong> (condiciones físicas, ergonomía, ruido). Las cifras, tal como aparecen en el abstract oficial:</p><table><tr><th>Resultado</th><th>Motivacionales</th><th>Sociales (incremental)</th><th>Contexto (incremental)</th></tr><tr><td>Satisfacción laboral</td><td>34%</td><td>17%</td><td>4%</td></tr><tr><td>Compromiso organizacional</td><td>24%</td><td><strong>40%</strong></td><td>–</td></tr><tr><td>Percepciones de rol</td><td>26%</td><td>18%</td><td>–</td></tr><tr><td>Desempeño subjetivo</td><td>25%</td><td>9%</td><td>–</td></tr><tr><td>Percepciones de rotación</td><td><strong>2%</strong></td><td>24%</td><td>–</td></tr><tr><td>Estrés</td><td>–</td><td>–</td><td>16%</td></tr></table>
+
+<p>Aunque el paper tiene varios resultados interesantes hay dos que quiero destacar, en mi insistencia de no quedarse en las consignas fáciles.</p>
+<p>Primero: el <strong>2%</strong> de las percepciones de rotación. Esto significa que hacer el puesto más interesante, por sí solo, casi no mueve la intención de irse; lo que sí la mueve son las características sociales, que agregan 24 puntos porcentuales. Entonces, un organización que invierte en enriquecer puestos de trabajo para resolver problemas de rotación está gastando en el ítem equivocado.</p>
+<p>Segundo: el <strong>40%</strong> adicional en compromiso organizacional. El lado social del trabajo agrega más varianza que el lado motivacional, lo que implica que el diseño relacional del trabajo no es mera "buena onda", sino que influye mucho smás de lo que habitualmente se reconoce.</p>
+
+<p><strong>Y ojo con algo.</strong> En fuentes secundarias circulan atribuidas a este metaanálisis las cifras "55% de satisfacción, 38% de estrés y 26% de rotación". No corresponden al abstract oficial. Las cifras de la tabla anterior provienen del paper original en agosto de 2026. Es un buen recordatorio de una regla del curso: la cita se verifica contra la fuente primaria, no contra quien la cita.</p>
+
+<h3>El efecto de las demandas</h3>
+<p>LePine, Podsakoff y LePine (2005) sintetizaron 82 manuscritos con 101 muestras independientes.</p>
+
+<table><tr><th>Correlación corregida</th><th>Demandas de desafío</th><th>Demandas de bloqueo</th></tr><tr><td>Con tensión (strain)</td><td>.40</td><td>.58</td></tr><tr><td>Con motivación</td><td>+.16</td><td>−.12</td></tr><tr><td>Con desempeño</td><td>+.12</td><td>−.20</td></tr></table>
+<p>Noten que <strong>ambos</strong> tipos de demandas se asocian positivamente con tensión. El análisis más fino muestra que las demandas de desafío tiene un efecto indirecto negativo sobre el desempeño, vía tensión, que se compensa con el efecto positivo vía motivación. El resultado neto es levemente favorable, pero no es gratis. No es tan simple como decir que las demandas de desafío son "buenas".</p>
+
+<h3>El job crafting funciona, con una excepción notable</h3><p>Rudolph, Katz, Lavigne y Zacher (2017) reunieron 108 fuentes, 122 muestras independientes, N = 35.670 trabajadores y 1.429 tamaños de efecto.</p><table><tr><th>Dimensión</th><th>Engagement</th><th>Desempeño autorreportado</th><th>Tensión</th></tr><tr><td>Job crafting global</td><td>.450</td><td>.274</td><td>−.125</td></tr><tr><td>Aumentar recursos estructurales</td><td><strong>.591</strong></td><td>.400</td><td>−.157</td></tr><tr><td>Aumentar demandas desafiantes</td><td>.454</td><td>.310</td><td>−.140</td></tr><tr><td>Aumentar recursos sociales</td><td>.352</td><td>.133</td><td>−.046</td></tr><tr><td>Disminuir demandas obstaculizadoras</td><td><strong>−.090</strong></td><td>−.070</td><td><strong>+.150</strong></td></tr></table>
+<p>Como expliqué en clases, creo que la última fila de la tabla es la más interesante. La dimensión que consiste en sacarse de encima lo que estorba se comporta al revés que las otras tres: se asocia positivamente con tensión y negativamente con desempeño, incluido el desempeño contextual (−.161). En otras palabras, aunque disminuir las demandas de bloqueo (obstaculizadoras) parece la estrategia más razonable, los datos muestran que no lo es. Incluso, los autores del estudio indican que el análisis factorial no respalda incluirla en el factor global.</p>
+
+<p>La conclusión práctica, nuevamente, es que el mundo real resulta más complejo de lo sugieren las teoría simples: el job crafting que funciona es el que <strong>agrega</strong> recursos y desafíos, no el que reduce obstáculos.</p>
+<p>Una precisión importante es que esta meta-análisis no reporta burnout como categoría separada, si no que lo agrupa junto con agotamiento emocional bajo el constructo de <strong>"tensión laboral"</strong> (<em>"job strain"</em>). Por tanto, no sería correcto generalizar diciendi que el "el job crafting reduce el burnout", porque, estríctamente, el estudio no lo permite.</p>
+
+<h3>El único estudio cercano a evidencia causal</h3><p>Holman y Axtell (2016) hicieron algo poco frecuente en este campo: una intervención real de rediseño del trabajo en un call center, con diseño cuasi-experimental y análisis multinivel.</p><p>El resultado confirma un modelo de mediadores múltiples y resultados múltiples: la intervención afectó un rango amplio de resultados (bienestar de los empleados, cumplimiento del contrato psicológico y desempeño evaluado por el supervisor) <strong>a través de cambios en dos características del puesto</strong>: control del trabajo y retroalimentación.</p><p>Es exactamente la cadena de efectos que el modelo de características del puesto predice, y es la razón por la cual este estudio vale más que veinte correlaciones transversales.</p>
+
+<h3>El costo de enriquecer solo una parte</h3>
+<p>Shin y Grant (2019) hicieron un estudio que, por enésima vez, nos recuerda que el comportamiento humano es complejo. En un estudio de campo con 105 vendedores de una tienda por departamentos coreana, evaluados por 11 supervisores en 6 tareas centrales, aquellos con motivación intrínseca <strong>más alta</strong> en una de sus tareas mostraron peor desempeño promedio en las demás (γ = −.13, p &lt; .01), peor desempeño mínimo (γ = −.29, p &lt; .001) y más variabilidad entre tareas. </p>
+<p>El experimento de laboratorio, con 255 participantes, identificó el mecanismo: <strong>aburrimiento</strong>. Trabajar en una tarea muy interesante deterioró el desempeño en una tarea posterior aburrida, pero no en una interesante, y la mediación por aburrimiento se sostuvo mientras que la ira, la ansiedad, la tristeza, el asco, la relajación y la felicidad no mediaron nada.</p>
+<p>Dos precisiones importantes. Primera: no dicen que la motivación intrínseca sea mala. En la <strong>misma</strong> tarea sigue prediciendo mejor desempeño (γ = .12, p &lt; .001). Segunda: el efecto es <strong>curvilíneo</strong>. La motivación intrínseca moderada en una tarea protege mejor el desempeño en las tareas aburridas que la motivación intrínseca alta.</p><p>La implicación de gestión es que el rediseño parcial tiene costo. Darle a alguien un "proyecto entretenido" encima de sus tareas de siempre puede empeorar el desempeño en esas tareas de siempre.</p>
+
+<h3>¿Y qué pasa en la larga y angosta faja de tierra?</h3>
+
+<p><strong>Chile mide esto por ley, y lo mide en serio.</strong> El CEAL-SM/SUSESO se aplicó en 2024 a <strong>20.451 centros de trabajo</strong> (16.262 privados y 4.189 públicos), un 37,2% más que el año anterior, cubriendo <strong>1.016.765 personas trabajadoras</strong>. Es, con distancia, la mayor medición de condiciones laborales del país. El 20,9% de los centros quedó en riesgo medio o alto, con mayor prevalencia en salud (41,6%), administración pública (38,2%) y educación (34,4%). Las dimensiones con más centros en riesgo alto son <strong>carga de trabajo (22,9%)</strong>, exigencias emocionales (20,6%) y equilibrio trabajo y vida privada (13,3%).</p><p>Las tres son demandas. El instrumento chileno obligatorio está construido, en la práctica, con el vocabulario del JD-R.</p><p><strong>Lo que cuesta el mal diseño.</strong> Los trastornos mentales y del comportamiento son la <strong>primera causa de licencia médica en Chile</strong>: 30,9% del total en 2025 (2.170.209 de 7.016.470 licencias) y 32,6% en 2024. Hay una tendencia a la baja, también en días autorizados por persona, que pasaron de 46,9 a 42,4 entre 2024 y 2025.</p><p><strong>Un rediseño decretado por ley.</strong> La Ley 21.561 redujo la jornada laboral. El calendario oficial es de 44 horas desde el 26 de abril de 2024, <strong>42 horas desde el 26 de abril de 2026</strong> y 40 horas desde el 26 de abril de 2028. En términos del JD-R es una reducción de demanda sin adición de ningún recurso, lo que permite anticipar efectos sobre el proceso de deterioro y no necesariamente sobre el proceso motivacional. Es una hipótesis derivada del modelo, no un dato: todavía no hay evidencia chilena publicada al respecto.</p><p><strong>JD-R medido en Chile.</strong> La décima edición de la medición de Circular HR y Fundación Chile, con 7.630 trabajadores y datos de 2023, usa el JD-R como marco explícito y reporta la primera caída en la proporción de personas con alto grado de agotamiento desde 2017 (de 23% en 2022 a 18% en 2023), con brecha de género y menor engagement en las generaciones más jóvenes. Es un informe de consultora, sin revisión por pares ni descripción pública del muestreo: sirve como evidencia descriptiva del contexto chileno, no como estudio validado.</p><h3>Los tres outcomes</h3><p><strong>Desempeño.</strong> Las características motivacionales explican 25% del desempeño subjetivo y las sociales agregan 9% más. El job crafting global correlaciona .274 con desempeño autorreportado y .184 con desempeño evaluado por otros. Pero el rediseño parcial puede deteriorar el desempeño en las tareas que quedaron sin tocar.</p><p><strong>Actitudes.</strong> 34% de la satisfacción laboral por características motivacionales, más 17% por las sociales y 4% por el contexto. En compromiso organizacional las sociales agregan 40%, más que las motivacionales. Es el resultado donde el lado relacional del trabajo más pesa.</p><p><strong>Bienestar.</strong> Las características de contexto agregan 16% de la varianza en estrés. Las demandas de bloqueo se asocian .58 con tensión y las de desafío .40. En Chile, la carga de trabajo es la dimensión con más centros en riesgo alto y los trastornos mentales son la primera causa de licencia médica.</p><p>La lectura conjunta importa: el diseño del trabajo es la única palanca de esta unidad que mueve los tres resultados al mismo tiempo y en la misma dirección. Los incentivos no lo hacen. Las metas tampoco.</p><h2>E. Mito versus evidencia</h2><div class="mito"><p><span class="etiqueta">Se dice que...</span> para que la gente esté más motivada hay que hacer actividades de motivación.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la motivación, la satisfacción y el agotamiento son resultados, no causas. Lo que los produce son las características del trabajo, que explican en promedio el 43% de la varianza en diecinueve resultados laborales distintos (Humphrey et al., 2007). Un taller no cambia ninguna característica del puesto de nadie.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el taller es barato, visible, se puede fotografiar y no exige negociar con las jefaturas de línea. El rediseño exige todo lo contrario.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> si el trabajo fuera más entretenido, la gente no renunciaría.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las características motivacionales del puesto explican apenas el 2% de la varianza en percepciones de rotación. Las características sociales agregan 24 puntos por sobre ellas (Humphrey et al., 2007). La gente no renuncia a un puesto aburrido: renuncia a un lugar donde no le importa a nadie.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el modelo de características del puesto se enseña sin su parte social, y porque intervenir sobre las tareas es más fácil que intervenir sobre las relaciones.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> el estrés de desafío es el estrés bueno.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las demandas de desafío se asocian .40 con tensión, y las de bloqueo .58 (LePine et al., 2005). Ambas cobran peaje. Lo que las diferencia es el signo con motivación (+.16 contra −.12) y con desempeño (+.12 contra −.20), no la ausencia de costo.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque la distinción entre desafío y bloqueo se divulgó como si fuera una distinción entre estrés sano y estrés dañino, cosa que el metaanálisis nunca dijo.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> hacer job crafting es sacarse de encima lo que molesta.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> esa es precisamente la única de las cuatro dimensiones que se comporta al revés: se asocia positivamente con tensión (+.150) y negativamente con desempeño contextual (−.161), mientras que aumentar recursos estructurales se asocia .591 con engagement (Rudolph et al., 2017). El job crafting que funciona agrega, no resta.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque reducir la carga es la respuesta intuitiva al agotamiento, y porque el nombre de la dimensión suena a autocuidado.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> darle a alguien un proyecto entretenido lo motiva.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> puede deteriorar su desempeño en el resto de sus tareas, por un efecto de contraste mediado por aburrimiento, y el efecto es curvilíneo: la motivación intrínseca moderada en una tarea protege mejor el desempeño en las tareas aburridas que la alta (Shin y Grant, 2019).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el proyecto entretenido produce gratitud visible y de corto plazo, mientras que el deterioro ocurre en tareas rutinarias que nadie mira.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> la fórmula del puntaje potencial motivador mide qué tan motivador es un cargo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> su forma multiplicativa nunca tuvo buen respaldo empírico, y un promedio simple de las cinco dimensiones predice tan bien o mejor. Es útil como herramienta de diagnóstico para ordenar una conversación sobre un cargo, no como indicador con propiedades métricas.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque una fórmula con multiplicaciones parece más rigurosa que una suma, y porque los manuales la reproducen sin discutir su validez.</p></div>
+
+<h2>F. Qué significa para un Ingeniero Comercial</h2><p><strong>Antes de intervenir, clasifica.</strong> Escribe lo que la gente le dice y sepáralo en dos columnas: características y resultados. Si todas tus iniciativas están en la segunda columna, estás tratando síntomas.</p><p><strong>Diagnostica el puesto antes de elegir la intervención.</strong> Puntúa las cinco dimensiones, identifica las dos más bajas y elige la forma de rediseño que mueva esas dos. Rotar puestos cuando el problema es autonomía no arregla nada, derrocha recursos y consume la paciencia de todos.</p>
+<p><strong>No descuides el lado social.</strong> Es el que más varianza agrega en compromiso y en intención de renuncia, y es el que sistemáticamente queda fuera de los proyectos de rediseño, que suelen ser proyectos de tareas.</p>
+<p><strong>Distingue entre demandas de bloqueo de demandas de desafío; pon el foco en las primeras.</strong> La ambigüedad de rol, el conflicto de rol y la burocracia inútil son demandas que exigen esfuerzo y además estorban. Quitarlas es de las pocas intervenciones que mejoran motivación, desempeño y bienestar al mismo tiempo.</p>
+<p><strong>Deja espacio para el job crafting, pero oriéntalo.</strong> La gente va a rediseñar su trabajo de todas formas. La pregunta de gestión es si eso ocurre a favor o en contra de lo que la organización necesita. Y la evidencia dice hacia dónde orientarlo: hacia agregar recursos y desafíos.</p>
+<p><strong>Rediseña el puesto completo, no sólo una parte.</strong> Si vas a enriquecer, considera qué pasa con el resto de las tareas de esa persona. El contraste tiene costo.</p>
+<p><strong>Usa lo que ya está medido.</strong> Si stu organización aplicó el CEAL-SM, ya tiene un diagnóstico de demandas y recursos hecho con un instrumento estandarizado y con obligación legal de intervenir. Ese informe suele quedar archivado; es la mejor materia prima disponible para un proyecto de rediseño.</p>
+
+<h2>G. Para la evaluación</h2><p>Después de leer este apunte deberías poder:</p><ol><li>Distinguir características del trabajo de resultados del trabajo, y explicar por qué la mayoría de las intervenciones de motivación apunta a las segundas.</li><li>Nombrar y definir las cinco dimensiones del modelo de características del puesto, los tres estados psicológicos críticos y el moderador que el modelo declara.</li><li>Explicar qué afirma la forma multiplicativa de la PPM y por qué conviene tratarla como herramienta de diagnóstico y no como indicador métrico.</li><li>Explicar el proceso dual del JD-R y la proposición de interacción entre demandas y recursos.</li><li>Distinguir demandas de desafío de demandas de bloqueo, con las magnitudes que las diferencian y sin caer en la lectura de que unas no cobran peaje.</li><li>Describir las tres fronteras del job crafting de Wrzesniewski y Dutton, distinguirlas de las cuatro dimensiones de la tradición JD-R, y explicar por qué una de esas cuatro se comporta al revés que las demás.</li><li>Analizar un puesto real, identificar la característica más baja, proponer un rediseño top-down y uno bottom-up, y justificar cada uno con evidencia y con la necesidad psicológica a la que apunta.</li><li>Explicar qué tipo de conclusiones permite un metaanálisis correlacional y por qué el estudio de Holman y Axtell ocupa un lugar distinto en la jerarquía de evidencia.</li></ol><h2>H. Referencias</h2><div class="referencias"><p>Circular HR & Fundación Chile. (2024). <em>El mundo del trabajo en 2024: Aguas turbulentas. Medición de agotamiento y engagement laboral</em>. Fundación Chile.</p><p>Demerouti, E., Bakker, A. B., Nachreiner, F., & Schaufeli, W. B. (2001). The job demands-resources model of burnout. <em>Journal of Applied Psychology, 86</em>(3), 499–512. <a href="https://doi.org/10.1037/0021-9010.86.3.499">https://doi.org/10.1037/0021-9010.86.3.499</a></p><p>Fried, Y., & Ferris, G. R. (1987). The validity of the job characteristics model: A review and meta-analysis. <em>Personnel Psychology, 40</em>(2), 287–322. <a href="https://doi.org/10.1111/j.1744-6570.1987.tb00605.x">https://doi.org/10.1111/j.1744-6570.1987.tb00605.x</a></p><p>Gagné, M., Olafsen, A. H., Howard, J., Parker, S., Hewett, R., & Frølund, C. W. (2026). What matters more for work motivation: Compensation or work design? <em>Motivation Science, 12</em>(1), 96–123. <a href="https://doi.org/10.1037/mot0000407">https://doi.org/10.1037/mot0000407</a></p><p>Hackman, J. R., & Oldham, G. R. (1976). Motivation through the design of work: Test of a theory. <em>Organizational Behavior and Human Performance, 16</em>(2), 250–279. <a href="https://doi.org/10.1016/0030-5073(76">https://doi.org/10.1016/0030-5073(76</a>)90016-7</p><p>Holman, D., & Axtell, C. (2016). Can job redesign interventions influence a broad range of employee outcomes by changing multiple job characteristics? A quasi-experimental study. <em>Journal of Occupational Health Psychology, 21</em>(3), 284–295. <a href="https://doi.org/10.1037/a0039962">https://doi.org/10.1037/a0039962</a></p><p>Humphrey, S. E., Nahrgang, J. D., & Morgeson, F. P. (2007). Integrating motivational, social, and contextual work design features: A meta-analytic summary and theoretical extension of the work design literature. <em>Journal of Applied Psychology, 92</em>(5), 1332–1356. <a href="https://doi.org/10.1037/0021-9010.92.5.1332">https://doi.org/10.1037/0021-9010.92.5.1332</a></p><p>LePine, J. A., Podsakoff, N. P., & LePine, M. A. (2005). A meta-analytic test of the challenge stressor-hindrance stressor framework: An explanation for inconsistent relationships among stressors and performance. <em>Academy of Management Journal, 48</em>(5), 764–775. <a href="https://doi.org/10.5465/amj.2005.18803921">https://doi.org/10.5465/amj.2005.18803921</a></p><p>Ley 21.561. (2023). <em>Modifica el Código del Trabajo con el objeto de reducir la jornada laboral</em>. Diario Oficial de la República de Chile, 26 de abril de 2023.</p><p>Rudolph, C. W., Katz, I. M., Lavigne, K. N., & Zacher, H. (2017). Job crafting: A meta-analysis of relationships with individual differences, job characteristics, and work outcomes. <em>Journal of Vocational Behavior, 102</em>, 112–138. <a href="https://doi.org/10.1016/j.jvb.2017.05.008">https://doi.org/10.1016/j.jvb.2017.05.008</a></p><p>Shin, J., & Grant, A. M. (2019). Bored by interest: How intrinsic motivation in one task can reduce performance on other tasks. <em>Academy of Management Journal, 62</em>(2), 415–436. <a href="https://doi.org/10.5465/amj.2017.0735">https://doi.org/10.5465/amj.2017.0735</a></p><p>Superintendencia de Seguridad Social. (2025). <em>Documento de trabajo N° 26: Riesgo psicosocial laboral en Chile. Resultados de la aplicación 2024 del CEAL-SM/SUSESO</em>. SUSESO.</p><p>Superintendencia de Seguridad Social. (2026). <em>Informe anual de licencias médicas 2025: Análisis, control y desafíos</em>. SUSESO.</p><p>Wrzesniewski, A., & Dutton, J. E. (2001). Crafting a job: Revisioning employees as active crafters of their work. <em>Academy of Management Review, 26</em>(2), 179–201. <a href="https://doi.org/10.5465/amr.2001.4378011">https://doi.org/10.5465/amr.2001.4378011</a></p></div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

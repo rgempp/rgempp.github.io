@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metas que mueven y metas que dañan · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 7</p>
+  <h1>Metas que mueven y metas que dañan: la teoría del establecimiento de metas y su lado oscuro</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>Apunte complementario N° 7<br>Complementa y actualiza R&J cap. 7<br>Prof. <a href="https://www.gempp.cl">René Gempp</a><br><a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2><p>Este apunte existe porque el establecimiento (o "fijación") de metas es de los pocos marcos conceptuales sobre la motivación que nacen desde el management. Sin embargo, el capítulo 7 de R&J cubre la teoría del establecimiento de metas en pocas páginas, presenta la teoría de las expectativas como una fórmula y no dice nada del lado oscuro ni de la controversia que lo siguió. Ese vacío es el que este apunte llena.</p>
+<p>Lo anterior, porque el estableciento de metas (al igual que el uso de incentivos, que aborda el apunte 8) es la herramienta de gestión más usada y más barata que existe, y la evidencia dice que funciona. Un(a) ingeniero(a) comercial va a fijar metas, va a heredar sistemas de metas diseñados por otros y va a ser evaluado(a) contra metas que alguien fijó. Por otro lado, las metas, mal usadas, producen fraude, riesgo y agotamiento, y este daño daño puede aparecer justo cuando parece que la meta esta funcionando. Saber las dos cosas a la vez es lo que distingue a quien administra con evidencia de quien repite el nombre de una teoría.</p>
+
+<h2>B. La idea en breve</h2><div class="resumen"><p>Una meta específica y difícil produce más desempeño que una meta fácil, que una meta vaga y que la instrucción "haz tu mejor esfuerzo". Es uno de los hallazgos más replicados de la psicología aplicada: más de cien tareas distintas, más de cuarenta mil participantes, al menos ocho países y lapsos que van de un minuto a veinticinco años (Locke y Latham, 2002). El tamaño del efecto, frente a "haz tu mejor esfuerzo", va de d = .42 a d = .80 según el metaanálisis de los propios autores.</p><p>Funciona por cuatro mecanismos: la meta <strong>dirige</strong> la atención hacia lo relevante, <strong>energiza</strong> el esfuerzo, <strong>sostiene</strong> la persistencia y <strong>activa</strong> el conocimiento y las estrategias que la persona ya tiene. Pero, atención, para que la meta específica y difícil funcione se requieren tres condiciones: que la persona esté comprometida con la meta, que reciba retroalimentación sobre su avance y que la tarea no sea tan compleja que primero haya que aprender a hacerla.</p>
+
+<p>La tercera condición es la que más se ignora. En tareas nuevas o complejas, una meta de desempeño alta empeora las cosas, porque la persona se pone a probar estrategias a tientas bajo presión. Ahí la meta correcta es una meta de aprendizaje: cuántas estrategias descubrir, no cuánto producir.</p>
+
+<p>Y, como expliqué en clases, hay también un "lado oscuro": Schweitzer, Ordóñez y Douma (2004) demostraron, con un experimento, tener una meta duplicó la proporción de personas que sobredeclararon su desempeño, y el efecto se concentró en quienes quedaron más cerla de cumplir la meta. En otras palabras: cuando las personas quieren alcanzar una meta y está muy cerca de alcanzarla, aumenta la probabilidad de hacer trampa.</p></div>
+
+<h2>C. Los conceptos</h2>
+<h3>Qué es una meta, y por qué una meta vaga no es realmente una meta</h3>
+<p>En la teoría de Locke y Latham, una meta es el objeto o el resultado de una acción, con un estándar contra el cual se juzga el propio desempeño. Esa segunda parte es la que importa. "Haz tu mejor esfuerzo" no es una realmente una meta, porque no tiene referente externo: cada persona la define a su manera, y en la práctica la define hacia abajo. Por eso, cuando a la gente se le pide que haga su mejor esfuerzo, no lo hace (Locke y Latham, 2002).</p>
+
+<p>Dos atributos definen una meta efectiva. La <strong>especificidad</strong> (cuántas unidades, en cuánto tiempo, con qué calidad) reduce la ambigüedad sobre qué cuenta como logro. La <strong>dificultad</strong> determina cuánto esfuerzo moviliza. Las dos van juntas: una meta específica pero fácil no rinde, porque la especificidad por sí sola no eleva el desempeño; solo lo hace cuando la meta específica es además difícil.</p>
+
+<h3>Por qué funcionan: los cuatro mecanismos</h3><table><tr><th>Mecanismo</th><th>Qué hace la meta</th><th>Ejemplo de gestión</th></tr><tr><td>Dirección</td><td>Enfoca la atención y el esfuerzo en las actividades relevantes para la meta, y las aleja de las irrelevantes</td><td>Un vendedor con meta de nuevas cuentas deja de dedicar la tarde a clientes antiguos</td></tr><tr><td>Energía</td><td>Una meta alta moviliza más esfuerzo que una meta baja</td><td>La misma cuadrilla carga más troncos cuando la meta sube</td></tr><tr><td>Persistencia</td><td>Cuando la persona controla su tiempo, una meta difícil prolonga el esfuerzo; con plazo, acelera el ritmo</td><td>Un plazo ajustado produce un ritmo más rápido que un plazo holgado</td></tr><tr><td>Estrategias</td><td>La meta activa el conocimiento que la persona tiene, lo transfiere desde tareas parecidas o dispara la planificación cuando la tarea es nueva</td><td>Ante una meta nueva, la gente planifica; ante una rutinaria, aplica lo que sabe</td></tr></table>
+
+<p>El cuarto mecanismo es el más importante para entender cuándo las metas fallan. Si la persona no tiene la estrategia correcta y la meta es difícil, la meta activa una estrategia inapropiada con más energía, y el resultado es peor que con una meta fácil (Locke y Latham, 2002).</p>
+
+<h3>Los tres moderadores</h3>
+
+<p>La relación meta-desempeño no es incondicional. Locke y Latham (2002) declaran tres moderadores, es decir, tres variables que pueden potenciar o amortiguar el efecto de la meta sobre el desempeño.</p>
+
+<p><strong>Compromiso con la meta.</strong> El efecto es más fuerte cuando la persona está comprometida, y el compromiso importa más mientras más difícil es la meta. Dos cosas lo producen: que el logro sea importante para la persona y que la persona crea que puede lograrlo. Aquí hay un dato que sorprende a casi todos: a misma dificultad una meta asignada por la jefatura funciona igual que una meta fijada participativamente, siempre que se explique su propósito. Lo que rinde menos no es la meta asignada: es la meta asignada a secas, sin justificación. El meta-análisis sobre participación en decisiones, con desempeño medido objetivamente, encontró un efecto de solo .11 (Wagner y Gooding, 1987, citado en Locke y Latham, 2002). El beneficio real de participar en la fijación de la meta es cognitivo, no motivacional: aparece cuando el subordinado sabe algo que el jefe no sabe, y consiste en mejores estrategias, no en más ganas (Latham y Locke, 2018).</p>
+
+<p><strong>Retroalimentación.</strong> Una meta sin información sobre el avance es una meta ciega. La combinación de meta más retroalimentación es más efectiva que la meta sola. Lamentablemente, este es el moderador que más sistemas de metas incumplen. Por ejemplo, si la meta es mensual pero el dato llega el día cinco del mes siguiente, la retroalimentación no está funcionando.</p>
+
+<p><strong>Complejidad de la tarea.</strong> A medida que la tarea se vuelve más compleja y las estrategias no están automatizadas, el efecto de la meta depende de que la persona pueda descubrir cómo hacerla. Las cifras vienen del meta-análisis de Wood, Mento y Locke (1987): para dificultad de la meta, d = .67 en tareas menos complejas y d = .48 en las más complejas; para metas específicas difíciles frente a "haz tu mejor esfuerzo", d = .77 frente a d = .41. El efecto no desaparece, pero se reduce casi a la mitad.</p>
+
+<h3>Metas de aprendizaje y metas de desempeño</h3>
+
+<p>Esta es la distinción que resuelve el problema de la complejidad. Una <strong>meta de desempeño</strong> es el puntaje que se quiere alcanzar en la tarea. Una <strong>meta de aprendizaje</strong> es el número de ideas o estrategias que se quieren descubrir para hacer la tarea bien (Locke y Latham, 2002). En una simulación de control de tráfico aéreo, una meta de desempeño interfirió con la adquisición del conocimiento necesario, y la gente rindió mejor con "haz tu mejor esfuerzo". Pero cuando se fijó una meta de aprendizaje específica y difícil en vez de una meta de desempeño, las metas altas volvieron a superar a la instrucción vaga. </p>
+
+<p>El mecanismo es la presión evaluativa. Una meta en una tarea que no se domina, hace que la persona esté tan ansiosa por lograrla que prueba estrategias de forma desordenada y no aprende cuál funciona. La meta de aprendizaje enfoca la atención en la tarea; la de desempeño, en la comparación con otros (Lord et al., 2010). Un hallazgo posterior que es importante para gestión: la meta de aprendizaje beneficia más a las personas de menor capacidad cognitiva, porque las obliga a hacer sistemáticamente lo que las de alta capacidad hacen espontáneamente (Latham y Locke, 2018).</p>
+
+<p>La regla operativa: a quien recién entra, o enfrenta una tarea nueva, conviene darle metas de aprendizaje; a quien ya domina la tarea, hay que asignarle metas de desempeño.</p>
+
+<h3>Antes de la meta: Vroom y el papel de las expectativas</h3>
+<p>La teoría de las expectativas (Vroom, 1964) describe la decisión que la persona toma antes de esforzarse, con tres preguntas consecutivas.</p>
+
+<table><tr><th>Eslabón</th><th>La pregunta</th><th>Lo que conecta</th></tr><tr><td>Expectativa</td><td>Si me esfuerzo, ¿voy a lograr el desempeño?</td><td>esfuerzo → desempeño</td></tr><tr><td>Instrumentalidad</td><td>Si logro ese desempeño, ¿voy a recibir la recompensa?</td><td>desempeño → recompensa</td></tr><tr><td>Valencia</td><td>¿Esa recompensa me importa a mí?</td><td>recompensa → mis metas</td></tr></table><p>Los tres se multiplican, no se suman: basta un cero en cualquiera para que el esfuerzo sea cero. Por eso la pregunta útil para un jefe no es "¿está motivado?" sino "¿cuál eslabón está roto?". La persona que no cree poder (expectativa), la que no cree que el sistema cumple (instrumentalidad) y la que no valora el premio (valencia) se ven iguales desde afuera y se arreglan de maneras completamente distintas.</p>
+
+<p>Una precisión sobre el estatus científico del modelo. El metaanálisis de van Eerde y Thierry (1996) mostró que el modelo de Vroom predice mejor la <strong>elección</strong> (preferencias, intenciones) que el esfuerzo o el desempeño, y que funciona mejor dentro de una persona (por qué yo elijo A sobre B) que entre personas. Eso no invalida el modelo pero precisa su alcance: Vroom es un modelo de decisión, no de energía, y como herramienta de diagnóstico sigue siendo excelente.</p>
+
+<h3>El eslabón de la expectativa y el rol de la autoeficacia</h3><p>La autoeficacia es la creencia de ser capaz de ejecutar lo que se necesita para lograr un resultado (Bandura, 1997). No es autoestima, no es optimismo y no es un rasgo global; es específica La misma persona puede tener altísima autoeficacia para hablar en público y bajísima para trabajar en Excel. Se construye desde cuatro fuentes, en orden de potencia: experiencias de logro (haberlo hecho bien antes), modelamiento (ver a alguien parecido lograrlo), persuasión verbal (que alguien creíble exprese confianza) e interpretación del propio estado fisiológico (leer el nerviosismo como señal de que importa, no de que no se puede).</p>
+
+<p>En la teoría de metas, la autoeficacia opera dentro del compromiso. Quien la tiene alta se fija metas más altas, se compromete más con las asignadas, encuentra mejores estrategias y responde mejor a la retroalimentación negativa. Acá viene otra cuestión importante: asignar una meta desafiante ya eleva la autoeficacia, porque es una expresión implícita de confianza de la jefatura (Locke y Latham, 2002).</p>
+
+<p>Por supuesto, no siempre funciona de manera tan simple. Judge et al. (2007) mostraron que la autoeficacia agrega poco valor predictivo sobre el desempeño una vez que se controlan la habilidad mental general, la experiencia y la personalidad. Por otro lado, Sitzmann y Yeo (2013) mostraron que, dentro de una misma persona a lo largo del tiempo, la autoeficacia es más producto del desempeño previo que causa del desempeño futuro. Esto implica que la autoeficacia importa sobre todo en fases de aprendizaje y en tareas nuevas, y el efecto Pigmalión es real pero más pequeño de lo que sugieren los libros de texto.</p>
+
+<h3>Fijar la meta es la mitad: sostener el avance es la otra</h3>
+<p>La teoría clásica dice mucho sobre qué meta fijar y menos sobre qué pasa en el camino. La psicología social reciente llena ese vacío con cuatro fenómenos de la dinámica del avance, sintetizados por Fishbach (2025).</p>
+
+<p>El <strong>gradiente de meta</strong> (<em>goal gradient</em>): el esfuerzo se acelera a medida que la meta se acerca (como mencionamos en clases, las tarjetas de fidelización con sellos se completan más rápido cerca del premio). El <strong>atasco del medio</strong> (<em>stuck in the middle</em>): la motivación tiene forma de U, alta al inicio y al final, baja en la mitad, y en la mitad la gente relaja sus estándares de calidad. La <strong>hipótesis del área pequeña</strong>: para motivar conviene destacar lo que es más pequeño, el avance acumulado a quien recién empieza y lo que falta a quien va avanzado. Y el <strong>efecto de nuevo comienzo</strong> (<em>fresh start</em>): los hitos temporales (por ejemplo: lunes, primero de mes, cumpleaños) aumentan la disposición a iniciar metas.</p>
+
+<p>Sobre la retroalimentación, un dato incómodo del meta-análisis clásico de Kluger y DeNisi (1996): las intervenciones de feedback mejoran el desempeño en promedio, pero en alrededor de un tercio de los casos lo <strong>empeoran</strong>, típicamente cuando desvían la atención desde la tarea hacia el yo. Esto ocurre, por ejemplo, cuando el feedback hace que las personas se sientan incopetentes o si sienten que el feedback es una crítica, más que información apra mejorar su desempeño. En la misma línea, Fishbach (2025) agrega que la gente no aprende del feedback negativo porque amenaza el ego, y que los expertos y comprometidos lo buscan y aprovechan mejor que los novatos. En términos prácticos: al novato, hay que darle feedback de avance y en positivo; al experto, el feedback negativo sí le sirve y hasta lo pide.</p>
+
+<h2>D. Qué dice la evidencia</h2>
+
+<h3>Cuánta evidencia hay detrás</h3>
+<p>La síntesis de Locke y Latham (2002) no es un meta-análisis propiamente tal, sino la revisión narrativa de treinta y cinco años de investigación, escrita por los dos autores de la teoría. Lo que dicen, literalmente (p. 714) es: <em>metas específicas y difíciles han elevado el desempeño en bastante más de cien tareas distintas, con más de cuarenta mil participantes, en al menos ocho países, en laboratorio, simulación y terreno, sobre variables de cantidad, calidad, tiempo, costos y conducta laboral. Los tamaños de efecto provienen de su metaanálisis de 1990: d = .52 a .82 para dificultad de la meta y d = .42 a .80 para metas específicas difíciles frente a "haz tu mejor esfuerzo".</em> Para quienes aún no han cursado estadística: un d de Cohen igual a .80 significa que la persona promedio del grupo con meta supera a alrededor del 79% del grupo sin meta.</p>
+
+<p>En su retrospectiva de medio siglo, los mismos autores reportan que su libro de 1990 se basó en aproximadamente 400 estudios, que la investigación posterior superó los mil, y citan un análisis de utilidad de Schmidt (2013) según el cual, con un sueldo promedio de 50.000 dólares, una intervención de fijación de metas aumenta el producto de un empleado en 9.200 dólares al año (Locke & Latham, 2019).</p>
+<p>Un estudio de muy citado: camioneros madereros sindicalizados pasaron de cargar el 60% al 90% del peso legal permitido cuando se les asignó una meta de carga, con un ahorro de 250 mil dólares en nueve meses (Latham y Baldes, 1975, citado en Locke y Latham, 2002). Ningún camión nuevo, ningún bono: simplemente una meta.</p>
+
+<h3>Las metas son el antecedente más fuerte del desempeño</h3>
+<p>El metaanálisis de Van Iddekinge et al. (2023) sobre esfuerzo laboral, con 141 estudios y 171 muestras, permite comparar antecedentes. La fijación de metas se asoció con el esfuerzo con ρ = .32 y, sobre los mismos estudios primarios, con el desempeño con ρ = .46, la relación más fuerte de todos los antecedentes de puesto y organización examinados, por sobre la satisfacción laboral (.24), el compromiso organizacional (.16) y la motivación intrínseca (.17). Es evidencia correlacional, con las limitaciones de siempre, pero converge con los experimentos.</p>
+
+<h3>Metas sin dinero, y el límite de la dificultad</h3>
+
+<p>Un experimento de campo sintetizado por Goerg (2015) muestra dos cosas que la teoría predice y una que la matiza. Trabajadores temporales contratados para reordenar una biblioteca de 35.000 libros rindieron 15% más cuando tenían una meta que cuando no la tenían, y el efecto fue el mismo con meta asignada y con meta autoelegida. Atar un bono a la meta no agregó velocidad: la meta motivaba por sí sola. Sin embargo hubo un matiz: la relación entre dificultad y rendimiento tuvo forma de U invertida, con el mejor resultado en una meta intermedia, y la meta demasiado fácil rindió <strong>peor</strong> que no tener meta.</p>
+
+<p>Ese último dato conviene leerlo junto con lo que dicen Locke y Latham. Su función es lineal (más difícil, más desempeño) hasta que se alcanza el límite de la capacidad o se pierde el compromiso, y en su retrospectiva precisan que las metas imposibles elevan el desempeño en laboratorio, donde fallar no cuesta nada, pero en terreno producen desmoralización; en las organizaciones, la meta debe ser desafiante pero alcanzable (Locke y Latham, 2019). Las dos fuentes convergen en la práctica: la meta fácil no sirve, la imposible tampoco.</p>
+
+<h3>Cuando la meta induce mentir</h3>
+<p>Schweitzer, Ordóñez y Douma (2004) hicieron un experimento de laboratorio con 154 estudiantes de pregrado, asignados al azar a tres condiciones. Todos resolvieron anagramas de siete letras en rondas de un minuto. La condición de control recibió la instrucción "haz tu mejor esfuerzo" con pago fijo de 10 dólares. La segunda recibió una meta de nueve palabras por ronda, con el mismo pago fijo. La tercera recibió la misma meta más dos dólares por cada ronda cumplida, entregados en un sobre con billetes de un dólar del que se quedaban con lo ganado. La meta de nueve se calibró con un piloto de 70 personas en el percentil 90: era difícil.</p>
+
+<p>Los participantes autorreportaban su desempeño. Los investigadores emparejaron cuadernillos y hojas de respuesta con letras únicas, lo que les permitió comparar palabras válidas reales contra palabras declaradas. Sobredeclararon al menos una vez el 10.5% en control, el 22.7% con meta y pago fijo y el 30.2% con meta más recompensa.</p>
+
+<p>Pero el hallazgo más interesante no es ese sino otro: Entre quienes hicieron exactamente ocho palabras (es decir, llegaron a una palabra de la meta), declararon nueve o más el 14.81% en control, el 34.48% con meta simple y el 48.48% con meta más recompensa. Y quienes sobredeclararon habían hecho en promedio 5.00 palabras en las rondas que reportaron con honestidad y 7.46 en las que sobredeclararon. Mentían cuando estaban cerca, no cuando estaban lejos. El marco es la teoría prospectiva: la meta opera como punto de referencia, quedar por debajo se codifica como pérdida, y la pérdida induce búsqueda de riesgo, incluido el riesgo moral.</p>
+
+<h3>Seis efectos secundarios y tres casos</h3>
+
+<p>Ordóñez, Schweitzer, Galinsky y Bazerman (2009) sistematizaron el lado oscuro en seis efectos secundarios: foco estrecho que descuida las áreas sin meta, preferencias de riesgo distorsionadas, aumento de la conducta antiética, aprendizaje inhibido, corrosión de la cultura organizacional y motivación intrínseca reducida. Propusieron además una etiqueta de advertencia con diez preguntas que un administrador debería hacerse antes de instalar un sistema de metas, entre ellas si las metas son demasiado específicas, si el horizonte temporal es el apropiado, cómo van a influir en la toma de riesgos y cuáles son las metas últimas de la organización.</p>
+
+<p>Sus casos: Sears fijó a los talleres mecánicos una meta de 147 dólares de venta por hora, y el resultado fue sobrecobro y reparaciones innecesarias en toda la compañía; Ford fijó la meta de un auto de menos de 2.000 libras y menos de 2.000 dólares para 1970, y con ese plazo varios niveles de jefatura firmaron controles de seguridad que no se hicieron, incluido el del estanque de combustible del Pinto (Ordóñez et al., 2009). El caso posterior a ese artículo es el más contundente: Wells Fargo, bajo presión sistemática por metas de venta cruzada, abrió cerca de 1.5 millones de cuentas sin autorización y 565 mil solicitudes de tarjeta no pedidas, despidió a 5.300 empleados y pagó una multa de 185 millones de dólares (Consumer Financial Protection Bureau, 2016); el acuerdo con el Departamento de Justicia llegó en 2020 a 3.000 millones (United States Department of Justice, 2020). La conclusión del informe interno de la empresa fue que la presión por cumplir las metas, más que la compensación directa, había sido el motor principal de las prácticas indebidas.</p>
+
+<h3>El debate, y por qué no hay una conclusión clara</h3>
+
+<p>Locke y Latham respondieron al estudio con un artículo llamado "Has goal setting gone wild, or have its attackers abandoned good scholarship?" (Locke y Latham, 2009). Plantean cinco puntos generales: las anécdotas de prensa no son evidencia; se ignoraron variables confundidas, sobre todo incentivos mal diseñados; hubo citación selectiva; se reportaron mal algunos resultados; y los peligros ya estaban reconocidos en su propio libro de 1984, que les dedica un capítulo.</p>
+
+<p>Casi una década después, Latham y Locke (2018) agregaron el reanálisis empírico. Reconocen limitaciones reales: la mentalidad de solo resultados se asocia con conducta no ética, el perfeccionismo con metas excesivas predice agotamiento, y los supervisores que perciben sus metas como excesivas maltratan más a su gente (Mawritz et al., 2014, citado en Latham y Locke, 2018). Pero reanalizan el experimento de 2004: solo mintió el 1.5%, 4.7% y 9% de cada condición, la sobredeclaración media fue 0.11 palabras sobre medias de 5.5 a 6.2, y nadie tomó dinero no merecido pudiendo hacerlo sin ser descubierto. Precisan además que el percentil 90 fue una pauta para estudios de laboratorio, nunca una recomendación de campo, donde la pauta es la meta difícil pero alcanzable. Y ofrecen la salida accionable: emparejar la meta de desempeño con una meta conductual de ética o justicia minimizó la trampa en un experimento de negociación (Ganegoda et al., 2016, citado en Latham y Locke, 2018).</p>
+
+<p>La evidencia posterior refina el mecanismo. Welsh y Ordóñez (2014) mostraron que no es solo el punto de referencia: las metas altas consecutivas agotan los recursos de autocontrol, y ese agotamiento media la conducta antiética. Y Welsh et al. (2019) mostraron que las metas de aprendizaje reducen la conducta antiética sin sacrificar desempeño, incluso cuando son muy desafiantes. Allí hay un antídoto respaldado por evidencia.</p>
+
+<p>Sobre esta sección hay algo que creo importante enfatizar. No existe (o no he podido encontrar) un meta-análisis sobre metas y conducta antiética: lo que hay son experimentos y revisiones narrativas. Y las cifras de muertes del Ford Pinto que circulan provienen del artículo de Ordóñez et al. y son históricamente debatidas; no corresponde presentarlas como dato establecido. Es decir que no podemos tomar como afirmación definitiva que las metas inducen conductas poco éticas pero sí hay antecedentes para pensar que esto <em>puede</em> ocurrir, por lo que conviene tomar precauciones.</p>
+
+<h3>El aterrizaje chileno</h3>
+
+<p>Como discutimos en clases, los conceptos de valencia y de instrumentalidad planetados por Vroom no se calculan en el vacío, sino contra los ingresos reales de las personas. Según la Encuesta Suplementaria de Ingresos 2025, en Chile, la mediana del ingreso mensual neto de la ocupación principal fue de $680.000 y el promedio de $962.945; el promedio es 42% más alto que la mediana, y el 68.7% de las personas ocupadas gana igual o menos que ese promedio. La mediana con educación media fue $598.442 y la mediana con postgrado $2.120.927 (Instituto Nacional de Estadísticas, 2026). Cada vez que alguien dice que "el sueldo promedio en Chile es de casi un millón", esa es la trampa: al promedio lo levantan unos pocos ingresos muy altos, y la mediana es lo que la mitad de la gente efectivamente no supera. ¿Qué implican estos datos para la valencia y la instrumentalidad en su aplicación al contexto nacional?</p>
+
+<p>Al preparar este apunte no encontré estudios publicados sobre fijación de metas con trabajadores chilenos que permitan decir si los tamaños de efecto de la literatura internacional se replican aquí. Lo que sí es el marco legal de la Ley 21.431, que obliga a las plataformas digitales a informar cómo su algoritmo asigna y evalúa, es decir, cómo fija metas sin decirlo. Si fuiste a esa clase, recordarás lo que conversamos.</p>
+
+<h3>Los tres outcomes</h3>
+
+<p><strong>Desempeño.</strong> Sube, y bastante: d entre .42 y .80 frente a "haz tu mejor esfuerzo", con dos condiciones (compromiso y retroalimentación) y un límite (en tareas complejas el efecto se reduce casi a la mitad, y con la estrategia equivocada se invierte).</p><p><strong>Actitudes.</strong> Efecto ambiguo, con una paradoja documentada: quienes tienen metas más difíciles producen más y quedan menos satisfechos, porque la vara con que se juzgan está más alta. En un estudio con estudiantes, la máxima satisfacción anticipada fue la de quienes tenían meta de C y la mínima la de quienes tenían meta de A (Mento, Locke y Klein, 1992, citado en Locke y Latham, 2002). En el ciclo de alto desempeño de la teoría, la satisfacción es el resultado del desempeño recompensado, no su causa.</p><p><strong>Bienestar.</strong> Es el lado que la teoría clásica trató menos. Las metas altas consecutivas agotan los recursos de autocontrol (Welsh y Ordóñez, 2014), y a eso se suman el estrés y la sensación de fracaso cuando la meta no se alcanza. Una palanca que sube un outcome y hunde otro no es una buena palanca: es una decisión, y hay que tomarla a ojos abiertos.</p><h2>E. Mito versus evidencia</h2><div class="mito"><p><span class="etiqueta">Se dice que...</span> una buena meta es una meta alcanzable, como dice la A de SMART.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la relación entre dificultad y desempeño es positiva y lineal hasta el límite de la capacidad: las metas más difíciles producen más esfuerzo y más rendimiento (Locke y Latham, 2002). La meta fácil de cumplir es la que no sirve, y en un experimento de campo rindió peor que no tener meta (Goerg, 2015). "Alcanzable" es correcto solo en el sentido de "no imposible": en terreno, la meta imposible desmoraliza (Locke y Latham, 2019).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque SMART es una regla de consultoría fácil de recordar, y porque una meta alcanzable es más cómoda de fijar y de cumplir para las dos partes.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> las metas hay que fijarlas participativamente, o la gente no se compromete.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> con dificultad igualada, la meta asignada rinde igual que la participativa siempre que se explique su propósito; el efecto de la participación sobre el desempeño medido objetivamente es de .11 (Wagner y Gooding, 1987, citado en Locke y Latham, 2002). Lo que rinde menos es la meta asignada sin justificación. El beneficio de participar es cognitivo, y aparece cuando el subordinado sabe algo que el jefe no.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque la participación es deseable por otras razones (justicia procedimental, información) y porque suena mejor que "asignar".</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> las metas hacen que la gente mienta.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> una meta difícil duplicó la proporción de personas que sobredeclararon su desempeño, y el efecto se concentró en quienes quedaron a una palabra de cumplirla (Schweitzer et al., 2004). Pero la sobredeclaración media fue de 0.11 palabras, mintió entre el 1.5% y el 9% según la condición, y nadie tomó dinero no merecido pudiendo hacerlo (Latham y Locke, 2018). Las metas no hacen mentir a la gente en general: crean un punto de referencia que, para la minoría que queda justo debajo, convierte el fraude pequeño en tentación. Y hay antídotos con evidencia: metas de aprendizaje y metas conductuales de ética junto a la de desempeño.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> por los casos escandalosos en el numerador y los mil estudios en el denominador; Latham y Locke lo llaman sesgo de disponibilidad.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> "haz tu mejor esfuerzo" respeta la autonomía y por eso motiva más.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> es una de las peores instrucciones posibles para el desempeño en tareas que la persona domina, porque no tiene referente y cada uno la define hacia abajo (Locke y Latham, 2002). La única situación en que supera a una meta específica difícil es la tarea nueva o compleja, y ahí la mejor opción no es la instrucción vaga sino una meta de aprendizaje.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque confunde autonomía con ausencia de estándar. La autonomía de la clase 6 es sentirse origen de la propia conducta, y eso es perfectamente compatible con una meta clara cuyo propósito se entiende.</p></div><div class="mito"><p><span class="etiqueta">Se dice que...</span> la autoeficacia se construye con charlas motivacionales.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la fuente más potente es la experiencia de logro, seguida del modelamiento; la persuasión verbal es la tercera y funciona solo si quien persuade es creíble (Bandura, 1997). Además, la autoeficacia agrega poco valor predictivo una vez controladas la habilidad y la experiencia (Judge et al., 2007), y dentro de una persona es más consecuencia del desempeño previo que causa del futuro (Sitzmann y Yeo, 2013). Se construye con metas próximas que se cumplen, no con discursos.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque la charla es barata, visible y se siente bien, y porque el efecto Pigmalión existe, aunque sea más chico de lo que se vende.</p></div>
+
+
+<h2>F. Qué significa para un ingenierio comercial</h2>
+<p><strong>Nunca digas "haz lo mejor que puedas".</strong> Es una instrucción cómoda que renuncia al mecanismo más barato de gestión que existe. Fija una meta específica, difícil y con plazo, y explique para qué sirve.</p>
+<p><strong>Antes de fijar la meta, diagnostica con el modelo de Vroom.</strong> Si la persona no cree poder (expectativa), la meta hay que acercarla y acompañarla de entrenamiento. Si no cree que el sistema cumpla (instrumentalidad), el problema no es la meta sino la credibilidad de quien la fija. Si el premio no le importa (valencia), ninguna meta va a mover nada.</p>
+<p><strong>Distingue al que aprende del que ya sabe.</strong> Al que recién entra o enfrenta una tarea nueva, metas de aprendizaje (cuántas maneras de hacerlo va a descubrir). Al que domina la tarea, metas de desempeño. Ponerle una meta de producción alta a alguien que todavía no sabe cómo producir es la forma más rápida de conseguir menos.</p>
+<p><strong>Cierra el circuito de retroalimentación antes de que la meta venza.</strong> Una meta mensual con dato disponible el mes siguiente no es un sistema de metas: es una evaluación. La retroalimentación tiene que llegar a tiempo para corregir el rumbo, y al novato le sirve en positivo y sobre el avance.</p>
+<p><strong>Trata de ver lo que la meta podría ocultar.</strong> Toda meta ilumina una dimensión. La pregunta de diseño es qué queda sin medir (calidad, cooperación, seguridad, ética) y con qué otro mecanismo se va a cuidar. Si no tienes respuesta, el sistema va a optimizar exactamente lo que no querías.</p>
+<p><strong>Diseña para el que queda justo debajo.</strong> El fraude no aparece en quien está lejos de la meta sino en quien está a una unidad de cumplirla. Un bono de todo o nada crea un escalón; un bono escalonado lo aplana. Y la meta conductual de ética junto a la de desempeño es la salvaguarda con mejor evidencia.</p>
+<p><strong>Trata la meta como una decisión sobre tres outcomes.</strong> Va a subir el desempeño. Puede bajar la satisfacción de quien más produce y puede agotar a quien persigue metas altas. Eso no es una razón para no fijar metas: es una razón para fijarlas sabiendo lo que cuestan.</p>
+
+<h2>G. Para la evaluación</h2><p>Después de leer este apunte deberías poder:</p><ol><li>Explicar por qué una meta específica y difícil supera a "haz tu mejor esfuerzo", citando los cuatro mecanismos y las magnitudes de efecto que lo sostienen.</li><li>Identificar los tres moderadores declarados de la teoría y explicar qué pasa con el efecto de la meta en tareas complejas, con cifras.</li><li>Distinguir una meta de aprendizaje de una meta de desempeño y decidir cuál corresponde a una persona según su dominio de la tarea.</li><li>Usar el modelo de Vroom como herramienta de diagnóstico (qué eslabón está roto) y explicar qué predice bien y qué no, según la evidencia metaanalítica.</li><li>Describir el diseño y los resultados de Schweitzer et al. (2004), incluido el hallazgo de proximidad, y explicar qué permite y qué no permite concluir una réplica de sala.</li><li>Exponer los seis efectos secundarios de Ordóñez et al. (2009) y las cinco objeciones de Locke y Latham (2009), y explicar por qué el debate no se cierra a favor de nadie.</li><li>Analizar un sistema de metas concreto identificando qué dimensión deja a oscuras, dónde crea un escalón y qué salvaguardas con evidencia se pueden agregar.</li></ol><h2>H. Referencias</h2><div class="referencias"><p>Bandura, A. (1997). <em>Self-efficacy: The exercise of control</em>. W. H. Freeman.</p><p>Consumer Financial Protection Bureau. (2016, 8 de septiembre). <em>Consumer Financial Protection Bureau fines Wells Fargo $100 million for widespread illegal practice of secretly opening unauthorized accounts</em> [Comunicado de prensa].</p><p>Fishbach, A. (2025). Goals and motivation. En D. T. Gilbert, S. T. Fiske, E. J. Finkel, & W. B. Mendes (Eds.), <em>The handbook of social psychology</em> (6th ed.). Situational Press. <a href="https://doi.org/10.70400/YBHK1018">https://doi.org/10.70400/YBHK1018</a></p><p>Goerg, S. J. (2015). Goal setting and worker motivation. <em>IZA World of Labor</em>, Artículo 178. <a href="https://doi.org/10.15185/izawol.178">https://doi.org/10.15185/izawol.178</a></p><p>Instituto Nacional de Estadísticas. (2026). <em>Síntesis de principales resultados: Encuesta Suplementaria de Ingresos 2025</em>. INE.</p><p>Judge, T. A., Jackson, C. L., Shaw, J. C., Scott, B. A., & Rich, B. L. (2007). Self-efficacy and work-related performance: The integral role of individual differences. <em>Journal of Applied Psychology, 92</em>(1), 107–127. <a href="https://doi.org/10.1037/0021-9010.92.1.107">https://doi.org/10.1037/0021-9010.92.1.107</a></p><p>Kluger, A. N., & DeNisi, A. (1996). The effects of feedback interventions on performance: A historical review, a meta-analysis, and a preliminary feedback intervention theory. <em>Psychological Bulletin, 119</em>(2), 254–284. <a href="https://doi.org/10.1037/0033-2909.119.2.254">https://doi.org/10.1037/0033-2909.119.2.254</a></p><p>Latham, G. P., & Locke, E. A. (2018). Goal setting theory: Controversies and resolutions. En D. S. Ones, N. Anderson, C. Viswesvaran, & H. K. Sinangil (Eds.), <em>The SAGE handbook of industrial, work and organizational psychology</em> (2nd ed., Vol. 2, pp. 145–166). SAGE.</p><p>Ley 21.431. (2022). <em>Modifica el Código del Trabajo regulando el contrato de trabajadores de empresas de plataformas digitales de servicios</em>. Diario Oficial de la República de Chile, 11 de marzo de 2022.</p><p>Locke, E. A., & Latham, G. P. (2002). Building a practically useful theory of goal setting and task motivation: A 35-year odyssey. <em>American Psychologist, 57</em>(9), 705–717. <a href="https://doi.org/10.1037/0003-066X.57.9.705">https://doi.org/10.1037/0003-066X.57.9.705</a></p><p>Locke, E. A., & Latham, G. P. (2009). Has goal setting gone wild, or have its attackers abandoned good scholarship? <em>Academy of Management Perspectives, 23</em>(1), 17–23. <a href="https://doi.org/10.5465/amp.2009.37008000">https://doi.org/10.5465/amp.2009.37008000</a></p><p>Locke, E. A., & Latham, G. P. (2019). The development of goal setting theory: A half century retrospective. <em>Motivation Science, 5</em>(2), 93–105. <a href="https://doi.org/10.1037/mot0000127">https://doi.org/10.1037/mot0000127</a></p><p>Lord, R. G., Diefendorff, J. M., Schmidt, A. M., & Hall, R. J. (2010). Self-regulation at work. <em>Annual Review of Psychology, 61</em>, 543–568. <a href="https://doi.org/10.1146/annurev.psych.093008.100314">https://doi.org/10.1146/annurev.psych.093008.100314</a></p><p>Ordóñez, L. D., Schweitzer, M. E., Galinsky, A. D., & Bazerman, M. H. (2009). Goals gone wild: The systematic side effects of overprescribing goal setting. <em>Academy of Management Perspectives, 23</em>(1), 6–16. <a href="https://doi.org/10.5465/amp.2009.37007999">https://doi.org/10.5465/amp.2009.37007999</a></p><p>Schweitzer, M. E., Ordóñez, L., & Douma, B. (2004). Goal setting as a motivator of unethical behavior. <em>Academy of Management Journal, 47</em>(3), 422–432. <a href="https://doi.org/10.5465/20159591">https://doi.org/10.5465/20159591</a></p><p>Sitzmann, T., & Yeo, G. (2013). A meta-analytic investigation of the within-person self-efficacy domain: Is self-efficacy a product of past performance or a driver of future performance? <em>Personnel Psychology, 66</em>(3), 531–568. <a href="https://doi.org/10.1111/peps.12035">https://doi.org/10.1111/peps.12035</a></p><p>United States Department of Justice. (2020, 21 de febrero). <em>Wells Fargo agrees to pay $3 billion to resolve criminal and civil investigations into sales practices</em> [Comunicado de prensa].</p><p>van Eerde, W., & Thierry, H. (1996). Vroom's expectancy models and work-related criteria: A meta-analysis. <em>Journal of Applied Psychology, 81</em>(5), 575–586.</p><p>Van Iddekinge, C. H., Arnold, J. D., Aguinis, H., Lang, J. W. B., & Lievens, F. (2023). Work effort: A conceptual and meta-analytic review. <em>Journal of Management, 49</em>(1), 125–157. <a href="https://doi.org/10.1177/01492063221087641">https://doi.org/10.1177/01492063221087641</a></p><p>Vroom, V. H. (1964). <em>Work and motivation</em>. Wiley.</p><p>Welsh, D. T., & Ordóñez, L. D. (2014). The dark side of consecutive high performance goals: Linking goal setting, depletion, and unethical behavior. <em>Organizational Behavior and Human Decision Processes, 123</em>(2), 79–89. <a href="https://doi.org/10.1016/j.obhdp.2013.07.006">https://doi.org/10.1016/j.obhdp.2013.07.006</a></p><p>Welsh, D., Bush, J., Thiel, C., & Bonner, J. (2019). Reconceptualizing goal setting's dark side: The ethical consequences of learning versus outcome goals. <em>Organizational Behavior and Human Decision Processes, 150</em>, 14–27. <a href="https://doi.org/10.1016/j.obhdp.2018.11.001">https://doi.org/10.1016/j.obhdp.2018.11.001</a></p></div><h3>Para profundizar</h3><ul><li>Locke y Latham (2002): la fuente única si vas a leer una sola. Trece páginas escritas por los autores de la teoría, con las cifras, los mecanismos y los moderadores.</li><li>Ordóñez et al. (2009) y Locke y Latham (2009), leídos en ese orden y en la misma sentada: el mejor ejemplo del curso de cómo se discute con evidencia entre colegas que no están de acuerdo.</li><li>Fishbach (2025): si te interesó la dinámica del avance, este capítulo la trae completa y es de lectura accesible.</li></ul>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

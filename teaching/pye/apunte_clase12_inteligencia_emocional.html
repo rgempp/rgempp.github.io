@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inteligencia emocional · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 12</p>
+  <h1>Inteligencia emocional: qué es, cómo se mide, qué predice y qué conviene comprar</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 12 <br>
+    Complementa y actualiza R&amp;J cap. 4 · Se lee junto con el Apunte N° 11 <br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Pocas ideas de la psicología han tenido tanto éxito comercial como la inteligencia emocional. En Chile se ofrece como curso de educación continua en las principales universidades, como programa de capacitación con código SENCE, como módulo de casi todo diplomado de liderazgo, y como test en procesos de selección y de desarrollo de ejecutivos. La promesa que la acompaña desde 1995 es que importa más que el CI para el éxito en la vida y en el trabajo. El capítulo 4 de Robbins y Judge es cauto con esa promesa, pero no le da al lector las herramientas para evaluar lo que le van a vender: no distingue con claridad entre las corrientes de investigación que usan el mismo nombre para cosas distintas, no reporta magnitudes, y no explica por qué un cuestionario de autoinforme no puede medir una habilidad.</p>
+<p>Este apunte hace tres cosas. Primero, ordena el campo: qué definió la investigación original, qué le agregó el mercado y qué mide cada tipo de instrumento. Segundo, resume la evidencia metaanalítica sobre tres preguntas: si la inteligencia emocional es una inteligencia, si es personalidad con otro nombre y qué predice por sobre lo que ya sabíamos medir. Tercero, traduce eso a decisiones: qué exigirle a un test o a un taller antes de pagar por ellos, y para qué usos la evidencia respalda su empleo y para cuáles no. La conclusión no es que la inteligencia emocional no exista. Existe, como habilidad, se mide con tareas y predice de manera modesta y específica. Lo que no resiste la evidencia es la versión que más se vende.</p>
+<h2>B. La idea en breve</h2><div class="resumen">
+<p>Salovey y Mayer (1990) definieron la <strong>inteligencia emocional</strong> como una habilidad: percibir emociones, usarlas para pensar, comprenderlas y manejarlas. Como toda habilidad, se mide con tareas que tienen respuestas mejores y peores. Goleman (1995) popularizó el nombre, le sumó rasgos de personalidad, motivación y habilidades sociales, y prometió que importaba más que el CI. Desde entonces conviven bajo el mismo nombre tres corrientes (Ashkanasy &amp; Daus, 2005): tests de habilidad basados en el modelo de Salovey y Mayer, cuestionarios de autoinforme basados en ese mismo modelo, y modelos "mixtos" o de rasgo, medidos por autoinforme, que abarcan mucho más que emociones.</p>
+<p>Tres hechos ordenan la evidencia. Los cuestionarios de rasgo son, en lo esencial, personalidad con otro nombre: correlacionan cerca de .85 con el factor general de personalidad, mientras que los tests de habilidad correlacionan .28 (van der Linden et al., 2017). La inteligencia emocional mixta autoinformada correlaciona .29 con el desempeño evaluado por el supervisor, pero esa relación desaparece (β = −.02) al controlar siete constructos ya conocidos (Joseph et al., 2015). Y la de habilidad predice el desempeño de manera modesta (ρ = .18) y sobre todo en trabajos de alta carga emocional (ρ = .24 contra .01 en los de baja carga; Joseph &amp; Newman, 2010).</p>
+<p>A eso se suma el problema del autoconocimiento: quienes tienen menos habilidad emocional son los que más se sobreestiman, los que más descartan el feedback y los que menos quieren aprender (Sheldon et al., 2014). Para un administrador la regla es simple: si se quiere medir habilidad, hay que usar tareas; si se usa un cuestionario, se está midiendo personalidad y confianza en uno mismo, y conviene llamarlas por su nombre.</p>
+</div><h2>C. Los conceptos</h2>
+<h3>La definición original: una habilidad con cuatro ramas</h3>
+<p>Salovey y Mayer (1990) propusieron la inteligencia emocional como la capacidad de monitorear las emociones propias y ajenas, discriminarlas y usar esa información para guiar el pensamiento y la acción. El modelo maduro (Mayer, Caruso &amp; Salovey, 2016) distingue cuatro ramas ordenadas de la más básica a la más compleja: <strong>percibir</strong> emociones con precisión en caras, voces, posturas y en uno mismo; <strong>usar</strong> las emociones para facilitar el pensamiento (saber qué estado sirve para qué tarea, lo que conecta con el dual tuning del Apunte 10); <strong>comprender</strong> las emociones, sus causas, sus mezclas y cómo cambian con el tiempo; y <strong>manejar</strong> las emociones, propias y de otros, para alcanzar metas. El punto decisivo de la definición es que se trata de una habilidad, es decir, de algo que la persona es capaz de hacer y que se evalúa con tareas de desempeño, como cualquier otra inteligencia.</p>
+<p>Joseph y Newman (2010) dieron a las ramas una estructura causal, el <strong>modelo en cascada</strong>: percibir emociones es condición para comprenderlas, comprenderlas es condición para regularlas de manera deliberada, y la regulación es lo que afecta el desempeño. La percepción se apoya en la responsabilidad (atención al detalle), la comprensión en la capacidad cognitiva general y la regulación en la estabilidad emocional. El modelo se sostuvo con datos metaanalíticos.</p>
+<h3>Tres corrientes con un mismo nombre</h3>
+<p>Ashkanasy y Daus (2005) ordenaron la literatura en tres corrientes que conviene tener claras cada vez que alguien dice "medimos la inteligencia emocional". La <strong>corriente 1</strong> usa el modelo de cuatro ramas y lo mide con tests de habilidad, con respuestas correctas e incorrectas; el instrumento de referencia es el MSCEIT (Mayer-Salovey-Caruso Emotional Intelligence Test). La <strong>corriente 2</strong> usa la misma definición pero la mide con cuestionarios de autoinforme o de reporte de pares: la persona dice qué tan buena es percibiendo o manejando emociones (por ejemplo, la escala de Schutte et al., 1998). La <strong>corriente 3</strong> son los modelos <strong>mixtos</strong> o de <strong>rasgo</strong>: no usan la definición de Salovey y Mayer, se miden casi siempre por autoinforme, y abarcan optimismo, asertividad, empatía, motivación, autoestima, manejo del estrés y habilidades sociales. Aquí están el EQ-i, el ESCI de Goleman y Boyatzis, el Genos y el TEIQue de Petrides, que sus autores prefieren llamar "inteligencia emocional rasgo" o "autoeficacia emocional".</p>
+<p>En clases usamos una clasificación de cuatro enfoques que es compatible con la anterior y más útil para leer un catálogo de tests: (1) autopercepción, con cuestionarios en que la persona se describe ("soy bueno leyendo los sentimientos de los demás"); (2) competencias percibidas por otros, típicamente en evaluaciones de 360 grados ("Aurelio se da cuenta cuando alguien necesita apoyo"); (3) mixto, que combina los dos anteriores con competencias varias; y (4) habilidad, con tareas objetivas. Solo el cuarto mide lo que Salovey y Mayer definieron. Los tres primeros miden lo que la persona, o quienes la rodean, creen de ella.</p>
+<h3>Qué hay dentro de un test de habilidad</h3>
+<p>Un test de habilidad presenta tareas. Para percepción: identificar la emoción en una cara, en un video breve o en una voz. Para comprensión: decir qué emoción resulta de combinar otras dos, cómo cambiará la emoción de un personaje después de un evento, o qué siente cada persona en una viñeta. Para manejo: leer una situación y elegir, entre varias respuestas posibles, la más efectiva para uno mismo o para otro. La corrección se establece por consenso de expertos, por consenso de la población normativa o, en los tests más recientes, por teoría: el Geneva Emotional Competence Test (GECo; Schlegel &amp; Mortillaro, 2019) construye sus ítems de juicio situacional con escenarios laborales y define las respuestas correctas a partir de las teorías de la emoción y de la regulación, no de lo que opina la mayoría. Cinco estudios con 888 participantes mostraron buena precisión de medida, correlaciones esperables con capacidad cognitiva y personalidad, y predicción del desempeño en tareas de assessment center en profesionales.</p>
+<p>Dos matices técnicos importan para quien vaya a usar uno. El primero es la estructura: aunque el modelo dice cuatro ramas, los análisis factoriales a nivel de ítem de cuatro tests de habilidad (muestras de 503, 5.000, 1.000 y 2.000) sugieren que la estructura empírica no coincide exactamente con las cuatro áreas teóricas, y los propios autores del modelo proponen revisiones (Mayer, Caruso, Sitarenios &amp; Romero Escobar, 2024). El segundo es la diferencia entre <strong>desempeño máximo</strong> y <strong>desempeño típico</strong>: un test de manejo emocional puede preguntar "¿cuál es la mejor respuesta?" o "¿qué haría usted?", y las dos instrucciones miden cosas distintas. En dos estudios (Croacia, N = 215; Australia, N = 138), la versión de desempeño máximo predijo el promedio de notas y la de desempeño típico predijo la resiliencia; y las personas más responsables fueron las que más se acercaron a su máximo en la conducta típica (Mohorić et al., 2024). Para selección interesa el máximo; para predecir la conducta cotidiana, el típico.</p>
+<p>Un test popular que conviene mirar con cuidado es el Reading the Mind in the Eyes Test (RMET), en que se identifica el estado mental de una persona a partir de una foto de sus ojos. Una revisión sistemática de veinte años de uso encontró que la mayoría de los estudios que lo emplean no reporta evidencia de validez de constructo que respalde la interpretación de sus puntajes (Higgins et al., 2024). Ser famoso no es lo mismo que estar validado.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>¿Es una inteligencia?</h3>
+<p>Para que algo sea una inteligencia, sus componentes deberían correlacionar entre sí y con la capacidad cognitiva general, y los tests de habilidad cumplen ambas condiciones en grado razonable (Côté, 2014; Elfenbein, 2023). El metaanálisis de Schlegel et al. (2020), con 471 tamaños de efecto de 133 muestras, estimó la correlación entre la capacidad de reconocer emociones en señales no verbales y la inteligencia en r = .19, similar para inteligencia fluida, cristalizada, espacial y de memoria, y mayor en tests que presentan cara, voz y cuerpo a la vez que en tests de fotos estáticas. Es una relación positiva y modesta: reconocer emociones es en parte una cuestión de inteligencia general y en parte otra cosa. Eso es exactamente lo que se espera de una inteligencia específica.</p>
+<h3>¿Es personalidad con otro nombre?</h3>
+<p>Depende de cuál. Van der Linden et al. (2017) metaanalizaron 142 fuentes de datos con 36.268 personas y encontraron que la inteligencia emocional <strong>de rasgo</strong> (los cuestionarios de autoinforme de la corriente 3) correlaciona aproximadamente .85 con el factor general de personalidad extraído de los Cinco Grandes; la de <strong>habilidad</strong>, .28. Una correlación de .85 entre dos constructos medidos con instrumentos distintos es, en la práctica, identidad. Anglim et al. (2020) llegaron a lo mismo desde el modelo HEXACO: la personalidad explica la mayor parte de la varianza de la inteligencia emocional de rasgo, con la extraversión como el dominio más asociado. Elfenbein (2023) resume la implicancia con una frase: la importancia de la inteligencia emocional autoinformada es epifenoménica, es decir, lo que la gente cree sobre sus habilidades importa porque lo cree, no porque coincida con lo que es capaz de hacer.</p>
+<h3>¿Qué predice?</h3>
+<p>Joseph y Newman (2010) metaanalizaron la relación con el desempeño laboral separando construcción y método de medida. La inteligencia emocional de habilidad, medida con tests de desempeño, correlacionó ρ = .18 con el desempeño (k = 10, N = 887); en trabajos con alta carga emocional, ρ = .24; en trabajos con baja carga, ρ = .01. La inteligencia emocional mixta autoinformada correlacionó ρ = .47 (k = 9). Esa última cifra, la más alta que se había reportado para casi cualquier predictor, fue la que despertó sospechas.</p>
+<p>Joseph, Jin, Newman y O'Boyle (2015) la revisaron con más estudios y desempeño evaluado por supervisores: ρ = .29. Luego hicieron la pregunta correcta: ¿qué hay adentro de un cuestionario mixto? Siete constructos conocidos: inteligencia emocional de habilidad, autoeficacia, desempeño autoevaluado, responsabilidad, estabilidad emocional, extraversión y capacidad cognitiva general. En conjunto, explican el contenido de la inteligencia emocional mixta con una correlación múltiple de .79. Y al controlar esos siete, la relación de la inteligencia emocional mixta con el desempeño queda en β = −.02. La inteligencia emocional mixta predice el desempeño porque adentro lleva personalidad, confianza y capacidad cognitiva con otro nombre.</p>
+<p>Hay que decir que el debate no fue unánime. O'Boyle, Humphrey, Pollack, Hawver y Story (2011) habían reportado, también con datos metaanalíticos, validez incremental de las tres corrientes por sobre capacidad cognitiva y personalidad, y Ashkanasy y Dorris (2017) citan ese resultado para defender que las tres corrientes tienen algo que decir. La diferencia con Joseph et al. (2015) está en los controles: cuando a la personalidad y la capacidad cognitiva se agregan la autoeficacia y el desempeño autoevaluado, que son precisamente lo que un cuestionario de autoinforme captura mejor, la validez incremental de la corriente mixta desaparece. La lectura más defendible hoy es que la inteligencia emocional de habilidad tiene una validez modesta y específica, y que la mixta no agrega nada por sobre lo que ya se sabía medir.</p>
+<p>Fuera del trabajo la historia es la misma. MacCann et al. (2020) metaanalizaron la relación con el desempeño académico en 42.529 estudiantes: ρ = .20 en total, .24 para los tests de habilidad, .12 para los autoinformes y .19 para los mixtos, con los efectos más altos en las ramas de comprensión y manejo de emociones. La inteligencia emocional predice, pero predice de manera modesta, más cuando se mide como habilidad, y menos que la responsabilidad o la inteligencia general, cuyas correlaciones con el rendimiento académico son de tamaño similar o mayor.</p>
+<p>Côté (2014) propone tres maneras de pensar la relación entre inteligencia emocional y resultados, y las tres son más útiles que la pregunta "¿predice o no?". El modelo de <strong>generalización de validez</strong> pregunta por el beneficio promedio en todos los trabajos: positivo y modesto. El modelo <strong>específico de la situación</strong> pregunta dónde importa más: en trabajos de alta carga emocional, en cargos donde hay que leer a otros, y menos donde la capacidad cognitiva compensa. El modelo <strong>moderador</strong> pregunta qué otras relaciones cambia: por ejemplo, la inteligencia emocional puede amortiguar el efecto del estrés o, al revés, estrechar el vínculo entre las metas de una persona y su conducta, para bien o para mal.</p>
+<h3>El problema del autoconocimiento</h3>
+<p>Sheldon, Dunning y Ames (2014) hicieron rendir el MSCEIT a estudiantes de magíster y MBA en tres estudios y les pidieron estimar en qué percentil de la población adulta estaban. En promedio se ubicaron en el percentil 77; su resultado real fue el 41. Treinta y seis puntos de sobreestimación. El patrón de Dunning y Kruger apareció con nitidez: quienes estaban en el percentil 10 real se sobreestimaron entre 63 y 69 puntos según el estudio; quienes estaban en el 90, entre 5 y 20. Al recibir su resultado, los de peor desempeño lo descartaron (el test estaba mal diseñado, las situaciones eran artificiales) y corrigieron solo una fracción de su estimación. Y cuando se les ofreció comprar con descuento un libro sobre inteligencia emocional, el 64% del cuarto superior quiso comprarlo y el 20% del cuarto inferior. Quienes más lo necesitan son quienes menos lo saben y menos quieren aprender.</p>
+<p>El resultado no es exclusivo de la inteligencia emocional. Mayer, Panter y Caruso (2020) lo encontraron para la inteligencia personal, la capacidad de entender rasgos, metas y planes propios y ajenos: las personas que se sobreestimaban eran más optimistas y sociables; las que se estimaban con precisión tenían más inteligencia verbal y personal, más apertura y más responsabilidad. La consecuencia para cualquier cuestionario de autoinforme de habilidad es la paradoja que señala Côté (2014): para evaluar con precisión la propia autoconciencia se necesita autoconciencia. Un autoinforme de inteligencia emocional mide, en buena parte, la confianza de la persona en sí misma.</p>
+<h3>El lado oscuro</h3>
+<p>Hay una tendencia a suponer que más inteligencia emocional es siempre mejor. Kilduff, Chiaburu y Menges (2010) argumentan que, como toda habilidad, puede usarse para fines propios a costa de otros: leer con precisión lo que sienten los compañeros y usarlo, controlar el flujo de información emocional, influir sobre las emociones ajenas hacia metas egoístas, fingir expresiones con destreza, encuadrar eventos con reevaluaciones estratégicas y disfrazar intereses. Elfenbein (2023) agrega que una habilidad excepcional para leer a los demás puede dar acceso a sentimientos privados que las personas preferirían no compartir, en perjuicio de las relaciones. Y si la inteligencia emocional estrecha el vínculo entre las metas de una persona y su conducta, facilita las metas que tenga, también las malas. Una organización que selecciona por inteligencia emocional sin mirar los valores está seleccionando una herramienta, no una virtud.</p>
+<h3>¿Se puede entrenar?</h3>
+<p>Si la inteligencia emocional es una inteligencia, debería ser relativamente estable, y las transformaciones que prometen los seminarios breves son dudosas (Elfenbein, 2023). La evidencia sobre entrenamiento se concentra en el reconocimiento de emociones, donde la práctica con retroalimentación funciona mejor que la instrucción en aula. La mayoría de los programas comerciales mezcla componentes heterogéneos, lo que hace imposible saber qué parte funcionó. Lo que sí tiene evidencia causal es el entrenamiento de una habilidad específica de regulación: la reevaluación cognitiva, que en un ensayo aleatorizado con 176 trabajadores mejoró el afecto y el desempeño durante tres semanas y un mes después (Zhu et al., 2025; ver Apunte 11). La diferencia es instructiva: entrenar una estrategia concreta, con práctica diaria y en el trabajo, funciona; prometer que dos días de taller elevan una inteligencia, no.</p>
+<h3>Y en Chile</h3>
+<p>La evidencia chilena sobre inteligencia emocional es escasa y toda del lado de la medición de rasgo. El TEIQue-SF, el cuestionario breve de inteligencia emocional de rasgo, tiene una versión en castellano de Chile cuyos datos se usaron en la prueba de invarianza de medición con el Reino Unido y Brasil: el instrumento mide lo mismo en las tres muestras (Perazzo et al., 2021), lo que permite comparar puntajes pero no cambia lo que mide, es decir, personalidad y autoeficacia emocional. No hay, hasta donde llega esta revisión, estudios chilenos publicados de validez predictiva de tests de inteligencia emocional para selección de personal, ni de validez incremental por sobre personalidad y capacidad cognitiva. Lo que sí hay en Chile es investigación de primer nivel sobre las emociones en el trabajo y su regulación (Madrid &amp; Patterson, 2014; Madrid et al., 2015, 2019, 2020; y el FONDECYT 1241333 que se presenta en clases), que es el sustrato sobre el que la inteligencia emocional de habilidad tendría sentido. La oferta de cursos y tests, en cambio, es abundante, y casi toda descansa en la corriente 3.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> la inteligencia emocional importa más que el CI para el éxito laboral.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la inteligencia emocional de habilidad correlaciona ρ = .18 con el desempeño laboral, .24 en trabajos de alta carga emocional (Joseph &amp; Newman, 2010), y la mixta autoinformada, ρ = .29, que baja a β = −.02 al controlar personalidad, capacidad cognitiva y autoeficacia (Joseph et al., 2015). La capacidad cognitiva general sigue siendo el predictor individual más fuerte del desempeño en la mayoría de los trabajos.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque la frase es de un best seller de 1995, es halagadora para quien la escucha y sostiene un mercado de tests, libros y talleres.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> un cuestionario de quince minutos mide la inteligencia emocional.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los cuestionarios de rasgo correlacionan cerca de .85 con el factor general de personalidad (van der Linden et al., 2017), y la personalidad explica la mayor parte de su varianza (Anglim et al., 2020). Miden personalidad y confianza en uno mismo. La habilidad solo se mide con tareas que tienen respuestas correctas e incorrectas.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el cuestionario es barato, rápido, se aplica en línea y entrega un informe de colores; el test de habilidad es caro, largo y a veces incomoda a quien lo rinde.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> un test de inteligencia emocional le muestra a la persona en qué tiene que mejorar.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> quienes tienen menos habilidad se sobreestiman más (63 a 69 puntos percentiles en el decil inferior), descartan el feedback negativo como inválido y son los que menos quieren invertir en mejorar: 20% contra 64% del cuarto superior (Sheldon et al., 2014). El feedback de habilidad funciona con quienes ya la tienen.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque los que reciben bien el feedback son los que lo recomiendan, y porque nadie mide qué pasó con los que lo descartaron.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> más inteligencia emocional es siempre mejor para la organización.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la inteligencia emocional es una habilidad que puede usarse para manipular, fingir con destreza, controlar información y disfrazar intereses (Kilduff et al., 2010), y que estrecha el vínculo entre las metas de la persona y su conducta, sean cuales sean esas metas (Côté, 2014). Sin valores, es una herramienta.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque es difícil vender consultoría sobre un beneficio ambivalente, y porque "inteligencia emocional" suena a bondad.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Lo primero es separar dos preguntas que el mercado junta: si la inteligencia emocional es real y si el instrumento que le ofrecen la mide. La respuesta a la primera es sí, como habilidad, con validez modesta y específica. La respuesta a la segunda depende del instrumento, y la mayoría de lo que se ofrece en Chile es autoinforme.</p>
+<p>Tres preguntas antes de comprar un test. ¿Es de habilidad o de autoinforme? Si es autoinforme, un test de personalidad bien validado es más barato, mide lo mismo y no engaña sobre lo que mide. ¿Qué predice por sobre la personalidad y la capacidad cognitiva? Pedir la evidencia de validez incremental; si el proveedor no sabe qué significa la pregunta, ya está la respuesta. ¿Para qué se va a usar? Desarrollo con feedback de habilidad y práctica es defendible. Selección o promoción con autoinforme no lo es: es fácil de falsear, mide sobre todo confianza y personalidad, y puede ser discriminatorio si se usa para excluir sin evidencia de validez para el cargo. O'Connor et al. (2019) dan una regla práctica: usar medidas de habilidad cuando interesa lo que la persona es capaz de hacer en situaciones exigentes, y medidas de rasgo cuando interesa su conducta típica y su autoeficacia en situaciones cotidianas, sabiendo que en ese caso se está midiendo algo cercano a la personalidad.</p>
+<p>Tres preguntas antes de contratar un taller. ¿Qué habilidad concreta entrena? "Inteligencia emocional" no es una respuesta; "reevaluación cognitiva de situaciones difíciles con clientes" sí lo es. ¿Cómo se practica y con qué retroalimentación? La evidencia de entrenamiento favorece la práctica con feedback sobre la instrucción en aula, y el ensayo de Zhu et al. (2025) muestra que dos ejercicios diarios durante tres semanas hacen más que un seminario. ¿Cómo se va a saber si funcionó? Si la única medida es una encuesta de satisfacción al terminar, no se va a saber.</p>
+<p>Y una recomendación sobre qué hacer en vez de comprar: si de verdad interesa la habilidad emocional para un cargo, observarla. Una simulación en que la persona maneja a un cliente molesto, una entrevista conductual estructurada sobre situaciones emocionales reales, o un ejercicio de assessment center revelan más que cualquier cuestionario, y son los métodos que la Clase 19 va a defender como alternativa a la pseudociencia en la evaluación de personas. Mientras tanto, la mejor inversión en "inteligencia emocional" de una organización suele ser la del Apunte 11: reducir los eventos negativos evitables, revisar la legitimidad de las reglas de exhibición y entrenar reevaluación en los cargos de alta carga emocional.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Definir la inteligencia emocional según Salovey y Mayer, nombrar las cuatro ramas y explicar el modelo en cascada de Joseph y Newman (2010).</li><li>Distinguir las tres corrientes de Ashkanasy y Daus (2005) y los cuatro enfoques de medición vistos en clases, e identificar cuál usa un instrumento dado.</li><li>Explicar por qué los cuestionarios de rasgo miden personalidad (van der Linden et al., 2017) y por qué la inteligencia emocional mixta no agrega validez incremental (Joseph et al., 2015), reportando las cifras centrales.</li><li>Explicar qué muestran Sheldon et al. (2014) sobre el autoconocimiento de la habilidad emocional y qué implica para el uso de autoinformes en selección.</li><li>Evaluar una oferta de test o de taller de inteligencia emocional con las preguntas de la sección F y proponer una alternativa basada en observación de conducta.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Anglim, J., Morse, G., Dunlop, P. D., Minbashian, A., &amp; Marty, A. (2020). Predicting trait emotional intelligence from HEXACO personality: Domains, facets, and the general factor of personality. <em>Journal of Personality, 88</em>(2), 324–338. <a href="https://doi.org/10.1111/jopy.12493">https://doi.org/10.1111/jopy.12493</a></p>
+<p>Ashkanasy, N. M., &amp; Daus, C. S. (2005). Rumors of the death of emotional intelligence in organizational behavior are vastly exaggerated. <em>Journal of Organizational Behavior, 26</em>(4), 441–452. <a href="https://doi.org/10.1002/job.320">https://doi.org/10.1002/job.320</a></p>
+<p>Ashkanasy, N. M., &amp; Dorris, A. D. (2017). Emotions in the workplace. <em>Annual Review of Organizational Psychology and Organizational Behavior, 4</em>, 67–90. <a href="https://doi.org/10.1146/annurev-orgpsych-032516-113231">https://doi.org/10.1146/annurev-orgpsych-032516-113231</a></p>
+<p>Côté, S. (2014). Emotional intelligence in organizations. <em>Annual Review of Organizational Psychology and Organizational Behavior, 1</em>, 459–488. <a href="https://doi.org/10.1146/annurev-orgpsych-031413-091233">https://doi.org/10.1146/annurev-orgpsych-031413-091233</a></p>
+<p>Elfenbein, H. A. (2023). Emotion in organizations: Theory and research. <em>Annual Review of Psychology, 74</em>, 489–517. <a href="https://doi.org/10.1146/annurev-psych-032720-035940">https://doi.org/10.1146/annurev-psych-032720-035940</a></p>
+<p>Goleman, D. (1995). <em>Emotional intelligence</em>. Bantam Books.</p>
+<p>Higgins, W. C., Kaplan, D. M., Deschrijver, E., &amp; Ross, R. M. (2024). Construct validity evidence reporting practices for the Reading the Mind in the Eyes Test: A systematic scoping review. <em>Clinical Psychology Review, 108</em>, 102378. <a href="https://doi.org/10.1016/j.cpr.2023.102378">https://doi.org/10.1016/j.cpr.2023.102378</a></p>
+<p>Joseph, D. L., Jin, J., Newman, D. A., &amp; O'Boyle, E. H. (2015). Why does self-reported emotional intelligence predict job performance? A meta-analytic investigation of mixed EI. <em>Journal of Applied Psychology, 100</em>(2), 298–342. <a href="https://doi.org/10.1037/a0037681">https://doi.org/10.1037/a0037681</a></p>
+<p>Joseph, D. L., &amp; Newman, D. A. (2010). Emotional intelligence: An integrative meta-analysis and cascading model. <em>Journal of Applied Psychology, 95</em>(1), 54–78. <a href="https://doi.org/10.1037/a0017286">https://doi.org/10.1037/a0017286</a></p>
+<p>Kilduff, M., Chiaburu, D. S., &amp; Menges, J. I. (2010). Strategic use of emotional intelligence in organizational settings: Exploring the dark side. <em>Research in Organizational Behavior, 30</em>, 129–152. <a href="https://doi.org/10.1016/j.riob.2010.10.002">https://doi.org/10.1016/j.riob.2010.10.002</a></p>
+<p>MacCann, C., Jiang, Y., Brown, L. E. R., Double, K. S., Bucich, M., &amp; Minbashian, A. (2020). Emotional intelligence predicts academic performance: A meta-analysis. <em>Psychological Bulletin, 146</em>(2), 150–186. <a href="https://doi.org/10.1037/bul0000219">https://doi.org/10.1037/bul0000219</a></p>
+<p>Madrid, H. P., Barros, E., &amp; Vasquez, C. A. (2020). The emotion regulation roots of job satisfaction. <em>Frontiers in Psychology, 11</em>, 609933. <a href="https://doi.org/10.3389/fpsyg.2020.609933">https://doi.org/10.3389/fpsyg.2020.609933</a></p>
+<p>Madrid, H. P., Niven, K., &amp; Vasquez, C. A. (2019). Leader interpersonal emotion regulation and innovation in teams. <em>Journal of Occupational and Organizational Psychology, 92</em>(4), 787–805. <a href="https://doi.org/10.1111/joop.12292">https://doi.org/10.1111/joop.12292</a></p>
+<p>Madrid, H. P., &amp; Patterson, M. G. (2014). Measuring affect at work based on the valence and arousal circumplex model. <em>The Spanish Journal of Psychology, 17</em>, E50. <a href="https://doi.org/10.1017/sjp.2014.54">https://doi.org/10.1017/sjp.2014.54</a></p>
+<p>Madrid, H. P., Patterson, M. G., &amp; Leiva, P. I. (2015). Negative core affect and employee silence: How differences in activation, cognitive rumination, and problem-solving demands matter. <em>Journal of Applied Psychology, 100</em>(6), 1887–1898. <a href="https://doi.org/10.1037/a0039380">https://doi.org/10.1037/a0039380</a></p>
+<p>Mayer, J. D., Caruso, D. R., &amp; Salovey, P. (2016). The ability model of emotional intelligence: Principles and updates. <em>Emotion Review, 8</em>(4), 290–300. <a href="https://doi.org/10.1177/1754073916639667">https://doi.org/10.1177/1754073916639667</a></p>
+<p>Mayer, J. D., Caruso, D. R., Sitarenios, G., &amp; Romero Escobar, M. (2024). How many emotional intelligence abilities are there? An examination of four measures of emotional intelligence. <em>Personality and Individual Differences, 219</em>, 112468. <a href="https://doi.org/10.1016/j.paid.2023.112468">https://doi.org/10.1016/j.paid.2023.112468</a></p>
+<p>Mayer, J. D., Panter, A. T., &amp; Caruso, D. R. (2020). When people estimate their personal intelligence, who is overconfident? Who is accurate? <em>Journal of Personality, 88</em>, 1129–1144. <a href="https://doi.org/10.1111/jopy.12561">https://doi.org/10.1111/jopy.12561</a></p>
+<p>Mohorić, T., Takšić, V., Ćosić Pilepić, A., Brown, L. E. R., Birney, D. P., &amp; MacCann, C. (2024). Similarities and differences between typical- and maximum-performance in emotion management situational judgment tests. <em>Personality and Individual Differences, 219</em>, 112515. <a href="https://doi.org/10.1016/j.paid.2023.112515">https://doi.org/10.1016/j.paid.2023.112515</a></p>
+<p>O'Boyle, E. H., Humphrey, R. H., Pollack, J. M., Hawver, T. H., &amp; Story, P. A. (2011). The relation between emotional intelligence and job performance: A meta-analysis. <em>Journal of Organizational Behavior, 32</em>(5), 788–818. <a href="https://doi.org/10.1002/job.714">https://doi.org/10.1002/job.714</a></p>
+<p>O'Connor, P. J., Hill, A., Kaya, M., &amp; Martin, B. (2019). The measurement of emotional intelligence: A critical review of the literature and recommendations for researchers and practitioners. <em>Frontiers in Psychology, 10</em>, 1116. <a href="https://doi.org/10.3389/fpsyg.2019.01116">https://doi.org/10.3389/fpsyg.2019.01116</a></p>
+<p>Perazzo, M. F., Abreu, L. G., Pérez-Díaz, P. A., Petrides, K. V., Granville-Garcia, A. F., &amp; Paiva, S. M. (2021). Trait Emotional Intelligence Questionnaire-Short Form: Brazilian validation and measurement invariance between the United Kingdom and Latin-American datasets. <em>Journal of Personality Assessment, 103</em>(3), 342–351. <a href="https://doi.org/10.1080/00223891.2020.1758118">https://doi.org/10.1080/00223891.2020.1758118</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Salovey, P., &amp; Mayer, J. D. (1990). Emotional intelligence. <em>Imagination, Cognition and Personality, 9</em>(3), 185–211. <a href="https://doi.org/10.2190/DUGG-P24E-52WK-6CDG">https://doi.org/10.2190/DUGG-P24E-52WK-6CDG</a></p>
+<p>Schlegel, K., &amp; Mortillaro, M. (2019). The Geneva Emotional Competence Test (GECo): An ability measure of workplace emotional intelligence. <em>Journal of Applied Psychology, 104</em>(4), 559–580. <a href="https://doi.org/10.1037/apl0000365">https://doi.org/10.1037/apl0000365</a></p>
+<p>Schlegel, K., Palese, T., Mast, M. S., Rammsayer, T. H., Hall, J. A., &amp; Murphy, N. A. (2020). A meta-analysis of the relationship between emotion recognition ability and intelligence. <em>Cognition and Emotion, 34</em>(2), 329–351. <a href="https://doi.org/10.1080/02699931.2019.1632801">https://doi.org/10.1080/02699931.2019.1632801</a></p>
+<p>Schutte, N. S., Malouff, J. M., Hall, L. E., Haggerty, D. J., Cooper, J. T., Golden, C. J., &amp; Dornheim, L. (1998). Development and validation of a measure of emotional intelligence. <em>Personality and Individual Differences, 25</em>(2), 167–177. <a href="https://doi.org/10.1016/S0191-8869(98)00001-4">https://doi.org/10.1016/S0191-8869(98)00001-4</a></p>
+<p>Sheldon, O. J., Dunning, D., &amp; Ames, D. R. (2014). Emotionally unskilled, unaware, and uninterested in learning more: Reactions to feedback about deficits in emotional intelligence. <em>Journal of Applied Psychology, 99</em>(1), 125–137. <a href="https://doi.org/10.1037/a0034138">https://doi.org/10.1037/a0034138</a></p>
+<p>van der Linden, D., Pekaar, K. A., Bakker, A. B., Schermer, J. A., Vernon, P. A., Dunkel, C. S., &amp; Petrides, K. V. (2017). Overlap between the general factor of personality and emotional intelligence: A meta-analysis. <em>Psychological Bulletin, 143</em>(1), 36–52. <a href="https://doi.org/10.1037/bul0000078">https://doi.org/10.1037/bul0000078</a></p>
+<p>Zhu, Z., Aitken, J. A., Kim, J., Baines, J. I., Kaplan, S. A., Dalal, R. S., &amp; Hassani, J. (2025). Cognitive reappraisal emotion regulation interventions in the workplace and their impact on job performance: An ecological momentary intervention approach. <em>Journal of Occupational and Organizational Psychology</em>. Advance online publication. <a href="https://doi.org/10.1111/joop.70020">https://doi.org/10.1111/joop.70020</a></p>
+<h3>Para profundizar</h3>
+<p>Côté (2014) es la mejor revisión académica del tema y la más equilibrada; sus tres modelos ordenan casi todo lo publicado después. Elfenbein (2023), sección 2.5, resume en cuatro páginas el estado del debate, incluido el lado oscuro y el entrenamiento. O'Connor et al. (2019) es la guía práctica para elegir instrumento, escrita para quien va a usarlos y no solo para investigadores. Joseph et al. (2015) y Sheldon et al. (2014) son las dos lecturas que más cambian la opinión de quien llega convencido por el best seller.</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

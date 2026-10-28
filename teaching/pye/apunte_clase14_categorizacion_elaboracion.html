@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diversidad en equipos: el modelo de categorización-elaboración, las fallas y el perfil oculto · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 14</p>
+  <h1>Diversidad en equipos: el modelo de categorización-elaboración, las fallas y el perfil oculto</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 14 <br>
+    Complementa R&amp;J cap. 2 <br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>El capítulo 2 de Robbins y Judge dedica un párrafo a la diversidad en grupos: dice que la demográfica no ayuda ni daña en general, que la de pericia y educación sí ayuda, que lo más importante es destacar las similitudes y que el liderazgo transformacional sirve. Es poco, y una parte es discutible. El apunte 13 mostró que la correlación promedio entre diversidad y desempeño es cercana a cero porque mezcla equipos que ganan con equipos que pierden. La pregunta que un administrador necesita responder no es si la diversidad sirve, sino cuándo y por qué, y para eso hace falta un modelo.</p>
+<p>Ese modelo existe desde 2004 y es el marco de referencia del campo: el modelo de categorización-elaboración (CEM) de van Knippenberg, De Dreu y Homan. Este apunte lo explica con sus ocho proposiciones, presenta el fenómeno que lo motiva (los grupos no usan la información que tienen repartida), explica qué son las fallas (faultlines) y qué dice el metaanálisis vigente, resume la evidencia experimental sobre categorías cruzadas y creencias sobre la diversidad, y detalla el estudio que se controla en la ayudantía del viernes, Qi et al. (2022), con sus cifras y sus límites. Cierra con lo que el modelo le dice a quien dirige un equipo.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>Cuando un equipo es diverso pueden pasar dos cosas, y pueden pasar las dos a la vez. Por un lado, las diferencias son información: perspectivas, conocimientos y maneras de resolver que el grupo puede <strong>elaborar</strong> (intercambiar, procesar, devolver al grupo e integrar), y esa elaboración es lo que mejora las decisiones y la creatividad. Por otro lado, las diferencias pueden hacer saliente una <strong>categorización</strong>: "nosotros y ellos". Categorizar es inevitable y no daña por sí mismo; daña cuando la identidad de un subgrupo se siente amenazada, porque entonces produce <strong>sesgo intergrupal</strong> (favorezco a los míos, desconfío de los otros), y el sesgo bloquea la elaboración: no escucho ni uso la información del que es "de los otros".</p>
+<p>De ahí salen las reglas. La diversidad suma cuando la tarea exige procesar información y crear, cuando los integrantes están motivados y tienen la habilidad para hacerlo, y cuando las diferencias no se alinean en bandos. Resta cuando las diferencias convergen (las <strong>fallas</strong>: todos los hombres son mayores y de operaciones, todas las mujeres jóvenes y de marketing), cuando algo las activa (un trato diferencial, una humillación, un incentivo que enfrenta subgrupos) y cuando el equipo cree que la similitud es mejor que la diferencia. Y hay un fenómeno de base que explica por qué tantos comités deciden mal: los grupos hablan de lo que todos ya saben y no de lo que solo uno sabe; cuando la mejor opción solo se ve juntando los pedazos, tienen ocho veces menos probabilidad de encontrarla. La consecuencia práctica es que la diversidad no es un recurso que se tiene, sino un trabajo que se hace: componer para la tarea, cruzar las categorías, hacer explícita la elaboración, construir la creencia de que las diferencias sirven y vigilar los gatillos.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Dos tradiciones y un modelo que las junta</h3>
+<p>Durante cuarenta años la investigación sobre diversidad en grupos se dividió en dos tradiciones (Williams &amp; O'Reilly, 1998). La perspectiva de la <strong>categorización social</strong> (similitud-atracción, identidad social) sostiene que las personas clasifican a los demás en "como yo" y "distintos", prefieren trabajar con los parecidos, confían más en ellos y se comprometen más con grupos homogéneos; predice que la diversidad reduce la cohesión y aumenta el conflicto relacional y la rotación. La perspectiva de la <strong>información y la decisión</strong> sostiene que los grupos diversos tienen más conocimiento no redundante y más perspectivas, deben reconciliarlas y por eso procesan más a fondo; predice más creatividad y mejores decisiones. Las dos tienen evidencia. El error fue tratarlas como propiedades de tipos distintos de diversidad (la demográfica activaría la primera, la de conocimientos la segunda) y como procesos independientes. Los metaanálisis no confirmaron que el tipo de diversidad modere los efectos (van Knippenberg et al., 2004; van Dijk et al., 2012), y el CEM parte de ahí: cualquier dimensión de diversidad puede activar los dos procesos, y la categorización puede interrumpir la elaboración.</p>
+<h3>El modelo de categorización-elaboración</h3>
+<p>van Knippenberg, De Dreu y Homan (2004) definen la <strong>diversidad</strong> como las diferencias entre individuos en cualquier atributo que pueda llevar a percibir que otra persona es distinta de uno, y la <strong>elaboración de información relevante para la tarea</strong> como el intercambio de información y perspectivas, su procesamiento individual, la devolución al grupo de los resultados de ese procesamiento y la discusión e integración de sus implicancias. La <strong>categorización social</strong> es la diferenciación entre otros del endogrupo, subjetivamente similares a uno, y otros del exogrupo, subjetivamente distintos; y el <strong>sesgo intergrupal</strong> son las percepciones, actitudes y conductas más favorables hacia el endogrupo que hacia el exogrupo. La distinción entre categorización y sesgo es central: la categorización es percepción; el sesgo es lo que daña.</p>
+<p>El modelo se resume en ocho proposiciones:</p>
+<table><tr><th>N°</th><th>Proposición</th></tr><tr><td>P1</td><td>El proceso primario detrás de los efectos positivos de la diversidad es la elaboración de información relevante para la tarea.</td></tr><tr><td>P2</td><td>Los requisitos de la tarea moderan la relación: la diversidad se relaciona positivamente con el desempeño cuando la tarea exige procesamiento de información y soluciones creativas.</td></tr><tr><td>P3</td><td>La diversidad produce más elaboración cuando la motivación de los integrantes es alta.</td></tr><tr><td>P4</td><td>La diversidad produce más elaboración cuando la habilidad de los integrantes es alta.</td></tr><tr><td>P5</td><td>La categorización social depende de la interacción entre el ajuste comparativo, el ajuste normativo y la accesibilidad cognitiva de la categoría.</td></tr><tr><td>P6</td><td>La categorización produce sesgos intergrupales que dañan al grupo en la medida en que la identidad implicada se sienta amenazada o cuestionada.</td></tr><tr><td>P7</td><td>Los sesgos intergrupales interrumpen la elaboración de información y, por esa vía, el desempeño.</td></tr><tr><td>P8</td><td>Todas las dimensiones de la diversidad pueden activar tanto la categorización como la elaboración.</td></tr></table>
+<p>Dicho como figura: de la diversidad salen dos rutas. La de abajo va de la diversidad a la elaboración y de ahí al desempeño, y se abre con tarea, motivación y habilidad. La de arriba va de la diversidad a la categorización (según P5) y de ahí al sesgo (según P6), y del sesgo sale una flecha negativa hacia la elaboración (P7). El resultado neto de un equipo depende de cuál ruta pesa más, y por eso el promedio de los estudios es casi cero.</p>
+<p>Tres detalles del modelo que conviene entender. Primero, <strong>la tarea</strong> (P2): en tareas rutinarias elaborar estorba; el beneficio aparece en tareas complejas, no rutinarias, que requieren decidir o crear. El metaanálisis de Wallrich et al. (2024) lo confirma: el efecto de la diversidad es más positivo en equipos de investigación y desarrollo y en tareas creativas. Segundo, <strong>la saliencia</strong> (P5), que viene de la teoría de la autocategorización: el <strong>ajuste comparativo</strong> (comparative fit) es cuánto coinciden las diferencias (si en un equipo todos los hombres son mayores y todas las mujeres jóvenes, la categoría parte limpiamente al grupo; si edad y género se cruzan, no); el <strong>ajuste normativo</strong> (normative fit) es cuánto sentido tiene la categoría para las personas en esa situación, lo que depende de creencias y estereotipos; y la <strong>accesibilidad</strong> es cuán rápido viene a la mente, crónicamente alta para género, edad y origen, y aumentada por lo que la organización nombra. Tercero, <strong>la amenaza</strong> (P6): suprimir las categorías no es la solución, porque negarle a alguien su identidad también amenaza; y pedirle a una persona "la perspectiva femenina" la categoriza contra su voluntad. Ni reconocer ni minimizar las diferencias tiene efectos uniformes.</p>
+<h3>Elaborar no es discutir, y los grupos no lo hacen por defecto</h3>
+<p>La elaboración no es conflicto de tarea. El metaanálisis de De Dreu y Weingart (2003) encontró que el conflicto sobre el contenido se asocia negativamente con el desempeño, y el de de Wit, Greer y Jehn (2012) que su promedio es nulo y que solo es positivo en condiciones específicas. Se puede elaborar sin pelear y pelear sin elaborar.</p>
+<p>El fenómeno de base es el <strong>perfil oculto</strong> (Stasser &amp; Titus, 1985). Cuando cada integrante tiene un pedazo distinto de la información y la mejor opción solo se ve al juntar los pedazos, los grupos fallan. Lu, Yuan y McLeod (2012) reunieron 65 estudios con 3.189 grupos: los grupos mencionan la información compartida (la que todos tienen) unas dos desviaciones estándar más que la información única (la que solo uno tiene); los grupos con perfil oculto tienen ocho veces menos probabilidad de encontrar la solución que los grupos con información completa; y lo que mejora la decisión es la cobertura, es decir, qué fracción de la información única llega a decirse en voz alta, más que el tiempo dedicado a discutirla. El medio de comunicación (presencial o a distancia) no cambia el patrón. La razón es simple: de lo compartido todos pueden hablar; lo único exige que alguien diga algo que los demás no saben y que, con frecuencia, contradice la preferencia que la mesa ya formó. La simulación de la clase ("la sucursal de Temuco") es un perfil oculto: desde cualquier carpeta, la candidata equivocada parece mejor; con toda la información, gana el otro.</p>
+<h3>Fallas: cuando las diferencias se alinean</h3>
+<p>Lau y Murnighan (1998) llamaron <strong>fallas</strong> (faultlines) a las líneas divisorias hipotéticas que parten un grupo en subgrupos según uno o más atributos que se alinean. Es el ajuste comparativo del CEM convertido en medida. El ejemplo clásico (Thatcher, 2013): dos equipos con tres hombres y tres mujeres, tres licenciados y tres con magíster, tres de marketing y tres de operaciones. Para cualquier índice de diversidad son idénticos. Pero en uno las tres mujeres son licenciadas de marketing y los tres hombres magíster de operaciones (falla fuerte), y en el otro los atributos se cruzan (sin falla). Las fallas se miden con índices que calculan cuán homogéneos son los subgrupos potenciales (Fau de Thatcher, Jehn y Zanutto, 2003; ASW de Meyer y Glenz, 2013). Se distinguen las fallas <strong>latentes</strong> (calculadas por el investigador a partir de la composición) de las <strong>activadas</strong> (percibidas por los integrantes como "nosotros y ellos"), y lo que las activa son gatillos: trato diferencial a un subgrupo, valores distintos que salen a la luz, presión para asimilarse, un insulto o humillación, o el simple contacto (Chrobot-Mason et al., 2009). Hasta la estructura de incentivos y la disposición de los asientos pueden activar una falla (Homan et al., 2008).</p>
+<p>El metaanálisis vigente es el de Thatcher, Meyer, Kim y Patel (2024), con 168 estudios y 24.953 equipos: las fallas latentes se asocian con más conflicto y con fallas activadas, pero no directamente con el desempeño ni la satisfacción; la activación es lo que media; y, controlando la activación, las fallas latentes se asocian positivamente con la elaboración de información, lo que sugiere que subgrupos con pericia distinta pueden aportar más mientras no se conviertan en bandos. Una advertencia bibliográfica: el metaanálisis anterior de los mismos autores (Thatcher &amp; Patel, 2011) fue retractado en 2016 por errores de cálculo; las citas que todavía circulan a ese trabajo no deben usarse.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>Los grupos diversos pueden decidir mejor y sentirse peor</h3>
+<p>Phillips, Liljenquist y Neale (2009) formaron cincuenta grupos de cuatro integrantes de fraternidades y hermandades universitarias para resolver un misterio de asesinato con información individual. Tres veteranos de la misma hermandad discutían y a los cinco minutos entraba un cuarto integrante, de la misma hermandad o de otra. Cuando el recién llegado era de otra hermandad, 69% de los integrantes veteranos identificó correctamente al culpable; cuando era de la misma, 56%. Y los grupos diversos reportaron menos confianza en su decisión y la sensación de haber funcionado peor; la mejora no se explicó por ideas nuevas del recién llegado, sino por cómo trabajaron los veteranos ante alguien distinto. Los homogéneos: más seguros, más cómodos, más equivocados. La explicación es la del CEM: ante alguien "de afuera", los veteranos no asumen acuerdo y se esfuerzan en explicar y revisar; ante alguien "de los nuestros" que disiente, el desacuerdo se vive como un problema personal. Sommers (2006) encontró lo mismo en jurados simulados: los de seis personas blancas discutieron menos hechos y cometieron más errores que los de cuatro blancas y dos afroamericanas, y la diferencia venía sobre todo de los jurados blancos, que procesaban más en presencia de diversidad. La lección es que la incomodidad no es el costo de la diversidad sino parte de cómo hace trabajar mejor a un grupo, y que un grupo que se siente muy bien puede estar muy equivocado.</p>
+<h3>Qué hace que un equipo elabore</h3>
+<p>Tres estudios muestran las palancas de P2 a P4. Scholten, van Knippenberg, Nijstad y De Dreu (2007) encontraron en laboratorio que rendir cuentas por el proceso (tener que explicar cómo se llegó a la decisión, no solo cuál fue) aumentó el uso de la información repartida y la calidad de la decisión. Kearney, Gebert y Voelpel (2009) encontraron en equipos reales que la diversidad de edad y de educación se asociaba con mejor desempeño solo en equipos con alta "necesidad de cognición" (gusto por pensar), un indicador de habilidad y motivación para procesar. Y van Ginkel y van Knippenberg (2008) mostraron lo más barato: grupos a los que simplemente se les explicó que la tarea requería intercambiar e integrar información elaboraron más (medido con codificación de la interacción) y decidieron mejor. Una representación compartida de la tarea ("aquí hay que juntar lo que cada uno sabe") cambia la conducta. Eso es lo que recibe, sin saberlo, la mitad de los grupos en la simulación de la clase: un protocolo que obliga a poner toda la información sobre la mesa antes de opinar.</p>
+<h3>Misma diversidad, distinta distribución</h3>
+<p>Homan, van Knippenberg, van Kleef y De Dreu (2007) hicieron en laboratorio el experimento que separa cantidad de distribución. Grupos de cuatro con diversidad de género (reforzada con un feedback ficticio de personalidad que alineaba género y personalidad) y diversidad informacional (cada uno con información distinta para la tarea). En los grupos con ambas, la información se repartió de dos maneras: alineada con el género (los dos hombres con un tipo de información, las dos mujeres con otro) o cruzada (un hombre y una mujer con cada tipo). Las dos condiciones tienen exactamente la misma cantidad de diversidad; ningún índice aditivo las distingue. Resultado: el clima del equipo fue claramente mejor en la condición cruzada que en la de falla, y al menos tan bueno como en los grupos homogéneos; lo mismo para el conflicto de tarea y de relación; y la diversidad de género interrumpió la elaboración solo cuando estaba alineada con la información. Para gestión, la consecuencia es que un administrador controla mejor la distribución (quién trabaja con quién, quién sabe qué) que la composición, y que la distribución es lo que decide.</p>
+<h3>Lo que el equipo cree sobre la diversidad</h3>
+<p>La evidencia más clara sobre P6 viene de las <strong>creencias sobre la diversidad</strong> (diversity beliefs): lo que los integrantes piensan sobre si la diversidad, en una dimensión dada, ayuda o perjudica al grupo. van Knippenberg, Haslam y Platow (2007) encontraron, en una encuesta y un experimento, que la diversidad de género se asociaba positivamente con la identificación con el equipo en quienes creían en el valor de la diversidad, y negativamente en quienes creían en el valor de la similitud. Homan, van Knippenberg, van Kleef y De Dreu (2007), en el artículo titulado "Bridging faultlines by valuing diversity", mostraron que en grupos con falla hubo menos elaboración y peor desempeño solo cuando los integrantes creían en el valor de la homogeneidad; con creencias pro-diversidad, los grupos con falla usaron mejor su información. Homan, Greer, Jehn y Koning (2010) agregaron que las creencias moderan el paso de la falla latente a la percepción de subgrupos. A nivel de organización, Ely y Thomas (2001) distinguieron tres discursos sobre la diversidad: "discriminación y justicia" (cumplir), "acceso y legitimidad" (vender a mercados diversos) e "integración y aprendizaje" (aprender de las diferencias), y solo el tercero se asoció con beneficios de desempeño. Dos precisiones que hacen van Knippenberg, Homan y van Ginkel (2013): creer en el valor de la diversidad no es lo mismo que no tener prejuicios (uno puede no tener nada contra los italianos y creer que un equipo sueco-italiano sin idioma común rendirá mal), y la ausencia de creencias negativas no implica la presencia de positivas; ambas se miden por separado y están solo modestamente correlacionadas.</p>
+<h3>El estudio de la ayudantía: Qi et al. (2022)</h3>
+<p>Qi, Armstrong, Yang y Li (2022) pusieron a prueba la interacción entre categorización y elaboración del CEM en 91 equipos de cinco organizaciones financieras de China continental (453 personas, 89% de respuesta; equipos de 4 a 8, media 4.95; edad media 37.7; 55% hombres). La pregunta: cómo y cuándo la <strong>diversidad cognitiva</strong> (diferencias percibidas en conocimientos, habilidades y formas de pensar) produce creatividad de equipo. Las hipótesis: la elaboración media la relación (H1); las <strong>fallas demográficas</strong> (edad y género alineados) debilitan la relación diversidad cognitiva → elaboración (H2); el <strong>balance de subgrupos</strong> (dos subgrupos del mismo tamaño) también la debilita (H3); y por tanto el efecto indirecto es menor con fallas fuertes y con subgrupos balanceados (H4). El diseño separó las mediciones por una semana: diversidad cognitiva en T1 (4 ítems de Van der Vegt y Janssen, 2003; α = .77), elaboración evaluada por los pares en T2 (3 ítems de Homan et al., 2008; α = .81) y creatividad evaluada por los pares en T3 (4 ítems de Shin y Zhou, 2007; α = .86). Las fallas se calcularon con el índice ASW sobre edad y género; el balance, como la desviación estándar de los tamaños de los subgrupos multiplicada por −1.</p>
+<p>Los resultados apoyaron todas las hipótesis. La diversidad cognitiva se asoció con creatividad (β = .61) y parte de esa relación pasó por la elaboración: efecto indirecto .13 (intervalo de confianza al 95% [.01, .30]), efecto directo .48; es decir, mediación parcial. Con fallas débiles (una desviación estándar bajo la media), la pendiente de diversidad cognitiva a elaboración fue .50 (p &lt; .01); con fallas fuertes, .05 (no significativa). Con subgrupos desbalanceados (uno grande y uno chico), .44 (p &lt; .01); con subgrupos balanceados, −.01. Los efectos indirectos condicionales fueron .28 con fallas débiles y .03 con fallas fuertes; .24 con desbalance y −.01 con balance. Lo contraintuitivo es el balance: dos subgrupos del mismo tamaño fueron peores que uno grande y uno chico. La explicación de los autores, tomada del modelo de proyección endogrupal, es que con una mayoría clara esa mayoría se siente "el equipo" y valida el procesamiento de información, mientras la minoría, que no puede competir por ser prototípica, aporta su información única para ganar aceptación; con dos bandos del mismo tamaño, cada uno se siente el verdadero equipo y compiten.</p>
+<p>Lo que hay que leer bien. Fortalezas: equipos reales, tres momentos de medición, elaboración y creatividad evaluadas por los pares y no por el propio interesado, y una prueba explícita de la interacción que el CEM propone. Límites que los autores declaran: una sola cultura; todas las variables reportadas por los mismos integrantes, aunque en semanas distintas; fallas medidas solo con atributos demográficos. Límites que conviene agregar: la diversidad es percibida, no un índice de composición, y eso explica en parte coeficientes más altos que los de los metaanálisis; los indicadores de acuerdo para agregar al nivel de equipo son bajos (ICC(2) entre .41 y .48); el diseño es correlacional, de modo que la "mediación" describe asociaciones condicionadas y no autoriza lenguaje causal; y el hallazgo del balance contradice otros estudios. Una pregunta para llevar a la ayudantía: ¿qué diseño permitiría decir que la diversidad cognitiva causa elaboración? La respuesta es manipularla, como hicieron Homan et al. (2007) en laboratorio, con el costo de perder el realismo de los equipos de Qi et al.</p>
+<h3>El doble filo con datos, y el vacío chileno</h3>
+<p>Valls, González-Romá y Tomás (2016) siguieron 57 sucursales de una caja de ahorros española durante 18 meses: la diversidad de nivel educativo se asoció negativamente con la calidad de la comunicación del equipo seis meses después (r = −.31) y, a través de ella, con el desempeño evaluado por el gerente un año más tarde. Pero el clima de innovación moderó la relación: con clima bajo, la pendiente fue −1.6 (p &lt; .01); con clima alto, .35 (no significativa); solo con clima muy alto el efecto se volvió positivo. Es el CEM con datos de campo: la misma diversidad resta en un contexto y suma en otro, y el mediador es la calidad de la comunicación (clara, oportuna, completa), no la cantidad. En Chile no existe un estudio publicado equivalente con equipos. Lo más cercano es Raineri (2018), que encontró que usar equipos diversos para tomar decisiones es la práctica de gestión de la diversidad menos frecuente en empresas chilenas: 262 de 360 trabajadores encuestados la consideraron infrecuente y solo 17% de los grupos focales de mandos medios la mencionó. El país tiene la diversidad (apunte 13) y casi no tiene la práctica que la convierte en valor.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> para que un equipo diverso funcione hay que destacar las similitudes y evitar hablar de las diferencias.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> suprimir las categorías puede aumentar el sesgo cuando amenaza la identidad del subgrupo (P6), y que lo que protege a los equipos con falla no es ignorar la diferencia sino creer que sirve: con creencias pro-diversidad, los grupos con falla usaron mejor su información (Homan et al., 2007). A nivel organizacional, el discurso de "integración y aprendizaje" es el único asociado con beneficios (Ely &amp; Thomas, 2001).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque la similitud se siente cómoda y el manual la recomienda, y porque confunde no activar los bandos (correcto) con no reconocer las diferencias (contraproducente).</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> si el equipo discute mucho es porque está usando bien su diversidad.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el conflicto de tarea tiene, en promedio, efecto nulo o negativo sobre el desempeño (De Dreu &amp; Weingart, 2003; de Wit et al., 2012). Lo que mejora la decisión es la cobertura de la información única (Lu et al., 2012), que puede lograrse sin conflicto, con un protocolo que obligue a intercambiar antes de evaluar.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el conflicto es visible y la elaboración silenciosa, y porque "debatir" suena a rigor.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el problema de los equipos diversos es que la gente categoriza; hay que entrenarla para que no lo haga.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la categorización es automática e inevitable, y no es lo que daña: daña el sesgo que aparece cuando hay amenaza (P6). Las fallas latentes se asocian con más elaboración cuando no se activan (Thatcher et al., 2024). Lo que se gestiona es la distribución de la información y los roles (Homan et al., 2007), los gatillos y las creencias, no la percepción de la diferencia.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque es más fácil culpar a las cabezas de las personas que a la estructura de incentivos, los asientos y el reparto de tareas.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> basta con juntar a la gente correcta en la sala para que la mejor decisión aparezca.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> cuando la mejor opción solo se ve juntando lo que cada uno sabe, los grupos tienen ocho veces menos probabilidad de encontrarla, porque hablan de lo compartido dos desviaciones estándar más que de lo único (Lu et al., 2012). Explicarle al grupo que la tarea exige intercambiar e integrar mejora la decisión (van Ginkel &amp; van Knippenberg, 2008).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque los comités que eligen mal se sienten seguros de haber elegido bien (Phillips et al., 2009).</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p><strong>Componer para la tarea, no para la foto.</strong> La diversidad funcional y cognitiva paga en tareas complejas, no rutinarias, que exigen decidir o crear; en tareas rutinarias no paga y puede estorbar. Recomendación: antes de armar un equipo diverso, preguntar qué tiene que producir.</p>
+<p><strong>Cruzar las categorías.</strong> Que quién sabe qué no coincida con género, edad, origen o antigüedad; repartir la información, los roles y los asientos cruzando las líneas visibles. Y una advertencia explícita de van Knippenberg y van Ginkel (2010): "prevenir fallas" al contratar se convierte fácilmente en un sesgo contra grupos subrepresentados. La falla se gestiona en la distribución, no se evita contratando parecidos.</p>
+<p><strong>Hacer explícita la elaboración.</strong> Decirle al equipo que la tarea exige juntar lo que cada uno sabe; usar protocolos que obliguen a poner la información sobre la mesa antes de opinar (ronda de información, tabla por fuente, preguntas dirigidas a quien menos ha hablado); rendir cuentas por el proceso y no solo por el resultado; parar a mirar cómo se está trabajando (reflexividad). Es lo más barato que tiene evidencia.</p>
+<p><strong>Construir la creencia de que las diferencias sirven.</strong> El discurso de "integración y aprendizaje", no solo el de cumplir ni el de vender. Líderes que sostengan esa creencia mientras las diferencias están a la vista, y que extiendan relaciones de calidad a todos, no solo a los parecidos.</p>
+<p><strong>Vigilar los gatillos.</strong> Trato diferencial a un subgrupo, presión para asimilarse, humillaciones, incentivos que enfrentan a subgrupos, hasta la disposición física del lugar. Las fallas latentes son inofensivas hasta que algo las activa; lo que las activa suele estar en manos de la jefatura.</p>
+<p><strong>Desconfiar de la comodidad.</strong> Un comité que decide rápido y por unanimidad, y que se siente seguro, puede estar reproduciendo un perfil oculto. La incomodidad de un grupo diverso que revisa, explica y se contradice no es una señal de que algo anda mal.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Explicar el modelo de categorización-elaboración con sus dos rutas, sus ocho proposiciones y la flecha que conecta el sesgo con la elaboración, y usarlo para explicar por qué la correlación promedio entre diversidad y desempeño es cercana a cero.</li><li>Definir elaboración de información, distinguirla del conflicto de tarea y explicar el fenómeno del perfil oculto con las cifras de Lu et al. (2012).</li><li>Definir falla (faultline), distinguir fallas latentes de activadas, dar un ejemplo de dos equipos con igual diversidad y distinta falla, y resumir lo que dice el metaanálisis de Thatcher et al. (2024).</li><li>Explicar el diseño, las hipótesis, los resultados principales (coeficientes de las pendientes simples y del efecto indirecto) y los límites de Qi et al. (2022), y proponer un diseño que permitiría inferir causalidad.</li><li>Analizar un caso de equipo diverso y proponer, con base en el modelo, qué palancas (tarea, distribución, protocolo de elaboración, creencias, gatillos) usaría un administrador.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Chrobot-Mason, D., Ruderman, M. N., Weber, T. J., &amp; Ernst, C. (2009). The challenge of leading on unstable ground: Triggers that activate social identity faultlines. <em>Human Relations, 62</em>(11), 1763–1794. <a href="https://doi.org/10.1177/0018726709346376">https://doi.org/10.1177/0018726709346376</a></p>
+<p>De Dreu, C. K. W., &amp; Weingart, L. R. (2003). Task versus relationship conflict, team performance, and team member satisfaction: A meta-analysis. <em>Journal of Applied Psychology, 88</em>(4), 741–749. <a href="https://doi.org/10.1037/0021-9010.88.4.741">https://doi.org/10.1037/0021-9010.88.4.741</a></p>
+<p>de Wit, F. R. C., Greer, L. L., &amp; Jehn, K. A. (2012). The paradox of intragroup conflict: A meta-analysis. <em>Journal of Applied Psychology, 97</em>(2), 360–390. <a href="https://doi.org/10.1037/a0024844">https://doi.org/10.1037/a0024844</a></p>
+<p>Ely, R. J., &amp; Thomas, D. A. (2001). Cultural diversity at work: The effects of diversity perspectives on work group processes and outcomes. <em>Administrative Science Quarterly, 46</em>(2), 229–273. <a href="https://doi.org/10.2307/2667087">https://doi.org/10.2307/2667087</a></p>
+<p>Homan, A. C., Greer, L. L., Jehn, K. A., &amp; Koning, L. (2010). Believing shapes seeing: The impact of diversity beliefs on the construal of group composition. <em>Group Processes &amp; Intergroup Relations, 13</em>(4), 477–493. <a href="https://doi.org/10.1177/1368430209350747">https://doi.org/10.1177/1368430209350747</a></p>
+<p>Homan, A. C., van Knippenberg, D., van Kleef, G. A., &amp; De Dreu, C. K. W. (2007a). Bridging faultlines by valuing diversity: Diversity beliefs, information elaboration, and performance in diverse work groups. <em>Journal of Applied Psychology, 92</em>(5), 1189–1199. <a href="https://doi.org/10.1037/0021-9010.92.5.1189">https://doi.org/10.1037/0021-9010.92.5.1189</a></p>
+<p>Homan, A. C., van Knippenberg, D., van Kleef, G. A., &amp; De Dreu, C. K. W. (2007b). Interacting dimensions of diversity: Cross-categorization and the functioning of diverse work groups. <em>Group Dynamics: Theory, Research, and Practice, 11</em>(2), 79–94. <a href="https://doi.org/10.1037/1089-2699.11.2.79">https://doi.org/10.1037/1089-2699.11.2.79</a></p>
+<p>Homan, A. C., Hollenbeck, J. R., Humphrey, S. E., van Knippenberg, D., Ilgen, D. R., &amp; Van Kleef, G. A. (2008). Facing differences with an open mind: Openness to experience, salience of intragroup differences, and performance of diverse work groups. <em>Academy of Management Journal, 51</em>(6), 1204–1222. <a href="https://doi.org/10.5465/amj.2008.35732995">https://doi.org/10.5465/amj.2008.35732995</a></p>
+<p>Kearney, E., Gebert, D., &amp; Voelpel, S. C. (2009). When and how diversity benefits teams: The importance of team members' need for cognition. <em>Academy of Management Journal, 52</em>(3), 581–598. <a href="https://doi.org/10.5465/amj.2009.41331431">https://doi.org/10.5465/amj.2009.41331431</a></p>
+<p>Lau, D. C., &amp; Murnighan, J. K. (1998). Demographic diversity and faultlines: The compositional dynamics of organizational groups. <em>Academy of Management Review, 23</em>(2), 325–340. <a href="https://doi.org/10.5465/amr.1998.533229">https://doi.org/10.5465/amr.1998.533229</a></p>
+<p>Lu, L., Yuan, Y. C., &amp; McLeod, P. L. (2012). Twenty-five years of hidden profiles in group decision making: A meta-analysis. <em>Personality and Social Psychology Review, 16</em>(1), 54–75. <a href="https://doi.org/10.1177/1088868311417243">https://doi.org/10.1177/1088868311417243</a></p>
+<p>Phillips, K. W., Liljenquist, K. A., &amp; Neale, M. A. (2009). Is the pain worth the gain? The advantages and liabilities of agreeing with socially distinct newcomers. <em>Personality and Social Psychology Bulletin, 35</em>(3), 336–350. <a href="https://doi.org/10.1177/0146167208328062">https://doi.org/10.1177/0146167208328062</a></p>
+<p>Qi, M., Armstrong, S. J., Yang, Z., &amp; Li, X. (2022). Cognitive diversity and team creativity: Effects of demographic faultlines, subgroup imbalance and information elaboration. <em>Journal of Business Research, 139</em>, 819–830. <a href="https://doi.org/10.1016/j.jbusres.2021.10.027">https://doi.org/10.1016/j.jbusres.2021.10.027</a></p>
+<p>Raineri, A. (2018). Diversity management in three Latin American countries: An institutional theory perspective. <em>Academia Revista Latinoamericana de Administración, 31</em>(2), 426–447. <a href="https://doi.org/10.1108/ARLA-08-2016-0220">https://doi.org/10.1108/ARLA-08-2016-0220</a></p>
+<p>Scholten, L., van Knippenberg, D., Nijstad, B. A., &amp; De Dreu, C. K. W. (2007). Motivated information processing and group decision-making: Effects of process accountability on information processing and decision quality. <em>Journal of Experimental Social Psychology, 43</em>(4), 539–552. <a href="https://doi.org/10.1016/j.jesp.2006.05.010">https://doi.org/10.1016/j.jesp.2006.05.010</a></p>
+<p>Sommers, S. R. (2006). On racial diversity and group decision making: Identifying multiple effects of racial composition on jury deliberations. <em>Journal of Personality and Social Psychology, 90</em>(4), 597–612. <a href="https://doi.org/10.1037/0022-3514.90.4.597">https://doi.org/10.1037/0022-3514.90.4.597</a></p>
+<p>Stasser, G., &amp; Titus, W. (1985). Pooling of unshared information in group decision making: Biased information sampling during discussion. <em>Journal of Personality and Social Psychology, 48</em>(6), 1467–1478. <a href="https://doi.org/10.1037/0022-3514.48.6.1467">https://doi.org/10.1037/0022-3514.48.6.1467</a></p>
+<p>Thatcher, S. M. B. (2013). Moving beyond a categorical approach to diversity: The role of demographic faultlines. En Q. M. Roberson (Ed.), <em>The Oxford handbook of diversity and work</em> (pp. 52–72). Oxford University Press.</p>
+<p>Thatcher, S. M. B., Meyer, B., Kim, Y., &amp; Patel, P. C. (2024). A meta-analytic integration of the faultlines literature. <em>Organizational Psychology Review, 14</em>(2), 238–281. <a href="https://doi.org/10.1177/20413866231225064">https://doi.org/10.1177/20413866231225064</a></p>
+<p>Valls, V., González-Romá, V., &amp; Tomás, I. (2016). Linking educational diversity and team performance: Team communication quality and innovation team climate matter. <em>Journal of Occupational and Organizational Psychology, 89</em>(4), 751–771. <a href="https://doi.org/10.1111/joop.12152">https://doi.org/10.1111/joop.12152</a></p>
+<p>van Dijk, H., van Engen, M. L., &amp; van Knippenberg, D. (2012). Defying conventional wisdom: A meta-analytical examination of the differences between demographic and job-related diversity relationships with performance. <em>Organizational Behavior and Human Decision Processes, 119</em>(1), 38–53. <a href="https://doi.org/10.1016/j.obhdp.2012.06.003">https://doi.org/10.1016/j.obhdp.2012.06.003</a></p>
+<p>van Ginkel, W. P., &amp; van Knippenberg, D. (2008). Group information elaboration and group decision making: The role of shared task representations. <em>Organizational Behavior and Human Decision Processes, 105</em>(1), 82–97. <a href="https://doi.org/10.1016/j.obhdp.2007.08.005">https://doi.org/10.1016/j.obhdp.2007.08.005</a></p>
+<p>van Knippenberg, D., De Dreu, C. K. W., &amp; Homan, A. C. (2004). Work group diversity and group performance: An integrative model and research agenda. <em>Journal of Applied Psychology, 89</em>(6), 1008–1022. <a href="https://doi.org/10.1037/0021-9010.89.6.1008">https://doi.org/10.1037/0021-9010.89.6.1008</a></p>
+<p>van Knippenberg, D., Haslam, S. A., &amp; Platow, M. J. (2007). Unity through diversity: Value-in-diversity beliefs, work group diversity, and group identification. <em>Group Dynamics: Theory, Research, and Practice, 11</em>(3), 207–222. <a href="https://doi.org/10.1037/1089-2699.11.3.207">https://doi.org/10.1037/1089-2699.11.3.207</a></p>
+<p>van Knippenberg, D., Homan, A. C., &amp; van Ginkel, W. P. (2013). Diversity cognition and climates. En Q. M. Roberson (Ed.), <em>The Oxford handbook of diversity and work</em> (pp. 220–238). Oxford University Press.</p>
+<p>van Knippenberg, D., &amp; van Ginkel, W. P. (2010). The categorization-elaboration model of work group diversity: Wielding the double-edged sword. En R. J. Crisp (Ed.), <em>The psychology of social and cultural diversity</em> (pp. 257–280). Wiley-Blackwell.</p>
+<p>Wallrich, L., Opara, V., Wesołowska, M., Barnoth, D., &amp; Yousefi, S. (2024). The relationship between team diversity and team performance: Reconciling promise and reality through a comprehensive meta-analysis registered report. <em>Journal of Business and Psychology, 39</em>(6), 1303–1354. <a href="https://doi.org/10.1007/s10869-024-09977-0">https://doi.org/10.1007/s10869-024-09977-0</a></p>
+<p>Williams, K. Y., &amp; O'Reilly, C. A. (1998). Demography and diversity in organizations: A review of 40 years of research. <em>Research in Organizational Behavior, 20</em>, 77–140.</p>
+<h3>Para profundizar</h3>
+<p>van Knippenberg y van Ginkel (2010), citado arriba, es la versión más clara del modelo escrita por sus autores, con la evidencia de los primeros seis años. Guillaume, Y. R. F., Dawson, J. F., Otaye-Ebede, L., Woods, S. A., &amp; West, M. A. (2017). Harnessing demographic differences in organizations: What moderates the effects of workplace diversity? <em>Journal of Organizational Behavior, 38</em>(2), 276–303. <a href="https://doi.org/10.1002/job.2040">https://doi.org/10.1002/job.2040</a> ordena los moderadores en cuatro niveles (estrategia, unidad, equipo, individuo) y es la lectura natural después de este apunte. Phillips, K. W., Duguid, M., Thomas-Hunt, M., &amp; Uparna, J. (2013), capítulo 9 del Oxford Handbook citado arriba, agrega el estatus: la persona que más sabe suele ser la que menos habla.</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

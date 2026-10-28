@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de emociones · Personas y Equipos UDP</title>
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g6{grid-template-columns:repeat(6,1fr)}
+  @media (max-width:760px){.g3,.g2,.g6{grid-template-columns:repeat(2,1fr)}}
+  .persona{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem;font-family:system-ui,sans-serif;font-size:.82rem}
+  .persona h4{margin:0 0 .4rem;font-size:.85rem;color:var(--acero)}
+  .persona label{display:block;color:var(--gris);font-size:.75rem;margin-top:.35rem}
+  .persona input[type=range]{width:100%} .persona select,.persona input[type=number]{width:100%;font-size:.85rem;padding:.2rem}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)}
+  svg{max-width:100%;height:auto;display:block}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .ficha{display:grid;gap:.4rem;font-family:system-ui,sans-serif;font-size:.85rem}
+  .ficha .item{padding:.3rem .5rem;border-radius:.3rem;background:#fff;border:1px solid var(--borde)}
+  .ficha .item.mas{border-left:4px solid var(--verde)} .ficha .item.menos{border-left:4px solid var(--rojo)}
+  .ficha .item.unico{background:var(--ambar-claro)}
+  .slider{font-family:system-ui,sans-serif;font-size:.85rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .gauge{height:.9rem;background:var(--borde);border-radius:.5rem;overflow:hidden} .gauge > div{height:100%;background:var(--verde)}
+  .codigo{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.4rem;letter-spacing:.15em;background:#fff;border:2px dashed var(--rojo);padding:.6rem 1rem;border-radius:.5rem;display:inline-block}
+  input.txt{font-family:system-ui,sans-serif;font-size:.95rem;padding:.45rem;border:1px solid var(--borde);border-radius:.4rem;width:100%}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+
+  .plano{position:relative;user-select:none;touch-action:none}
+  .plano svg{cursor:crosshair}
+  .palabras{display:flex;flex-wrap:wrap;gap:.35rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.5rem 0}
+  .palabras span{border:1px solid var(--borde);background:#fff;padding:.25rem .55rem;border-radius:1rem;cursor:pointer}
+  .palabras span.sel{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  .palabras span.puesta{background:var(--gris-claro);color:var(--gris);text-decoration:line-through}
+  .medidor{font-family:system-ui,sans-serif;font-size:.85rem;margin:.4rem 0}
+  .medidor .barra{height:.8rem;background:var(--borde);border-radius:.4rem;overflow:hidden;margin-top:.2rem}
+  .medidor .barra>div{height:100%;transition:width .4s}
+  .dialogo{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;font-family:system-ui,sans-serif;font-size:.95rem;margin:0 0 1rem}
+  .dialogo .cli{background:var(--tinte);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .6rem}
+  .dialogo .tra{background:var(--gris-claro);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .6rem;border-left:4px solid var(--acero)}
+  .dialogo .opcion{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--borde);border-radius:.45rem;padding:.5rem .7rem;margin:.3rem 0;cursor:pointer;font:inherit;color:var(--tinta)}
+  .dialogo .opcion:hover{background:var(--gris-claro)}
+  .tarjetas{display:flex;flex-wrap:wrap;gap:.4rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.4rem 0}
+  .tarjetas span{border:1px solid var(--borde);background:#fff;padding:.3rem .6rem;border-radius:.4rem;cursor:pointer}
+  .tarjetas span.sel{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  .tarjetas span.ok{background:var(--verde-claro);border-color:var(--verde);cursor:default}
+  .tarjetas span.mal{background:var(--tinte);border-color:var(--rojo)}
+  .cubetas{display:grid;gap:.5rem;grid-template-columns:repeat(5,1fr);font-family:system-ui,sans-serif;font-size:.8rem}
+  .cubetas.c3{grid-template-columns:repeat(3,1fr)} .cubetas.c4{grid-template-columns:repeat(4,1fr)}
+  @media (max-width:760px){.cubetas{grid-template-columns:repeat(2,1fr)}}
+  .cubeta{border:2px dashed var(--borde);border-radius:.5rem;padding:.5rem;min-height:4.5rem;cursor:pointer;background:#fff}
+  .cubeta:hover{border-color:var(--rojo)}
+  .cubeta h5{margin:0 0 .3rem;font-size:.8rem;color:var(--acero)}
+  .cubeta .dentro{color:var(--verde);font-size:.78rem}
+  .evento{display:inline-block;width:1.55rem;height:1.55rem;line-height:1.5rem;border-radius:.3rem;text-align:center;font-size:.72rem;font-weight:700;color:#fff;cursor:pointer;margin:1px;font-family:system-ui,sans-serif;border:2px solid transparent}
+  .evento.pos{background:var(--verde)} .evento.neg{background:var(--rojo)} .evento.neu{background:var(--gris)} .evento.fuera{opacity:.25;text-decoration:line-through}
+  .evento.evitable{border-color:#F59E0B}
+  .leyenda{font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .paso{display:none} .paso.activo{display:block}
+  .hbar{font-family:system-ui,sans-serif;font-size:.85rem;margin:.35rem 0}
+  .hbar .track{height:1rem;background:var(--borde);border-radius:.3rem;overflow:hidden;position:relative}
+  .hbar .track>div{height:100%;background:var(--acero);transition:width .4s}
+  .chip{display:inline-block;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro);font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Tema 3</p>
+  <h1>Emociones en el trabajo: seis estaciones para entender lo que se siente, lo que se contagia y lo que cuesta fingir</h1>
+  <p class="meta">Personas y Equipos, secciones 02 y 03 · 2º semestre 2026 · Acompaña a los apuntes 10, 11 y 12<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/pye/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0: INICIO ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Seis estaciones, cada una con algo que manipular, algo que observar y dos o tres preguntas con retroalimentación. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. Al final, la ficha de salida resume lo que completaste. No hay registro ni nota: es material para estudiar.</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. Ubica el sentimiento.</strong> El circumplejo de valencia y activación, con tus propias palabras y tu propia semana.</div>
+    <div class="caja"><strong>2. Una semana de eventos.</strong> La teoría de los eventos afectivos como simulador: tú eres el jefe y tienes tres fichas.</div>
+    <div class="caja"><strong>3. El actor infiltrado.</strong> Cómo se contagia el ánimo en un equipo de seis, y qué lee el equipo en la cara del líder.</div>
+    <div class="caja"><strong>4. El cliente difícil.</strong> Fingir, sentir o explotar: un diálogo con medidores, y las estrategias de regulación ordenadas.</div>
+    <div class="caja"><strong>5. ¿Qué mide este test?</strong> Estima tu habilidad, ponla a prueba, y aprende a leer un catálogo de tests de inteligencia emocional.</div>
+    <div class="caja"><strong>6. ¿Mito o evidencia?</strong> Catorce afirmaciones que circulan en empresas, con su veredicto y su magnitud.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 40 a 60 minutos. Funciona sin conexión una vez cargado. Los modelos numéricos de las estaciones 2, 3 y 4 son ilustrativos: están calibrados con las magnitudes de los estudios que se citan, pero no son simulaciones de esos estudios. Las referencias completas están en los apuntes 10, 11 y 12.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<!-- ============ ESTACIÓN 1: CIRCUMPLEJO ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Ubica el sentimiento: dos dimensiones, no una</h2>
+  <p>El afecto no es una línea de "mal" a "bien". Tiene dos dimensiones: <strong>valencia</strong> (horizontal, de displacer a placer) y <strong>activación</strong> (vertical, de baja a alta). Elige una palabra y luego haz clic en el plano donde crees que va. Cuando hayas puesto al menos ocho, pide la referencia: verás dónde las ubica la investigación (Russell, 2003; Warr, 2007; Madrid y Patterson, 2014) y cuánto te alejaste.</p>
+  <div class="palabras" id="palabras"></div>
+  <div class="grid g2">
+    <div class="plano"><svg id="svgCirc" viewBox="0 0 420 420"></svg></div>
+    <div>
+      <div class="caja" id="circInfo">Elige una palabra de la lista y haz clic en el plano.</div>
+      <button class="btn" id="btnRef" onclick="verReferencia()" disabled>Ver la referencia</button>
+      <button class="btn light" onclick="togglePanas()">Girar los ejes 45° (PANAS)</button>
+      <button class="btn light" onclick="reiniciarCirc()">Empezar de nuevo</button>
+      <div class="nota" id="circRes" style="display:none;margin-top:.8rem"></div>
+    </div>
+  </div>
+
+  <h3>Tu semana en el círculo</h3>
+  <p>Ahora tres eventos tuyos de la última semana (no se guardan fuera de este navegador). Para cada uno, qué tan placentero fue (1 a 7) y cuánta activación te produjo (1 a 5). Aparecen como rombos en el plano.</p>
+  <div class="grid g3" id="semana"></div>
+  <div class="nota" id="semanaOut" style="display:none"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2: TEA ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Una semana de eventos: tú eres el jefe</h2>
+  <p>La teoría de los eventos afectivos (Weiss y Cropanzano, 1996) dice que el trabajo es un flujo de eventos, que los eventos producen reacciones afectivas y que esas reacciones, acumuladas, sedimentan en actitudes. Abajo hay una semana laboral de una persona: 20 momentos, cada uno con un evento. Pasa el cursor sobre un evento para ver qué es. El ánimo se calcula con la asimetría de Miner, Glomb y Hulin (2005): un evento negativo mueve el ánimo cerca de una desviación estándar hacia abajo (−0.96) y uno positivo, un quinto hacia arriba (+0.20); además, el ánimo vuelve lentamente a su nivel de base.</p>
+  <div class="caja">
+    <div id="semanaEventos"></div>
+    <div class="leyenda" style="margin-top:.4rem">Verde: evento positivo. Rojo: negativo. Gris: nada en particular. Borde amarillo: evento que la organización puede evitar o producir. Haz clic en un evento con borde amarillo para quitarlo (si es negativo) o agregarlo (si es positivo). Cada cambio cuesta una ficha.</div>
+    <div class="sans" style="margin-top:.6rem"><strong>Fichas disponibles: <span id="fichas">3</span> de 3.</strong>
+      <button class="btn light" onclick="resetSemana()">Volver a la semana original</button>
+      <label class="mini" style="margin-left:.6rem">Reactividad de la persona (afectividad rasgo): <input type="range" id="reactiv" min="0.5" max="1.5" step="0.1" value="1" oninput="calcTEA()"> <span id="reactivV">1.0</span>×</label>
+    </div>
+  </div>
+  <svg id="svgTEA" viewBox="0 0 640 230"></svg>
+  <div class="grid g3">
+    <div class="stat"><div class="lbl">MOMENTOS EN DISPLACER</div><div class="num" id="teaMedia">–</div><div class="lbl">porcentaje de los 20 momentos con el ánimo bajo la base</div></div>
+    <div class="stat"><div class="lbl">PEOR MOMENTO</div><div class="num" id="teaMin">–</div><div class="lbl">el punto más bajo de la trayectoria</div></div>
+    <div class="stat"><div class="lbl">SEDIMENTO (actitud)</div><div class="num" id="teaSed">–</div><div class="lbl">promedio de la semana, en DE: la satisfacción se construye así</div></div>
+  </div>
+  <div class="nota" id="teaLectura"></div>
+  <h3>Desafíos</h3>
+  <div class="desafio" id="t1"><div class="chk">✓</div><div><strong>1. Tres fichas, un sedimento.</strong> Con las tres fichas, deja el sedimento de la semana en positivo (por encima de 0). <span class="mini">Prueba primero agregando positivos y después quitando negativos. Compara.</span></div></div>
+  <div class="desafio" id="t2"><div class="chk">✓</div><div><strong>2. La cuenta que no cierra.</strong> Agrega los tres positivos disponibles sin quitar ningún negativo y comprueba que el peor momento de la semana sigue igual. <span class="mini">Un elogio el martes no borra el grito del lunes.</span></div></div>
+  <div class="desafio" id="t3"><div class="chk">✓</div><div><strong>3. Dentro y entre personas.</strong> Mueve la reactividad a 0.5 y a 1.5 con la misma semana. ¿Cambian los eventos? ¿Cambia la trayectoria? <span class="mini">Las disposiciones moderan la reacción; los eventos siguen siendo los mismos. En Miner et al., el 56% de la variación del ánimo fue dentro de la persona.</span></div></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3: CONTAGIO ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · El actor infiltrado: cómo se contagia el ánimo</h2>
+  <p>Un equipo de seis en una reunión de 40 minutos. Fija el ánimo inicial de cada uno (de −3, muy desagradable, a +3, muy agradable) y mira cómo convergen ronda a ronda por imitación automática (Hatfield, Cacioppo y Rapson, 1993). El líder pesa más porque todos lo miran (Sy, Côté y Saavedra, 2005). Lo que <em>no</em> pasa: el ánimo desagradable no se contagia más fuerte que el agradable; esa hipótesis no se sostuvo en Barsade (2002).</p>
+  <div class="grid g6" id="equipo"></div>
+  <div style="margin:.6rem 0">
+    <button class="btn light" onclick="presetC('lider+')">Líder entusiasmado, resto neutro</button>
+    <button class="btn light" onclick="presetC('lider-')">Líder irritado, resto neutro</button>
+    <button class="btn light" onclick="presetC('uno-')">Un integrante (no líder) muy negativo</button>
+    <button class="btn light" onclick="presetC('mezcla')">Mezcla al azar</button>
+  </div>
+  <svg id="svgCont" viewBox="0 0 640 240"></svg>
+  <div class="grid g3">
+    <div class="stat"><div class="lbl">TONO AFECTIVO DEL GRUPO (final)</div><div class="num" id="contTono">–</div><div class="lbl">promedio del equipo tras 8 rondas</div></div>
+    <div class="stat"><div class="lbl">DISPERSIÓN (inicio → final)</div><div class="num" id="contDisp">–</div><div class="lbl">desviación estándar: la convergencia es el contagio</div></div>
+    <div class="stat"><div class="lbl">QUIÉN MOVIÓ A QUIÉN</div><div class="num" id="contQuien" style="font-size:1.05rem">–</div><div class="lbl">hacia dónde se desplazó el promedio</div></div>
+  </div>
+  <div class="nota" id="contLectura"></div>
+
+  <h3>Las emociones como información social (EASI)</h3>
+  <p>Ahora el líder expresa una emoción en la reunión. El equipo la recibe por dos rutas: la <strong>afectiva</strong> (lo que se le pega) y la <strong>inferencial</strong> (lo que deduce de la situación y del líder). Elige la emoción y el contexto (Van Kleef, 2009).</p>
+  <div class="caja sans" style="font-size:.9rem">
+    <label>Emoción que expresa el líder:
+      <select id="easiEmo" onchange="calcEASI()"><option value="enojo">Enojo</option><option value="entusiasmo">Entusiasmo</option><option value="preocupacion">Preocupación</option><option value="neutro">Ninguna (neutro)</option></select></label>
+    <label style="margin-left:1rem">Relación con el equipo:
+      <select id="easiRel" onchange="calcEASI()"><option value="coop">Cooperativa, con confianza</option><option value="comp">Competitiva o con poca confianza</option></select></label>
+    <label style="margin-left:1rem">El equipo tiene tiempo para procesar:
+      <select id="easiProc" onchange="calcEASI()"><option value="si">Sí</option><option value="no">No, van apurados</option></select></label>
+    <div class="grid g2" style="margin-top:.8rem">
+      <div class="stat"><div class="lbl">RUTA AFECTIVA</div><div id="easiAf" style="font-size:.9rem"></div></div>
+      <div class="stat"><div class="lbl">RUTA INFERENCIAL</div><div id="easiInf" style="font-size:.9rem"></div></div>
+    </div>
+    <div class="nota" id="easiNota" style="margin-top:.8rem"></div>
+  </div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4: TRABAJO EMOCIONAL ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · El cliente difícil: fingir, sentir o explotar</h2>
+  <p>Trabajas en el mesón de una isapre. Un cliente llega furioso por un cobro que él mismo autorizó hace tres meses. La regla de exhibición es clara: calidez y calma. Antes de empezar, decide qué hizo la organización; después, en cada turno elige cómo respondes. Tres medidores se mueven: tu <strong>agotamiento</strong>, la <strong>autenticidad</strong> que el cliente percibe y <strong>cómo va el cliente</strong>. Están calibrados con Hülsheger y Schewe (2011) y con el círculo de Côté (2005); son ilustrativos.</p>
+  <div class="caja sans" id="palancas" style="font-size:.9rem">
+    <strong>Lo que hizo la organización antes de que el cliente llegara:</strong><br>
+    <label><input type="checkbox" id="pal1"> El sistema de cobros funciona y la fila es corta (menos eventos negativos evitables).</label><br>
+    <label><input type="checkbox" id="pal2"> Hay protocolo Ley Karin: puedes derivar o cortar una interacción abusiva sin que te cueste el puesto.</label><br>
+    <label><input type="checkbox" id="pal3"> Te entrenaron en reevaluación con práctica repetida ("si el cliente grita, entonces pienso que está asustado").</label><br>
+    <button class="btn" style="margin-top:.5rem" onclick="iniciarDialogo()">Que entre el cliente</button>
+  </div>
+  <div id="dialogoBox" style="display:none">
+    <div class="grid g3">
+      <div class="medidor">Agotamiento: <strong id="mAgot">0</strong>/100<div class="barra"><div id="bAgot" style="background:var(--rojo);width:0%"></div></div></div>
+      <div class="medidor">Autenticidad percibida: <strong id="mAut">50</strong>/100<div class="barra"><div id="bAut" style="background:var(--verde);width:50%"></div></div></div>
+      <div class="medidor">El cliente: <strong id="mCli">furioso</strong><div class="barra"><div id="bCli" style="background:var(--acero);width:10%"></div></div></div>
+    </div>
+    <div class="dialogo" id="dialogo"></div>
+    <div class="nota" id="dialogoFin" style="display:none"></div>
+  </div>
+
+  <h3>Cinco momentos para regular (Gross, 1998)</h3>
+  <p>Diez cosas que una persona puede hacer con una emoción. Elige una tarjeta y luego el momento del proceso en que actúa. Mientras antes en la cadena, más barato.</p>
+  <div class="tarjetas" id="tarjGross"></div>
+  <div class="cubetas" id="cubGross"></div>
+  <div class="nota" id="grossOut" style="display:none"></div>
+
+  <h3>Regular las emociones de otros: tres niveles de involucramiento</h3>
+  <p>Nueve cosas que un jefe puede hacer con lo que siente su equipo (Diefendorff, Niven y Ong, en prensa; Niven, Totterdell y Holman, 2009). Clasifícalas por cuánto involucramiento con el otro exigen.</p>
+  <div class="tarjetas" id="tarjInter"></div>
+  <div class="cubetas c3" id="cubInter"></div>
+  <div class="nota" id="interOut" style="display:none"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5: IE ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · ¿Qué mide este test? Inteligencia emocional</h2>
+  <div class="paso activo" id="ie1">
+    <h3>Paso 1 · Estima tu habilidad</h3>
+    <p>Comprender emociones (sus causas, sus mezclas, cómo cambian) es una de las cuatro ramas de la inteligencia emocional de habilidad (Mayer, Caruso y Salovey, 2016). Respecto de tus compañeros de curso, ¿en qué percentil crees que estás? (50 = justo en la mitad; 90 = mejor que el 90%).</p>
+    <div class="slider">Tu estimación: <strong id="ieEstV">50</strong><input type="range" id="ieEst" min="1" max="99" value="50" oninput="document.getElementById('ieEstV').textContent=this.value"></div>
+    <button class="btn" onclick="iePaso(2)">Guardar mi estimación y hacer la prueba</button>
+  </div>
+  <div class="paso" id="ie2">
+    <h3>Paso 2 · Seis ítems de habilidad</h3>
+    <p>Son ítems escritos para este curso, con clave basada en la teoría de la emoción (como hace el GECo; Schlegel y Mortillaro, 2019). Es una demostración, no una medición. Responde los seis.</p>
+    <div id="ieItems"></div>
+    <div class="nota" id="ieRes" style="display:none"></div>
+  </div>
+  <div class="paso" id="ie3">
+    <h3>Paso 3 · ¿Qué tipo de instrumento es?</h3>
+    <p>Ocho ítems tomados de distintos tipos de instrumento. Elige el ítem y luego el tipo. Solo uno de los cuatro tipos mide una habilidad.</p>
+    <div class="tarjetas" id="tarjIE"></div>
+    <div class="cubetas c4" id="cubIE"></div>
+    <div class="nota" id="ieClasOut" style="display:none"></div>
+    <h3>Paso 4 · ¿Qué predice cada uno?</h3>
+    <p>Correlaciones metaanalíticas corregidas con el desempeño laboral. Activa los controles y mira qué queda.</p>
+    <div class="caja sans" style="font-size:.9rem">
+      <label><input type="checkbox" id="ctrl1" onchange="calcPred()"> Controlar personalidad, capacidad cognitiva, autoeficacia y desempeño autoevaluado (Joseph et al., 2015)</label><br>
+      <label><input type="checkbox" id="ctrl2" onchange="calcPred()"> Mirar solo trabajos de alta carga emocional (Joseph y Newman, 2010)</label>
+      <div id="predBars" style="margin-top:.6rem"></div>
+      <div class="nota" id="predNota" style="margin-top:.6rem"></div>
+    </div>
+    <h3>Antes de comprar: tres preguntas</h3>
+    <div class="caja sans" style="font-size:.9rem" id="compra">
+      <label>¿El test es de habilidad (tareas con respuestas correctas) o de autoinforme? <select id="c1" onchange="calcCompra()"><option value="">elige</option><option value="hab">Habilidad</option><option value="auto">Autoinforme o 360</option></select></label><br>
+      <label>¿El proveedor muestra validez incremental sobre personalidad y capacidad cognitiva? <select id="c2" onchange="calcCompra()"><option value="">elige</option><option value="si">Sí, con datos</option><option value="no">No, o no sabe qué es</option></select></label><br>
+      <label>¿Para qué se va a usar? <select id="c3" onchange="calcCompra()"><option value="">elige</option><option value="des">Desarrollo con feedback</option><option value="sel">Selección o promoción</option></select></label>
+      <div class="nota" id="compraOut" style="display:none;margin-top:.6rem"></div>
+    </div>
+    <h3>Para cerrar la estación</h3>
+    <div id="q5"></div>
+  </div>
+</section>
+
+<!-- ============ ESTACIÓN 6: MITOS ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · ¿Mito o evidencia?</h2>
+  <p>Catorce afirmaciones que circulan en empresas, charlas y redes. Marca verdadero o falso; luego aparece el veredicto, la magnitud y la fuente. Las referencias completas están en los apuntes 10, 11 y 12.</p>
+  <div id="mitos"></div>
+  <div class="nota" id="mitosRes" style="display:none"></div>
+</section>
+
+<!-- ============ FICHA DE SALIDA ============ -->
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div id="fichaRepaso"></div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y UTILIDADES =====================
+const estado = { hechas: {}, respuestas: {} };
+function guardar(){ try{ localStorage.setItem("lab_emo_v1", JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem("lab_emo_v1"); if(s){ Object.assign(estado, JSON.parse(s)); } }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+const NOMBRES = ["Inicio","1 · Circumplejo","2 · Eventos","3 · Contagio","4 · Cliente difícil","5 · Test de IE","6 · Mitos","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+let actual = 0;
+function pintarNav(){
+  const n = document.getElementById("nav"); n.innerHTML = "";
+  NOMBRES.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t; b.onclick=()=>ir(i);
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista"); n.appendChild(b); });
+  const k = EST.filter(i=>estado.hechas[i]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de 6`;
+}
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa")); document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===7) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+const r2 = x => (Math.round(x*100)/100).toFixed(2);
+const r1 = x => (Math.round(x*10)/10).toFixed(1);
+const mean = a => a.reduce((s,x)=>s+x,0)/a.length;
+const sdPob = a => { const m=mean(a); return Math.sqrt(mean(a.map(x=>(x-m)*(x-m)))); };
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+// Preguntas MC genéricas
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML="";
+  items.forEach((q,qi)=>{
+    const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML = `<strong>${q.p}</strong><br>` + q.o.map((o,oi)=>`<span class="opc" data-q="${qi}" data-o="${oi}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const oi=+el.dataset.o; const ok = oi===q.c;
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[q.c].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML = (ok?"<strong>Correcto.</strong> ":"<strong>No es eso.</strong> ") + q.f + (q.r?` <span class="cita">${q.r}</span>`:"");
+      estado.respuestas[`${estacion}_${qi}`] = ok?1:0; guardar();
+      if(items.every((_,k)=> (`${estacion}_${k}`) in estado.respuestas)) marcar(estacion);
+    });
+  });
+}
+// Clasificador genérico: tarjetas -> cubetas
+function clasificador(tarjId, cubId, outId, items, cubetas, key, textoFinal){
+  const T=document.getElementById(tarjId), C=document.getElementById(cubId), O=document.getElementById(outId);
+  let sel=null; const hechas={};
+  T.innerHTML=""; items.forEach((it,i)=>{ const s=document.createElement("span"); s.textContent=it.t; s.dataset.i=i; s.onclick=()=>{ if(hechas[i]) return; T.querySelectorAll("span").forEach(x=>x.classList.remove("sel")); s.classList.add("sel"); sel=i; }; T.appendChild(s); });
+  C.innerHTML=""; cubetas.forEach((cb,ci)=>{ const d=document.createElement("div"); d.className="cubeta"; d.innerHTML=`<h5>${cb.n}</h5><div class="mini">${cb.d||""}</div><div class="dentro"></div>`;
+    d.onclick=()=>{ if(sel===null){ O.style.display="block"; O.innerHTML="Primero elige una tarjeta."; return; }
+      const it=items[sel]; const ok = it.c===ci; const sp=T.querySelector(`span[data-i="${sel}"]`);
+      O.style.display="block";
+      if(ok){ hechas[sel]=1; sp.classList.remove("sel"); sp.classList.add("ok"); d.querySelector(".dentro").innerHTML += `• ${esc(it.t)}<br>`; O.innerHTML=`<strong>Correcto.</strong> ${it.f}`; sel=null; }
+      else { sp.classList.add("mal"); setTimeout(()=>sp.classList.remove("mal"),700); O.innerHTML=`<strong>No va ahí.</strong> ${it.f}`; }
+      const n=Object.keys(hechas).length; estado.respuestas[key]=n/items.length; guardar();
+      if(n===items.length){ O.innerHTML += `<br><strong>Listo.</strong> ${textoFinal}`; if(typeof cubDone==="function") cubDone(key); }
+    }; C.appendChild(d); });
+}
+
+// ===================== ESTACIÓN 1: CIRCUMPLEJO =====================
+// Posiciones de referencia (valencia, activación) en [-1, 1], según la tradición de Warr (2007) y el circumplejo de Russell (2003).
+const PAL = [
+  ["entusiasmado", 0.72, 0.68], ["alegre", 0.80, 0.45], ["orgulloso", 0.70, 0.50], ["inspirado", 0.65, 0.70],
+  ["tranquilo", 0.65, -0.60], ["relajado", 0.60, -0.70], ["aliviado", 0.55, -0.35], ["satisfecho", 0.85, 0.00],
+  ["nervioso", -0.50, 0.78], ["tenso", -0.60, 0.65], ["irritado", -0.72, 0.52], ["preocupado", -0.55, 0.45],
+  ["triste", -0.75, -0.35], ["desanimado", -0.70, -0.52], ["aburrido", -0.40, -0.72], ["cansado", -0.30, -0.80],
+];
+const puestas = {}; let palSel = null; let panas = false; let refVisible = false;
+const SEMANA = [null,null,null];
+function initCirc(){
+  const c=document.getElementById("palabras"); c.innerHTML="";
+  PAL.forEach((p,i)=>{ const s=document.createElement("span"); s.textContent=p[0]; s.dataset.i=i; s.onclick=()=>{ c.querySelectorAll("span").forEach(x=>x.classList.remove("sel")); s.classList.add("sel"); palSel=i; document.getElementById("circInfo").innerHTML=`Haz clic en el plano donde va <strong>${p[0]}</strong>.`; }; c.appendChild(s); });
+  const svg=document.getElementById("svgCirc");
+  svg.addEventListener("click", ev=>{
+    if(palSel===null) return;
+    const pt=svg.createSVGPoint(); pt.x=ev.clientX; pt.y=ev.clientY; const q=pt.matrixTransform(svg.getScreenCTM().inverse());
+    const v=Math.max(-1,Math.min(1,(q.x-210)/180)), a=Math.max(-1,Math.min(1,(210-q.y)/180));
+    puestas[palSel]=[v,a]; document.querySelector(`#palabras span[data-i="${palSel}"]`).classList.add("puesta"); document.querySelector(`#palabras span[data-i="${palSel}"]`).classList.remove("sel"); palSel=null;
+    const n=Object.keys(puestas).length; document.getElementById("circInfo").innerHTML = `${n} de ${PAL.length} palabras ubicadas. ` + (n>=8? "Ya puedes ver la referencia." : "Ubica al menos ocho para ver la referencia.");
+    document.getElementById("btnRef").disabled = n<8; dibCirc();
+  });
+  const sem=document.getElementById("semana"); sem.innerHTML="";
+  for(let i=0;i<3;i++){ const d=document.createElement("div"); d.className="persona"; d.innerHTML=`<h4>Evento ${i+1}</h4><input class="txt" placeholder="qué pasó (opcional)" oninput="SEMANA[${i}]=SEMANA[${i}]||{v:4,a:3};SEMANA[${i}].t=this.value;dibCirc()">
+    <label>Valencia (1 displacer · 7 placer): <span id="sv${i}">4</span></label><input type="range" min="1" max="7" value="4" oninput="SEMANA[${i}]=SEMANA[${i}]||{v:4,a:3};SEMANA[${i}].v=+this.value;document.getElementById('sv${i}').textContent=this.value;dibCirc();leerSemana()">
+    <label>Activación (1 baja · 5 alta): <span id="sa${i}">3</span></label><input type="range" min="1" max="5" value="3" oninput="SEMANA[${i}]=SEMANA[${i}]||{v:4,a:3};SEMANA[${i}].a=+this.value;document.getElementById('sa${i}').textContent=this.value;dibCirc();leerSemana()">`; sem.appendChild(d); }
+  dibCirc();
+}
+function togglePanas(){ panas=!panas; dibCirc(); estado.respuestas.panas=1; guardar(); }
+function reiniciarCirc(){ Object.keys(puestas).forEach(k=>delete puestas[k]); refVisible=false; document.querySelectorAll("#palabras span").forEach(x=>x.classList.remove("puesta","sel")); document.getElementById("btnRef").disabled=true; document.getElementById("circRes").style.display="none"; document.getElementById("circInfo").innerHTML="Elige una palabra de la lista y haz clic en el plano."; dibCirc(); }
+function dibCirc(){
+  const X=v=>210+v*180, Y=a=>210-a*180;
+  let h=`<rect x="30" y="30" width="360" height="360" fill="#F3F4F6" rx="8"/>`;
+  h+=`<line x1="30" y1="210" x2="390" y2="210" stroke="#9CA3AF" stroke-width="1.5"/><line x1="210" y1="30" x2="210" y2="390" stroke="#9CA3AF" stroke-width="1.5"/>`;
+  h+=`<text x="386" y="204" font-size="10" fill="#6B7280" text-anchor="end" font-family="sans-serif" font-weight="700">PLACER</text><text x="34" y="204" font-size="10" fill="#6B7280" font-family="sans-serif" font-weight="700">DISPLACER</text>`;
+  h+=`<text x="214" y="42" font-size="10" fill="#6B7280" font-family="sans-serif" font-weight="700">ALTA ACTIVACIÓN</text><text x="214" y="384" font-size="10" fill="#6B7280" font-family="sans-serif" font-weight="700">BAJA ACTIVACIÓN</text>`;
+  h+=`<text x="60" y="70" font-size="11" fill="#C8102E" font-family="sans-serif" font-weight="700">ANSIEDAD</text><text x="300" y="70" font-size="11" fill="#15803D" font-family="sans-serif" font-weight="700">ENTUSIASMO</text><text x="48" y="372" font-size="11" fill="#475569" font-family="sans-serif" font-weight="700">DECAIMIENTO</text><text x="330" y="372" font-size="11" fill="#475569" font-family="sans-serif" font-weight="700">CALMA</text>`;
+  if(panas){ h+=`<line x1="50" y1="370" x2="370" y2="50" stroke="#C8102E" stroke-width="1.5" stroke-dasharray="5,4"/><line x1="50" y1="50" x2="370" y2="370" stroke="#C8102E" stroke-width="1.5" stroke-dasharray="5,4"/>`;
+    h+=`<text x="386" y="46" font-size="9" fill="#C8102E" font-family="sans-serif" text-anchor="end">AFECTO POSITIVO alto</text><text x="40" y="384" font-size="9" fill="#C8102E" font-family="sans-serif">AP bajo</text><text x="40" y="46" font-size="9" fill="#C8102E" font-family="sans-serif">AFECTO NEGATIVO alto</text><text x="372" y="384" font-size="9" fill="#C8102E" font-family="sans-serif" text-anchor="end">AN bajo</text>`; }
+  Object.entries(puestas).forEach(([i,[v,a]])=>{ const p=PAL[i]; h+=`<circle cx="${X(v)}" cy="${Y(a)}" r="5" fill="#C8102E"/><text x="${X(v)+7}" y="${Y(a)+4}" font-size="10" fill="#1F2937" font-family="sans-serif">${p[0]}</text>`;
+    if(refVisible){ h+=`<line x1="${X(v)}" y1="${Y(a)}" x2="${X(p[1])}" y2="${Y(p[2])}" stroke="#9CA3AF" stroke-dasharray="3,3"/><circle cx="${X(p[1])}" cy="${Y(p[2])}" r="5" fill="none" stroke="#15803D" stroke-width="2"/>`; } });
+  SEMANA.forEach((e,i)=>{ if(!e) return; const v=(e.v-4)/3, a=(e.a-3)/2; h+=`<polygon points="${X(v)},${Y(a)-7} ${X(v)+7},${Y(a)} ${X(v)},${Y(a)+7} ${X(v)-7},${Y(a)}" fill="#475569"/><text x="${X(v)+9}" y="${Y(a)+4}" font-size="10" fill="#475569" font-family="sans-serif" font-weight="700">${esc(e.t||("evento "+(i+1)))}</text>`; });
+  document.getElementById("svgCirc").innerHTML=h;
+}
+function verReferencia(){
+  refVisible=true; dibCirc();
+  const ks=Object.keys(puestas); let okQ=0, dist=[];
+  ks.forEach(i=>{ const [v,a]=puestas[i], p=PAL[i]; const mismoQ = Math.sign(v)===Math.sign(p[1]) && Math.sign(a)===Math.sign(p[2]); if(mismoQ) okQ++; dist.push(Math.hypot(v-p[1],a-p[2])); });
+  const dm=mean(dist);
+  const peor = ks.map(i=>[PAL[i][0], Math.hypot(puestas[i][0]-PAL[i][1], puestas[i][1]-PAL[i][2])]).sort((x,y)=>y[1]-x[1]).slice(0,3).map(x=>x[0]);
+  const r=document.getElementById("circRes"); r.style.display="block";
+  r.innerHTML=`<strong>Resultado:</strong> ${okQ} de ${ks.length} palabras en el cuadrante de referencia; distancia media ${r2(dm)} (en un plano de −1 a 1). ${dm<0.35?"Muy cerca de la estructura que encuentra la investigación.":dm<0.55?"Razonable: el cuadrante suele acertarse; lo que varía es cuánta activación se le atribuye a cada palabra.":"Las discrepancias no son errores: el modelo describe el núcleo afectivo; el objeto y la interpretación le ponen el nombre."} Las que más se alejaron: ${peor.join(", ")}.<br><span class="cita">Fíjate en que "tenso" y "entusiasmado" están a la misma altura: ambos son alta activación. Se distinguen por la valencia. Por eso el estrés y el engagement no son opuestos.</span>`;
+  estado.respuestas.circ = okQ/ks.length; guardar();
+}
+function leerSemana(){
+  const ev=SEMANA.filter(Boolean); if(ev.length<3) return;
+  const q=e=>{ const v=e.v-4, a=e.a-3; return v>0&&a>0?"entusiasmo":v<0&&a>0?"ansiedad":v<0&&a<0?"decaimiento":v>0&&a<0?"calma":"el centro"; };
+  const cu=ev.map(q); const alta=ev.filter(e=>e.a>=4).length;
+  const o=document.getElementById("semanaOut"); o.style.display="block";
+  o.innerHTML=`<strong>Tu semana:</strong> tus tres eventos caen en ${[...new Set(cu)].join(", ")}. ${alta>=2?"Dos o más fueron de alta activación: una semana con eventos de ansiedad y de entusiasmo a la vez es exactamente el perfil que produce estrés y compromiso simultáneos.":"Pocos eventos de alta activación: una semana más bien tranquila o apagada; mira si lo que domina es calma o decaimiento, porque piden cosas distintas."}`;
+  estado.respuestas.semana=1; guardar();
+}
+const Q1 = [
+  { p:"Gallup reporta que el 41% de los trabajadores chilenos sintió mucho estrés el día anterior y que Chile tiene el engagement más alto de la región (33%). ¿Cómo es posible?", o:["Es una contradicción: alguien midió mal","Estrés y engagement están ambos en la mitad de alta activación y se distinguen por la valencia; además, uno es un estado del día y el otro una actitud estable","El engagement de Gallup mide otra cosa, no emociones"], c:1, f:"Dos capas: en el circumplejo ambos son estados activados que difieren en valencia, no polos de una línea; y el estrés diario es un estado que fluctúa (56% de la varianza es intrapersonal), mientras que el engagement es el sedimento de muchas reacciones.", r:"Russell (2003); Warr (2007); Miner et al. (2005)." },
+  { p:"Un equipo reporta en la encuesta de clima un puntaje medio en \"ánimo\". ¿Qué no sabes con ese dato?", o:["Nada: un puntaje medio es un equipo normal","Si el equipo está en calma o en decaimiento, que piden intervenciones opuestas","Si el equipo es productivo"], c:1, f:"Un puntaje único de valencia no distingue placer calmado (calma) de displacer desactivado (decaimiento), ni entre un equipo tenso que habla y uno apagado que calla. Por eso se mide por cuadrantes; hay un instrumento breve validado en castellano.", r:"Madrid &amp; Patterson (2014); Madrid, Patterson &amp; Leiva (2015)." },
+  { p:"Al girar los ejes 45° aparece el esquema de afecto positivo y negativo del PANAS. ¿Qué pierde ese esquema?", o:["Nada: es el mismo plano","Los dos cuadrantes de baja activación: calma y decaimiento quedan como \"poco afecto\"","La valencia"], c:1, f:"El PANAS mide afecto positivo activado (entusiasmo) y afecto negativo activado (ansiedad). La calma y el decaimiento aparecen como puntajes bajos en ambos, es decir, como ausencia de afecto, cuando son estados afectivos con consecuencias (el decaimiento calla; Madrid et al., 2015).", r:"Watson &amp; Tellegen (1985); Warr (2007)." },
+];
+
+// ===================== ESTACIÓN 2: TEA =====================
+// 20 momentos de una semana (lun a vie, 4 por día). s: signo; m: magnitud en DE; ev: evitable/producible por la organización.
+const EVENTOS_BASE = [
+  {t:"Lunes 9:00 · Café con el equipo", s:1, m:0.2}, {t:"Lunes 10:30 · Plataforma caída media mañana", s:-1, m:0.96, ev:1}, {t:"Lunes 12:00 · Resolviste un problema difícil", s:1, m:0.2}, {t:"Lunes 16:00 · Reunión que no decide nada", s:-1, m:0.96, ev:1},
+  {t:"Martes 9:00 · Nada en particular", s:0, m:0}, {t:"Martes 11:00 · Un cliente te agradece", s:1, m:0.2}, {t:"Martes 14:00 · Avanzaste en el informe", s:1, m:0.2}, {t:"Martes 17:00 · Instrucción confusa: rehacer una hora de trabajo", s:-1, m:0.96, ev:1},
+  {t:"Miércoles 9:00 · Compañero te ayuda", s:1, m:0.2}, {t:"Miércoles 11:00 · Nada en particular", s:0, m:0}, {t:"Miércoles 13:00 · Almuerzo agradable", s:1, m:0.2}, {t:"Miércoles 16:00 · El jefe te grita delante de otros", s:-1, m:0.96, ev:1},
+  {t:"Jueves 9:00 · Buen feedback de un par", s:1, m:0.2}, {t:"Jueves 11:00 · Terminaste una tarea pendiente", s:1, m:0.2}, {t:"Jueves 15:00 · Cliente agresivo por un error ajeno", s:-1, m:0.96}, {t:"Jueves 17:00 · Un correo amable", s:1, m:0.2},
+  {t:"Viernes 9:00 · Nada en particular", s:0, m:0}, {t:"Viernes 11:00 · Pequeño logro", s:1, m:0.2}, {t:"Viernes 14:00 · Conversación entretenida", s:1, m:0.2}, {t:"Viernes 17:00 · Cierre de semana tranquilo", s:1, m:0.2},
+];
+// Positivos que la organización puede producir (ocupan los momentos "nada en particular")
+const POS_PRODUCIBLES = { 4:"Martes 9:00 · Elogio público del jefe", 9:"Miércoles 11:00 · Celebración de un hito", 16:"Viernes 9:00 · Reconocimiento en la reunión" };
+let EV = []; let fichas = 3; let sedHist = { pos:false, neg:false };
+function resetSemana(){ EV = EVENTOS_BASE.map(e=>({...e, fuera:false, agregado:false})); fichas=3; calcTEA(); }
+function toggleEv(i){
+  const e=EV[i];
+  if(e.ev && e.s===-1){ if(e.fuera){ e.fuera=false; fichas++; } else { if(fichas<=0) return avisoFichas(); e.fuera=true; fichas--; sedHist.neg=true; } }
+  else if(i in POS_PRODUCIBLES){ if(e.agregado){ e.agregado=false; e.s=0; e.m=0; e.t=EVENTOS_BASE[i].t; fichas++; } else { if(fichas<=0) return avisoFichas(); e.agregado=true; e.s=1; e.m=0.2; e.t=POS_PRODUCIBLES[i]; fichas--; sedHist.pos=true; } }
+  calcTEA();
+}
+function avisoFichas(){ const l=document.getElementById("teaLectura"); l.innerHTML="<strong>No quedan fichas.</strong> Devuelve un cambio para recuperar una."; }
+function calcTEA(){
+  const react=+document.getElementById("reactiv").value; document.getElementById("reactivV").textContent=r1(react);
+  document.getElementById("fichas").textContent=fichas;
+  const c=document.getElementById("semanaEventos"); c.innerHTML="";
+  ["L","M","X","J","V"].forEach((d,di)=>{ const row=document.createElement("div"); row.innerHTML=`<span class="mini" style="display:inline-block;width:1.2rem">${d}</span>`;
+    for(let k=0;k<4;k++){ const i=di*4+k, e=EV[i]; const s=document.createElement("span"); s.className="evento "+(e.s>0?"pos":e.s<0?"neg":"neu")+((e.ev&&e.s<0)||(i in POS_PRODUCIBLES)?" evitable":"")+(e.fuera?" fuera":""); s.title=e.t+(e.fuera?" (eliminado)":""); s.textContent=e.s>0?"+":e.s<0?"−":"·"; s.onclick=()=>toggleEv(i); row.appendChild(s); }
+    c.appendChild(row); });
+  // trayectoria
+  const rho=0.6; let m=0; const tray=[];
+  EV.forEach(e=>{ const eff = e.fuera?0 : e.s*e.m*react; m = rho*m + eff; tray.push(m); });
+  const media=mean(tray), min=Math.min(...tray), sed=media, pctNeg=Math.round(100*tray.filter(v=>v<-0.25).length/tray.length);
+  document.getElementById("teaMedia").textContent=pctNeg+"%"; document.getElementById("teaMin").textContent=r2(min); document.getElementById("teaSed").textContent=(sed>=0?"+":"")+r2(sed);
+  // svg
+  const W=640,H=230, x0=40, x1=620, y=v=>120-v*45;
+  let h=`<line x1="${x0}" y1="${y(0)}" x2="${x1}" y2="${y(0)}" stroke="#9CA3AF"/>`;
+  [-2,-1,1].forEach(v=>h+=`<line x1="${x0}" y1="${y(v)}" x2="${x1}" y2="${y(v)}" stroke="#E5E7EB"/><text x="${x0-6}" y="${y(v)+3}" font-size="9" fill="#6B7280" text-anchor="end" font-family="sans-serif">${v>0?"+":""}${v} DE</text>`);
+  ["Lun","Mar","Mié","Jue","Vie"].forEach((d,i)=>h+=`<text x="${x0+(i*4+1.5)*(x1-x0)/20}" y="222" font-size="10" fill="#6B7280" text-anchor="middle" font-family="sans-serif">${d}</text>`);
+  const pts=tray.map((v,i)=>`${x0+(i+0.5)*(x1-x0)/20},${y(v)}`).join(" ");
+  h+=`<polyline points="${pts}" fill="none" stroke="#1F2937" stroke-width="2"/>`;
+  tray.forEach((v,i)=>{ const e=EV[i]; const col=e.fuera||e.s===0?"#9CA3AF":e.s>0?"#15803D":"#C8102E"; h+=`<circle cx="${x0+(i+0.5)*(x1-x0)/20}" cy="${y(v)}" r="4" fill="${col}"><title>${esc(e.t)}${e.fuera?" (eliminado)":""} · ánimo ${r2(v)}</title></circle>`; });
+  h+=`<text x="${x0}" y="14" font-size="10" fill="#6B7280" font-family="sans-serif">Ánimo del momento (DE respecto de la base). Cada punto es un momento; el color, el evento.</text>`;
+  document.getElementById("svgTEA").innerHTML=h;
+  // lectura
+  const nNeg=EV.filter(e=>e.s<0&&!e.fuera).length, nPos=EV.filter(e=>e.s>0).length;
+  let L=`<strong>Lectura:</strong> ${nPos} eventos positivos y ${nNeg} negativos. Los positivos son ${nNeg?Math.round(nPos/nNeg*10)/10:"muchas"} veces más frecuentes, pero cada negativo pesa ${Math.round(0.96/0.2*10)/10} veces más. `;
+  L += nNeg>=4 ? "Mira la trayectoria: cuatro caídas grandes y una recuperación lenta. Eso es una semana corriente." : nNeg===0 ? "Sin eventos negativos la trayectoria casi no baja: el sedimento sube más que con cualquier cantidad de elogios." : "Quitaste eventos negativos: compara el peor momento y el sedimento con la semana original.";
+  document.getElementById("teaLectura").innerHTML=L;
+  // desafíos
+  const agregados=EV.filter(e=>e.agregado).length, quitados=EV.filter(e=>e.fuera).length;
+  if(sed>0){ ok("t1"); } if(agregados===3 && quitados===0 && Math.abs(min-minBase())<0.001){ ok("t2"); }
+  if(react<=0.5) estado.respuestas.t3a=1; if(react>=1.5) estado.respuestas.t3b=1; if(estado.respuestas.t3a&&estado.respuestas.t3b) ok("t3");
+  guardar();
+}
+function minBase(){ const rho=0.6; let m=0, mn=0; EVENTOS_BASE.forEach(e=>{ m=rho*m+e.s*e.m*(+document.getElementById("reactiv").value); mn=Math.min(mn,m); }); return mn; }
+function ok(id){ document.getElementById(id).classList.add("hecho"); estado.respuestas[id]=1; }
+const Q2 = [
+  { p:"Con tres fichas, ¿qué subió más el sedimento de la semana?", o:["Agregar tres eventos positivos","Quitar tres eventos negativos evitables","Da lo mismo: tres fichas son tres fichas"], c:1, f:"Cada negativo pesa cerca de cinco veces lo que un positivo (−0.96 vs +0.20 DE), así que evitar uno vale más que producir varios. Además, los negativos evitables (plataforma caída, instrucción confusa, reunión sin decisión, jefe que grita) los produce la organización.", r:"Miner, Glomb &amp; Hulin (2005); Baumeister et al. (2001)." },
+  { p:"Un jefe maltrata a alguien el lunes y lo felicita en público el martes. Según la asimetría, el balance de la semana queda:", o:["En cero: un evento compensa al otro","Claramente negativo: el elogio recupera una fracción de lo que costó el maltrato","Positivo: el elogio fue público"], c:1, f:"Un negativo de −0.96 y un positivo de +0.20 no se anulan. Es la cuenta que no cierra. Y en la memoria la asimetría es aún mayor: los incidentes negativos con el jefe se recuerdan más y con más detalle.", r:"Miner et al. (2005); Dasborough (2006)." },
+  { p:"Al mover la reactividad (afectividad rasgo) de 0.5 a 1.5 cambió la trayectoria pero no los eventos. ¿Qué componente de la TEA es ese?", o:["Las características del ambiente de trabajo","Las disposiciones, que moderan cuánto reacciona cada persona a un mismo evento","La conducta impulsada por el juicio"], c:1, f:"Las disposiciones (afectividad positiva y negativa como rasgo) moderan la reacción. La organización no gestiona ese dial: gestiona los eventos. Y aun así, en Miner et al. más de la mitad de la variación del ánimo (56%) fue dentro de la persona, de un momento a otro.", r:"Weiss &amp; Cropanzano (1996); Miner et al. (2005)." },
+];
+
+// ===================== ESTACIÓN 3: CONTAGIO =====================
+const EQ = [ {n:"Líder", m:0}, {n:"Ana", m:0}, {n:"Bruno", m:0}, {n:"Camila", m:0}, {n:"Diego", m:0}, {n:"Elisa", m:0} ];
+function initCont(){
+  const c=document.getElementById("equipo"); c.innerHTML="";
+  EQ.forEach((p,i)=>{ const d=document.createElement("div"); d.className="persona"; d.innerHTML=`<h4>${p.n}${i===0?" (todos lo miran)":""}</h4><label>Ánimo inicial: <span id="eqv${i}">${p.m}</span></label><input type="range" min="-3" max="3" step="0.5" value="${p.m}" oninput="EQ[${i}].m=+this.value;calcCont()">`; c.appendChild(d); });
+  calcCont();
+}
+function refrescarEQ(){ document.querySelectorAll("#equipo input").forEach((el,i)=>el.value=EQ[i].m); }
+function presetC(t){
+  EQ.forEach(p=>p.m=0);
+  if(t==="lider+") EQ[0].m=3; if(t==="lider-") EQ[0].m=-3; if(t==="uno-") EQ[3].m=-3;
+  if(t==="mezcla") EQ.forEach(p=>p.m=Math.round((Math.random()*6-3)*2)/2);
+  refrescarEQ(); calcCont(); estado.respuestas["c_"+t]=1; guardar();
+}
+function calcCont(){
+  EQ.forEach((p,i)=>document.getElementById("eqv"+i).textContent=p.m);
+  const W=[0.45,0.11,0.11,0.11,0.11,0.11]; // peso de cada persona como emisor (el líder pesa más)
+  const alpha=0.22; const R=8; let cur=EQ.map(p=>p.m); const hist=[cur.slice()];
+  for(let r=0;r<R;r++){ const nxt=cur.map((mi,i)=>{ let s=0, ws=0; cur.forEach((mj,j)=>{ if(j===i) return; s+=W[j]*(mj-mi); ws+=W[j]; }); return mi + alpha*s/ws; }); cur=nxt; hist.push(cur.slice()); }
+  const tono=mean(cur), d0=sdPob(hist[0]), d1=sdPob(cur), m0=mean(hist[0]);
+  document.getElementById("contTono").textContent=(tono>=0?"+":"")+r2(tono);
+  document.getElementById("contDisp").textContent=`${r2(d0)} → ${r2(d1)}`;
+  const desp=tono-m0; document.getElementById("contQuien").textContent = Math.abs(desp)<0.05? "El promedio no se movió" : (desp>0?"Subió ":"Bajó ")+r2(Math.abs(desp))+(Math.abs(EQ[0].m-m0)>Math.max(...EQ.slice(1).map(p=>Math.abs(p.m-m0)))?" (arrastre del líder)":" (arrastre del grupo)");
+  // svg
+  const x0=50,x1=620,y=v=>120-v*33; const cols=["#C8102E","#475569","#15803D","#B45309","#3730A3","#9CA3AF"];
+  let h=`<line x1="${x0}" y1="${y(0)}" x2="${x1}" y2="${y(0)}" stroke="#9CA3AF"/>`;
+  [-3,-2,-1,1,2,3].forEach(v=>h+=`<text x="${x0-6}" y="${y(v)+3}" font-size="9" fill="#6B7280" text-anchor="end" font-family="sans-serif">${v>0?"+":""}${v}</text>`);
+  for(let r=0;r<=R;r++) h+=`<text x="${x0+r*(x1-x0)/R}" y="232" font-size="9" fill="#6B7280" text-anchor="middle" font-family="sans-serif">${r===0?"inicio":"ronda "+r}</text>`;
+  EQ.forEach((p,i)=>{ const pts=hist.map((hs,r)=>`${x0+r*(x1-x0)/R},${y(hs[i])}`).join(" "); h+=`<polyline points="${pts}" fill="none" stroke="${cols[i]}" stroke-width="${i===0?3:1.5}" stroke-dasharray="${i===0?"":"4,2"}"/>`; });
+  EQ.forEach((p,i)=>{ h+=`<rect x="${x0+i*90}" y="6" width="10" height="10" fill="${cols[i]}"/><text x="${x0+i*90+14}" y="15" font-size="10" fill="#6B7280" font-family="sans-serif">${p.n}</text>`; });
+  h+=`<text x="${x0}" y="30" font-size="9" fill="#9CA3AF" font-family="sans-serif">Modelo ilustrativo de convergencia; el líder pesa cuatro veces más como emisor.</text>`;
+  document.getElementById("svgCont").innerHTML=h;
+  let L="<strong>Lectura:</strong> ";
+  if(d0<0.01) L+="Todos partieron igual: no hay nada que contagiar. Mueve a alguien.";
+  else { L+=`La dispersión bajó de ${r2(d0)} a ${r2(d1)}: eso es convergencia, el resultado del contagio. `; if(Math.abs(EQ[0].m)>=2 && EQ.slice(1).every(p=>Math.abs(p.m)<1)) L+="El líder arrastró al grupo hacia su ánimo, en la dirección que sea: el contagio no es más fuerte para lo desagradable (Barsade, 2002, H2 no apoyada); lo que hace al líder potente es la atención que recibe (Sy et al., 2005). "; if(Math.abs(EQ[3].m)>=2 && Math.abs(EQ[0].m)<1 && EQ.slice(1).filter((p,i)=>i!==2).every(p=>Math.abs(p.m)<1)) L+="Un integrante muy negativo que no es el líder empuja algo al grupo, pero sobre todo es absorbido por él: contagia menos de lo que recibe. "; L+="En una reunión real esto ocurre en minutos y sin que nadie lo decida: de 94 participantes de Barsade, uno sospechó que había un actor."; }
+  document.getElementById("contLectura").innerHTML=L; estado.respuestas.cont=1; guardar();
+}
+function calcEASI(){
+  const e=document.getElementById("easiEmo").value, rel=document.getElementById("easiRel").value, pr=document.getElementById("easiProc").value;
+  const AF={ enojo:"Se les pega la tensión: el equipo se pone a la defensiva o irritable, y la coordinación empeora aunque el esfuerzo suba (Sy et al., 2005).", entusiasmo:"Se contagia el entusiasmo: más ánimo positivo, más cooperación, menos conflicto (Barsade, 2002: r = .44 y −.42).", preocupacion:"Se contagia algo de inquietud, de baja intensidad: el grupo se vuelve más cuidadoso y menos exploratorio.", neutro:"Poco que contagiar. El equipo lee la ausencia de señal, y suele leerla como falta de interés." };
+  const INF={ enojo: rel==="coop"?"\"Algo salió mal y le importa\": el enojo se lee como señal de que la meta está en riesgo. Pero también se lee como reacción desproporcionada y falta de autocontrol: en cuatro experimentos con 3.852 participantes, quien expresa enojo es visto como menos competente y pierde estatus (Porat &amp; Levy Paluck, 2024).":"\"Va contra nosotros\": en una relación competitiva o sin confianza, el enojo se lee como amenaza; el equipo se cierra, cede en lo inmediato y evita volver a negociar.",
+    entusiasmo: rel==="coop"?"\"Vamos bien\": el equipo infiere que la meta es alcanzable y que el líder confía; sube la disposición a arriesgar ideas.":"\"Qué estará tramando\": sin confianza, el entusiasmo del otro se lee con sospecha y se descuenta.",
+    preocupacion: rel==="coop"?"\"Necesita que lo ayudemos\": la preocupación expresada moviliza apoyo y atención a los detalles.":"\"Está débil\": en contexto competitivo la preocupación se lee como vulnerabilidad y puede aprovecharse.",
+    neutro:"\"No sabemos qué piensa\": sin señal, el equipo infiere con lo que tiene, y suele inferir lo peor." };
+  document.getElementById("easiAf").innerHTML=AF[e]; document.getElementById("easiInf").innerHTML=INF[e];
+  const n=document.getElementById("easiNota");
+  n.innerHTML = pr==="si" ? "<strong>Con tiempo para procesar, pesa la ruta inferencial:</strong> el equipo deduce qué significa la emoción antes de reaccionar. Con motivación y capacidad de procesar, las inferencias dominan (Van Kleef, 2009)." : "<strong>Apurados, pesa la ruta afectiva:</strong> sin tiempo ni capacidad para procesar, el equipo reacciona a lo que se le pegó, no a lo que la emoción significa.";
+  estado.respuestas.easi=1; guardar();
+}
+const Q3 = [
+  { p:"En el experimento de Barsade (2002), ¿cuál de estas hipótesis NO se sostuvo?", o:["El ánimo del actor se contagió a los demás","El ánimo desagradable se contagia más fuerte que el agradable","El contagio positivo se asoció con más cooperación y menos conflicto"], c:1, f:"El contagio ocurrió (2.75 vs 2.33 según codificadores ciegos) y se asoció con cooperación (r = .44) y menos conflicto (r = −.42). Pero no fue más fuerte para lo desagradable ni para la alta energía. Un experimento serio reporta sus hipótesis fallidas.", r:"Barsade (2002)." },
+  { p:"Un gerente cree que mostrar enojo en las reuniones le da autoridad. Según la evidencia experimental reciente:", o:["Tiene razón: el enojo señala poder y competencia","El enojo a veces se lee como poder, pero consistentemente como menos competencia, y quita estatus frente a expresar tristeza o nada","Depende del género del gerente, nada más"], c:1, f:"Porat y Levy Paluck (2024) replicaron los estudios clásicos con cuatro experimentos prerregistrados (N = 3.852): quien expresa enojo es visto como menos competente y menos cálido, y recibe menos estatus. El enojo se lee como reacción desproporcionada y falta de autocontrol.", r:"Porat &amp; Levy Paluck (2024)." },
+];
+</script>
+
+<script>
+// ===================== ESTACIÓN 4: CLIENTE DIFÍCIL =====================
+// Modelo ilustrativo. Cada respuesta tiene una estrategia: SA (superficial), DA (profunda), AUTO (automática), DEV (desviación: mostrar lo que se siente contra la regla).
+// Efectos calibrados con Hülsheger & Schewe (2011): SA agota (ρ .44) y no mejora al cliente (.05); DA casi no agota (.09) y mejora al cliente (.37). Côté (2005): baja autenticidad -> peor reacción -> nuevo evento negativo.
+let D = null;
+const TURNOS = [
+  { cli:"¡Esto es un robo! Me cobraron un plan que yo nunca pedí. ¡Quiero hablar con alguien que sirva de algo!",
+    op:[ {t:"(Sonríes, tono de guion) Entiendo su molestia, señor. Déjeme revisar en el sistema.", e:"SA"},
+         {t:"(Piensas: no está enojado conmigo, está asustado por su plata) Veo que esto le preocupa de verdad. Vamos a mirarlo juntos ahora mismo.", e:"DA"},
+         {t:"(Sin pensarlo, como tantas veces) Tranquilo, lo vamos a resolver. Cuénteme desde el principio.", e:"AUTO"},
+         {t:"Señor, el plan lo autorizó usted. No me levante la voz.", e:"DEV"} ] },
+  { cli:"¿Revisar? ¡Llevo cuarenta minutos en la fila! Ustedes siempre dicen lo mismo. ¿Me está escuchando o está leyendo un cartel?",
+    op:[ {t:"(Mantienes la sonrisa, aprietas la mandíbula) Por supuesto que lo escucho. Un momento, por favor.", e:"SA"},
+         {t:"(Te recuerdas: cuarenta minutos de fila enojarían a cualquiera) Tiene razón en estar molesto por la espera; eso no debió pasar. Lo que sí puedo hacer ahora es ver el cobro con usted.", e:"DA"},
+         {t:"(Automático) Lo escucho. Y sí, la fila estuvo pésima hoy. Veamos el cobro.", e:"AUTO"},
+         {t:"Mire, yo no manejo la fila. Si quiere reclamar, hay un libro para eso.", e:"DEV"} ] },
+  { cli:"Acá está el contrato. Léalo. Yo no firmé ningún plan adicional. Y si no me devuelven la plata hoy, los funo en redes.",
+    op:[ {t:"(Cara neutra, voz plana) Veo que hay una firma de autorización con fecha de julio. Puedo ingresar un reclamo.", e:"SA"},
+         {t:"(Piensas: cree que lo engañaron, por eso amenaza) Entiendo que esto parezca un engaño. Mire: acá aparece una autorización de julio; revisémosla juntos y, si no la reconoce, ingreso el reclamo con prioridad.", e:"DA"},
+         {t:"(Automático) Acá está la autorización de julio. Si no es suya, lo escalamos ahora. ¿La reconoce?", e:"AUTO"},
+         {t:"Haga lo que quiera en redes. Acá está su firma.", e:"DEV"} ] },
+  { cli:"...Ah. Julio. Puede que haya sido mi señora. Pero igual, ¿por qué nadie me avisó?",
+    op:[ {t:"(Sonrisa de cierre, por protocolo) Lamento el inconveniente. ¿Algo más en que pueda ayudarlo?", e:"SA"},
+         {t:"(Sientes alivio genuino) Qué bueno que lo aclaramos. Tiene razón en que debimos avisar: le dejo anotada la sugerencia y le muestro cómo ver los cobros en la app para que no vuelva a pasar.", e:"DA"},
+         {t:"(Automático) Pasa seguido. Le muestro dónde ver los cobros en la app, así no lo pilla de sorpresa.", e:"AUTO"},
+         {t:"Es lo que le dije desde el principio.", e:"DEV"} ] },
+];
+function iniciarDialogo(){
+  const p1=document.getElementById("pal1").checked, p2=document.getElementById("pal2").checked, p3=document.getElementById("pal3").checked;
+  D = { turno:0, agot: p1?8:18, agotEvento: p1?8:18, agotReg:0, aut:50, cli: p1?-2:-3, p1,p2,p3, hist:[] };
+  document.getElementById("dialogoBox").style.display="block"; document.getElementById("dialogoFin").style.display="none";
+  pintarMed(); pintarTurno();
+}
+function pintarMed(){
+  document.getElementById("mAgot").textContent=Math.round(D.agot); document.getElementById("bAgot").style.width=Math.min(100,D.agot)+"%";
+  document.getElementById("mAut").textContent=Math.round(D.aut); document.getElementById("bAut").style.width=Math.max(0,Math.min(100,D.aut))+"%";
+  const c=D.cli; const lbl = c<=-2.5?"furioso":c<=-1.5?"muy molesto":c<=-0.5?"molesto":c<0.5?"neutral":c<1.5?"más tranquilo":"calmado y agradecido";
+  document.getElementById("mCli").textContent=lbl; document.getElementById("bCli").style.width=Math.round((c+3)/6*100)+"%";
+}
+function pintarTurno(){
+  const box=document.getElementById("dialogo");
+  let h=D.hist.map(x=>`<div class="cli"><strong>Cliente:</strong> ${esc(x.cli)}</div><div class="tra"><strong>Tú:</strong> ${esc(x.tu)} <span class="chip">${x.lbl}</span><br><span class="mini">${x.fb}</span></div>`).join("");
+  if(D.turno<TURNOS.length){
+    const T=TURNOS[D.turno]; const cliTxt = (D.turno>0 && D.cli>=0) ? T.cli.replace(/¡|!/g,"") : T.cli;
+    h+=`<div class="cli"><strong>Cliente:</strong> ${esc(cliTxt)}</div>`;
+    T.op.forEach((o,i)=>{ if(o.e==="AUTO" && !D.p3) return; h+=`<button class="opcion" onclick="responder(${i})">${esc(o.t)}</button>`; });
+    if(D.p2 && D.cli<=-2.5) h+=`<button class="opcion" style="border-color:var(--ambar)" onclick="responder(-1)">(Protocolo) Señor, no puedo seguir atendiéndolo si me grita. Lo derivo a un supervisor o puede volver cuando quiera conversar.</button>`;
+    if(!D.p3) h+=`<div class="mini" style="margin-top:.4rem">Falta una opción: la respuesta automática solo aparece si te entrenaron con práctica (palanca 3).</div>`;
+  }
+  box.innerHTML=h;
+}
+function responder(i){
+  const T=TURNOS[D.turno];
+  if(i===-1){ D.hist.push({cli:T.cli, tu:"(Protocolo) No puedo seguir si me grita. Lo derivo a un supervisor.", lbl:"Selección de la situación", fb:"Cortaste el evento. El cliente no se calma hoy, pero tú no pagas la cuenta: ni máscara ni agresión. Es lo que la Ley Karin exige que la organización permita."}); D.turno=TURNOS.length; D.cli=Math.min(D.cli,-2); D.agotEvento+=4; D.agot+=4; pintarMed(); pintarTurno(); cerrarDialogo(); return; }
+  const o=T.op[i]; let lbl="", fb="";
+  const evento = Math.max(0, -D.cli) * 2.5;  // el cliente enojado agota por sí mismo (Zapf: el evento)
+  D.agotEvento += evento; D.agot += evento;
+  if(o.e==="SA"){ D.agotReg+=14; D.agot+=14; D.aut-=14; D.cli += (D.aut<40? -0.6 : -0.1); lbl="Actuación superficial"; fb="Cambiaste la cara, no lo que sientes. Cuesta recursos durante toda la interacción y el cliente nota algo de la máscara: si la autenticidad cae, él escala (Côté, 2005), y eso es un nuevo evento negativo para ti."; }
+  if(o.e==="DA"){ D.agotReg+=5; D.agot+=5; D.aut+=14; D.cli += 1.0; lbl="Actuación profunda"; fb="Reinterpretaste la situación (está asustado, la fila fue pésima, cree que lo engañaron) y lo que mostraste salió de lo que sentiste. Cuesta algo al principio; el cliente lo percibe y se calma (ρ = .37 con satisfacción del cliente)."; }
+  if(o.e==="AUTO"){ D.agotReg+=1; D.agot+=1; D.aut+=16; D.cli += 1.0; lbl="Regulación automática"; fb="No tuviste que fingir ni reevaluar a conciencia: la práctica automatizó el guion. Es la forma más frecuente y la más sana de cumplir la regla (Zapf et al., 2021)."; }
+  if(o.e==="DEV"){ D.agotReg+=0; D.agot+=6; D.aut+=8; D.cli -= 1.2; lbl="Desviación emocional"; fb="Mostraste lo que sentías. Es auténtico, pero viola la regla de exhibición y el cliente escala: el evento negativo crece y, con él, lo que después vas a tener que regular. Cuando la profunda no es posible, la superficial suele ser mejor que esto."; }
+  D.cli=Math.max(-3,Math.min(3,D.cli)); D.aut=Math.max(0,Math.min(100,D.aut));
+  D.hist.push({cli:T.cli, tu:o.t, lbl, fb}); D.turno++;
+  pintarMed(); pintarTurno();
+  if(D.turno>=TURNOS.length) cerrarDialogo();
+}
+function cerrarDialogo(){
+  const f=document.getElementById("dialogoFin"); f.style.display="block";
+  const tot=Math.max(1,D.agot); const pe=Math.round(D.agotEvento/tot*100), pr=Math.round(D.agotReg/tot*100);
+  const usadas = D.hist.map(h=>h.lbl);
+  f.innerHTML=`<strong>Cómo terminó:</strong> agotamiento ${Math.round(D.agot)}/100; autenticidad percibida ${Math.round(D.aut)}/100; el cliente terminó ${document.getElementById("mCli").textContent}. Estrategias: ${usadas.join(" → ")}.<br>
+  <strong>De dónde salió tu agotamiento (la precisión de Zapf):</strong> ${pe}% del evento (el cliente enojado, la fila, el sistema) y ${pr}% de regular tu expresión. ${pe>=50?"La mayor parte la puso el evento, no la máscara: por eso la primera palanca es reducir los eventos negativos evitables, no entrenar mejores máscaras.":"Esta vez la máscara pesó más que el evento: es lo que pasa cuando se finge turno tras turno con un cliente que ya se había calmado."}
+  ${!D.p1?"<br><span class=\"cita\">Vuelve a empezar marcando la palanca 1 (sistema y fila): el cliente llega menos enojado y el evento te cuesta menos antes de que digas una palabra.</span>":""}
+  ${!D.p3?"<br><span class=\"cita\">Vuelve a empezar marcando la palanca 3: con práctica aparece la respuesta automática, la que menos cuesta.</span>":""}`;
+  estado.respuestas.dialogo=(estado.respuestas.dialogo||0)+1; guardar();
+}
+const GROSS_CARDS = [
+  {t:"Pedir que te cambien de la cuenta del cliente que te saca de quicio", c:0, f:"Selección de la situación: evitar (o buscar) la situación antes de que ocurra."},
+  {t:"Tener la conversación difícil en un café y no en la oficina", c:1, f:"Modificación de la situación: cambiar algo de ella para que la emoción sea otra."},
+  {t:"Derivar al cliente que grita, por protocolo", c:0, f:"Selección de la situación: salir de la situación. Con Ley Karin, la organización debe permitirlo."},
+  {t:"Concentrarte en el contenido de la crítica y no en el tono", c:2, f:"Despliegue atencional: elegir a qué prestar atención dentro de la situación."},
+  {t:"Mirar el reloj y contar hasta diez mientras el cliente grita", c:2, f:"Despliegue atencional (distracción): apartar la atención del estímulo."},
+  {t:"Pensar \"no está enojado conmigo, está asustado por su plata\"", c:3, f:"Cambio cognitivo (reevaluación): la estrategia con mejor evidencia experimental y causal en el trabajo (Webb et al., 2012; Zhu et al., 2025). Aquí vive la actuación profunda."},
+  {t:"Pensar \"esta ansiedad es energía para la presentación\"", c:3, f:"Cambio cognitivo: reevaluar la emoción misma. En Zhu et al. (2025) funcionó, aunque menos que reevaluar la situación."},
+  {t:"Sonreír y bajar el tono mientras por dentro sigues furioso", c:4, f:"Modulación de la respuesta (supresión de la expresión): no cambia lo que se siente y consume recursos. Aquí vive la actuación superficial."},
+  {t:"Respirar lento para bajar las pulsaciones una vez enojado", c:4, f:"Modulación de la respuesta: actúa sobre la respuesta fisiológica cuando la emoción ya está."},
+  {t:"Agendar la reunión con el cliente conflictivo a primera hora, cuando tienes más energía", c:1, f:"Modificación de la situación: no evitas la reunión, cambias sus condiciones."},
+];
+const GROSS_CUBS = [ {n:"1. Selección de la situación", d:"evitar o buscar"}, {n:"2. Modificación de la situación", d:"cambiar algo de ella"}, {n:"3. Despliegue atencional", d:"mirar otra cosa"}, {n:"4. Cambio cognitivo", d:"reinterpretar"}, {n:"5. Modulación de la respuesta", d:"suprimir o fingir"} ];
+const INTER_CARDS = [
+  {t:"Decirle \"no es para tanto\" y seguir con la agenda", c:0, f:"Bajo involucramiento: desestimar o minimizar la preocupación del otro. Barato y a menudo peor que no hacer nada."},
+  {t:"Poner cara de enojo para que el equipo se apure", c:0, f:"Bajo involucramiento: usar la propia expresión emocional para influir. Y recuerda el costo del enojo en competencia percibida."},
+  {t:"Cambiar de tema cuando alguien se altera", c:0, f:"Bajo involucramiento: ignorar o retirarse de la conversación."},
+  {t:"Hacer un chiste para aliviar la tensión de la reunión", c:1, f:"Involucramiento medio: humor. Funciona en el momento; no cambia la interpretación."},
+  {t:"Proponer una pausa para café en medio de una discusión que se calienta", c:1, f:"Involucramiento medio: distracción, apartar la atención del estímulo que altera."},
+  {t:"Escuchar a la persona hasta el final, sin interrumpir, y validar lo que siente", c:2, f:"Alto involucramiento: escucha empática y validación, un mensaje de cuidado."},
+  {t:"Ayudarla a ver el feedback como información sobre la tarea y no sobre ella", c:2, f:"Alto involucramiento: reevaluación interpersonal, la versión conjunta de la actuación profunda."},
+  {t:"Mover el plazo o reasignar la tarea que la tiene desbordada", c:2, f:"Alto involucramiento: modificar la situación del otro. Solo puede hacerlo quien tiene poder sobre plazos y asignaciones, y es la que menos se usa."},
+  {t:"Darle un consejo concreto sobre cómo enfrentar al cliente", c:2, f:"Alto involucramiento: consejo, que exige entender el problema del otro."},
+];
+const INTER_CUBS = [ {n:"Involucramiento bajo", d:"poco contacto con el otro"}, {n:"Involucramiento medio", d:"humor, distracción"}, {n:"Involucramiento alto", d:"escuchar, reevaluar juntos, cambiar su situación"} ];
+function cubDone(key){ if(key==="gross"||key==="inter"){ /* se marca la estación con las preguntas */ } }
+const Q4 = [
+  { p:"Según Hülsheger y Schewe (2011), ¿qué estrategia se asocia con mejor satisfacción del cliente y casi nada de agotamiento?", o:["Actuación superficial (ρ con cliente .05; con agotamiento .44)","Actuación profunda (ρ con cliente .37; con agotamiento .09)","Las dos por igual"], c:1, f:"Fingir cansa y no mejora el servicio; sentir no cansa (o casi) y sí lo mejora. Con una precisión: los ítems de actuación superficial mezclan la máscara con la emoción negativa que la hizo necesaria, y el evento se lleva buena parte del costo (Zapf et al., 2021).", r:"Hülsheger &amp; Schewe (2011); Zapf et al. (2021)." },
+  { p:"Una empresa de atención de público quiere reducir el agotamiento de sus ejecutivos. Según Zapf et al. (2021), ¿cuál es la primera palanca?", o:["Un taller de sonrisa y manejo de la voz","Reducir los eventos negativos evitables (filas, sistemas que fallan, clientes abusivos) y después entrenar reevaluación","Seleccionar personas con alta inteligencia emocional autoinformada"], c:1, f:"Los cuestionarios de actuación superficial confunden evento y máscara; cuando se separan, la emoción sentida se queda con la mayor parte del daño. Primero menos eventos (incluida la protección frente al cliente abusivo, que la Ley Karin exige), después entrenar reevaluación, que sí tiene evidencia causal (Zhu et al., 2025).", r:"Zapf et al. (2021); Zhu et al. (2025)." },
+];
+
+// ===================== ESTACIÓN 5: IE =====================
+const IE_ITEMS = [
+  { p:"1. ¿Qué dos emociones se combinan en la nostalgia?", o:["Alegría y tristeza","Miedo y rabia","Sorpresa y asco"], c:0, f:"La nostalgia mezcla el placer de recordar con la tristeza de lo que ya no está: es el ejemplo clásico de mezcla en la rama de comprensión." },
+  { p:"2. Catalina lleva días preocupada por un informe. El jefe lo aprueba sin cambios. Lo más probable es que sienta:", o:["Orgullo","Alivio","Sorpresa"], c:1, f:"Cuando desaparece una amenaza anticipada, la emoción que sigue a la preocupación es el alivio. El orgullo requiere atribuirse el logro; puede venir después." },
+  { p:"3. Tomás está irritado porque un compañero no entregó su parte. Se entera de que el compañero tuvo una emergencia familiar. Es más probable que pase a sentir:", o:["Más rabia, porque igual no entregó","Culpa o vergüenza por haberse enojado, y preocupación por el compañero","Indiferencia"], c:1, f:"La rabia depende de atribuir intención o negligencia; al cambiar la atribución, la emoción cambia (transición), y suele aparecer culpa por la reacción anterior." },
+  { p:"4. Dos personas pierden el mismo plazo. Una siente rabia; la otra, culpa. ¿Qué es lo que difiere entre ellas?", o:["A quién atribuyen la causa: a otro (rabia) o a sí misma (culpa)","Su nivel de inteligencia emocional","La importancia del plazo"], c:0, f:"Misma situación, distinta valoración (appraisal): la rabia nace de atribuir la causa a otro y la culpa, a uno mismo. Comprender emociones es comprender esas valoraciones." },
+  { p:"5. Un compañero recibe un feedback muy duro delante del equipo y se queda callado. Lo más efectivo para ayudarlo ahora es:", o:["Decirle enseguida que no es para tanto","Hacer un chiste para distender","Buscarlo un momento a solas, escucharlo y ayudarlo a ver qué dice el feedback de la tarea y no de él"], c:2, f:"Las estrategias de alto involucramiento (escucha, validación, reevaluación conjunta) producen mejor afecto y mejor relación; minimizar es de bajo involucramiento y suele empeorar las cosas." },
+  { p:"6. Antes de una presentación importante sientes mucha ansiedad. Según la evidencia, lo que mejor funciona es:", o:["Suprimir cualquier señal de nervios y aparentar calma","Reinterpretar la activación como energía y preparación, y repasar lo que controlas","Evitar presentar y pedir que lo haga otro"], c:1, f:"La supresión no cambia lo que se siente y consume recursos; la reevaluación sí cambia la experiencia (Webb et al., 2012). Evitar funciona a corto plazo y cuesta a largo plazo." },
+];
+let ieEstimacion = null;
+function iePaso(n){ if(n===2){ ieEstimacion=+document.getElementById("ieEst").value; estado.respuestas.ieEst=ieEstimacion; guardar(); } document.querySelectorAll("#e5 .paso").forEach(p=>p.classList.remove("activo")); document.getElementById("ie"+n).classList.add("activo"); window.scrollTo({top:document.getElementById("e5").offsetTop,behavior:"smooth"}); }
+function initIE(){
+  const c=document.getElementById("ieItems"); c.innerHTML=""; const resp={};
+  IE_ITEMS.forEach((q,qi)=>{ const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML=`<strong>${q.p}</strong><br>`+q.o.map((o,oi)=>`<span class="opc" data-o="${oi}">${o}</span>`).join("")+`<div class="feedback" style="display:none"></div>`; c.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ if(d.dataset.done) return; d.dataset.done="1"; const ok=+el.dataset.o===q.c; el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[q.c].classList.add("correcta"); const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=(ok?"<strong>Correcto.</strong> ":"<strong>No es eso.</strong> ")+q.f; resp[qi]=ok?1:0;
+      if(Object.keys(resp).length===IE_ITEMS.length){ const ac=Object.values(resp).reduce((s,x)=>s+x,0); estado.respuestas.ieScore=ac; guardar(); ieResultado(ac); } }); });
+}
+function ieResultado(ac){
+  const est = ieEstimacion ?? estado.respuestas.ieEst ?? 50;
+  // Ubicación aproximada en una distribución de referencia ilustrativa de aciertos (0-6): acumulada hasta el puntaje
+  const dist=[0.02,0.06,0.14,0.26,0.28,0.17,0.07]; let acum=0; for(let k=0;k<ac;k++) acum+=dist[k]; const pct=Math.round((acum+dist[ac]/2)*100);
+  const gap=est-pct;
+  const r=document.getElementById("ieRes"); r.style.display="block";
+  r.innerHTML=`<strong>Resultado:</strong> ${ac} de 6. En una distribución de referencia ilustrativa, eso corresponde a un percentil cercano a ${pct}. Tu estimación fue ${est}. ${Math.abs(gap)<=15?"Estimaste con bastante precisión.":gap>15?`Te sobreestimaste en unos ${gap} puntos.`:`Te subestimaste en unos ${-gap} puntos.`}<br>
+  <span class="cita">En Sheldon, Dunning y Ames (2014), estudiantes de magíster y MBA se ubicaron en promedio en el percentil 77 del MSCEIT; su resultado real fue el 41. Y el decil inferior se sobreestimó entre 63 y 69 puntos. Esta prueba es una demostración con seis ítems, no una medición; lo que vale es la lógica: para evaluar la propia habilidad emocional se necesita esa misma habilidad.</span><br>
+  <button class="btn" style="margin-top:.6rem" onclick="iePaso(3)">Seguir al paso 3</button>`;
+}
+const IE_CARDS = [
+  {t:"\"Soy bueno leyendo los sentimientos de los demás\" (de acuerdo / en desacuerdo)", c:0, f:"Autoinforme: cómo creo que soy. Correlaciona cerca de .85 con el factor general de personalidad (van der Linden et al., 2017)."},
+  {t:"\"Tiendo a mirar el lado positivo de la vida\"", c:0, f:"Autoinforme de rasgo (TEIQue): optimismo, que es personalidad más que habilidad emocional."},
+  {t:"\"Aurelio se da cuenta cuando alguien necesita apoyo y responde con eficacia\" (lo responde su jefe)", c:1, f:"Reporte de otros (360): mejor que el autoinforme, pero sesgado por simpatía y política."},
+  {t:"Inventario que combina autoevaluación, evaluación del jefe y 12 competencias (ESCI, Genos)", c:2, f:"Mixto: autoinforme más reportes de otros más competencias varias. Es lo que casi todo el mercado vende; su validez incremental desaparece al controlar lo conocido (Joseph et al., 2015)."},
+  {t:"\"¿Qué emoción muestra esta cara?\" (foto; hay una respuesta correcta)", c:3, f:"Habilidad: rama de percepción. Tarea con respuestas mejores y peores."},
+  {t:"\"Qué emoción resulta de combinar alegría y tristeza?\" (una alternativa es correcta)", c:3, f:"Habilidad: rama de comprensión (mezclas)."},
+  {t:"\"Un colega recibe una crítica injusta en público. ¿Cuál es la respuesta más efectiva?\" (clave por teoría)", c:3, f:"Habilidad: juicio situacional de manejo, como en el GECo o el MSCEIT."},
+  {t:"\"Mi equipo diría que manejo bien la presión\"", c:0, f:"Autoinforme disfrazado de reporte de otros: sigue siendo lo que yo creo que los demás creen."},
+];
+const IE_CUBS = [ {n:"1. Autoinforme", d:"cómo creo que soy"}, {n:"2. Reporte de otros (360)", d:"cómo me ven"}, {n:"3. Mixto", d:"combinación con competencias"}, {n:"4. Habilidad", d:"tareas con respuestas correctas"} ];
+function calcPred(){
+  const c1=document.getElementById("ctrl1").checked, c2=document.getElementById("ctrl2").checked;
+  const rows=[ ["IE mixta (autoinforme) → desempeño", c1? -0.02 : 0.29, c1?"β al controlar siete constructos (Joseph et al., 2015)":"ρ con desempeño evaluado por el supervisor (Joseph et al., 2015)"],
+    ["IE de habilidad → desempeño", c2? 0.24 : 0.18, c2?"ρ en trabajos de alta carga emocional; .01 en los de baja (Joseph & Newman, 2010)":"ρ global (Joseph & Newman, 2010)"],
+    ["IE de rasgo ↔ factor general de personalidad", 0.85, "r ≈ .85 (van der Linden et al., 2017); la de habilidad, .28"] ];
+  document.getElementById("predBars").innerHTML = rows.map(([l,v,n])=>`<div class="hbar">${l}: <strong>${v<0?"−":""}${Math.abs(v).toFixed(2)}</strong> <span class="mini">${n}</span><div class="track"><div style="width:${Math.abs(v)*100}%;background:${v<0?"#C8102E":"#475569"}"></div></div></div>`).join("");
+  document.getElementById("predNota").innerHTML = c1 ? "<strong>Al controlar personalidad, capacidad cognitiva, autoeficacia y desempeño autoevaluado, la IE mixta no agrega nada</strong> (β = −.02). Predecía porque adentro llevaba esas cosas con otro nombre." : c2 ? "<strong>La IE de habilidad importa donde el trabajo consiste en administrar emociones</strong>: .24 en alta carga emocional, .01 en baja." : "La IE de habilidad predice de manera modesta y específica; la mixta parece predecir más, pero mira qué pasa al activar los controles.";
+  estado.respuestas.pred=1; guardar();
+}
+function calcCompra(){
+  const a=document.getElementById("c1").value, b=document.getElementById("c2").value, c=document.getElementById("c3").value; if(!a||!b||!c) return;
+  const o=document.getElementById("compraOut"); o.style.display="block"; let v="";
+  if(a==="auto" && c==="sel") v="<strong>No comprar.</strong> Un autoinforme en selección mide confianza y personalidad, es fácil de falsear y puede excluir sin evidencia de validez para el cargo. Si se quiere personalidad, medir personalidad, que es más barato y está mejor validado.";
+  else if(a==="auto" && c==="des") v="<strong>Con cuidado.</strong> Para desarrollo puede servir como espejo de autoeficacia emocional, sabiendo que no mide habilidad y que quienes menos la tienen más se sobreestiman (Sheldon et al., 2014). Mejor complementar con observación en simulaciones.";
+  else if(a==="hab" && b==="no") v="<strong>Pedir los datos antes.</strong> Un test de habilidad es el enfoque correcto, pero sin validez incremental demostrada no se sabe qué agrega a un test de capacidad cognitiva y uno de personalidad. Si el proveedor no sabe qué significa la pregunta, ya está la respuesta.";
+  else if(a==="hab" && b==="si" && c==="sel") v="<strong>Defendible, con límites.</strong> La IE de habilidad predice de manera modesta (ρ ≈ .18) y más en trabajos de alta carga emocional (.24). Úsalo donde el trabajo consiste en administrar emociones y como complemento, no como filtro único.";
+  else v="<strong>Defendible.</strong> Habilidad, con evidencia incremental y para desarrollo con feedback: es el uso con mejor respaldo. Y la mejor inversión suele seguir siendo observar la conducta en simulaciones.";
+  o.innerHTML=v; estado.respuestas.compra=1; guardar();
+}
+const Q5 = [
+  { p:"Un proveedor afirma que su cuestionario de inteligencia emocional (autoinforme, 15 minutos) predice el desempeño con r = .30. ¿Cuál es la lectura correcta?", o:["Es un predictor excelente, mejor que la personalidad","Probablemente predice porque mide personalidad, confianza y capacidad cognitiva con otro nombre: al controlarlas, la relación desaparece (β = −.02)","No puede ser cierto"], c:1, f:"Joseph et al. (2015) revisaron la estimación (ρ = .29) y mostraron que siete constructos conocidos explican el contenido de la IE mixta (R = .79); al controlarlos, no queda nada. Los cuestionarios de rasgo correlacionan .85 con el factor general de personalidad.", r:"Joseph et al. (2015); van der Linden et al. (2017)." },
+  { p:"¿Cuál de estas afirmaciones sobre la inteligencia emocional de habilidad es correcta?", o:["No existe como constructo distinto","Es un constructo distinto, medible con tareas, que predice modestamente y más en trabajos de alta carga emocional","Predice el desempeño más que la capacidad cognitiva"], c:1, f:"La IE de habilidad correlaciona .28 con el factor general de personalidad (no .85), sigue el modelo en cascada (percibir → comprender → manejar) y predice ρ = .18 en general y .24 en trabajos emocionales. La capacidad cognitiva sigue siendo el predictor más fuerte en la mayoría de los trabajos.", r:"Joseph &amp; Newman (2010); van der Linden et al. (2017)." },
+];
+
+// ===================== ESTACIÓN 6: MITOS =====================
+const MITOS = [
+  ["Un trabajador feliz es un trabajador productivo.", false, "El afecto del momento se asocia con el desempeño del momento en la dirección esperada, pero explica menos del 5% de su varianza en 123 muestras y 127.410 observaciones; la afectividad estable pesa más.", "Aitken et al. (2026)."],
+  ["Más de la mitad de la variación en cómo se siente la gente en el trabajo ocurre dentro de la misma persona, de un momento a otro.", true, "56% de la varianza del tono hedónico fue intrapersonal en un muestreo de experiencias con 41 empleados y 1.226 registros.", "Miner, Glomb &amp; Hulin (2005)."],
+  ["Un evento negativo y uno positivo de la misma importancia se compensan.", false, "El negativo movió el ánimo −0.96 DE; el positivo, +0.20. Unas cinco veces más por evento negativo, aunque los positivos son tres a cinco veces más frecuentes.", "Miner et al. (2005); Baumeister et al. (2001)."],
+  ["El estrés y el compromiso laboral son opuestos.", false, "Ambos son estados de alta activación que difieren en valencia; Chile reporta 41% de estrés diario y el engagement más alto de la región (33%) a la vez.", "Russell (2003); Warr (2007); Gallup (2026)."],
+  ["El sol pone de buen humor.", false, "La creencia es una correlación ilusoria clásica; el efecto del clima sobre el ánimo es pequeño o nulo. Lo que sí está bien establecido es el ritmo diario y semanal, replicado con 509 millones de tuits en 84 países.", "Golder &amp; Macy (2011); R&amp;J cap. 4."],
+  ["Las emociones negativas son un problema que hay que eliminar del trabajo.", false, "El afecto negativo activado estrecha la atención y mejora la detección de errores; la creatividad requiere ambos tipos de afecto en tándem. En datos chilenos, la ansiedad hace hablar cuando hay problemas que resolver y el decaimiento hace callar.", "George (2011); George &amp; Zhou (2007); Madrid et al. (2015)."],
+  ["En un experimento con un actor infiltrado en 29 grupos, solo una de 94 personas se dio cuenta de que había un actor.", true, "Y el ánimo del actor cambió el de los demás (2.75 vs 2.33), la cooperación (r = .44) y el conflicto (r = −.42).", "Barsade (2002)."],
+  ["El ánimo negativo se contagia más fuerte que el positivo.", false, "Esa hipótesis (y la de la alta energía) no se sostuvo en el experimento de Barsade. Lo negativo pesa más como evento, no se contagia más como expresión.", "Barsade (2002)."],
+  ["Sonreírle al cliente es parte del servicio y no cuesta nada.", false, "La sonrisa fingida (actuación superficial) se asocia con agotamiento (.44), despersonalización (.48) y menor satisfacción laboral (−.33), y no mejora al cliente (.05); la profunda sí (.37) y casi no agota (.09).", "Hülsheger &amp; Schewe (2011)."],
+  ["La forma más frecuente de cumplir una regla de exhibición es fingir.", false, "En los estudios que la miden, la forma más frecuente es la regulación automática: sentir lo que corresponde sin esfuerzo porque la práctica lo automatizó. Es también la más beneficiosa.", "Zapf et al. (2021)."],
+  ["Con la Ley Karin (21.643), el maltrato de un cliente ya no puede tratarse como \"parte de la pega\".", true, "Vigente desde el 01-08-2024, exige a todo empleador un protocolo de prevención que cubre la violencia ejercida por terceros (clientes, usuarios, pacientes). No convierte al cliente en sujeto de sanción laboral: obliga a la organización a gestionar la exposición.", "Ley 21.643 (2024)."],
+  ["La reevaluación cognitiva se puede entrenar en trabajadores reales con efectos que duran.", true, "Ensayo aleatorizado con 88 y 88 trabajadores: dos ejercicios diarios durante tres semanas redujeron el afecto negativo, aumentaron el positivo y mejoraron el desempeño, sin desvanecimiento un mes después. Reevaluar la situación funcionó mejor que reevaluar la emoción.", "Zhu et al. (2025)."],
+  ["La inteligencia emocional importa más que el CI para el éxito laboral.", false, "La IE de habilidad correlaciona .18 con el desempeño (.24 en trabajos emocionales); la mixta autoinformada, .29, que baja a −.02 al controlar lo que ya sabíamos medir. La frase es de un best seller de 1995.", "Joseph &amp; Newman (2010); Joseph et al. (2015)."],
+  ["Las personas con menos habilidad emocional son las que más se sobreestiman y las que menos quieren aprender.", true, "Percentil 77 estimado contra 41 real; el decil inferior se sobreestimó 63 a 69 puntos, descartó el feedback y solo el 20% quiso comprar un libro de IE con descuento (64% en el cuarto superior).", "Sheldon, Dunning &amp; Ames (2014)."],
+];
+function initMitos(){
+  const c=document.getElementById("mitos"); c.innerHTML="";
+  MITOS.forEach((m,i)=>{ const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML=`<strong>${i+1}. ${m[0]}</strong><br><span class="opc" data-v="1">Verdadero</span><span class="opc" data-v="0">Falso</span><div class="feedback" style="display:none"></div>`;
+    c.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ if(d.dataset.done) return; d.dataset.done="1"; const v=el.dataset.v==="1"; const ok=v===m[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[m[1]?0:1].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=`<strong>${m[1]?"Verdadero":"Falso"}.</strong> ${m[2]} <span class="cita">${m[3]}</span>`;
+      estado.respuestas["m"+i]=ok?1:0; guardar();
+      const done=MITOS.every((_,k)=>("m"+k) in estado.respuestas);
+      if(done){ const ac=MITOS.filter((_,k)=>estado.respuestas["m"+k]===1).length; const r=document.getElementById("mitosRes"); r.style.display="block"; r.innerHTML=`<strong>Resultado:</strong> ${ac} de ${MITOS.length} veredictos correctos. Lo que importa no es el puntaje sino la magnitud: casi todos los mitos tienen algo de verdad y un tamaño distinto del que se dice.`; marcar(6); }
+    }); });
+}
+
+// ===================== FICHA DE SALIDA =====================
+const REPASO = {1:"Apunte 10, sección C (el circumplejo) y la lámina de Madrid y Patterson.",2:"Apunte 10, la teoría de los eventos afectivos y la asimetría de Miner et al.",3:"Apunte 11, contagio emocional y el modelo EASI; Porat y Levy Paluck sobre el enojo.",4:"Apunte 11, trabajo emocional (Hülsheger y Schewe), la precisión de Zapf y la regulación (Gross; regulación interpersonal).",5:"Apunte 12, las tres corrientes, qué predice cada instrumento y el problema del autoconocimiento.",6:"Apuntes 10, 11 y 12: la evidencia detrás de cada afirmación."};
+function pintarFicha(){
+  const k=EST.filter(i=>estado.hechas[i]); const falt=EST.filter(i=>!estado.hechas[i]);
+  const resp=Object.entries(estado.respuestas).filter(([key,v])=>/^(1|2|3|4|5)_\d+$|^m\d+$/.test(key));
+  const ac=resp.filter(([,v])=>v===1).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas:</strong> ${k.length? k.map(i=>NOMBRES[i]).join(" · "):"ninguna todavía"}.` + (falt.length? ` <strong>Faltan:</strong> ${falt.map(i=>NOMBRES[i]).join(" · ")}.`:" Las seis.") + (resp.length? `<br><strong>Preguntas respondidas:</strong> ${resp.length}, con ${ac} aciertos a la primera.`:"") + (estado.respuestas.ieScore!==undefined? `<br><strong>Prueba de seis ítems:</strong> ${estado.respuestas.ieScore} de 6; tu estimación previa fue el percentil ${estado.respuestas.ieEst}.`:"");
+  const errores={}; resp.forEach(([key,v])=>{ if(v===0){ const e=key.startsWith("m")?6:+key.split("_")[0]; errores[e]=(errores[e]||0)+1; } });
+  const lista=Object.keys(errores).map(e=>`<li>${NOMBRES[e]}: ${errores[e]} ${errores[e]===1?"error":"errores"}. Repasa: ${REPASO[e]}</li>`).join("");
+  document.getElementById("fichaRepaso").innerHTML = lista? `<h3>Sugerencias de repaso</h3><ul class="sans" style="font-size:.92rem">${lista}</ul>` : (resp.length? `<div class="nota ok">Sin errores en lo respondido. Si quieres poner a prueba lo aprendido, vuelve a la estación 2 y explica con tus palabras por qué un elogio el martes no borra el grito del lunes.</div>`:"");
+}
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem("lab_emo_v1"); }catch(e){} location.reload(); }
+
+// ===================== INIT =====================
+cargar(); pintarNav(); initCirc(); resetSemana(); initCont(); calcEASI(); initIE(); calcPred(); initMitos();
+clasificador("tarjGross","cubGross","grossOut",GROSS_CARDS,GROSS_CUBS,"gross","Mientras antes en la cadena, más barato: seleccionar y modificar la situación cuesta menos que suprimir la expresión cuando la emoción ya está.");
+clasificador("tarjInter","cubInter","interOut",INTER_CARDS,INTER_CUBS,"inter","Quien tiene poder tiene a mano la estrategia más potente, modificar la situación del otro, y es la que menos se usa. En equipos directivos, mejorar el ánimo del equipo se asoció con más innovación (Madrid, Niven &amp; Vasquez, 2019).");
+clasificador("tarjIE","cubIE","ieClasOut",IE_CARDS,IE_CUBS,"ieclas","Solo el tipo 4 mide lo que Salovey y Mayer definieron. Los otros tres miden lo que la persona, o quienes la rodean, creen de ella.");
+pregunta("q1", Q1, 1); pregunta("q2", Q2, 2); pregunta("q3", Q3, 3); pregunta("q4", Q4, 4); pregunta("q5", Q5, 5);
+</script>
+</body>
+</html>

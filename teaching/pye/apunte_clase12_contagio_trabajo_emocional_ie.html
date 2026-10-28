@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contagio, trabajo emocional y regulación · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 11</p>
+  <h1>Contagio, trabajo emocional y regulación: lo que se transmite, lo que cuesta fingir y lo que se puede entrenar</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 11 <br>
+    Complementa y actualiza R&amp;J cap. 4 · Se lee junto con el Apunte N° 12 (inteligencia emocional) <br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>El apunte anterior trató el afecto dentro de la persona (el nivel 1 del mapa de Ashkanasy y Dorris, 2017). Este trata lo que pasa entre personas y en los grupos (niveles 3 y 4), y lo que la organización hace con eso. Tres temas que el capítulo 4 de Robbins y Judge menciona pero no desarrolla con evidencia suficiente.</p>
+<p>El primero es el contagio emocional. El manual lo trata como un fenómeno de servicio al cliente; la investigación muestra que es un proceso general, automático, que opera en cualquier grupo y con especial fuerza desde quien tiene autoridad. El segundo es el trabajo emocional. El manual define actuación superficial y profunda y dice que la primera agota; lo que no dice es cuánto, con qué consistencia y por qué, y tampoco advierte que buena parte de ese costo puede venir del cliente y no de la máscara. Hay un metaanálisis de tres décadas que responde las primeras preguntas y una revisión reciente desde la psicología del trabajo que corrige la lectura simplista. El tercero es la regulación emocional, propia y ajena: el manual la trata como una lista de técnicas individuales, cuando el 98% de los episodios de regulación involucran a otra persona y una parte central del liderazgo consiste, precisamente, en regular las emociones de los demás.</p>
+<p>La inteligencia emocional, que el manual trata en el mismo capítulo y que en la Clase 12 se ve al final, tiene su propio apunte, el N° 12, porque en Chile es un tema con demasiado mercado y demasiado poca evidencia como para despacharlo en dos párrafos. Este apunte termina con lo que le corresponde a un administrador: cómo reducir el costo del trabajo emocional, qué se puede entrenar y por qué la ley chilena vigente desde 2024 cambió las reglas del juego para los trabajos de atención de público.</p>
+<h2>B. La idea en breve</h2><div class="resumen">
+<p>Las emociones se transmiten. Cuando alguien expresa una emoción, quien la observa la recibe por dos rutas: una <strong>afectiva</strong>, el contagio, que opera por imitación automática y sin conciencia; y otra <strong>inferencial</strong>, en la que el observador deduce algo de la situación o de la persona. Un actor infiltrado en 29 grupos de negociación cambió el ánimo de los demás, aumentó la cooperación y redujo el conflicto, y solo una de 94 personas se dio cuenta. El líder es el emisor más potente porque todos lo miran.</p>
+<p>Muchas organizaciones prescriben la emoción que sus trabajadores deben mostrar. Eso es <strong>trabajo emocional</strong>, y se puede cumplir de tres maneras: fingiendo la expresión (<strong>actuación superficial</strong>), intentando sentir lo que hay que mostrar (<strong>actuación profunda</strong>) o, la más frecuente, sintiéndolo sin esfuerzo porque la práctica lo automatizó (<strong>regulación automática</strong>). La diferencia no es de estilo sino de costo. La actuación superficial se asocia con agotamiento emocional (correlación corregida de .44), con menor satisfacción laboral y con ningún beneficio para el cliente; la profunda no se asocia con agotamiento (.09) y sí con mejor satisfacción del cliente (.37). Con una precisión importante: los cuestionarios de actuación superficial mezclan la máscara con la emoción negativa que la hizo necesaria, y cuando se separan, la emoción sentida se queda con la mayor parte del daño. La primera línea de defensa no es enseñar a fingir mejor sino reducir los eventos que obligan a fingir.</p>
+<p>La regulación emocional también es interpersonal. La gente calma, anima, distrae y también presiona a los demás a propósito, con estrategias que van desde ignorar hasta cambiar la situación del otro, y en equipos directivos chilenos los intentos del líder por mejorar el ánimo del equipo se asocian con más innovación, y los intentos por empeorarlo, con menos. La estrategia con mejor evidencia, la reevaluación, se entrena: un ensayo aleatorizado con trabajadores mostró mejoras en afecto y desempeño que no se desvanecieron un mes después.</p>
+</div><h2>C. Los conceptos</h2>
+<h3>Contagio emocional y el modelo EASI</h3>
+<p>El <strong>contagio emocional</strong> es la tendencia a captar y sentir las emociones de otros. Hatfield, Cacioppo y Rapson (1993) describieron su versión primitiva en tres pasos: imitación automática de la expresión facial, la postura y el tono de quien tenemos al frente; retroalimentación desde esa expresión hacia lo que sentimos (poner cara de enojo produce algo de enojo); y convergencia de los estados afectivos de quienes interactúan. Ocurre en fracciones de segundo y sin decisión consciente. Y no todos contagian igual: Eisenkraft y Elfenbein (2010), con datos de 48 grupos de trabajo analizados con un modelo de relaciones sociales, mostraron que existe una diferencia individual estable en las emociones que una persona tiende a provocar en los demás, que llamaron <strong>presencia afectiva</strong>; controlado el contagio, explicó el 10% de la varianza del afecto positivo y el 23% del afecto negativo que sentían los compañeros. Hay gente que, sin proponérselo, hace sentir peor a los que la rodean, y eso es una propiedad de esa persona, no de sus compañeros.</p>
+<p>El modelo de las <strong>emociones como información social</strong> (EASI; Van Kleef, 2009) ordena el fenómeno más amplio. Cuando alguien expresa una emoción, el observador reacciona por dos rutas. La ruta afectiva es el contagio y la reacción emocional propia: su enojo me enoja. La ruta inferencial es lo que deduzco: si el jefe está enojado, algo hice mal; si el cliente llora, necesita ayuda; si la contraparte se enoja en una negociación, está cerca de su límite. Cuál ruta pesa depende de dos moderadores: cuánto procesa el observador la información (con más motivación y capacidad de procesar, pesa la inferencia) y el contexto relacional (cooperación o competencia, poder, normas de exhibición).</p>
+<p>Una aplicación reciente del modelo corrige una creencia extendida en gestión: que mostrar enojo da estatus. Esa idea salía de estudios de laboratorio de los años 2000. Porat y Levy Paluck (2024) los replicaron con cuatro experimentos prerregistrados y 3.852 participantes en Estados Unidos, usando los mismos métodos, y encontraron lo contrario: quien expresa enojo en el trabajo es visto a veces como poderoso, pero consistentemente como menos competente y menos cálido, y recibe menos estatus que quien expresa tristeza o ninguna emoción. El enojo se lee, por la ruta inferencial, como reacción desproporcionada y falta de autocontrol. El jefe que grita no se hace respetar; se hace evaluar como incompetente.</p>
+<h3>Trabajo emocional, reglas de exhibición y disonancia</h3>
+<p>Hochschild (1983) acuñó el término <strong>trabajo emocional</strong> (emotional labor) estudiando a auxiliares de vuelo y a cobradores de deudas: administrar los propios sentimientos para producir, en público, la expresión facial y corporal que el rol exige, a cambio de un salario. Tres piezas lo componen. Las <strong>reglas de exhibición</strong> (display rules) definen qué se debe mostrar y qué se prohíbe: calidez en el mesón, firmeza en cobranza, serenidad en urgencia. La <strong>disonancia emocional</strong> es la brecha entre lo que la persona siente y lo que debe mostrar; es la fuente del costo. Y las estrategias para cerrar esa brecha son dos. La <strong>actuación superficial</strong> (surface acting) modifica solo la expresión: sonrío y bajo el tono mientras por dentro sigo furioso. La <strong>actuación profunda</strong> (deep acting) intenta modificar el sentimiento, típicamente reinterpretando la situación: este cliente no está enojado conmigo, está asustado por su plata. Las dos cumplen la regla; difieren en la autenticidad que el otro percibe y en el desgaste propio. Zapf, Kern, Tschan, Holman y Semmer (2021) agregan una tercera vía, que resulta ser la más frecuente: la <strong>regulación automática</strong>, en que la emoción requerida por la regla se genera sin regulación consciente, porque la práctica automatizó el guion. La enfermera que se alegra al ver que el niño mejora no está actuando; el vendedor experimentado a quien un cliente enojado le activa, sin pensarlo, el objetivo de ser profesional, tampoco. Es lo que Hochschild llamó actuación profunda pasiva y lo que Diefendorff, Croyle y Gosserand (2005) midieron como emociones sentidas de manera natural.</p>
+<h3>Regulación emocional: el modelo de proceso</h3>
+<p>Gross (1998) ordenó las estrategias de <strong>regulación emocional</strong> según el momento del proceso en que actúan: selección de la situación (evitarla o buscarla), modificación de la situación, despliegue atencional (mirar otra cosa), cambio cognitivo (reinterpretar) y modulación de la respuesta (suprimir o fingir la expresión cuando la emoción ya está). La actuación profunda vive en el cambio cognitivo; la superficial, en la modulación de la respuesta. La regla general es que mientras antes en la cadena se intervenga, más barato sale.</p>
+<h3>Regulación interpersonal: administrar las emociones de otros</h3>
+<p>Gross et al. (2006, citado en Diefendorff, Niven &amp; Ong, en prensa) reportaron que el 98% de los episodios cotidianos de regulación emocional involucran a otra persona. Sin embargo, la investigación organizacional trató durante décadas la regulación como un asunto individual. Diefendorff, Niven y Ong (en prensa) proponen leerla como un proceso social en tres niveles (la relación concreta entre dos personas, las normas de la profesión y la organización, y las expectativas de la sociedad sobre género, edad o etnia) y en cuatro fases: qué meta persigue la regulación, cómo se detecta que el estado actual no coincide con el deseado, qué estrategia se usa y qué resultados produce.</p>
+<p>La <strong>regulación interpersonal</strong> es el intento deliberado de cambiar lo que siente otro. Niven, Totterdell y Holman (2009) construyeron la primera clasificación de estrategias; Diefendorff et al. las ordenan por el grado de involucramiento social que exigen. Las de <strong>bajo involucramiento</strong> requieren poco contacto con el otro: desestimar o minimizar su preocupación, retirarse de la conversación, ignorarlo, o usar la propia expresión emocional para influir en él. Las de <strong>involucramiento medio</strong> exigen algo más: humor para aliviar la situación, distracción para apartar la atención del otro de lo que lo altera. Las de <strong>alto involucramiento</strong> implican meterse de lleno: escuchar con empatía, expresar valoración o tranquilidad, reevaluar el evento junto con el otro, aconsejar, o modificar directamente su situación (reasignar una tarea, mover un plazo, trasladar al paciente a una sala más tranquila). Quién usa cuál depende de factores sociales: con personas cercanas se usan más las de alto involucramiento (Tanna &amp; MacCann, 2023); quien tiene más poder puede modificar la situación porque controla plazos y asignaciones (Niven, 2025); las mujeres usan menos las estrategias de bajo involucramiento, como culpar o invalidar, lo que refleja expectativas sociales sobre quién debe hacerse cargo de las emociones ajenas.</p>
+<p>Esto importa para el liderazgo porque una parte grande de lo que hace un jefe con su equipo es exactamente esto. La versión constructiva (mejorar el afecto del otro) produce afecto agradable, mejor relación percibida y mejor desempeño del regulado; la versión destructiva (empeorarlo, hacer sentir culpa o miedo) produce lo contrario. Y la <strong>reevaluación conjunta</strong> ("mirémoslo de otra manera: el cliente no está enojado con nosotros, está asustado") es la versión interpersonal de la actuación profunda.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>El actor infiltrado: contagio en grupos</h3>
+<p>Barsade (2002) diseñó el experimento clásico. 94 estudiantes de negocios, en 29 grupos de dos a cuatro personas más un confederado, simularon ser jefes de departamento negociando durante 30 minutos el reparto de un fondo de bonos. El confederado, siempre el mismo estudiante de teatro, decía exactamente lo mismo en todos los grupos; solo cambiaba cómo lo decía, en un diseño 2 × 2: agradable o desagradable, con alta o baja energía. Cuatro codificadores que no conocían la condición puntuaron el ánimo de cada participante cada dos minutos en video, y cada participante reportó el suyo.</p>
+<p>El contagio ocurrió: los codificadores puntuaron más ánimo agradable en los grupos con confederado agradable (2.75 contra 2.33 en escala de 1 a 5), y el autorreporte cambió +0.41 con el confederado agradable y −0.26 con el desagradable. El contagio positivo se asoció con más cooperación observada (r = .44), con un reparto más parejo del fondo (r = −.37 con la dispersión de las asignaciones), con menos conflicto (r = −.42) y con mejor desempeño percibido por los pares. De los 94 participantes, uno sospechó que había un actor. Dos hipótesis no se sostuvieron y el artículo lo reporta: el contagio no fue más fuerte para lo desagradable que para lo agradable, ni para la alta energía que para la baja.</p>
+<p>Los límites: un solo actor (lo que se contagió pudo ser algo de ese actor), estudiantes en una simulación breve, y los resultados sobre cooperación y conflicto son correlaciones con el contagio medido, no efectos directos de la condición. La fortaleza es que es un experimento, y por eso aquí sí corresponde decir que el ánimo del actor produjo cambios en el ánimo de los demás.</p>
+<p>Sy, Côté y Saavedra (2005) llevaron la lógica al líder: en grupos cuyo líder fue inducido a un ánimo positivo o negativo antes de la tarea, los integrantes con líder de buen ánimo reportaron más ánimo positivo, el tono afectivo grupal fue más positivo y el grupo se coordinó mejor; los grupos con líder de mal ánimo se esforzaron más pero se coordinaron peor. El ánimo negativo del líder no es inútil, pero cobra un costo de coordinación: dual tuning otra vez.</p>
+<p>En Chile, el proyecto FONDECYT 1241333 (investigador responsable Héctor Madrid; el profesor de este curso es coinvestigador) estudia qué pesa más en la reacción de los seguidores a las emociones del líder: la valencia o la activación. El hallazgo preliminar del experimento de viñetas, con alrededor de 500 participantes, es que la valencia domina: importa más si el jefe está bien o mal con uno que cuán intenso está. Son resultados en curso, no publicados, y pueden cambiar. Lo que sí está publicado es el trabajo previo del mismo equipo sobre regulación interpersonal del líder: en un estudio de campo multifuente con equipos directivos, Madrid, Niven y Vasquez (2019) encontraron que los intentos del líder por mejorar las emociones de los integrantes se asociaron con más innovación del equipo, a través del tono afectivo positivo del equipo, y que los intentos por empeorarlas redujeron la innovación a través del tono afectivo negativo. Y en un diario de nueve días con 55 profesionales de un MBA chileno, la regulación orientada a mejorar el propio afecto se asoció con más satisfacción laboral diaria, mediada por el afecto positivo (Madrid, Barros &amp; Vasquez, 2020). La regulación emocional, propia y ajena, es una conducta de liderazgo con consecuencias medibles, también en Chile.</p>
+<h3>El costo del trabajo emocional, en tres décadas de datos</h3>
+<p>Hülsheger y Schewe (2011) metaanalizaron 95 estudios (105 muestras, 23.574 personas). Las correlaciones corregidas cuentan una historia consistente:</p>
+<table><tr><th>Resultado</th><th>Actuación superficial</th><th>Actuación profunda</th></tr><tr><td>Agotamiento emocional</td><td>.44 (k = 47)</td><td>.09 (k = 38)</td></tr><tr><td>Despersonalización</td><td>.48 (k = 15)</td><td>.05 (k = 15)</td></tr><tr><td>Tensión psicológica</td><td>.42 (k = 12)</td><td>.00 (k = 7)</td></tr><tr><td>Satisfacción laboral</td><td>−.33 (k = 30)</td><td>.05 (k = 21)</td></tr><tr><td>Desempeño de tarea</td><td>.11 (k = 10)</td><td>.01 (k = 9)</td></tr><tr><td>Desempeño emocional (calidad del servicio)</td><td>−.14 (k = 8)</td><td>.18 (k = 11)</td></tr><tr><td>Satisfacción del cliente</td><td>.05 (k = 2)</td><td>.37 (k = 5)</td></tr></table>
+<p>Fingir se asocia con agotamiento, despersonalización, tensión y menor satisfacción, y no se asocia con mejor servicio. Sentir no se asocia con agotamiento, o casi, y sí con mejor desempeño emocional y satisfacción del cliente. La disonancia entre lo que se siente y lo que exige la regla se comporta como la actuación superficial (.40 con agotamiento). Advertencias: la evidencia es correlacional y en su mayoría transversal, se basa en autorreporte, y los k de satisfacción del cliente son pequeños. Aun así, el patrón es de los más estables del área y las revisiones posteriores lo confirman (Grandey &amp; Gabriel, 2015).</p>
+<p>¿Por qué? Dos mecanismos. El primero es intrapersonal: sostener una expresión que contradice lo que se siente exige autocontrol continuo durante toda la interacción; la disonancia no se resuelve, se administra, y administrarla agota (Grandey, 2003). El segundo es interpersonal, y es el aporte del modelo de interacción social de Côté (2005): las personas detectan, de manera imperfecta, la falta de autenticidad y reaccionan peor; esa mala reacción es un nuevo evento negativo para el trabajador, que agrava su tensión y exige más actuación. Círculo vicioso. La actuación profunda produce el círculo contrario. Y del apunte anterior sabemos que cada reacción del cliente es un evento afectivo, y que los negativos pesan cinco veces más.</p>
+<h3>Una precisión: ¿cansa fingir, o cansa el cliente?</h3>
+<p>Zapf et al. (2021) revisan la misma literatura desde la psicología del trabajo y hacen una advertencia que cambia la lectura de la tabla. Los ítems típicos de actuación superficial ("finjo emociones que no siento", "oculto mis verdaderos sentimientos", "pongo una máscara") contienen dos cosas a la vez: una emoción negativa sentida y el esfuerzo por no mostrarla. Están confundidas en la misma pregunta. Por eso la correlación de .44 con agotamiento no permite saber cuánto del daño viene del evento (el cliente que gritó) y cuánto de la regulación (la máscara). Cuando los estudios miden las dos cosas por separado, la emoción sentida suele quedarse con la mayor parte del efecto: en Semmer et al. (2016b, estudio 3), actuación superficial y emociones negativas sentidas predijeron tensión por separado, pero al entrar juntas solo las emociones sentidas siguieron siendo significativas; Zerbe (2000) encontró lo mismo. La evidencia experimental, en que la emoción sentida es igual entre condiciones porque se asigna al azar, muestra que suprimir sí tiene un costo propio; y el experimento de Goldberg y Grandey (2007) encontró que evento negativo y regulación agotan de manera independiente. La conclusión no es que fingir no cueste, sino que el cliente que obliga a fingir cuesta al menos tanto, y que la primera línea de defensa es reducir esos eventos, no entrenar mejores máscaras.</p>
+<p>La revisión agrega tres puntos. Primero, la regulación automática, descrita en la sección C, es en los pocos estudios que la miden la forma más frecuente de regular en el trabajo, correlaciona positivamente con actuación profunda y negativamente con superficial, y se entrena con práctica y con intenciones de implementación del tipo "si el cliente grita, entonces pienso que está asustado". Segundo, no toda regla de exhibición es igual: el requisito de mostrar emociones positivas cumple los criterios de un estresor de desafío (meta importante, chance de lograrla, ganancia en logro y reconocimiento, legitimidad), y por eso se asocia a la vez con tensión y con satisfacción y desempeño; el requisito de mostrar lo contrario de lo que se siente es un estresor de obstáculo, puro costo; y exigir tolerar la agresión de clientes es una tarea ilegítima que viola la dignidad del trabajador (Semmer et al., 2015; Grandey, Rupp &amp; Brice, 2015), lo que conecta con la Ley Karin. Tercero, la cultura modera el costo: en culturas con normas fuertes de exhibición institucional, como la norteamericana, la actuación superficial cuesta más que en culturas que toleran la expresión espontánea, como las latinas, que dan más autonomía sobre la propia cara (Grandey et al., 2005); y en culturas interdependientes regular la expresión puede leerse como madurez y no como inautenticidad (Mesquita &amp; Delvaux, 2013). No hay un metaanálisis chileno; es razonable esperar que el costo de fingir sea algo menor aquí que en Estados Unidos, pero es una hipótesis.</p>
+<h3>Qué se puede entrenar</h3>
+<p>Sobre la regulación en general, el metaanálisis experimental de Webb, Miles y Sheeran (2012) sobre el modelo de Gross encontró que el cambio cognitivo, y en particular la reevaluación, es de las estrategias más efectivas para modificar lo que de verdad se siente, mientras que suprimir la expresión no cambia la experiencia y consume recursos. Esa evidencia era de laboratorio. Zhu et al. (2025) la llevaron al trabajo con un ensayo controlado aleatorizado: 88 trabajadores hicieron dos ejercicios breves de reevaluación cognitiva al día durante tres semanas laborales, y otros 88 hicieron actividades de control, reportando diariamente sus resultados. El grupo de reevaluación redujo su afecto negativo y aumentó el positivo, lo que a su vez redujo la conducta contraproducente y mejoró el desempeño global evaluado; un seguimiento un mes después no mostró desvanecimiento del efecto; y de las dos formas de reevaluar, reinterpretar la situación ("el cliente está asustado") funcionó mejor que reinterpretar la emoción ("mi rabia es útil"). Es la evidencia causal más directa de que la actuación profunda se puede enseñar en contextos laborales reales, y es exactamente la instrucción de la tarjeta del juego de roles de la Clase 12.</p>
+<h3>Lo que dice la ley chilena</h3>
+<p>La Ley 21.643, conocida como Ley Karin, publicada el 15 de enero de 2024 y vigente desde el 1 de agosto de 2024, modificó el Código del Trabajo para exigir a todo empleador un protocolo de prevención del acoso laboral, el acoso sexual y la violencia en el trabajo, incluida la ejercida por terceros ajenos a la relación laboral: clientes, usuarios, pacientes. Para el tema de este apunte, el punto es que el maltrato del cliente deja de ser "parte de la pega" y pasa a ser un riesgo que la organización debe gestionar. La evaluación obligatoria de riesgo psicosocial ya lo medía: en la aplicación 2024 del CEAL-SM/SUSESO (20.451 centros de trabajo, 1.016.765 personas), exigencias emocionales fue la segunda dimensión con más centros en riesgo alto, 20.6%, solo detrás de carga de trabajo (SUSESO, 2025). Los trastornos mentales y del comportamiento son, además, la primera causa de licencia médica en Chile, con el 30.9% de las licencias de 2025 (SUSESO, 2026); esa cifra no se puede atribuir al trabajo emocional, pero el trabajo emocional es uno de los riesgos que la ley exige evaluar.</p>
+<h3>Y la inteligencia emocional</h3>
+<p>La Clase 12 cierra con la inteligencia emocional, y el capítulo 4 la trata en el mismo bloque. Tiene apunte propio, el N° 12, porque la discusión es larga y en Chile tiene consecuencias prácticas: hay un mercado grande de tests y talleres, y la diferencia entre medir lo que alguien cree ser y lo que es capaz de hacer decide si ese gasto sirve para algo. Lo mínimo que hay que llevarse de aquí es que la inteligencia emocional de habilidad es un constructo distinto, medible con tareas, que predice modestamente y más en trabajos emocionales; que los cuestionarios de autoinforme "mixtos" no agregan nada por sobre la personalidad, la capacidad cognitiva y la autoeficacia (Joseph, Jin, Newman &amp; O'Boyle, 2015); y que quienes tienen menos habilidad emocional son los que más se sobreestiman y menos quieren aprender (Sheldon, Dunning &amp; Ames, 2014). El detalle, el debate entre corrientes y las recomendaciones de compra están en el apunte 12.</p>
+<h3>Qué no sabemos</h3>
+<p>No está bien establecido si las personas con más habilidad emocional se contagian menos o regulan mejor el contagio; hay evidencia de que la susceptibilidad al contagio varía entre personas y de que la presencia afectiva es una diferencia individual estable, pero no de que la habilidad inmunice. Tampoco hay evidencia publicada sobre el efecto de la Ley Karin en el trabajo emocional de los trabajos de servicio en Chile, ni un metaanálisis chileno sobre el costo de la actuación superficial. La evidencia sobre actuación profunda sigue siendo mayormente correlacional; el ensayo de Zhu et al. (2025) es el primero con asignación aleatoria y seguimiento en trabajadores, y falta replicarlo en trabajos de alta carga emocional y en América Latina. Y la regulación automática, que parece ser la más frecuente y la más sana, es por definición la más difícil de medir, porque ocurre sin conciencia.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el estado de ánimo de cada uno es asunto de cada uno.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las emociones se contagian por imitación automática y sin conciencia. En un experimento con un actor infiltrado en 29 grupos, el ánimo del actor cambió el ánimo de los demás, la cooperación (r = .44) y el conflicto (r = −.42), y solo 1 de 94 personas se dio cuenta (Barsade, 2002). El líder es el emisor más potente porque todos lo miran (Sy et al., 2005).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el contagio es invisible para quien lo sufre y para quien lo produce.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> sonreírle al cliente es parte del servicio y no cuesta nada.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> cuando la sonrisa es fingida (actuación superficial) se asocia con agotamiento emocional (.44), despersonalización (.48) y menor satisfacción laboral (−.33), y no mejora la satisfacción del cliente (.05). Solo cuando el trabajador logra sentir lo que muestra (actuación profunda) el cliente lo nota (.37) y el trabajador no se agota (.09) (Hülsheger &amp; Schewe, 2011).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el costo lo paga el trabajador y no aparece en ningún indicador de servicio hasta que se convierte en rotación o licencia.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el problema del trabajo emocional es que la gente finge; la solución es entrenarla para que no finja.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los cuestionarios de actuación superficial mezclan la máscara con la emoción negativa que la hizo necesaria, y cuando se separan, la emoción sentida se queda con la mayor parte del daño (Zapf et al., 2021; Semmer et al., 2016b). Entrenar reevaluación funciona (Zhu et al., 2025), pero la primera palanca es reducir los eventos que obligan a regular: filas que no colapsen, procesos que no fallen, protección frente al cliente abusivo.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque entrenar al trabajador es más barato que rediseñar el servicio, y porque traslada el problema a quien lo sufre.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> un jefe que muestra enojo se hace respetar.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> en cuatro experimentos prerregistrados con 3.852 participantes, quien expresa enojo en el trabajo es visto a veces como poderoso pero consistentemente como menos competente, y recibe menos estatus que quien expresa tristeza o nada (Porat &amp; Levy Paluck, 2024). El enojo del líder, además, se contagia al equipo y empeora la coordinación (Sy et al., 2005), y los intentos del líder por empeorar el ánimo del equipo se asocian con menos innovación (Madrid et al., 2019).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el enojo produce obediencia inmediata, que se confunde con respeto, y porque los estudios antiguos que le atribuían estatus se citan más que sus replicaciones fallidas.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Sobre el contagio: el ánimo con que un jefe entra a una reunión es una decisión de gestión, la tome o no. No se trata de fingir entusiasmo (eso es actuación superficial, y se nota) sino de saber que la propia cara es la señal más leída de la sala y de regular temprano en la cadena de Gross: seleccionar y modificar la situación antes que suprimir la expresión. Y el enojo no es una herramienta de autoridad: cuesta competencia percibida y estatus (Porat &amp; Levy Paluck, 2024).</p>
+<p>Sobre la regulación de los demás: es parte del cargo de quien dirige, y conviene hacerla con estrategias de alto involucramiento (escuchar, reevaluar en conjunto, cambiar la situación) y no de bajo involucramiento (minimizar, ignorar, poner cara). Quien tiene poder tiene la estrategia más potente a mano, modificar la situación, y es la que menos se usa. La evidencia chilena dice que mejorar el ánimo del equipo se asocia con innovación y empeorarlo con lo contrario (Madrid et al., 2019).</p>
+<p>Sobre el trabajo emocional, cuatro recomendaciones en orden. Primera: reducir la exposición a la agresión gratuita y a los eventos evitables. El modelo de Côté dice que el evento negativo que produce el cliente es lo que exige actuación; Zapf et al. (2021) dicen que ese evento se lleva la mayor parte del costo; la Ley Karin dice que gestionar esa exposición es obligatorio. Protocolos para cortar una interacción abusiva, tiempos de recuperación entre llamadas difíciles, procesos que no fallen delante del cliente y rotación fuera de los puestos de más carga emocional intervienen sobre la causa. Segunda: revisar la legitimidad de las reglas de exhibición. Pedir calidez es un desafío legítimo; pedir aguantar insultos con una sonrisa es una tarea ilegítima, y la organización que la impone está produciendo el daño que luego trata con talleres. Tercera: entrenar reevaluación, no "servicio al cliente" superficial, y hacerlo con práctica repetida e intenciones de implementación hasta que se automatice. Enseñar qué emoción mostrar sin enseñar cómo llegar a sentirla es entrenar para agotarse; enseñar a reevaluar la situación tiene evidencia causal (Zhu et al., 2025). Cuarta: no confundir reglas de exhibición con cultura. Una organización que exige entusiasmo permanente en todos los cargos está prescribiendo disonancia a escala.</p>
+<p>Sobre la inteligencia emocional, las preguntas antes de comprar están en el apunte 12.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Explicar el contagio emocional y las dos rutas del modelo EASI, y aplicarlas a una situación de liderazgo o de negociación.</li><li>Distinguir actuación superficial de actuación profunda, y explicar con los dos mecanismos (recursos y reacción del otro) por qué difieren en costo.</li><li>Reportar las magnitudes centrales del metaanálisis de Hülsheger y Schewe (2011), traducirlas a lenguaje llano y explicar la precisión de Zapf et al. (2021) sobre el confundido entre emoción sentida y máscara.</li><li>Distinguir actuación superficial, actuación profunda y regulación automática, y explicar qué evidencia hay de que la reevaluación se puede entrenar en el trabajo (Zhu et al., 2025).</li><li>Describir las estrategias de regulación interpersonal por nivel de involucramiento y aplicarlas a una situación de liderazgo, con la evidencia chilena de Madrid et al. (2019).</li><li>Analizar un caso de atención de público identificando reglas de exhibición (y su legitimidad), disonancia, estrategia de regulación y las obligaciones que impone la Madrid, H. P., Barros, E., &amp; Vasquez, C. A. (2020). The emotion regulation roots of job satisfaction. <em>Frontiers in Psychology, 11</em>, 609933. <a href="https://doi.org/10.3389/fpsyg.2020.609933">https://doi.org/10.3389/fpsyg.2020.609933</a></li></ol>
+<p>Madrid, H. P., Niven, K., &amp; Vasquez, C. A. (2019). Leader interpersonal emotion regulation and innovation in teams. <em>Journal of Occupational and Organizational Psychology, 92</em>(4), 787–805. <a href="https://doi.org/10.1111/joop.12292">https://doi.org/10.1111/joop.12292</a></p>
+<p>Ley 21.643.</p>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Ashkanasy, N. M., &amp; Dorris, A. D. (2017). Emotions in the workplace. <em>Annual Review of Organizational Psychology and Organizational Behavior, 4</em>, 67–90. <a href="https://doi.org/10.1146/annurev-orgpsych-032516-113231">https://doi.org/10.1146/annurev-orgpsych-032516-113231</a></p>
+<p>Barsade, S. G. (2002). The ripple effect: Emotional contagion and its influence on group behavior. <em>Administrative Science Quarterly, 47</em>(4), 644–675. <a href="https://doi.org/10.2307/3094912">https://doi.org/10.2307/3094912</a></p>
+<p>Côté, S. (2005). A social interaction model of the effects of emotion regulation on work strain. <em>Academy of Management Review, 30</em>(3), 509–530. <a href="https://doi.org/10.5465/amr.2005.17293692">https://doi.org/10.5465/amr.2005.17293692</a></p>
+<p>Diefendorff, J. M., Croyle, M. H., &amp; Gosserand, R. H. (2005). The dimensionality and antecedents of emotional labor strategies. <em>Journal of Vocational Behavior, 66</em>(2), 339–357. <a href="https://doi.org/10.1016/j.jvb.2004.02.001">https://doi.org/10.1016/j.jvb.2004.02.001</a></p>
+<p>Diefendorff, J. M., Niven, K., &amp; Ong, M. (en prensa). Emotion regulation at work: A social perspective. <em>Annual Review of Psychology</em>.</p>
+<p>Eisenkraft, N., &amp; Elfenbein, H. A. (2010). The way you make me feel: Evidence for individual differences in affective presence. <em>Psychological Science, 21</em>(4), 505–510. <a href="https://doi.org/10.1177/0956797610364117">https://doi.org/10.1177/0956797610364117</a></p>
+<p>Goldberg, L. S., &amp; Grandey, A. A. (2007). Display rules versus display autonomy: Emotion regulation, emotional exhaustion, and task performance in a call center simulation. <em>Journal of Occupational Health Psychology, 12</em>(3), 301–318. <a href="https://doi.org/10.1037/1076-8998.12.3.301">https://doi.org/10.1037/1076-8998.12.3.301</a></p>
+<p>Grandey, A. A. (2003). When "the show must go on": Surface acting and deep acting as determinants of emotional exhaustion and peer-rated service delivery. <em>Academy of Management Journal, 46</em>(1), 86–96. <a href="https://doi.org/10.5465/30040678">https://doi.org/10.5465/30040678</a></p>
+<p>Grandey, A. A., &amp; Gabriel, A. S. (2015). Emotional labor at a crossroads: Where do we go from here? <em>Annual Review of Organizational Psychology and Organizational Behavior, 2</em>, 323–349. <a href="https://doi.org/10.1146/annurev-orgpsych-032414-111400">https://doi.org/10.1146/annurev-orgpsych-032414-111400</a></p>
+<p>Grandey, A. A., Rupp, D., &amp; Brice, W. N. (2015). Emotional labor threatens decent work: A proposal to eradicate emotional display rules. <em>Journal of Organizational Behavior, 36</em>(6), 770–785. <a href="https://doi.org/10.1002/job.2020">https://doi.org/10.1002/job.2020</a></p>
+<p>Gross, J. J. (1998). The emerging field of emotion regulation: An integrative review. <em>Review of General Psychology, 2</em>(3), 271–299. <a href="https://doi.org/10.1037/1089-2680.2.3.271">https://doi.org/10.1037/1089-2680.2.3.271</a></p>
+<p>Hatfield, E., Cacioppo, J. T., &amp; Rapson, R. L. (1993). Emotional contagion. <em>Current Directions in Psychological Science, 2</em>(3), 96–100. <a href="https://doi.org/10.1111/1467-8721.ep10770953">https://doi.org/10.1111/1467-8721.ep10770953</a></p>
+<p>Hochschild, A. R. (1983). <em>The managed heart: Commercialization of human feeling</em>. University of California Press.</p>
+<p>Hülsheger, U. R., &amp; Schewe, A. F. (2011). On the costs and benefits of emotional labor: A meta-analysis of three decades of research. <em>Journal of Occupational Health Psychology, 16</em>(3), 361–389. <a href="https://doi.org/10.1037/a0022876">https://doi.org/10.1037/a0022876</a></p>
+<p>Joseph, D. L., Jin, J., Newman, D. A., &amp; O'Boyle, E. H. (2015). Why does self-reported emotional intelligence predict job performance? A meta-analytic investigation of mixed EI. <em>Journal of Applied Psychology, 100</em>(2), 298–342. <a href="https://doi.org/10.1037/a0037681">https://doi.org/10.1037/a0037681</a></p>
+<p>Ley 21.643. (2024). Modifica el Código del Trabajo y otros cuerpos legales, en materia de prevención, investigación y sanción del acoso laboral, sexual o de violencia en el trabajo. <em>Diario Oficial de la República de Chile</em>, 15 de enero de 2024.</p>
+<p>Niven, K., Totterdell, P., &amp; Holman, D. (2009). A classification of controlled interpersonal affect regulation strategies. <em>Emotion, 9</em>(4), 498–509. <a href="https://doi.org/10.1037/a0015962">https://doi.org/10.1037/a0015962</a></p>
+<p>Porat, R., &amp; Levy Paluck, E. (2024). Anger at work. <em>Frontiers in Social Psychology, 2</em>, 1337715. <a href="https://doi.org/10.3389/frsps.2024.1337715">https://doi.org/10.3389/frsps.2024.1337715</a></p>
+<p>Sheldon, O. J., Dunning, D., &amp; Ames, D. R. (2014). Emotionally unskilled, unaware, and uninterested in learning more: Reactions to feedback about deficits in emotional intelligence. <em>Journal of Applied Psychology, 99</em>(1), 125–137. <a href="https://doi.org/10.1037/a0034138">https://doi.org/10.1037/a0034138</a></p>
+<p>Superintendencia de Seguridad Social. (2025). <em>Documento de trabajo N° 26: Riesgo psicosocial laboral en Chile. Resultados de la aplicación 2024 del CEAL-SM/SUSESO</em>. SUSESO.</p>
+<p>Superintendencia de Seguridad Social. (2026). <em>Informe anual de licencias médicas 2025: Análisis, control y desafíos</em>. SUSESO.</p>
+<p>Sy, T., Côté, S., &amp; Saavedra, R. (2005). The contagious leader: Impact of the leader's mood on the mood of group members, group affective tone, and group processes. <em>Journal of Applied Psychology, 90</em>(2), 295–305. <a href="https://doi.org/10.1037/0021-9010.90.2.295">https://doi.org/10.1037/0021-9010.90.2.295</a></p>
+<p>Van Kleef, G. A. (2009). How emotions regulate social life: The emotions as social information (EASI) model. <em>Current Directions in Psychological Science, 18</em>(3), 184–188. <a href="https://doi.org/10.1111/j.1467-8721.2009.01633.x">https://doi.org/10.1111/j.1467-8721.2009.01633.x</a></p>
+<p>Van Kleef, G. A., &amp; Côté, S. (2022). The social effects of emotions. <em>Annual Review of Psychology, 73</em>, 629–658. <a href="https://doi.org/10.1146/annurev-psych-020821-010855">https://doi.org/10.1146/annurev-psych-020821-010855</a></p>
+<p>Webb, T. L., Miles, E., &amp; Sheeran, P. (2012). Dealing with feeling: A meta-analysis of the effectiveness of strategies derived from the process model of emotion regulation. <em>Psychological Bulletin, 138</em>(4), 775–808. <a href="https://doi.org/10.1037/a0027600">https://doi.org/10.1037/a0027600</a></p>
+<p>Zapf, D., Kern, M., Tschan, F., Holman, D., &amp; Semmer, N. K. (2021). Emotion work: A work psychology perspective. <em>Annual Review of Organizational Psychology and Organizational Behavior, 8</em>, 139–172. <a href="https://doi.org/10.1146/annurev-orgpsych-012420-062451">https://doi.org/10.1146/annurev-orgpsych-012420-062451</a></p>
+<p>Zhu, Z., Aitken, J. A., Kim, J., Baines, J. I., Kaplan, S. A., Dalal, R. S., &amp; Hassani, J. (2025). Cognitive reappraisal emotion regulation interventions in the workplace and their impact on job performance: An ecological momentary intervention approach. <em>Journal of Occupational and Organizational Psychology</em>. Advance online publication. <a href="https://doi.org/10.1111/joop.70020">https://doi.org/10.1111/joop.70020</a></p>
+<h3>Para profundizar</h3>
+<p>Grandey y Gabriel (2015) es la mejor revisión breve sobre trabajo emocional y su agenda pendiente; Zapf et al. (2021) es la lectura crítica que la complementa y la que más cambia cómo se lee la evidencia. Van Kleef (2009) tiene cinco páginas y explica el modelo EASI completo; Van Kleef y Côté (2022) lo actualizan con una década de evidencia. Diefendorff, Niven y Ong (en prensa) es la mejor entrada a la regulación emocional como proceso social, y Grandey y Sayre (2019), <em>Current Directions in Psychological Science, 28</em>(2), 131–137, resumen el trabajo emocional en seis páginas. Las referencias secundarias citadas dentro de Zapf et al. (Semmer et al., 2016b; Zerbe, 2000; Grandey et al., 2005; Mesquita &amp; Delvaux, 2013) y dentro de Diefendorff et al. (Gross et al., 2006; Tanna &amp; MacCann, 2023; Niven, 2025) se citan aquí a través de esas revisiones.</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de diversidad · Personas y Equipos UDP</title>
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g6{grid-template-columns:repeat(6,1fr)}
+  @media (max-width:760px){.g3,.g2,.g6{grid-template-columns:repeat(2,1fr)}}
+  .persona{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem;font-family:system-ui,sans-serif;font-size:.82rem}
+  .persona h4{margin:0 0 .4rem;font-size:.85rem;color:var(--acero)}
+  .persona label{display:block;color:var(--gris);font-size:.75rem;margin-top:.35rem}
+  .persona input[type=range]{width:100%} .persona select,.persona input[type=number]{width:100%;font-size:.85rem;padding:.2rem}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)}
+  svg{max-width:100%;height:auto;display:block}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .ficha{display:grid;gap:.4rem;font-family:system-ui,sans-serif;font-size:.85rem}
+  .ficha .item{padding:.3rem .5rem;border-radius:.3rem;background:#fff;border:1px solid var(--borde)}
+  .ficha .item.mas{border-left:4px solid var(--verde)} .ficha .item.menos{border-left:4px solid var(--rojo)}
+  .ficha .item.unico{background:var(--ambar-claro)}
+  .slider{font-family:system-ui,sans-serif;font-size:.85rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .gauge{height:.9rem;background:var(--borde);border-radius:.5rem;overflow:hidden} .gauge > div{height:100%;background:var(--verde)}
+  .codigo{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:1.4rem;letter-spacing:.15em;background:#fff;border:2px dashed var(--rojo);padding:.6rem 1rem;border-radius:.5rem;display:inline-block}
+  input.txt{font-family:system-ui,sans-serif;font-size:.95rem;padding:.45rem;border:1px solid var(--borde);border-radius:.4rem;width:100%}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Tema 4</p>
+  <h1>Diversidad en las organizaciones: cinco estaciones para entender lo que cuesta entender</h1>
+  <p class="meta">Personas y Equipos, secciones 02 y 03 · 2º semestre 2026 · Acompaña a los apuntes 13, 14 y 15<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/pye/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0: INICIO ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Cinco estaciones, cada una con algo que manipular, algo que observar y una o dos preguntas con retroalimentación. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. Al final, la ficha de salida resume lo que completaste. No hay registro ni nota: es material para estudiar.</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. Arma tu equipo.</strong> Las tres formas de diversidad de Harrison y Klein (2007), calculadas en vivo sobre un equipo que tú compones.</div>
+    <div class="caja"><strong>2. Misma diversidad, distinta falla.</strong> Por qué dos equipos idénticos en cualquier índice pueden partirse de maneras muy distintas.</div>
+    <div class="caja"><strong>3. El simulador del modelo.</strong> Las dos rutas del modelo de categorización-elaboración, con seis palancas.</div>
+    <div class="caja"><strong>4. El perfil oculto.</strong> Decide a quién nombrar con una sola carpeta y luego mira lo que no viste.</div>
+    <div class="caja"><strong>5. ¿Mito o evidencia?</strong> Trece afirmaciones que circulan en empresas, con su veredicto y su magnitud.</div>
+    <div class="caja"><strong>Ficha de salida.</strong> Resumen de tus estaciones y aciertos, con sugerencias de repaso.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 35 a 50 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en los apuntes 13 y 14.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<!-- ============ ESTACIÓN 1: HARRISON & KLEIN ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Arma tu equipo: tres formas de "diversidad"</h2>
+  <p>Un equipo de seis personas. Para cada una fija su <strong>opinión</strong> sobre una decisión (1 = "consolidar", 7 = "crecer rápido"), su <strong>área</strong> y su <strong>sueldo</strong> mensual (en millones). El laboratorio calcula las tres formas de diversidad de Harrison y Klein (2007) y las dibuja. Mueve cosas y mira qué cambia y qué no.</p>
+  <div class="grid g6" id="personas"></div>
+  <div style="margin:.6rem 0 1rem">
+    <button class="btn light" onclick="preset('homogeneo')">Todos iguales</button>
+    <button class="btn light" onclick="preset('polos')">Dos polos de opinión</button>
+    <button class="btn light" onclick="preset('variedad')">Seis áreas distintas</button>
+    <button class="btn light" onclick="preset('socio')">Un socio y cinco juniors</button>
+    <button class="btn light" onclick="preset('azar')">Al azar</button>
+  </div>
+  <div class="grid g3">
+    <div class="stat"><div class="lbl">SEPARACIÓN (opinión)</div><div class="num" id="s1sep">–</div><div class="lbl">desviación estándar; máximo posible 3.0</div><span class="nivel" id="s1sepN"></span><svg id="svgSep" viewBox="0 0 300 70"></svg></div>
+    <div class="stat"><div class="lbl">VARIEDAD (área)</div><div class="num" id="s1var">–</div><div class="lbl">índice de Blau = 1 − Σp²; máximo con 6 personas .833</div><span class="nivel" id="s1varN"></span><svg id="svgVar" viewBox="0 0 300 70"></svg></div>
+    <div class="stat"><div class="lbl">DISPARIDAD (sueldo)</div><div class="num" id="s1dis">–</div><div class="lbl">coeficiente de Gini; máximo con 6 personas .833 · CV = <span id="s1cv"></span></div><span class="nivel" id="s1disN"></span><svg id="svgDis" viewBox="0 0 300 70"></svg></div>
+  </div>
+  <div class="nota" id="s1lectura"></div>
+
+  <h3>Desafíos</h3>
+  <div class="desafio" id="d1"><div class="chk">✓</div><div><strong>1. Dos polos.</strong> Lleva la separación al máximo (DE ≥ 2.8) sin que la variedad de áreas cambie respecto de cómo está ahora. <span class="mini">La separación se logra con la opinión; la variedad depende de las áreas. Son cosas distintas.</span></div></div>
+  <div class="desafio" id="d2"><div class="chk">✓</div><div><strong>2. Todos distintos.</strong> Lleva la variedad al máximo (seis áreas distintas) manteniendo la separación mínima (DE ≤ 0.5). <span class="mini">Un equipo puede ser máximamente variado en información y estar de acuerdo en todo.</span></div></div>
+  <div class="desafio" id="d3"><div class="chk">✓</div><div><strong>3. Uno arriba.</strong> Lleva la disparidad al máximo (Gini ≥ 0.60) con un solo sueldo alto y el resto iguales y lo más bajos posible. <span class="mini">Fíjate en que seis sueldos distintos y escalonados NO dan el máximo: la disparidad máxima es uno arriba, no todos diferentes.</span></div></div>
+
+  <h3>Mismo atributo, tres lentes</h3>
+  <p>La <em>antigüedad en la empresa</em> de estas mismas seis personas: <span id="antig" class="sans"></span> años. Elige la pregunta y mira cómo cambia el índice y la lectura.</p>
+  <div class="caja">
+    <button class="btn sec" onclick="lente('sep')">¿Se parten en antiguos vs nuevos? (separación)</button>
+    <button class="btn sec" onclick="lente('var')">¿Trajeron épocas distintas? (variedad)</button>
+    <button class="btn sec" onclick="lente('dis')">¿Uno manda por antigüedad? (disparidad)</button>
+    <div id="lenteOut" class="nota" style="margin-top:.8rem;display:none"></div>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2: FALLAS ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Misma diversidad, distinta falla</h2>
+  <p>Seis personas con tres atributos: género, edad y área. Haz clic en un atributo para cambiarlo. El índice de Blau de cada atributo mide cuánta diversidad hay; el <strong>índice de falla</strong> (Fau, Thatcher et al., 2003) mide cuánto se <em>alinean</em> los atributos: qué fracción de las diferencias se explica por la mejor partición del equipo en dos subgrupos.</p>
+  <div style="margin:.4rem 0 1rem">
+    <button class="btn light" onclick="presetF('A')">Equipo A (alineado)</button>
+    <button class="btn light" onclick="presetF('B')">Equipo B (cruzado)</button>
+    <button class="btn light" onclick="presetF('Qi')">Falla parcial: cuatro alineados, dos cruzados</button>
+    <button class="btn light" onclick="presetF('azar')">Al azar</button>
+  </div>
+  <div class="grid g6" id="personasF"></div>
+  <div class="grid g3" style="margin-top:.8rem">
+    <div class="stat"><div class="lbl">Blau género</div><div class="num" id="bG">–</div></div>
+    <div class="stat"><div class="lbl">Blau edad</div><div class="num" id="bE">–</div></div>
+    <div class="stat"><div class="lbl">Blau área</div><div class="num" id="bA">–</div></div>
+  </div>
+  <div class="stat" style="margin-top:.8rem"><div class="lbl">ÍNDICE DE FALLA (Fau): fracción de la variación total de los tres atributos explicada por la mejor división en dos subgrupos</div><div class="num" id="fau">–</div><div class="lbl" id="fauSplit"></div><span class="nivel" id="fauN"></span></div>
+  <div class="nota" id="fLectura" style="margin-top:.8rem"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3: CEM ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · El simulador del modelo de categorización-elaboración</h2>
+  <p>Seis palancas mueven las dos rutas del modelo (van Knippenberg, De Dreu y Homan, 2004). La ruta de abajo convierte las diferencias en información elaborada; la de arriba las convierte en "nosotros y ellos". El sesgo de la ruta de arriba bloquea la de abajo.</p>
+  <div class="nota aviso"><strong>Advertencia:</strong> es un modelo ilustrativo que respeta la dirección de las ocho proposiciones; los números no son estimaciones empíricas. Sirve para ver cómo interactúan las palancas, no para predecir un equipo real.</div>
+  <div class="grid g2">
+    <div>
+      <div class="slider">Complejidad de la tarea (P2) <span id="v_tarea"></span><input type="range" min="0" max="100" value="70" id="k_tarea"></div>
+      <div class="slider">Motivación para procesar (P3) <span id="v_mot"></span><input type="range" min="0" max="100" value="60" id="k_mot"></div>
+      <div class="slider">Habilidad para procesar (P4) <span id="v_hab"></span><input type="range" min="0" max="100" value="60" id="k_hab"></div>
+    </div>
+    <div>
+      <div class="slider">Alineamiento de las diferencias: falla (P5, comparative fit) <span id="v_ali"></span><input type="range" min="0" max="100" value="30" id="k_ali"></div>
+      <div class="slider">Amenaza a la identidad de un subgrupo (P6) <span id="v_ame"></span><input type="range" min="0" max="100" value="30" id="k_ame"></div>
+      <div class="slider">Creencia de que la diversidad sirve (diversity beliefs) <span id="v_cre"></span><input type="range" min="0" max="100" value="50" id="k_cre"></div>
+    </div>
+  </div>
+  <div style="margin:.4rem 0 .8rem">
+    <button class="btn light" onclick="escenario('id')">Equipo de I+D, categorías cruzadas</button>
+    <button class="btn light" onclick="escenario('comite')">Comité con falla y trato desigual</button>
+    <button class="btn light" onclick="escenario('rutina')">Línea de producción rutinaria</button>
+    <button class="btn light" onclick="escenario('puente')">Falla fuerte con creencias pro-diversidad</button>
+  </div>
+  <svg id="svgCEM" viewBox="0 0 900 330"></svg>
+  <div class="grid g3" style="margin-top:.6rem">
+    <div class="stat"><div class="lbl">Sesgo intergrupal</div><div class="num" id="o_sesgo">–</div><div class="gauge"><div id="g_sesgo" style="background:var(--rojo)"></div></div></div>
+    <div class="stat"><div class="lbl">Elaboración de información</div><div class="num" id="o_elab">–</div><div class="gauge"><div id="g_elab"></div></div></div>
+    <div class="stat"><div class="lbl">Desempeño relativo a un equipo homogéneo</div><div class="num" id="o_des">–</div><div class="gauge"><div id="g_des" style="background:var(--acero)"></div></div></div>
+  </div>
+  <div class="nota" id="cemLectura" style="margin-top:.8rem"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4: PERFIL OCULTO ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · El perfil oculto: la sucursal de Temuco</h2>
+  <p>Eres parte del comité que nombra a quien dirigirá la nueva sucursal. Hay tres candidaturas internas. Primero ves <strong>solo tu carpeta</strong> (la del área de Personas) y decides. Después se abren las otras tres.</p>
+  <div id="ph1">
+    <h3>Tu carpeta: área de Personas</h3>
+    <div class="grid g3" id="carpetaPersonas"></div>
+    <div class="pregunta"><strong>Con esta información, ¿a quién nombrarías?</strong><br>
+      <span class="opc" onclick="phVoto('Reyes')">Carolina Reyes</span>
+      <span class="opc" onclick="phVoto('Fuentes')">Matías Fuentes</span>
+      <span class="opc" onclick="phVoto('Pino')">Javiera Pino</span>
+    </div>
+  </div>
+  <div id="ph2" style="display:none">
+    <div class="nota" id="phVotoTxt"></div>
+    <h3>Ahora se abren las carpetas de Ventas, Finanzas y Operaciones</h3>
+    <p>Los datos en amarillo son los que <strong>solo una carpeta</strong> tenía. Fíjate en cómo cambia el balance.</p>
+    <div id="phTabla"></div>
+    <div class="pregunta"><strong>Con toda la información, ¿a quién nombrarías?</strong><br>
+      <span class="opc" onclick="phVoto2('Reyes')">Carolina Reyes</span>
+      <span class="opc" onclick="phVoto2('Fuentes')">Matías Fuentes</span>
+      <span class="opc" onclick="phVoto2('Pino')">Javiera Pino</span>
+      <div class="feedback" id="phFb" style="display:none"></div>
+    </div>
+    <div id="q4"></div>
+  </div>
+</section>
+
+<!-- ============ ESTACIÓN 5: MITOS ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · ¿Mito o evidencia?</h2>
+  <p>Trece afirmaciones que circulan en empresas, charlas y redes. Marca verdadero o falso; luego aparece el veredicto, la magnitud y la fuente. Las referencias completas están en los apuntes 13 y 14.</p>
+  <div id="mitos"></div>
+  <div class="nota" id="mitosRes" style="display:none"></div>
+</section>
+
+<!-- ============ FICHA DE SALIDA ============ -->
+<section class="estacion" id="e6">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div id="fichaRepaso"></div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+</div>
+
+<script>
+// ===================== CONFIGURACIÓN =====================
+
+// ===================== ESTADO Y UTILIDADES =====================
+const estado = { hechas: {}, respuestas: {} };
+function guardar(){ try{ localStorage.setItem("lab_div_v1", JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem("lab_div_v1"); if(s){ Object.assign(estado, JSON.parse(s)); } }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+const NOMBRES = ["Inicio","1 · Tipos","2 · Fallas","3 · Modelo","4 · Perfil oculto","5 · Mitos","Ficha de salida"];
+function pintarNav(){
+  const n = document.getElementById("nav"); n.innerHTML = "";
+  NOMBRES.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t; b.onclick=()=>ir(i);
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista"); n.appendChild(b); });
+  const k = [1,2,3,4,5].filter(i=>estado.hechas[i]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de 5`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa")); document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===6) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+const r2 = x => (Math.round(x*100)/100).toFixed(2);
+const mean = a => a.reduce((s,x)=>s+x,0)/a.length;
+const sdPob = a => { const m=mean(a); return Math.sqrt(mean(a.map(x=>(x-m)*(x-m)))); };
+const blau = a => { const c={}; a.forEach(x=>c[x]=(c[x]||0)+1); return 1 - Object.values(c).reduce((s,k)=>s+Math.pow(k/a.length,2),0); };
+const gini = a => { const n=a.length, s=[...a].sort((x,y)=>x-y), m=mean(a); if(m===0) return 0; let g=0; for(let i=0;i<n;i++) for(let j=0;j<n;j++) g+=Math.abs(s[i]-s[j]); return g/(2*n*n*m); };
+const cv = a => { const m=mean(a); return m? sdPob(a)/m : 0; };
+function nivel(ratio){ return ratio<0.25? ["min","mínima"] : ratio<0.75? ["mod","moderada"] : ["max","máxima"]; }
+function setNivel(id, ratio){ const [c,t]=nivel(ratio); const e=document.getElementById(id); e.className="nivel "+c; e.textContent=t; }
+
+// Preguntas MC genéricas
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML="";
+  items.forEach((q,qi)=>{
+    const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML = `<strong>${q.p}</strong><br>` + q.o.map((o,oi)=>`<span class="opc" data-q="${qi}" data-o="${oi}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const oi=+el.dataset.o; const ok = oi===q.c;
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[q.c].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML = (ok?"<strong>Correcto.</strong> ":"<strong>No es eso.</strong> ") + q.f + (q.r?` <span class="cita">${q.r}</span>`:"");
+      estado.respuestas[`${estacion}_${qi}`] = ok?1:0; guardar();
+      if(items.every((_,k)=> (`${estacion}_${k}`) in estado.respuestas)) marcar(estacion);
+    });
+  });
+}
+
+// ===================== ESTACIÓN 1 =====================
+const AREAS = ["Ventas","Finanzas","Operaciones","Personas","TI","Legal"];
+const P = [];
+const ANTIG = [12, 1, 2, 11, 1, 3];
+function initP(){
+  for(let i=0;i<6;i++) P.push({op: 4, area: "Ventas", sueldo: 1.5});
+  const c = document.getElementById("personas"); c.innerHTML="";
+  P.forEach((p,i)=>{
+    const d=document.createElement("div"); d.className="persona";
+    d.innerHTML = `<h4>Persona ${i+1}</h4>
+      <label>Opinión: <span id="op${i}">${p.op}</span></label><input type="range" min="1" max="7" value="${p.op}" oninput="P[${i}].op=+this.value;calc1()">
+      <label>Área</label><select onchange="P[${i}].area=this.value;calc1()">${AREAS.map(a=>`<option ${a===p.area?"selected":""}>${a}</option>`).join("")}</select>
+      <label>Sueldo (millones)</label><input type="number" min="0.5" max="12" step="0.5" value="${p.sueldo}" onchange="P[${i}].sueldo=+this.value;calc1()">`;
+    c.appendChild(d);
+  });
+  document.getElementById("antig").textContent = ANTIG.join(", ");
+  calc1();
+}
+function refrescarP(){ document.querySelectorAll("#personas .persona").forEach((d,i)=>{ d.querySelector("input[type=range]").value=P[i].op; d.querySelector("select").value=P[i].area; d.querySelector("input[type=number]").value=P[i].sueldo; }); }
+function preset(t){
+  if(t==="homogeneo"){ P.forEach(p=>{p.op=4;p.area="Ventas";p.sueldo=1.5;}); }
+  if(t==="polos"){ P.forEach((p,i)=>{p.op=i<3?1:7;}); }
+  if(t==="variedad"){ P.forEach((p,i)=>{p.area=AREAS[i];}); }
+  if(t==="socio"){ P.forEach((p,i)=>{p.sueldo=i===0?12:0.5;}); }
+  if(t==="azar"){ P.forEach(p=>{p.op=1+Math.floor(Math.random()*7);p.area=AREAS[Math.floor(Math.random()*6)];p.sueldo=0.5+0.5*Math.floor(Math.random()*12);}); }
+  refrescarP(); calc1();
+}
+let d1base = null;
+function calc1(){
+  P.forEach((p,i)=>document.getElementById("op"+i).textContent=p.op);
+  const ops=P.map(p=>p.op), areas=P.map(p=>p.area), su=P.map(p=>p.sueldo);
+  const sd=sdPob(ops), b=blau(areas), g=gini(su);
+  document.getElementById("s1sep").textContent=r2(sd); document.getElementById("s1var").textContent=r2(b); document.getElementById("s1dis").textContent=r2(g); document.getElementById("s1cv").textContent=r2(cv(su));
+  setNivel("s1sepN", sd/3); setNivel("s1varN", b/0.8333); setNivel("s1disN", g/0.8333);
+  dibSep(ops); dibVar(areas); dibDis(su);
+  // lectura
+  const L=[];
+  if(sd/3>0.75) L.push("La opinión está partida en dos polos: es la forma máxima de SEPARACIÓN, la que predice conflicto, desconfianza y menos cohesión.");
+  else if(sd/3<0.25) L.push("Las opiniones coinciden: separación mínima, buena coordinación, riesgo de pensamiento de grupo.");
+  else L.push("Las opiniones están repartidas a lo largo del continuo: separación moderada, se pueden contrastar puntos de vista sin bandos.");
+  if(b/0.8333>0.75) L.push("Cada persona aporta una categoría distinta: VARIEDAD máxima, el máximo de información y el mayor costo de coordinación.");
+  else if(b<0.01) L.push("Todas del mismo área: variedad nula, mismo lenguaje, poca información nueva.");
+  else L.push("Algunas áreas repetidas: variedad moderada.");
+  if(g/0.8333>0.75) L.push("Un sueldo concentra el recurso: DISPARIDAD máxima, la que predice silencio de los de abajo y resentimiento.");
+  else if(g<0.02) L.push("Sueldos iguales: disparidad nula.");
+  else L.push("Sueldos escalonados: disparidad moderada. Nota que seis sueldos todos distintos NO son el máximo de disparidad; el máximo es uno arriba y el resto abajo.");
+  document.getElementById("s1lectura").innerHTML = "<strong>Lectura:</strong> " + L.join(" ");
+  // desafíos
+  if(d1base===null) d1base = b;
+  const d1 = sd>=2.8 && Math.abs(b-d1base)<0.001; const d2 = b>0.83 && sd<=0.5; const d3 = g>=0.6 && (new Set(su)).size===2;
+  [["d1",d1],["d2",d2],["d3",d3]].forEach(([id,v])=>{ const e=document.getElementById(id); if(v){ e.classList.add("hecho"); estado.respuestas[id]=1; } });
+  if(d1||d2||d3) guardar();
+}
+function dibSep(ops){ const s=document.getElementById("svgSep"); let h=`<line x1="20" y1="50" x2="280" y2="50" stroke="#9CA3AF"/>`; for(let v=1;v<=7;v++){ const x=20+(v-1)*260/6; h+=`<text x="${x}" y="66" font-size="9" fill="#6B7280" text-anchor="middle" font-family="sans-serif">${v}</text>`; } const cnt={}; ops.forEach(v=>{ cnt[v]=(cnt[v]||0); const x=20+(v-1)*260/6; h+=`<circle cx="${x}" cy="${50-8-cnt[v]*9}" r="4.5" fill="#C8102E"/>`; cnt[v]++; }); s.innerHTML=h; }
+function dibVar(areas){ const s=document.getElementById("svgVar"); const idx=a=>AREAS.indexOf(a); let h=""; areas.forEach((a,i)=>{ const ang=i*Math.PI/3, cx=150+60*Math.cos(ang), cy=36+26*Math.sin(ang), k=idx(a); const f="#15803D";
+  const sh=[`<circle cx="${cx}" cy="${cy}" r="6" fill="${f}"/>`, `<rect x="${cx-5.5}" y="${cy-5.5}" width="11" height="11" fill="${f}"/>`, `<polygon points="${cx},${cy-7} ${cx+7},${cy+5} ${cx-7},${cy+5}" fill="${f}"/>`, `<polygon points="${cx},${cy-7} ${cx+7},${cy} ${cx},${cy+7} ${cx-7},${cy}" fill="${f}"/>`, `<polygon points="${cx},${cy-7} ${cx+2},${cy-2} ${cx+7},${cy-2} ${cx+3},${cy+1} ${cx+4.5},${cy+7} ${cx},${cy+3.5} ${cx-4.5},${cy+7} ${cx-3},${cy+1} ${cx-7},${cy-2} ${cx-2},${cy-2}" fill="${f}"/>`, `<polygon points="${cx-3.5},${cy-6} ${cx+3.5},${cy-6} ${cx+7},${cy} ${cx+3.5},${cy+6} ${cx-3.5},${cy+6} ${cx-7},${cy}" fill="${f}"/>`][k];
+  h+=sh+`<text x="${cx}" y="${cy+16}" font-size="7" fill="#6B7280" text-anchor="middle" font-family="sans-serif">${a}</text>`; }); s.innerHTML=h; }
+function dibDis(su){ const s=document.getElementById("svgDis"); const mx=Math.max(...su,1); let h=`<line x1="24" y1="8" x2="24" y2="62" stroke="#9CA3AF"/>`; su.forEach((v,i)=>{ const x=40+i*42, y=62-(v/mx)*52; h+=`<line x1="${x}" y1="62" x2="${x}" y2="${y}" stroke="#E5E7EB"/><circle cx="${x}" cy="${y}" r="4.5" fill="#475569"/><text x="${x}" y="${y-7}" font-size="7" fill="#6B7280" text-anchor="middle" font-family="sans-serif">${v}</text>`; }); s.innerHTML=h; }
+function lente(t){
+  const a=ANTIG; const out=document.getElementById("lenteOut"); out.style.display="block";
+  if(t==="sep"){ const sd=sdPob(a); out.innerHTML=`<strong>Como separación.</strong> La pregunta es si los antiguos y los nuevos están en bandos. Desviación estándar de la antigüedad = ${r2(sd)} años. Con 12, 11 por un lado y 1, 2, 1, 3 por otro, el grupo es casi bimodal: separación alta. Predicción: dos subculturas, "los de antes" contra "los que llegaron", y conflicto si la antigüedad se asocia a decisiones.`; }
+  if(t==="var"){ const cat=a.map(x=>x>=10?"más de 10 años":x>=3?"3 a 9 años":"menos de 3 años"); out.innerHTML=`<strong>Como variedad.</strong> La pregunta es si el equipo reúne épocas distintas de la empresa (memoria institucional, contactos). Agrupando en tres categorías (${[...new Set(cat)].join("; ")}), Blau = ${r2(blau(cat))}. Predicción: más información sobre cómo se hacían las cosas y por qué, al costo de coordinar lenguajes distintos.`; }
+  if(t==="dis"){ out.innerHTML=`<strong>Como disparidad.</strong> La pregunta es si la antigüedad funciona como estatus: quién tiene derecho a hablar primero. Gini de la antigüedad = ${r2(gini(a))}; dos personas concentran 23 de 30 años de experiencia. Predicción: los nuevos callan, y la información que traen de afuera no entra a la decisión.`; }
+  out.innerHTML += `<br><span class="cita">Los mismos seis números; tres índices distintos; tres predicciones distintas. La pregunta define la forma, la forma define la medida, la medida define lo que se encuentra (Harrison &amp; Klein, 2007).</span>`;
+  estado.respuestas["lente_"+t]=1; guardar();
+}
+const Q1 = [
+  { p:"Un comité de seis gerentes: tres quieren fusionarse con un competidor y tres se oponen con la misma fuerza. ¿Qué forma de diversidad está en su máximo?", o:["Variedad: hay dos categorías de opinión","Separación: el grupo está partido en dos polos","Disparidad: un bando tiene más poder"], c:1, f:"Es separación: diferencias de posición en un continuo (a favor / en contra), con el grupo partido mitad y mitad en los extremos. Variedad sería que aportaran conocimientos de categorías distintas; disparidad, que uno concentrara el poder.", r:"Harrison &amp; Klein (2007), Tabla 1." },
+  { p:"Un investigador mide la \"diversidad de edad\" de 50 equipos con la desviación estándar, pero su hipótesis es que las edades distintas aportan experiencias y redes distintas. ¿Cuál es el problema?", o:["Ninguno: la DE siempre mide diversidad","Conceptualiza variedad y mide separación: la DE premia dos polos de edad y castiga edades todas distintas","Debería usar el Gini"], c:1, f:"La DE es el índice de la separación (su máximo es bimodal). Si la hipótesis es de variedad (información distinta), corresponde Blau o entropía. De Meulenaere et al. (2022) muestran que con la DE, un equipo con edades uniformes de 18 a 65 parece MÁS diverso que uno partido en 18 y 40, al revés del concepto.", r:"Harrison &amp; Klein (2007); De Meulenaere, Biemann &amp; Boone (2022)." },
+  { p:"¿Cuál de estas configuraciones de sueldos (seis personas) tiene la disparidad MÁXIMA?", o:["1, 2, 3, 4, 5, 6 millones","1, 1, 1, 1, 1, 6 millones","3, 3, 3, 3, 3, 3 millones"], c:1, f:"La disparidad máxima es asimétrica: una persona concentra el recurso y el resto está en lo más bajo. Seis sueldos escalonados son disparidad moderada (y, leídos como categorías, mucha variedad). Seis iguales es disparidad nula.", r:"Harrison &amp; Klein (2007), Figura 1." },
+];
+
+// ===================== ESTACIÓN 2 =====================
+const F = [];
+const GEN=["Mujer","Hombre"], EDAD=["Joven","Mayor"], AREA2=["Marketing","Operaciones"];
+function initF(){ for(let i=0;i<6;i++) F.push({g:0,e:0,a:0}); presetF("A"); }
+function presetF(t){
+  if(t==="A"){ F.forEach((p,i)=>{p.g=i<3?0:1; p.e=i<3?0:1; p.a=i<3?0:1;}); }
+  if(t==="B"){ const cfg=[[0,0,0],[0,1,1],[0,1,0],[1,0,1],[1,0,0],[1,1,1]]; F.forEach((p,i)=>{[p.g,p.e,p.a]=cfg[i];}); }
+  if(t==="Qi"){ const cfg=[[0,1,0],[0,1,1],[1,0,0],[1,0,1],[0,0,1],[1,1,0]]; F.forEach((p,i)=>{[p.g,p.e,p.a]=cfg[i];}); }
+  if(t==="azar"){ F.forEach(p=>{p.g=Math.round(Math.random());p.e=Math.round(Math.random());p.a=Math.round(Math.random());}); }
+  pintarF();
+}
+function pintarF(){
+  const c=document.getElementById("personasF"); c.innerHTML="";
+  F.forEach((p,i)=>{ const d=document.createElement("div"); d.className="persona";
+    d.innerHTML=`<h4>Persona ${i+1}</h4><button class="btn light" style="width:100%;margin:.1rem 0" onclick="F[${i}].g=1-F[${i}].g;pintarF()">${GEN[p.g]}</button><button class="btn light" style="width:100%;margin:.1rem 0" onclick="F[${i}].e=1-F[${i}].e;pintarF()">${EDAD[p.e]}</button><button class="btn light" style="width:100%;margin:.1rem 0" onclick="F[${i}].a=1-F[${i}].a;pintarF()">${AREA2[p.a]}</button>`;
+    c.appendChild(d); });
+  calcF();
+}
+function fau(){ // Thatcher, Jehn & Zanutto (2003): max over 2-subgroup splits of between-SS / total-SS, atributos dummy
+  const X=F.map(p=>[p.g,p.e,p.a]); const n=6, k=3; const gm=[0,1,2].map(j=>mean(X.map(r=>r[j])));
+  let tot=0; X.forEach(r=>r.forEach((v,j)=>tot+=(v-gm[j])**2)); if(tot===0) return {f:0,split:null};
+  let best=0, bs=null;
+  for(let m=1;m<(1<<n)-1;m++){ const g1=[],g2=[]; for(let i=0;i<n;i++) ((m>>i)&1?g1:g2).push(i); if(g1.length<2||g2.length<2) continue; if(g1[0]!==0) continue; // evita duplicados
+    let bss=0; [g1,g2].forEach(g=>{ const mm=[0,1,2].map(j=>mean(g.map(i=>X[i][j]))); mm.forEach((v,j)=>bss+=g.length*(v-gm[j])**2); });
+    const f=bss/tot; if(f>best){best=f;bs=[g1,g2];} }
+  return {f:best, split:bs};
+}
+function calcF(){
+  const bg=blau(F.map(p=>p.g)), be=blau(F.map(p=>p.e)), ba=blau(F.map(p=>p.a));
+  document.getElementById("bG").textContent=r2(bg); document.getElementById("bE").textContent=r2(be); document.getElementById("bA").textContent=r2(ba);
+  const {f,split}=fau(); document.getElementById("fau").textContent=r2(f);
+  document.getElementById("fauSplit").textContent = split? `Mejor división: {${split[0].map(i=>i+1).join(", ")}} contra {${split[1].map(i=>i+1).join(", ")}}` : "Sin variación: todos iguales";
+  setNivel("fauN", f);
+  let L="";
+  if(f>0.9) L="Los tres atributos coinciden: cada subgrupo es homogéneo por dentro y distinto del otro. Es la falla más fuerte posible (comparative fit alto). Basta un gatillo (un trato distinto, una humillación, un incentivo que enfrente a los dos) para que se active como \"nosotros y ellos\".";
+  else if(f<0.5) L="Los atributos se cruzan: ninguna división en dos subgrupos explica mucho de las diferencias. Es un equipo con categorías cruzadas, el arreglo que en el experimento de Homan et al. (2007) tuvo el mejor clima y usó mejor su información.";
+  else L="Hay una división que explica parte de las diferencias, pero no todas: falla intermedia. Un atributo que se cruce con los demás (una mujer en Operaciones, un hombre joven en Marketing) debilita la línea.";
+  const same = Math.abs(bg-0.5)<0.01 && Math.abs(be-0.5)<0.01 && Math.abs(ba-0.5)<0.01;
+  document.getElementById("fLectura").innerHTML = `<strong>Lectura:</strong> ${L}` + (same? ` <strong>Fíjate:</strong> los tres índices de Blau están en .50, el máximo para dos categorías, en cualquiera de los equipos A, B o Qi. Por los índices de diversidad son idénticos; por la falla, no.`:"");
+  estado.respuestas["fau_explorado"]=1;
+}
+const Q2 = [
+  { p:"Los equipos A (alineado) y B (cruzado) tienen exactamente los mismos índices de Blau en género, edad y área. ¿Cuál tiene más diversidad?", o:["A, porque tiene una falla fuerte","B, porque las categorías se cruzan","Los dos tienen la misma diversidad; difieren en cómo está distribuida"], c:2, f:"La diversidad es la cantidad de diferencias; la falla es cómo se alinean. Dos equipos pueden ser idénticos en cualquier índice de diversidad y muy distintos en su falla. Por eso los índices aditivos no detectan el problema (Lau &amp; Murnighan, 1998; Thatcher, 2013).", r:"Thatcher (2013); Qi et al. (2022), Figura 2." },
+  { p:"Según el metaanálisis vigente (Thatcher, Meyer, Kim &amp; Patel, 2024; 168 estudios, 24.953 equipos), las fallas LATENTES (calculadas por el investigador):", o:["Reducen directamente el desempeño en todos los equipos","Se asocian con más conflicto y con fallas activadas; el desempeño cae cuando la falla se activa, y controlando la activación se asocian con MÁS elaboración","No tienen ningún efecto"], c:1, f:"La activación es lo que media. Una falla latente que no se activa como \"bandos\" puede incluso aportar: subgrupos con pericia distinta elaboran más. Lo que la activa son gatillos: trato diferencial, presión para asimilarse, insultos, incentivos que enfrentan subgrupos (Chrobot-Mason et al., 2009).", r:"Thatcher et al. (2024). El metaanálisis anterior (2011) fue retractado." },
+];
+
+// ===================== ESTACIÓN 3 =====================
+const K = ["tarea","mot","hab","ali","ame","cre"];
+function leerK(){ const o={}; K.forEach(k=>{o[k]=+document.getElementById("k_"+k).value; document.getElementById("v_"+k).textContent=o[k];}); return o; }
+function escenario(t){
+  const v = { id:[85,75,80,15,15,70], comite:[60,50,55,90,85,25], rutina:[10,40,50,40,30,50], puente:[70,65,65,90,40,90] }[t];
+  K.forEach((k,i)=>document.getElementById("k_"+k).value=v[i]); calcCEM();
+}
+function calcCEM(){
+  const v=leerK(); const D=0.7; // diversidad fija (moderada-alta)
+  const saliencia = v.ali/100;                                  // P5 (comparative fit; accesibilidad implícita)
+  const sesgo = saliencia * (v.ame/100) * (1 - 0.7*v.cre/100);  // P6: daña con amenaza; creencias amortiguan
+  const potencial = D * (0.4*v.tarea + 0.3*v.mot + 0.3*v.hab)/100; // P1-P4
+  const elab = potencial * (1 - sesgo);                         // P7
+  const costoRutina = v.tarea<30 ? (30-v.tarea)/100*1.5 : 0;    // P2: en tareas rutinarias elaborar estorba
+  const des = 100*(elab*1.2 - sesgo*0.5 - costoRutina);         // relativo a homogéneo (0)
+  document.getElementById("o_sesgo").textContent=r2(sesgo); document.getElementById("g_sesgo").style.width=(sesgo*100)+"%";
+  document.getElementById("o_elab").textContent=r2(elab); document.getElementById("g_elab").style.width=(elab/0.7*100)+"%";
+  document.getElementById("o_des").textContent=(des>=0?"+":"")+Math.round(des); document.getElementById("g_des").style.width=Math.min(100,Math.max(0,50+des))+"%";
+  dibCEM(saliencia, sesgo, elab, des);
+  let L=[];
+  if(v.tarea<30) L.push("La tarea es rutinaria: elaborar las diferencias no paga y cuesta coordinación (P2). Un equipo diverso aquí no tiene dónde ganar.");
+  if(sesgo>0.4) L.push("Las diferencias están alineadas y hay amenaza: la ruta de arriba domina y bloquea la elaboración (P6-P7).");
+  if(sesgo>0.2 && v.cre>70) L.push("La creencia de que la diversidad sirve amortigua el sesgo aunque la falla sea fuerte: es el hallazgo de \"Bridging faultlines\" (Homan et al., 2007).");
+  if(elab>0.45) L.push("La ruta de abajo domina: tarea compleja, motivación y habilidad convierten las diferencias en elaboración y desempeño (P1-P4).");
+  if(v.ali>70 && v.ame<25) L.push("Falla fuerte pero sin amenaza: el modelo dice que categorizar no daña por sí mismo (P6); el riesgo está en que un gatillo suba la amenaza.");
+  if(L.length===0) L.push("Mueve una palanca a la vez y mira qué ruta responde.");
+  document.getElementById("cemLectura").innerHTML="<strong>Lectura:</strong> "+L.join(" ");
+  estado.respuestas["cem_explorado"]=1;
+}
+function dibCEM(sal, sesgo, elab, des){
+  const s=document.getElementById("svgCEM");
+  const w=x=>Math.max(1.5, x*12);
+  const box=(x,y,wd,h,t,sub,fill)=>`<rect x="${x}" y="${y}" width="${wd}" height="${h}" rx="6" fill="${fill}"/><text x="${x+wd/2}" y="${y+22}" font-size="12" font-weight="700" fill="#fff" text-anchor="middle" font-family="sans-serif">${t}</text><text x="${x+wd/2}" y="${y+40}" font-size="10" fill="#fff" text-anchor="middle" font-family="sans-serif">${sub}</text>`;
+  let h = box(20,135,150,60,"DIVERSIDAD","diferencias (P8)","#1F2937");
+  h += `<line x1="170" y1="150" x2="300" y2="80" stroke="#475569" stroke-width="${w(sal)}" opacity="${0.3+0.7*sal}"/>`;
+  h += box(300,50,190,60,"CATEGORIZACIÓN","nosotros y ellos (P5)","#475569");
+  h += `<line x1="490" y1="80" x2="600" y2="80" stroke="#C8102E" stroke-width="${w(sesgo)}" opacity="${0.3+0.7*sesgo}"/>`;
+  h += box(600,50,190,60,"SESGO INTERGRUPAL","favorezco a los míos (P6)","#C8102E");
+  h += `<line x1="170" y1="180" x2="300" y2="250" stroke="#15803D" stroke-width="${w(elab)}" opacity="${0.3+0.7*elab}"/>`;
+  h += box(300,220,190,60,"ELABORACIÓN","intercambiar e integrar (P1-P4)","#15803D");
+  h += `<line x1="490" y1="250" x2="600" y2="250" stroke="#15803D" stroke-width="${w(elab)}" opacity="${0.3+0.7*elab}"/>`;
+  h += box(600,220,190,60,"DESEMPEÑO",(des>=0?"+":"")+Math.round(des)+" vs homogéneo","#1F2937");
+  h += `<line x1="640" y1="110" x2="450" y2="220" stroke="#C8102E" stroke-width="${w(sesgo)}" stroke-dasharray="6 4" opacity="${0.3+0.7*sesgo}"/>`;
+  h += `<text x="560" y="175" font-size="11" fill="#C8102E" font-weight="700" font-family="sans-serif">− el sesgo bloquea (P7)</text>`;
+  h += `<text x="395" y="40" font-size="10" fill="#6B7280" text-anchor="middle" font-family="sans-serif">saliencia ${r2(sal)}</text>`;
+  h += `<text x="395" y="305" font-size="10" fill="#6B7280" text-anchor="middle" font-family="sans-serif">tarea · motivación · habilidad</text>`;
+  s.innerHTML=h;
+}
+const Q3 = [
+  { p:"En el simulador, con falla fuerte (alineamiento 90) y amenaza alta, el desempeño cae. ¿Cuál de estas palancas lo recupera SIN cambiar la composición del equipo?", o:["Bajar la complejidad de la tarea","Subir la creencia de que la diversidad sirve y bajar la amenaza (trato igual, sin gatillos)","Subir la habilidad"], c:1, f:"Las creencias pro-diversidad y la ausencia de amenaza desactivan la ruta de arriba (P6) y liberan la elaboración (P7). Bajar la complejidad elimina el beneficio (P2) y subir la habilidad no sirve mientras el sesgo bloquee el intercambio. Es lo que muestran Homan et al. (2007) y van Knippenberg, Haslam y Platow (2007).", r:"van Knippenberg et al. (2004), P6-P7." },
+  { p:"¿Por qué la correlación promedio entre diversidad y desempeño en 2.638 tamaños de efecto es r = .024 (Wallrich et al., 2024)?", o:["Porque la diversidad no hace nada","Porque mezcla equipos donde domina la ruta de la elaboración con equipos donde domina la del sesgo, y los efectos se cancelan","Porque los estudios están mal hechos"], c:1, f:"Un promedio cercano a cero con 20% de estudios positivos y 20% negativos (Joshi &amp; Roh, 2009) indica dos procesos de signo contrario. El modelo dice de qué depende cuál gana: tarea, motivación, habilidad, alineamiento, amenaza y creencias.", r:"Wallrich et al. (2024); van Knippenberg et al. (2004)." },
+];
+
+// ===================== ESTACIÓN 4 =====================
+const PH = {
+  Reyes: { comp:[["+","8 años en retail, 3 como subgerenta de tienda en Puerto Montt"],["+","Cumplió la meta anual de ventas los tres últimos años"],["+","Evaluada con \"desempeño destacado\" en liderazgo"],["+","Domina el sistema de inventario y caja; capacitó a otras tiendas"]],
+    unico:{Personas:["−","Dos denuncias internas por trato brusco; una amonestación escrita"], Ventas:["−","Metas cumplidas con descuentos no autorizados; margen 6 puntos bajo el promedio"], Finanzas:["−","Faltante de caja de $1,8 millones en 2024; auditoría abierta"], Operaciones:["−","Rotación anual de su equipo 55% contra 30% de la zona"]} },
+  Fuentes: { comp:[["+","6 años en la empresa, 2 como jefe de sección de electrónica"],["+","Sin observaciones disciplinarias"],["−","Nunca ha dirigido una tienda completa; equipo de 9"],["−","Vive en Santiago; pidió dos meses para trasladarse"]],
+    unico:{Personas:["+","Su sección tiene el mejor clima de la empresa y rotación de 12%"], Ventas:["+","Lideró el piloto omnicanal que subió 18% las ventas de su sección"], Finanzas:["+","Mejor margen de la tienda y cero diferencias de inventario en tres años"], Operaciones:["+","Es de Temuco; escribió el plan de apertura usado en Osorno"]} },
+  Pino: { comp:[["+","10 años en banca, 4 como jefa de oficina; 8 meses en la empresa"],["+","MBA y referencias correctas"],["−","Nunca ha trabajado en retail"],["−","Pretensiones de renta 30% sobre el rango"],["+","Disponibilidad inmediata; buena entrevista"]], unico:{} },
+};
+function initPH(){
+  const c=document.getElementById("carpetaPersonas"); c.innerHTML="";
+  ["Reyes","Fuentes","Pino"].forEach(k=>{ const d=PH[k]; const items=[...d.comp]; if(d.unico.Personas) items.push(d.unico.Personas);
+    c.innerHTML += `<div class="caja"><strong>${k==="Reyes"?"Carolina Reyes":k==="Fuentes"?"Matías Fuentes":"Javiera Pino"}</strong><div class="ficha" style="margin-top:.4rem">${items.map(it=>`<div class="item ${it[0]==="+"?"mas":"menos"}">${it[1]}</div>`).join("")}</div></div>`; });
+}
+function phVoto(k){
+  estado.respuestas.ph1=k; guardar();
+  const bal = k==="Reyes"? "Con tu carpeta, Reyes tenía 4 datos a favor y 1 en contra; Fuentes 3 a favor y 2 en contra. Era la elección razonable con lo que sabías." : k==="Fuentes"? "Elegiste a Fuentes con 3 datos a favor y 2 en contra, contra los 4 a favor de Reyes. Poco común: casi todos los comités eligen a Reyes en esta etapa." : "Elegiste a Pino, que no tiene experiencia en retail. Con tu carpeta, Reyes parecía claramente mejor.";
+  document.getElementById("phVotoTxt").innerHTML = `<strong>Votaste por ${k}.</strong> ${bal}`;
+  const T=["Reyes","Fuentes","Pino"], AR=["Personas","Ventas","Finanzas","Operaciones"];
+  let h=`<table><tr><th>Dato</th><th>Carolina Reyes</th><th>Matías Fuentes</th><th>Javiera Pino</th></tr>`;
+  h+=`<tr><td><strong>Compartido (todas las carpetas)</strong></td>${T.map(t=>`<td><div class="ficha">${PH[t].comp.map(it=>`<div class="item ${it[0]==="+"?"mas":"menos"}">${it[1]}</div>`).join("")}</div></td>`).join("")}</tr>`;
+  AR.forEach(a=>{ h+=`<tr><td><strong>Solo ${a}</strong></td>${T.map(t=>{const u=PH[t].unico[a]; return `<td>${u?`<div class="ficha"><div class="item unico ${u[0]==="+"?"mas":"menos"}">${u[1]}</div></div>`:"<span class='mini'>nada nuevo</span>"}</td>`;}).join("")}</tr>`; });
+  h+=`<tr><td><strong>Balance con todo</strong></td><td><strong>4 a favor, 4 en contra</strong></td><td><strong>6 a favor, 2 en contra</strong></td><td>3 a favor, 2 en contra</td></tr></table>`;
+  document.getElementById("phTabla").innerHTML=h;
+  document.getElementById("ph1").style.display="none"; document.getElementById("ph2").style.display="block";
+}
+function phVoto2(k){
+  estado.respuestas.ph2=k; guardar();
+  const fb=document.getElementById("phFb"); fb.style.display="block";
+  fb.innerHTML = (k==="Fuentes"? "<strong>Con toda la información, Fuentes es la mejor candidatura</strong> (6 a favor, 2 en contra, y los dos en contra son salvables: nunca ha dirigido una tienda, pero escribió el plan de apertura que la empresa usó; se muda en dos meses)." : "<strong>Con toda la información, la mejor candidatura es Fuentes</strong> (6 a favor, 2 en contra). Reyes queda 4 a 4 y sus cuatro problemas (denuncias, descuentos no autorizados, faltante de caja, rotación 55%) son graves.") +
+   " Esto es un <strong>perfil oculto</strong>: desde cualquier carpeta sola, Reyes parecía mejor; la respuesta estaba repartida. En 65 estudios con 3.189 grupos, los grupos mencionan la información compartida unas dos desviaciones estándar más que la única, y tienen ocho veces menos probabilidad de encontrar la solución que si tuvieran toda la información (Lu, Yuan &amp; McLeod, 2012).";
+  pregunta("q4", Q4, 4);
+}
+const Q4 = [
+  { p:"¿Qué regla de reunión habría evitado el error con más probabilidad?", o:["Votar primero y discutir después","Que cada integrante lea en voz alta TODOS los datos de su carpeta, por candidatura, antes de que nadie diga a quién prefiere","Dar más tiempo para discutir"], c:1, f:"Es elaboración por diseño: poner la información única sobre la mesa antes de que se formen preferencias. Lo que mejora la decisión es la cobertura de la información única, más que el tiempo de discusión (Lu et al., 2012). Explicarle al grupo que la tarea exige intercambiar e integrar ya mejora la decisión (van Ginkel &amp; van Knippenberg, 2008).", r:"Stasser &amp; Titus (1985); Lu et al. (2012)." },
+  { p:"En una empresa real, ¿qué son \"las carpetas\"?", o:["Los archivos de personal","Los departamentos, las nacionalidades, las generaciones: lo que cada subgrupo sabe y los demás no","Las evaluaciones de desempeño"], c:1, f:"La diversidad es, en parte, información repartida. Si cada subgrupo habla solo de lo que todos saben, la diversidad no entra a la decisión, y la persona que más sabe suele ser la que menos habla (estatus).", r:"van Knippenberg et al. (2004); Phillips et al. (2013)." },
+];
+
+// ===================== ESTACIÓN 5 =====================
+const MITOS = [
+  ["Los equipos diversos rinden mejor que los homogéneos.", false, "La correlación promedio es r = .024 en 2.638 tamaños de efecto; 20% de estudios positivos, 20% negativos, 60% nulos. Depende de la tarea y de si el equipo elabora.", "Wallrich et al. (2024); Joshi &amp; Roh (2009)."],
+  ["En Chile, un currículum de mujer recibe menos llamadas que uno de hombre con las mismas calificaciones.", false, "En el único experimento chileno (11.016 CV, 2006): 14.9% hombres vs 14.6% mujeres, sin diferencia; tampoco por apellido de clase ni comuna. Mide solo la llamada y no midió nacionalidad.", "Bravo, Sanhueza &amp; Urzúa (2008)."],
+  ["En EE.UU., un nombre que suena afroamericano recibe menos llamadas que uno que suena blanco, con el mismo currículum.", true, "50% más de llamadas para nombres blancos (9.65% vs 6.45%); en 28 experimentos, 36% más; y sin cambio en 25 años.", "Bertrand &amp; Mullainathan (2004); Quillian et al. (2017)."],
+  ["Los millennials y la generación Z cambian de trabajo más que las generaciones anteriores cuando tenían la misma edad.", false, "Las diferencias entre generaciones adyacentes promedian d = .09 y el diseño no puede separar generación de edad (cohorte = período − edad). A los 25 todos cambian más de trabajo.", "Ravid et al. (2024); Rudolph et al. (2021)."],
+  ["Las mujeres son líderes menos eficaces que los hombres.", false, "d = −.04 en 82 estudios: ninguna diferencia en eficacia. La brecha está en quién emerge como líder (d = .21 a favor de los hombres) y en cómo se lee la misma conducta.", "Paustian-Underdahl et al. (2014); Badura et al. (2018)."],
+  ["La capacitación obligatoria en diversidad aumenta la presencia de mujeres y minorías en jefaturas.", false, "En 829 empresas durante tres décadas se asoció con caídas de hasta 9% en cinco años. Mentoría (+9 a +24%), grupos de trabajo (+9 a +30%) y un cargo responsable (+7 a +18%) sí.", "Dobbin &amp; Kalev (2016); Kalev et al. (2006)."],
+  ["Una hora de capacitación online en diversidad cambia conductas.", false, "En un experimento con 3.016 empleados de 63 países mejoró actitudes y no cambió ninguna conducta a 3, 6 ni 14 semanas.", "Chang et al. (2019)."],
+  ["En Chile es legal pedir \"buena presencia\" o \"edad máxima 35 años\" en un aviso de trabajo.", false, "El artículo 2 del Código del Trabajo declara discriminatorias las ofertas de trabajo que exijan, entre otros, sexo, edad, apariencia personal, nacionalidad o situación socioeconómica.", "Código del Trabajo, art. 2."],
+  ["Más de la mitad de las mujeres ha vivido alguna conducta de acoso sexual en el trabajo.", true, "58% en 55 muestras probabilísticas (86.578 mujeres, EE.UU.); la forma más común es el menosprecio por ser mujer, no la insinuación. En Chile, 44.212 denuncias en el primer año de la Ley Karin.", "Cortina &amp; Areguin (2021); Ilies et al. (2003)."],
+  ["Diversidad e inclusión son lo mismo.", false, "Diversidad es composición; inclusión es la experiencia de pertenecer y poder ser distinto a la vez. La asimilación (pertenecer si te pareces) suele confundirse con inclusión.", "Shore et al. (2011)."],
+  ["Para que un equipo diverso funcione hay que destacar las similitudes y no hablar de las diferencias.", false, "Lo que protege a los equipos con falla es creer que la diferencia sirve, no ignorarla; suprimir las categorías puede aumentar el sesgo cuando amenaza la identidad.", "Homan et al. (2007); van Knippenberg et al. (2004)."],
+  ["La clase social es, según los mandos medios chilenos, la fuente de discriminación más mencionada en las empresas.", true, "El clasismo apareció en 83% de los grupos focales chilenos (El Salvador 33%, Guatemala 30%); el proceso donde opera es la selección (78%).", "Raineri (2018)."],
+  ["\"Aquí no vemos diferencias; tratamos a todos igual\" es la mejor política contra el sesgo.", false, "Inducir esa mentalidad aumenta el sesgo explícito e implícito, reduce la capacidad de detectar discriminación, y en una organización se asoció con menos compromiso de las minorías. Declarar meritocracia produce asignaciones más sesgadas.", "Richeson &amp; Nussbaum (2004); Plaut et al. (2009); Castilla &amp; Benard (2010)."],
+];
+function initMitos(){
+  const c=document.getElementById("mitos"); c.innerHTML="";
+  MITOS.forEach((m,i)=>{ const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML=`<strong>${i+1}. ${m[0]}</strong><br><span class="opc" data-v="1">Verdadero</span><span class="opc" data-v="0">Falso</span><div class="feedback" style="display:none"></div>`;
+    c.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ if(d.dataset.done) return; d.dataset.done="1"; const v=el.dataset.v==="1"; const ok=v===m[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[m[1]?0:1].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=`<strong>${m[1]?"Verdadero":"Falso"}.</strong> ${m[2]} <span class="cita">${m[3]}</span>`;
+      estado.respuestas["m"+i]=ok?1:0; guardar();
+      const done=MITOS.every((_,k)=>("m"+k) in estado.respuestas);
+      if(done){ const ac=MITOS.filter((_,k)=>estado.respuestas["m"+k]===1).length; const r=document.getElementById("mitosRes"); r.style.display="block"; r.innerHTML=`<strong>Resultado:</strong> ${ac} de ${MITOS.length} veredictos correctos. Lo que importa no es el puntaje sino la magnitud: casi todos los mitos tienen algo de verdad y un tamaño mucho menor del que se dice.`; marcar(5); }
+    }); });
+}
+
+// ===================== FICHA DE SALIDA =====================
+const REPASO = {1:"Apunte 13, sección sobre Harrison y Klein (separación, variedad, disparidad y sus índices).",2:"Apunte 14, sección sobre fallas (Lau y Murnighan; Thatcher et al., 2024).",3:"Apunte 14, el modelo de categorización-elaboración y sus ocho proposiciones.",4:"Apunte 14, perfil oculto (Stasser y Titus; Lu, Yuan y McLeod).",5:"Apuntes 13 y 15: la evidencia detrás de cada afirmación."};
+function pintarFicha(){
+  const k=[1,2,3,4,5].filter(i=>estado.hechas[i]); const falt=[1,2,3,4,5].filter(i=>!estado.hechas[i]);
+  const resp=Object.entries(estado.respuestas).filter(([key,v])=>/^(1|2|3|4)_\d+$|^m\d+$/.test(key));
+  const ac=resp.filter(([,v])=>v===1).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas:</strong> ${k.length? k.map(i=>NOMBRES[i]).join(" · "):"ninguna todavía"}.` + (falt.length? ` <strong>Faltan:</strong> ${falt.map(i=>NOMBRES[i]).join(" · ")}.`:" Las cinco.") + (resp.length? `<br><strong>Preguntas respondidas:</strong> ${resp.length}, con ${ac} aciertos a la primera.`:"");
+  const errores={}; resp.forEach(([key,v])=>{ if(v===0){ const e=key.startsWith("m")?5:+key.split("_")[0]; errores[e]=(errores[e]||0)+1; } });
+  const lista=Object.keys(errores).map(e=>`<li>${NOMBRES[e]}: ${errores[e]} ${errores[e]===1?"error":"errores"}. Repasa: ${REPASO[e]}</li>`).join("");
+  document.getElementById("fichaRepaso").innerHTML = lista? `<h3>Sugerencias de repaso</h3><ul class="sans" style="font-size:.92rem">${lista}</ul>` : (resp.length? `<div class="nota ok">Sin errores en lo respondido. Si quieres poner a prueba lo aprendido, vuelve a la estación 1 y explica con tus palabras por qué la desviación estándar no sirve para medir variedad.</div>`:"");
+}
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem("lab_div_v1"); }catch(e){} location.reload(); }
+
+// ===================== INIT =====================
+cargar(); pintarNav(); initP(); initF(); K.forEach(k=>document.getElementById("k_"+k).addEventListener("input",calcCEM)); calcCEM(); initPH(); initMitos();
+pregunta("q1", Q1, 1); pregunta("q2", Q2, 2); pregunta("q3", Q3, 3);
+if(estado.respuestas.ph1 && estado.respuestas.ph2){ /* ya hecho: permitir rehacer */ }
+</script>
+</body>
+</html>

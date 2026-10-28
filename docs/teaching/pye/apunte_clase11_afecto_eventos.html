@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emociones y estados de ánimo en el trabajo · Personas y Equipos</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 10</p>
+  <h1>Emociones y estados de ánimo en el trabajo: el circumplejo y la teoría de los eventos afectivos</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 10 <br>
+    Complementa y actualiza R&amp;J cap. 4 <br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>El capítulo 4 de Robbins y Judge hace bien dos cosas: distingue emociones de estados de ánimo y presenta la teoría de los eventos afectivos. Pero se queda corto en tres puntos que importan para un administrador. Primero, presenta la estructura del afecto con un solo esquema (afecto positivo y negativo de alta activación) y deja fuera la mitad del mapa: los estados de baja activación, como la calma y el decaimiento, que son exactamente los que aparecen cuando un equipo se apaga. Segundo, no dice cuánto pesa el ánimo sobre el desempeño, y sin magnitudes la frase "un trabajador feliz es un trabajador productivo" se vuelve un eslogan. Tercero, el manual trata el ánimo como algo que se tiene o no se tiene, cuando la evidencia de las últimas dos décadas muestra que la mayor parte de la variación en cómo se siente la gente ocurre dentro de la misma persona, de un momento a otro de la jornada.</p>
+<p>Este apunte cubre esos tres vacíos con evidencia verificada y con dos anclas chilenas: el modelo del afecto que usamos en clases se validó en castellano con datos de trabajadores, y un estudio de diario con profesionales chilenos muestra que la activación, y no solo la valencia, decide quién habla y quién calla en el trabajo. Además prepara la lectura de la ayudantía del viernes 09-10, George (2011), que necesita el vocabulario que se presenta aquí.</p>
+<h2>B. La idea en breve</h2><div class="resumen">
+<p>El afecto no es una línea que va de "mal" a "bien". Tiene dos dimensiones: <strong>valencia</strong> (qué tan placentero o displacentero es lo que siento) y <strong>activación</strong> (cuánta energía tengo para actuar). Cruzarlas produce cuatro cuadrantes con nombres de trabajo: entusiasmo, ansiedad, decaimiento y calma. El estrés y el compromiso no son opuestos: los dos son estados de alta activación, y una persona puede pasar del uno al otro en la misma mañana.</p>
+<p>Lo que produce esos estados son, sobre todo, <strong>eventos</strong>: cosas que pasan durante la jornada. La teoría de los eventos afectivos dice que el ambiente de trabajo determina qué eventos son probables, que los eventos producen reacciones afectivas, y que esas reacciones alimentan por un lado conductas inmediatas y por otro, acumuladas, las actitudes hacia el trabajo. La consecuencia práctica es una frase: no se gestionan ánimos, se gestionan eventos.</p>
+<p>Tres hechos empíricos ordenan el tema. Más de la mitad de la variación en el ánimo laboral ocurre dentro de la misma persona, de un momento a otro. Un evento negativo mueve el ánimo unas cinco veces más que uno positivo, aunque los positivos son varias veces más frecuentes. Y el ánimo del momento se asocia con el desempeño del momento en la dirección esperada, pero explica menos del 5% de su varianza: la teoría se sostiene, el eslogan no.</p>
+</div><h2>C. Los conceptos</h2>
+<h3>Afecto, emoción y estado de ánimo</h3>
+<p><strong>Afecto</strong> es el término paraguas para toda la gama de sentimientos que experimenta una persona. Bajo ese paraguas hay dos cosas distintas. Una <strong>emoción</strong> es una reacción a un objeto o evento específico: breve, intensa, visible en la cara y en el cuerpo, y asociada a una tendencia de acción inmediata. Me dio rabia el correo del jefe. Un <strong>estado de ánimo</strong> es un estado más difuso, sin objeto claro, menos intenso y más duradero, que colorea la manera de pensar antes que la de actuar. Estoy irritable desde la mañana y no sé por qué. La distinción es de grado y los dos se convierten uno en otro: una emoción que no se procesa deja un estado de ánimo, y un estado de ánimo baja el umbral para que un evento menor dispare una emoción.</p>
+<p>El manual agrega una precisión que conviene subrayar. El afecto tiene una versión <strong>estado</strong> (lo que siento ahora) y una versión <strong>rasgo</strong> (mi tendencia habitual a sentir de cierta manera, llamada afectividad positiva y negativa). Casi todo lo que sigue trata del estado. La afectividad como rasgo vuelve en la unidad de diferencias individuales.</p>
+<h3>La estructura del afecto: el circumplejo</h3>
+<p>Durante décadas se discutió si el afecto se describe mejor con categorías (miedo, ira, alegría, tristeza, asco, sorpresa, las seis emociones básicas de Ekman) o con dimensiones. La respuesta que domina hoy la investigación es que las categorías describen la emoción completa (con su objeto y su interpretación), pero que debajo de todas ellas hay un núcleo afectivo que se describe con dos dimensiones (Russell, 2003). La <strong>valencia</strong> va de displacer a placer. La <strong>activación</strong> (arousal) va de baja a alta. Cualquier estado afectivo se ubica en un punto de ese plano, y los puntos se ordenan en círculo: por eso el modelo se llama <strong>circumplejo</strong>.</p>
+<p>Los cuatro cuadrantes reciben, en la tradición de Warr (2007), nombres que sirven para hablar del trabajo:</p>
+<table><tr><th>Cuadrante</th><th>Valencia</th><th>Activación</th><th>Palabras típicas</th></tr><tr><td>Entusiasmo</td><td>Placer</td><td>Alta</td><td>entusiasmado, inspirado, enérgico, alegre</td></tr><tr><td>Ansiedad</td><td>Displacer</td><td>Alta</td><td>tenso, nervioso, preocupado, irritado</td></tr><tr><td>Decaimiento</td><td>Displacer</td><td>Baja</td><td>desanimado, triste, cansado, aburrido</td></tr><tr><td>Calma</td><td>Placer</td><td>Baja</td><td>tranquilo, relajado, sereno, cómodo</td></tr></table>
+<p>Dos aclaraciones que evitan confusiones frecuentes. La primera: el esquema de afecto positivo y negativo que usa el manual (y el cuestionario PANAS) no contradice al circumplejo; es el mismo plano con los ejes girados 45 grados, de modo que su "afecto positivo" es el cuadrante de entusiasmo y su "afecto negativo" el de ansiedad (Watson &amp; Tellegen, 1985). Lo que ese esquema pierde son los dos cuadrantes de baja activación. Las dos dimensiones no son un artefacto del inglés ni del castellano: un análisis de cómo 2.474 lenguas de 20 familias lingüísticas agrupan conceptos emocionales bajo una misma palabra encontró variación cultural considerable en el detalle, pero una estructura universal en la que todas las familias diferencian las emociones, antes que nada, por valencia y por activación (Jackson et al., 2019). La segunda: estrés y compromiso no son polos de una misma línea. Ambos están en la mitad superior del círculo (alta activación) y se distinguen por la valencia. Por eso un país, o una persona, puede reportar mucho estrés diario y mucho engagement al mismo tiempo, como muestra Gallup para Chile: 41% con mucho estrés el día anterior y 33% de compromiso, el más alto de América Latina (Gallup, 2026).</p>
+<h3>La teoría de los eventos afectivos</h3>
+<p>Weiss y Cropanzano (1996) propusieron el modelo que ordena esta unidad. El trabajo es un flujo de <strong>eventos</strong>: una felicitación, un reclamo, un plazo que se adelanta, una reunión que se cancela. Los eventos producen <strong>reacciones afectivas</strong> (emociones y estados de ánimo). Esas reacciones tienen dos destinos. Uno es inmediato: la <strong>conducta impulsada por el afecto</strong>, como ayudar a un compañero, contestar mal a un cliente, abandonar una tarea o tomar un riesgo. El otro es acumulativo: muchas reacciones sedimentan en <strong>actitudes laborales</strong> (satisfacción, compromiso), que a su vez producen <strong>conductas impulsadas por el juicio</strong>, más deliberadas, como renunciar o esforzarse de manera sostenida.</p>
+<p>Dos piezas cierran el modelo. Las <strong>características del ambiente de trabajo</strong> (diseño del puesto, jefatura, clientes, normas) determinan qué eventos son probables; y las <strong>disposiciones</strong> de la persona (la afectividad rasgo) moderan cuánto reacciona a cada evento. La consecuencia para gestión es directa: la organización no administra el ánimo de la gente, pero sí administra el flujo de eventos que produce. Conectado con la Clase 9, el diseño del trabajo es en buena parte el diseño de ese flujo.</p>
+<p>¿Qué eventos importan? Ohly y Schmitt (2015) pidieron a 218 trabajadores que registraran incidentes de su jornada y obtuvieron 559 positivos y 383 negativos, que agruparon en 11 familias, cuatro de eventos positivos y siete de negativos. Los positivos giran en torno al logro (alcanzar una meta, resolver un problema, sentirse competente) y al vínculo (recibir reconocimiento o feedback positivo, interacciones sociales positivas). Los negativos, más variados, en torno a los obstáculos para avanzar, los conflictos y problemas de comunicación, la sobrecarga y la presión de tiempo, y los problemas de gestión y organización. Los autores observan que las familias se ordenan por dos valores, agencia y comunión, que son las mismas necesidades de competencia y relación de la teoría de la autodeterminación vista en la Clase 6.</p>
+<h3>Un mapa de cinco niveles</h3>
+<p>El capítulo 4 mezcla, sin avisar, afirmaciones que ocurren en niveles distintos, y buena parte de las contradicciones aparentes se disuelven al preguntar en qué nivel está cada una. Ashkanasy y Dorris (2017) ordenan la investigación sobre emociones en el trabajo en cinco niveles. El nivel 1 es <strong>intrapersonal</strong>: el afecto cambia de un momento a otro dentro de la misma persona; es el nivel de este apunte (eventos, ánimo, circumplejo, muestreo de experiencias). El nivel 2 es <strong>entre personas</strong>: hay diferencias estables, como la afectividad rasgo y la inteligencia emocional. El nivel 3 es <strong>interpersonal</strong>: las emociones se comunican, se leen y se contagian, y el rol exige mostrar unas y ocultar otras. El nivel 4 es el de <strong>grupos y equipos</strong>: el tono afectivo del equipo y el ánimo del líder como señal que todos leen. El nivel 5 es el <strong>organizacional</strong>: clima y cultura emocional, qué emociones se consideran normales en esta empresa. La Clase 12 y los apuntes 11 y 12 trabajan en los niveles 2, 3 y 4. Cuando una frase del manual diga que "las emociones positivas mejoran el desempeño", conviene preguntar si habla del ánimo de hoy (nivel 1), de la persona alegre (nivel 2) o del equipo de buen ánimo (nivel 4): la evidencia es distinta en cada caso.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>El ánimo cambia más dentro de la persona que entre personas</h3>
+<p>Miner, Glomb y Hulin (2005) siguieron a 41 empleados de una empresa manufacturera de Estados Unidos (ingeniería 54%, servicio al cliente 32%, informática 15%) con un método llamado <strong>muestreo de experiencias</strong>: cada persona llevaba una palmtop que sonaba cuatro veces al día, en momentos aleatorios, durante dos a tres semanas. En cada señal reportaba cómo se sentía y si desde la señal anterior había ocurrido algún evento positivo o negativo con la jefatura, con compañeros, con clientes o con la tarea. Se reunieron 1.226 registros válidos, unos 30 por persona.</p>
+<p>El primer resultado es el que justifica todo el enfoque: el 56% de la varianza del tono hedónico del ánimo fue intrapersonal. En palabras llanas, más de la mitad de la variación en cómo se siente la gente en el trabajo ocurre dentro de la misma persona, de un momento a otro, y menos de la mitad corresponde a diferencias entre personas. Una encuesta anual de clima captura la parte chica; la parte grande pasa entre las nueve y las seis, todos los días.</p>
+<h3>Lo malo pesa cinco veces más que lo bueno</h3>
+<p>El segundo resultado de Miner et al. (2005) es la asimetría. Un evento negativo movió el ánimo del momento, en promedio, cerca de una desviación estándar hacia abajo (coeficiente promedio de −0.96 DE); un evento positivo lo movió apenas un quinto de desviación estándar hacia arriba (+0.20 DE). Aproximadamente cinco veces más impacto por evento negativo. Pero los eventos positivos fueron entre tres y cinco veces más frecuentes: por ejemplo, el 29.3% de las señales venía precedida de una interacción positiva con compañeros y solo el 11.7% de una negativa.</p>
+<p>Las dos cifras juntas describen la vida laboral con bastante exactitud: está hecha mayormente de eventos positivos pequeños y de unos pocos negativos que pesan mucho. Es una instancia del principio general de que lo malo es más fuerte que lo bueno (Baumeister et al., 2001), y de lo que George (2011) llama sesgo de negatividad y offset de positividad. La implicancia de gestión es una cuenta que no cierra: un jefe que maltrata el lunes y felicita el martes no queda en cero. Evitar un evento negativo vale más que producir varios positivos. La asimetría también aparece en la memoria: en un estudio cualitativo en que se pidió a empleados relatar interacciones con su jefe, los incidentes negativos se recordaron más, con más intensidad y con más detalle que los positivos, y el jefe resultó ser una de las fuentes más frecuentes de eventos afectivos, en ambas direcciones (Dasborough, 2006).</p>
+<p>El estudio tiene límites que hay que decir. Son 41 personas de una sola empresa (el poder estadístico viene de los 1.226 momentos, no de las personas); el ánimo y los eventos los reporta la misma persona; y el diseño es correlacional aunque sea intrapersonal: registrar el evento junto con el ánimo no es manipular el evento. Hubo además una sorpresa: el buen ánimo se asoció con más conductas de retiro (postergar, estirar pausas), al revés de lo esperado, y no se asoció con ayudar a otros. Las sorpresas también se reportan.</p>
+<h3>El ánimo del momento y el desempeño del momento</h3>
+<p>Aitken et al. (2026) publicaron un metaanálisis prerregistrado de la relación intrapersonal entre afecto y desempeño, es decir, del mismo tipo de estudios que Miner et al.: 123 muestras independientes, 14.717 personas y 127.410 observaciones dentro de ventanas de 24 horas o menos. Lo presentan como una prueba de la teoría de los eventos afectivos, y la teoría pasa la prueba con una advertencia importante.</p>
+<p>Cuando una persona está con más afecto positivo de lo habitual, rinde algo mejor en la tarea, ayuda más (conducta cívica) y hace menos conductas contraproducentes; el afecto negativo va en la dirección inversa en las tres. La asociación con el desempeño de tarea es consistente en el tiempo; con las conductas discrecionales es menos directa. Pero los efectos intrapersonales son de tamaño pequeño a moderado, y el afecto positivo y el negativo explican menos del 5% de la varianza en cada dimensión del desempeño. Además, los efectos entre personas (la afectividad rasgo) son consistentemente mayores que los intrapersonales.</p>
+<p>El mecanismo que mejor explica ese patrón, consistente pero chico, es el modelo episódico de Beal, Weiss, Barros y MacDermid (2005), con un coautor chileno: el desempeño ocurre en episodios acotados, y dentro de cada episodio el afecto influye sobre todo a través de la atención. Una emoción intensa, agradable o desagradable, desvía recursos atencionales de la tarea hacia la emoción misma y hacia su regulación; el afecto también afecta la persistencia en la tarea. El efecto es real en cada episodio, pero se diluye al agregar episodios y días.</p>
+<p>La lectura correcta: el ánimo del día ayuda, de manera consistente pero modesta, y la afectividad estable de la persona pesa más. La versión de póster, "trabajador feliz, trabajador productivo", no se sostiene tal cual. El ánimo es una de muchas piezas y no la más grande. Eso no le quita importancia al tema: el afecto predice con más fuerza otras cosas que interesan en este curso, en particular las actitudes (de las que es el sedimento) y el bienestar.</p>
+<h3>Las emociones displacenteras también trabajan: dual tuning</h3>
+<p>George (2011), la lectura de la ayudantía, argumenta que la investigación sobre afecto en las organizaciones ha sido asimétrica: se estudian los beneficios del afecto positivo y los costos del negativo, cuando ambos son funcionales y deben estudiarse en tándem. La ansiedad estrecha la atención y vuelve más cuidadoso, lo que sirve para revisar un contrato o detectar un error; el entusiasmo abre la atención y vuelve más exploratorio, lo que sirve para generar ideas. Cuál conviene depende de la tarea, no de la emoción. La evidencia de referencia es George y Zhou (2007): en una muestra de trabajadores, la combinación de ánimo positivo y negativo, en un contexto de apoyo del supervisor, predijo más creatividad que el ánimo positivo solo.</p>
+<p>El cuadro de cuatro celdas que usamos en clases es una síntesis didáctica de esa idea sobre el circumplejo, no una figura del artículo: entusiasmo (pensamiento flexible y divergente, conducta activa y exploradora), ansiedad (pensamiento estrecho y convergente, conducta activa y cuidadosa), decaimiento (pensamiento rumiativo, conducta pasiva) y calma (pensamiento flexible sin urgencia, conducta pasiva). Un estudio de diario reciente con doce compuestos de valencia y activación encontró que la relación entre afecto y creatividad en el trabajo puede ser positiva, negativa o nula según el compuesto (Madrid &amp; Patterson, 2025), lo que confirma que la pregunta "¿el buen ánimo ayuda a la creatividad?" está mal planteada sin la activación.</p>
+<h3>El circumplejo funciona en castellano</h3>
+<p>Madrid y Patterson (2014) validaron en inglés y castellano el Multi-Affect Indicator de Warr (2007), un cuestionario breve con adjetivos para los cuatro cuadrantes, con tres muestras de trabajadores. Modelos de ecuaciones estructurales multigrupo respaldaron la estructura y su invarianza entre idiomas, y el modelamiento circular estocástico respaldó la representación circumpleja: los adjetivos se ordenan en círculo alrededor de los ejes de valencia y activación, como predice el modelo. La consecuencia práctica es que existe un instrumento breve, validado en castellano, para medir cómo se siente la gente en el trabajo por cuadrante, y no con un único puntaje de "clima".</p>
+<h3>La activación decide quién calla: datos chilenos</h3>
+<p>Que la activación sea una dimensión con consecuencias, y no un adorno del círculo, se ve en Madrid, Patterson y Leiva (2015). Siguieron con un diario a 44 profesionales de distintas empresas chilenas (alumnos de un MBA vespertino; 81.8% hombres; 29% staff profesional, 32% supervisores, 39% ejecutivos), que reportaron su afecto y su <strong>silencio</strong> (guardarse ideas, sugerencias o preocupaciones sobre el trabajo) en nueve olas a lo largo de tres semanas, con 342 observaciones en total. La pregunta era si el afecto negativo produce silencio, y la respuesta fue: depende de la activación y de la persona.</p>
+<p>El afecto negativo de <strong>baja activación</strong> (decaimiento) se asoció con más silencio, pero solo en las personas con alta tendencia a rumiar (pendiente b = .36, p &lt; .01 con rumiación alta; b = −.02 con rumiación baja). El afecto negativo de <strong>alta activación</strong> (tensión, irritación) hizo lo contrario: se asoció con menos silencio cuando el puesto exigía resolver problemas (b = −.23, p = .07 con demandas altas; interacción b = −.18, p &lt; .01). Es decir, con la misma valencia negativa, el estado desactivado calla y el estado activado habla, siempre que haya un problema que resolver. Un gerente que mide el "clima" con un puntaje no puede distinguir entre un equipo tenso que levanta problemas y un equipo apagado que se los guarda, y esos dos equipos necesitan intervenciones opuestas. Límites: autorreporte, muestra pequeña y mayoritariamente masculina, y un efecto de alta activación marginal en significación; el patrón es coherente con dual tuning y con lo que Kish-Gephart et al. (2009) describen para el miedo, la emoción de alta activación que más silencia cuando el problema no es propio sino del poder.</p>
+<h3>De dónde viene el ánimo, y qué tan bien está establecido</h3>
+<p>El capítulo 4 lista fuentes del ánimo: personalidad, hora del día, día de la semana, clima, estrés, actividades sociales, sueño, ejercicio, edad y sexo. Conviene ordenarlas por solidez. Bien establecidas: el ritmo diario (el afecto positivo sube durante la mañana y cae en la noche) y el semanal (mejor hacia el fin de semana), replicados con 509 millones de mensajes de Twitter de 2.4 millones de usuarios en 84 países (Golder &amp; Macy, 2011); la falta de sueño; la afectividad rasgo. Con matices: el ejercicio (efecto pequeño y consistente), la edad (las personas mayores reportan menos afecto negativo, con diferencias modestas) y las actividades sociales (asociación positiva con causalidad en ambos sentidos). Mito o exageración: el clima, donde la creencia de que el sol mejora el ánimo es una correlación ilusoria clásica y el efecto real es pequeño o nulo; y el sexo, donde la diferencia documentada está en la expresión y el reporte más que en la experiencia, y es mucho menor que la variación dentro de cada sexo.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el estrés y el compromiso son opuestos: un trabajador estresado no puede estar comprometido.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> ambos son estados de alta activación que se distinguen por la valencia, no polos de una misma línea (Russell, 2003; Warr, 2007). Chile reporta al mismo tiempo 41% de estrés diario y el engagement más alto de la región (Gallup, 2026). Además, el compromiso es una actitud relativamente estable y el estrés del día un estado que fluctúa: el 56% de la variación del ánimo ocurre dentro de la misma persona (Miner et al., 2005).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque el lenguaje cotidiano tiene una sola dimensión ("estar bien" o "estar mal") y porque las encuestas de clima miden una vez al año.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> un trabajador feliz es un trabajador productivo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el afecto positivo del momento se asocia con mejor desempeño de tarea, más conducta cívica y menos conducta contraproducente, pero explica menos del 5% de la varianza de cada una, y los efectos de la afectividad estable son mayores que los del ánimo del día (Aitken et al., 2026). La relación existe y es consistente; la magnitud es modesta.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque la relación es real y fácil de observar en casos, y porque vende programas de "felicidad organizacional" que intervienen sobre el efecto y no sobre los eventos.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> un buen jefe compensa un mal momento con un elogio.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> un evento negativo mueve el ánimo unas cinco veces más que uno positivo (−0.96 contra +0.20 desviaciones estándar; Miner et al., 2005). Lo malo es más fuerte que lo bueno (Baumeister et al., 2001). Evitar un evento negativo vale más que producir varios positivos.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque los eventos positivos son tres a cinco veces más frecuentes y dan la impresión de que el balance es favorable, mientras que el peso de los negativos se acumula en silencio.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> las emociones negativas son un problema que hay que eliminar del trabajo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el afecto negativo activado estrecha la atención y mejora la detección de errores y la evaluación de riesgos; la creatividad requiere ambos tipos de afecto en tándem (George, 2011; George &amp; Zhou, 2007). Lo que hay que eliminar es el evento negativo gratuito (el maltrato, la instrucción confusa), no la exigencia.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> porque la investigación misma fue asimétrica durante décadas y porque "emoción negativa" suena a problema.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Lo primero es cambiar la unidad de análisis. No se gestiona el ánimo de las personas; se gestiona el flujo de eventos que la organización produce. Eso convierte preguntas vagas ("¿cómo está el clima?") en preguntas concretas: ¿qué eventos negativos produce esta unidad de manera evitable? Instrucciones confusas, plataformas caídas, plazos que se adelantan sin aviso, reuniones que no deciden, un supervisor que grita. Cada uno pesa cinco veces lo que un elogio.</p>
+<p>Recomendación: antes de invertir en eventos positivos (celebraciones, reconocimientos, beneficios), auditar los negativos. La asimetría de Miner et al. dice que el retorno está en evitar, no en compensar. El modelo de Côté que veremos el lunes agrega que los eventos negativos que producen los clientes también son gestionables: la organización decide cuánta exposición a la agresión permite.</p>
+<p>Recomendación: medir el afecto por cuadrantes, no con un puntaje único. Un equipo "sin problemas de clima" puede estar en calma o en decaimiento, y esos dos estados piden intervenciones opuestas. Existe un instrumento breve validado en castellano para eso (Madrid &amp; Patterson, 2014). Y un equipo que se queja no es necesariamente el que está peor: en datos chilenos, el afecto negativo activado hace hablar cuando hay problemas que resolver, y el desactivado hace callar (Madrid et al., 2015). El silencio es la señal más cara de leer mal.</p>
+<p>Recomendación: distinguir en las conversaciones de gestión el estado de la actitud. Un colaborador tenso esta semana no es un colaborador desmotivado; un colaborador satisfecho en la encuesta no es uno que esté bien todos los días. Las dos cosas se miden distinto y se intervienen distinto.</p>
+<p>Y una advertencia sobre lo que no hay que comprar: los programas que prometen "trabajadores felices, trabajadores productivos" a partir de intervenir sobre el ánimo. La magnitud (menos del 5%) no justifica el precio, y el mecanismo está al revés: el ánimo es el efecto de los eventos, no la causa que se puede decretar.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Distinguir emoción de estado de ánimo, y afecto estado de afecto rasgo, con un ejemplo laboral de cada uno.</li><li>Ubicar un estado afectivo en el circumplejo y explicar por qué el estrés y el compromiso no son opuestos.</li><li>Explicar la teoría de los eventos afectivos con sus cinco componentes (características del ambiente, eventos, reacciones, disposiciones, conductas y actitudes) y aplicarla a un caso: identificar los eventos, las reacciones y los dos tipos de conducta.</li><li>Reportar las tres cifras centrales de la evidencia (56% de varianza intrapersonal, asimetría de cinco a uno, menos del 5% de varianza del desempeño) y explicar qué implica cada una para la gestión.</li><li>Argumentar, con dual tuning, por qué una emoción displacentera puede ser funcional según la tarea.</li><li>Identificar en qué nivel (intrapersonal, entre personas, interpersonal, grupo, organización) está una afirmación sobre emociones en el trabajo, y explicar con el estudio de Madrid et al. (2015) por qué la activación cambia la conducta que produce un mismo afecto negativo.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Aitken, J. A., Baines, J. I., Wonders, M. E., Kaplan, S. A., &amp; Clark, J. E. (2026). A meta-analytic review of the within-person relationship between affect and job performance. <em>Journal of Organizational Behavior, 47</em>(4), 685–709. <a href="https://doi.org/10.1002/job.70035">https://doi.org/10.1002/job.70035</a></p>
+<p>Ashkanasy, N. M., &amp; Dorris, A. D. (2017). Emotions in the workplace. <em>Annual Review of Organizational Psychology and Organizational Behavior, 4</em>, 67–90. <a href="https://doi.org/10.1146/annurev-orgpsych-032516-113231">https://doi.org/10.1146/annurev-orgpsych-032516-113231</a></p>
+<p>Baumeister, R. F., Bratslavsky, E., Finkenauer, C., &amp; Vohs, K. D. (2001). Bad is stronger than good. <em>Review of General Psychology, 5</em>(4), 323–370. <a href="https://doi.org/10.1037/1089-2680.5.4.323">https://doi.org/10.1037/1089-2680.5.4.323</a></p>
+<p>Beal, D. J., Weiss, H. M., Barros, E., &amp; MacDermid, S. M. (2005). An episodic process model of affective influences on performance. <em>Journal of Applied Psychology, 90</em>(6), 1054–1068. <a href="https://doi.org/10.1037/0021-9010.90.6.1054">https://doi.org/10.1037/0021-9010.90.6.1054</a></p>
+<p>Dasborough, M. T. (2006). Cognitive asymmetry in employee emotional reactions to leadership behaviors. <em>The Leadership Quarterly, 17</em>(2), 163–178. <a href="https://doi.org/10.1016/j.leaqua.2005.12.004">https://doi.org/10.1016/j.leaqua.2005.12.004</a></p>
+<p>Gallup. (2026). <em>State of the Global Workplace: 2026 report</em>. Gallup.</p>
+<p>George, J. M. (2011). Dual tuning: A minimum condition for understanding affect in organizations? <em>Organizational Psychology Review, 1</em>(2), 147–164. <a href="https://doi.org/10.1177/2041386610390257">https://doi.org/10.1177/2041386610390257</a></p>
+<p>George, J. M., &amp; Zhou, J. (2007). Dual tuning in a supportive context: Joint contributions of positive mood, negative mood, and supervisory behaviors to employee creativity. <em>Academy of Management Journal, 50</em>(3), 605–622. <a href="https://doi.org/10.5465/amj.2007.25525934">https://doi.org/10.5465/amj.2007.25525934</a></p>
+<p>Golder, S. A., &amp; Macy, M. W. (2011). Diurnal and seasonal mood vary with work, sleep, and daylength across diverse cultures. <em>Science, 333</em>(6051), 1878–1881. <a href="https://doi.org/10.1126/science.1202775">https://doi.org/10.1126/science.1202775</a></p>
+<p>Jackson, J. C., Watts, J., Henry, T. R., List, J.-M., Forkel, R., Mucha, P. J., Greenhill, S. J., Gray, R. D., &amp; Lindquist, K. A. (2019). Emotion semantics show both cultural variation and universal structure. <em>Science, 366</em>(6472), 1517–1522. <a href="https://doi.org/10.1126/science.aaw8160">https://doi.org/10.1126/science.aaw8160</a></p>
+<p>Kish-Gephart, J. J., Detert, J. R., Treviño, L. K., &amp; Edmondson, A. C. (2009). Silenced by fear: The nature, sources, and consequences of fear at work. <em>Research in Organizational Behavior, 29</em>, 163–193. <a href="https://doi.org/10.1016/j.riob.2009.07.002">https://doi.org/10.1016/j.riob.2009.07.002</a></p>
+<p>Madrid, H. P., &amp; Patterson, M. G. (2014). Measuring affect at work based on the valence and arousal circumplex model. <em>The Spanish Journal of Psychology, 17</em>, E50. <a href="https://doi.org/10.1017/sjp.2014.54">https://doi.org/10.1017/sjp.2014.54</a></p>
+<p>Madrid, H. P., &amp; Patterson, M. G. (2025). A valence and arousal circumplex examination of affect and creativity at work. <em>Applied Psychology, 74</em>(1), e12577. <a href="https://doi.org/10.1111/apps.12577">https://doi.org/10.1111/apps.12577</a></p>
+<p>Madrid, H. P., Patterson, M. G., &amp; Leiva, P. I. (2015). Negative core affect and employee silence: How differences in activation, cognitive rumination, and problem-solving demands matter. <em>Journal of Applied Psychology, 100</em>(6), 1887–1898. <a href="https://doi.org/10.1037/a0039380">https://doi.org/10.1037/a0039380</a></p>
+<p>Miner, A. G., Glomb, T. M., &amp; Hulin, C. (2005). Experience sampling mood and its correlates at work. <em>Journal of Occupational and Organizational Psychology, 78</em>(2), 171–193. <a href="https://doi.org/10.1348/096317905X40105">https://doi.org/10.1348/096317905X40105</a></p>
+<p>Ohly, S., &amp; Schmitt, A. (2015). What makes us enthusiastic, angry, feeling at rest or worried? Development and validation of an affective work events taxonomy using concept mapping methodology. <em>Journal of Business and Psychology, 30</em>(1), 15–35. <a href="https://doi.org/10.1007/s10869-013-9328-3">https://doi.org/10.1007/s10869-013-9328-3</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Russell, J. A. (2003). Core affect and the psychological construction of emotion. <em>Psychological Review, 110</em>(1), 145–172. <a href="https://doi.org/10.1037/0033-295X.110.1.145">https://doi.org/10.1037/0033-295X.110.1.145</a></p>
+<p>Warr, P. (2007). <em>Work, happiness, and unhappiness</em>. Lawrence Erlbaum.</p>
+<p>Watson, D., &amp; Tellegen, A. (1985). Toward a consensual structure of mood. <em>Psychological Bulletin, 98</em>(2), 219–235. <a href="https://doi.org/10.1037/0033-2909.98.2.219">https://doi.org/10.1037/0033-2909.98.2.219</a></p>
+<p>Weiss, H. M., &amp; Cropanzano, R. (1996). Affective events theory: A theoretical discussion of the structure, causes and consequences of affective experiences at work. <em>Research in Organizational Behavior, 18</em>, 1–74.</p>
+<h3>Para profundizar</h3>
+<p>Weiss y Cropanzano (1996) es largo pero se lee bien; las primeras 20 páginas bastan para entender el modelo completo. George (2011) es la lectura de la ayudantía: conviene leerla con el cuadro de cuatro celdas al lado. Barsade y Gibson (2007), <em>Academy of Management Perspectives, 21</em>(1), 36–59, es la revisión más citada sobre por qué el afecto importa en las organizaciones. Ashkanasy y Dorris (2017) es el mapa de cinco niveles y una buena puerta de entrada a todo el campo. Diener, Thapa y Tay (2020), <em>Annual Review of Organizational Psychology and Organizational Behavior, 7</em>, 451–477, revisan con cuidado qué se sabe y qué no sobre las emociones positivas en el trabajo, incluida la evidencia longitudinal y experimental sobre la dirección causal.</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

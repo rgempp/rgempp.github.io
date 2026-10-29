@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personalidad en el trabajo: cinco tendencias recientes · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 22</p>
+  <h1>Personalidad en el trabajo: cinco tendencias recientes</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 22 · Lectura opcional del Tema 5 (no entra en la Prueba 2)<br>
+    Complementa los apuntes 16 a 21<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Los apuntes 16 a 21 cubren lo que un administrador necesita saber sobre personalidad y diferencias individuales, con la evidencia acumulada hasta 2022. Este apunte es distinto: reúne cinco líneas de investigación de los últimos tres años que están cambiando cómo se mide y se usa la personalidad en las organizaciones, y que en clase solo alcanzaron una lámina. Es lectura opcional, no entra en la prueba, y está pensado para quien vaya a trabajar en selección, en gestión de personas o en consultoría, donde estas cinco cosas ya se están discutiendo.</p>
+<p>Las cinco son: medir la personalidad "en el trabajo" en vez de en general; entender la personalidad como estados que cambian con la situación, con el trabajo remoto como caso; la inteligencia artificial como herramienta para fingir en los tests; los "perfiles" o tipos estadísticos frente a los rasgos; y el dilema entre validez y equidad en la selección. Cada sección cierra con lo que significa en la práctica.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<ol><li><strong>Contextualizar.</strong> Preguntar "en el trabajo, soy alguien que..." en lugar de "soy alguien que..." duplica la validez de un inventario de personalidad (.11 a .24) sin cambiar nada más. El marco de referencia debe coincidir con el criterio.</li><li><strong>Estados y trabajo remoto.</strong> Tres cuartos de la variación en conducta relevante a un rasgo ocurre dentro de la misma persona, entre situaciones. El trabajo remoto quita claves de deber y consistencia: el estado de responsabilidad baja en casa, y las disposiciones pesan más. Quien diseña trabajo remoto puede reponer las claves en vez de esperar que todos sean responsables solos.</li><li><strong>IA y faking.</strong> Un candidato puede pedirle a un modelo de lenguaje que responda el test por él; en 2023, ChatGPT-4 quedó sobre el percentil 99 de estudiantes instruidos a fingir, incluso en el formato de elección forzada que frena a los humanos. La respuesta es diseño (varios predictores, muestras de trabajo, entrevista estructurada), no desconfianza.</li><li><strong>Perfiles vs rasgos.</strong> Los "tipos" obtenidos con estadística moderna (perfiles latentes) no agregan nada a los rasgos continuos para predecir desempeño (0.2% de varianza, no significativo). Los rasgos ya contienen la información.</li><li><strong>Validez y equidad.</strong> Con las validez revisadas, quitar el test de inteligencia de una batería cuesta poco (.61 a .56) y gana mucho en equidad (ratio de impacto adverso .42 a .67). Las decisiones de selección son decisiones sobre ese dilema, y hay que tomarlas con las dos cifras a la vista.</li></ol>
+</div>
+<h2>C. Las cinco tendencias</h2>
+<h3>1. Medir el rasgo donde se activa: personalidad contextualizada</h3>
+<p>La teoría de la activación de rasgos (apunte 17) dice que un rasgo se expresa, y predice, cuando la situación lo convoca. Un inventario general ("soy alguien que termina lo que empieza") obliga a promediar sobre todas las situaciones de la vida; uno contextualizado ("en el trabajo, soy alguien que termina lo que empieza") fija el marco de referencia. Shaffer y Postlethwaite (2012) metaanalizaron 90 estudios y encontraron que la validez media para el desempeño es .11 con medidas generales y .24 con medidas contextualizadas. En la tabla revisada de Sackett, Zhang, Berry y Lievens (2022), la responsabilidad general vale .19 con una variabilidad entre estudios de .15, y la contextualizada .25 con variabilidad cero; la estabilidad emocional pasa de .09 a .23, la extraversión de .10 a .21, la amabilidad de .10 a .19 y la apertura de .05 a .12.</p>
+<p>Danner y Lechner (2024) lo probaron con el instrumento que respondiste en clase: compararon el BFI-2 estándar con una versión laboral (BISS) en 290 trabajadores alemanes. La varianza explicada subió en todos los criterios laborales: satisfacción laboral de 30% a 41% (de 32% a 51% usando facetas), conducta cívica de 16% a 36%, compromiso ocupacional de 20% a 35%, riesgo de burnout de 39% a 45%. En el único criterio no laboral, la salud general, ganó la versión estándar (35% contra 24%). La lección tiene dos partes: el marco de referencia mejora la predicción cuando coincide con el criterio, y la empeora cuando no. Dos mecanismos lo explican: las "disposiciones condicionales" (la persona que es ordenada en el trabajo y caótica en casa no está mintiendo en ninguno de los dos cuestionarios) y la reducción de la ambigüedad del ítem (Wright &amp; Mischel, 1987). Las cautelas: autoinforme, muestra pequeña, y posible bidireccionalidad (los resultados laborales moldean cómo uno se ve "en el trabajo").</p>
+<p><strong>En la práctica.</strong> Si vas a comprar o usar un inventario de personalidad para un propósito laboral, pide la versión contextualizada o, si no existe, fija el marco en las instrucciones ("responde pensando en cómo eres en el trabajo"). Es la mejora de validez más barata que existe. No resuelve el faking (sección 3) ni reemplaza el análisis del puesto (apunte 17).</p>
+<h3>2. Estados de personalidad y trabajo remoto</h3>
+<p>El apunte 16 presentó la idea de Fleeson: la misma persona varía entre momentos tanto como la gente varía entre sí; entre el 49% y el 78% de la variación en conducta relevante a un rasgo es intra-persona (Fleeson &amp; Gallagher, 2009). Collis, Woods, Wu y Alesayi (2026) revisaron 33 estudios de muestreo de experiencias en trabajadores para saber qué mueve esos estados en el trabajo. El estado de responsabilidad sube con la urgencia, la dificultad de la tarea, las situaciones de "deber" y estar físicamente en la oficina, y predice el desempeño de tarea de ese momento; el estado de neuroticismo sube con la presión de tiempo y el conflicto interpersonal y baja con intervenciones de atención plena; el estado de extraversión sube con clientes amables. Y actuar fuera de carácter (un introvertido comportándose como extravertido) da vitalidad a corto plazo y agota después.</p>
+<p>El hallazgo con más consecuencias para el diseño del trabajo es el del lugar: con muestreo de experiencias, las personas muestran estados de responsabilidad significativamente más altos en la oficina que en casa (Matz &amp; Harari, 2021, en Collis et al., 2026). En el lenguaje del apunte 17, la casa quita claves de deber y de consistencia: la situación se debilita. Y cuando la situación se debilita, las disposiciones pesan más. Esa es la hipótesis central de Dural y Kudret (2024) para el trabajo remoto, y lo que sugiere la evidencia disponible, que es incipiente: entre más de 1.700 teletrabajadores encuestados, la responsabilidad y la apertura se asocian a mayor productividad en casa y la extraversión a menor preferencia por teletrabajar (Gavoille &amp; Hazans, 2025); en 106 empleados alemanes, la responsabilidad correlaciona .20 con la productividad en teletrabajo y −.21 con el "cyberslacking", pero la interacción entre proporción de teletrabajo y responsabilidad no fue significativa (Heyen &amp; Spoden, 2025). Durante la pandemia, la responsabilidad predijo mejor el desempeño, con más tensión e insatisfacción (Venkatesh et al., 2021, en Dural &amp; Kudret, 2024).</p>
+<p><strong>En la práctica.</strong> Diseñar trabajo remoto es decidir qué claves se quitan y cuáles se reponen. Reuniones breves diarias, metas visibles, trazabilidad de entregas y rutinas ("las tareas individuales para los días en casa") son facilitadores y liberadores en el lenguaje de Tett. Confiar en que "los responsables rendirán igual en casa" es apostar a la disposición cuando se puede diseñar la situación. En Chile el teletrabajo sigue siendo minoritario (cerca del 7% de los trabajadores en 2023 según la ENCLA [dato por verificar]), pero concentrado en los puestos profesionales a los que ustedes van a postular.</p>
+<h3>3. Inteligencia artificial y faking</h3>
+<p>El apunte 19 mostró que los postulantes inflan sus respuestas (d ≈ .45 en responsabilidad y estabilidad emocional), que cerca del 30% lo hace de forma apreciable, y que las "escalas de mentira" no detectan nada. Desde 2023 hay un ingrediente nuevo: el candidato puede pedirle a un modelo de lenguaje que responda el test por él. Phillips y Robie (2024) lo pusieron a prueba. Le dieron a cuatro modelos de acceso gratuito (ChatGPT-3.5, Jasper, Google Bard y ChatGPT-4, en junio de 2023) la descripción de un puesto de ventas y dos medidas Big Five basadas en adjetivos: una Likert (20 adjetivos por rasgo) y una de elección forzada (40 pares de adjetivos igualados en deseabilidad, el formato que mejor resiste el faking humano). Compararon los puntajes con los de 869 estudiantes de cuatro universidades que habían respondido "como si postularan" al mismo puesto.</p>
+<table><tr><th>Modelo (junio 2023)</th><th>Extraversión, Likert</th><th>Responsabilidad, Likert</th><th>Extraversión, elección forzada</th><th>Responsabilidad, elección forzada</th></tr><tr><td>ChatGPT-4</td><td>d = 1.95 (percentil 99)</td><td>1.73 (100)</td><td>1.30 (85)</td><td>1.95 (98)</td></tr><tr><td>ChatGPT-3.5</td><td>.79 (76)</td><td>.65 (70)</td><td>−.62 (33)</td><td>−.01 (45)</td></tr><tr><td>Google Bard</td><td>−.53 (33)</td><td>.45 (66)</td><td>−.14 (51)</td><td>.48 (65)</td></tr><tr><td>Jasper</td><td>.15 (54)</td><td>−.06 (44)</td><td>−.62 (33)</td><td>−.01 (45)</td></tr></table>
+<p>Diferencias estandarizadas y percentiles respecto de 869 estudiantes instruidos a responder como postulantes. Elaborado a partir de Phillips y Robie (2024).</p>
+<p>Tres lecturas. ChatGPT-4 quedó sobre el percentil 99 en el formato Likert y sobre el 85 en el de elección forzada: el formato que frena a los humanos (y a los tres modelos más débiles) no frenó al mejor modelo. Todos los modelos fingieron peor la responsabilidad que la extraversión, porque el estereotipo del vendedor es extravertido y los modelos reproducen estereotipos. Y las cautelas son las de un estudio pionero: versiones gratuitas de 2023 (los modelos cambian cada pocos meses), una sola sesión por modelo, estudiantes con instrucción de fingir y no postulantes reales, y ninguna prueba de si un evaluador puede detectar la respuesta de IA. La dirección del hallazgo es lo robusto; el percentil exacto no.</p>
+<p><strong>En la práctica.</strong> Un cuestionario de personalidad respondido sin supervisión ya no mide lo que medía. Las respuestas no son escalas de mentira ni prohibiciones, sino diseño: nunca decidir solo con el cuestionario; combinar con muestras de trabajo, entrevista estructurada y referencias, que la IA no puede responder por el candidato; usar normas de postulantes; y asumir que la asistencia existe. La política de IA del curso (uso no autorizado en evaluaciones) responde a la misma lógica: la respuesta asistida destruye la validez de lo que se quería medir.</p>
+<h3>4. Perfiles y tipos: la versión estadística tampoco ayuda</h3>
+<p>El apunte 16 explicó por qué los sistemas de tipos (16, 9, 4) fallan: las distribuciones son continuas y unimodales, y dicotomizar pierde información. Una objeción razonable es que los tipos comerciales fallan porque están mal construidos, y que un método estadístico serio (el análisis de perfiles latentes, que busca subgrupos de personas con configuraciones parecidas de rasgos) podría encontrar "tipos" reales que predigan mejor que los rasgos por separado, por ejemplo, porque la combinación de alta extraversión con baja amabilidad importe más que cada rasgo solo.</p>
+<p>Moon et al. (2026) lo probaron con 4.103 empleados de una gran empresa estadounidense, en un estudio de validación concurrente con medidas de personalidad, desempeño evaluado, proactividad, orientación al aprendizaje y creatividad. Encontraron cuatro perfiles con cierto parecido a los descritos en otras muestras. Pero cuando preguntaron si los perfiles predicen el desempeño más allá de los cinco rasgos continuos, el incremento fue de 0.2% de varianza (no significativo) para los perfiles como categorías y 0.3% como probabilidades continuas; para proactividad, orientación al aprendizaje y creatividad, 0.1% o menos. Su conclusión: los perfiles "pueden tener un valor limitado en términos de validez de criterio". Los rasgos continuos ya contienen la información; agruparlos en cajas no agrega nada, por sofisticado que sea el método.</p>
+<p><strong>En la práctica.</strong> Cuando una consultora ofrezca "perfiles" o "arquetipos" de personalidad, aunque vengan con análisis de conglomerados y gráficos de radar, la pregunta es la misma del apunte 19: ¿qué predice, sobre qué muestra, y qué agrega sobre los rasgos? La evidencia disponible dice que nada. Los perfiles pueden servir para comunicar un resultado; no para decidir.</p>
+<h3>5. Validez y equidad: el dilema en cifras</h3>
+<p>El apunte 20 explicó que la tabla de validez de los métodos de selección fue corregida en 2022 y que el test de inteligencia bajó de .51 a .31. Berry, Lievens, Zhang y Sackett (2024) sacaron la consecuencia práctica. Rehicieron la "matriz metaanalítica" que se usa para diseñar baterías de selección (las correlaciones entre seis predictores y de cada uno con el desempeño) con las cifras revisadas, y preguntaron cuánto vale incluir el test de inteligencia cuando se mira a la vez la validez y la equidad entre grupos. La equidad se mide con el ratio de impacto adverso: la tasa de selección del grupo minoritario dividida por la del mayoritario (en Estados Unidos, la "regla de los cuatro quintos" exige al menos .80).</p>
+<table><tr><th>Batería de seis predictores</th><th>Validez (R)</th><th>Ratio de impacto adverso</th></tr><tr><td>Máxima validez (incluye test de inteligencia con peso .20)</td><td>.61</td><td>.42</td></tr><tr><td>Sin test de inteligencia</td><td>.56</td><td>.67</td></tr><tr><td>Con equidad de al menos .80</td><td>.48</td><td>.80</td></tr><tr><td>Matriz antigua (1998-2011), sin test de inteligencia</td><td>.46</td><td>.78</td></tr></table>
+<p>Elaborado a partir de Berry et al. (2024), Tablas 4 y 5.</p>
+<p>Con la matriz antigua, quitar el test de inteligencia parecía costar mucho (de .59 a .46 en baterías de tres predictores); con la nueva, la validez es .48 con o sin él. La razón es doble: el test de inteligencia tiene la mayor diferencia de promedio entre grupos de todos los predictores (d = .79) y ya no la mayor validez (la entrevista estructurada vale .42); y el impacto adverso de cualquier método sigue a su carga cognitiva (las diferencias entre grupos de los predictores alternativos correlacionan .89 con su correlación con la inteligencia). En el análisis de pesos relativos, la entrevista estructurada aporta el 35% de la validez explicada; los datos biográficos y la integridad, 20% cada uno; la inteligencia, 16%. Los autores concluyen que los "métodos alternativos" deberían ser el punto de partida y el test de inteligencia, una opción para circunstancias específicas. Con dos excepciones que ellos mismos declaran: cuando la batería es solo de "productos de estante" (inteligencia, responsabilidad, integridad), quitar la inteligencia sí cuesta (de .45 a .32); y para predecir el aprendizaje en entrenamiento, donde la inteligencia sigue siendo probablemente el mejor predictor.</p>
+<p><strong>En la práctica.</strong> Toda decisión de selección es una decisión sobre este dilema, se tome o no conscientemente. A cualquier test se le piden sus diferencias entre grupos, no solo su validez; y una batería se diseña mirando las dos cifras. El paralelo chileno es la admisión universitaria: las pruebas PAES son predictores válidos con brechas por dependencia escolar, y el debate sobre ranking de notas y cupos de equidad es, en estos términos, un debate sobre cuánto peso dar a un predictor válido con alto impacto adverso frente a otros con menos diferencia entre grupos.</p>
+<h2>D. Para profundizar</h2>
+<p>Collis et al. (2026): la revisión de estados de personalidad en el trabajo; útil si te interesa el trabajo remoto o el diseño de puestos.</p>
+<p>Berry et al. (2024): el análisis completo del dilema validez-diversidad, con las curvas de Pareto; lectura obligada para quien vaya a diseñar selección.</p>
+<p>Phillips y Robie (2024): seis páginas; el punto de partida de una literatura que va a crecer rápido.</p>
+<h2>E. Referencias</h2>
+<div class="referencias">
+<p>Berry, C. M., Lievens, F., Zhang, C., &amp; Sackett, P. R. (2024). Insights from an updated personnel selection meta-analytic matrix: Revisiting general mental ability tests' role in the validity–diversity trade-off. <em>Journal of Applied Psychology, 109</em>(10), 1611–1634. <a href="https://doi.org/10.1037/apl0001203">https://doi.org/10.1037/apl0001203</a></p>
+<p>Collis, H., Woods, S. A., Wu, C.-H., &amp; Alesayi, S. (2026). Personality states at work: A narrative review of emergent research and an agenda for future development of the field. <em>Applied Psychology, 75</em>(3), e70093. <a href="https://doi.org/10.1111/apps.70093">https://doi.org/10.1111/apps.70093</a></p>
+<p>Danner, D., &amp; Lechner, C. M. (2024). Big Five domains and facets contextualized to the work domain outperform noncontextualized ones. <em>Journal of Individual Differences, 45</em>(3), 167–175. <a href="https://doi.org/10.1027/1614-0001/a000421">https://doi.org/10.1027/1614-0001/a000421</a></p>
+<p>Dural, U., &amp; Kudret, S. (2024). Self-monitoring personality trait in organizations: A research agenda for self-monitoring effects in remote work, leadership diversity, and beyond. En A. Tuncdogan, O. A. Acar, H. W. Volberda, &amp; K. de Ruyter (Eds.), <em>The Oxford handbook of individual differences in organizational contexts</em> (cap. 23). Oxford University Press.</p>
+<p>Fleeson, W., &amp; Gallagher, P. (2009). The implications of Big Five standing for the distribution of trait manifestation in behavior: Fifteen experience-sampling studies and a meta-analysis. <em>Journal of Personality and Social Psychology, 97</em>(6), 1097–1114. <a href="https://doi.org/10.1037/a0016786">https://doi.org/10.1037/a0016786</a></p>
+<p>Gavoille, N., &amp; Hazans, M. (2025). Personality traits, remote work and productivity. <em>International Labour Review, 164</em>(3). <a href="https://doi.org/10.16995/ilr.18853">https://doi.org/10.16995/ilr.18853</a></p>
+<p>Heyen, S., &amp; Spoden, C. (2025). Working from home: Increased productivity or a gateway to counterproductivity? The role of personality traits. <em>Journal of Work and Organizational Psychology, 41</em>(3), 119–128. <a href="https://doi.org/10.5093/jwop2026a14">https://doi.org/10.5093/jwop2026a14</a></p>
+<p>Moon, N. A., Converse, P. D., al-Qallawi, S., Ponce, L. P., Fedele, D. J., Caylor, J. R., &amp; Bush, J. (2026). Personality profiles at work: Nature and implications for performance. <em>Human Performance, 39</em>(3), 145–170. <a href="https://doi.org/10.1080/08959285.2026.2648829">https://doi.org/10.1080/08959285.2026.2648829</a></p>
+<p>Phillips, J., &amp; Robie, C. (2024). Can a computer outfake a human? <em>Personality and Individual Differences, 217</em>, 112434. <a href="https://doi.org/10.1016/j.paid.2023.112434">https://doi.org/10.1016/j.paid.2023.112434</a></p>
+<p>Sackett, P. R., Zhang, C., Berry, C. M., &amp; Lievens, F. (2022). Revisiting meta-analytic estimates of validity in personnel selection: Addressing systematic overcorrection for restriction of range. <em>Journal of Applied Psychology, 107</em>(11), 2040–2068. <a href="https://doi.org/10.1037/apl0000994">https://doi.org/10.1037/apl0000994</a></p>
+<p>Shaffer, J. A., &amp; Postlethwaite, B. E. (2012). A matter of context: A meta-analytic investigation of the relative validity of contextualized and noncontextualized personality measures. <em>Personnel Psychology, 65</em>(3), 445–494. <a href="https://doi.org/10.1111/j.1744-6570.2012.01250.x">https://doi.org/10.1111/j.1744-6570.2012.01250.x</a></p>
+<p>Wright, J. C., &amp; Mischel, W. (1987). A conditional approach to dispositional constructs: The local predictability of social behavior. <em>Journal of Personality and Social Psychology, 53</em>(6), 1159–1177. <a href="https://doi.org/10.1037/0022-3514.53.6.1159">https://doi.org/10.1037/0022-3514.53.6.1159</a></p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

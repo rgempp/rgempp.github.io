@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Habilidades cognitivas y la tabla de validez: qué predice mejor el desempeño · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 20</p>
+  <h1>Habilidades cognitivas y la tabla de validez: qué predice mejor el desempeño</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 20 · Lectura individual del Tema 5 (no se expone en clase; entra en la Prueba 2)<br>
+    Complementa y actualiza R&amp;J cap. 2 (sección "Aptitud") y cap. 5<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>El Tema 5 del curso se llama "personalidad y diferencias individuales", y en clase dedicamos casi todo el tiempo a la personalidad. Pero la diferencia individual que más consistentemente predice el desempeño en el trabajo no es un rasgo de personalidad: es la habilidad cognitiva general. Robbins y Judge la tratan en el capítulo 2, bajo el nombre de "aptitud intelectual", con una tabla de siete dimensiones y la afirmación de que "los puestos difieren en las exigencias que imponen". Es correcto, pero insuficiente para dos cosas que un administrador necesita: saber cuánto predice la inteligencia comparada con los otros métodos de selección, y saber que la tabla que durante veinticinco años resumió esa comparación fue corregida en 2022.</p>
+<p>Este apunte es de lectura individual y entra en la prueba. Explica qué es la habilidad cognitiva general y cómo se mide; presenta la tabla de validez de los métodos de selección en sus dos versiones (la clásica de 1998 y la revisada de 2022) y explica por qué cambió; muestra que las habilidades específicas aportan sobre la general; resume la relación entre inteligencia y personalidad (casi nula) y la comparación entre ambas como predictores (la inteligencia gana en lo académico); y cierra con lo que creen sobre todo esto el público y los profesionales de recursos humanos, que es, en buena parte, lo contrario de lo que dice la evidencia.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>La habilidad cognitiva general (g) es la capacidad de razonar, aprender y resolver problemas nuevos, y es el factor común a todas las tareas intelectuales: quien rinde bien en una tiende a rendir bien en las otras. Se mide con tests de razonamiento y es, con la entrevista estructurada, el predictor individual más sólido del desempeño laboral, y el más sólido del aprendizaje en entrenamiento.</p>
+<p>Su validez, sin embargo, es menor de lo que se enseñó durante décadas. La tabla clásica de Schmidt y Hunter (1998) le asignaba .51; Sackett, Zhang, Berry y Lievens (2022) mostraron que esa cifra, y casi todas las de la tabla, estaban infladas por correcciones estadísticas basadas en supuestos sin base empírica, y la rebajaron a .31. En la tabla revisada el predictor más válido pasa a ser la entrevista estructurada (.42), seguida de los tests de conocimiento del puesto (.40) y los datos biográficos (.38). La conciencia medida en general baja de .31 a .19; la contextualizada al trabajo conserva cerca de .25.</p>
+<p>Tres consecuencias. Primera, ya no es cierto que "con un test de inteligencia basta": una batería sin test de inteligencia pierde poco en validez (de .61 a .56) y gana mucho en equidad entre grupos (Berry, Lievens, Zhang &amp; Sackett, 2024). Segunda, las habilidades específicas (velocidad de procesamiento, conocimiento general, procesamiento visual) agregan validez sobre g (Nye, Ma &amp; Wee, 2022). Tercera, inteligencia y personalidad son casi independientes (solo la apertura correlaciona .16 con g), así que miden cosas distintas y conviene medir ambas; pero cuando se comparan cabeza a cabeza en lo académico, la inteligencia explica entre cuatro y diez veces más varianza que los cinco rasgos juntos (Zisman &amp; Ganzach, 2022). La mayoría de los profesionales de recursos humanos cree lo contrario.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Qué es la habilidad cognitiva general</h3>
+<p>A principios del siglo XX, Spearman observó que los puntajes en tareas intelectuales muy distintas (vocabulario, aritmética, series de figuras, memoria) correlacionan positivamente entre sí: quien es bueno en una tiende a ser bueno en las demás. A ese factor común lo llamó g (de "general"). Un siglo de investigación ha confirmado la observación en todas las poblaciones y baterías estudiadas: la "variedad positiva" (positive manifold) es uno de los hallazgos más replicados de la psicología. g no es "la suma de las habilidades" sino lo que tienen en común; y por encima de g, el modelo más aceptado hoy (Cattell-Horn-Carroll) distingue habilidades amplias, como el razonamiento fluido (resolver problemas nuevos), el conocimiento cristalizado (vocabulario, información general), el procesamiento visual, la velocidad de procesamiento, la memoria de trabajo y el conocimiento cuantitativo y verbal.</p>
+<p>Robbins y Judge presentan siete "dimensiones de la aptitud intelectual" (aptitud numérica, comprensión verbal, velocidad perceptual, razonamiento inductivo, razonamiento deductivo, visualización espacial y memoria). Es una lista razonable, pero el manual no dice lo más importante: esas siete dimensiones correlacionan entre sí, y buena parte de lo que predicen lo predicen a través de g. Por eso un test breve de razonamiento (el Wonderlic de 12 minutos, el Dominó, las matrices de Raven) predice el desempeño en casi cualquier trabajo: no porque el trabajo exija completar series de dominós, sino porque la capacidad de aprender rápido y de resolver lo imprevisto es útil en casi todo.</p>
+<p>Dos distinciones de uso corriente que conviene aclarar. La "inteligencia emocional" (IE) tiene dos versiones: la de habilidad (percibir, entender y manejar emociones, medida con tareas de respuesta correcta) y la "mixta" o de rasgo (autoinforme de competencias socioemocionales, que se solapa mucho con los Big Five). En la tabla revisada de Sackett et al. (2022), la IE de base de personalidad tiene validez .30 y la de habilidad .22; el debate sobre si agrega algo sobre inteligencia y personalidad sigue abierto (Tuncdogan, Acar, Volberda &amp; de Ruyter, 2024). Y las "inteligencias múltiples" de Gardner (musical, corporal, interpersonal, etc.) son una propuesta pedagógica popular con muy poca evidencia empírica de que sean independientes entre sí; en los datos, también correlacionan.</p>
+<h3>Cómo se mide y cómo se interpreta</h3>
+<p>Los tests de habilidad cognitiva son tareas con respuesta correcta, tiempo limitado y dificultad creciente. Los puntajes se expresan en una escala normativa, por comparación con un grupo de referencia (el CI clásico tiene media 100 y desviación estándar 15). Tres propiedades importan para usarlos bien. Primera, son muy confiables: las correlaciones test-retest de los buenos tests superan .90. Segunda, son relativamente estables: la posición relativa de una persona se mantiene bastante de la adolescencia a la adultez. Tercera, y es el punto delicado, producen diferencias de promedio entre grupos (por nivel socioeconómico de origen, por etnia en Estados Unidos, por calidad de la escolaridad) mayores que cualquier otro predictor de selección. Eso no los hace sesgados en el sentido técnico (predicen igual de bien para distintos grupos), pero sí hace que usarlos como único filtro excluya desproporcionadamente a los grupos con menor promedio. Ese es el "dilema validez-diversidad" que trata la sección D.</p>
+<h3>La tabla que todos citaban</h3>
+<p>En 1998, Schmidt y Hunter publicaron un resumen de 85 años de investigación sobre la validez de los métodos de selección de personal. Su tabla fue, hasta 2022, la más citada de la psicología del trabajo. Decía que los tests de habilidad cognitiva general predicen el desempeño con .51, las muestras de trabajo con .54, la entrevista estructurada con .51, los tests de integridad con .41, la conciencia con .31, la entrevista no estructurada con .38, los años de experiencia con .18, los intereses con .10 y la grafología con .02. Con esas cifras, la recomendación era clara: medir inteligencia siempre, y sumarle una muestra de trabajo o un test de integridad.</p>
+<p>Esas cifras no son correlaciones observadas. Son correlaciones <strong>corregidas</strong> por dos cosas: la falta de confiabilidad del criterio (las evaluaciones de desempeño del jefe son imprecisas, y eso atenúa cualquier correlación) y la <strong>restricción de rango</strong> (si solo se estudia a los contratados, que ya pasaron el filtro, la variabilidad del predictor es menor que en los postulantes, y eso también atenúa la correlación). Las dos correcciones son legítimas en principio. El problema es cómo se aplicaron.</p>
+<h3>Por qué cambió: Sackett y colegas (2022)</h3>
+<p>Sackett, Zhang, Berry y Lievens (2022) revisaron los metaanálisis en que se basaba la tabla y encontraron un error sistemático. La corrección por restricción de rango supone que el predictor se usó para seleccionar a las personas estudiadas; pero la gran mayoría de los estudios de validez son <strong>concurrentes</strong>: se mide el predictor a empleados ya contratados, que fueron seleccionados por otros medios, de modo que la restricción sobre ese predictor es mínima. Los metaanálisis clásicos corregían todos los estudios "como si fueran predictivos", a menudo con distribuciones de restricción supuestas, sin base empírica. En palabras de los autores, "no debería ponerse confianza alguna en correcciones basadas en distribuciones supuestas (inventadas)" (p. 6 del preprint). Al rehacer las estimaciones con correcciones justificadas, casi todas las cifras bajaron, en promedio entre .10 y .20 puntos.</p>
+<table><tr><th>Predictor</th><th>Schmidt y Hunter (1998)</th><th>Sackett et al. (2022)</th><th>Diferencia de promedio entre grupos (d)</th></tr><tr><td>Entrevista estructurada</td><td>.51</td><td>.42</td><td>.23</td></tr><tr><td>Tests de conocimiento del puesto</td><td>.48</td><td>.40</td><td>.54</td></tr><tr><td>Datos biográficos (clave empírica)</td><td>.35</td><td>.38</td><td>.33</td></tr><tr><td>Muestras de trabajo</td><td>.54</td><td>.33</td><td>.67</td></tr><tr><td>Habilidad cognitiva general</td><td>.51</td><td>.31</td><td>.79</td></tr><tr><td>Tests de integridad</td><td>.41</td><td>.31</td><td>.10</td></tr><tr><td>Assessment centers</td><td>.37</td><td>.29</td><td>.52</td></tr><tr><td>Intereses (ajuste persona-puesto)</td><td>.10</td><td>.24</td><td>.33</td></tr><tr><td>Conciencia (medida general)</td><td>.31</td><td>.19</td><td>−.07</td></tr><tr><td>Entrevista no estructurada</td><td>.38</td><td>.19</td><td>.32</td></tr><tr><td>Años de experiencia</td><td>.18</td><td>.07</td><td>.49</td></tr></table>
+<p>Elaborado a partir de Sackett et al. (2022), Tabla 3. Validez operativa con el desempeño laboral global; d es la diferencia estandarizada entre grupos étnicos mayoritario y minoritario en Estados Unidos (positiva = el grupo mayoritario puntúa más alto). Sackett et al. (2022) agregan predictores que no estaban en 1998: inteligencia emocional de base de personalidad .30 y de habilidad .22, tests de juicio situacional .26, y personalidad contextualizada al trabajo (la conciencia "en el trabajo" conserva cerca de .25, con variabilidad casi nula entre estudios) [cifras de las filas nuevas por cotejar con el PDF de la revista].</p>
+<p>Lo que sube es lo que mide conocimiento y conducta directamente ligados al puesto (entrevista estructurada, conocimiento del puesto, datos biográficos, intereses cuando se definen como ajuste). Lo que baja es lo que se corregía con supuestos sin base (habilidad cognitiva, muestras de trabajo, entrevista no estructurada). Y la conciencia "a secas" pierde casi la mitad de su validez, mientras que la contextualizada la conserva: es la lección del apunte 17 aplicada a la medición.</p>
+<p>Un matiz que los propios autores exigen. El .31 de la habilidad cognitiva es un promedio con intervalo de credibilidad de .13 a .49, y el .42 de la entrevista estructurada va de .18 a .66. En contextos específicos la inteligencia puede superar a la entrevista, y para el rendimiento en <strong>entrenamiento</strong> (aprender el trabajo, no hacerlo) la habilidad cognitiva "sigue siendo un predictor importante, quizás el más importante" (Berry et al., 2024, p. 35). Tampoco se trata de que la inteligencia "ya no predice": .31 sigue siendo una correlación grande en la escala de las diferencias individuales.</p>
+<h3>Con o sin test de inteligencia: el dilema validez-diversidad</h3>
+<p>Berry, Lievens, Zhang y Sackett (2024) rehicieron, con las cifras revisadas, la pregunta práctica: ¿cuánto gana una batería de selección por incluir un test de habilidad cognitiva, y cuánto cuesta en equidad? Con la matriz antigua, quitar la habilidad cognitiva de una batería de tres predictores bajaba la validez conjunta de .59 a .46. Con la matriz nueva, la validez es .48 con o sin ella. En la batería completa de seis predictores (entrevista estructurada, integridad, biodata, habilidad cognitiva, conciencia, juicio situacional), la validez máxima es .61 con un ratio de impacto adverso de .42 (es decir, el grupo minoritario es seleccionado a menos de la mitad de la tasa del mayoritario); con peso cero en habilidad cognitiva, la validez baja a .56 y el ratio sube a .67. La razón es que, de los seis, la habilidad cognitiva tiene la mayor diferencia entre grupos (d = .79) y ya no la mayor validez. En el análisis de pesos relativos, la entrevista estructurada aporta el 35% de la validez explicada, los datos biográficos el 20%, la integridad el 20% y la habilidad cognitiva el 16%.</p>
+<p>La conclusión de los autores invierte la recomendación de 1998: los "métodos alternativos" deberían ser el punto de partida, y el test de inteligencia, "un método alternativo que solo debería considerarse en circunstancias muy específicas" (p. 29). Con dos excepciones que ellos mismos señalan: cuando la batería está hecha solo de "productos de estante" (test de inteligencia, conciencia, integridad), quitar la inteligencia sí cuesta (de .45 a .32); y para predecir aprendizaje en entrenamiento.</p>
+<h3>Habilidades específicas: más que g</h3>
+<p>Durante décadas, la doctrina fue "no mucho más que g" (Ree, Earles &amp; Teachout, 1994): una vez medida la habilidad general, las específicas agregan poco. Nye, Ma y Wee (2022) lo pusieron a prueba con 201 muestras y correcciones más conservadoras que las clásicas. La habilidad general correlaciona .23 con el desempeño de tarea evaluado por el jefe y .37 con criterios objetivos; con el rendimiento en entrenamiento, .35 y .49. Pero varias habilidades específicas predicen tanto o más: el conocimiento general (.33 y .37), la velocidad de procesamiento (.31 y .45), el conocimiento cuantitativo (.33 y .47). Y agregan: sobre la habilidad general, las específicas suman .16 de varianza explicada en tarea y .33 en entrenamiento. En el análisis de pesos relativos, g explica cerca del 10% de la varianza explicada, y el conocimiento general y la velocidad de procesamiento cerca de un cuarto cada una.</p>
+<p>Lo que los autores no dicen es que g sea irrelevante; dicen que las baterías "eficientes" que solo miden razonamiento verbal y numérico (muy saturadas de g) desaprovechan validez. Dos detalles más: el ajuste entre la habilidad medida y las exigencias del puesto no moderó la validez (medir la habilidad "correcta" para el puesto no mejoró la predicción), y los diseños longitudinales dieron correlaciones algo menores que los concurrentes.</p>
+<h3>Inteligencia y personalidad: casi independientes</h3>
+<p>¿Son las personas inteligentes más abiertas, más responsables, menos neuróticas? Casi no. Anglim (2026) sintetiza los metaanálisis: la correlación de g con neuroticismo es −.08, con extraversión −.01, con amabilidad .00, con conciencia −.01, y con apertura .16 (.24 con la inteligencia cristalizada). A nivel de facetas aparece algo más: la faceta de "ideas" o "intelecto" de la apertura correlaciona .25, la necesidad de cognición .24 y la ansiedad ante los tests −.20. Con los cinco dominios juntos se predice g con R = .23; con facetas, .40.</p>
+<p>Hay una lección metodológica escondida aquí. Un metaanálisis anterior (Stanek &amp; Ones, 2023) reportaba correlaciones mayores (por ejemplo, .27 entre laboriosidad y g); Anglim muestra que esas cifras estaban infladas por tres muestras gigantes que concentraban casi la mitad del total de personas, y que al ponderar de forma apropiada la correlación baja a .06. Más datos no siempre significa mejor conclusión.</p>
+<p>Lo importante para el administrador: medir inteligencia y medir personalidad es medir cosas distintas, y por eso la conciencia tiene validez incremental sobre la inteligencia (y viceversa). La corrección de Berry et al. (2024) sobre su correlación es .03.</p>
+<h3>¿Cuál importa más?</h3>
+<p>En el apunte 16 se mencionó la afirmación, popular en capacitación de "habilidades blandas", de que la personalidad importa más que la inteligencia. Zisman y Ganzach (2022) la pusieron a prueba en seis bases de datos longitudinales de Estados Unidos (más de 25.000 personas en total). Sin controles, la inteligencia explica en promedio el 23% de la varianza del logro educativo y los cinco rasgos el 5%; del promedio de notas en secundaria, 23% contra 2%; del logaritmo del salario, 8% contra 4%. Con controles por sexo, edad y origen socioeconómico la ventaja de la inteligencia aumenta. Los autores matizan: no es que la personalidad "no importe", sino que las medidas de rasgos por autoinforme pueden subestimarla; las evaluaciones por otros y la personalidad contextualizada al trabajo predicen mejor. Y todo es correlacional: nada de esto autoriza decir que la inteligencia "causa" el salario.</p>
+<p>La respuesta sensata es la del apunte 16: depende del resultado. Para aprender y rendir en lo académico, la inteligencia; para morir, divorciarse y comportarse en el trabajo de forma cívica o contraproducente, la personalidad pesa tanto o más.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>Lo que cree la gente</h3>
+<p>Furnham y Horne (2021) preguntaron a 275 adultos británicos por 35 afirmaciones sobre la inteligencia que la literatura considera mitos. En promedio, los participantes rechazaron 12 de las 35. El 90% aceptó que "hay inteligencias múltiples en la mente humana", el 85% que "la inteligencia emocional es una habilidad real útil en la vida", el 90% que "la inteligencia es demasiado compleja para resumirla en un número", el 77% que "los tests de inteligencia están sesgados contra las minorías", el 73% que "los puntajes de CI solo miden qué tan bueno es uno rindiendo tests", y el 77% que "los programas de entrenamiento cerebral pueden elevar el CI". Casi todos (71%) rechazaron, en cambio, que "la inteligencia no es importante en el lugar de trabajo". El patrón general es la adhesión a una visión "plástica" y "múltiple" de la inteligencia. Los propios autores advierten que varios de los 35 enunciados admiten matices y no son falsedades incontrovertibles; los más claros son los de medición (la inteligencia se mide bien y en un número) y los de utilidad laboral.</p>
+<h3>Lo que creen los profesionales de recursos humanos</h3>
+<p>Rynes, Colbert y Brown (2002) encuestaron a 959 profesionales de recursos humanos de Estados Unidos con 35 afirmaciones sobre prácticas, pidiéndoles decir si eran verdaderas o falsas según la investigación. La mayor brecha entre investigación y creencias apareció en selección. Solo el 18% identificó como falsa la afirmación "la conciencia predice mejor el desempeño que la inteligencia"; solo el 16% la de "seleccionar por valores es más eficaz que seleccionar por inteligencia"; el 42% la de "ser muy inteligente es una desventaja en empleos poco calificados"; el 32% la de "los tests de integridad no sirven porque la gente miente"; y el 49% la de "hay cuatro dimensiones básicas de personalidad, las del MBTI". Fisher et al. (2021) repitieron el estudio con 453 profesionales de Estados Unidos y Canadá: los porcentajes fueron 19.6%, 17.9%, 48.7%, 23.0% y 20.1%. Es decir, veinte años después, la brecha persiste, y en varios ítems empeoró. El 47% rechazó que "un grafólogo hábil puede predecir el desempeño"; el 53% restante no lo rechazó.</p>
+<p>Nota: Rynes et al. formularon esos ítems con la tabla de 1998. Con la de 2022 la inteligencia (.31) sigue superando a la conciencia general (.19), pero la distancia es menor y la conciencia contextualizada (cerca de .25) se acerca. El mito sigue siendo mito, con menos margen.</p>
+<h3>Chile</h3>
+<p>Didier Pino (2014) revisó 4.612 avisos de empleo para psicólogos de selección publicados entre 2008 y 2013 en las cinco principales bolsas de trabajo chilenas, de los cuales 4.329 especificaban tests. El 100% exigía manejar el test de Lüscher y el de Zulliger (pruebas proyectivas sin estudios de validez predictiva publicados para selección); el 68% pedía tests "escritos o psicométricos", y dentro de ellos, el Dominó (un test de razonamiento no verbal) aparecía en el 23.2% de los avisos y el Wonderlic (razonamiento general, 12 minutos) en el 17.6%. Es decir, en Chile se usa habilidad cognitiva en selección, pero menos que las pruebas proyectivas, y a menudo con tests antiguos y sin normas locales actualizadas. La clase 19 y el apunte 19 dedican la sesión a esto: qué exigirle a un test antes de usarlo para decidir sobre personas. Lo que este apunte aporta a esa discusión es el estándar de comparación: cualquier instrumento que se proponga para seleccionar compite contra una entrevista estructurada (.42), un test de conocimiento del puesto (.40) o un test de razonamiento (.31), y debería mostrar que predice algo que esos no predicen.</p>
+<p>Sobre la relación entre el dilema validez-diversidad y Chile, el paralelo natural son las pruebas de admisión universitaria (PSU, PAES), que son tests de habilidad y conocimiento con diferencias de promedio por dependencia escolar y nivel socioeconómico; el debate chileno sobre ranking de notas y cupos de equidad es, en términos de este apunte, un debate sobre cuánto peso dar a un predictor válido con alto impacto adverso frente a otros predictores con menos diferencia entre grupos. [Cifras de brechas PAES por dependencia: consultar el informe anual del DEMRE antes de citar.]</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> la inteligencia es demasiado compleja para resumirla en un número.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las tareas intelectuales correlacionan positivamente entre sí en todas las poblaciones estudiadas, y el factor común (g) se mide con confiabilidad sobre .90 y predice desempeño y aprendizaje con validez .31 y mayor (Sackett et al., 2022; Nye et al., 2022). Que un número no lo diga todo (las habilidades específicas agregan) no significa que no diga nada.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> el 90% de la gente lo cree (Furnham &amp; Horne, 2021); suena humilde y es cómodo.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> un buen test de inteligencia es lo único que hace falta para seleccionar.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> con las cifras revisadas, una batería sin test de inteligencia pierde poco (.61 a .56) y mejora mucho el impacto adverso (.42 a .67); la entrevista estructurada (.42), el conocimiento del puesto (.40) y los datos biográficos (.38) superan a la habilidad cognitiva (.31) (Berry et al., 2024; Sackett et al., 2022).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> la tabla de 1998 se enseñó durante 25 años, y la inteligencia es barata de medir.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> la conciencia (o los valores, o la inteligencia emocional) predice mejor el desempeño que la inteligencia.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la habilidad cognitiva (.31) supera a la conciencia general (.19) y se acerca a la contextualizada (.25); en lo académico, la inteligencia explica entre cuatro y diez veces más varianza que los cinco rasgos (Zisman &amp; Ganzach, 2022). Solo el 18% de los profesionales de RR.HH. lo sabía en 2002 y el 20% en 2021 (Rynes et al., 2002; Fisher et al., 2021).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> la personalidad es más agradable de discutir, y la industria de las "habilidades blandas" lo repite.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> las personas inteligentes tienen una personalidad distinta (más abiertas, más responsables, más frías).</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las correlaciones de g con los Big Five son cercanas a cero, salvo con la apertura (.16; .25 con la faceta de intelecto) (Anglim, 2026). Inteligencia y personalidad miden cosas distintas, y por eso conviene medir ambas.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> los estereotipos del "genio raro" y del "tonto simpático" son memorables; y algunos metaanálisis ponderados por muestras gigantes inflaron las correlaciones.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> los tests de inteligencia están sesgados contra las minorías, así que no deben usarse.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los tests producen diferencias de promedio entre grupos (d ≈ .79 en Estados Unidos), pero predicen el desempeño de forma similar para los distintos grupos; el problema no es el sesgo predictivo sino el impacto adverso, y se maneja combinando predictores y ponderando la equidad (Berry et al., 2024).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> la diferencia de promedios es real y visible, y la distinción entre sesgo e impacto adverso es técnica.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, actualizar la tabla mental. Si alguien cita que "la inteligencia predice .5" o que "las muestras de trabajo son lo mejor", está usando cifras de 1998. Las vigentes son las de Sackett et al. (2022): entrevista estructurada .42, conocimiento del puesto .40, biodata .38, muestras de trabajo .33, habilidad cognitiva .31, integridad .31.</p>
+<p>Segundo, estructurar la entrevista. Es el predictor más válido, el más barato de mejorar y uno de los de menor diferencia entre grupos. Estructurar significa: mismas preguntas para todos, ligadas al análisis del puesto, con pautas de puntuación anotadas y varios entrevistadores. La entrevista no estructurada vale la mitad (.19) y premia la apariencia.</p>
+<p>Tercero, usar la habilidad cognitiva donde más rinde y con conciencia de su costo. Rinde más para predecir aprendizaje (entrenamiento, puestos nuevos, trabajos complejos) que para predecir el desempeño cotidiano en un puesto ya aprendido; y tiene el mayor impacto adverso de todos los predictores. Si se usa, combinarla con predictores de baja diferencia entre grupos (integridad, conciencia contextualizada, entrevista estructurada) y revisar las tasas de selección por grupo.</p>
+<p>Cuarto, medir inteligencia y personalidad por separado, y no esperar que una informe sobre la otra. Son casi independientes, y por eso suman.</p>
+<p>Quinto, pedir evidencia. Un test de razonamiento con manual técnico, normas chilenas recientes y estudios de validez publicados compite con una entrevista estructurada; un test proyectivo sin ninguna de esas cosas no compite con nada. El tribunal de los tests (clase 19) pone en práctica este criterio.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Explicar qué es la habilidad cognitiva general (g), por qué se postula un factor general y cómo se relaciona con las "dimensiones de la aptitud intelectual" de Robbins y Judge.</li><li>Reproducir, en orden aproximado, la tabla revisada de validez de los métodos de selección (Sackett et al., 2022) y nombrar los tres predictores más válidos.</li><li>Explicar por qué las cifras de Schmidt y Hunter (1998) estaban infladas (restricción de rango corregida como si todos los estudios fueran predictivos) y cuáles bajaron más.</li><li>Describir el dilema validez-diversidad con las cifras de Berry et al. (2024) y explicar la diferencia entre sesgo predictivo e impacto adverso.</li><li>Resumir el hallazgo de Nye et al. (2022) sobre las habilidades específicas y su validez incremental sobre g.</li><li>Citar la correlación entre inteligencia y cada uno de los Big Five y explicar qué implica para la selección.</li><li>Evaluar la afirmación "la conciencia predice mejor que la inteligencia" con las cifras de Zisman y Ganzach (2022) y de Sackett et al. (2022), y citar qué proporción de profesionales de RR.HH. la cree.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Anglim, J. (2026). Personality and cognitive ability: A critical review and meta-analytic synthesis. <em>Current Opinion in Psychology, 67</em>, 102171. <a href="https://doi.org/10.1016/j.copsyc.2025.102171">https://doi.org/10.1016/j.copsyc.2025.102171</a></p>
+<p>Berry, C. M., Lievens, F., Zhang, C., &amp; Sackett, P. R. (2024). Insights from an updated personnel selection meta-analytic matrix: Revisiting general mental ability tests' role in the validity–diversity trade-off. <em>Journal of Applied Psychology, 109</em>(10), 1611–1634. <a href="https://doi.org/10.1037/apl0001203">https://doi.org/10.1037/apl0001203</a></p>
+<p>Didier Pino, N. O. (2014). Selección de personal en Chile. <em>Revista Iberoamericana de Psicología: Ciencia y Tecnología, 7</em>(1), 103–114. <a href="https://doi.org/10.33881/2027-1786.rip.7109">https://doi.org/10.33881/2027-1786.rip.7109</a></p>
+<p>Fisher, P. A., Risavy, S. D., Robie, C., König, C. J., Christiansen, N. D., Tett, R. P., &amp; Simonet, D. V. (2021). Selection myths: A conceptual replication of HR professionals' beliefs about effective human resource practices in the US and Canada. <em>Journal of Personnel Psychology, 20</em>(2), 51–60. <a href="https://doi.org/10.1027/1866-5888/a000263">https://doi.org/10.1027/1866-5888/a000263</a></p>
+<p>Furnham, A., &amp; Horne, G. (2021). Myths and misconceptions about intelligence: A study of 35 myths. <em>Personality and Individual Differences, 181</em>, 111014. <a href="https://doi.org/10.1016/j.paid.2021.111014">https://doi.org/10.1016/j.paid.2021.111014</a></p>
+<p>Nye, C. D., Ma, J., &amp; Wee, S. (2022). Cognitive ability and job performance: Meta-analytic evidence for the validity of narrow cognitive abilities. <em>Journal of Business and Psychology, 37</em>(6), 1119–1139. <a href="https://doi.org/10.1007/s10869-022-09796-1">https://doi.org/10.1007/s10869-022-09796-1</a></p>
+<p>Ree, M. J., Earles, J. A., &amp; Teachout, M. S. (1994). Predicting job performance: Not much more than g. <em>Journal of Applied Psychology, 79</em>(4), 518–524. <a href="https://doi.org/10.1037/0021-9010.79.4.518">https://doi.org/10.1037/0021-9010.79.4.518</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Rynes, S. L., Colbert, A. E., &amp; Brown, K. G. (2002). HR professionals' beliefs about effective human resource practices: Correspondence between research and practice. <em>Human Resource Management, 41</em>(2), 149–174. <a href="https://doi.org/10.1002/hrm.10029">https://doi.org/10.1002/hrm.10029</a></p>
+<p>Sackett, P. R., Zhang, C., Berry, C. M., &amp; Lievens, F. (2022). Revisiting meta-analytic estimates of validity in personnel selection: Addressing systematic overcorrection for restriction of range. <em>Journal of Applied Psychology, 107</em>(11), 2040–2068. <a href="https://doi.org/10.1037/apl0000994">https://doi.org/10.1037/apl0000994</a></p>
+<p>Sackett, P. R., Zhang, C., Berry, C. M., &amp; Lievens, F. (2023). Revisiting the design of selection systems in light of new findings regarding the validity of widely used predictors. <em>Industrial and Organizational Psychology, 16</em>(3), 283–300. <a href="https://doi.org/10.1017/iop.2023.24">https://doi.org/10.1017/iop.2023.24</a></p>
+<p>Schmidt, F. L., &amp; Hunter, J. E. (1998). The validity and utility of selection methods in personnel psychology: Practical and theoretical implications of 85 years of research findings. <em>Psychological Bulletin, 124</em>(2), 262–274. <a href="https://doi.org/10.1037/0033-2909.124.2.262">https://doi.org/10.1037/0033-2909.124.2.262</a></p>
+<p>Stanek, K. C., &amp; Ones, D. S. (2023). Meta-analytic relations between personality and cognitive ability. <em>Proceedings of the National Academy of Sciences, 120</em>(23), e2212794120. <a href="https://doi.org/10.1073/pnas.2212794120">https://doi.org/10.1073/pnas.2212794120</a></p>
+<p>Tuncdogan, A., Acar, O. A., Volberda, H. W., &amp; de Ruyter, K. (2024). IQ, EQ, and multiple intelligences. En A. Tuncdogan, O. A. Acar, H. W. Volberda, &amp; K. de Ruyter (Eds.), <em>The Oxford handbook of individual differences in organizational contexts</em> (pp. 53–63). Oxford University Press.</p>
+<p>Zisman, C., &amp; Ganzach, Y. (2022). The claim that personality is more important than intelligence in predicting important life outcomes has been greatly exaggerated. <em>Intelligence, 92</em>, 101631. <a href="https://doi.org/10.1016/j.intell.2022.101631">https://doi.org/10.1016/j.intell.2022.101631</a></p>
+<h3>Para profundizar</h3>
+<p>Sackett et al. (2023): la versión "para practicantes" del artículo de 2022, con las implicaciones para el diseño de sistemas de selección; es la lectura más útil si vas a trabajar en selección.</p>
+<p>Berry et al. (2024): el análisis completo del dilema validez-diversidad, con las curvas de Pareto que muestran cuánta validez cuesta cada punto de equidad.</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

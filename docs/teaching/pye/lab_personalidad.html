@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de personalidad y diferencias individuales · Personas y Equipos UDP</title>
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Tema 5</p>
+  <h1>Diferencias individuales y personalidad: siete estaciones para leer a las personas sin comprar humo</h1>
+  <p class="meta">Personas y Equipos, secciones 02 y 03 · 2º semestre 2026 · Acompaña a las clases 17, 18 y 19 y a los apuntes 16 a 22<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/pye/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0 ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Siete estaciones, cada una con algo que manipular, algo que clasificar y preguntas con retroalimentación. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. Al final, la ficha de salida resume lo que completaste y qué conviene repasar. No hay registro ni nota: es material para estudiar el Tema 5 y preparar la Prueba 2.</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. El mapa.</strong> Biográficas y psicológicas; cognitivas y no cognitivas; la personalidad como variable de entrada; y por qué un rasgo es una distribución y no un punto.</div>
+    <div class="caja"><strong>2. Los cinco rasgos.</strong> Qué busca y qué evita cada polo, qué predice cada rasgo en el trabajo, cómo leer un perfil, cuánto cambia la personalidad.</div>
+    <div class="caja"><strong>3. La situación.</strong> Fuerza situacional, activación de rasgos, las seis claves, el mismo rasgo en nueve ocupaciones.</div>
+    <div class="caja"><strong>4. HEXACO y el lado oscuro.</strong> El sexto factor, dictador o ultimátum, lo que predice la honestidad-humildad, Big Five contra HEXACO, la tríada oscura.</div>
+    <div class="caja"><strong>5. El tribunal de los tests.</strong> El efecto Forer en vivo, las seis reglas, tipos que no existen, faking e inteligencia artificial, el dilema validez-diversidad.</div>
+    <div class="caja"><strong>6. Lo que no es un rasgo.</strong> Aptitudes y la tabla de validez, autoevaluaciones esenciales, valores y ajuste persona-organización (apuntes 20 y 21).</div>
+    <div class="caja"><strong>7. ¿Mito o evidencia?</strong> Veinte afirmaciones que circulan en empresas, con su veredicto, su magnitud y su fuente.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 60 a 80 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en los apuntes 16 a 22.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<!-- ============ ESTACIÓN 1: EL MAPA ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · El mapa de las diferencias individuales</h2>
+  <p>Las diferencias individuales son los atributos relativamente estables en que las personas difieren entre sí. El curso las ordena en dos cortes: <strong>biográficas</strong> (lo que se ve en un currículum) y <strong>psicológicas</strong>; y dentro de las psicológicas, <strong>cognitivas</strong> (conocimiento, habilidades, aptitudes: cómo procesamos información) y <strong>no cognitivas</strong> (personalidad, autoevaluaciones esenciales, intereses y valores, actitudes: patrones persistentes de conducta y preferencias).</p>
+
+  <h3>A. Ubica cada descripción en el mapa</h3>
+  <p>Tres fronteras generan confusión: habilidad (adquirida, específica) y aptitud (potencial, general); personalidad (general, sin objeto) y actitud (evaluación de algo concreto); rasgo (cómo tiendo a actuar) y valor (qué considero importante).</p>
+  <div id="c1mapa"></div>
+
+  <h3>B. ¿Variable de entrada o resultado?</h3>
+  <p>Los rasgos son variables de entrada con efecto indirecto: influyen en procesos cognitivos y motivacionales, y moderan la respuesta al contexto. Los tres resultados del curso son desempeño (conductas observables), actitudes (predisposiciones evaluativas hacia el trabajo) y bienestar (salud en el trabajo). Clasifica.</p>
+  <div id="c1entrada"></div>
+
+  <h3>C. Una distribución, no un punto</h3>
+  <p>Fleeson (2001, 2004) midió a personas varias veces al día durante semanas. La misma persona varía entre momentos tanto como varía la gente entre sí; y aun así su promedio semanal se repite con r ≈ .9. Mueve el control y mira qué pasa con dos personas simuladas (datos sintéticos que reproducen el patrón, no datos reales).</p>
+  <div class="caja">
+    <div class="slider">Variabilidad de una misma persona entre momentos: <span class="v" id="flV">media</span><input type="range" id="flS" min="0" max="10" value="5" oninput="fleeson()"></div>
+    <svg viewBox="0 0 640 190" id="svgFl"></svg>
+    <div class="grid g3" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">Momentos en que la persona A estuvo MÁS extravertida que la B</div><div class="num" id="flCruce">–</div></div>
+      <div class="stat"><div class="lbl">Diferencia entre promedios semanales (A − B)</div><div class="num" id="flDif">–</div></div>
+      <div class="stat"><div class="lbl">Correlación entre el promedio de la semana 1 y la semana 2 (ambas personas)</div><div class="num" id="flR">≈ .9</div></div>
+    </div>
+    <div class="nota" id="flOut" style="margin:.6rem 0 0">Mueve el control.</div>
+  </div>
+
+  <h3>D. Cinco rasgos, cuatro funciones</h3>
+  <p>Leary y Hoyle (2009) ordenan las disposiciones por lo que hacen; DeYoung (2015) lee cada rasgo como parámetro de un sistema que persigue metas. Une cada rasgo con su función.</p>
+  <div class="match" id="func"></div>
+  <button class="btn" onclick="checkMatch('func', FUNC, '1_func', 'Cinco de cinco. Es una herramienta para pensar, no una ley: los propios autores discuten dónde cae cada rasgo (la responsabilidad podría estar en todas las categorías).')">Comprobar</button>
+  <div id="funcRes" class="nota" style="display:none"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2: LOS CINCO ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Los cinco rasgos: qué buscan, qué predicen, cuánto cambian</h2>
+  <p>Los cinco factores salieron del diccionario: si una diferencia importa, el idioma tiene palabras para ella, y al analizar cómo se agrupan miles de descripciones aparecen los mismos cinco grupos en inglés y en muchas otras lenguas. No son tipos sino dimensiones continuas, y ningún polo es "bueno": cada uno busca algo, sirve para algo y paga un costo.</p>
+
+  <h3>A. ¿Qué rasgo habla aquí?</h3>
+  <p>Clasifica por la <strong>función</strong> (qué busca o evita la persona), no por el adjetivo.</p>
+  <div id="c2rasgo"></div>
+
+  <h3>B. ¿Qué predice cada rasgo en el trabajo?</h3>
+  <p>Correlaciones metaanalíticas corregidas: desempeño de tarea, conducta cívica (OCB) y contraproductiva (CWB) de He et al. (2019); satisfacción laboral de Judge, Heller y Mount (2002); liderazgo de Javalagi et al. (2024). Haz clic en un rasgo.</p>
+  <div class="cont" id="rasgoBox" style="grid-template-columns:repeat(5,1fr)"></div>
+  <div class="caja" id="rasgoOut">
+    <div class="barra"><span class="lb">Desempeño de tarea</span><div class="tr"><div id="bT"></div></div><span class="vv" id="vT">–</span></div>
+    <div class="barra"><span class="lb">Conducta cívica (OCB)</span><div class="tr"><div id="bO"></div></div><span class="vv" id="vO">–</span></div>
+    <div class="barra"><span class="lb">Contraproductiva (CWB)</span><div class="tr"><div id="bW"></div></div><span class="vv" id="vW">–</span></div>
+    <div class="barra"><span class="lb">Satisfacción laboral</span><div class="tr"><div id="bS2"></div></div><span class="vv" id="vS2">–</span></div>
+    <div class="barra"><span class="lb">Emergencia como líder</span><div class="tr"><div id="bL"></div></div><span class="vv" id="vL">–</span></div>
+    <div class="nota" id="rasgoLectura" style="margin:.6rem 0 0">Elige un rasgo.</div>
+  </div>
+  <p class="mini">Escala de −.40 a +.40; la línea central es cero. En este campo, .10 es pequeño, .20 mediano y .30 grande. Los cinco juntos explican R² ≈ .04 del desempeño global: poco en promedio, más en lo discrecional.</p>
+
+  <h3>C. Lee un perfil</h3>
+  <p>Mueve los cinco promedios (escala 1 a 5, como en el BFI-2) y lee la devolución. Reglas: importa el perfil más que el número; no hay polo bueno; es autoinforme; diferencias menores a 0.3 son ruido.</p>
+  <div class="caja">
+    <div class="grid g5">
+      <div class="slider">Extraversión <span class="v" id="pEv">3.0</span><input type="range" id="pE" min="10" max="50" value="30" oninput="perfil()"></div>
+      <div class="slider">Amabilidad <span class="v" id="pAv">3.0</span><input type="range" id="pA" min="10" max="50" value="30" oninput="perfil()"></div>
+      <div class="slider">Responsabilidad <span class="v" id="pCv">3.0</span><input type="range" id="pC" min="10" max="50" value="30" oninput="perfil()"></div>
+      <div class="slider">Neuroticismo <span class="v" id="pNv">3.0</span><input type="range" id="pN" min="10" max="50" value="30" oninput="perfil()"></div>
+      <div class="slider">Apertura <span class="v" id="pOv">3.0</span><input type="range" id="pO" min="10" max="50" value="30" oninput="perfil()"></div>
+    </div>
+    <div class="nota" id="perfilOut" style="margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>D. ¿Cuán estable es la personalidad?</h3>
+  <p>Bleidorn et al. (2022), 189 estudios y 178.503 personas: la estabilidad de orden (la correlación entre dos mediciones) sube rápido en la infancia y casi no crece después de los 25. Elige una edad.</p>
+  <div class="caja">
+    <div class="slider">Edad: <span class="v" id="edV">20</span> años<input type="range" id="edS" min="5" max="60" value="20" oninput="estab()"></div>
+    <div class="grid g3">
+      <div class="stat"><div class="lbl">Estabilidad de orden a esa edad (modelo de Bleidorn et al.)</div><div class="num" id="edR">–</div></div>
+      <div class="stat"><div class="lbl">De los 16 a los 66 años (Damian et al., 2019)</div><div class="num">.31</div><div class="lbl">y el 98% cambió de forma fiable en al menos un rasgo</div></div>
+      <div class="stat"><div class="lbl">Cambio con intervenciones de 4 a 8 semanas (Roberts et al., 2017)</div><div class="num">d = .37</div><div class="lbl">estabilidad emocional .57; el efecto dura más de un año</div></div>
+    </div>
+    <div class="nota" id="edOut" style="margin:.6rem 0 0"></div>
+  </div>
+  <p class="mini">Los puntos del modelo reportados por los autores: .09 (5 años), .57 (15), .74 (25), .82 (50); los valores intermedios están interpolados. Principio de madurez: con la edad suben estabilidad emocional, responsabilidad y amabilidad.</p>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3: LA SITUACIÓN ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · La situación decide: fuerza, activación y nueve ocupaciones</h2>
+  <p>Detrás de un promedio de .20 hay estudios con validez cero y estudios con .35. Dos marcos explican por qué: la <strong>fuerza situacional</strong> (cuánto margen deja la situación: el volumen) y la <strong>activación de rasgos</strong> (qué rasgo convoca: la emisora). Un rasgo predice cuando la situación deja ver la conducta del rasgo y la valora.</p>
+
+  <h3>A. ¿Qué rasgo se ve en la entrevista y cuál solo trabajando?</h3>
+  <p>Wiersma y Kappe (2017) midieron la personalidad de 96 egresados de RR.HH. en primer año y su sueldo cuatro años después. Antes de ver el resultado, apuesta.</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div>¿Qué rasgo se asoció al sueldo INICIAL? <select class="sel" id="wi"><option value="">elige...</option><option>Extraversión</option><option>Amabilidad</option><option>Responsabilidad</option><option>Estabilidad emocional</option><option>Apertura</option></select></div>
+      <div>¿Y al CRECIMIENTO del sueldo? <select class="sel" id="wc"><option value="">elige...</option><option>Extraversión</option><option>Amabilidad</option><option>Responsabilidad</option><option>Estabilidad emocional</option><option>Apertura</option></select></div>
+    </div>
+    <button class="btn" style="margin-top:.6rem" onclick="wiersma()">Revelar</button>
+    <div class="nota" id="wOut" style="display:none;margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>B. Simulador de fuerza situacional</h3>
+  <p>Meyer, Dalal y Hermida (2010): claridad, consistencia, restricciones y consecuencias. A mayor fuerza, menos predice la personalidad (Ritz et al., 2023: las cuatro facetas pesan parecido). El simulador es <strong>ilustrativo</strong>: parte de la validez promedio de la responsabilidad (.20) y la atenúa o amplifica según la fuerza, dentro del rango observado por Tett y Burnett (2003), de .09 a .35.</p>
+  <div class="caja">
+    <div class="grid g4">
+      <div class="slider">Claridad <span class="v" id="f1v">3</span><input type="range" id="f1" min="1" max="5" value="3" oninput="fuerza()"></div>
+      <div class="slider">Consistencia <span class="v" id="f2v">3</span><input type="range" id="f2" min="1" max="5" value="3" oninput="fuerza()"></div>
+      <div class="slider">Restricciones <span class="v" id="f3v">3</span><input type="range" id="f3" min="1" max="5" value="3" oninput="fuerza()"></div>
+      <div class="slider">Consecuencias <span class="v" id="f4v">3</span><input type="range" id="f4" min="1" max="5" value="3" oninput="fuerza()"></div>
+    </div>
+    <div class="grid g2" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">FUERZA DE LA SITUACIÓN</div><div class="num" id="fF">–</div><span class="nivel" id="fFN"></span></div>
+      <div class="stat"><div class="lbl">VALIDEZ ESPERADA DE LA RESPONSABILIDAD (ilustrativa)</div><div class="num" id="fV">–</div><span class="nivel" id="fVN"></span></div>
+    </div>
+    <div class="nota" id="fOut" style="margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>C. Las seis claves de la activación de rasgos</h3>
+  <p>Tett y Burnett (2003): demandas, distractores, restricciones, liberadores, facilitadores y claves discrecionales. Clasifica cada situación.</p>
+  <div id="c3claves"></div>
+
+  <h3>D. El mismo rasgo en nueve ocupaciones</h3>
+  <p>Wilmot y Ones (2021): 15 metaanálisis, 539 muestras, 89.639 personas. Elige un grupo ocupacional y mira qué rasgos predicen el desempeño allí.</p>
+  <div class="caja">
+    <select class="sel" id="ocSel" onchange="ocup()"></select>
+    <div style="margin-top:.6rem">
+      <div class="barra"><span class="lb">Responsabilidad</span><div class="tr"><div id="oC"></div></div><span class="vv" id="voC">–</span></div>
+      <div class="barra"><span class="lb">Amabilidad</span><div class="tr"><div id="oA"></div></div><span class="vv" id="voA">–</span></div>
+      <div class="barra"><span class="lb">Estabilidad emocional</span><div class="tr"><div id="oES"></div></div><span class="vv" id="voES">–</span></div>
+      <div class="barra"><span class="lb">Extraversión</span><div class="tr"><div id="oE"></div></div><span class="vv" id="voE">–</span></div>
+      <div class="barra"><span class="lb">Apertura</span><div class="tr"><div id="oO"></div></div><span class="vv" id="voO">–</span></div>
+    </div>
+    <div class="nota" id="ocOut" style="margin:.6rem 0 0"></div>
+  </div>
+  <p class="mini">Escala de 0 a .40. La responsabilidad predice en los nueve grupos; los demás rasgos, solo donde la ocupación los convoca. Y el perfil ocupacional es tendencia, no requisito: la ocupación explica entre 2% y 7% de la varianza de cada rasgo (Anni et al., 2025).</p>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4: HEXACO ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · HEXACO: el sexto factor y el lado oscuro</h2>
+  <p>Con listas completas de adjetivos y en una docena de lenguas aparecen seis factores. Tres son casi los mismos del Big Five (extraversión, responsabilidad, apertura), dos se reorganizan (emocionalidad y amabilidad "versus ira") y uno es nuevo: la <strong>honestidad-humildad</strong>, el rasgo de no explotar a otros cuando se puede.</p>
+
+  <h3>A. ¿Dictador o ultimátum?</h3>
+  <p>En el juego del dictador, tú repartes y el otro no puede negarse: la situación permite explotar sin castigo y convoca a H (r = .25 con lo que das; .11 con A). En el ultimátum, el otro reparte y tú puedes rechazar y perder todo: te explotan, y convoca a A (aceptar ofertas injustas: .19 con A, −.01 con H). ¿De qué tipo es cada situación?</p>
+  <div id="c4juego"></div>
+
+  <h3>B. ¿Cuánto de cada dimensión HEXACO captura el Big Five?</h3>
+  <p>Thielmann et al. (2022), 152 muestras y 88.596 personas. Haz clic en cada dimensión.</p>
+  <div class="cont" id="hexBox"></div>
+  <div class="caja">
+    <div class="barra"><span class="lb">Varianza capturada por los Big Five</span><div class="tr"><div id="bHex"></div></div><span class="vv" id="vHex">–</span></div>
+    <div class="nota" id="hexOut" style="margin:.6rem 0 0">Elige una dimensión.</div>
+  </div>
+
+  <h3>C. Big Five contra HEXACO frente a la desviación laboral</h3>
+  <p>Pletzer, Bentvelzen, Oostrom y de Vries (2019): correlaciones corregidas con robar, sabotear, trabajar lento a propósito, acosar o chismear. Es el artículo de la ayudantía. Haz clic en cada par.</p>
+  <div class="caja">
+    <svg viewBox="0 0 640 260" id="svgPl"></svg>
+    <div class="nota" id="plOut" style="margin:.6rem 0 0">Haz clic en un par de barras.</div>
+  </div>
+
+  <h3>D. ¿Qué situación activa cada dimensión?</h3>
+  <p>De Vries et al. (2016): cada dimensión responde a un tipo de situación. Clasifica.</p>
+  <div id="c4aff"></div>
+
+  <h3>E. El lado oscuro, en cifras</h3>
+  <p>Narcisismo, maquiavelismo y psicopatía subclínica: tres rasgos continuos, presentes en población general, que se relacionan sobre todo con baja honestidad-humildad (−.41, −.61, −.54; Muris et al., 2017). ¿Y en el trabajo? Antes de ver, estima la correlación de la psicopatía con emerger como líder (Landay et al., 2019; 92 muestras).</p>
+  <div class="caja">
+    <div class="slider">Tu estimación: <span class="v" id="psV">.30</span><input type="range" id="psS" min="-40" max="60" value="30" oninput="document.getElementById('psV').textContent=fmt(+this.value/100)"></div>
+    <button class="btn" onclick="psico()">Revelar</button>
+    <div class="nota" id="psOut" style="display:none;margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5: EL TRIBUNAL ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · El tribunal de los tests</h2>
+  <p>Un test que no puede mostrar su manual técnico no es un test: es un producto. Esta estación empieza con un experimento sobre ti.</p>
+
+  <h3>A. Tu perfil de personalidad laboral</h3>
+  <p>Responde las cinco preguntas y lee el perfil que el sistema genera para ti. Luego califica de 0 (nada) a 5 (perfecto) qué tan bien te describe.</p>
+  <div class="caja" id="forerBox">
+    <div id="forerQ"></div>
+    <button class="btn" id="forerBtn" onclick="forerPerfil()">Generar mi perfil</button>
+    <div id="forerP" style="display:none">
+      <div class="pregunta" style="margin-top:.8rem"><strong>Tu perfil de personalidad laboral.</strong><br>Tienes una gran necesidad de que los demás te aprecien y valoren tu trabajo. Tiendes a ser crítico contigo mismo. Tienes capacidades que todavía no has aprovechado del todo. Aunque tienes algunas debilidades, en general eres capaz de compensarlas. Por fuera pareces disciplinado y seguro, pero por dentro a veces te preocupas y dudas de tus decisiones. Prefieres cierto grado de cambio y variedad, y te molesta sentirte limitado por reglas y restricciones. Te enorgulleces de pensar por tu cuenta y no aceptas las opiniones de otros sin evidencia suficiente. A veces eres sociable y abierto; otras veces, reservado y cauteloso. Algunas de tus aspiraciones tienden a ser poco realistas.</div>
+      <div class="slider">¿Qué tan bien te describe? <span class="v" id="foV">3</span> / 5<input type="range" id="foS" min="0" max="5" value="3" oninput="document.getElementById('foV').textContent=this.value"></div>
+      <button class="btn sec" onclick="forerReveal()">Enviar mi calificación</button>
+      <div class="nota" id="foOut" style="display:none;margin:.6rem 0 0"></div>
+    </div>
+  </div>
+
+  <h3>B. Las seis reglas: ¿qué regla viola cada hallazgo?</h3>
+  <p>Confiabilidad, estructura, validez de constructo, validez de criterio e incremental, equidad y normas, faking y consecuencias. Son las preguntas que cualquier instrumento para decidir sobre personas debe responder con datos publicados (AERA, APA y NCME, 2014; SIOP, 2018).</p>
+  <div id="c5reglas"></div>
+
+  <h3>C. Tipos que no existen: corta una campana por la mitad</h3>
+  <p>Un sistema de tipos necesita dos jorobas; lo que se observa, siempre, es una campana. Si cortas una distribución continua por el centro, ¿cuánta gente cambia de "tipo" al repetir el test? Mueve la confiabilidad test-retest de la escala continua (simulación con una distribución normal; las escalas del MBTI tienen test-retest entre .73 y .93).</p>
+  <div class="caja">
+    <div class="slider">Confiabilidad test-retest de la escala: <span class="v" id="rtV">.80</span><input type="range" id="rtS" min="50" max="99" value="80" oninput="retest()"></div>
+    <svg viewBox="0 0 640 170" id="svgRt"></svg>
+    <div class="grid g2" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">Cambia de lado al repetir (simulación, una escala)</div><div class="num" id="rtP">–</div></div>
+      <div class="stat"><div class="lbl">Cambia de tipo de cuatro letras según el propio manual del MBTI, a 4 semanas</div><div class="num">35%</div><div class="lbl">Pittenger (2005)</div></div>
+    </div>
+    <div class="nota" id="rtOut" style="margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>D. Faking: la gente finge, y la IA finge mejor</h3>
+  <p>Birkeland et al. (2006): los postulantes reales puntúan más alto que los no postulantes. Phillips y Robie (2024): modelos de lenguaje instruidos a responder "como el candidato ideal" para un puesto de ventas, comparados con 869 estudiantes con la misma instrucción. Haz clic.</p>
+  <div class="caja">
+    <div class="barra"><span class="lb">Responsabilidad (postulantes)</span><div class="tr"><div class="neg" style="left:0;width:45%"></div></div><span class="vv">d = .45</span></div>
+    <div class="barra"><span class="lb">Estabilidad emocional</span><div class="tr"><div class="neg" style="left:0;width:44%"></div></div><span class="vv">d = .44</span></div>
+    <div class="barra"><span class="lb">Apertura</span><div class="tr"><div style="left:0;width:13%"></div></div><span class="vv">d = .13</span></div>
+    <div class="barra"><span class="lb">Extraversión</span><div class="tr"><div style="left:0;width:11%"></div></div><span class="vv">d = .11</span></div>
+    <p class="mini" style="margin:.4rem 0 .6rem">Escala de 0 a 1 desviación estándar. Cerca del 30% de los postulantes infla sus puntajes (Griffith y Robie, 2013); las "escalas de mentira" correlacionan ρ = .04 con la conducta prosocial real (Lanz et al., 2022): no detectan nada.</p>
+    <div class="cont" id="iaBox" style="grid-template-columns:repeat(4,1fr)"></div>
+    <div class="nota" id="iaOut" style="margin:.6rem 0 0">Elige un modelo para ver cuánto fingió la extraversión y la responsabilidad (d respecto de los estudiantes; percentil).</div>
+  </div>
+
+  <h3>E. El dilema validez-diversidad</h3>
+  <p>Berry et al. (2024): en una batería de seis predictores, el peso del test de inteligencia (GMA) compra validez y cuesta equidad. Mueve el peso. Los tres puntos reportados por los autores son (peso .20: R = .61, ratio de impacto adverso .42), (peso 0: .56, .67) y (equidad ≥ .80: .48); los valores intermedios están interpolados y son ilustrativos.</p>
+  <div class="caja">
+    <div class="slider">Peso del test de inteligencia en la batería: <span class="v" id="gmV">.20</span><input type="range" id="gmS" min="0" max="20" value="20" oninput="berry()"></div>
+    <div class="grid g2">
+      <div class="stat"><div class="lbl">VALIDEZ DE LA BATERÍA (R)</div><div class="num" id="gmR">–</div></div>
+      <div class="stat"><div class="lbl">RATIO DE IMPACTO ADVERSO (tasa de selección del grupo minoritario / mayoritario)</div><div class="num" id="gmA">–</div><span class="nivel" id="gmAN"></span></div>
+    </div>
+    <div class="nota" id="gmOut" style="margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>F. Chile: lo que piden los avisos</h3>
+  <p>Didier Pino (2014) revisó 4.329 avisos para psicólogos de selección (2008-2013). ¿Qué porcentaje exigía manejar el test de Lüscher (colores) y el Zulliger (manchas), dos pruebas proyectivas sin un solo estudio publicado de validez predictiva en selección?</p>
+  <div class="caja">
+    <div class="slider">Tu estimación: <span class="v" id="dpV">50</span>%<input type="range" id="dpS" min="0" max="100" value="50" oninput="document.getElementById('dpV').textContent=this.value"></div>
+    <button class="btn" onclick="didier()">Revelar</button>
+    <div class="nota" id="dpOut" style="display:none;margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q5"></div>
+</section>
+
+<!-- ============ ESTACIÓN 6: LO QUE NO ES UN RASGO ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · Lo que no es un rasgo: aptitudes, autoevaluaciones y valores</h2>
+  <p>Tres cosas que Robbins y Judge ponen en el mismo capítulo y que conviene separar: la <strong>aptitud cognitiva</strong> (cuánto tarda alguien en aprender; apunte 20), las <strong>autoevaluaciones esenciales</strong> (lo que creo de mí; apunte 21) y los <strong>valores</strong> (a qué aspiro; apunte 21). Son lectura individual y entran en la Prueba 2.</p>
+
+  <h3>A. La tabla de validez: ordena los predictores</h3>
+  <p>Sackett, Zhang, Berry y Lievens (2022) corrigieron la tabla clásica de Schmidt y Hunter (1998). Ordena estos seis métodos de selección de mayor a menor validez para predecir el desempeño (usa los botones para mover).</p>
+  <ul class="orden" id="ordSack"></ul>
+  <button class="btn" onclick="checkOrden()">Comprobar</button>
+  <div id="ordOut" class="nota" style="display:none"></div>
+
+  <h3>B. ¿Aptitud, habilidad o conocimiento?</h3>
+  <div id="c6cog"></div>
+
+  <h3>C. Autoevaluaciones esenciales: ¿qué predicen?</h3>
+  <p>Cuatro indicadores que correlacionan entre .52 y .85: autoestima, autoeficacia generalizada, locus de control interno y estabilidad emocional (Chang et al., 2012). Antes de ver, ordena mentalmente: ¿predicen más la satisfacción vital, la satisfacción laboral o el desempeño evaluado por otros? Haz clic.</p>
+  <div class="cont" id="cseBox" style="grid-template-columns:repeat(4,1fr)"></div>
+  <div class="nota" id="cseOut" style="margin:.6rem 0 0">Elige un criterio.</div>
+
+  <h3>D. ¿Rasgo o valor?</h3>
+  <p>"Los rasgos dicen cómo son las personas; los valores, a qué aspiran" (Roccas et al., 2002). Correlacionan (benevolencia y amabilidad .61; autodirección y apertura .52; Parks-Leduc et al., 2015), pero no son lo mismo. Clasifica cada frase.</p>
+  <div id="c6rv"></div>
+
+  <h3>E. El ajuste persona-organización: ¿qué predice?</h3>
+  <p>Kristof-Brown, Zimmerman y Johnson (2005), 172 estudios. Haz clic en cada resultado.</p>
+  <div class="cont" id="poBox" style="grid-template-columns:repeat(4,1fr)"></div>
+  <div class="caja">
+    <div class="barra"><span class="lb">Ajuste persona-organización</span><div class="tr"><div id="bPO"></div></div><span class="vv" id="vPO">–</span></div>
+    <div class="nota" id="poOut" style="margin:.6rem 0 0">Elige un resultado.</div>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q6"></div>
+</section>
+
+<!-- ============ ESTACIÓN 7: MITOS ============ -->
+<section class="estacion" id="e7">
+  <h2>Estación 7 · ¿Mito o evidencia?</h2>
+  <p>Veinte afirmaciones que circulan en empresas, charlas y redes. Marca verdadero o falso; luego aparece el veredicto, la magnitud y la fuente. Las referencias completas están en los apuntes 16 a 22.</p>
+  <div id="mitos"></div>
+  <div class="nota" id="mitosRes" style="display:none"></div>
+</section>
+
+<!-- ============ FICHA ============ -->
+<section class="estacion" id="e8">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div id="fichaRepaso"></div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y UTILIDADES =====================
+const estado = { hechas: {}, respuestas: {} };
+function guardar(){ try{ localStorage.setItem("lab_pers_v1", JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem("lab_pers_v1"); if(s){ Object.assign(estado, JSON.parse(s)); } }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+const NOMBRES = ["Inicio","1 · El mapa","2 · Los cinco","3 · La situación","4 · HEXACO","5 · El tribunal","6 · No es un rasgo","7 · Mitos","Ficha de salida"];
+const EST = [1,2,3,4,5,6,7];
+function pintarNav(){
+  const n = document.getElementById("nav"); n.innerHTML = "";
+  NOMBRES.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t; b.onclick=()=>ir(i);
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista"); n.appendChild(b); });
+  const k = EST.filter(i=>estado.hechas[i]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de 7`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa")); document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===8) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+const fmt = x => (x<0?"−":"+")+Math.abs(x).toFixed(2).replace(/^0/,"");
+const fmt0 = x => (x<0?"−":"")+Math.abs(x).toFixed(2).replace(/^0/,"");
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML="";
+  items.forEach((q,qi)=>{
+    const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML = `<strong>${q.p}</strong><br>` + q.o.map((o,oi)=>`<span class="opc" data-o="${oi}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const oi=+el.dataset.o; const ok = oi===q.c;
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[q.c].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML = (ok?"<strong>Correcto.</strong> ":"<strong>No es eso.</strong> ") + q.f + (q.r?` <span class="cita">${q.r}</span>`:"");
+      estado.respuestas[`${estacion}_q${qi}`] = ok?1:0; guardar();
+      if(items.every((_,k)=> (`${estacion}_q${k}`) in estado.respuestas)) marcar(estacion);
+    });
+  });
+}
+function clasificador(contId, cats, items, clave, estacion){
+  const cont=document.getElementById(contId); cont.innerHTML="";
+  items.forEach((it,i)=>{
+    const d=document.createElement("div"); d.className="clasif";
+    d.innerHTML = `<p class="enun"><strong>${i+1}.</strong> ${it[0]}</p><div class="cats">${cats.map((c,ci)=>`<span class="cat" data-c="${ci}">${c}</span>`).join("")}</div><div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".cat").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const ci=+el.dataset.c, ok=ci===it[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".cat")[it[1]].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=(ok?"<strong>Correcto.</strong> ":`<strong>No: ${cats[it[1]].toLowerCase()}.</strong> `)+it[2];
+      estado.respuestas[`${estacion}_${clave}${i}`]=ok?1:0; guardar();
+    });
+  });
+}
+function initMatch(id, pares, placeholder){
+  const c=document.getElementById(id); c.innerHTML="";
+  const defs=pares.map((z,i)=>({d:z[1],i})).sort(()=>Math.random()-.5);
+  defs.forEach(o=>{ const d=document.createElement("div"); d.className="def"; d.textContent=o.d; d.dataset.i=o.i; c.appendChild(d);
+    const s=document.createElement("select"); s.className="sel"; s.innerHTML=`<option value="">${placeholder}</option>`+pares.map((z,k)=>`<option value="${k}">${z[0]}</option>`).join(""); c.appendChild(s); });
+}
+function checkMatch(id, pares, clave, msgOk){
+  const defs=[...document.querySelectorAll(`#${id} .def`)], sels=[...document.querySelectorAll(`#${id} select`)]; let ok=0;
+  defs.forEach((d,k)=>{ const b=sels[k].value!==""&&+sels[k].value===+d.dataset.i; d.classList.remove("bien","mal"); d.classList.add(b?"bien":"mal"); if(b) ok++; });
+  const r=document.getElementById(id+"Res"); r.style.display="block";
+  if(ok===pares.length){ r.className="nota ok"; r.innerHTML="<strong>"+msgOk+"</strong>"; estado.respuestas[clave]=1; }
+  else { r.className="nota"; r.innerHTML=`<strong>${ok} de ${pares.length}.</strong> Corrige los que están en rojo y vuelve a comprobar.`; if(!(clave in estado.respuestas)) estado.respuestas[clave]=0; }
+  guardar();
+}
+function barra(id, val, min, max, cls){ const el=document.getElementById(id); const w=(max-min); const zero=(0-min)/w*100; const x=(val-min)/w*100; el.className=cls||""; if(val>=0){ el.style.left=zero+"%"; el.style.width=(x-zero)+"%"; } else { el.style.left=x+"%"; el.style.width=(zero-x)+"%"; } }
+
+// ===================== ESTACIÓN 1: EL MAPA =====================
+const MAPA=["Biográfica","Cognitiva: conocimiento","Cognitiva: habilidad","Cognitiva: aptitud","No cognitiva: personalidad","No cognitiva: autoevaluación esencial","No cognitiva: interés o valor","No cognitiva: actitud"];
+const C1MAPA=[
+  ["Sabe usar Excel a nivel avanzado.",2,"Una destreza adquirida con práctica, específica. Conocimiento no es habilidad: se puede saber la teoría de las tablas dinámicas y no saber armar una."],
+  ["Aprende rápido cualquier software nuevo.",3,"Un potencial general: la aptitud predice cuánto tarda alguien en adquirir una habilidad. La más estudiada es la inteligencia general (apunte 20)."],
+  ["Es puntual y ordenado en todo lo que hace.",4,"Un patrón general y estable, sin objeto específico: responsabilidad (faceta orden)."],
+  ["Le gusta su trabajo actual.",7,"Una evaluación de un objeto específico; cambia si cambia el objeto. Los rasgos predisponen actitudes (neuroticismo y satisfacción −.29), pero no son lo mismo."],
+  ["Cree que puede con cualquier tarea que le pongan.",5,"Autoeficacia generalizada, uno de los cuatro indicadores de las autoevaluaciones esenciales (apunte 21)."],
+  ["Le molesta profundamente la injusticia.",6,"Un valor: qué considera importante. En el HEXACO aparece además como faceta de la honestidad-humildad (justicia): frontera real entre valor y rasgo."],
+  ["Tiene 24 años y tres de experiencia.",0,"Lo que se ve en un currículum. Las biográficas organizan la diversidad demográfica (Tema 4) y predicen poco por sí solas."],
+  ["Conoce al detalle la ley laboral chilena.",1,"Comprensión teórica o práctica de un tema. Saberla no es lo mismo que saber aplicarla en una negociación (habilidad)."],
+  ["Se pone nervioso cada vez que tiene que presentar.",4,"Si es un patrón general, neuroticismo (faceta ansiedad). Si ocurre solo al presentar, es un estado o una respuesta situacional, y eso es el tema de la estación 3."],
+  ["Piensa que los jefes de esta empresa no escuchan.",7,"Una actitud hacia un objeto específico (la jefatura de esta empresa). Si lo dijera de todos los jefes de todas las empresas, se acercaría a un rasgo (baja confianza) o a un valor."]
+];
+const ENT=["Variable de entrada","Proceso","Resultado: desempeño","Resultado: actitud","Resultado: bienestar"];
+const C1ENT=[
+  ["La responsabilidad de una analista.",0,"Un rasgo: entrada con efecto indirecto. Influye en procesos y modera la respuesta al contexto; no produce el desempeño por sí sola."],
+  ["Cuántos informes entregó a tiempo este mes.",2,"Conductas observables: desempeño."],
+  ["Su predisposición favorable hacia el trabajo que hace.",3,"Actitud: una predisposición evaluativa hacia el trabajo, interna, que hay que medir."],
+  ["Cómo interpretó el correo ambiguo de su jefe.",1,"Un proceso cognitivo (percepción): la vía por la que los rasgos actúan. Dos personas con distinto neuroticismo leen el mismo correo de forma distinta."],
+  ["Sus síntomas de agotamiento al final del semestre.",4,"Bienestar: salud en el trabajo. Lo que más pesa aquí son las condiciones laborales; la personalidad modula, no sustituye."],
+  ["Su inteligencia general.",0,"Una aptitud: también variable de entrada, de la familia cognitiva."]
+];
+function fleeson(){
+  const v=+document.getElementById("flS").value; document.getElementById("flV").textContent=["muy baja","baja","baja","media-baja","media","media","media-alta","alta","alta","muy alta","muy alta"][v];
+  const sd=0.15+v*0.17; const n=28; let seed=7; const rnd=()=>{ seed=(seed*9301+49297)%233280; return seed/233280; };
+  const gauss=()=>{ let u=0,w=0; while(u===0) u=rnd(); while(w===0) w=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*w); };
+  const mA=4.1, mB=3.3; const A=[],B=[]; for(let i=0;i<n;i++){ A.push(Math.min(7,Math.max(1,mA+sd*gauss()))); B.push(Math.min(7,Math.max(1,mB+sd*gauss()))); }
+  const svg=document.getElementById("svgFl"); let s=`<line x1="40" y1="160" x2="620" y2="160" stroke="#E5E7EB"/><line x1="40" y1="20" x2="40" y2="160" stroke="#E5E7EB"/>`;
+  for(let y=1;y<=7;y+=2){ const yy=160-(y-1)/6*140; s+=`<text x="30" y="${yy+4}" font-size="10" text-anchor="end" fill="#6B7280">${y}</text>`; }
+  const px=i=>45+i*(575/(n-1)), py=y=>160-(y-1)/6*140;
+  s+=`<polyline fill="none" stroke="#C8102E" stroke-width="2" points="${A.map((y,i)=>px(i)+","+py(y)).join(" ")}"/>`;
+  s+=`<polyline fill="none" stroke="#475569" stroke-width="2" points="${B.map((y,i)=>px(i)+","+py(y)).join(" ")}"/>`;
+  const avg=a=>a.reduce((x,y)=>x+y,0)/a.length; const aA=avg(A), aB=avg(B);
+  s+=`<line x1="45" y1="${py(aA)}" x2="620" y2="${py(aA)}" stroke="#C8102E" stroke-dasharray="4,4"/><line x1="45" y1="${py(aB)}" x2="620" y2="${py(aB)}" stroke="#475569" stroke-dasharray="4,4"/>`;
+  s+=`<text x="330" y="182" font-size="10" text-anchor="middle" fill="#6B7280">28 momentos de dos semanas · conducta extravertida de 1 a 7 · rojo: persona A · gris: persona B · líneas punteadas: promedios</text>`;
+  svg.innerHTML=s;
+  const cruce=A.filter((y,i)=>y>B[i]).length; document.getElementById("flCruce").textContent=`${cruce} de ${n}`;
+  document.getElementById("flDif").textContent=(aA-aB).toFixed(1)+" puntos";
+  const a1=avg(A.slice(0,14)),a2=avg(A.slice(14)),b1=avg(B.slice(0,14)),b2=avg(B.slice(14));
+  document.getElementById("flR").textContent=(Math.abs((a1-b1)-(a2-b2))<0.5?"≈ .9":"alta");
+  document.getElementById("flOut").innerHTML = v<=3? `<strong>Con poca variabilidad, A está casi siempre por encima de B.</strong> Así imaginamos la personalidad cuando pensamos en "tipos": un punto fijo. No es lo que muestran los datos.` : v<=6? `<strong>Con variabilidad realista, las dos personas se cruzan en varios momentos (${n-cruce} de ${n}) y aun así sus promedios se distinguen con claridad.</strong> Eso es un rasgo: una distribución de estados. El introvertido tiene momentos muy extravertidos; el extravertido, momentos callados. La personalidad no predice el momento; predice la tendencia.` : `<strong>Con variabilidad muy alta, los momentos de A y B casi no se distinguen (se cruzan en ${n-cruce} de ${n}) y, sin embargo, los promedios siguen separados.</strong> Fleeson encontró que la desviación estándar de una misma persona entre momentos es comparable a la del ánimo y mayor que la diferencia entre personas en su promedio; y que el promedio semanal se repite de una semana a otra con r ≈ .9.`;
+  estado.respuestas["1_fl"]=1; guardar();
+}
+const FUNC=[["Extraversión","Sensibilidad a las recompensas: busca estímulo, contacto, estatus; exploración conductual"],["Amabilidad","Coordinar mis metas con las de otros: mantener relaciones positivas (no es docilidad)"],["Neuroticismo","Sensibilidad a la amenaza y la incertidumbre: respuestas defensivas; un sistema de alarma"],["Apertura","Exploración cognitiva: ampliar y examinar la experiencia, ideas, novedad"],["Responsabilidad","Proteger metas de largo plazo de la distracción y el impulso: planificar, cumplir, seguir reglas"]];
+const Q1=[
+  {p:"¿Por qué la personalidad predice tendencias y no actos?", o:["Porque los tests son imprecisos","Porque un rasgo es una distribución de estados: la misma persona varía entre momentos tanto como la gente entre sí, pero su promedio se repite (r ≈ .9 entre semanas)","Porque la gente miente en los cuestionarios","Porque los rasgos cambian cada semana"], c:1, f:"Fleeson (2001, 2004). Por eso el perfil del BFI-2 describe promedios y por eso actuar 'fuera de carácter' es posible y frecuente.", r:"Apunte 16."},
+  {p:"Una empresa quiere predecir quién aprenderá más rápido un sistema nuevo. ¿Qué familia del mapa debería mirar primero?", o:["Biográficas (edad)","Cognitivas: aptitud","No cognitivas: actitud hacia la tecnología","No cognitivas: personalidad"], c:1, f:"La aptitud es el potencial general para adquirir habilidades; la habilidad cognitiva general predice el aprendizaje en entrenamiento mejor que cualquier otra variable del mapa.", r:"Apunte 20."},
+  {p:"\"Está contenta con su trabajo, así que tiene buena personalidad.\" ¿Qué frontera del mapa confunde?", o:["Habilidad y aptitud","Personalidad y actitud","Rasgo y valor","Biográfica y psicológica"], c:1, f:"La satisfacción es una actitud: una evaluación de un objeto específico que cambia con el objeto. Los rasgos predisponen actitudes (neuroticismo y satisfacción −.29), pero no son lo mismo.", r:"Apuntes 16 y 21."}
+];
+
+// ===================== ESTACIÓN 2: LOS CINCO =====================
+const RAS=["Extraversión","Amabilidad","Responsabilidad","Neuroticismo","Apertura"];
+const C2RASGO=[
+  ["\"Si hay una fiesta, voy; si hay un cliente difícil, mejor: me gusta la adrenalina de convencer.\"",0,"Busca recompensas, estímulo y estatus: el núcleo de la extraversión no es hablar mucho sino la sensibilidad a las recompensas. Dato más robusto del campo: más afecto positivo (r ≈ .40)."],
+  ["\"Cambié de opinión porque el argumento era bueno; con el anterior no me moví.\"",1,"Amabilidad no es docilidad: los altos en A cambian de opinión con argumentos fuertes y no con débiles; los bajos no cambian con ninguno (Habashi y Wegener, 2008)."],
+  ["\"Tengo la lista, el plazo y el plan B; lo que no está escrito no existe.\"",2,"Proteger metas lejanas del impulso: organización, productividad, cumplir. Busca hacer las cosas bien (β = .46) y tener control (Costantini et al., 2020)."],
+  ["\"Antes de la reunión ya pensé en todo lo que puede salir mal.\"",3,"Sensibilidad a la amenaza y la incertidumbre. Costo: menos satisfacción (r = −.29), más estrés. Valor: detecta riesgos que otros no ven."],
+  ["\"Prefiero el proyecto que nadie ha hecho antes, aunque no sepa cómo termina.\"",4,"Exploración cognitiva: novedad, ideas, complejidad. No es inteligencia (r = .26 con SAT verbal, .05 con matemático)."],
+  ["\"No me gusta negociar: prefiero ceder antes que pelear por diez mil pesos.\"",1,"El costo del polo alto de la amabilidad: negociar peor, evitar el conflicto necesario, y salario (−.10; éxito extrínseco de carrera β = −.32)."],
+  ["\"Me cuesta soltar una regla aunque ya no sirva.\"",2,"El costo del polo alto de la responsabilidad: rigidez, perfeccionismo, no soltar metas ni reglas cuando conviene (DeYoung: compulsividad)."],
+  ["\"Mantengo la calma en la emergencia, pero a veces subestimo los riesgos.\"",3,"El polo bajo del neuroticismo (estabilidad emocional): calma bajo presión y, como costo, menos vigilancia."]
+];
+const PRED={ // tarea, OCB, CWB, satisfacción, emergencia como líder
+  "Extraversión":[.07,.09,-.01,.25,.22,"Paga en lo visible y lo social: emergencia como líder (.22; .33 en Judge et al., 2002), ventas, engagement (.38). Para el desempeño global explica cerca del 1%. La entrevista la ve; el trabajo no siempre la paga."],
+  "Amabilidad":[.08,.14,-.26,.17,.11,"Ayuda a convivir y protege de lo peor (CWB −.26); cuesta sueldo (−.10) y promociones (−.05). Su validez para la tarea depende mucho del trabajo: .25 en salud, .03 en ventas."],
+  "Responsabilidad":[.16,.18,-.32,.26,.15,"El rasgo con validez más general: en la dirección deseable con el 98% de 175 variables laborales (Wilmot y Ones, 2019). Pero no es mágico: .14 en profesionales, y una réplica preregistrada dio .03 con desempeño ocupacional (Soto, 2019)."],
+  "Neuroticismo":[-.14,-.12,.07,-.29,-.16,"Domina la satisfacción laboral (−.29) y la vital, y es el rasgo más ligado a estrés y salud mental. Validez pequeña y general para el desempeño. Es el que más cambia con intervención (d = .57)."],
+  "Apertura":[-.01,.14,.19,.02,.16,"Casi no predice la tarea ni la satisfacción; predice aprendizaje en capacitación, creatividad e intereses. La correlación positiva con CWB viene de solo 8 estudios (N = 1.421): tratar con cautela."]
+};
+function initRasgo(){ const b=document.getElementById("rasgoBox"); b.innerHTML=""; RAS.forEach(r=>{ const d=document.createElement("div"); d.textContent=r; d.onclick=()=>{ [...b.children].forEach(x=>x.classList.remove("on")); d.classList.add("on"); rasgo(r); }; b.appendChild(d); }); }
+function rasgo(r){ const p=PRED[r]; const signo=r==="Neuroticismo"?" (valores para neuroticismo; la estabilidad emocional invierte el signo)":"";
+  barra("bT",p[0],-.4,.4,p[0]<0?"neg":"pos"); barra("bO",p[1],-.4,.4,p[1]<0?"neg":"pos"); barra("bW",p[2],-.4,.4,p[2]<0?"pos":"neg"); barra("bS2",p[3],-.4,.4,p[3]<0?"neg":"pos"); barra("bL",p[4],-.4,.4,p[4]<0?"neg":"pos");
+  ["vT","vO","vW","vS2","vL"].forEach((id,i)=>document.getElementById(id).textContent=fmt(p[i]));
+  document.getElementById("rasgoLectura").innerHTML=`<strong>${r}${signo}.</strong> ${p[5]} <span class="cita">He et al. (2019); Judge, Heller y Mount (2002); Javalagi et al. (2024).</span>`; estado.respuestas["2_rasgo"]=1; guardar(); }
+function perfil(){
+  const v={}; ["E","A","C","N","O"].forEach(k=>{ v[k]=+document.getElementById("p"+k).value/10; document.getElementById("p"+k+"v").textContent=v[k].toFixed(1); });
+  const nombres={E:"extraversión",A:"amabilidad",C:"responsabilidad",N:"neuroticismo",O:"apertura"};
+  const alto={E:"tiendes a buscar gente, estímulo y protagonismo; ayuda en ventas, liderazgo y trabajos de mucha interacción; cuesta impulsividad y riesgo",A:"tiendes a cooperar, confiar y evitar el conflicto; ayuda en equipos y servicio; cuesta negociar peor y, en promedio, algo de sueldo",C:"tiendes a planificar, cumplir y terminar; es el rasgo con validez más general para el desempeño y las notas; cuesta rigidez y perfeccionismo",N:"tiendes a preocuparte, reaccionar y anticipar riesgos; detectas lo que otros no ven; cuesta satisfacción y estrés (y es lo que más cambia con intervención)",O:"tiendes a explorar ideas, variar e imaginar; ayuda en aprendizaje, creatividad y cambio; cuesta dispersión y menor claridad de metas en equipos"};
+  const bajo={E:"prefieres pocos estímulos, observar y trabajar solo; DeYoung lo llama 'detachment', no 'volcado hacia adentro'; ayuda en trabajo concentrado; cuesta visibilidad",A:"tiendes a competir, cuestionar y decir lo que piensas; ayuda en negociar y dar malas noticias; cuesta conflicto y conducta contraproductiva",C:"tiendes a improvisar y tolerar el desorden; ayuda en entornos cambiantes; cuesta plazos y cumplimiento sostenido",N:"mantienes la calma bajo presión; ayuda en emergencias y trabajos de riesgo; cuesta subestimar riesgos",O:"prefieres lo probado, lo concreto y la rutina; ayuda en claridad de metas y procedimientos; cuesta adaptación al cambio"};
+  const dev=Object.keys(v).map(k=>({k,d:v[k]-3})).sort((a,b)=>Math.abs(b.d)-Math.abs(a.d));
+  const marc=dev.filter(x=>Math.abs(x.d)>=0.6);
+  let out="";
+  if(marc.length===0){ out="<strong>Perfil cercano al centro en los cinco rasgos.</strong> La mayoría de la gente queda entre 2.5 y 4; lo informativo es qué rasgo sobresale respecto de los otros, y aquí ninguno lo hace con claridad. Diferencias menores a 0.3 son ruido de un test breve."; }
+  else { out="<strong>Rasgos que sobresalen:</strong> "+marc.map(x=>`${nombres[x.k]} ${x.d>0?"alta":"baja"} (${v[x.k].toFixed(1)}): ${x.d>0?alto[x.k]:bajo[x.k]}`).join(". ")+"."; }
+  if(v.N>=4 && v.E<=2.5) out+=" Combinación que los metaanálisis asocian a menor satisfacción laboral (N −.29, E +.25): vale la pena mirar la situación, no solo el rasgo.";
+  if(v.C>=4 && v.A>=4) out+=" Alta responsabilidad y alta amabilidad: el perfil que más predice conducta cívica y menos conducta contraproductiva; y el que más suben los postulantes cuando fingen (d ≈ .45 y .94).";
+  out+=" <span class='cita'>Recuerda: es autoinforme (identidad), no hay polo bueno y cinco números son un mapa de baja resolución.</span>";
+  document.getElementById("perfilOut").innerHTML=out; estado.respuestas["2_perfil"]=1; guardar();
+}
+function estab(){
+  const e=+document.getElementById("edS").value; document.getElementById("edV").textContent=e;
+  const pts=[[5,.087],[15,.567],[25,.735],[50,.820],[60,.826]]; let r=pts[0][1];
+  for(let i=0;i<pts.length-1;i++){ if(e>=pts[i][0]&&e<=pts[i+1][0]){ const t=(e-pts[i][0])/(pts[i+1][0]-pts[i][0]); r=pts[i][1]+t*(pts[i+1][1]-pts[i][1]); } }
+  document.getElementById("edR").textContent=fmt0(r);
+  document.getElementById("edOut").innerHTML = e<12? "<strong>En la infancia la personalidad es poco estable:</strong> la mayor parte del aumento ocurre antes de los 35 años (96%)." : e<26? `<strong>A los ${e} años la personalidad está terminando de cuajar:</strong> la estabilidad sube rápido en la adolescencia y casi no crece después de los 25. Es justo la edad de este curso.` : "<strong>En la adultez la estabilidad se estanca cerca de .8 a mediano plazo:</strong> y aun así, a 50 años de distancia la correlación baja a .3 y el 98% cambia en al menos un rasgo. Robbins y Judge dicen que 'la clasificación general permanece casi igual': cierto a cinco años, no a cincuenta.";
+  estado.respuestas["2_estab"]=1; guardar();
+}
+const Q2=[
+  {p:"Un gerente quiere 'contratar gente alta en todo, menos en neuroticismo'. ¿Qué le dirías?", o:["Buena idea: todos los rasgos son socialmente deseables","Cada polo paga un costo: extraversión y riesgo, amabilidad y negociar peor, responsabilidad y rigidez, apertura y dispersión; y el polo bajo de neuroticismo subestima riesgos. No hay polo bueno; hay ajuste con la situación","Solo importa la responsabilidad","La personalidad no se puede medir"], c:1, f:"Robbins y Judge afirman que todos los rasgos son 'socialmente deseables'; la evidencia de trade-offs lo contradice.", r:"Apunte 16."},
+  {p:"¿Cuánto del desempeño laboral global explican los cinco rasgos juntos?", o:["Cerca del 40%","Cerca del 20%","R² ≈ .04, con la responsabilidad aportando la mitad; la personalidad predice más lo discrecional (OCB, CWB, satisfacción) que la tarea","Nada: Mischel tenía razón"], c:2, f:"He et al. (2019). 'Válido' no significa 'alto': la validez de la responsabilidad fue .12 sin corregir, .31 corregida en los 90 y .19 re-corregida en 2022.", r:"Apunte 17."},
+  {p:"¿Qué rasgo cambia más con una intervención de 4 a 8 semanas?", o:["Apertura","Responsabilidad","Estabilidad emocional (d = .57), y el efecto dura más de un año","Ninguno: la personalidad no cambia"], c:2, f:"Roberts et al. (2017), 207 estudios. Menos de 4 semanas casi no sirve; más de 8 no añade. No esperen transformaciones de un taller de dos días.", r:"Apunte 16."},
+  {p:"La personalidad, el nivel socioeconómico de origen y la inteligencia como predictores de mortalidad, divorcio y logro ocupacional: ¿cuál pesa más?", o:["La inteligencia, por lejos","El nivel socioeconómico","Son 'indistinguibles': todos los efectos son pequeños a medianos, y la personalidad pesa tanto como los otros dos","La personalidad pesa el doble"], c:2, f:"Roberts et al. (2007). Con dos cautelas: para notas y años de estudio la inteligencia explica mucho más (Zisman y Ganzach, 2022), y el efecto de la responsabilidad sobre longevidad no se sostuvo en un mega-análisis posterior (Beck y Jackson, 2022).", r:"Apunte 16."}
+];
+
+// ===================== ESTACIÓN 3: LA SITUACIÓN =====================
+function wiersma(){ const i=document.getElementById("wi").value, c=document.getElementById("wc").value; if(!i||!c){ alert("Elige los dos rasgos."); return; }
+  const ok=(i==="Extraversión")+(c==="Responsabilidad"); const o=document.getElementById("wOut"); o.style.display="block"; o.className="nota "+(ok===2?"ok":"");
+  o.innerHTML=`<strong>${ok===2?"Las dos.":ok===1?"Una de dos.":"Ninguna."}</strong> Extraversión: r = .25 con el sueldo inicial y .04 con su crecimiento. Responsabilidad: .07 con el inicial y .26 con el crecimiento. Todas las empresas usaron entrevistas no estructuradas: la extraversión se ve en 45 minutos (apariencia y evaluación correlacionan .88 en entrevistas no estructuradas vs .18 en estructuradas); la responsabilidad solo se ve trabajando, y nadie preguntó las notas (r = .45 con C). Cautelas: 96 personas, una carrera, un país; la diferencia entre correlaciones no fue significativa en el test directo. La lección: la validez de un rasgo depende de qué conducta la situación deja ver. <span class="cita">Wiersma y Kappe (2017).</span>`;
+  estado.respuestas["3_w"]=ok===2?1:0; guardar(); }
+function fuerza(){
+  const f=[1,2,3,4].map(i=>{ const v=+document.getElementById("f"+i).value; document.getElementById("f"+i+"v").textContent=v; return v; });
+  const F=f.reduce((a,b)=>a+b,0)/4; document.getElementById("fF").textContent=F.toFixed(1)+" / 5";
+  const n=document.getElementById("fFN"); n.className="nivel "+(F<2.5?"min":F<3.5?"mod":"max"); n.textContent=F<2.5?"situación débil":F<3.5?"intermedia":"situación fuerte";
+  const val=0.35-(F-1)*(0.26/4); document.getElementById("fV").textContent=fmt0(val);
+  const m=document.getElementById("fVN"); m.className="nivel "+(val>=.28?"bien":val>=.15?"mod":"max"); m.textContent=val>=.28?"grande":val>=.15?"mediana":"pequeña";
+  const alta=f.map((v,i)=>v>=4?["claridad","consistencia","restricciones","consecuencias"][i]:null).filter(x=>x);
+  document.getElementById("fOut").innerHTML = (F>=3.5? `<strong>Situación fuerte${alta.length?" (alta en "+alta.join(", ")+")":""}:</strong> todos terminan haciendo lo mismo y la personalidad deja de predecir. Ejemplo: cuando el costo del error es alto, los poco y los muy responsables trabajan igual de cuidadosos (Meyer, Dalal y Bonaccio, 2009). Lo que la personalidad sí predice aquí es lo discrecional: el trato, la conducta cívica y la contraproductiva.` : F<2.5? `<strong>Situación débil:</strong> hay margen para decidir cómo, cuándo y con quién, y ahí vive la personalidad. Judge y Zapata (2015): en los trabajos más 'débiles' la validez de la extraversión sube de .11 a .29 y la de la amabilidad a .31.` : `<strong>Situación intermedia:</strong> la tarea central suele ser fuerte (demanda primaria, con consecuencias) y el margen está en las demandas secundarias. Lee cuál de las cuatro facetas domina: no pesan igual en todos los puestos, aunque en promedio moderan parecido (Ritz et al., 2023).`) + ` <span class="cita">Valor ilustrativo, calibrado al rango .09 a .35 de Tett y Burnett (2003).</span>`;
+  estado.respuestas["3_fuerza"]=1; guardar();
+}
+const CLAVES=["Demanda","Distractor","Restricción","Liberador","Facilitador","Discrecional"];
+const C3CLAVES=[
+  ["El puesto exige cerrar el presupuesto cada mes con cero errores (para la responsabilidad).",0,"Oportunidad de expresar el rasgo de forma valorada. Las demandas primarias (la tarea con consecuencias) dejan poco margen; las secundarias (cómo, cuándo, con quién) son el territorio de la personalidad."],
+  ["La conversación en el dispensador de agua, para una persona muy sociable con un plazo encima.",1,"Expresar el rasgo interfiere con el desempeño. Otro clásico: la 'parálisis por análisis' de la persona muy metódica."],
+  ["Un sistema automatizado decide el orden de las tareas y un supervisor revisa cada paso (para la responsabilidad).",2,"Suprime la clave: anula el rasgo. La supervisión cercana o un sistema automatizado quitan la demanda de metodicidad; el aislamiento físico quita la de sociabilidad."],
+  ["Una crisis inesperada en una oficina rutinaria, para la estabilidad emocional.",3,"Un evento discreto que contrarresta una restricción: el rasgo que la rutina no dejaba ver aparece. Otros liberadores: un retiro de planificación, entrenar a un recluta."],
+  ["La consigna 'piensen fuera de la caja' en una reunión de diseño, para la apertura.",4,"Amplifica una clave que ya existe. Un recordatorio del plazo hace lo mismo con la responsabilidad."],
+  ["Un vendedor ayuda a sus pares con clientes difíciles aunque nadie se lo pide ni lo paga (amabilidad).",5,"Expresar un rasgo que no se exige ni se recompensa: ligado a la autonomía. Es la zona de la conducta cívica."],
+  ["Trabajar 100% remoto, para la extraversión.",2,"Una restricción crónica: el aislamiento anula las claves de sociabilidad. Y fuera de la oficina baja además el estado de responsabilidad (Collis et al., 2026)."],
+  ["Un cliente insatisfecho que exige firmeza, para una persona muy amable.",1,"Distractor: expresar la amabilidad (ceder, evitar el conflicto) estorba al desempeño. Es el polo alto pagando su costo."]
+];
+const OCUP=[["Oficios calificados y semicalificados",.24,.08,.14,.04,.03,"En trabajos simples la situación es fuerte: la responsabilidad y algo de estabilidad emocional predicen; el resto, casi nada."],["Administrativo",.25,.18,.17,.14,.17,"Complejidad moderada: todos los rasgos aportan algo y la correlación múltiple es de las más altas (.30)."],["Ventas",.27,.03,.10,.14,.03,"La amabilidad vale .03: cerrar una venta exige firmeza, no comunión. La extraversión aporta (.14) y la responsabilidad más (.27)."],["Militar",.31,.10,.25,.13,.16,"La estabilidad emocional vale .25: demanda de seguridad bajo presión. La responsabilidad llega a .31."],["Salud",.33,.25,.09,.11,.02,"La amabilidad vale .25, la más alta de todos los grupos: demanda de comunión. La responsabilidad, .33."],["Servicio al cliente",.23,.11,.13,.13,.11,"Demandas sociales moderadas; perfil parejo."],["Policía",.23,.10,.14,.10,.06,"Estabilidad emocional y responsabilidad; la apertura casi no cuenta."],["Gerencia",.17,.05,.07,.14,.08,"La responsabilidad baja a .17 y la extraversión aporta (.14). Las facetas orden y cautela predicen al revés en gerencia (−.13; Dudley et al., 2006)."],["Profesionales",.14,.04,.04,.02,.20,"La apertura vale .20 (demanda de autonomía e ideas); la responsabilidad baja a .14. En trabajos muy complejos manda la capacidad cognitiva."]];
+function initOcup(){ const s=document.getElementById("ocSel"); s.innerHTML=`<option value="">elige un grupo ocupacional...</option>`+OCUP.map((o,i)=>`<option value="${i}">${o[0]}</option>`).join(""); }
+function ocup(){ const i=document.getElementById("ocSel").value; if(i==="") return; const o=OCUP[+i];
+  [["oC",1],["oA",2],["oES",3],["oE",4],["oO",5]].forEach(([id,k])=>{ barra(id,o[k],0,.4,"pos"); document.getElementById("v"+id).textContent=fmt0(o[k]); });
+  document.getElementById("ocOut").innerHTML=`<strong>${o[0]}.</strong> ${o[6]} <span class="cita">Wilmot y Ones (2021), correlaciones corregidas.</span>`; estado.respuestas["3_ocup"]=1; guardar(); }
+const Q3=[
+  {p:"Un aviso pide 'resistencia a la presión' para un puesto con guion, supervisión cercana y procedimientos obligatorios. ¿Cuál es el problema?", o:["Ninguno: la estabilidad emocional siempre predice","La situación es fuerte: no va a dejar ver el rasgo, así que seleccionar por él es pedir a ciegas (validez .10 vs .26 cuando el rasgo se elige por análisis del puesto)","Hay que pedir extraversión","La estabilidad emocional no se puede medir"], c:1, f:"Tett y Burnett (2003); Tett et al. (1999): los estudios confirmatorios obtienen el doble de validez que los exploratorios.", r:"Apunte 17."},
+  {p:"¿Por qué la amabilidad vale .25 en salud y .03 en ventas?", o:["Porque los vendedores mienten más","Porque la situación convoca rasgos distintos: salud demanda comunión; ventas demanda cerrar, y ceder estorba","Porque en salud hay más mujeres","Porque el metaanálisis tiene error"], c:1, f:"Activación de rasgos: relevancia (qué rasgo convoca la situación) más fuerza (cuánto margen deja). Barrick, Mount y Li (2013): amabilidad y meta de comunión.", r:"Wilmot y Ones (2021); apunte 17."},
+  {p:"¿Qué dice la evidencia sobre 'el trabajo también moldea la personalidad'?", o:["Es falso: la personalidad es genética","Es cierto y grande: un cambio de trabajo transforma a la gente","Es cierto y pequeño: el primer empleo sube la responsabilidad (d = 0.28), más demandas de tiempo suben el neuroticismo, y los efectos se concentran en N; la calle tiene dos vías (modelo DATA)","Solo ocurre en trabajos remotos"], c:2, f:"Woods et al. (2019); Bühler et al. (2024); Wu (2016). Para administradores: diseñar el trabajo es, en pequeño y con el tiempo, diseñar a la gente.", r:"Apunte 17."}
+];
+
+// ===================== ESTACIÓN 4: HEXACO =====================
+const JUEGO=["Dictador: convoca a H","Ultimátum: convoca a A"];
+const C4JUEGO=[
+  ["Un cajero de supermercado nota que el sistema no registró una compra y nadie lo va a notar.",0,"Puede explotar sin castigo: la situación de la honestidad-humildad. Los bajos en H eligen la opción egoísta cuando el castigo es improbable y cooperan cuando es probable (Hilbig et al., 2012)."],
+  ["Un colega te deja todo el trabajo del informe y tú decides si lo denuncias o lo aguantas.",1,"Te están explotando y decides si sigues cooperando: la situación de la amabilidad 'versus ira' (tolerancia, perdón, paciencia)."],
+  ["Una gerenta puede inflar los gastos de representación; auditoría revisa una de cada cien rendiciones.",0,"Castigo improbable más recompensa clara: el ítem 12 del HEXACO-60 en versión corporativa. La palanca no es solo seleccionar por H; es hacer probable el castigo."],
+  ["Tu jefe te asigna la peor parte del proyecto sin consultarte; puedes protestar o aceptar.",1,"Oferta injusta que puedes rechazar: ultimátum. Aceptar ofertas injustas correlaciona .19 con A y −.01 con H."],
+  ["Un alumno encuentra la pauta de la prueba en una fotocopiadora.",0,"Oportunidad de sacar ventaja sin que nadie lo note: H. Y una situación que un diseño mejor (trazabilidad, pautas custodiadas) habría eliminado."]
+];
+const HEX=[["H",27,"Honestidad-humildad: tres cuartos de lo que mide no está en el Big Five. Correlaciona .47 con la amabilidad del Big Five, que la contiene en parte (49% con el NEO-PI-R, que tiene facetas de franqueza y modestia)."],["E",61,"Emocionalidad: una rotación del neuroticismo (N-E .63). La ira salió de aquí hacia baja A; la sentimentalidad entró desde la A del Big Five."],["X",92,"Extraversión: prácticamente la misma (.91)."],["A",58,"Amabilidad versus ira: una rotación de la A del Big Five (.69). Aquí vive ahora la ira (paciencia, perdón, gentileza, flexibilidad)."],["C",82,"Responsabilidad: prácticamente la misma (.90)."],["O",81,"Apertura: prácticamente la misma (.89). La inteligencia no está aquí."]];
+function initHex(){ const b=document.getElementById("hexBox"); b.innerHTML=""; HEX.forEach(h=>{ const d=document.createElement("div"); d.textContent=h[0]; d.className=h[1]<50?"ctrl":h[1]<70?"amo":"auto"; d.onclick=()=>{ [...b.children].forEach(x=>x.classList.remove("on")); d.classList.add("on"); barra("bHex",h[1],0,100,h[1]<50?"neg":"pos"); document.getElementById("vHex").textContent=h[1]+"%"; document.getElementById("hexOut").innerHTML=`<strong>${h[2]}</strong> <span class="cita">Thielmann et al. (2022). HEXACO no es 'Big Five + 1': es una repartición de la varianza de N y A en E, A y H.</span>`; estado.respuestas["4_hex"]=1; guardar(); }; b.appendChild(d); }); }
+const PLZ=[["Apertura",-.08,-.04,"Ni la apertura ni la extraversión predicen la desviación en ninguno de los dos modelos."],["Responsabilidad",-.37,-.40,"Casi igual en los dos modelos: la responsabilidad cuida las normas (predice más la desviación contra la organización, −.40, que contra personas, −.26)."],["Extraversión",-.05,-.01,"Nada que ver con la desviación."],["Amabilidad",-.36,-.19,"La A del Big Five predice más porque contiene parte de H (correlacionan .47): parte de su validez es validez de la honestidad-humildad. La A del HEXACO (versus ira) cuida a la gente: predice más la desviación interpersonal."],["Neuroticismo / Emocionalidad",.19,-.14,"Direcciones opuestas: el neuroticismo contiene ira (faceta ira +.28, ansiedad −.07; Hastings y O'Neill, 2009), que empuja a la desviación; la emocionalidad contiene miedo y dependencia, y los altos en E temen las represalias. La rotación puesta a prueba con un criterio externo."],["Honestidad-Humildad",null,-.48,"El predictor más fuerte de todos, sin contraparte en el Big Five. Varianza explicada: 19% con los cinco, 32% con los seis. Cautelas: muestras distintas, sin heteroinforme en HEXACO, la ventaja baja de 13 a 9 puntos sin correcciones, transversal."]];
+function initPl(){ const svg=document.getElementById("svgPl"); const cx=380, sc=220; let s=`<line x1="${cx}" y1="10" x2="${cx}" y2="245" stroke="#1F2937"/>`;
+  PLZ.forEach((r,i)=>{ const y=18+i*38; s+=`<g style="cursor:pointer" onclick="pletzer(${i})"><text x="238" y="${y+16}" font-size="11" text-anchor="end" fill="#1F2937">${r[0]}</text>`;
+    if(r[1]===null) s+=`<text x="${cx-6}" y="${y+10}" font-size="9" text-anchor="end" fill="#6B7280" font-style="italic">(no existe en el Big Five)</text>`; else { const w=Math.abs(r[1])*sc; s+=`<rect x="${r[1]<0?cx-w:cx}" y="${y}" width="${w}" height="12" fill="#9CA3AF"/><text x="${r[1]<0?cx-w-4:cx+w+4}" y="${y+10}" font-size="10" text-anchor="${r[1]<0?"end":"start"}" fill="#6B7280">${fmt(r[1])}</text>`; }
+    const w2=Math.abs(r[2])*sc; s+=`<rect x="${r[2]<0?cx-w2:cx}" y="${y+14}" width="${w2}" height="12" fill="#C8102E"/><text x="${r[2]<0?cx-w2-4:cx+w2+4}" y="${y+24}" font-size="10" text-anchor="${r[2]<0?"end":"start"}" fill="#C8102E" font-weight="700">${fmt(r[2])}</text></g>`; });
+  s+=`<rect x="20" y="248" width="10" height="8" fill="#9CA3AF"/><text x="34" y="256" font-size="10" fill="#1F2937">Big Five</text><rect x="90" y="248" width="10" height="8" fill="#C8102E"/><text x="104" y="256" font-size="10" fill="#1F2937">HEXACO</text><text x="620" y="256" font-size="10" text-anchor="end" fill="#6B7280">ρ con desviación laboral; Pletzer et al. (2019), Tabla 1</text>`;
+  svg.innerHTML=s; }
+function pletzer(i){ const r=PLZ[i]; document.getElementById("plOut").innerHTML=`<strong>${r[0]}: ${r[1]===null?"":"Big Five "+fmt(r[1])+", "}HEXACO ${fmt(r[2])}.</strong> ${r[3]}`; estado.respuestas["4_pl"]=1; guardar(); }
+const AFF=["Explotación → H","Inseguridad → E","Socialidad → X","Obstrucción → A","Deber → C","Exploración → O"];
+const C4AFF=[
+  ["Acceso fácil a dinero o estatus y nadie controla.",0,"La situación permite ganar a costa de otros: honestidad-humildad (DIAMONDS: engaño)."],["Peligro físico o amenaza a los tuyos.",1,"Evitar amenazas y buscar apoyo: emocionalidad (negatividad)."],["Presidir una reunión, conocer gente, una fiesta.",2,"Actividad grupal y atención social: extraversión (socialidad)."],["Ser tratado con injusticia y poder vengarte o perdonar.",3,"Represalia o ceder: amabilidad versus ira (adversidad)."],["Tareas por hacer, plazos, otros trabajando.",4,"Rendir y orientarse a metas o procrastinar: responsabilidad (deber)."],["Un problema intelectual nuevo.",5,"Descubrir e idear o conformarse: apertura (intelecto)."]
+];
+function psico(){ const e=+document.getElementById("psS").value/100; const o=document.getElementById("psOut"); o.style.display="block"; o.className="nota "+(Math.abs(e-.07)<=.1?"ok":"");
+  o.innerHTML=`<strong>Tu estimación: ${fmt(e)}. La cifra: ρ = .07 con emergencia como líder, −.04 con eficacia.</strong> 'Uno de cada cinco CEOs es psicópata' no tiene respaldo: la alarma 'puede estar exagerada' (Landay et al., 2019). Lo que sí: el liderazgo transformacional visto por los subordinados correlaciona −.58 (k = 3), y lo que en un hombre se tolera en una mujer se sanciona (eficacia .03 vs −.18). En el trabajo (O'Boyle et al., 2012; 245 muestras): con desempeño, maquiavelismo −.07, narcisismo −.03, psicopatía −.10; con conducta contraproductiva, .25, .43 y .07. Y los altos en maquiavelismo responden a consecuencias, no a cursos de ética (Hemsey y Dahling, 2024). No son diagnósticos: son dimensiones continuas en población general.`;
+  estado.respuestas["4_ps"]=1; guardar(); }
+const Q4=[
+  {p:"Un gerente concluye: 'las personas deshonestas causan los robos; basta seleccionar por honestidad-humildad'. ¿Qué objeción es correcta?", o:["Ninguna: H predice la desviación con ρ = −.48","Varias: todo es correlacional y transversal; los bajos en H cooperan cuando el castigo es probable, así que la situación sigue mandando; ρ = −.48 deja la mayor parte de la varianza sin explicar; y los postulantes suben .68 DE en H","La honestidad no se puede medir","Es mejor usar un test de inteligencia"], c:1, f:"Es la pregunta 12 de la guía de lectura. Pletzer et al.: 'las organizaciones pueden reducir la desviación evitando las señales situacionales que activan la expresión de bajos H, C, A y E'. Seleccionar y diseñar son dos palancas.", r:"Apunte 18."},
+  {p:"¿Por qué la amabilidad del Big Five predice más desviación (−.36) que la del HEXACO (−.19)?", o:["Porque el HEXACO está mal construido","Porque contiene parte de la honestidad-humildad (correlacionan .47): parte de su validez es validez de H","Porque tiene más ítems","Porque mide la ira"], c:1, f:"Y al revés: la A del HEXACO contiene la ira que salió del neuroticismo, y por eso predice más la desviación contra personas.", r:"Pletzer et al. (2019); Thielmann et al. (2022)."},
+  {p:"¿Qué predice la honestidad-humildad y qué no?", o:["Predice todo: desempeño, liderazgo y conducta cívica","Predice casi todo lo que implica aprovecharse de otros (rasgos oscuros −.69, decisión no ética −.51, CWB −.41) y casi nada del 'hacer más' (desempeño .06, OCB .15)","No predice nada: es una faceta de la amabilidad","Solo predice en Europa"], c:1, f:"Zettler et al. (2020), 426 metaanálisis. Es el rasgo del 'no hacer daño'.", r:"Apunte 18."}
+];
+
+// ===================== ESTACIÓN 5: EL TRIBUNAL =====================
+const FORQ=["Prefiero (a) empezar el día con una lista o (b) ver qué pasa.","En un grupo nuevo suelo (a) escuchar primero o (b) hablar primero.","Trabajo mejor (a) con plazos claros o (b) con libertad de horario.","Ante un problema difícil (a) busco datos o (b) confío en mi intuición.","Los fines de semana prefiero (a) planes fijos o (b) improvisar."];
+function initForer(){ const c=document.getElementById("forerQ"); c.innerHTML=FORQ.map((q,i)=>`<div class="pregunta" style="margin-bottom:.5rem"><strong>${i+1}.</strong> ${q}<br><span class="opc fo" data-q="${i}" data-v="a">a</span><span class="opc fo" data-q="${i}" data-v="b">b</span></div>`).join("");
+  c.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ c.querySelectorAll(`.opc[data-q="${el.dataset.q}"]`).forEach(x=>x.classList.remove("correcta")); el.classList.add("correcta"); }); }
+function forerPerfil(){ document.getElementById("forerP").style.display="block"; document.getElementById("forerBtn").disabled=true; }
+function forerReveal(){ const v=+document.getElementById("foS").value; const o=document.getElementById("foOut"); o.style.display="block"; o.className="nota "+(v>=3?"":"ok");
+  o.innerHTML=`<strong>Le pusiste ${v} sobre 5. El perfil es el mismo para todos, y las cinco preguntas no se usaron para nada.</strong> Forer (1949) hizo esto con sus estudiantes con frases de un libro de astrología: le pusieron 4.26 sobre 5 en promedio. Funciona porque las frases son vagas ('a veces sociable, a veces reservado'), positivas ('capacidad sin aprovechar') y universales. La lección: que un resultado te describa no es evidencia de que el test mida algo. La aceptación del usuario es la forma más débil de validez, y es la que más se vende ('el 90% dice que su tipo es exacto'). <span class="cita">Forer (1949); Stein y Swan (2019).</span>`;
+  estado.respuestas["5_forer"]=1; guardar(); }
+const REG=["1. Confiabilidad","2. Estructura","3. Constructo","4. Criterio e incremental","5. Equidad y normas","6. Faking y consecuencias"];
+const C5REG=[
+  ["El 35% de las personas obtiene un tipo de cuatro letras distinto al repetir el MBTI a las cuatro semanas.",0,"Las escalas continuas son confiables (.73 a .93); lo que no es estable es la tipología: quien queda cerca del corte cambia de lado por azar."],
+  ["Los análisis factoriales del eneagrama encuentran menos de nueve factores y ningún estudio deriva los nueve tipos por agrupamiento.",1,"Los ítems no se agrupan como dice la teoría del test (Hook et al., 2021)."],
+  ["Las cuatro escalas del MBTI correlacionan entre −.74 y .44 con cuatro de los Big Five: mide lo mismo, con otro nombre y sin el quinto rasgo.",2,"Validez de constructo: converge con lo establecido; y lo que le falta (neuroticismo) es justo lo que más predice satisfacción y salud."],
+  ["No hay estudios que muestren que el tipo MBTI prediga desempeño más allá de lo que ya se mide.",3,"Validez de criterio e incremental: el estándar de comparación existe (entrevista estructurada .42, GMA .31, responsabilidad contextualizada .25) y hay que superarlo."],
+  ["Una consultora chilena usa normas de España de 1995 y no entrega manual técnico.",4,"Equidad y normas: normas locales recientes, manual con puntuación transparente, evidencia de que mide igual en distintos grupos. Sin manual no hay test: hay un producto."],
+  ["Nadie midió cuánto se puede fingir el test ni qué pasa con los rechazados.",5,"Faking y consecuencias: la validez es de las inferencias y sus consecuencias, no del instrumento (Messick)."],
+  ["Con textos neutros (copiar un párrafo), la validez de los grafólogos cae a cero; con textos autobiográficos predicen igual que un lego.",3,"Lo que predice es el contenido del texto, no la letra: la grafología no agrega nada sobre leer el texto (Neter y Ben-Shakhar, 1989). Sentencia: prohibida para selección."]
+];
+function retest(){ const r=+document.getElementById("rtS").value/100; document.getElementById("rtV").textContent=fmt0(r);
+  // simulación: N bivariadas con correlación r; proporción que cambia de signo
+  let seed=11; const rnd=()=>{ seed=(seed*9301+49297)%233280; return seed/233280; }; const g=()=>{ let u=0,w=0; while(u===0)u=rnd(); while(w===0)w=rnd(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*w); };
+  const N=4000; let camb=0; const hist=new Array(20).fill(0); for(let i=0;i<N;i++){ const z1=g(); const z2=r*z1+Math.sqrt(1-r*r)*g(); if((z1<0)!==(z2<0)) camb++; const b=Math.min(19,Math.max(0,Math.floor((z1+3)/6*20))); hist[b]++; }
+  const p=camb/N*100; document.getElementById("rtP").textContent=p.toFixed(0)+"%";
+  const svg=document.getElementById("svgRt"); const mx=Math.max(...hist); let s=""; hist.forEach((h,i)=>{ const x=40+i*28, hh=h/mx*120; s+=`<rect x="${x}" y="${145-hh}" width="24" height="${hh}" fill="${i<10?"#FDF2F3":"#DBEAFE"}" stroke="#E5E7EB"/>`; });
+  s+=`<line x1="320" y1="15" x2="320" y2="150" stroke="#C8102E" stroke-width="2" stroke-dasharray="5,4"/><text x="180" y="165" font-size="11" text-anchor="middle" fill="#6B7280">"Introvertido"</text><text x="460" y="165" font-size="11" text-anchor="middle" fill="#6B7280">"Extravertido"</text><text x="320" y="12" font-size="10" text-anchor="middle" fill="#C8102E">el corte</text>`;
+  svg.innerHTML=s;
+  document.getElementById("rtOut").innerHTML=`<strong>Con una escala de confiabilidad ${fmt0(r)}, cerca del ${p.toFixed(0)}% cambia de lado al repetir, porque la mayoría está cerca del corte.</strong> Con cuatro escalas, la probabilidad de conservar las cuatro letras baja mucho más. Y dicotomizar pierde información: la varianza compartida con otra variable baja a .64 de la original; si se cortan las dos, a .40 (Cohen, 1983). Vale para 16 tipos (MBTI), 9 (eneagrama), 4 (DISC) y 12 (signos): ningún análisis taxométrico encuentra un tipo natural. <span class="cita">Simulación con distribución normal; Pittenger (2005); Reynierse (2013).</span>`;
+  estado.respuestas["5_rt"]=1; guardar(); }
+const IA=[["ChatGPT-4",1.95,99,1.73,100,"Sobre el percentil 99 en los dos rasgos. En el formato de elección forzada, el que mejor resiste el faking humano, sigue entre el percentil 85 y el 98: el formato frena a los humanos y a los modelos débiles, no al mejor modelo."],["ChatGPT-3.5",.79,76,.65,70,"Finge mejor que el estudiante promedio, pero lejos de GPT-4; en elección forzada queda bajo la mediana."],["Google Bard",-.53,33,.45,66,"Fingió peor la extraversión que un estudiante promedio."],["Jasper",.15,54,-.06,44,"Prácticamente igual que un estudiante instruido a fingir."]];
+function initIA(){ const b=document.getElementById("iaBox"); b.innerHTML=""; IA.forEach(m=>{ const d=document.createElement("div"); d.textContent=m[0]; d.onclick=()=>{ [...b.children].forEach(x=>x.classList.remove("on")); d.classList.add("on"); document.getElementById("iaOut").innerHTML=`<strong>${m[0]}: extraversión d = ${m[1].toFixed(2)} (percentil ${m[2]}); responsabilidad d = ${m[3].toFixed(2)} (percentil ${m[4]}).</strong> ${m[5]} Todos fingieron peor la responsabilidad que la extraversión: el estereotipo del vendedor es extravertido, y los modelos reproducen estereotipos. Cautelas: versiones gratuitas de 2023, una sesión por modelo, estudiantes y no postulantes reales. <span class="cita">Phillips y Robie (2024).</span>`; estado.respuestas["5_ia"]=1; guardar(); }; b.appendChild(d); }); }
+function berry(){ const w=+document.getElementById("gmS").value/100; document.getElementById("gmV").textContent=fmt0(w);
+  const R=.56+(w/.20)*(.61-.56), A=.67-(w/.20)*(.67-.42); document.getElementById("gmR").textContent=fmt0(R); document.getElementById("gmA").textContent=fmt0(A);
+  const n=document.getElementById("gmAN"); n.className="nivel "+(A>=.8?"bien":A>=.6?"mod":"max"); n.textContent=A>=.8?"cumple la regla de los cuatro quintos":A>=.6?"impacto adverso moderado":"impacto adverso alto";
+  document.getElementById("gmOut").innerHTML=(w>=.18?"<strong>Máxima validez (.61) con ratio de impacto adverso .42:</strong> la tasa de selección del grupo minoritario es menos de la mitad de la del mayoritario.":w<=.02?"<strong>Sin test de inteligencia: la validez baja a .56 y el ratio sube a .67.</strong> Con la matriz antigua (1998-2011) quitar GMA bajaba la validez de .59 a .46; con la nueva, cuesta poco.":"<strong>Zona intermedia (interpolada).</strong> Para alcanzar .80, la 'regla de los cuatro quintos', la validez cae a .48 con una batería que pesa conciencia, entrevista e integridad.")+" Por qué cambió: la inteligencia tiene la mayor diferencia entre grupos (d = .79) y ya no la mayor validez (.31 vs entrevista estructurada .42). Lo que no dice: que la inteligencia no sirva; para aprender un trabajo nuevo sigue siendo probablemente el mejor predictor. Regla práctica (y chilena: piensen en la PAES): a cualquier test se le piden sus diferencias entre grupos, no solo su validez. <span class='cita'>Berry et al. (2024); apunte 20.</span>";
+  estado.respuestas["5_berry"]=1; guardar(); }
+function didier(){ const e=+document.getElementById("dpS").value; const o=document.getElementById("dpOut"); o.style.display="block"; o.className="nota "+(e>=90?"ok":"");
+  o.innerHTML=`<strong>Tu estimación: ${e}%. La cifra: 100%.</strong> Los 4.329 avisos exigían Lüscher y Zulliger; el 68% pedía tests psicométricos (Dominó 23%, Wonderlic 18%, MBTI 7%); el 35% tests gráficos (grafología en el 28% de ellos). La revisión de la evidencia 1920-2013: para Lüscher 'no se encontraron estudios de validez predictiva', para Zulliger 'no ha sido probada', para 'persona bajo la lluvia' 'no se encontró investigación alguna'. Y nadie regula: la Ley 20.609 prohíbe discriminar, pero no sanciona usar instrumentos sin validez. Ustedes van a ser los clientes de estos psicólogos: pidan el manual. <span class="cita">Didier Pino (2014).</span>`;
+  estado.respuestas["5_dp"]=1; guardar(); }
+const Q5=[
+  {p:"El mejor argumento de la defensa en el tribunal: 'los tests científicos también fallan: la tabla de validez se corrigió en 2022 y la gente finge'. ¿Qué responde la fiscalía?", o:["Que los tests científicos nunca fallan","Que esa es justamente la diferencia: los tests validados tienen expediente, y el expediente se corrige; un test sin expediente no se puede corregir","Que el faking no existe","Que la tabla de 2022 está equivocada"], c:1, f:"Y 'sirve para conversar' es un uso legítimo si se declara; el problema es cuando la conversación decide un ascenso.", r:"Apunte 19."},
+  {p:"'Los tests de personalidad no sirven porque la gente miente.' ¿Qué dice la evidencia?", o:["Es cierto: la validez desaparece","Los postulantes suben cerca de .45 DE y ~30% finge; la validez se atenúa pero no desaparece; las escalas de mentira no sirven (ρ = .04); se maneja con diseño, no con desconfianza","Nadie finge","Solo fingen los extravertidos"], c:1, f:"Birkeland et al. (2006); Griffith y Robie (2013); Lanz et al. (2022); y Anglim et al. (2018) con el HEXACO: R² .18 vs .11, diferencia no significativa.", r:"Apunte 19."},
+  {p:"Una consultora ofrece un 'test de potencial' para tu primera selección. ¿Qué dos preguntas haces antes de firmar?", o:["¿Cuánto cuesta? ¿Es online?","¿Lo usan empresas grandes? ¿A la gente le gusta?","¿Me muestra el manual técnico con normas chilenas? ¿Qué predice, en qué muestra, con qué correlación y qué agrega sobre una entrevista estructurada?","¿Tiene colores? ¿Es rápido?"], c:2, f:"Popularidad y aceptabilidad miden marketing, no validez. Los profesionales de RR.HH. aciertan menos del 20% en los mitos de selección (Rynes et al., 2002; Fisher et al., 2021).", r:"Apunte 19."}
+];
+
+// ===================== ESTACIÓN 6: NO ES UN RASGO =====================
+const SACK=[["Entrevista estructurada",.42],["Datos biográficos",.38],["Habilidad cognitiva general",.31],["Responsabilidad contextualizada",.25],["Responsabilidad (medida general)",.19],["Años de experiencia",.07]];
+let ordenAct=[];
+function initOrden(){ ordenAct=[0,1,2,3,4,5].sort(()=>Math.random()-.5); pintarOrden(); }
+function pintarOrden(){ const ul=document.getElementById("ordSack"); ul.innerHTML=""; ordenAct.forEach((k,i)=>{ const li=document.createElement("li"); li.innerHTML=`<span class="n">${i+1}</span><span class="txt">${SACK[k][0]}</span><button onclick="moverOrden(${i},-1)">▲</button><button onclick="moverOrden(${i},1)">▼</button>`; ul.appendChild(li); }); }
+function moverOrden(i,d){ const j=i+d; if(j<0||j>=ordenAct.length) return; [ordenAct[i],ordenAct[j]]=[ordenAct[j],ordenAct[i]]; pintarOrden(); }
+function checkOrden(){ const lis=[...document.querySelectorAll("#ordSack li")]; let ok=0; ordenAct.forEach((k,i)=>{ const b=k===i; lis[i].classList.remove("bien","mal"); lis[i].classList.add(b?"bien":"mal"); if(b) ok++; lis[i].querySelector(".txt").textContent=SACK[k][0]+" ("+fmt0(SACK[k][1])+")"; });
+  const o=document.getElementById("ordOut"); o.style.display="block"; o.className="nota "+(ok===6?"ok":"");
+  o.innerHTML=`<strong>${ok} de 6 en su lugar.</strong> Entrevista estructurada .42, biodata .38, habilidad cognitiva general .31, responsabilidad contextualizada .25, responsabilidad general .19, años de experiencia .07. La tabla clásica de Schmidt y Hunter (1998) daba .51 a la inteligencia y .54 a las muestras de trabajo: estaban infladas por correcciones estadísticas basadas en supuestos que no se cumplían. Y la diferencia entre grupos de la inteligencia (d = .79) es la mayor de la tabla: de ahí el dilema validez-diversidad de la estación 5. <span class="cita">Sackett et al. (2022); apunte 20.</span>`;
+  estado.respuestas["6_ord"]=ok===6?1:0; guardar(); }
+const COG=["Conocimiento","Habilidad","Aptitud"];
+const C6COG=[
+  ["Puede explicar qué es una tabla dinámica y para qué sirve.",0,"Comprensión teórica de un tema."],["Arma una tabla dinámica en cinco minutos.",1,"Destreza adquirida con práctica. La transferencia de conocimiento a habilidad es lo que la capacitación suele fallar en lograr."],["Resuelve problemas numéricos nuevos más rápido que casi todos.",2,"Potencial general: predice cuánto tarda en adquirir habilidades nuevas. Validez .31 con el desempeño y mayor con el aprendizaje."],["Después de la doctrina 'no mucho más que g', Nye et al. (2022) mostraron que las habilidades específicas agregan validez sobre la general. ¿De qué familia hablan?",2,"Aptitudes: la general y las específicas (velocidad de procesamiento, razonamiento verbal y numérico)."]
+];
+const CSE=[["Satisfacción vital",.54,"Lo que más predicen las autoevaluaciones esenciales: cómo la persona vive su vida."],["Satisfacción laboral",.36,"Y cómo vive su trabajo. La relación con las actitudes es su razón de ser (Judge, Locke y Durham, 1997)."],["Tensión",-.42,"Menos tensión percibida."],["Desempeño evaluado por otros",.15,"Con el desempeño autoinformado .25; con el objetivo .12. No sirven para seleccionar, y están en discusión: ¿son estabilidad emocional con otro nombre?"]];
+function initCSE(){ const b=document.getElementById("cseBox"); b.innerHTML=""; CSE.forEach(c=>{ const d=document.createElement("div"); d.textContent=c[0]; d.onclick=()=>{ [...b.children].forEach(x=>x.classList.remove("on")); d.classList.add("on"); document.getElementById("cseOut").innerHTML=`<strong>${c[0]}: ${fmt(c[1])}.</strong> ${c[2]} <span class="cita">Chang et al. (2012); apunte 21.</span>`; estado.respuestas["6_cse"]=1; guardar(); }; b.appendChild(d); }); }
+const RV=["Rasgo","Valor"];
+const C6RV=[
+  ["\"Siempre llego con todo preparado.\"",0,"Describe cómo tiende a actuar: responsabilidad. Los rasgos son descriptivos."],["\"Para mí lo más importante es ser leal con mi gente.\"",1,"Declara a qué aspira: benevolencia. Los valores son motivacionales; correlacionan con los rasgos (benevolencia y amabilidad .61) pero no son lo mismo: valorar la creatividad no garantiza ser creativo."],["\"Me importa tener poder sobre los recursos y la gente.\"",1,"Valor de poder. Lake et al. (2025): su estabilidad es .25 entre quienes lo valoran poco y .92 entre quienes lo valoran mucho; los rasgos, en cambio, son igual de estables para todos."],["\"Me pongo ansioso antes de cada presentación.\"",0,"Neuroticismo. Y una advertencia del apunte 21: los postulantes reales dicen valorar el poder casi una desviación estándar menos (d = −.89) que quienes no postulan: medir valores en selección choca con la distorsión."]
+];
+const PO=[["Compromiso",.51,"Lo que más predice el ajuste persona-organización: quedarse y sentirse parte."],["Satisfacción",.44,"Sentirse bien en el lugar; el ajuste persona-puesto predice aún más la satisfacción (.56)."],["Intención de irse",-.35,"Quien calza se queda. Se llega al ajuste por atracción, selección y abandono (ASA), lo que produce homogeneidad, y la homogeneidad tiene costo."],["Desempeño",.07,"Casi nada: el ajuste predice sentirse y quedarse, no rendir. 'Ajuste cultural' como criterio de selección es la puerta de la homogeneidad y la discriminación indirecta."]];
+function initPO(){ const b=document.getElementById("poBox"); b.innerHTML=""; PO.forEach(c=>{ const d=document.createElement("div"); d.textContent=c[0]; d.onclick=()=>{ [...b.children].forEach(x=>x.classList.remove("on")); d.classList.add("on"); barra("bPO",c[1],-.6,.6,c[1]<0?"neg":"pos"); document.getElementById("vPO").textContent=fmt(c[1]); document.getElementById("poOut").innerHTML=`<strong>${c[0]}: ${fmt(c[1])}.</strong> ${c[2]} <span class="cita">Kristof-Brown et al. (2005); apunte 21.</span>`; estado.respuestas["6_po"]=1; guardar(); }; b.appendChild(d); }); }
+const Q6=[
+  {p:"'La personalidad importa más que la inteligencia.' ¿Cuándo es cierto y cuándo no?", o:["Siempre es cierto","Nunca es cierto","Depende del resultado: para notas y años de estudio la inteligencia explica 4 a 10 veces más; para mortalidad y divorcio pesan parecido; para el desempeño laboral, GMA .31 vs responsabilidad .19 (o .25 contextualizada)","Solo en Chile"], c:2, f:"Zisman y Ganzach (2022); Roberts et al. (2007); Sackett et al. (2022). Menos del 20% de los profesionales de RR.HH. identifica este mito.", r:"Apunte 20."},
+  {p:"¿Qué dice el mejor estudio sobre 'los millennials valoran otras cosas'?", o:["Que los millennials no quieren trabajar","Que en treinta años subió el valor del ocio (.57 DE) y los extrínsecos (.26), bajaron los intrínsecos (.20) y los altruistas no cambiaron; y hay mucha más variación dentro de cada generación que entre ellas","Que todas las generaciones son iguales","Que los boomers son más altruistas"], c:1, f:"Twenge et al. (2010), 16.507 estudiantes de 1976, 1991 y 2006 (misma edad, distinto año). Robbins y Judge: las clasificaciones generacionales 'carecen de evidencias científicas'.", r:"Apunte 21."},
+  {p:"Una empresa quiere seleccionar por 'ajuste cultural' usando un test de valores. ¿Qué problemas tiene?", o:["Ninguno: el ajuste predice desempeño","Tres: el ajuste persona-organización predice compromiso y satisfacción pero no desempeño (.07); los postulantes distorsionan sus valores (poder d = −.89); y es la puerta de la homogeneidad y la discriminación indirecta","Que los valores no existen","Que el test es caro"], c:1, f:"Kristof-Brown et al. (2005); Anglim et al. (2022); Schneider et al. (1995). La homogeneidad daña más donde hay que leer el mercado.", r:"Apunte 21."}
+];
+
+// ===================== ESTACIÓN 7: MITOS =====================
+const MITOS=[
+  ["Hay 16 tipos de personalidad.",false,"Las dimensiones son continuas y unimodales; ningún análisis taxométrico encuentra tipos naturales. El 35% cambia de tipo MBTI al repetir el test a las cuatro semanas y las interacciones que definirían los 'tipos completos' explican entre 0.7% y 6% de la varianza.","Pittenger (2005); Reynierse (2013)."],
+  ["La personalidad no cambia después de los 30.",false,"Estabilidad .6-.7 a mediano plazo y .3 a cincuenta años; cambio acumulado de hasta 1.5 DE en estabilidad emocional; intervenciones de 4 a 8 semanas con d ≈ .4 que duran más de un año.","Bleidorn et al. (2022); Damian et al. (2019); Roberts et al. (2017)."],
+  ["La personalidad cambia todo el tiempo, así que no sirve medirla.",false,"La misma persona varía entre momentos, pero su promedio semanal se repite con r ≈ .9. Un rasgo es una distribución: predice tendencias, no momentos.","Fleeson (2001, 2004)."],
+  ["La responsabilidad va en la dirección deseable con casi todas las variables laborales.",true,"Con el 98% de 175 variables, en 92 metaanálisis y más de un millón de personas; ρ media .20. Pero no es uniforme: .14 en profesionales, y sus facetas orden y cautela predicen al revés en gerencia.","Wilmot y Ones (2019, 2021); Dudley et al. (2006)."],
+  ["Hay que contratar extravertidos.",false,"La extraversión se ve en la entrevista (.25 con el sueldo inicial) y predice emergencia como líder, pero explica cerca del 1% del desempeño global y vale .02 en profesionales. El trabajo paga la responsabilidad.","Wiersma y Kappe (2017); Wilmot et al. (2019); Wilmot y Ones (2021)."],
+  ["La amabilidad cuesta sueldo.",true,"−.10 con salario, −.05 con promociones y β = −.32 con el éxito extrínseco de carrera; a cambio, −.26 a −.39 con conducta contraproducente y .24 con satisfacción vital. Ayuda a convivir y cuesta plata.","Wilmot y Ones (2022); Judge y Kammeyer-Mueller (2007)."],
+  ["La personalidad no predice nada: Mischel tenía razón.",false,"Predice tendencias y conducta discrecional (responsabilidad y CWB −.32), y predice más cuando la situación es relevante y débil (.26 vs .10). Poco en promedio; bastante en las condiciones correctas.","He et al. (2019); Tett et al. (1999); Judge y Zapata (2015)."],
+  ["Medir el rasgo con marco de referencia laboral ('en el trabajo, soy alguien que...') duplica su validez.",true,"De .11 a .24 en 90 estudios; la responsabilidad contextualizada conserva .25 con variabilidad cero entre estudios. Es la mejora más barata de la validez de un inventario.","Shaffer y Postlethwaite (2012); Sackett et al. (2022)."],
+  ["Las ocupaciones tienen perfiles de personalidad que funcionan como requisitos.",false,"Los perfiles son reconocibles, pero la ocupación explica entre 2% y 7% de la varianza de cada rasgo y el 57% de 263 ocupaciones tiene todos sus promedios dentro de ±0.3 DE. Tendencia, no requisito.","Anni et al. (2025)."],
+  ["HEXACO es el Big Five más un factor.",false,"Es una reorganización: emocionalidad y amabilidad son rotaciones de N y A (la ira cambia de casa); la honestidad-humildad añade contenido del que el Big Five captura solo el 27%.","Thielmann et al. (2022); Anglim y O'Connor (2019)."],
+  ["La honestidad-humildad predice la desviación laboral mejor que cualquiera de los cinco grandes.",true,"ρ = −.48; los seis HEXACO explican 32% de la varianza frente a 19% de los cinco Big Five. Con cautelas: muestras distintas, solo autoinforme en HEXACO, la ventaja baja a 9 puntos sin correcciones.","Pletzer et al. (2019)."],
+  ["Basta seleccionar por honestidad para evitar el fraude.",false,"Los bajos en H cooperan cuando el castigo es probable; la formación ética sin consecuencias no cambia a los maquiavélicos. Sin diseño de la situación, la selección es media palanca.","Hilbig et al. (2012); Bloodgood et al. (2010); Hemsey y Dahling (2024)."],
+  ["Uno de cada cinco CEOs es psicópata.",false,"La psicopatía correlaciona .07 con emergencia como líder y −.04 con eficacia: la alarma 'puede estar exagerada'. Lo que sí: los subordinados los evalúan peor (−.58).","Landay et al. (2019)."],
+  ["Si un test me describió perfecto, es porque mide.",false,"Efecto Forer: 4.26 sobre 5 con un perfil idéntico para todos. La aceptación del usuario es la forma más débil de validez, y la más vendida.","Forer (1949); Stein y Swan (2019)."],
+  ["La grafología no correlaciona con nada.",false,"Correlaciona con el contenido del texto (.14 a .21 con textos autobiográficos, igual que cualquier lego); con textos neutros, cero. La letra no agrega nada sobre leer el texto.","Neter y Ben-Shakhar (1989)."],
+  ["Un modelo de lenguaje instruido a 'responder como el candidato ideal' queda sobre el percentil 99 de los humanos que fingen.",true,"GPT-4: extraversión d = 1.95 (percentil 99), responsabilidad 1.73 (percentil 100); la elección forzada frena a los modelos débiles, no a GPT-4. Cautelas: versiones de 2023, una sesión, estudiantes.","Phillips y Robie (2024)."],
+  ["Con un test de inteligencia basta.",false,"Una batería sin test de inteligencia pierde poco en validez (.61 a .56) y gana mucho en equidad (ratio de impacto adverso .42 a .67). La inteligencia sigue siendo probablemente el mejor predictor del aprendizaje.","Berry et al. (2024); Sackett et al. (2022)."],
+  ["En Chile, el 100% de los avisos para psicólogos de selección exigía manejar pruebas proyectivas sin validez predictiva publicada.",true,"Lüscher y Zulliger en 4.329 avisos (2008-2013). La Ley 20.609 prohíbe discriminar, pero no sanciona usar instrumentos sin validez.","Didier Pino (2014)."],
+  ["Las autoevaluaciones esenciales sirven para seleccionar.",false,"Predicen satisfacción vital (.54), satisfacción laboral (.36) y menos tensión (−.42); con el desempeño evaluado por otros, .15. Y están en discusión: ¿son estabilidad emocional con otro nombre?","Chang et al. (2012)."],
+  ["El ajuste persona-organización predice el desempeño.",false,"Predice compromiso (.51), satisfacción (.44) e intención de irse (−.35), pero no desempeño (.07). Predice sentirse y quedarse, no rendir.","Kristof-Brown et al. (2005)."]
+];
+function initMitos(){
+  const c=document.getElementById("mitos"); c.innerHTML="";
+  MITOS.forEach((m,i)=>{ const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML=`<strong>${i+1}. ${m[0]}</strong><br><span class="opc" data-v="1">Verdadero</span><span class="opc" data-v="0">Falso</span><div class="feedback" style="display:none"></div>`;
+    c.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ if(d.dataset.done) return; d.dataset.done="1"; const v=el.dataset.v==="1"; const ok=v===m[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[m[1]?0:1].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=`<strong>${m[1]?"Verdadero":"Falso"}.</strong> ${m[2]} <span class="cita">${m[3]}</span>`;
+      estado.respuestas["7_m"+i]=ok?1:0; guardar();
+      const done=MITOS.every((_,k)=>("7_m"+k) in estado.respuestas);
+      if(done){ const ac=MITOS.filter((_,k)=>estado.respuestas["7_m"+k]===1).length; const r=document.getElementById("mitosRes"); r.style.display="block"; r.innerHTML=`<strong>Resultado:</strong> ${ac} de ${MITOS.length} veredictos correctos. Lo que importa no es el puntaje sino el hábito: ante cada afirmación sobre personas, pregunta qué se está midiendo (el mapa), qué busca ese rasgo, qué situación lo activa, y si el instrumento tiene expediente.`; marcar(7); }
+    }); });
+}
+
+// ===================== FICHA =====================
+const REPASO={1:"Apunte 16, sección C: el mapa de las diferencias individuales, la distribución de estados (Fleeson) y las cinco funciones (Leary y Hoyle; DeYoung).",2:"Apunte 16 (cada rasgo con su función y su costo; estabilidad y cambio) y apunte 17, sección D (las cifras de validez).",3:"Apunte 17: fuerza situacional, activación de rasgos, las seis claves, Wilmot y Ones (2021), Anni et al. (2025) y el modelo DATA.",4:"Apunte 18: de cinco a seis, H versus A, Zettler et al. (2020), Pletzer et al. (2019) y sus cautelas, De Vries et al. (2016), la tríada oscura.",5:"Apunte 19: Forer, las seis reglas, tipos versus dimensiones, MBTI, grafología, faking e IA, Berry et al. (2024), Didier Pino (2014).",6:"Apuntes 20 (la tabla de validez de Sackett et al., 2022; aptitud, habilidad y conocimiento) y 21 (autoevaluaciones esenciales, rasgos versus valores, ajuste persona-organización, generaciones).",7:"Apuntes 16 a 21, secciones E (Mito versus evidencia)."};
+function pintarFicha(){
+  const k=EST.filter(i=>estado.hechas[i]); const falt=EST.filter(i=>!estado.hechas[i]);
+  const resp=Object.entries(estado.respuestas).filter(([key])=>/^[1-7]_/.test(key) && !/_(fl|rasgo|perfil|estab|fuerza|ocup|hex|pl|ps|forer|rt|ia|berry|dp|cse|po)$/.test(key));
+  const ac=resp.filter(([,v])=>v===1).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas:</strong> ${k.length? k.map(i=>NOMBRES[i]).join(" · "):"ninguna todavía"}.` + (falt.length? ` <strong>Faltan:</strong> ${falt.map(i=>NOMBRES[i]).join(" · ")}.`:" Las siete.") + (resp.length? `<br><strong>Preguntas y clasificaciones respondidas:</strong> ${resp.length}, con ${ac} aciertos a la primera.`:"");
+  const errores={}; resp.forEach(([key,v])=>{ if(v===0){ const e=+key.split("_")[0]; errores[e]=(errores[e]||0)+1; } });
+  const lista=Object.keys(errores).map(e=>`<li>${NOMBRES[e]}: ${errores[e]} ${errores[e]===1?"error":"errores"}. Repasa: ${REPASO[e]}</li>`).join("");
+  document.getElementById("fichaRepaso").innerHTML = lista? `<h3>Sugerencias de repaso</h3><ul class="sans" style="font-size:.92rem">${lista}</ul>` : (resp.length? `<div class="nota ok">Sin errores en lo respondido. Si quieres poner a prueba lo aprendido, vuelve a la estación 3 y explica con tus palabras por qué la amabilidad vale .25 en salud y .03 en ventas.</div>`:"");
+}
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem("lab_pers_v1"); }catch(e){} location.reload(); }
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1mapa",MAPA,C1MAPA,"m",1); clasificador("c1entrada",ENT,C1ENT,"e",1); fleeson(); initMatch("func",FUNC,"elige el rasgo..."); pregunta("q1",Q1,1);
+clasificador("c2rasgo",RAS,C2RASGO,"r",2); initRasgo(); perfil(); estab(); pregunta("q2",Q2,2);
+fuerza(); clasificador("c3claves",CLAVES,C3CLAVES,"c",3); initOcup(); pregunta("q3",Q3,3);
+clasificador("c4juego",JUEGO,C4JUEGO,"j",4); initHex(); initPl(); clasificador("c4aff",AFF,C4AFF,"a",4); pregunta("q4",Q4,4);
+initForer(); clasificador("c5reglas",REG,C5REG,"r",5); retest(); initIA(); berry(); pregunta("q5",Q5,5);
+initOrden(); clasificador("c6cog",COG,C6COG,"c",6); initCSE(); clasificador("c6rv",RV,C6RV,"v",6); initPO(); pregunta("q6",Q6,6);
+initMitos();
+</script>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Más allá del Big Five: el modelo HEXACO, la honestidad-humildad y el lado oscuro de la personalidad · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 18</p>
+  <h1>Más allá del Big Five: el modelo HEXACO, la honestidad-humildad y el lado oscuro de la personalidad</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 18 · Clase 18 (miércoles 04-11-2026; lectura previa junto con el apunte 17)<br>
+    Complementa y actualiza R&amp;J cap. 5 (secciones "Marcos de la personalidad" y "La tríada oscura")<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Robbins y Judge presentan el modelo de los cinco grandes como el marco dominante de la personalidad y, unas páginas después, la "tríada oscura" como un conjunto de rasgos socialmente indeseables. Lo que no cuentan es que entre ambas cosas hay un puente: en los últimos veinte años, la misma estrategia que produjo los cinco factores, aplicada a más lenguas y con listas completas de adjetivos, produjo seis. El sexto factor, honestidad-humildad, es la dimensión que describe si una persona engaña, roba, adula o se siente con derecho a más cuando puede hacerlo sin castigo; es, con diferencia, el mejor predictor de la conducta contraproducente en el trabajo; y explica la mayor parte de lo que la tríada oscura tiene en común.</p>
+<p>Este apunte presenta el modelo HEXACO como lo que es (una reorganización del Big Five, no una adición), explica qué es la honestidad-humildad y qué la distingue de la amabilidad, resume la evidencia sobre lo que predice, con el metaanálisis que controlamos en la ayudantía (Pletzer et al., 2019), muestra qué situaciones activan el rasgo y qué pasa cuando lo responde un postulante, y da el mapa del lado oscuro (narcisismo, maquiavelismo, psicopatía), que se desarrolla a fondo en la clase sobre liderazgo. Cierra con las normas chilenas preliminares del HEXACO-60 que usaste para leer tu perfil.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>El modelo HEXACO tiene seis dimensiones: honestidad-humildad (H), emocionalidad (E), extraversión (X), amabilidad (A), responsabilidad (C) y apertura (O). Tres son prácticamente las mismas del Big Five (X, C, O, con correlaciones de .89 a .91). Dos se reorganizan: la ira sale del neuroticismo y entra en la baja amabilidad; la sentimentalidad sale de la amabilidad y entra en la emocionalidad. Y una es nueva: el Big Five captura solo el 27% de lo que mide la honestidad-humildad.</p>
+<p>La honestidad-humildad y la amabilidad son dos formas de cooperar: H es no explotar al otro cuando podrías hacerlo sin castigo; A es seguir cooperando aunque el otro te explote. La distinción se ve con dinero real: cuánto das cuando repartes correlaciona con H y no con A; cuánto toleras cuando te reparten mal correlaciona con A y no con H.</p>
+<p>H predice casi todo lo que implica aprovecharse de otros: rasgos oscuros (−.69), baja integridad (−.55), decisiones no éticas (−.51), conducta contraproducente (−.41), delincuencia (−.39), engaño con incentivos reales (−.25); y casi nada del "hacer más" (desempeño .06, conducta cívica .15). En el metaanálisis de Pletzer et al. (2019), H es el predictor más fuerte de la desviación laboral (ρ = −.48), los seis factores HEXACO explican el 32% de su varianza frente al 19% de los cinco Big Five, y el neuroticismo y la emocionalidad predicen en direcciones opuestas porque la ira empuja y el miedo frena.</p>
+<p>El rasgo espera su situación: los bajos en H eligen la opción egoísta cuando el castigo es improbable y cooperan cuando es probable. Por eso seleccionar por H y diseñar la situación (premiar los medios, liderar con consecuencias, monitorear) son dos palancas distintas. El lado oscuro (narcisismo, maquiavelismo, psicopatía) se relaciona sobre todo con bajo H, predice poco el desempeño y algo la conducta contraproducente, y la alarma sobre "psicópatas en las cúpulas" es, según los metaanálisis, exagerada (correlación con emerger como líder: .07).</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>De cinco a seis: el diccionario en más idiomas</h3>
+<p>El apunte 16 explicó la hipótesis léxica: si una diferencia entre personas importa, el idioma tiene palabras para ella. Los primeros estudios, en inglés, usaron listas relativamente cortas de adjetivos y encontraron cinco factores, que luego se replicaron en muchas lenguas usando listas igualmente cortas o traducidas. Ashton y Lee (2007) revisaron los estudios léxicos "estándar" (solo adjetivos descriptores de personalidad, con muestras nativas de cada lengua y listas completas) y encontraron que en al menos doce lenguas (croata, holandés, inglés reanalizado, filipino, francés, alemán, griego, húngaro, italiano, coreano, polaco y turco) aparece la misma estructura de seis factores. En cuatro de ellas, la solución de cinco factores ni siquiera recupera el Big Five; en ninguna fallan los seis. Su conclusión (Ashton, Lee &amp; de Vries, 2014) es que el Big Five fue en parte "un accidente histórico": los primeros estudios en inglés subrepresentaban los adjetivos de honestidad (sincero, justo, modesto, frente a astuto, codicioso, hipócrita), que con listas cortas se reparten entre la amabilidad y la responsabilidad en vez de formar factor propio.</p>
+<p>Conviene decir que el consenso es amplio pero no universal. De Raad y colegas (2010) solo encontraron tres factores plenamente replicables comparando lenguas por pares; otros inventarios de seis factores no convergen en el mismo sexto factor; y un análisis con unos setecientos ítems de inventarios públicos extrajo cinco factores sin que el sexto fuera H (Anglim &amp; O'Connor, 2019). Lo que no está en discusión es lo que viene después: que la honestidad-humildad predice cosas que el Big Five no predice.</p>
+<h3>Los seis factores</h3>
+<table><tr><th>Factor</th><th>Polo alto</th><th>Polo bajo</th><th>Facetas</th></tr><tr><td>H, honestidad-humildad</td><td>sincero, honesto, leal, modesto, justo</td><td>astuto, codicioso, pretencioso, hipócrita, jactancioso</td><td>sinceridad, justicia, ausencia de codicia, modestia</td></tr><tr><td>E, emocionalidad</td><td>emocional, sensible, sentimental, temeroso, ansioso</td><td>valiente, duro, independiente, seguro, estable</td><td>miedo, ansiedad, dependencia, sentimentalidad</td></tr><tr><td>X, extraversión</td><td>sociable, vivaz, hablador, alegre, activo</td><td>tímido, pasivo, retraído, callado</td><td>autoestima social, audacia social, sociabilidad, vivacidad</td></tr><tr><td>A, amabilidad (vs. ira)</td><td>paciente, tolerante, pacífico, indulgente</td><td>irascible, pendenciero, terco, colérico</td><td>perdón, gentileza, flexibilidad, paciencia</td></tr><tr><td>C, responsabilidad</td><td>organizado, disciplinado, diligente, cuidadoso</td><td>desordenado, negligente, imprudente, perezoso</td><td>organización, diligencia, perfeccionismo, prudencia</td></tr><tr><td>O, apertura</td><td>intelectual, creativo, no convencional, innovador</td><td>superficial, poco imaginativo, convencional</td><td>apreciación estética, curiosidad, creatividad, no convencionalidad</td></tr></table>
+<p>Elaborado a partir de Ashton y Lee (2007, Tabla 2) y Ashton et al. (2014, Tabla 2).</p>
+<p>Tres cosas no están donde el Big Five las pone. La ira no está en la emocionalidad: está en la baja amabilidad, que por eso se llama "amabilidad versus ira". La sentimentalidad (los vínculos emocionales fuertes, la empatía) no está en la amabilidad: está en la emocionalidad. Y la capacidad intelectual no está en la apertura, que el HEXACO define deliberadamente sin ella. Las cuatro facetas de la honestidad-humildad merecen leerse con calma, porque son el contenido nuevo: <strong>sinceridad</strong> (ser genuino; los bajos adulan o fingen agrado para obtener favores), <strong>justicia</strong> (evitar el fraude y la corrupción; los bajos están dispuestos a engañar o robar), <strong>ausencia de codicia</strong> (desinterés por la riqueza, el lujo y el estatus) y <strong>modestia</strong> (verse como una persona común sin derecho a trato especial; los bajos se sienten superiores y con derecho a privilegios).</p>
+<h3>HEXACO no es "Big Five más uno"</h3>
+<p>Es tentador describir el HEXACO como el Big Five con un factor adicional. Es inexacto, y la inexactitud importa para interpretar un perfil. Thielmann, Moshagen, Hilbig y Zettler (2022) metaanalizaron la correspondencia entre los dos modelos con 152 muestras y 88.596 personas. Las tres dimensiones compartidas convergen casi por completo (extraversión .91, responsabilidad .90, apertura .89). El neuroticismo del Big Five correlaciona .63 con la emocionalidad, y la amabilidad del Big Five .69 con la amabilidad del HEXACO: parecidas, pero no iguales, porque son una rotación. El neuroticismo del Big Five correlaciona −.43 con la amabilidad del HEXACO (la ira que cambió de casa), y la amabilidad del Big Five .23 con la emocionalidad (la sentimentalidad que cambió de casa). La honestidad-humildad correlaciona .47 con la amabilidad del Big Five y poco con el resto.</p>
+<p>La cifra que resume todo es cuánta varianza de cada dimensión HEXACO explican los cinco factores del Big Five juntos: extraversión 92%, responsabilidad 82%, apertura 81%, emocionalidad 61%, amabilidad 58% y honestidad-humildad 27%. Tres cuartos de lo que mide H no está en el Big Five. Con un matiz: depende del inventario Big Five. El NEO-PI-R, que tiene facetas de franqueza y modestia dentro de su amabilidad, captura el 49% de H; los inventarios breves, entre 13% y 22%. Anglim y O'Connor (2019) lo formulan con precisión: estrictamente, H "no representa una adición al Big Five sino una repartición de la varianza del neuroticismo y la amabilidad del Big Five en la amabilidad, la emocionalidad y la honestidad-humildad del HEXACO". Una ventaja práctica de esa repartición es que las seis dimensiones HEXACO son más independientes entre sí (correlación absoluta media .14) que las cinco del Big Five (.25).</p>
+<h3>Honestidad-humildad y amabilidad: dos formas de cooperar</h3>
+<p>¿Por qué separar la honestidad de la amabilidad, si ambas son "ser bueno con los demás"? La teoría de Ashton y Lee (2007) distingue dos caras del altruismo recíproco. La honestidad-humildad es <strong>justicia</strong>: no explotar al otro cuando podrías hacerlo sin consecuencias; su beneficio es conservar las ganancias de la cooperación y su costo es renunciar a lo que podrías sacar. La amabilidad es <strong>tolerancia</strong>: seguir cooperando aunque el otro te esté explotando; su beneficio son las relaciones de largo plazo y su costo es ser explotado. La emocionalidad, por su parte, es altruismo de parentesco (empatía, apego, evitar el daño a uno y a los suyos), lo que explica de forma parsimoniosa la diferencia de sexo más consistente en personalidad (cerca de una desviación estándar, mujeres más altas). Y extraversión, responsabilidad y apertura son tres formas de compromiso: con la gente, con la tarea y con las ideas.</p>
+<p>La distinción entre H y A se ve con dinero real. En el juego del dictador, tú repartes una suma y el otro no puede negarse: es una situación que permite explotar sin castigo, y cuánto das correlaciona .25 con H y .11 (no significativo) con A. En el juego del ultimátum, el otro reparte y tú puedes rechazar la oferta, en cuyo caso nadie recibe nada: es una situación en que te explotan, y aceptar ofertas injustas correlaciona .19 con A y −.01 con H (Hilbig, Zettler, Leist &amp; Heydasch, 2013). El metaanálisis de Thielmann, Spadaro y Balliet (2020), con 770 estudios de juegos económicos, confirma el patrón: H es el rasgo amplio que más predice la prosocialidad (.20), y lo hace donde hay oportunidad de explotar (dictador .26, fiduciario .22) y no donde la decisión es reactiva (respondedor del ultimátum .02).</p>
+<h3>Qué predice la honestidad-humildad</h3>
+<p>Zettler, Thielmann, Hilbig y Moshagen (2020) reunieron 426 metaanálisis con 112.697 personas para describir la "red nomológica" del HEXACO. Cada dimensión se relaciona con un dominio de resultados: H con la explotación (−.48), E con la inseguridad (.27), X con la socialidad (.53), A con la obstrucción (.33), C con el deber (.41), O con la exploración (.38). Las correlaciones de H con criterios específicos cuentan la historia completa:</p>
+<table><tr><th>Criterio</th><th>H</th><th>A</th><th>C</th></tr><tr><td>Rasgos oscuros (tríada)</td><td>−.69</td><td>−.40</td><td>−.32</td></tr><tr><td>Materialismo</td><td>−.63</td><td>−.30</td><td>−.04</td></tr><tr><td>Baja integridad</td><td>−.55</td><td>−.31</td><td>−.47</td></tr><tr><td>Decisión no ética</td><td>−.51</td><td>−.19</td><td>−.25</td></tr><tr><td>Conducta contraproducente</td><td>−.41</td><td>−.20</td><td>−.38</td></tr><tr><td>Delincuencia</td><td>−.39</td><td>−.15</td><td>−.21</td></tr><tr><td>Engaño en tareas con incentivos</td><td>−.25</td><td>−.03</td><td>−.05</td></tr><tr><td>Altruismo</td><td>.49</td><td>.35</td><td>.23</td></tr><tr><td>Cooperación activa</td><td>.32</td><td>.18</td><td>.10</td></tr><tr><td>Desempeño laboral</td><td>.06</td><td></td><td>.28</td></tr><tr><td>Conducta cívica</td><td>.15</td><td></td><td>.18</td></tr></table>
+<p>Elaborado a partir de Zettler et al. (2020, Tablas 5 y 9). Correlaciones corregidas.</p>
+<p>H es el rasgo del "no hacer daño", no del "hacer más": predice casi todo lo que implica aprovecharse de otros y casi nada del desempeño, la conducta cívica o el liderazgo (.08). Eso lo hace complementario de la responsabilidad, que predice ambas cosas. La validez incremental está documentada en estudios primarios: la delincuencia laboral se predice con R = .63 usando el HEXACO frente a .47 con el NEO-FFI; la probabilidad de acoso sexual, con R = .34 usando un inventario Big Five y .54 añadiendo H (Ashton et al., 2014).</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>El estudio destacado: Big Five versus HEXACO frente a la desviación laboral</h3>
+<p>Pletzer, Bentvelzen, Oostrom y de Vries (2019) hicieron el primer metaanálisis que compara los dos modelos frente a un criterio organizacional: la desviación laboral, definida como "conducta voluntaria que viola normas organizacionales significativas y con ello amenaza el bienestar de la organización, de sus miembros o de ambos" (Robinson &amp; Bennett, 1995), que incluye robar, sabotear, trabajar lento a propósito (desviación organizacional) y chismear, acosar u hostigar a compañeros (desviación interpersonal). Reunieron 55 estudios con el Big Five y 15 con el HEXACO, casi 500 correlaciones, y las corrigieron por la falta de confiabilidad de predictor y criterio.</p>
+<table><tr><th>Dimensión</th><th>Big Five (ρ)</th><th>HEXACO (ρ)</th></tr><tr><td>Apertura</td><td>−.08</td><td>−.04</td></tr><tr><td>Responsabilidad</td><td>−.37</td><td>−.40</td></tr><tr><td>Extraversión</td><td>−.05</td><td>−.01</td></tr><tr><td>Amabilidad</td><td>−.36</td><td>−.19</td></tr><tr><td>Neuroticismo / emocionalidad</td><td>+.19</td><td>−.14</td></tr><tr><td>Honestidad-humildad</td><td>(no existe)</td><td>−.48</td></tr><tr><td>Varianza explicada por el modelo completo</td><td>19%</td><td>32%</td></tr></table>
+<p>Elaborado a partir de Pletzer et al. (2019, Tablas 1 y 4).</p>
+<p>Tres lecturas. Primera, la honestidad-humildad es el predictor más fuerte de todos (ρ = −.48; intervalo de confianza de −.53 a −.44), seguida de la responsabilidad en ambos modelos. Los seis factores HEXACO explican el 32% de la varianza de la desviación frente al 19% de los cinco Big Five; en el HEXACO, H aporta el 57% de esa varianza explicada y C el 33%; en el Big Five, C aporta el 53% y A el 37%. Segunda, la amabilidad del Big Five predice más (−.36) que la del HEXACO (−.19), y la razón es instructiva: la amabilidad del Big Five contiene parte de H (correlacionan .47), así que parte de su validez es, en realidad, validez de la honestidad. Tercera, el neuroticismo del Big Five (+.19) y la emocionalidad del HEXACO (−.14) predicen en direcciones opuestas, y la diferencia es significativa. El neuroticismo contiene ira, que empuja a la desviación; la emocionalidad contiene ansiedad, miedo y dependencia, que frenan (quien teme las represalias no roba). Un estudio por facetas citado por los autores lo muestra en una sola escala: la faceta de ira del neuroticismo correlaciona +.28 con la desviación y la de ansiedad −.07; promediadas en un solo factor, se cancelan (Hastings &amp; O'Neill, 2009). Es la rotación de la sección C, puesta a prueba con un criterio externo.</p>
+<p>Dos hallazgos secundarios importan para la práctica. La responsabilidad predice más la desviación contra la organización (−.40) que contra las personas (−.26), y la amabilidad al revés (−.29 frente a −.36): la responsabilidad cuida las normas, la amabilidad cuida a la gente. Y cuando la desviación la reporta la propia persona, la responsabilidad y la amabilidad predicen más (−.40 y −.38) que cuando la reporta un tercero (−.22 y −.25), mientras que los otros rasgos no cambian; si fuera un sesgo general de método común, cambiarían todos; que cambien justo los dos rasgos más deseables sugiere que las personas inflan su responsabilidad y su amabilidad y minimizan su desviación al mismo tiempo.</p>
+<p>Las cautelas que los propios autores piden: las muestras de cada modelo son distintas (20 estudios y 6.731 personas para el Big Five; 12 y 3.177 para el HEXACO); ningún estudio HEXACO midió la desviación con heteroinforme; con correlaciones sin corregir la ventaja del HEXACO baja de 13 a 9 puntos; hay señales de sesgo de publicación en los estudios del Big Five; y todos los diseños son transversales, así que nada de esto autoriza lenguaje causal. Y una limitación que conviene recordar: para la conducta cívica, la ventaja del HEXACO es mínima, porque esa conducta depende sobre todo de la extraversión y la responsabilidad, que ya están en el Big Five, y H correlaciona solo .21 con ella (Pletzer, Oostrom &amp; de Vries, 2021).</p>
+<h3>El rasgo espera su situación</h3>
+<p>El apunte 17 presentó la activación de rasgos; el HEXACO tiene su propia versión. De Vries, Tybur, Pollet y van Vugt (2016) proponen que cada dimensión responde a un tipo de situación, según lo que la situación permite (affordance): la explotación (ganar a costa de otros) activa H; la inseguridad (amenazas) activa E; la socialidad activa X; la obstrucción (ser tratado injustamente) activa A; el deber (tareas por hacer) activa C; la exploración (problemas, novedad) activa O. Corresponden casi uno a uno con las DIAMONDS del apunte 17 (engaño, negatividad, socialidad, adversidad, deber, intelecto).</p>
+<p>La evidencia clave viene de dilemas con dinero real: en juegos de bienes públicos, las personas bajas en H eligen la opción egoísta cuando el castigo es improbable y cooperan cuando es probable; las altas en H cooperan en ambos casos (Hilbig, Zettler &amp; Heydasch, 2012). El rasgo no desaparece en la situación fuerte: espera. De ahí tres mecanismos (De Vries et al., 2016): las personas eligen situaciones acordes a sus rasgos (los bajos en H buscan donde hay algo que aprovechar), las situaciones activan el rasgo, y el mismo rasgo tiene consecuencias distintas según la situación (un bajo H puede "tener éxito" en un área financiera sin supervisión; la psicopatía es más frecuente tanto en las cárceles como en los directorios). La implicación para quien dirige es que reducir la desviación no es solo seleccionar por H; es quitar las claves que la activan: el castigo improbable, la autonomía sin controles, los sistemas que premian el resultado "a cualquier costo". Pletzer et al. (2019) lo dicen así: las organizaciones pueden reducir la desviación "evitando las señales situacionales que activan la expresión de bajos H, C, A y E".</p>
+<h3>Cuando lo responde un postulante</h3>
+<p>El apunte 19 muestra que los postulantes distorsionan sus respuestas. Anglim, Lievens, Everton, Grant y Marty (2018) lo midieron con el HEXACO en un diseño poco común: 260 postulantes reales y 347 no postulantes respondieron el inventario completo, y unos 18 meses después todos informaron confidencialmente su conducta contraproducente y cívica. Los postulantes puntuaron más alto en amabilidad (d = .94), honestidad-humildad (.68), responsabilidad (.65) y extraversión (.64), sin diferencias en emocionalidad ni apertura; sus desviaciones estándar fueron el 80% de las de los no postulantes. En el seguimiento confidencial, la diferencia media bajó de .50 a .14: era el contexto, no las personas. Y la validez cayó poco: la varianza explicada de la conducta contraproducente fue 18% en no postulantes y 11% en postulantes, diferencia no significativa. La lección repite la del apunte 19: la distorsión es grande en las medias y pequeña en la validez; se maneja con normas de postulantes (no de empleados respondiendo en confianza), con rasgos relevantes al puesto y sin decidir solo con el cuestionario.</p>
+<h3>El lado oscuro: narcisismo, maquiavelismo y psicopatía</h3>
+<p>Paulhus y Williams (2002) llamaron "tríada oscura" a tres rasgos subclínicos, continuos y presentes en la población general, que comparten un núcleo de manipulación insensible. El <strong>narcisismo</strong> es grandiosidad, sentirse con derecho a privilegios, dominancia y búsqueda de admiración. El <strong>maquiavelismo</strong> es manipulación, cinismo sobre la naturaleza humana, desprecio por la moral convencional y foco en el interés propio; es el único de los tres sin origen clínico. La <strong>psicopatía</strong> subclínica es impulsividad, búsqueda de emociones, baja empatía, baja ansiedad y ausencia de remordimiento; se considera la más malévola de las tres.</p>
+<p>El metaanálisis de Muris, Merckelbach, Otgaar y Meijer (2017) da las cifras: los tres se superponen (maquiavelismo-psicopatía .58, narcisismo-psicopatía .38, narcisismo-maquiavelismo .34); los hombres puntúan más alto (correlaciones con el sexo de .15, .16 y .29); y los tres se relacionan sobre todo con baja honestidad-humildad (−.41, −.61 y −.54, frente a −.21, −.43 y −.46 con la amabilidad del Big Five). Las facetas de H distinguen el contenido: el maquiavelismo y la psicopatía van con baja sinceridad y baja justicia (entre −.44 y −.56), el narcisismo con baja modestia (−.52) y codicia (−.35). Cuando se controla lo que los tres tienen en común, "la psicopatía dirige el espectáculo" en los correlatos psicosociales, y los autores concluyen que el concepto de tríada es parcialmente redundante con modelos tradicionales como el HEXACO. Moshagen, Hilbig y Zettler (2018) llevaron la idea al límite con el "factor D": la tendencia general a maximizar la utilidad propia ignorando, aceptando o provocando el perjuicio de otros, con creencias que lo justifican; D correlaciona −.80 con H, y lo que queda del narcisismo cuando se le quita D es extraversión. Si D es un constructo o un artefacto de medición sigue en debate.</p>
+<p>¿Qué predice en el trabajo? Menos de lo que dicen los titulares. O'Boyle, Forsyth, Banks y McDaniel (2012), con 245 muestras y 43.907 personas, encontraron correlaciones con el desempeño de −.07 (maquiavelismo), −.03 (narcisismo) y −.10 (psicopatía), y con la conducta contraproducente de .25, .43 y .07; el poder modera (con autoridad, el narcisismo daña más el desempeño y la psicopatía se nota menos en las medidas habituales de conducta contraproducente, porque se expresa de otras formas). Landay, Harms y Credé (2019), con 92 muestras, pusieron a prueba el titular "uno de cada cinco CEOs es psicópata": la psicopatía correlaciona .07 con emerger como líder, −.04 con ser eficaz, y −.58 con el liderazgo transformacional evaluado por los subordinados (tres estudios); hay una U invertida pequeña para la eficacia; y una diferencia de sexo: las mismas tendencias se toleran en hombres (emergencia .10) y se sancionan en mujeres (.04; eficacia .03 frente a −.18). Su conclusión es que la alarma "puede estar exagerada", aunque los subordinados sufren y hay evidencia consistente de que estos rasgos agregan algo sobre el Big Five para predecir conducta contraproducente, acoso y susceptibilidad al engaño (Harms, Landay &amp; Fezzey, 2024). Hay lados positivos pequeños (algo de creatividad, buena primera impresión en entrevistas, salario para el narcisismo, posición de liderazgo para el maquiavelismo), que lo negativo "ensombrece".</p>
+<p>Lo que una organización puede hacer lo resumen Hemsey y Dahling (2024) para el maquiavelismo, con la lógica de la fuerza situacional y la activación de rasgos. Las personas altas en maquiavelismo responden a consecuencias, no a cursos: el clima y el liderazgo ético reducen su manipulación, pero la formación ética "sin dientes" solo cambia a quienes ya eran bajos en el rasgo (Bloodgood et al., 2010). Los entornos estructurados (roles claros, supervisión cercana, poca autonomía) los frustran, pero contienen sus peores conductas; la autonomía fortalece la relación entre maquiavelismo e intimidación de pares. El cambio organizacional, las restricciones de recursos y la ruptura del contrato psicológico intensifican el socavamiento. De ahí tres recomendaciones: premiar los medios y no solo los resultados (cuidado con los sistemas de recompensa de criterio único), liderar éticamente con consecuencias reales, y monitorear y sancionar con múltiples evaluadores, porque la manipulación engaña a uno solo. Con una advertencia: una situación fuerte puede desplazar la conducta hacia formas menos detectables, así que conviene una supervisión amplia y no una política estrecha.</p>
+<h3>Chile</h3>
+<p>En Chile, un estudio de adaptación preliminar del HEXACO-60 con 1.806 estudiantes universitarios arroja los siguientes resultados:</p>
+<table><tr><th>Dimensión</th><th>Media</th><th>DE</th><th>α</th><th>P10</th><th>P25</th><th>P50</th><th>P75</th><th>P90</th></tr><tr><td>Honestidad-humildad</td><td>3.49</td><td>0.70</td><td>.75</td><td>2.6</td><td>3.0</td><td>3.5</td><td>4.0</td><td>4.4</td></tr><tr><td>Emocionalidad</td><td>3.04</td><td>0.69</td><td>.74</td><td>2.1</td><td>2.6</td><td>3.0</td><td>3.5</td><td>3.9</td></tr><tr><td>Extraversión</td><td>3.46</td><td>0.64</td><td>.77</td><td>2.7</td><td>3.1</td><td>3.5</td><td>3.9</td><td>4.3</td></tr><tr><td>Amabilidad (vs. ira)</td><td>3.11</td><td>0.61</td><td>.69</td><td>2.3</td><td>2.7</td><td>3.1</td><td>3.5</td><td>3.9</td></tr><tr><td>Responsabilidad</td><td>3.57</td><td>0.63</td><td>.76</td><td>2.8</td><td>3.1</td><td>3.6</td><td>4.0</td><td>4.4</td></tr><tr><td>Apertura</td><td>3.48</td><td>0.66</td><td>.71</td><td>2.6</td><td>3.0</td><td>3.5</td><td>4.0</td><td>4.3</td></tr></table>
+<p>HEXACO-60, n = 1.806 estudiantes universitarios chilenos. Resultados preliminares de un estudio en curso (Gempp, UDP); no citar como publicados.</p>
+<p>Tres advertencias para usarlas. Son normas de estudiantes, no de trabajadores ni de postulantes; son provisionales; y con diez ítems por dimensión, diferencias menores a 0.3 puntos son ruido. Sobre el Big Five, Cupani, Lorenzo-Seva y Morán (2025) mostraron en 429 chilenos que la estructura de cinco factores se replica con una congruencia de .91, y que Chile tiene la menor diferencia de edad en amabilidad de los doce países latinoamericanos estudiados (d = .08). No hay, en las fuentes revisadas, un estudio chileno publicado del HEXACO ni de la tríada oscura.</p>
+<p>Sobre los casos públicos chilenos que se mencionaron en clase (La Polar, con sentencia de 2015 por las repactaciones unilaterales; Penta, con sentencia de 2018 por delitos tributarios, cuya pena incluyó un curso de ética empresarial; Corpesca, con sentencia de 2021 por cohecho y fraude al fisco, incluida una multa a la empresa como persona jurídica), conviene ser explícito en dos cosas. Sirven para leer situaciones (qué incentivos, qué controles, qué cultura hacían improbable el castigo y probable la recompensa), no para atribuir rasgos a personas reales, a quienes nadie midió. Y una investigación mediática no es culpabilidad: en el caso SQM, en octubre de 2025, el tribunal absolvió a todos los acusados.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el HEXACO es el Big Five con un sexto factor agregado.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> es una reorganización: extraversión, responsabilidad y apertura son las mismas (.89 a .91); emocionalidad y amabilidad son rotaciones del neuroticismo y la amabilidad del Big Five (.63 y .69; la ira cambia de casa); y el Big Five captura solo el 27% de la honestidad-humildad (Thielmann et al., 2022).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> "cinco más uno" es más fácil de contar, y los nombres de cuatro de los seis factores coinciden.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> la honestidad es una faceta de la amabilidad; no hace falta medirla aparte.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la amabilidad del Big Five captura entre 13% y 49% de H según el inventario; H y A predicen cosas distintas con dinero real (dictador frente a ultimátum); y H predice la desviación laboral diez puntos de varianza por encima de la amabilidad del Big Five (Pletzer et al., 2019). El debate sigue abierto en lo estructural; la validez diferencial no.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> el NEO-PI-R tiene facetas de franqueza y modestia dentro de la amabilidad, y con ese inventario la superposición es mayor.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> uno de cada cinco CEOs es psicópata y los psicópatas llegan arriba porque funcionan.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la psicopatía correlaciona .07 con emerger como líder y −.04 con ser eficaz; los subordinados evalúan peor a esos líderes (−.58); y la alarma "puede estar exagerada" (Landay et al., 2019). Lo que sí: el poder modera la expresión, y las mismas tendencias se toleran en hombres y se sancionan en mujeres.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> los casos extremos son memorables, y "psicópata" vende más que "ρ = .07".</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> basta seleccionar por honestidad para evitar el fraude.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los bajos en H cooperan cuando el castigo es probable (Hilbig et al., 2012); la formación ética sin consecuencias no cambia a los altos en maquiavelismo (Bloodgood et al., 2010); y la validez de la personalidad para la desviación es mayor justamente donde la situación deja margen. Seleccionar y diseñar son dos palancas (Hemsey &amp; Dahling, 2024).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> culpar a las personas es más cómodo que revisar los incentivos.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> los rasgos oscuros son diagnósticos: "mi jefe es psicópata".</p><p><span class="etiqueta ev">La evidencia muestra que...</span> narcisismo, maquiavelismo y psicopatía subclínicos son dimensiones continuas en población general, con correlaciones modestas con la conducta laboral (desempeño entre −.03 y −.10), y la psicopatía clínica o forense se evalúa con otros instrumentos y otros criterios (Muris et al., 2017).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> las etiquetas clínicas dan la sensación de explicar, y el enojo con un jefe busca nombre.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, si vas a medir personalidad para prevenir conducta contraproducente, mide honestidad-humildad. Es el rasgo que más predice el robo, el engaño, la corrupción y el acoso, y el Big Five lo captura mal. Si puedes elegir instrumento, el HEXACO (Pletzer et al., 2019); y en cualquier caso, con normas de postulantes, rasgos relevantes al puesto y nunca como único criterio.</p>
+<p>Segundo, no esperes de H lo que no da. No predice desempeño, conducta cívica ni liderazgo; para eso están la responsabilidad y la extraversión. Un perfil "muy honesto" no es un perfil "de alto desempeño", y al revés.</p>
+<p>Tercero, lee la situación antes de culpar a las personas. Castigo improbable, recompensa ligada solo al resultado, autonomía sin rendición de cuentas y normas ambiguas ("todos lo hacen") son las claves que activan la explotación en quienes tienen la disposición. Quitar esas claves protege más que cualquier test: premiar los medios, trazabilidad, varios ojos sobre las decisiones, liderazgo ético con consecuencias.</p>
+<p>Cuarto, al interpretar un perfil HEXACO, recuerda que la ira vive en la baja amabilidad y no en la emocionalidad. Una persona "difícil" puede ser alta en emocionalidad (ansiosa, dependiente, sentimental) o baja en amabilidad (irritable, terca, rencorosa), y las dos cosas piden respuestas distintas.</p>
+<p>Quinto, con el lado oscuro, menos etiquetas y más diseño. Los efectos sobre el desempeño son pequeños; los daños a los demás son reales; y lo que modera su expresión es la estructura de recompensas y controles, no los cursos de ética. Si una conducta se repite, revisa primero qué la premia.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Explicar por qué los estudios léxicos en más lenguas producen seis factores y cuál es el contenido del sexto.</li><li>Describir el HEXACO como reorganización del Big Five, con las cifras de Thielmann et al. (2022): qué dimensiones son equivalentes, cuáles son rotaciones y cuánta varianza de H captura el Big Five.</li><li>Distinguir honestidad-humildad de amabilidad con la teoría del altruismo recíproco y con la evidencia del dictador y el ultimátum.</li><li>Resumir qué predice H (y qué no) a partir de Zettler et al. (2020).</li><li>Explicar los resultados de Pletzer et al. (2019): el predictor más fuerte, la varianza explicada por cada modelo, por qué la amabilidad del Big Five predice más que la del HEXACO, por qué neuroticismo y emocionalidad van en direcciones opuestas, y las cautelas.</li><li>Explicar la activación situacional de H (castigo improbable) y sus implicaciones para el diseño de controles e incentivos.</li><li>Citar las magnitudes del faking en postulantes (Anglim et al., 2018) y su efecto sobre la validez.</li><li>Definir narcisismo, maquiavelismo y psicopatía subclínicos, citar sus correlaciones con H y con la conducta laboral, y evaluar críticamente la afirmación "uno de cada cinco CEOs es psicópata".</li><li>Interpretar un perfil HEXACO-60 con las normas chilenas preliminares y sus advertencias.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Anglim, J., Lievens, F., Everton, L., Grant, S. L., &amp; Marty, A. (2018). HEXACO personality predicts counterproductive work behavior and organizational citizenship behavior in low-stakes and job applicant contexts. <em>Journal of Research in Personality, 77</em>, 11–20. <a href="https://doi.org/10.1016/j.jrp.2018.09.003">https://doi.org/10.1016/j.jrp.2018.09.003</a></p>
+<p>Anglim, J., &amp; O'Connor, P. (2019). Measurement and research using the Big Five, HEXACO, and narrow traits: A primer for researchers and practitioners. <em>Australian Journal of Psychology, 71</em>(1), 16–25. <a href="https://doi.org/10.1111/ajpy.12202">https://doi.org/10.1111/ajpy.12202</a></p>
+<p>Ashton, M. C., &amp; Lee, K. (2007). Empirical, theoretical, and practical advantages of the HEXACO model of personality structure. <em>Personality and Social Psychology Review, 11</em>(2), 150–166. <a href="https://doi.org/10.1177/1088868306294907">https://doi.org/10.1177/1088868306294907</a></p>
+<p>Ashton, M. C., &amp; Lee, K. (2009). The HEXACO-60: A short measure of the major dimensions of personality. <em>Journal of Personality Assessment, 91</em>(4), 340–345. <a href="https://doi.org/10.1080/00223890902935878">https://doi.org/10.1080/00223890902935878</a></p>
+<p>Ashton, M. C., Lee, K., &amp; de Vries, R. E. (2014). The HEXACO Honesty-Humility, Agreeableness, and Emotionality factors: A review of research and theory. <em>Personality and Social Psychology Review, 18</em>(2), 139–152. <a href="https://doi.org/10.1177/1088868314523838">https://doi.org/10.1177/1088868314523838</a></p>
+<p>Cupani, M., Lorenzo-Seva, U., &amp; Morán, V. (2025). Personality traits in Latin America: A cross-cultural study of the Big Five factor structure and its relationship with self-reported daily behaviors. <em>Journal of Personality Assessment, 107</em>(1), 89–99. <a href="https://doi.org/10.1080/00223891.2024.2353139">https://doi.org/10.1080/00223891.2024.2353139</a></p>
+<p>de Vries, R. E., Tybur, J. M., Pollet, T. V., &amp; van Vugt, M. (2016). Evolution, situational affordances, and the HEXACO model of personality. <em>Evolution and Human Behavior, 37</em>(5), 407–421. <a href="https://doi.org/10.1016/j.evolhumbehav.2016.04.001">https://doi.org/10.1016/j.evolhumbehav.2016.04.001</a></p>
+<p>Harms, P. D., Landay, K., &amp; Fezzey, T. (2024). Explorations of the shadow realm: Examining the role of dark personality in the workplace. En A. Tuncdogan, O. A. Acar, H. W. Volberda, &amp; K. de Ruyter (Eds.), <em>The Oxford handbook of individual differences in organizational contexts</em> (pp. 122–139). Oxford University Press.</p>
+<p>Hemsey, D. R., &amp; Dahling, J. J. (2024). Moderating Machiavelli: How do situational characteristics shape the expression of Machiavellianism in the workplace? En A. Tuncdogan, O. A. Acar, H. W. Volberda, &amp; K. de Ruyter (Eds.), <em>The Oxford handbook of individual differences in organizational contexts</em> (pp. 140–158). Oxford University Press.</p>
+<p>Hilbig, B. E., Zettler, I., &amp; Heydasch, T. (2012). Personality, punishment and public goods: Strategic shifts towards cooperation as a matter of dispositional honesty–humility. <em>European Journal of Personality, 26</em>(3), 245–254. <a href="https://doi.org/10.1002/per.830">https://doi.org/10.1002/per.830</a></p>
+<p>Hilbig, B. E., Zettler, I., Leist, F., &amp; Heydasch, T. (2013). It takes two: Honesty–Humility and Agreeableness differentially predict active versus reactive cooperation. <em>Personality and Individual Differences, 54</em>(5), 598–603. <a href="https://doi.org/10.1016/j.paid.2012.11.008">https://doi.org/10.1016/j.paid.2012.11.008</a></p>
+<p>Landay, K., Harms, P. D., &amp; Credé, M. (2019). Shall we serve the dark lords? A meta-analytic review of psychopathy and leadership. <em>Journal of Applied Psychology, 104</em>(1), 183–196. <a href="https://doi.org/10.1037/apl0000357">https://doi.org/10.1037/apl0000357</a></p>
+<p>Moshagen, M., Hilbig, B. E., &amp; Zettler, I. (2018). The dark core of personality. <em>Psychological Review, 125</em>(5), 656–688. <a href="https://doi.org/10.1037/rev0000111">https://doi.org/10.1037/rev0000111</a></p>
+<p>Muris, P., Merckelbach, H., Otgaar, H., &amp; Meijer, E. (2017). The malevolent side of human nature: A meta-analysis and critical review of the literature on the Dark Triad (narcissism, Machiavellianism, and psychopathy). <em>Perspectives on Psychological Science, 12</em>(2), 183–204. <a href="https://doi.org/10.1177/1745691616666070">https://doi.org/10.1177/1745691616666070</a></p>
+<p>O'Boyle, E. H., Jr., Forsyth, D. R., Banks, G. C., &amp; McDaniel, M. A. (2012). A meta-analysis of the Dark Triad and work behavior: A social exchange perspective. <em>Journal of Applied Psychology, 97</em>(3), 557–579. <a href="https://doi.org/10.1037/a0025679">https://doi.org/10.1037/a0025679</a></p>
+<p>Paulhus, D. L., &amp; Williams, K. M. (2002). The Dark Triad of personality: Narcissism, Machiavellianism, and psychopathy. <em>Journal of Research in Personality, 36</em>(6), 556–563. <a href="https://doi.org/10.1016/S0092-6566(02)00505-6">https://doi.org/10.1016/S0092-6566(02)00505-6</a></p>
+<p>Pletzer, J. L., Bentvelzen, M., Oostrom, J. K., &amp; de Vries, R. E. (2019). A meta-analysis of the relations between personality and workplace deviance: Big Five versus HEXACO. <em>Journal of Vocational Behavior, 112</em>, 369–383. <a href="https://doi.org/10.1016/j.jvb.2019.04.004">https://doi.org/10.1016/j.jvb.2019.04.004</a></p>
+<p>Pletzer, J. L., Oostrom, J. K., &amp; de Vries, R. E. (2021). HEXACO personality and organizational citizenship behavior: A domain- and facet-level meta-analysis. <em>Human Performance, 34</em>(2), 126–147. <a href="https://doi.org/10.1080/08959285.2021.1891072">https://doi.org/10.1080/08959285.2021.1891072</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Thielmann, I., Moshagen, M., Hilbig, B. E., &amp; Zettler, I. (2022). On the comparability of basic personality models: Meta-analytic correspondence, scope, and orthogonality of the Big Five and HEXACO dimensions. <em>European Journal of Personality, 36</em>(6), 870–900. <a href="https://doi.org/10.1177/08902070211026793">https://doi.org/10.1177/08902070211026793</a></p>
+<p>Thielmann, I., Spadaro, G., &amp; Balliet, D. (2020). Personality and prosocial behavior: A theoretical framework and meta-analysis. <em>Psychological Bulletin, 146</em>(1), 30–90. <a href="https://doi.org/10.1037/bul0000217">https://doi.org/10.1037/bul0000217</a></p>
+<p>Zettler, I., Thielmann, I., Hilbig, B. E., &amp; Moshagen, M. (2020). The nomological net of the HEXACO model of personality: A large-scale meta-analytic investigation. <em>Perspectives on Psychological Science, 15</em>(3), 723–760. <a href="https://doi.org/10.1177/1745691619895036">https://doi.org/10.1177/1745691619895036</a></p>
+<h3>Para profundizar</h3>
+<p>Ashton, Lee y de Vries (2014): la revisión más clara de qué son H, E y A, con la teoría del altruismo y la evidencia de validez incremental; doce páginas.</p>
+<p>Pletzer et al. (2019): el artículo de la ayudantía; léelo con la tabla de este apunte al lado y con las doce preguntas de la guía de lectura.</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El tribunal de los tests: qué exigirle a un instrumento antes de decidir sobre personas · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 19</p>
+  <h1>El tribunal de los tests: qué exigirle a un instrumento antes de decidir sobre personas</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 19 · Clase 19 (viernes 06-11-2026; lectura previa a la clase)<br>
+    Complementa y corrige R&amp;J cap. 5 (recuadro "Mito o ciencia" y notas sobre el MBTI)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Robbins y Judge presentan el MBTI como "el instrumento de evaluación de la personalidad más utilizado en el mundo" y le dedican casi tanto espacio como al modelo de los cinco factores, con una crítica breve al final. El resultado es que muchos estudiantes salen del capítulo creyendo que el MBTI es una alternativa legítima al Big Five, con algunos defectos. No lo es, y la razón no es de gusto: hay cuarenta años de evidencia psicométrica sobre por qué los sistemas de tipos fallan. Lo mismo vale para la grafología, el eneagrama, el DISC y los tests que circulan en redes sociales, y para dos instrumentos que en Chile se exigen en el 100% de los avisos para psicólogos de selección (Lüscher y Zulliger) sin un solo estudio publicado de validez predictiva.</p>
+<p>Este apunte da un criterio para distinguir un test que mide de uno que solo parece medir: seis reglas derivadas de los estándares profesionales. Explica por qué nos convencen los perfiles vagos (efecto Forer), revisa la evidencia sobre cada uno de los "acusados" del tribunal de la clase, presenta dos problemas que afectan incluso a los tests buenos (el faking y la inteligencia artificial), y cierra con la situación chilena y con lo que creen los profesionales de recursos humanos, que suele ser lo contrario de lo que dice la investigación. Como la clase fue recuperativa, este apunte cubre todo su contenido.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>Que un resultado "te describa" no prueba que el test mida algo. Forer (1949) entregó a sus estudiantes un perfil "individual" idéntico para todos, armado con frases de horóscopo, y lo calificaron con 4.26 sobre 5 de precisión. Las frases vagas, positivas y universales nos describen a todos, y la aceptación del usuario es la forma más débil de validez.</p>
+<p>Lo que sí cuenta son seis cosas que un instrumento debe poder mostrar con datos publicados: confiabilidad (y estabilidad del tipo, si clasifica en tipos), estructura replicada, validez de constructo, validez de criterio con validez incremental sobre lo que ya se mide, equidad y normas locales con manual técnico, y conocimiento de cuánto se puede fingir y de sus consecuencias. Con esas reglas, el MBTI mide cuatro rasgos continuos (los mismos que cuatro de los Big Five) pero sus 16 tipos no existen en los datos: el 35% de las personas cambia de tipo en cuatro semanas, y no hay evidencia de que prediga desempeño. La grafología no predice nada que no prediga el contenido del texto. El eneagrama no recupera sus nueve tipos. El DISC y los tests virales no tienen expediente.</p>
+<p>Dos problemas afectan a todos los tests, incluidos los validados: los postulantes puntúan medio punto de desviación estándar más alto que los empleados en responsabilidad y estabilidad emocional, cerca del 30% infla sus puntajes, las "escalas de mentira" no detectan nada, y la inteligencia artificial finge mejor que las personas. La validez se atenúa, no desaparece: se maneja con diseño (nunca decidir solo con personalidad, rasgos relevantes al puesto, formatos resistentes), no con desconfianza ni con escalas de mentira. En Chile, los instrumentos más exigidos no tienen evidencia, y los profesionales de recursos humanos, en Chile y fuera, aciertan menos del 20% en los mitos básicos de selección.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Por qué nos convencen: el efecto Forer</h3>
+<p>En 1949, Bertram Forer aplicó a sus estudiantes de introducción a la psicología un cuestionario y, una semana después, les entregó un "análisis de personalidad" individual. Les pidió calificar de 0 a 5 cuán bien los describía. La calificación promedio fue 4.26. El análisis era el mismo para todos, compuesto por trece frases tomadas de un libro de astrología: "tienes una gran necesidad de que los demás te aprecien", "tienes capacidades que no has aprovechado", "a veces eres sociable y abierto; otras, reservado y cauteloso". Forer lo llamó "la falacia de la validación personal". Hoy se conoce como efecto Forer o efecto Barnum, y es la base del negocio de los horóscopos, de los tests virales y de buena parte del marketing de los tests de tipos: las descripciones de tipo del MBTI, escriben Stein y Swan (2019), "podrían prestarse a efectos Forer".</p>
+<p>Tres características hacen que una frase funcione: es <strong>vaga</strong> (admite casi cualquier conducta), es <strong>positiva</strong> (nadie rechaza un elogio) y es <strong>universal</strong> (describe algo que casi todos sentimos). Y el efecto crece cuando el perfil se presenta como individualizado y cuando viene de una fuente con autoridad. La lección es sencilla: la pregunta "¿te sientes reconocido en el resultado?" no es una prueba de validez. Que el 90% de los usuarios "confirme" su tipo es exactamente lo que se esperaría de un perfil Barnum.</p>
+<h3>Qué exigirle a un test: seis reglas</h3>
+<p>Los estándares profesionales de evaluación psicológica (American Educational Research Association, American Psychological Association &amp; National Council on Measurement in Education, 2014) y los principios de validación para selección de personal (Society for Industrial and Organizational Psychology, 2018) se pueden resumir en seis preguntas que un instrumento usado para decidir sobre personas debería responder con datos publicados:</p>
+<ol><li><strong>Confiabilidad.</strong> ¿Da el mismo resultado al repetirlo? Si clasifica en tipos, ¿el tipo es estable? Una escala continua con confiabilidad .80 puede producir una clasificación en tipos muy inestable, porque la mayoría de las personas está cerca del corte (Pittenger, 2005).</li><li><strong>Estructura.</strong> ¿Los ítems se agrupan como dice la teoría del test? ¿Lo replicaron investigadores independientes? Si la teoría dice nueve tipos y el análisis encuentra cinco factores, la teoría está mal.</li><li><strong>Validez de constructo.</strong> ¿Converge con medidas establecidas de lo mismo y se distingue de lo que no debería medir? Un test que correlaciona .74 con la extraversión del Big Five mide extraversión, con otro nombre.</li><li><strong>Validez de criterio e incremental.</strong> ¿Predice desempeño u otro resultado relevante? ¿Agrega algo sobre lo que ya se mide? El estándar de comparación existe (apunte 20): entrevista estructurada .42, conocimiento del puesto .40, habilidad cognitiva .31, responsabilidad contextualizada .25 (Sackett, Zhang, Berry &amp; Lievens, 2022). Un test nuevo debe mostrar que suma sobre eso.</li><li><strong>Equidad y normas.</strong> ¿Mide igual en distintos grupos? ¿Hay normas locales recientes y un manual técnico con procedimientos de puntuación transparentes? Un test con normas estadounidenses de 1985 aplicado en Chile en 2026 no tiene normas.</li><li><strong>Faking y consecuencias.</strong> ¿Se sabe cuánto se puede fingir? ¿Qué pasa con las personas cuando se usa para decidir? Messick (1995) insistió en que la validez es una propiedad de las inferencias que se hacen con el test y de sus consecuencias, no del instrumento en sí.</li></ol>
+<p>La regla 5 tiene cifras propias, que el apunte 20 desarrolla: Berry, Lievens, Zhang y Sackett (2024) mostraron que, con las validez revisadas, quitar el test de inteligencia de una batería de seis predictores cuesta poco en validez (de .61 a .56) y mejora mucho la equidad entre grupos (el ratio de impacto adverso sube de .42 a .67), porque la inteligencia tiene la mayor diferencia entre grupos (d = .79) y ya no la mayor validez. A cualquier test se le piden sus diferencias entre grupos, no solo su validez.</p>
+<p>Una regla práctica resume las seis: pedir el manual técnico. Si no hay manual con confiabilidad, estructura, validez y normas publicadas, no hay test; hay un producto. Y la carga de la prueba la tiene quien lo vende, no quien duda.</p>
+<h3>El problema de fondo: tipos que no existen en los datos</h3>
+<p>Casi todos los instrumentos cuestionados comparten una característica: clasifican a las personas en tipos (16, 9, 4, 12). El apunte 16 adelantó por qué eso falla; aquí va el argumento completo, porque es el que decide el juicio.</p>
+<p>Si existieran "extravertidos" e "introvertidos" como clases naturales, la distribución de puntajes en esa escala tendría dos jorobas separadas por un valle. Lo que se observa, en todas las muestras y con todos los sistemas de puntuación, es una campana con la mayoría en el medio. Pittenger (2005, p. 213) lo dice así: "aunque la bimodalidad parece ser una característica esencial de las distribuciones de puntajes, está llamativamente ausente". Los análisis taxométricos, diseñados para detectar categorías latentes, no encuentran ningún "taxón" en el MBTI ni en otras medidas junguianas (Arnau et al., 2003, citados en Reynierse, 2013).</p>
+<p>Cortar una campana por la mitad tiene dos consecuencias. La primera es la inestabilidad: la mayoría de las personas queda cerca del corte y cae de un lado u otro por azar, así que cambia de "tipo" al repetir el test. La segunda es la pérdida de información: Cohen (1983) mostró que dicotomizar una variable reduce su varianza compartida con otra a .64 de la original, y dicotomizar ambas a .40. Harvey y Murry (1994) estimaron que cada escala del MBTI pierde entre 26% y 32% de su información al dicotomizarse. Un sistema de tipos, en suma, toma una medida razonable y la empeora.</p>
+<p>Tampoco ayudan los "perfiles" obtenidos con estadística moderna. Moon et al. (2026) analizaron a 4.103 empleados de una gran empresa con análisis de perfiles latentes (encontraron cuatro) y preguntaron si los perfiles predicen el desempeño más allá de los cinco rasgos continuos: el incremento fue de 0.2% de varianza y no significativo, y lo mismo para proactividad, orientación al aprendizaje y creatividad. Los rasgos continuos ya contienen la información; agruparlos en cajas, por sofisticado que sea el método, no agrega nada.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>MBTI</h3>
+<p>El Myers-Briggs Type Indicator clasifica en 16 tipos a partir de cuatro dicotomías: extraversión-introversión, sensación-intuición, pensamiento-sentimiento, juicio-percepción. Lo responden unos dos millones de personas al año (estimación de la industria, citada en Reynierse, 2013, y Stein &amp; Swan, 2019) y la empresa que lo distribuye declara trabajar con 88 de las 100 mayores empresas de Estados Unidos (The Myers-Briggs Company, 2026). Cuatro hallazgos resumen la evidencia (Pittenger, 2005):</p>
+<ul><li><strong>Estabilidad del tipo.</strong> Según el propio manual (Myers et al., 1998), el 35% de las personas obtiene un tipo de cuatro letras distinto al repetir el test a las cuatro semanas; en otro estudio, el 50% cambió en al menos una escala a las cinco semanas (McCarley &amp; Carskadon, 1983). Entre quienes puntúan cerca del medio, cambian entre el 25% y el 32% por escala.</li><li><strong>Lo que mide.</strong> Las cuatro escalas correlacionan con cuatro de los Big Five: extraversión-introversión con extraversión (−.74 en hombres, −.69 en mujeres), sensación-intuición con apertura (.72 y .69), pensamiento-sentimiento con amabilidad (.44 y .46), juicio-percepción con responsabilidad (−.49 y −.46) (McCrae &amp; Costa, 1989, reproducidos en Reynierse, 2013). Es decir, mide cuatro de los cinco grandes, sin el quinto (el neuroticismo, que es justamente el que más predice satisfacción y salud) y sin facetas.</li><li><strong>Los "tipos completos".</strong> La teoría sostiene que el tipo es más que la suma de sus cuatro letras (una interacción). Las interacciones entre escalas explican entre 0.7% y 6% de la varianza en los descriptores (Reynierse, 2013). No hay "tipo completo".</li><li><strong>Validez laboral.</strong> "Los esfuerzos por detectar vínculos simples entre tipos y eficacia gerencial han sido decepcionantes" (Gardner &amp; Martinko, 1996, citados en Pittenger); no hay estudios de validez incremental sobre otros inventarios. La conclusión de Pittenger (p. 218): usarlo para seleccionar, asignar a equipos o evaluar "no está justificado por la simple razón de que no hay datos disponibles que recomienden tales decisiones".</li></ul>
+<p>Conviene ser preciso en lo que la defensa puede decir, porque es verdad: las escalas continuas del MBTI son confiables (test-retest entre .56 y .93 según la escala y el intervalo; Reynierse, 2013); el instrumento converge con el Big Five, lo que es evidencia de que mide algo real; y la empresa desaconseja usarlo para seleccionar personal. El problema no es que no mida nada: es que convierte cuatro dimensiones continuas en 16 cajas que no existen, y que se usa para decisiones que no puede sostener. Stein y Swan (2019) agregan la crítica teórica: la "validación" por acuerdo del usuario con su tipo es circular (si el usuario puede elegir su tipo, el tipo "verdadero" no está oculto), y la teoría está construida para no ser refutable.</p>
+<h3>Grafología</h3>
+<p>La grafología infiere personalidad y aptitud laboral de la escritura a mano. El estudio destacado de la clase es el metaanálisis de Neter y Ben-Shakhar (1989): 17 estudios, 63 grafólogos, 51 no grafólogos y 1.223 escritos. Cuando el texto era de contenido autobiográfico (el postulante escribe sobre sí mismo), las correlaciones con el criterio estuvieron entre .14 y .21 para todos los jueces, incluidos legos y psicólogos sin formación grafológica; para los grafólogos, entre .15 y .18. Cuando el texto era neutro (copiar un párrafo), la validez de los grafólogos fue cercana a cero. Y "los psicólogos sin formación grafológica superaron a los grafólogos en todas las dimensiones". La interpretación es directa: lo poco que se predice viene del contenido del texto (educación, experiencia, cómo se expresa la persona), no de la letra.</p>
+<p>Ben-Shakhar, Bar-Hillel, Bilu, Ben-Abba y Flug (1986) lo confirmaron con empleados bancarios: grafólogos y un psicólogo clínico correlacionaron entre .2 y .3 con las evaluaciones de los supervisores, pero un modelo lineal simple con información extraída del texto los superó; y con escritos uniformes de 40 profesionales, los grafólogos no superaron el azar al adivinar la profesión entre ocho opciones. En Chile, Didier Pino (2014) revisó 57 artículos pertinentes y concluyó "una definitiva falta de evidencia que apoye algún nivel de validez". La grafología aparece en el 28% de los avisos chilenos para psicólogos de selección que piden tests gráficos. Lo que no hay que decir es que "no correlaciona con nada": correlaciona con lo que dice el texto. El punto es que la escritura no agrega nada y que cualquier lector atento lo hace igual o mejor.</p>
+<h3>Eneagrama y DISC</h3>
+<p>El eneagrama clasifica en nueve tipos. Hook, Hall, Davis, Van Tongeren y Conner (2021) revisaron sistemáticamente 104 muestras y concluyeron que la evidencia de confiabilidad y validez es "mixta": los análisis factoriales encuentran típicamente menos de nueve factores, ningún estudio ha derivado los nueve tipos mediante análisis de conglomerados, hay poca investigación sobre los elementos secundarios de la teoría (alas, movimientos entre tipos), y no hay estudios de validez de criterio laboral. A favor: algunas subescalas se relacionan de forma coherente con los Big Five (extraversión con los tipos 7 y 8) y varios estudios reportan utilidad percibida para el crecimiento personal. Como marco de conversación para desarrollo, no reclama predecir nada; el problema aparece cuando se usa para decidir.</p>
+<p>El DISC (Dominancia, Influencia, Estabilidad, Cumplimiento) vende cuatro "estilos". Su teoría viene de Marston (1928), que nunca construyó un instrumento; hoy existen varios tests comerciales con ese nombre. No se encontró validez de criterio laboral publicada en revistas con revisión por pares; las evaluaciones disponibles sugieren escalas no independientes que se reducen al Big Five [REFERENCIA POR VERIFICAR]. Es el "acusado sin expediente": las seis reglas funcionan como interrogatorio, y la carga de la prueba la tiene quien lo vende.</p>
+<h3>Tests virales y algoritmos</h3>
+<p>Un test de doce preguntas en redes sociales que entrega "qué tipo de líder eres" no tiene manual, normas, confiabilidad ni validez, y termina en un perfil positivo y vago: es Forer con una interfaz bonita. Conviene distinguirlo de su primo serio. Youyou, Kosinski y Stillwell (2015), con 86.220 voluntarios de Facebook, mostraron que un algoritmo entrenado con "me gusta" necesitó 10 likes para juzgar la personalidad de una persona (contra su autoinforme) tan bien como un colega de trabajo, 70 para igualar a un amigo, 150 a un familiar y 300 al cónyuge. El metaanálisis de Azucar, Marengo y Settanni (2018) estima que la personalidad predicha desde huellas digitales correlaciona entre .29 (amabilidad) y .40 (extraversión) con el autoinforme: mide algo, menos de lo que se vende. Las herramientas comerciales que infieren personalidad de video, lenguaje y redes (Hinds, 2024) enfrentan las mismas seis reglas y dos más: consentimiento informado, y evidencia de que miden igual en todos los grupos. El sistema de selección que Amazon desarrolló y abandonó en 2018 penalizaba los currículos que contenían la palabra "women's" (Dastin, 2018, citado en Hinds, 2024). Un algoritmo validado tiene expediente; un test viral no tiene nada; y un algoritmo sin auditoría de sesgo es un test con expediente incompleto.</p>
+<h3>El problema de todos: el faking</h3>
+<p>El faking (distorsión deliberada de respuestas para obtener un resultado deseado) afecta a los tests validados, no solo a los acusados. Birkeland, Manson, Kisamore, Brannick y Smith (2006) compararon, en 33 estudios, a postulantes reales con no postulantes: los postulantes puntúan más alto en responsabilidad (d = .45), estabilidad emocional (.44), apertura (.13) y extraversión (.11). Griffith y Robie (2013) estiman que alrededor del 30% (±10%) de los postulantes infla sus puntajes. Conviene no confundir esto con el faking "instruido" de laboratorio (responde como el candidato ideal), que produce diferencias de una desviación estándar o más y representa un máximo, no lo típico.</p>
+<p>¿Cuánto daño hace? La validez de criterio "se atenúa pero no se destruye" (Griffith &amp; Robie, 2013), aunque en un estudio con postulantes reales la correlación con conducta contraproducente se atenuó severamente (Peterson et al., 2011). Lo que sí cambia es a quién se contrata: el faking reordena a los candidatos en la parte alta de la distribución, que es donde se decide. Y hay una trampa estadística: con datos fingidos, la consistencia interna y el ajuste factorial <em>mejoran</em>, de modo que las estadísticas de homogeneidad engañan.</p>
+<p>Las "escalas de mentira" o de deseabilidad social no resuelven el problema. Lanz, Thielmann y Gerpott (2022), en un metaanálisis de 41 muestras (8.980 personas), encontraron que el puntaje en esas escalas correlaciona .04 con la conducta prosocial real en juegos económicos con dinero; si midieran "fingir", la correlación debería ser negativa. Griffith y Robie (2013, p. 269): "es hora de clavar el último clavo en el ataúd y dejar de usar medidas de deseabilidad social para detectar el faking". Lo que funciona, al menos en parte: nunca decidir solo con personalidad; preferir rasgos estrechos y relevantes al puesto; formatos de elección forzada bien construidos; advertencias (reducen el faking, aunque no elevan la validez); retest de los casos sospechosos. Y una novedad que cambia el problema: Phillips y Robie (2024) le pidieron a cuatro modelos de lenguaje de acceso gratuito (ChatGPT-3.5, Jasper, Google Bard y ChatGPT-4, en junio de 2023) que respondieran dos medidas Big Five "como el candidato ideal" para un puesto de ventas, y compararon sus puntajes con los de 869 estudiantes que recibieron la misma instrucción. En el formato Likert habitual, ChatGPT-4 quedó sobre el percentil 99 en extraversión y responsabilidad (d = 1.95 y 1.73 respecto de los estudiantes). En el formato de elección forzada, que es el que mejor resiste el faking humano, tres de los cuatro modelos quedaron en o bajo la mediana de los estudiantes, pero ChatGPT-4 siguió sobre el percentil 85 en extraversión y 98 en responsabilidad. Todos los modelos fingieron peor la responsabilidad que la extraversión, porque el estereotipo del vendedor es extravertido y los modelos reproducen estereotipos. Las cautelas son las de un estudio pionero (versiones gratuitas de 2023, una sesión por modelo, estudiantes y no postulantes reales, sin prueba de si alguien detecta la respuesta de IA), pero la dirección del hallazgo es clara: el formato que frena a las personas no frena al mejor modelo, el faking asistido ya está en las postulaciones, y es una razón más para no decidir con un cuestionario a solas. La política de IA del curso (uso no autorizado en evaluaciones) existe por la misma razón: la respuesta asistida destruye la validez de lo que se quería medir.</p>
+<h3>Chile</h3>
+<p>Didier Pino (2014) revisó 4.612 avisos de empleo para psicólogos de selección publicados entre 2008 y 2013 en las cinco principales bolsas de trabajo chilenas; 4.329 especificaban tests. El 100% exigía manejar el test de Lüscher (colores) y el de Zulliger (manchas, creado en 1948 para el ejército suizo); el 68% pedía tests "escritos o psicométricos" (Dominó 23.2%, Wonderlic 17.6%, Kostick 15.3%, MBTI 7.1%); el 43% mencionaba entrevistas; el 35% pedía tests gráficos (persona bajo la lluvia 37.8% de ellos, grafología 28.2%, HTP 11.4%). En un segundo estudio, el autor revisó la evidencia publicada entre 1920 y 2013: para Lüscher "no se encontraron estudios de validez predictiva o su uso en contextos de selección de personal"; para Zulliger, "la validez predictiva del test no ha sido probada"; para persona bajo la lluvia, "no se encontró investigación alguna publicada". El marco legal no ayuda: la Ley 20.609 prohíbe la discriminación arbitraria, pero no existe norma que sancione el uso de instrumentos sin validez, y el Colegio de Psicólogos no tiene potestad sancionatoria. (Encuestas más recientes citadas en prensa sugieren que el 74% de los psicólogos de selección usa tests proyectivos y el 68% declara usar la intuición como herramienta central.) En 2025, expertos de consultoras internacionales reconocían en prensa que "algunas pruebas populares fueron creadas hace décadas y no han sido revisadas bajo los estándares actuales" (Emol, 2 de mayo de 2025).</p>
+<p>Para quien va a contratar psicólogos y consultoras, la implicación es directa: el mercado chileno exige instrumentos sin expediente porque los clientes no piden expediente. Dos preguntas cambian eso: "muéstreme el manual técnico y las normas chilenas" y "qué predice, en qué muestra, con qué correlación, y qué agrega sobre una entrevista estructurada".</p>
+<h3>Lo que creen los profesionales</h3>
+<p>Rynes, Colbert y Brown (2002) preguntaron a 959 profesionales de recursos humanos de Estados Unidos si 35 afirmaciones eran verdaderas o falsas según la investigación. La mayor brecha apareció en selección: solo el 18% identificó como falsa la afirmación "la responsabilidad predice mejor el desempeño que la inteligencia"; el 16% la de "seleccionar por valores es más eficaz que por inteligencia"; el 32% la de "los tests de integridad no sirven porque la gente miente"; el 49% la de "hay cuatro dimensiones básicas de personalidad, las del MBTI". Fisher et al. (2021) repitieron el estudio con 453 profesionales de Estados Unidos y Canadá: 20%, 18%, 23% y 20%, respectivamente; y el 53% no rechazó que "un grafólogo hábil puede predecir el desempeño". Veinte años después, la brecha persiste y en varios ítems empeoró. Una réplica holandesa encontró "notables similitudes" (Sanders et al., 2008).</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> si lo usan las grandes empresas y lo responden millones, funciona.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> 88 de las Fortune 100 usan el MBTI y el 100% de los avisos chilenos exige Lüscher y Zulliger; ninguno tiene estudios de validez predictiva para selección. La popularidad mide marketing y aceptabilidad, no validez; y los profesionales que lo compran aciertan menos del 20% en los mitos básicos (Rynes et al., 2002; Fisher et al., 2021).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> la prueba social es un atajo razonable en la vida diaria, y nadie pide el manual.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> "me describió perfecto, así que mide".</p><p><span class="etiqueta ev">La evidencia muestra que...</span> un perfil idéntico para todos, hecho de frases de horóscopo, obtiene 4.26 sobre 5 de precisión percibida (Forer, 1949). La aceptación del usuario es la forma más débil de validez.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> las frases vagas y positivas nos describen a todos, y nos gusta que nos describan bien.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el MBTI es "una alternativa al Big Five con algunos defectos" (versión de Robbins y Judge).</p><p><span class="etiqueta ev">La evidencia muestra que...</span> mide cuatro de los cinco grandes (r de .44 a .74), convertidos en tipos que no existen en los datos (sin bimodalidad ni taxón), inestables (35% cambia en cuatro semanas) y sin validez laboral documentada (Pittenger, 2005; Reynierse, 2013). No es una alternativa: es el mismo contenido, empeorado.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> los tipos son memorables, dan identidad y venden; y los manuales de comportamiento organizacional son indulgentes con lo que los lectores ya usan.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> los tests de personalidad no sirven porque la gente miente.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los postulantes puntúan d ≈ .45 más alto y cerca del 30% finge, pero la validez se atenúa, no desaparece (Birkeland et al., 2006; Griffith &amp; Robie, 2013); la entrevista no estructurada se "finge" igual o más (apariencia .88). Se maneja con diseño, no con desconfianza. Y las escalas de mentira no detectan nada (ρ = .04; Lanz et al., 2022).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> es uno de los mitos de Rynes; solo el 32% (2002) y el 23% (2021) de los profesionales lo rechazó.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> los tests proyectivos "ven lo que la persona esconde" y por eso son mejores que los cuestionarios.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> para Lüscher, Zulliger y persona bajo la lluvia no hay un solo estudio publicado de validez predictiva en selección (Didier Pino, 2014). Un cuestionario validado tiene expediente y límites conocidos; un proyectivo sin estudios no tiene ni lo uno ni lo otro.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> la idea de "ver lo oculto" es atractiva, la formación en psicodiagnóstico es una industria, y el cliente no pide evidencia.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, pedir el manual técnico antes de contratar cualquier instrumento. Confiabilidad, estructura, validez, normas locales recientes y procedimiento de puntuación. Si la consultora no lo tiene o no lo muestra, no hay test.</p>
+<p>Segundo, exigir validez incremental. Un instrumento nuevo compite contra una entrevista estructurada (.42), un test de conocimiento del puesto (.40) y un test de razonamiento (.31). Debe mostrar que agrega algo sobre eso, para ese tipo de puesto, con datos.</p>
+<p>Tercero, desconfiar de los tipos. Cualquier instrumento que clasifique a las personas en cajas (16, 9, 4) está tomando una medida continua y empeorándola; y la etiqueta es pegajosa: "es un ISTJ" se queda en la ficha más que "puntúa 3.6 en responsabilidad". Si se quiere usar un instrumento de tipos para una conversación de desarrollo, declararlo como eso y no dejar que decida ascensos ni asignaciones.</p>
+<p>Cuarto, tomar el faking en serio sin paranoia. Nunca decidir solo con un cuestionario de personalidad; combinarlo con entrevista estructurada, muestras de trabajo y referencias; preferir rasgos estrechos relevantes al puesto; no comprar "resistencia al faking" como promesa ni usar escalas de mentira; y asumir que los candidatos pueden usar inteligencia artificial para responder.</p>
+<p>Quinto, auditar los algoritmos como se auditaría un test. Un sistema de selección automatizado necesita las seis reglas más consentimiento y evidencia de equidad entre grupos; la opacidad no es una excusa.</p>
+<p>Sexto, recordar que en Chile nadie lo va a exigir por ustedes. No hay regulación específica de los tests psicológicos en selección; el estándar lo pone el cliente. Ustedes serán el cliente.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Explicar el efecto Forer, citar la cifra de Forer (1949) y argumentar por qué la aceptación del usuario no es evidencia de validez.</li><li>Enumerar las seis reglas para evaluar un instrumento y aplicarlas a un test concreto.</li><li>Explicar, con la distribución de puntajes y la pérdida de información por dicotomizar, por qué los sistemas de tipos fallan.</li><li>Resumir la evidencia sobre el MBTI (estabilidad del tipo, convergencia con el Big Five, interacciones, validez laboral) distinguiendo lo que mide de lo que no.</li><li>Describir el metaanálisis de Neter y Ben-Shakhar (1989) y explicar por qué la validez residual de la grafología viene del contenido del texto.</li><li>Resumir la evidencia sobre el eneagrama, el DISC y los tests virales, y distinguirlos de un algoritmo con validación publicada.</li><li>Citar las magnitudes del faking en postulantes reales, explicar por qué las escalas de deseabilidad social no lo detectan, y nombrar tres prácticas que lo mitigan.</li><li>Describir el panorama chileno (Didier Pino, 2014) y la brecha investigación-práctica (Rynes et al., 2002; Fisher et al., 2021), y formular las dos preguntas que harías a una consultora.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>American Educational Research Association, American Psychological Association, &amp; National Council on Measurement in Education. (2014). <em>Standards for educational and psychological testing</em>. American Educational Research Association.</p>
+<p>Azucar, D., Marengo, D., &amp; Settanni, M. (2018). Predicting the Big 5 personality traits from digital footprints on social media: A meta-analysis. <em>Personality and Individual Differences, 124</em>, 150–159. <a href="https://doi.org/10.1016/j.paid.2017.12.018">https://doi.org/10.1016/j.paid.2017.12.018</a></p>
+<p>Berry, C. M., Lievens, F., Zhang, C., &amp; Sackett, P. R. (2024). Insights from an updated personnel selection meta-analytic matrix: Revisiting general mental ability tests' role in the validity–diversity trade-off. <em>Journal of Applied Psychology, 109</em>(10), 1611–1634. <a href="https://doi.org/10.1037/apl0001203">https://doi.org/10.1037/apl0001203</a></p>
+<p>Ben-Shakhar, G., Bar-Hillel, M., Bilu, Y., Ben-Abba, E., &amp; Flug, A. (1986). Can graphology predict occupational success? Two empirical studies and some methodological ruminations. <em>Journal of Applied Psychology, 71</em>(4), 645–653. <a href="https://doi.org/10.1037/0021-9010.71.4.645">https://doi.org/10.1037/0021-9010.71.4.645</a></p>
+<p>Birkeland, S. A., Manson, T. M., Kisamore, J. L., Brannick, M. T., &amp; Smith, M. A. (2006). A meta-analytic investigation of job applicant faking on personality measures. <em>International Journal of Selection and Assessment, 14</em>(4), 317–335. <a href="https://doi.org/10.1111/j.1468-2389.2006.00354.x">https://doi.org/10.1111/j.1468-2389.2006.00354.x</a></p>
+<p>Cohen, J. (1983). The cost of dichotomization. <em>Applied Psychological Measurement, 7</em>(3), 249–253. <a href="https://doi.org/10.1177/014662168300700301">https://doi.org/10.1177/014662168300700301</a></p>
+<p>Didier Pino, N. O. (2014). Selección de personal en Chile. <em>Revista Iberoamericana de Psicología: Ciencia y Tecnología, 7</em>(1), 103–114. <a href="https://doi.org/10.33881/2027-1786.rip.7109">https://doi.org/10.33881/2027-1786.rip.7109</a></p>
+<p>Fisher, P. A., Risavy, S. D., Robie, C., König, C. J., Christiansen, N. D., Tett, R. P., &amp; Simonet, D. V. (2021). Selection myths: A conceptual replication of HR professionals' beliefs about effective human resource practices in the US and Canada. <em>Journal of Personnel Psychology, 20</em>(2), 51–60. <a href="https://doi.org/10.1027/1866-5888/a000263">https://doi.org/10.1027/1866-5888/a000263</a></p>
+<p>Forer, B. R. (1949). The fallacy of personal validation: A classroom demonstration of gullibility. <em>Journal of Abnormal and Social Psychology, 44</em>(1), 118–123. <a href="https://doi.org/10.1037/h0059240">https://doi.org/10.1037/h0059240</a></p>
+<p>Griffith, R. L., &amp; Robie, C. (2013). Personality testing and the "F-word": Revisiting seven questions about faking. En N. D. Christiansen &amp; R. P. Tett (Eds.), <em>Handbook of personality at work</em> (pp. 253–280). Routledge.</p>
+<p>Hinds, J. (2024). Digital data and personality: Challenges and opportunities for organizations. En A. Tuncdogan, O. A. Acar, H. W. Volberda, &amp; K. de Ruyter (Eds.), <em>The Oxford handbook of individual differences in organizational contexts</em> (pp. 325–344). Oxford University Press.</p>
+<p>Hook, J. N., Hall, T. W., Davis, D. E., Van Tongeren, D. R., &amp; Conner, M. (2021). The Enneagram: A systematic review of the literature and directions for future research. <em>Journal of Clinical Psychology, 77</em>(4), 865–883. <a href="https://doi.org/10.1002/jclp.23097">https://doi.org/10.1002/jclp.23097</a></p>
+<p>Lanz, L., Thielmann, I., &amp; Gerpott, F. H. (2022). Are social desirability scales desirable? A meta-analytic test of the validity of social desirability scales in the context of prosocial behavior. <em>Journal of Personality, 90</em>(2), 203–221. <a href="https://doi.org/10.1111/jopy.12662">https://doi.org/10.1111/jopy.12662</a></p>
+<p>Messick, S. (1995). Validity of psychological assessment: Validation of inferences from persons' responses and performances as scientific inquiry into score meaning. <em>American Psychologist, 50</em>(9), 741–749. <a href="https://doi.org/10.1037/0003-066X.50.9.741">https://doi.org/10.1037/0003-066X.50.9.741</a></p>
+<p>Moon, N. A., Converse, P. D., al-Qallawi, S., Ponce, L. P., Fedele, D. J., Caylor, J. R., &amp; Bush, J. (2026). Personality profiles at work: Nature and implications for performance. <em>Human Performance, 39</em>(3), 145–170. <a href="https://doi.org/10.1080/08959285.2026.2648829">https://doi.org/10.1080/08959285.2026.2648829</a></p>
+<p>Neter, E., &amp; Ben-Shakhar, G. (1989). The predictive validity of graphological inferences: A meta-analytic approach. <em>Personality and Individual Differences, 10</em>(7), 737–745. <a href="https://doi.org/10.1016/0191-8869(89)90120-7">https://doi.org/10.1016/0191-8869(89)90120-7</a></p>
+<p>Phillips, J., &amp; Robie, C. (2024). Can a computer outfake a human? <em>Personality and Individual Differences, 217</em>, 112434. <a href="https://doi.org/10.1016/j.paid.2023.112434">https://doi.org/10.1016/j.paid.2023.112434</a></p>
+<p>Pittenger, D. J. (2005). Cautionary comments regarding the Myers-Briggs Type Indicator. <em>Consulting Psychology Journal: Practice and Research, 57</em>(3), 210–221. <a href="https://doi.org/10.1037/1065-9293.57.3.210">https://doi.org/10.1037/1065-9293.57.3.210</a></p>
+<p>Reynierse, J. H. (2013). Type theory revisited: Implications of complementary opposites for the five-factor model of personality and organizational interventions. En N. D. Christiansen &amp; R. P. Tett (Eds.), <em>Handbook of personality at work</em> (pp. 356–391). Routledge.</p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Rynes, S. L., Colbert, A. E., &amp; Brown, K. G. (2002). HR professionals' beliefs about effective human resource practices: Correspondence between research and practice. <em>Human Resource Management, 41</em>(2), 149–174. <a href="https://doi.org/10.1002/hrm.10029">https://doi.org/10.1002/hrm.10029</a></p>
+<p>Sackett, P. R., Zhang, C., Berry, C. M., &amp; Lievens, F. (2022). Revisiting meta-analytic estimates of validity in personnel selection: Addressing systematic overcorrection for restriction of range. <em>Journal of Applied Psychology, 107</em>(11), 2040–2068. <a href="https://doi.org/10.1037/apl0000994">https://doi.org/10.1037/apl0000994</a></p>
+<p>Sanders, K., van Riemsdijk, M., &amp; Groen, B. (2008). The gap between research and practice: A replication study on the HR professionals' beliefs about effective human resource practices. <em>International Journal of Human Resource Management, 19</em>(10), 1976–1988. <a href="https://doi.org/10.1080/09585190802324304">https://doi.org/10.1080/09585190802324304</a></p>
+<p>Society for Industrial and Organizational Psychology. (2018). Principles for the validation and use of personnel selection procedures (5th ed.). <em>Industrial and Organizational Psychology, 11</em>(S1), 1–97. <a href="https://doi.org/10.1017/iop.2018.195">https://doi.org/10.1017/iop.2018.195</a></p>
+<p>Stein, R., &amp; Swan, A. B. (2019). Evaluating the validity of Myers-Briggs Type Indicator theory: A teaching tool and window into intuitive psychology. <em>Social and Personality Psychology Compass, 13</em>(2), e12434. <a href="https://doi.org/10.1111/spc3.12434">https://doi.org/10.1111/spc3.12434</a></p>
+<p>Youyou, W., Kosinski, M., &amp; Stillwell, D. (2015). Computer-based personality judgments are more accurate than those made by humans. <em>Proceedings of the National Academy of Sciences, 112</em>(4), 1036–1040. <a href="https://doi.org/10.1073/pnas.1418680112">https://doi.org/10.1073/pnas.1418680112</a></p>
+<h3>Para profundizar</h3>
+<p>Pittenger (2005): once páginas que resumen todo lo que hay que saber sobre el MBTI; si vas a trabajar en recursos humanos, léelo antes de que alguien te lo venda.</p>
+<p>Griffith y Robie (2013): las siete preguntas sobre el faking, con lo que funciona y lo que no; es el capítulo que debería leer cualquiera que use cuestionarios para seleccionar.</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

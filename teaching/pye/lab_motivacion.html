@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de motivación laboral · Personas y Equipos UDP</title>
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Tema 2</p>
+  <h1>Motivación laboral: seis estaciones para pasar de "cuánta" a "de qué tipo"</h1>
+  <p class="meta">Personas y Equipos, secciones 02 y 03 · 2º semestre 2026 · Acompaña a las clases 5 a 10 y a los apuntes 5, 6, 7, 8 y 9<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/pye/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0 ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Seis estaciones, cada una con algo que manipular, algo que clasificar y preguntas con retroalimentación. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. Al final, la ficha de salida resume lo que completaste y qué conviene repasar. No hay registro ni nota: es material para estudiar el Tema 2.</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. Qué es (y qué no es) la motivación.</strong> Las cuatro fases, las cuatro confusiones, el cuadro distal-proximal, el mapa de Kanfer y Chen y la cadena motivación, esfuerzo, desempeño.</div>
+    <div class="caja"><strong>2. El continuo de la autodeterminación.</strong> Seis maneras de estar motivado, qué predice cada una, las tres necesidades y la cadena desde la jefatura.</div>
+    <div class="caja"><strong>3. Metas y expectativas.</strong> El diagnóstico de Vroom, un simulador de fijación de metas, el hallazgo de proximidad y el lado oscuro.</div>
+    <div class="caja"><strong>4. Incentivos y justicia.</strong> El mismo dinero con distinto efecto, cantidad o calidad, la calculadora de Adams y las cuatro justicias.</div>
+    <div class="caja"><strong>5. Diseño del trabajo.</strong> Diagnóstico de un puesto, demandas y recursos, job crafting y el 2% que sorprende.</div>
+    <div class="caja"><strong>6. ¿Mito o evidencia?</strong> Veinte afirmaciones que circulan en empresas, con su veredicto, su magnitud y su fuente.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 50 a 70 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en los apuntes 5 a 9.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<!-- ============ ESTACIÓN 1: QUÉ ES ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Qué es (y qué no es) la motivación laboral</h2>
+  <p>La definición del curso (Pinder, 1998): el conjunto de fuerzas energéticas que se originan dentro y fuera de la persona, que inician la conducta relacionada con el trabajo y determinan su forma, dirección, intensidad y duración. Es un <strong>proceso</strong>, no un estado ni un rasgo, y las definiciones recientes lo describen como <strong>asignación de recursos limitados</strong>: motivar hacia algo es desmotivar respecto de otra cosa.</p>
+
+  <h3>A. ¿En qué fase está el problema?</h3>
+  <p>Inicio (cuándo comienza), dirección (qué se elige), intensidad (cuánto esfuerzo) y persistencia (cuánto se sostiene). Las intervenciones no operan sobre las cuatro por igual. Diagnostica cada caso.</p>
+  <div id="c1fase"></div>
+
+  <h3>B. Cuatro cosas que la motivación no es</h3>
+  <p>Cada afirmación confunde la motivación con otra cosa. ¿Con cuál?</p>
+  <div id="c1no"></div>
+
+  <h3>C. El cuadro de influencias: ¿de la persona o del contexto?, ¿distal o proximal?</h3>
+  <p>Diefendorff y Chandler (2011) cruzan dos ejes. Lo proximal es lo que un jefe puede mover el lunes; lo distal opera de fondo y actúa a través de lo proximal. Ubica cada factor.</p>
+  <div id="c1cuadro"></div>
+
+  <h3>D. El mapa de Kanfer y Chen (2016)</h3>
+  <p>Cuatro preguntas ordenan un siglo de teorías. Une cada teoría con la pregunta que responde.</p>
+  <div class="match" id="kanfer"></div>
+  <button class="btn" onclick="checkMatch('kanfer', KANFER, '1_kanfer', 'Cuatro de cuatro. ¿Por qué? (necesidades y motivos, clases 5 y 6); ¿qué? (elegir y perseguir metas, clase 7); ¿cómo? (las cogniciones que traducen el motivo en acción, clases 7 y 8); ¿dónde y cuándo? (el contexto que enciende o apaga, clases 8 y 9).')">Comprobar</button>
+  <div id="kanferRes" class="nota" style="display:none"></div>
+
+  <h3>E. La cadena: motivación, esfuerzo, desempeño</h3>
+  <p>Van Iddekinge et al. (2023), 141 estudios y 171 muestras: cada eslabón es necesario pero insuficiente para el siguiente. Haz clic en cada enlace para ver su magnitud.</p>
+  <div class="caja">
+    <svg viewBox="0 0 600 120" id="svgCadena">
+      <rect x="10" y="35" width="150" height="50" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/><text x="85" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#1F2937">MOTIVACIÓN</text><text x="85" y="72" text-anchor="middle" font-size="10" fill="#6B7280">fuerza inobservable</text>
+      <rect x="225" y="35" width="150" height="50" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/><text x="300" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#1F2937">ESFUERZO</text><text x="300" y="72" text-anchor="middle" font-size="10" fill="#6B7280">conducta observable</text>
+      <rect x="440" y="35" width="150" height="50" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/><text x="515" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#1F2937">DESEMPEÑO</text><text x="515" y="72" text-anchor="middle" font-size="10" fill="#6B7280">exige además eficacia</text>
+      <g style="cursor:pointer" onclick="cadena(0)"><line x1="160" y1="60" x2="225" y2="60" stroke="#C8102E" stroke-width="3"/><polygon points="225,60 215,54 215,66" fill="#C8102E"/><text x="192" y="50" text-anchor="middle" font-size="11" fill="#C8102E" font-weight="700">ρ = ?</text></g>
+      <g style="cursor:pointer" onclick="cadena(1)"><line x1="375" y1="60" x2="440" y2="60" stroke="#C8102E" stroke-width="3"/><polygon points="440,60 430,54 430,66" fill="#C8102E"/><text x="407" y="50" text-anchor="middle" font-size="11" fill="#C8102E" font-weight="700">ρ = ?</text></g>
+      <text x="300" y="108" text-anchor="middle" font-size="10" fill="#6B7280">y el esfuerzo con el agotamiento emocional: <tspan font-weight="700" fill="#1F2937" style="cursor:pointer" onclick="cadena(2)">ρ = ?</tspan></text>
+    </svg>
+    <div class="nota" id="cadenaOut" style="margin:.6rem 0 0">Haz clic en un enlace.</div>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2: SDT ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · El continuo de la autodeterminación: de qué tipo es la motivación</h2>
+  <p>La pregunta de las empresas es <em>cuánta</em> motivación tiene una persona. La teoría de la autodeterminación la cambia por <em>de qué tipo</em>: seis maneras de estar motivado, agrupadas en <strong>motivación controlada</strong> (razones a presión, vengan de afuera o de uno mismo) y <strong>motivación autónoma</strong> (razones propias). La amotivación es la ausencia de razones.</p>
+
+  <h3>A. ¿Cómo suena? Ubica cada frase en el continuo</h3>
+  <p>Clasifica por la <strong>razón que la persona declara</strong>, no por su conducta visible. Dos trampas: la introyección viene de adentro y aun así es controlada; la identificada es extrínseca y aun así es autónoma.</p>
+  <div id="c2cont"></div>
+
+  <h3>B. ¿Qué predice cada tipo?</h3>
+  <p>Correlaciones metaanalíticas corregidas con 124 muestras de trabajadores (Van den Broeck et al., 2021, Tablas 2 y 3). Haz clic en una casilla.</p>
+  <div class="cont" id="contBox"></div>
+  <div class="caja" id="contOut">
+    <div class="barra"><span class="lb">Desempeño</span><div class="tr"><div id="bD"></div></div><span class="vv" id="vD">–</span></div>
+    <div class="barra"><span class="lb">Satisfacción laboral</span><div class="tr"><div id="bS"></div></div><span class="vv" id="vS">–</span></div>
+    <div class="barra"><span class="lb">Burnout</span><div class="tr"><div id="bB"></div></div><span class="vv" id="vB">–</span></div>
+    <div class="nota" id="contLectura" style="margin:.6rem 0 0">Elige una casilla del continuo.</div>
+  </div>
+  <p class="mini">Escala de −.60 a +.60; la línea central es cero. En este campo, .30 es moderada y útil, .50 es fuerte.</p>
+
+  <h3>C. ¿Qué necesidad está siendo frustrada?</h3>
+  <p>Autonomía (sentir que lo que hago nace de mí; su opuesto no es la estructura sino el control), competencia (ser capaz, mejorar, ver el efecto) y relación (pertenecer, importarle a alguien). Son nutrientes, no gustos. Diagnostica cada caso.</p>
+  <div id="c2nec"></div>
+
+  <h3>D. La cadena desde la jefatura</h3>
+  <p>Hagger y Star (2026), 192 estudios y 93.552 trabajadores, modelo de ecuaciones estructurales sobre matrices metaanalíticas. Coeficientes estandarizados.</p>
+  <div class="caja">
+    <svg viewBox="0 0 640 150">
+      <rect x="5" y="40" width="140" height="56" rx="8" fill="#DBEAFE" stroke="#1D4ED8"/><text x="75" y="63" text-anchor="middle" font-size="11" font-weight="700" fill="#1D4ED8">APOYO DE LA JEFATURA</text><text x="75" y="78" text-anchor="middle" font-size="10" fill="#1D4ED8">a las necesidades</text>
+      <rect x="170" y="40" width="140" height="56" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/><text x="240" y="63" text-anchor="middle" font-size="11" font-weight="700">SATISFACCIÓN</text><text x="240" y="78" text-anchor="middle" font-size="10" fill="#6B7280">de las tres necesidades</text>
+      <rect x="335" y="40" width="140" height="56" rx="8" fill="#DCFCE7" stroke="#15803D"/><text x="405" y="63" text-anchor="middle" font-size="11" font-weight="700" fill="#15803D">MOTIVACIÓN</text><text x="405" y="78" text-anchor="middle" font-size="10" fill="#15803D">autónoma</text>
+      <rect x="500" y="40" width="135" height="56" rx="8" fill="#F3F4F6" stroke="#E5E7EB"/><text x="567" y="63" text-anchor="middle" font-size="11" font-weight="700">RESULTADOS</text><text x="567" y="78" text-anchor="middle" font-size="10" fill="#6B7280">desempeño, bienestar</text>
+      <line x1="145" y1="68" x2="170" y2="68" stroke="#1F2937" stroke-width="2"/><text x="157" y="32" text-anchor="middle" font-size="11" font-weight="700" fill="#C8102E">.720</text>
+      <line x1="310" y1="68" x2="335" y2="68" stroke="#1F2937" stroke-width="2"/><text x="322" y="32" text-anchor="middle" font-size="11" font-weight="700" fill="#C8102E">.575</text>
+      <line x1="475" y1="68" x2="500" y2="68" stroke="#1F2937" stroke-width="2"/><text x="487" y="32" text-anchor="middle" font-size="11" font-weight="700" fill="#C8102E">.355</text>
+      <path d="M75 96 Q320 150 567 96" fill="none" stroke="#C8102E" stroke-width="2" stroke-dasharray="5,4"/><text x="320" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#C8102E">efecto total del apoyo de la jefatura sobre los resultados: β = .591</text>
+    </svg>
+    <p class="mini" style="margin-top:.5rem">La rama paralela: la motivación controlada no aporta a los resultados adaptativos (β = .038, n.s.) pero empuja burnout y rotación (β = .282). Casi todo es correlacional y de autorreporte: los autores describen su modelo como "una secuencia posible entre otras igualmente ajustadas".</p>
+  </div>
+  <p>¿Y qué es concretamente apoyar las necesidades? Clasifica cada conducta de jefatura según la necesidad que apoya (Slemp et al., 2024: 881 muestras, 443.556 personas).</p>
+  <div id="c2apoyo"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3: METAS ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Metas y expectativas: la herramienta más barata, y su lado oscuro</h2>
+  <p>Una meta específica y difícil produce más desempeño que una fácil, que una vaga y que "haz tu mejor esfuerzo": más de cien tareas, más de cuarenta mil participantes, al menos ocho países, d entre .42 y .80 (Locke y Latham, 2002). Funciona por cuatro mecanismos (dirige, energiza, sostiene, activa estrategias) y con tres condiciones (compromiso, retroalimentación, tarea no demasiado compleja).</p>
+
+  <h3>A. Antes de la meta: el diagnóstico de Vroom</h3>
+  <p>Expectativa (si me esfuerzo, ¿logro el desempeño?), instrumentalidad (si lo logro, ¿recibo la recompensa?) y valencia (¿me importa?). Se <strong>multiplican</strong>: basta un cero para que el esfuerzo sea cero.</p>
+  <div class="caja">
+    <div class="grid g3">
+      <div class="slider">Expectativa: <span class="v" id="vEV">.8</span><input type="range" id="vE" min="0" max="10" value="8" oninput="vroom()"></div>
+      <div class="slider">Instrumentalidad: <span class="v" id="vIV">.8</span><input type="range" id="vI" min="0" max="10" value="8" oninput="vroom()"></div>
+      <div class="slider">Valencia: <span class="v" id="vVV">.8</span><input type="range" id="vV" min="0" max="10" value="8" oninput="vroom()"></div>
+    </div>
+    <div class="grid g2" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">FUERZA MOTIVACIONAL (E × I × V)</div><div class="num" id="vF">–</div><span class="nivel" id="vFN"></span></div>
+      <div class="nota" id="vLectura" style="margin:0"></div>
+    </div>
+  </div>
+  <p>Tres personas que "no están motivadas" se ven iguales desde afuera y se arreglan de maneras distintas. ¿Cuál eslabón está roto?</p>
+  <div id="c3vroom"></div>
+
+  <h3>B. Simulador: fija la meta</h3>
+  <p>Diseña la meta para una persona y mira el desempeño esperado y los riesgos. El modelo es ilustrativo: respeta las reglas y las magnitudes de Locke y Latham (2002, 2019), Goerg (2015) y Schweitzer et al. (2004), sin pretender precisión numérica.</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div>
+        <div class="slider">Tipo de instrucción: <span class="v" id="mTipoV"></span><br>
+          <button class="btn light on" id="mT0" onclick="setM('tipo',0)">"Haz tu mejor esfuerzo"</button><button class="btn light" id="mT1" onclick="setM('tipo',1)">Meta específica</button></div>
+        <div class="slider" id="mDifWrap">Dificultad de la meta: <span class="v" id="mDifV">difícil pero alcanzable</span><input type="range" id="mDif" min="1" max="10" value="6" oninput="simMeta()"></div>
+        <div class="slider">Tarea: <button class="btn light on" id="mC0" onclick="setM('comp',0)">Dominada</button><button class="btn light" id="mC1" onclick="setM('comp',1)">Nueva o compleja</button></div>
+        <div class="slider">Clase de meta: <button class="btn light on" id="mK0" onclick="setM('clase',0)">De desempeño (cuánto producir)</button><button class="btn light" id="mK1" onclick="setM('clase',1)">De aprendizaje (cuántas estrategias descubrir)</button></div>
+      </div>
+      <div>
+        <div class="slider">Retroalimentación sobre el avance: <button class="btn light on" id="mF1" onclick="setM('fb',1)">A tiempo</button><button class="btn light" id="mF0" onclick="setM('fb',0)">El mes siguiente</button></div>
+        <div class="slider">Propósito explicado: <button class="btn light on" id="mP1" onclick="setM('prop',1)">Sí</button><button class="btn light" id="mP0" onclick="setM('prop',0)">Asignada a secas</button></div>
+        <div class="slider">Bono: <button class="btn light on" id="mB0" onclick="setM('bono',0)">Sin bono</button><button class="btn light" id="mB1" onclick="setM('bono',1)">Todo o nada al cumplir</button><button class="btn light" id="mB2" onclick="setM('bono',2)">Escalonado</button></div>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">DESEMPEÑO ESPERADO (índice; "mejor esfuerzo" en tarea dominada = 100)</div><div class="num" id="mOut">–</div><span class="nivel" id="mOutN"></span></div>
+      <div class="stat"><div class="lbl">RIESGOS DEL DISEÑO</div><div id="mRiesgos" class="sans" style="font-size:.88rem"></div></div>
+    </div>
+    <div class="nota" id="mLectura" style="margin-top:.8rem"></div>
+  </div>
+  <div class="desafio" id="d3a"><div class="chk">✓</div><div><strong>Desafío.</strong> Encuentra una configuración con meta específica que rinda <em>peor</em> que "haz tu mejor esfuerzo", y luego una que rinda al máximo sin riesgo alto de sobredeclaración. <span class="mini" id="d3aTxt">0 de 2.</span></div></div>
+
+  <h3>C. El hallazgo de proximidad</h3>
+  <p>Schweitzer, Ordóñez y Douma (2004): 154 estudiantes, anagramas de siete letras, meta de nueve palabras calibrada en el percentil 90. Entre quienes hicieron <strong>exactamente ocho</strong> (a una palabra de la meta), ¿qué proporción declaró nueve o más? Adivina antes de revelar.</p>
+  <div class="caja">
+    <div class="grid g3">
+      <div class="slider">Control ("mejor esfuerzo"): <span class="v" id="pA">15</span>%<input type="range" id="pAs" min="0" max="100" value="15" oninput="document.getElementById('pA').textContent=this.value"></div>
+      <div class="slider">Meta, pago fijo: <span class="v" id="pB">15</span>%<input type="range" id="pBs" min="0" max="100" value="15" oninput="document.getElementById('pB').textContent=this.value"></div>
+      <div class="slider">Meta + US$2 por ronda: <span class="v" id="pC">15</span>%<input type="range" id="pCs" min="0" max="100" value="15" oninput="document.getElementById('pC').textContent=this.value"></div>
+    </div>
+    <button class="btn" onclick="revelarProx()">Revelar</button>
+    <div id="proxOut" style="display:none;margin-top:.6rem">
+      <div class="barra"><span class="lb">Control</span><div class="tr"><div style="left:0;width:14.81%"></div></div><span class="vv">14.8%</span></div>
+      <div class="barra"><span class="lb">Meta, pago fijo</span><div class="tr"><div style="left:0;width:34.48%"></div></div><span class="vv">34.5%</span></div>
+      <div class="barra"><span class="lb">Meta + recompensa</span><div class="tr"><div class="neg" style="left:0;width:48.48%"></div></div><span class="vv">48.5%</span></div>
+      <div class="nota" id="proxLectura" style="margin-top:.6rem"></div>
+    </div>
+  </div>
+
+  <h3>D. El lado oscuro: ¿qué efecto secundario ilustra cada caso?</h3>
+  <p>Ordóñez et al. (2009) sistematizaron seis efectos secundarios. Locke y Latham (2009) respondieron que las anécdotas no son evidencia y que los incentivos mal diseñados confunden el cuadro. Clasifica cada caso por el efecto que mejor ilustra.</p>
+  <div id="c3oscuro"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4: INCENTIVOS ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · ¿Motiva el dinero? Incentivos, pago variable y justicia</h2>
+  <p>El dinero sí motiva. La pregunta útil es <strong>qué</strong> motiva: los incentivos compran cantidad de desempeño, no calidad; una vez controlado el diseño del trabajo, el sueldo explica alrededor de un décimo de la motivación autónoma; y cómo se decide el pago importa tanto como cuánto se paga.</p>
+
+  <h3>A. El mismo dinero, distinto efecto</h3>
+  <p>Deci, Koestner y Ryan (1999a), 128 experimentos: efecto de la recompensa sobre la motivación intrínseca (d, conducta de libre elección). Elige un tipo de recompensa.</p>
+  <div class="caja">
+    <div id="recBtns"></div>
+    <div class="barra" style="margin-top:.6rem"><span class="lb">d</span><div class="tr"><div id="bRec"></div></div><span class="vv" id="vRec">–</span></div>
+    <div class="nota" id="recLectura" style="margin:.6rem 0 0">Elige un tipo de recompensa.</div>
+    <p class="mini">Escala de −.50 a +.50. El promedio global que se cita ("las recompensas destruyen la motivación intrínseca") esconde que el elogio la sube y la recompensa inesperada no la toca.</p>
+  </div>
+
+  <h3>B. ¿Cantidad o calidad? Elige la palanca</h3>
+  <p>Cerasoli, Nicklin y Ford (2014), 183 muestras y 212.468 personas: para la cantidad, los incentivos pesan β = .33 y la motivación intrínseca .24; para la calidad, la motivación intrínseca pesa .35 y los incentivos .06. Para cada puesto, ¿cuál es la palanca principal?</p>
+  <div id="c4cc"></div>
+
+  <h3>C. Reforzamiento involuntario: ¿qué está reforzando de verdad?</h3>
+  <p>Las organizaciones refuerzan sistemáticamente conductas que no quieren, porque miran el discurso y no la consecuencia. Para cada situación, ¿qué conducta se está reforzando?</p>
+  <div id="c4ref"></div>
+
+  <h3>D. La calculadora de Adams</h3>
+  <p>La persona compara la razón entre sus resultados y sus aportes con la misma razón en un referente que ella elige. Equidad no es igualdad. Mueve los valores.</p>
+  <div class="caja">
+    <div class="grid g4">
+      <div class="slider">Mis aportes: <span class="v" id="aAV">6</span><input type="range" id="aA" min="1" max="10" value="6" oninput="adams()"></div>
+      <div class="slider">Mis resultados: <span class="v" id="aRV">6</span><input type="range" id="aR" min="1" max="10" value="6" oninput="adams()"></div>
+      <div class="slider">Aportes del referente: <span class="v" id="rAV">6</span><input type="range" id="rA" min="1" max="10" value="6" oninput="adams()"></div>
+      <div class="slider">Resultados del referente: <span class="v" id="rRV">6</span><input type="range" id="rR" min="1" max="10" value="6" oninput="adams()"></div>
+    </div>
+    <div class="grid g3" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">MI RAZÓN (resultados / aportes)</div><div class="num" id="aMi">–</div></div>
+      <div class="stat"><div class="lbl">RAZÓN DEL REFERENTE</div><div class="num" id="aRef">–</div></div>
+      <div class="stat"><div class="lbl">PERCEPCIÓN</div><div class="num" id="aPer" style="font-size:1.2rem">–</div></div>
+    </div>
+    <div style="margin-top:.5rem"><button class="btn light" onclick="presetA(8,6,5,6)">Gano lo mismo que el nuevo que aporta menos</button><button class="btn light" onclick="presetA(6,6,6,9)">Mismo aporte, él gana más</button><button class="btn light" onclick="presetA(5,8,8,8)">Yo aporto menos y gano igual</button></div>
+    <div class="nota" id="aLectura" style="margin-top:.8rem"></div>
+  </div>
+
+  <h3>E. Las cuatro justicias</h3>
+  <p>Distributiva (cuánto me tocó), procedimental (cómo se decidió), interpersonal (cómo me trataron) e informacional (cómo me lo explicaron). Colquitt et al. (2001): la procedimental correlaciona .36 con el desempeño; la distributiva, .15. Clasifica cada queja.</p>
+  <div id="c4jus"></div>
+
+  <h3>F. Cuánto pesa realmente el sueldo</h3>
+  <p>Gagné et al. (2026), análisis de pesos relativos sobre la motivación autónoma (porcentaje del total explicado). Cambia de muestra.</p>
+  <div class="caja">
+    <button class="btn light on" id="gM1" onclick="gagne(0)">Muestra 1 (panel, 530/425)</button><button class="btn light" id="gM2" onclick="gagne(1)">Muestra 2 (panel, 741/347)</button><button class="btn light" id="gM3" onclick="gagne(2)">Muestra 3 (328 empleados, registros reales de pago)</button>
+    <div id="gagneOut" style="margin-top:.6rem"></div>
+    <p class="mini">Estudios de campo, no experimentos; nadie manipuló el pago ni el diseño del trabajo. Artículo de acceso abierto (CC BY 4.0).</p>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5: DISEÑO ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Diseño del trabajo: la palanca que más pesa</h2>
+  <p>Casi todo lo que la gente dice de su trabajo cae en dos columnas: <strong>características del trabajo</strong> (propiedades del puesto que alguien decidió) y <strong>resultados del trabajo</strong> (estados de la persona). La primera causa la segunda; el error más común es intervenir sobre la segunda. Catorce características explican en promedio el 43% de la varianza en 19 resultados (Humphrey et al., 2007).</p>
+
+  <h3>A. ¿Característica o resultado?</h3>
+  <div id="c5col"></div>
+
+  <h3>B. Diagnostica un puesto (Hackman y Oldham, 1976)</h3>
+  <p>Puntúa las cinco dimensiones de 1 a 7. El laboratorio calcula el puntaje potencial motivador (PPM) con su fórmula multiplicativa, lo compara con el promedio simple y sugiere qué forma de rediseño mueve las dos dimensiones más bajas.</p>
+  <div class="caja">
+    <div class="grid g5">
+      <div class="slider">Variedad: <span class="v" id="jVV">4</span><input type="range" id="jV" min="1" max="7" value="4" oninput="jcm()"></div>
+      <div class="slider">Identidad: <span class="v" id="jIV">4</span><input type="range" id="jI" min="1" max="7" value="4" oninput="jcm()"></div>
+      <div class="slider">Significancia: <span class="v" id="jSV">4</span><input type="range" id="jS" min="1" max="7" value="4" oninput="jcm()"></div>
+      <div class="slider">Autonomía: <span class="v" id="jAV">4</span><input type="range" id="jA" min="1" max="7" value="4" oninput="jcm()"></div>
+      <div class="slider">Retroalimentación: <span class="v" id="jFV">4</span><input type="range" id="jF" min="1" max="7" value="4" oninput="jcm()"></div>
+    </div>
+    <div style="margin:.5rem 0"><button class="btn light" onclick="presetJ(7,7,7,1,4)">Variado y significativo, sin autonomía</button><button class="btn light" onclick="presetJ(2,2,2,7,7)">Rutinario con autonomía y feedback</button><button class="btn light" onclick="presetJ(6,6,6,6,1)">Todo bien, pero nadie le avisa cómo va</button></div>
+    <div class="grid g3">
+      <div class="stat"><div class="lbl">PPM MULTIPLICATIVO (máx. 343)</div><div class="num" id="jPPM">–</div></div>
+      <div class="stat"><div class="lbl">PROMEDIO SIMPLE (máx. 7)</div><div class="num" id="jProm">–</div></div>
+      <div class="stat"><div class="lbl">DIMENSIONES MÁS BAJAS</div><div id="jBajas" class="sans" style="font-weight:700"></div></div>
+    </div>
+    <div class="nota" id="jLectura" style="margin-top:.8rem"></div>
+    <p class="mini">La fórmula multiplica autonomía y retroalimentación: si una es cero, el PPM es cero. Es la parte del modelo con peor respaldo: un promedio simple predice tan bien o mejor. Úsala para ordenar la conversación sobre un cargo, no como indicador métrico.</p>
+  </div>
+
+  <h3>C. Demandas y recursos (Demerouti et al., 2001)</h3>
+  <p>Las demandas agotan (proceso de deterioro de la salud); los recursos motivan (proceso motivacional) y amortiguan las demandas. Y no todas las demandas son iguales: las de <strong>desafío</strong> permiten logro; las de <strong>bloqueo</strong> estorban. Ambas cobran peaje en tensión (.40 y .58; LePine et al., 2005). Clasifica.</p>
+  <div id="c5jdr"></div>
+
+  <h3>D. Job crafting: ¿qué frontera cambia?</h3>
+  <p>Wrzesniewski y Dutton (2001): los trabajadores modifican su propio puesto cambiando la frontera de tarea, la relacional o la cognitiva. (No confundir con las cuatro dimensiones de la tradición JD-R, una de las cuales se comporta al revés.)</p>
+  <div id="c5jc"></div>
+
+  <h3>E. El 2% que sorprende</h3>
+  <p>Humphrey, Nahrgang y Morgeson (2007), 259 estudios y 219.625 personas. Antes de revelar, estima: ¿qué porcentaje de la varianza en percepciones de rotación explican las características <em>motivacionales</em> del puesto (variedad, autonomía, etc.)? ¿Y cuánto agregan las <em>sociales</em> (con quién, para quién)?</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div class="slider">Motivacionales: <span class="v" id="hA">20</span>%<input type="range" id="hAs" min="0" max="60" value="20" oninput="document.getElementById('hA').textContent=this.value"></div>
+      <div class="slider">Sociales (incremental): <span class="v" id="hB">10</span>%<input type="range" id="hBs" min="0" max="60" value="10" oninput="document.getElementById('hB').textContent=this.value"></div>
+    </div>
+    <button class="btn" onclick="revelarH()">Revelar</button>
+    <div id="hOut" style="display:none;margin-top:.6rem">
+      <table><tr><th>Resultado</th><th>Motivacionales</th><th>Sociales (incremental)</th><th>Contexto (incremental)</th></tr>
+      <tr><td>Satisfacción laboral</td><td>34%</td><td>17%</td><td>4%</td></tr>
+      <tr><td>Compromiso organizacional</td><td>24%</td><td><strong>40%</strong></td><td>–</td></tr>
+      <tr><td>Desempeño subjetivo</td><td>25%</td><td>9%</td><td>–</td></tr>
+      <tr><td>Percepciones de rotación</td><td><strong>2%</strong></td><td><strong>24%</strong></td><td>–</td></tr>
+      <tr><td>Estrés</td><td>–</td><td>–</td><td>16%</td></tr></table>
+      <div class="nota" id="hLectura"></div>
+    </div>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q5"></div>
+</section>
+
+<!-- ============ ESTACIÓN 6: MITOS ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · ¿Mito o evidencia?</h2>
+  <p>Veinte afirmaciones que circulan en empresas, charlas y redes. Marca verdadero o falso; luego aparece el veredicto, la magnitud y la fuente. Las referencias completas están en los apuntes 5 a 9.</p>
+  <div id="mitos"></div>
+  <div class="nota" id="mitosRes" style="display:none"></div>
+</section>
+
+<!-- ============ FICHA ============ -->
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div id="fichaRepaso"></div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y UTILIDADES =====================
+const estado = { hechas: {}, respuestas: {} };
+function guardar(){ try{ localStorage.setItem("lab_mot_v1", JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem("lab_mot_v1"); if(s){ Object.assign(estado, JSON.parse(s)); } }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+const NOMBRES = ["Inicio","1 · Qué es","2 · Autodeterminación","3 · Metas","4 · Incentivos","5 · Diseño","6 · Mitos","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+function pintarNav(){
+  const n = document.getElementById("nav"); n.innerHTML = "";
+  NOMBRES.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t; b.onclick=()=>ir(i);
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista"); n.appendChild(b); });
+  const k = EST.filter(i=>estado.hechas[i]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de 6`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa")); document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===7) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+const r2 = x => (Math.round(x*100)/100).toFixed(2);
+const r1 = x => (Math.round(x*10)/10).toFixed(1);
+const fmt = x => (x<0?"−":"+")+Math.abs(x).toFixed(2).replace(/^0/,"");
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML="";
+  items.forEach((q,qi)=>{
+    const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML = `<strong>${q.p}</strong><br>` + q.o.map((o,oi)=>`<span class="opc" data-o="${oi}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const oi=+el.dataset.o; const ok = oi===q.c;
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[q.c].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML = (ok?"<strong>Correcto.</strong> ":"<strong>No es eso.</strong> ") + q.f + (q.r?` <span class="cita">${q.r}</span>`:"");
+      estado.respuestas[`${estacion}_q${qi}`] = ok?1:0; guardar();
+      if(items.every((_,k)=> (`${estacion}_q${k}`) in estado.respuestas)) marcar(estacion);
+    });
+  });
+}
+function clasificador(contId, cats, items, clave, estacion){
+  const cont=document.getElementById(contId); cont.innerHTML="";
+  items.forEach((it,i)=>{
+    const d=document.createElement("div"); d.className="clasif";
+    d.innerHTML = `<p class="enun"><strong>${i+1}.</strong> ${it[0]}</p><div class="cats">${cats.map((c,ci)=>`<span class="cat" data-c="${ci}">${c}</span>`).join("")}</div><div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".cat").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const ci=+el.dataset.c, ok=ci===it[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".cat")[it[1]].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=(ok?"<strong>Correcto.</strong> ":`<strong>No: ${cats[it[1]].toLowerCase()}.</strong> `)+it[2];
+      estado.respuestas[`${estacion}_${clave}${i}`]=ok?1:0; guardar();
+    });
+  });
+}
+function initMatch(id, pares, placeholder){
+  const c=document.getElementById(id); c.innerHTML="";
+  const defs=pares.map((z,i)=>({d:z[1],i})).sort(()=>Math.random()-.5);
+  defs.forEach(o=>{ const d=document.createElement("div"); d.className="def"; d.textContent=o.d; d.dataset.i=o.i; c.appendChild(d);
+    const s=document.createElement("select"); s.className="sel"; s.innerHTML=`<option value="">${placeholder}</option>`+pares.map((z,k)=>`<option value="${k}">${z[0]}</option>`).join(""); c.appendChild(s); });
+}
+function checkMatch(id, pares, clave, msgOk){
+  const defs=[...document.querySelectorAll(`#${id} .def`)], sels=[...document.querySelectorAll(`#${id} select`)]; let ok=0;
+  defs.forEach((d,k)=>{ const b=sels[k].value!==""&&+sels[k].value===+d.dataset.i; d.classList.remove("bien","mal"); d.classList.add(b?"bien":"mal"); if(b) ok++; });
+  const r=document.getElementById(id+"Res"); r.style.display="block";
+  if(ok===pares.length){ r.className="nota ok"; r.innerHTML="<strong>"+msgOk+"</strong>"; estado.respuestas[clave]=1; }
+  else { r.className="nota"; r.innerHTML=`<strong>${ok} de ${pares.length}.</strong> Corrige los que están en rojo y vuelve a comprobar.`; if(!(clave in estado.respuestas)) estado.respuestas[clave]=0; }
+  guardar();
+}
+function barra(id, val, min, max, cls){ const el=document.getElementById(id); const w=(max-min); const zero=(0-min)/w*100; const x=(val-min)/w*100; el.className=cls||""; if(val>=0){ el.style.left=zero+"%"; el.style.width=(x-zero)+"%"; } else { el.style.left=x+"%"; el.style.width=(zero-x)+"%"; } }
+
+// ===================== ESTACIÓN 1 =====================
+const FASES=["Inicio","Dirección","Intensidad","Persistencia"];
+const C1FASE=[
+  ["Los analistas saben hacer el informe y lo hacen bien, pero nunca lo empiezan hasta que alguien los apura.",0,"El problema está en cuándo comienza la conducta. Un recordatorio o un plazo próximo actúa sobre el inicio; subir el bono no."],
+  ["El equipo trabaja mucho, pero dedica la tarde a responder correos en vez de cerrar las propuestas pendientes.",1,"Qué acción se selecciona entre las disponibles. Una meta específica sobre las propuestas actúa sobre la dirección."],
+  ["La vendedora visita a los clientes correctos y a tiempo, pero las visitas son de veinte minutos distraídos.",2,"Cuánto esfuerzo se pone. Un incentivo por unidad o una meta difícil actúan sobre la intensidad."],
+  ["Empiezan los proyectos con entusiasmo y los abandonan a la tercera semana.",3,"Cuánto se sostiene en el tiempo. Metas con retroalimentación de avance y la dinámica del gradiente actúan sobre la persistencia."],
+  ["Un jefe ofrece un bono mayor a un equipo que ya se esfuerza al máximo pero en las tareas equivocadas.",1,"El cuello de botella es de dirección, y el bono actúa sobre la intensidad. Un diagnóstico que no distingue la fase produce intervenciones que no tocan nada."]
+];
+const NOES=["Entusiasmo","Satisfacción (una actitud)","Desempeño","Un rasgo"];
+const C1NO=[
+  ["\"Mi equipo está motivado: se les nota en la cara, llegan contentos.\"",0,"El entusiasmo es un estado afectivo visible. Se puede estar muy motivado y trabajar en silencio, y eufórico sin dirigir nada hacia una meta de trabajo."],
+  ["\"Está contento con su trabajo, así que está motivado.\"",1,"La satisfacción es una evaluación del trabajo (clase 3). Se puede estar satisfecho y desmotivado (el cargo cómodo) y motivado e insatisfecho (el que reclama y aun así rinde)."],
+  ["\"Si estuviera motivado, rendiría.\"",2,"El desempeño es función de la motivación, las habilidades, los conocimientos y los recursos. Subir la motivación cuando el cuello de botella está en otra parte produce frustración."],
+  ["\"Hay gente motivada y gente floja; a Pedro le tocó ser de los flojos.\"",3,"La misma persona varía entre tareas, entre días y entre trabajos (Hogenelst et al., 2022; Chanal et al., 2026). Si varía con la situación, la situación es la variable administrable."],
+  ["\"Hagamos un taller para que se vayan con energía.\"",0,"El taller produce energía visible por una tarde; la motivación es un proceso que se despliega en el tiempo y que depende de factores proximales que el taller no toca."]
+];
+const CUAD=["Persona · distal","Persona · proximal","Contexto · distal","Contexto · proximal"];
+const C1CUAD=[
+  ["La cultura nacional",2,"Externa al individuo y lejos de la tarea: opera de fondo, a través de lo que la persona espera, valora y siente."],
+  ["La expectativa de que este esfuerzo produzca este resultado",1,"De la persona y pegada a la experiencia motivacional del momento. Un jefe tiene más influencia práctica sobre esto que sobre el sistema de compensación."],
+  ["El sistema de compensación de la empresa",2,"Del contexto y lejano. Es lo que más se toca y lo que más lento y menos actúa."],
+  ["Las características de la meta asignada",3,"Externa y proximal: una de las cuatro palancas que un jefe puede mover el lunes (con el diseño del puesto, la justicia y las influencias sociales)."],
+  ["La personalidad",0,"De la persona, pero lejos de la tarea concreta. Los rasgos distales predicen poco: la concienciosidad correlaciona .05 con el desempeño en los mismos estudios donde el esfuerzo correlaciona .41."],
+  ["La percepción de justicia en la última evaluación",3,"Contexto proximal: equidad y justicia son palancas externas cercanas, y son el contenido de la clase 8."],
+  ["La autoeficacia para esta tarea",1,"Persona, proximal. Lo personal no es sinónimo de inmodificable: se construye con metas próximas que se cumplen."],
+  ["El clima organizacional",2,"Contexto, distal. Importa, pero actúa a través de las palancas cercanas."]
+];
+const KANFER=[["¿Por qué?","Necesidades, motivos y razones para actuar: la teoría de la autodeterminación"],["¿Qué?","Elegir una meta y sostener el esfuerzo hasta cumplirla: la teoría del establecimiento de metas"],["¿Cómo?","Las cogniciones que traducen el motivo en acción: expectativas, autoeficacia, equidad"],["¿Dónde y cuándo?","El contexto que enciende o apaga: diseño del trabajo, demandas y recursos, incentivos"]];
+const CAD=[["Motivación intrínseca y esfuerzo: ρ = .46","Fuerte, pero lejos de la identidad: la mejor evidencia de que motivación y esfuerzo son constructos distintos. Se puede estar motivado sin llegar a esforzarse si el entorno se interpone."],["Esfuerzo y desempeño global: ρ ≈ .31","Sustancial, pero deja la mayor parte de la varianza a las habilidades, los conocimientos y los recursos. El vendedor que hace cincuenta llamadas a los clientes equivocados se esfuerza; no rinde."],["Esfuerzo y agotamiento emocional: ρ = .04","Esforzarse, por sí mismo, no quema. Lo que quema son las demandas sin recursos (estación 5)."]];
+function cadena(i){ document.getElementById("cadenaOut").innerHTML=`<strong>${CAD[i][0]}.</strong> ${CAD[i][1]} <span class="cita">Van Iddekinge et al. (2023).</span>`; estado.respuestas["1_cad"]=1; guardar(); }
+const Q1=[
+  {p:"Según las definiciones recientes (Schmidt et al., 2013; Kanfer et al., 2017), la motivación es asignación de recursos limitados. ¿Qué consecuencia de gestión se sigue?", o:["Que la motivación se puede aumentar indefinidamente con los incentivos correctos","Que motivar hacia algo implica desmotivar respecto de otra cosa: la pregunta es \"hacia qué, y a costa de qué\"","Que la motivación es un rasgo estable","Que el bienestar es la causa de la motivación"], c:1, f:"No es un estanque que se llena. La versión \"cantidad\" permite prometer que todo puede subir a la vez; la versión \"asignación\" obliga a elegir."},
+  {p:"\"Primero hay que tener a la gente contenta y después va a estar motivada.\" ¿Qué dice la investigación sobre motivación laboral?", o:["Es correcto: la satisfacción produce motivación","Trata el bienestar y la satisfacción como consecuencias del proceso motivacional, no como sus insumos","Son lo mismo","No hay evidencia en ningún sentido"], c:1, f:"Los lugares donde la gente está contenta suelen ser lugares bien diseñados; el bienestar es el síntoma, no el tratamiento (Diefendorff y Chandler, 2011)."},
+  {p:"Wahba y Bridwell (1976) revisaron la evidencia sobre la jerarquía de Maslow. ¿Qué encontraron?", o:["Que la pirámide se cumple en la mayoría de las muestras","Que ningún estudio factorial recuperó las cinco necesidades, ningún estudio longitudinal apoyó el mecanismo, y la predicción central falló para las necesidades inferiores","Que Maslow dibujó la pirámide en 1943","Que la teoría es correcta pero mal medida"], c:1, f:"\"Casi una teoría no testeable\". Y la pirámide no es de Maslow: la primera la publicó un psicólogo consultor en un artículo titulado \"How money motivates men\" (Bridgman et al., 2019)."}
+];
+
+// ===================== ESTACIÓN 2 =====================
+const REG=["Amotivación","Reg. externa","Reg. introyectada","Reg. identificada","Reg. integrada","Motiv. intrínseca"];
+const GRUPO=["ausencia de motivación","controlada","controlada","autónoma","autónoma","autónoma"];
+const C2CONT=[
+  ["\"Lo hago porque de eso depende el bono.\"",1,"Un premio administrado por otro: regulación externa, controlada. Es la casilla que casi no predice nada de lo que importa (salvo el compromiso de continuidad)."],
+  ["\"Me sentiría pésimo si no lo hiciera; no puedo defraudar a mi jefe.\"",2,"El premio y el castigo se internalizaron, pero siguen operando: culpa, vergüenza, orgullo. Viene de adentro y aun así es controlada."],
+  ["\"No me entretiene, pero le veo sentido: sé a quién le sirve.\"",3,"La persona valora el resultado, aunque la actividad no le guste. Es extrínseca (la razón está fuera de la actividad) y autónoma. El mejor predictor del desempeño."],
+  ["\"Lo haría igual aunque no me pagaran; se me pasa la hora.\"",5,"La actividad en sí misma resulta interesante o satisfactoria: motivación intrínseca."],
+  ["\"Sinceramente no sé para qué estoy acá.\"",0,"No hay razón, o la persona no ve conexión entre lo que hace y lo que pasa. No es un tipo de motivación: es su ausencia."],
+  ["\"Esto es parte de quién soy.\"",4,"El motivo ya forma parte de la identidad. Casi no se mide bien en el trabajo: varios metaanálisis recomiendan omitirla hasta tener mejores instrumentos."],
+  ["Se queda hasta tarde todos los días, nunca dice que no, y cuando le preguntan por qué, dice: \"si me voy antes que el equipo me da culpa\".",2,"La conducta visible es idéntica a la de alguien con motivación autónoma. Lo que difiere es el motivo, y el motivo delata introyección."],
+  ["Un enfermero encuentra su trabajo agotador e ingrato, y lo hace con dedicación completa porque cree en lo que produce.",3,"La actividad no le gusta; la razón es suya de todos modos. Identificada: autónoma sin ser intrínseca."],
+  ["\"Trabajo por el sueldo y porque si no me pagan, no como.\"",1,"Externa. Nada de malo en sí; el problema es un sistema construido solo sobre eso."],
+  ["\"Tengo que hacerlo perfecto; si no, voy a quedar como un inútil.\"",2,"Introyección: el castigo lo administra uno mismo. Rinde, hace horas extra y, estadísticamente, es quien está más cerca de irse (β = .515 con la intención de renunciar; Hagger y Star, 2026)."]
+];
+const VDB=[[-.28,-.32,.44],[.04,.03,.08],[.28,.17,.08],[.43,.47,-.25],[null,null,null],[.36,.57,-.40]];
+const VDBtxt=["La amotivación es la peor casilla en los tres resultados a la vez.","Casi una línea plana: trabajar por el premio o el castigo no se asocia de forma apreciable con casi nada de lo que importa. Donde sí manda: el 76.8% de lo que la motivación explica del compromiso de continuidad (quedarse porque irse sale caro).","En correlaciones simples parece inofensiva (.28 con desempeño). Separada de las demás, es la única que resta desempeño (β = −.271) y la que más predice la intención de renunciar (β = .515; Hagger y Star, 2026).","La sorpresa: el mejor predictor del desempeño no es la intrínseca (.36) sino la identificada (.43). De todo lo que la motivación explica del desempeño, aporta el 35.3%. No hace falta que algo guste; hace falta que se entienda para qué sirve.","La regulación integrada no se reporta por separado: cuesta distinguirla empíricamente de la identificada y la intrínseca, y el metaanálisis recomienda omitirla.","La mejor para la satisfacción (.57) y contra el burnout (−.40). Para el desempeño, segunda detrás de la identificada."];
+function initCont(){ const c=document.getElementById("contBox"); c.innerHTML=""; REG.forEach((r,i)=>{ const d=document.createElement("div"); d.textContent=r; d.className= i===0?"amo": i<3?"ctrl":"auto"; d.onclick=()=>verCont(i); c.appendChild(d); }); }
+function verCont(i){
+  [...document.querySelectorAll("#contBox div")].forEach((d,k)=>d.classList.toggle("on",k===i));
+  const v=VDB[i];
+  if(v[0]===null){ ["bD","bS","bB"].forEach(id=>{ const e=document.getElementById(id); e.style.width="0"; }); ["vD","vS","vB"].forEach(id=>document.getElementById(id).textContent="n/d"); }
+  else { barra("bD",v[0],-.6,.6,v[0]>=0?"pos":"neg"); barra("bS",v[1],-.6,.6,v[1]>=0?"pos":"neg"); barra("bB",v[2],-.6,.6,v[2]<=0?"pos":"neg"); document.getElementById("vD").textContent=fmt(v[0]); document.getElementById("vS").textContent=fmt(v[1]); document.getElementById("vB").textContent=fmt(v[2]); }
+  document.getElementById("contLectura").innerHTML=`<strong>${REG[i]} (${GRUPO[i]}).</strong> ${VDBtxt[i]} <span class="cita">Van den Broeck et al. (2021).</span>`;
+  estado.respuestas["2_cont"]=1; guardar();
+}
+const NEC=["Autonomía","Competencia","Relación"];
+const C2NEC=[
+  ["Le cambian el procedimiento cada semana sin explicarle por qué, y cuando pregunta le dicen \"porque sí\".",0,"Control sin porqué. Autonomía no es independencia: una cirujana con protocolo estricto puede tener altísima autonomía si entiende y suscribe el porqué. Acción: explicar el propósito y dar voz sobre el cómo."],
+  ["Lleva seis meses y nadie le ha dicho si lo que hace está bien o mal; no sabe si está mejorando.",1,"Competencia necesita desafío calibrado y retroalimentación oportuna e informativa. Acción: feedback como información (\"esto tiene este problema y así se resuelve\"), no como veredicto."],
+  ["Trabaja 100% remoto, con total libertad de horario, y siente que a nadie le importaría si desapareciera.",2,"Un jefe que solo te deja tranquilo no te está apoyando: te está dejando solo. Agregar apoyo a la relación por sobre la autonomía suma casi veinte puntos de varianza en pertenencia (ΔR² = .194; Slemp et al., 2024)."],
+  ["Le asignaron una tarea muy por encima de lo que sabe hacer, sin apoyo, y una por debajo de lo que domina, sin desafío.",1,"Desafío mal calibrado en ambos sentidos. Competencia es sentir que se es capaz y que se mejora."],
+  ["Tiene que cumplir metas que nadie le explicó, con un jefe que vigila cada paso y presiona con el bono.",0,"Presión, vigilancia y control: el opuesto de la autonomía. No es falta de estructura (la estructura apoya la competencia); es exceso de control."],
+  ["Su trabajo es bueno y lo sabe, pero no sabe a quién le sirve lo que produce.",2,"Relación incluye sentir que lo que uno hace le sirve a otros. Es la necesidad que más se descuida al diseñar puestos y la que más se nota cuando falta."]
+];
+const C2APOYO=[
+  ["Explica el porqué de cada decisión y ofrece opciones reales sobre el cómo.",0,"Apoyo a la autonomía: dar opciones, explicar el porqué, reconocer el punto de vista del otro, minimizar la presión (ρ = .57 con la satisfacción de autonomía)."],
+  ["Fija desafíos calibrados, expectativas claras y entrega retroalimentación informativa, no evaluativa.",1,"Apoyo a la competencia (ρ = .48). Nota que consiste en dar estructura: la estructura no es el opuesto de la autonomía."],
+  ["Muestra interés genuino, está disponible y crea condiciones para que la gente se conozca y colabore.",2,"Apoyo a la relación (ρ = .62 con la satisfacción de relación): la que corrige la moda de \"solo dar autonomía\"."],
+  ["Reconoce el punto de vista del equipo antes de imponer un cambio y reduce la presión.",0,"Reconocer la perspectiva del otro y minimizar la presión son componentes del apoyo a la autonomía."]
+];
+const Q2=[
+  {p:"\"La motivación intrínseca es la buena y la extrínseca es la mala.\" ¿Qué dice la evidencia?", o:["Es correcto","La distinción que importa es autónoma vs controlada: la regulación identificada es extrínseca por definición y es el mejor predictor del desempeño (ρ = .43 vs .36 de la intrínseca)","La extrínseca es siempre mejor para el desempeño","No hay diferencias entre tipos"], c:1, f:"Intrínseco y autónomo no son sinónimos. La mayoría de los trabajos no puede volverse apasionante, pero casi cualquier trabajo puede volverse comprensible, y para el desempeño eso rinde más.", r:"Van den Broeck et al. (2021)."},
+  {p:"\"Dar autonomía es dejar que cada uno haga lo que quiera.\" ¿Por qué es un error según la teoría?", o:["Porque la gente no sabe qué hacer sola","Porque autonomía es volición, no independencia: su opuesto es el control, no la estructura; un equipo sin reglas ni dirección experimenta abandono","Porque la autonomía solo funciona en culturas individualistas","Porque la autonomía reduce el desempeño"], c:1, f:"El apoyo a la competencia consiste precisamente en dar estructura, expectativas claras y retroalimentación. Y la moderación cultural no apareció en Hagger y Star (2026); en Slemp et al. (2024) el apoyo a la autonomía pesa incluso algo más en culturas colectivistas."},
+  {p:"¿Qué tipo de conclusiones NO permite la evidencia metaanalítica sobre la autodeterminación?", o:["Que exista un patrón consistente del continuo en decenas de países","Afirmaciones causales fuertes: casi todo es transversal, de autorreporte y los efectos se atenúan con el tiempo","Que la motivación autónoma se asocie con desempeño","Que la jefatura se asocie con la satisfacción de necesidades"], c:1, f:"157 de los 192 estudios de Hagger y Star son transversales; Van den Broeck excluyó experimentos. Lo que sí es fuerte es la convergencia: no prueba causalidad, pero no es poco."}
+];
+
+// ===================== ESTACIÓN 3 =====================
+function vroom(){
+  const e=+document.getElementById("vE").value/10, i=+document.getElementById("vI").value/10, v=+document.getElementById("vV").value/10;
+  const f1=x=> x===0?"0": x===1?"1.0": x.toFixed(1).replace(/^0/,"");
+  document.getElementById("vEV").textContent=f1(e); document.getElementById("vIV").textContent=f1(i); document.getElementById("vVV").textContent=f1(v);
+  const f=e*i*v; document.getElementById("vF").textContent=f.toFixed(2).replace(/^0/,"");
+  const n=document.getElementById("vFN"); n.className="nivel "+(f>=.5?"bien":f>=.2?"mod":"max"); n.textContent=f>=.5?"alta":f>=.2?"media":"baja";
+  const min=Math.min(e,i,v); const cual= min===e?"la expectativa (no cree poder lograr el desempeño: acercar la meta y acompañar con entrenamiento)": min===i?"la instrumentalidad (no cree que el sistema cumpla: el problema es la credibilidad de quien fija la meta, no la meta)":"la valencia (el premio no le importa: ninguna meta va a mover nada)";
+  const parejo = Math.max(e,i,v)-min < 0.05;
+  document.getElementById("vLectura").innerHTML = (min===0? "<strong>Esfuerzo cero.</strong> Basta un cero en un eslabón, por altos que estén los otros dos." : parejo? "<strong>Los tres eslabones están parejos.</strong> Baja uno y mira cómo cae el producto." : `<strong>El eslabón más débil es ${cual}.</strong>`) + " La pregunta útil no es \"¿está motivado?\" sino \"¿cuál eslabón está roto?\". Vroom predice mejor la elección que el esfuerzo (van Eerde y Thierry, 1996): es un modelo de decisión, excelente como herramienta de diagnóstico.";
+  estado.respuestas["3_vroom"]=1; guardar();
+}
+const ESL=["Expectativa","Instrumentalidad","Valencia"];
+const C3VROOM=[
+  ["\"Aunque me mate trabajando, no llego a esa cifra: nunca he vendido tanto.\"",0,"Esfuerzo → desempeño roto. La meta hay que acercarla y acompañarla de entrenamiento; una meta próxima que se cumple construye autoeficacia."],
+  ["\"El año pasado cumplimos y el bono nunca llegó; para qué me voy a esforzar.\"",1,"Desempeño → recompensa roto. El problema no es la meta sino la credibilidad del sistema."],
+  ["\"Sí, puedo, y sé que pagan; pero un viaje a Cancún no me interesa nada.\"",2,"Recompensa → mis metas roto. Ninguna meta va a mover nada si el premio no importa a esa persona."],
+  ["\"Depende del equipo y del mercado, no de mí: puedo hacerlo todo bien y no llegar.\"",0,"Expectativa: la persona no ve conexión entre su esfuerzo y el desempeño medido. Es también el problema de línea de visión de la estación 4."]
+];
+const M={tipo:0,comp:0,clase:0,fb:1,prop:1,bono:0};
+function setM(k,v){ M[k]=v; const map={tipo:["mT0","mT1"],comp:["mC0","mC1"],clase:["mK0","mK1"],fb:["mF0","mF1"],prop:["mP0","mP1"],bono:["mB0","mB1","mB2"]}; map[k].forEach((id,i)=>document.getElementById(id).classList.toggle("on",i===v)); simMeta(); }
+const mD={altoSinRiesgo:false,peor:false};
+function simMeta(){
+  const dif=+document.getElementById("mDif").value;
+  document.getElementById("mDifV").textContent = dif<=2?"fácil":dif<=4?"moderada":dif<=7?"difícil pero alcanzable":dif<=8?"muy difícil":"imposible";
+  document.getElementById("mDifWrap").style.opacity = M.tipo? "1":".4";
+  document.getElementById("mTipoV").textContent = M.tipo? "meta específica":"instrucción vaga";
+  let base = M.comp? 85:100; // tarea nueva rinde menos de partida
+  let out=base; const R=[]; const L=[];
+  if(!M.tipo){ out=base; L.push("\"Haz tu mejor esfuerzo\" no tiene referente: cada persona lo define a su manera, y en la práctica lo define hacia abajo."); if(M.comp) L.push("En tarea nueva, la instrucción vaga supera a una meta de desempeño alta, pero la mejor opción no es la vaguedad sino una meta de aprendizaje."); }
+  else {
+    if(M.clase===0){ // desempeño
+      if(!M.comp){ out = dif<=2? 94 : dif<=4? 108 : dif<=7? 125 : dif<=8? 128 : 100;
+        if(dif<=2) L.push("Meta específica pero fácil: la especificidad por sí sola no eleva el desempeño, y en el experimento de campo de Goerg (2015) la meta fácil rindió peor que no tener meta.");
+        else if(dif<=7) L.push("Específica y difícil: la combinación que funciona. d entre .42 y .80 frente a \"haz tu mejor esfuerzo\": la persona promedio con meta supera a alrededor del 79% del grupo sin meta.");
+        else if(dif<=8) L.push("Muy difícil: la función es lineal hasta el límite de la capacidad o del compromiso.");
+        else L.push("Imposible: en laboratorio eleva el desempeño porque fallar no cuesta nada; en terreno produce desmoralización (Locke y Latham, 2019). En las organizaciones, difícil pero alcanzable."); }
+      else { out = dif<=4? 88 : 72; L.push("Meta de desempeño en tarea nueva o compleja: la persona prueba estrategias a tientas bajo presión y aprende menos. Con la estrategia equivocada, la meta difícil activa esa estrategia con más energía. Cambia a meta de aprendizaje."); }
+    } else { // aprendizaje
+      if(M.comp){ out = dif<=2? 90 : dif<=7? 118 : 112; L.push("Meta de aprendizaje específica y difícil en tarea nueva: enfoca la atención en la tarea y no en la comparación; las metas altas vuelven a superar a la instrucción vaga (simulación de tráfico aéreo). Beneficia más a quienes tienen menor capacidad cognitiva."); }
+      else { out = dif<=2? 96 : 112; L.push("Meta de aprendizaje en tarea ya dominada: no estorba, pero la regla operativa es metas de desempeño para quien ya sabe hacer la tarea."); }
+      L.push("Las metas de aprendizaje reducen además la conducta antiética sin sacrificar desempeño (Welsh et al., 2019).");
+    }
+    if(!M.fb){ out-=12; R.push("Meta ciega: el dato llega el mes siguiente. Eso no es un sistema de metas, es una evaluación."); }
+    if(!M.prop){ out-=8; R.push("Asignada a secas: con dificultad igualada, la meta asignada rinde igual que la participativa si se explica su propósito; lo que rinde menos es la asignación sin justificación."); }
+    if(M.clase===0 && dif>=5){ if(M.bono===1) R.push("Bono de todo o nada con meta difícil: crea un escalón. La sobredeclaración se concentra en quien queda a una unidad de cumplir (34.5% con meta, 48.5% con meta más recompensa; Schweitzer et al., 2004)."); else if(M.bono===0) R.push("Aun sin bono, la meta difícil duplicó la proporción de sobredeclaración en el experimento. Antídotos: meta de aprendizaje o meta conductual de ética junto a la de desempeño."); else R.push("Bono escalonado: aplana el escalón que el todo-o-nada crea justo debajo de la meta."); }
+    if(M.clase===0 && dif>=5) R.push("Toda meta ilumina una dimensión y deja otras a oscuras (calidad, cooperación, seguridad, ética): ¿con qué otro mecanismo las vas a cuidar?");
+    if(dif>=8 && M.clase===0) R.push("Metas altas consecutivas agotan los recursos de autocontrol (Welsh y Ordóñez, 2014) y bajan la satisfacción de quien más produce.");
+  }
+  out=Math.round(out);
+  document.getElementById("mOut").textContent=out;
+  const n=document.getElementById("mOutN"); n.className="nivel "+(out>=115?"bien":out>=95?"mod":"max"); n.textContent=out>=115?"por encima":out>=95?"similar al mejor esfuerzo":"por debajo";
+  document.getElementById("mRiesgos").innerHTML = R.length? "<ul style='margin:.3rem 0 0 1rem;padding:0'>"+R.map(r=>`<li>${r}</li>`).join("")+"</ul>" : "Sin riesgos especiales en esta configuración.";
+  document.getElementById("mLectura").innerHTML="<strong>Lectura:</strong> "+L.join(" ");
+  if(M.tipo && out<(M.comp?85:100)) mD.peor=true;
+  const riesgoAlto = M.clase===0 && dif>=5 && M.bono===1;
+  if(out>=118 && !riesgoAlto) mD.altoSinRiesgo=true;
+  const k=(mD.peor?1:0)+(mD.altoSinRiesgo?1:0); document.getElementById("d3aTxt").textContent=`${k} de 2.`; if(k===2){ document.getElementById("d3a").classList.add("hecho"); estado.respuestas["3_d3a"]=1; }
+  estado.respuestas["3_sim"]=1; guardar();
+}
+function revelarProx(){
+  document.getElementById("proxOut").style.display="block";
+  const a=+document.getElementById("pAs").value, b=+document.getElementById("pBs").value, c=+document.getElementById("pCs").value;
+  const err=Math.abs(a-14.81)+Math.abs(b-34.48)+Math.abs(c-48.48);
+  document.getElementById("proxLectura").innerHTML=`<strong>Tu estimación: ${a}% / ${b}% / ${c}%.</strong> ${err<30?"Muy cerca.":"Lejos: fíjate en el patrón."} La meta no hace mentir a la gente en general: hace mentir a la gente que está cerca. Quienes sobredeclararon habían hecho 7.46 palabras en las rondas donde mintieron y 5.00 en las que no. Y el matiz de Latham y Locke (2018): la sobredeclaración media fue 0.11 palabras, mintió entre el 1.5% y el 9% por condición, y nadie tomó dinero no merecido pudiendo hacerlo.`;
+  estado.respuestas["3_prox"]=1; guardar();
+}
+const OSC=["Foco estrecho","Riesgo distorsionado","Conducta antiética","Aprendizaje inhibido","Cultura corroída","Motivación intrínseca reducida"];
+const C3OSC=[
+  ["Sears fijó a sus talleres una meta de US$147 de venta por hora; el resultado fue sobrecobro y reparaciones innecesarias en toda la compañía.",2,"La meta de venta por hora convirtió el fraude pequeño en tentación sistemática (Ordóñez et al., 2009). Locke y Latham responden que el caso mezcla metas con incentivos mal diseñados."],
+  ["Wells Fargo, bajo presión por metas de venta cruzada, abrió cerca de 1.5 millones de cuentas sin autorización; el informe interno concluyó que fue la presión por la meta, más que el bono, el motor principal.",2,"Conducta antiética a escala, con 5.300 despidos, US$185 millones de multa en 2016 y un acuerdo de US$3.000 millones en 2020."],
+  ["Ford fijó la meta de un auto de menos de 2.000 libras y menos de US$2.000 para 1970; con ese plazo, varios niveles firmaron controles de seguridad que no se hicieron.",0,"La meta iluminó peso, precio y plazo, y dejó la seguridad a oscuras. (Las cifras de muertes del Pinto que circulan son históricamente debatidas.)"],
+  ["Un equipo de call center con meta de llamadas por hora deja de resolver los problemas difíciles y los deriva, porque resolverlos \"gasta minutos\".",0,"Foco estrecho: se descuida lo que no tiene meta. La pregunta de diseño es qué queda sin medir y con qué otro mecanismo se cuida."],
+  ["A un analista recién llegado le ponen una meta de producción alta en un sistema que no domina; prueba estrategias desordenadamente y no aprende cuál funciona.",3,"Meta de desempeño en tarea no dominada: presión evaluativa que inhibe el aprendizaje. El antídoto es la meta de aprendizaje."],
+  ["Con metas trimestrales imposibles, los supervisores que las perciben excesivas maltratan más a su gente y el ranking enfrenta a los equipos entre sí.",4,"Corrosión de la cultura (Mawritz et al., 2014, citado en Latham y Locke, 2018: supervisores con metas excesivas maltratan más)."]
+];
+const Q3=[
+  {p:"Una gerente dice: \"Les pido a todos que hagan su mejor esfuerzo; así respeto su autonomía\". ¿Qué dice la evidencia?", o:["Es la mejor instrucción para tareas dominadas","Es una de las peores instrucciones para tareas dominadas: no tiene referente y cada uno la define hacia abajo; la autonomía es compatible con una meta clara cuyo propósito se entiende","Funciona si se acompaña de un bono","Solo funciona en culturas colectivistas"], c:1, f:"La única situación en que supera a una meta específica difícil es la tarea nueva o compleja, y ahí la mejor opción es una meta de aprendizaje, no la vaguedad.", r:"Locke y Latham (2002)."},
+  {p:"¿Qué muestra el metaanálisis de Van Iddekinge et al. (2023) sobre la fijación de metas frente a otros antecedentes del desempeño?", o:["Que la satisfacción laboral predice más que las metas","Que la fijación de metas es la relación más fuerte (ρ = .46), por sobre satisfacción (.24), compromiso (.16) y motivación intrínseca (.17)","Que las metas no se asocian con el esfuerzo","Que la motivación intrínseca es el antecedente más fuerte"], c:1, f:"Evidencia correlacional, con las limitaciones de siempre, pero converge con cientos de experimentos."},
+  {p:"\"La autoeficacia se construye con charlas motivacionales.\" ¿Qué dicen Bandura (1997) y la evidencia posterior?", o:["Es correcto: la persuasión verbal es la fuente más potente","La fuente más potente es la experiencia de logro, luego el modelamiento; la persuasión es tercera y solo funciona si quien persuade es creíble; y dentro de una persona la autoeficacia es más consecuencia del desempeño previo que causa del futuro","La autoeficacia es un rasgo global estable","La autoeficacia no se puede modificar"], c:1, f:"Se construye con metas próximas que se cumplen, no con discursos. Judge et al. (2007): agrega poco una vez controladas habilidad y experiencia; Sitzmann y Yeo (2013): más producto que causa."}
+];
+
+// ===================== ESTACIÓN 4 =====================
+const RECS=[["Recompensa verbal (elogio)",.33,"La única intervención con efecto positivo, costo cero e implementación inmediata. Que sea obvio no lo hace menos cierto ni más frecuente."],["Tangible inesperada",.01,"No daña nada: una recompensa que llega sin anunciarse no puede haber sido la razón de actuar."],["Tangible no contingente",-.10,"Pequeño efecto negativo."],["Tangible contingente al desempeño",-.28,"El efecto aparece en la conducta de libre elección, pero no en el interés autorreportado: la recompensa contingente transmite información de competencia que compensa en parte su carácter controlador."],["Tangible esperada (global)",-.36,"El daño se concentra en la recompensa tangible, esperada y contingente: exactamente el diseño de la mayoría de los bonos. Edward Deci nunca sostuvo que el dinero no motive."]];
+function initRec(){ const c=document.getElementById("recBtns"); c.innerHTML=RECS.map((r,i)=>`<button class="btn light" id="rec${i}" onclick="verRec(${i})">${r[0]}</button>`).join(""); }
+function verRec(i){ RECS.forEach((_,k)=>document.getElementById("rec"+k).classList.toggle("on",k===i)); const d=RECS[i][1]; barra("bRec",d,-.5,.5,d>=0?"pos":"neg"); document.getElementById("vRec").textContent=fmt(d); document.getElementById("recLectura").innerHTML=`<strong>${RECS[i][0]}: d = ${fmt(d)}.</strong> ${RECS[i][2]} <span class="cita">Deci, Koestner y Ryan (1999a).</span>`; estado.respuestas["4_rec"]=1; guardar(); }
+const CC=["Incentivo financiero (cantidad)","Motivación intrínseca y diseño del trabajo (calidad)"];
+const C4CC=[
+  ["Instaladores de parabrisas: unidades por día, resultado fácil de contar.",0,"Trabajo de cantidad: es el caso de Lazear (2000), donde pasar a pago por pieza subió la productividad 44%. La mitad fue efecto incentivo y la otra mitad efecto selección: los más productivos llegaron o se quedaron."],
+  ["Diseñadores de producto: lo que importa es que la solución sea buena, no cuántas hagan.",1,"Calidad: la motivación intrínseca pesa .35 y los incentivos .06. Pagar por producir aquí optimiza lo que se mide, no lo que se necesita."],
+  ["Ejecutivos de atención al cliente donde la empresa necesita que el problema quede resuelto, no que la llamada termine rápido.",1,"Criterio, cooperación y servicio: la palanca es el diseño del trabajo y la motivación autónoma. Un incentivo por llamadas cerradas produce llamadas cerradas."],
+  ["Temporeros reordenando 35.000 libros en una biblioteca: velocidad medible, tarea simple.",0,"Cantidad. Aunque en el experimento de Goerg (2015) la meta sola produjo el 15% de mejora y el bono no agregó velocidad: a veces ni siquiera hace falta el dinero."]
+];
+const REF=["Tapar los errores","Competir en vez de cooperar","No proponer nada","Gritar"];
+const C4REF=[
+  ["La empresa dice que quiere que reporten los errores a tiempo; al que reporta le cae una reprimenda.",0,"Se refuerza tapar. La consecuencia manda sobre el discurso."],
+  ["La empresa dice que quiere trabajo en equipo; paga bonos individuales por ranking.",1,"Se refuerza la competencia interna. Larkin et al. (2012): el costo del pago individual lo generan los pares, en sabotaje y menor cooperación."],
+  ["La empresa dice que quiere innovación; sanciona al proyecto que falla.",2,"Se refuerza no proponer. Nadie arriesga un proyecto cuando el fracaso se castiga."],
+  ["Un jefe grita cuando algo sale mal; el problema se resuelve rápido; deja de gritar.",3,"El jefe está siendo reforzado: la desaparición del problema refuerza la conducta de gritar. Alguien le enseñó, sin querer, que gritar funciona."]
+];
+function adams(){
+  const aA=+document.getElementById("aA").value, aR=+document.getElementById("aR").value, rA=+document.getElementById("rA").value, rR=+document.getElementById("rR").value;
+  ["aA","aR","rA","rR"].forEach(id=>document.getElementById(id+"V").textContent=document.getElementById(id).value);
+  const mi=aR/aA, ref=rR/rA; document.getElementById("aMi").textContent=r2(mi); document.getElementById("aRef").textContent=r2(ref);
+  const dif=mi-ref; const p=document.getElementById("aPer"); let t,L;
+  if(Math.abs(dif)<0.08){ t="Equidad"; p.style.color="#15803D"; L="Las razones coinciden: equidad percibida. Nota que no hace falta que los montos sean iguales: equidad no es igualdad."; }
+  else if(dif<0){ t="Sub-recompensa"; p.style.color="#C8102E"; L="Mi razón es menor que la del referente: inequidad desfavorable. Seis salidas: bajar mis aportes, pedir más (o autocompensarme), distorsionar cómo me veo, distorsionar cómo veo al otro, cambiar de referente, o irme. Solo una es la que el jefe espera."; }
+  else { t="Sobre-recompensa"; p.style.color="#B45309"; L="Mi razón es mayor que la del referente: inequidad favorable. La teoría predice algo de culpa y ajuste de aportes, pero en la práctica la mayoría se cree mejor que el promedio (Larkin et al., 2012): bajo pago por desempeño, la mayoría espera más de lo que recibe."; }
+  p.textContent=t; document.getElementById("aLectura").innerHTML="<strong>"+L+"</strong> El referente lo elige la persona; la organización no controla la comparación, solo puede hacerla más o menos visible (de ahí la recomendación de evitar dispersión salarial grande en el mismo cargo; Gagné et al., 2023).";
+  estado.respuestas["4_adams"]=1; guardar();
+}
+function presetA(a,b,c,d){ document.getElementById("aA").value=a; document.getElementById("aR").value=b; document.getElementById("rA").value=c; document.getElementById("rR").value=d; adams(); }
+const JUS=["Distributiva","Procedimental","Interpersonal","Informacional"];
+const C4JUS=[
+  ["\"Aporto más que Juan y ganamos lo mismo.\"",0,"Si lo que recibí es proporcional a lo que aporté, comparado con el referente: la equidad de Adams. Correlaciona .15 con el desempeño."],
+  ["\"El criterio del bono cambió a mitad de año y nadie pudo apelar.\"",1,"Consistencia, imparcialidad, corregibilidad y voz: justicia procedimental. Predice el desempeño (.36) más del doble que la distributiva, y es gratis."],
+  ["\"Me comunicaron el resultado de la evaluación por correo masivo, con un tono humillante.\"",2,"Dignidad y respeto al comunicar: interpersonal."],
+  ["\"Nunca me explicaron por qué mi aumento fue menor que el del resto.\"",3,"Explicación adecuada y oportuna: informacional. La Ley 21.431 la escribió en la ley para los algoritmos de las plataformas."],
+  ["\"El ranking usa datos de ventas que sé que están mal registrados.\"",1,"Procedimiento basado en información correcta: procedimental."],
+  ["\"El supervisor me trató con respeto al darme la mala noticia y se hizo el tiempo de conversar.\"",2,"Interpersonal, en positivo: un no-aumento bien comunicado puede producir más satisfacción que un aumento opaco."]
+];
+const GAG=[[["Pago total",5.84],["Pago variable (proporción)",4.19],["Variedad de tareas",29.38],["Autonomía",30.63],["Retroalimentación",29.96]],[["Pago total",3.82],["Pago variable (proporción)",5.54],["Variedad de tareas",35.43],["Demandas de conocimiento",15.41],["Autonomía",39.79]],[["Pago total",12.58],["Pago variable (proporción)",1.17],["Demandas de conocimiento",17.17],["Autonomía",50.99],["Retroalimentación",18.09]]];
+function gagne(i){ ["gM1","gM2","gM3"].forEach((id,k)=>document.getElementById(id).classList.toggle("on",k===i)); const comp=GAG[i][0][1]+GAG[i][1][1];
+  document.getElementById("gagneOut").innerHTML = GAG[i].map((r,k)=>`<div class="barra"><span class="lb">${r[0]}</span><div class="tr"><div class="${k<2?'neg':'pos'}" style="left:0;width:${r[1]*1.8}%"></div></div><span class="vv">${r[1].toFixed(1)}%</span></div>`).join("") + `<div class="nota" style="margin-top:.6rem"><strong>Compensación: ${comp.toFixed(1)}% del total explicado.</strong> La autonomía sola: ${GAG[i].find(r=>r[0]==="Autonomía")[1].toFixed(1)}%. Una vez controlado el diseño del trabajo, las relaciones del pago variable con los resultados pasan a ser mayoritariamente pequeñas y negativas. El dinero importa; el trabajo importa más, y cuesta menos cambiarlo. <span class="cita">Gagné et al. (2026), pesos relativos reescalados.</span></div>`;
+  estado.respuestas["4_gagne"]=1; guardar(); }
+const Q4=[
+  {p:"\"El dinero no motiva\" y \"el dinero es lo único que motiva\". ¿Qué tienen en común, según el Apunte 8?", o:["Que ambas son correctas en contextos distintos","Que ambas tratan al dinero como si tuviera un efecto único; la evidencia dice que compra cantidad (r = .34) y no calidad (r = .08)","Que ambas vienen de la teoría de la autodeterminación","Nada: una es verdadera y la otra falsa"], c:1, f:"Jenkins et al. (1998): de 47 estadísticos, 41 eran de cantidad y solo 6 de calidad. Durante décadas se preguntó si los incentivos aumentan la producción y casi nadie preguntó si empeoran lo que se produce."},
+  {p:"Dahl y Pierce (2020), registros daneses de 318.717 empleados: ¿qué se asoció con la adopción de pago por desempeño?", o:["Un aumento de 44% en productividad","Un aumento relativo de 5.7% en el uso de benzodiacepinas o antidepresivos, concentrado en quienes pierden ingreso y en el grupo de 50 a 65 años","Una caída en la rotación","Ningún efecto medible"], c:1, f:"Diferencias en diferencias con efectos fijos; los autores no reclaman causalidad estricta y hubo debate publicado con Pfeffer. Un sistema de incentivos es también una decisión de salud ocupacional."},
+  {p:"Seis guarderías de Haifa introdujeron una multa a los padres que llegaban tarde. ¿Qué pasó y por qué?", o:["Los atrasos bajaron: la multa funcionó como castigo","Los atrasos aumentaron: la multa convirtió una obligación moral en un precio que se podía pagar, y al retirarla no volvieron al nivel inicial","No hubo cambio","Los atrasos bajaron solo en las guarderías más caras"], c:1, f:"\"A fine is a price\" (Gneezy y Rustichini, 2000): la versión económica del desplazamiento motivacional (Frey y Jegen, 2001)."}
+];
+
+// ===================== ESTACIÓN 5 =====================
+const COL=["Característica del trabajo","Resultado del trabajo"];
+const C5COL=[
+  ["\"Nadie me dice cómo voy; me entero en la evaluación anual.\"",0,"Retroalimentación del puesto: una propiedad del cargo que alguien decidió (o no diseñó)."],
+  ["\"Termino la semana agotada.\"",1,"Agotamiento: un estado de la persona, efecto de las demandas."],
+  ["\"Hago un pedazo de algo que nunca veo terminado.\"",0,"Identidad de la tarea, baja. Característica."],
+  ["\"Estoy pensando en irme.\"",1,"Intención de renunciar: resultado. Y el que menos responde a enriquecer tareas (2%) y más a las características sociales (+24%)."],
+  ["\"Decido yo el orden y la manera de hacer mi trabajo.\"",0,"Autonomía: característica."],
+  ["\"Hagamos una encuesta de clima y un plan de acción.\"",1,"La encuesta mide resultados (satisfacción, compromiso). Si todas las iniciativas están en esta columna, se están tratando síntomas."]
+];
+function jcm(){
+  const V=+document.getElementById("jV").value, I=+document.getElementById("jI").value, S=+document.getElementById("jS").value, A=+document.getElementById("jA").value, F=+document.getElementById("jF").value;
+  [["jV",V],["jI",I],["jS",S],["jA",A],["jF",F]].forEach(([id,v])=>document.getElementById(id+"V").textContent=v);
+  const ppm=((V+I+S)/3)*A*F, prom=(V+I+S+A+F)/5;
+  document.getElementById("jPPM").textContent=ppm.toFixed(0); document.getElementById("jProm").textContent=prom.toFixed(1);
+  const dims=[["Variedad",V,"rotación de puestos o ampliación horizontal (riesgo: \"más de lo mismo\")","competencia"],["Identidad",I,"ampliación horizontal (una pieza completa de principio a fin) o equipos autoadministrados","autonomía"],["Significancia",S,"hacer visible a quién le cambia algo lo que se produce (diseño relacional del trabajo)","relación"],["Autonomía",A,"enriquecimiento vertical (la forma de mayor efecto y más costosa políticamente) u horario flexible (solo sobre el cuándo)","autonomía"],["Retroalimentación",F,"enriquecimiento vertical: que el trabajo mismo avise cómo va, sin depender de que alguien lo diga","competencia"]];
+  const bajas=[...dims].sort((a,b)=>a[1]-b[1]).slice(0,2);
+  document.getElementById("jBajas").textContent=bajas.map(d=>d[0]).join(" y ");
+  let L=`Las dos dimensiones más bajas son ${bajas[0][0].toLowerCase()} y ${bajas[1][0].toLowerCase()}. Antes de elegir la forma, decide qué característica está baja: para ${bajas[0][0].toLowerCase()}, ${bajas[0][2]}; para ${bajas[1][0].toLowerCase()}, ${bajas[1][2]}. En términos de la clase 6, alimentan la necesidad de ${bajas[0][3]} y de ${bajas[1][3]}.`;
+  if((A<=1||F<=1) && (V+I+S)/3>=5) L+=" Fíjate: el PPM multiplicativo castiga este puesto casi a cero por una sola dimensión, mientras el promedio simple lo deja en la mitad de la escala. Esa discrepancia es la razón para desconfiar de la fórmula.";
+  if(prom>=5.5) L+=" Un puesto bien diseñado en las cinco. Recuerda el moderador que el modelo declara: enriquecer el puesto de alguien que no busca crecer ahí no produce el mismo efecto. Y el lado social (con quién, para quién) no está en estas cinco y es el que más pesa en compromiso y rotación.";
+  document.getElementById("jLectura").innerHTML="<strong>Lectura:</strong> "+L; estado.respuestas["5_jcm"]=1; guardar();
+}
+function presetJ(v,i,s,a,f){ [["jV",v],["jI",i],["jS",s],["jA",a],["jF",f]].forEach(([id,x])=>document.getElementById(id).value=x); jcm(); }
+const JDR=["Demanda de desafío","Demanda de bloqueo","Recurso"];
+const C5JDR=[
+  ["Un proyecto complejo con responsabilidad real y plazo exigente pero alcanzable.",0,"Exige esfuerzo y permite logro y crecimiento. Se asocia +.16 con motivación y +.12 con desempeño, pero también .40 con tensión: cobra peaje."],
+  ["Ambigüedad de rol: nadie sabe bien qué se espera de cada quien.",1,"Exige esfuerzo y además estorba el logro. −.12 con motivación, −.20 con desempeño, .58 con tensión. Quitarla mejora los tres resultados a la vez."],
+  ["Apoyo de la jefatura y de los pares.",2,"Recurso: alimenta el proceso motivacional y amortigua el efecto de las demandas."],
+  ["Burocracia inútil y política interna para conseguir cualquier cosa.",1,"Bloqueo clásico: trabas que no dependen de la persona."],
+  ["Oportunidades de aprender y usar lo aprendido.",2,"Recurso (desarrollo profesional en el vocabulario del CEAL-SM)."],
+  ["Carga de trabajo alta con sentido, en un equipo que la reparte bien.",0,"Desafío. Con recursos, un trabajo muy demandante puede ser un buen trabajo; sin recursos, no. Y en Chile la carga de trabajo es la dimensión con más centros en riesgo alto (22.9%; SUSESO, 2025)."],
+  ["Inseguridad laboral: contratos que se renuevan mes a mes sin saber hasta cuándo.",1,"Bloqueo: estorba y no permite logro alguno."],
+  ["Autonomía sobre el cómo y el cuándo, y retroalimentación del propio trabajo.",2,"Los dos recursos a través de los cuales Holman y Axtell (2016) mostraron, con un cuasi-experimento en call center, que un rediseño mueve bienestar, contrato psicológico y desempeño."]
+];
+const JC=["Frontera de tarea","Frontera relacional","Frontera cognitiva"];
+const C5JC=[
+  ["La cajera que además ordena la góndola porque le gusta ver el pasillo bien.",0,"Cambia qué se hace: agrega una tarea."],
+  ["El agente de call center que se hace amigo del área técnica para resolver más rápido.",1,"Cambia con quién y cuánto: construye un vínculo nuevo."],
+  ["El auxiliar de aseo del hospital que se define como parte del equipo que cura.",2,"Cambia cómo entiende su trabajo: qué significa y de qué es parte."],
+  ["Un analista reordena su semana para hacer primero el trabajo de más concentración.",0,"Frontera de tarea: cambia el orden y el tiempo dedicado a cada una."],
+  ["Una vendedora empieza a pedirle a cada cliente que le cuente para qué usa el producto.",1,"Relacional, y de paso alimenta la significancia: ve a quién le cambia algo lo que hace."],
+  ["Un operario deja de hacer las tareas que le molestan y las deriva a otros.",0,"Frontera de tarea, en la versión que la evidencia JD-R llama \"disminuir demandas obstaculizadoras\": la única de las cuatro dimensiones que se comporta al revés (+.150 con tensión, −.161 con desempeño contextual; Rudolph et al., 2017). El job crafting que funciona agrega, no resta."]
+];
+function revelarH(){ document.getElementById("hOut").style.display="block"; const a=+document.getElementById("hAs").value, b=+document.getElementById("hBs").value;
+  document.getElementById("hLectura").innerHTML=`<strong>Tu estimación: ${a}% y ${b}%. La cifra real: 2% y 24%.</strong> Hacer el puesto más interesante, por sí solo, casi no mueve la intención de irse. Lo que la mueve es el lado social. La gente no renuncia a un puesto aburrido: renuncia a un lugar donde no le importa a nadie. Y en compromiso organizacional, las sociales agregan 40%, más que las motivacionales. <span class="cita">Humphrey et al. (2007), cifras verificadas contra el abstract oficial; las versiones "55% / 38% / 26%" que circulan no corresponden.</span>`; estado.respuestas["5_h"]=1; guardar(); }
+const Q5=[
+  {p:"\"Darle a alguien un proyecto entretenido lo motiva.\" ¿Qué mostraron Shin y Grant (2019)?", o:["Que la motivación intrínseca en una tarea mejora todas las demás","Que la motivación intrínseca alta en una tarea puede deteriorar el desempeño en las demás, por aburrimiento, y el efecto es curvilíneo: la moderada protege mejor","Que la motivación intrínseca no importa","Que el efecto solo aparece en Corea"], c:1, f:"105 vendedores evaluados por 11 supervisores en 6 tareas, más un experimento con 255 participantes que identificó el aburrimiento como mediador. El rediseño parcial tiene costo: rediseña el puesto completo."},
+  {p:"Un gerente propone rotación de puestos porque la encuesta muestra baja autonomía. ¿Cuál es el problema?", o:["La rotación es cara","La rotación mueve variedad, no autonomía: rotar cuando el problema es autonomía no arregla nada y gasta el capital político de la intervención","La autonomía no se puede cambiar","La encuesta no mide autonomía"], c:1, f:"Diagnostica el puesto antes de elegir la intervención: identifica las dos dimensiones más bajas y elige la forma de rediseño que mueva esas dos. Para autonomía: enriquecimiento vertical."},
+  {p:"La Ley 21.561 reduce la jornada a 40 horas en 2028. Leída desde el JD-R, ¿qué permite anticipar?", o:["Más engagement, porque sube los recursos","Efectos sobre el proceso de deterioro (menos demanda) y no necesariamente sobre el proceso motivacional, porque reduce una demanda sin agregar ningún recurso; es una hipótesis derivada del modelo, no un dato","Nada: el JD-R no aplica a leyes","Más rotación"], c:1, f:"Todavía no hay evidencia chilena publicada al respecto. 44 horas desde abril de 2024, 42 desde abril de 2026, 40 desde abril de 2028."}
+];
+
+// ===================== ESTACIÓN 6: MITOS =====================
+const MITOS=[
+  ["Hay gente motivada y gente floja.",false,"La motivación no es un rasgo: la misma persona varía entre tareas del mismo puesto, entre días y entre trabajos, con evidencia intra-persona en la vida laboral cotidiana. Si varía con la situación, la situación es la variable administrable.","Hogenelst et al. (2022); Chanal et al. (2026)."],
+  ["Si alguien está motivado, va a rendir.",false,"El desempeño es función de la motivación, las habilidades, los conocimientos y los recursos. El esfuerzo correlaciona .31 con el desempeño: deja la mayor parte de la varianza a lo demás.","Van Iddekinge et al. (2023)."],
+  ["Maslow dibujó la pirámide de necesidades.",false,"Nunca la dibujó. El triángulo lo publicó Davis en 1957 y la pirámide McDermid en 1960, en un artículo titulado \"How money motivates men\".","Bridgman, Cummings y Ballard (2019)."],
+  ["La motivación intrínseca es la buena y la extrínseca es la mala.",false,"El continuo tiene seis casillas. La regulación identificada es extrínseca y es el mejor predictor del desempeño (ρ = .43 vs .36 de la intrínseca). Lo que importa es autónoma vs controlada.","Van den Broeck et al. (2021)."],
+  ["Dar autonomía es dejar que cada uno haga lo que quiera.",false,"Autonomía es volición, no independencia; su opuesto es el control, no la estructura. El apoyo a la competencia consiste en dar estructura, expectativas claras y retroalimentación.","Deci et al. (2017); Slemp et al. (2024)."],
+  ["El que se queda hasta tarde es el más comprometido.",false,"Ese perfil corresponde muchas veces a regulación introyectada: el tipo de motivación que más predice la intención de renunciar (β = .515) y que se asocia con burnout.","Hagger y Star (2026); Van den Broeck et al. (2021)."],
+  ["La autodeterminación es un valor occidental que no aplica en Chile.",false,"La moderación por individualismo no apareció en las vías autónomas; el apoyo a la autonomía pesa incluso algo más en culturas colectivistas. Autonomía no es individualismo.","Hagger y Star (2026); Slemp et al. (2024)."],
+  ["Una buena meta es una meta alcanzable, como dice la A de SMART.",false,"La relación dificultad-desempeño es positiva y lineal hasta el límite de la capacidad; la meta fácil rindió peor que no tener meta en un experimento de campo. \"Alcanzable\" solo en el sentido de \"no imposible\".","Locke y Latham (2002, 2019); Goerg (2015)."],
+  ["Las metas hay que fijarlas participativamente, o la gente no se compromete.",false,"Con dificultad igualada, la meta asignada rinde igual que la participativa si se explica su propósito; el efecto de la participación sobre desempeño objetivo es .11. El beneficio de participar es cognitivo: aparece cuando el subordinado sabe algo que el jefe no.","Wagner y Gooding (1987), en Locke y Latham (2002); Latham y Locke (2018)."],
+  ["Metas específicas y difíciles superan a \"haz tu mejor esfuerzo\" en más de cien tareas y cuarenta mil participantes.",true,"Al menos ocho países, lapsos de un minuto a veinticinco años, d entre .42 y .80. Uno de los hallazgos más replicados de la psicología aplicada.","Locke y Latham (2002)."],
+  ["Las metas hacen que la gente mienta.",false,"Una meta difícil duplicó la sobredeclaración, concentrada en quienes quedaron a una palabra (14.8% → 34.5% → 48.5%). Pero la sobredeclaración media fue 0.11 palabras, mintió entre 1.5% y 9%, y nadie tomó dinero no merecido. Hay antídotos: metas de aprendizaje y metas conductuales de ética.","Schweitzer et al. (2004); Latham y Locke (2018); Welsh et al. (2019)."],
+  ["El dinero no motiva.",false,"Sí motiva: r = .34 con la cantidad de desempeño y β = .33 en regresión conjunta. Lo que no compra es calidad (r = .08). Deci nunca sostuvo que el dinero no motive.","Jenkins et al. (1998); Cerasoli et al. (2014)."],
+  ["Los incentivos destruyen la motivación intrínseca.",false,"Depende del tipo: el elogio la sube (d = +.33), la recompensa inesperada no la toca (+.01); el daño se concentra en la tangible, esperada y contingente (−.36).","Deci, Koestner y Ryan (1999a)."],
+  ["Si quiero que la gente se motive, tengo que subir los sueldos.",false,"Controlado el diseño del trabajo, el pago explica alrededor del 10% de lo explicable de la motivación autónoma en tres muestras; la autonomía sola, entre 30% y 51%.","Gagné et al. (2026)."],
+  ["Ser justo es que todos ganen lo mismo.",false,"La equidad de Adams es una razón aportes/resultados comparada con un referente, no igualdad de montos. Y la dimensión que más predice desempeño no es la distributiva (.15) sino la procedimental (.36).","Adams (1963); Colquitt et al. (2001)."],
+  ["En Dinamarca, adoptar pago por desempeño se asoció con mayor consumo de psicofármacos.",true,"5.7% de aumento relativo en benzodiacepinas o antidepresivos, concentrado en quienes pierden ingreso y en el grupo de 50 a 65 años (8.9%). Registros administrativos de 318.717 empleados.","Dahl y Pierce (2020)."],
+  ["Si el trabajo fuera más entretenido, la gente no renunciaría.",false,"Las características motivacionales del puesto explican el 2% de la varianza en percepciones de rotación; las sociales agregan 24 puntos.","Humphrey et al. (2007)."],
+  ["El estrés de desafío es el estrés bueno: no cobra peaje.",false,"Las demandas de desafío se asocian .40 con tensión y las de bloqueo .58. Ambas cobran peaje; difieren en el signo con motivación (+.16 vs −.12) y desempeño (+.12 vs −.20).","LePine et al. (2005)."],
+  ["Hacer job crafting es sacarse de encima lo que molesta.",false,"Es la única de las cuatro dimensiones que se comporta al revés: +.150 con tensión y −.161 con desempeño contextual. Aumentar recursos estructurales se asocia .591 con engagement. El job crafting que funciona agrega, no resta.","Rudolph et al. (2017)."],
+  ["Una multa convierte una obligación moral en un precio.",true,"En seis guarderías de Haifa, multar los atrasos los aumentó, y al retirar la multa no volvieron al nivel inicial. Es la versión económica del desplazamiento motivacional.","Gneezy y Rustichini (2000); Frey y Jegen (2001)."]
+];
+function initMitos(){
+  const c=document.getElementById("mitos"); c.innerHTML="";
+  MITOS.forEach((m,i)=>{ const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML=`<strong>${i+1}. ${m[0]}</strong><br><span class="opc" data-v="1">Verdadero</span><span class="opc" data-v="0">Falso</span><div class="feedback" style="display:none"></div>`;
+    c.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ if(d.dataset.done) return; d.dataset.done="1"; const v=el.dataset.v==="1"; const ok=v===m[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[m[1]?0:1].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=`<strong>${m[1]?"Verdadero":"Falso"}.</strong> ${m[2]} <span class="cita">${m[3]}</span>`;
+      estado.respuestas["6_m"+i]=ok?1:0; guardar();
+      const done=MITOS.every((_,k)=>("6_m"+k) in estado.respuestas);
+      if(done){ const ac=MITOS.filter((_,k)=>estado.respuestas["6_m"+k]===1).length; const r=document.getElementById("mitosRes"); r.style.display="block"; r.innerHTML=`<strong>Resultado:</strong> ${ac} de ${MITOS.length} veredictos correctos. Lo que importa no es el puntaje sino el hábito: ante cada afirmación sobre motivación, pregunta de qué tipo es la motivación, en qué fase está el problema, qué eslabón está roto y qué característica del trabajo cambia.`; marcar(6); }
+    }); });
+}
+
+// ===================== FICHA =====================
+const REPASO={1:"Apunte 5: definición de Pinder y las cuatro fases, lo que la motivación no es, el cuadro distal-proximal, el mapa de Kanfer y Chen y la cadena motivación-esfuerzo-desempeño.",2:"Apunte 6: el continuo de seis regulaciones (autónoma vs controlada; la introyección y la identificada), la tabla de Van den Broeck et al. (2021), las tres necesidades y la cadena de Hagger y Star (2026).",3:"Apunte 7: mecanismos y moderadores de las metas, metas de aprendizaje vs desempeño, el diagnóstico de Vroom, Schweitzer et al. (2004) y el debate Ordóñez vs Locke y Latham.",4:"Apunte 8: cantidad vs calidad, el socavamiento desagregado por tipo de recompensa, reforzamiento involuntario, Adams y las cuatro justicias, Gagné et al. (2026).",5:"Apunte 9: características vs resultados, el modelo de Hackman y Oldham y su fórmula, JD-R y demandas de desafío/bloqueo, job crafting, Humphrey et al. (2007).",6:"Apuntes 5 a 9, secciones E (Mito versus evidencia)."};
+function pintarFicha(){
+  const k=EST.filter(i=>estado.hechas[i]); const falt=EST.filter(i=>!estado.hechas[i]);
+  const resp=Object.entries(estado.respuestas).filter(([key])=>/^[1-6]_/.test(key) && !/_(cad|cont|vroom|sim|prox|rec|adams|gagne|jcm|h|d3a)$/.test(key));
+  const ac=resp.filter(([,v])=>v===1).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas:</strong> ${k.length? k.map(i=>NOMBRES[i]).join(" · "):"ninguna todavía"}.` + (falt.length? ` <strong>Faltan:</strong> ${falt.map(i=>NOMBRES[i]).join(" · ")}.`:" Las seis.") + (resp.length? `<br><strong>Preguntas y clasificaciones respondidas:</strong> ${resp.length}, con ${ac} aciertos a la primera.`:"");
+  const errores={}; resp.forEach(([key,v])=>{ if(v===0){ const e=+key.split("_")[0]; errores[e]=(errores[e]||0)+1; } });
+  const lista=Object.keys(errores).map(e=>`<li>${NOMBRES[e]}: ${errores[e]} ${errores[e]===1?"error":"errores"}. Repasa: ${REPASO[e]}</li>`).join("");
+  document.getElementById("fichaRepaso").innerHTML = lista? `<h3>Sugerencias de repaso</h3><ul class="sans" style="font-size:.92rem">${lista}</ul>` : (resp.length? `<div class="nota ok">Sin errores en lo respondido. Si quieres poner a prueba lo aprendido, vuelve a la estación 2 y explica con tus palabras por qué la regulación identificada es extrínseca y autónoma al mismo tiempo.</div>`:"");
+}
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem("lab_mot_v1"); }catch(e){} location.reload(); }
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1fase",FASES,C1FASE,"f",1); clasificador("c1no",NOES,C1NO,"n",1); clasificador("c1cuadro",CUAD,C1CUAD,"c",1); initMatch("kanfer",KANFER,"elige la pregunta..."); pregunta("q1",Q1,1);
+clasificador("c2cont",REG,C2CONT,"c",2); initCont(); clasificador("c2nec",NEC,C2NEC,"n",2); clasificador("c2apoyo",NEC,C2APOYO,"a",2); pregunta("q2",Q2,2);
+vroom(); clasificador("c3vroom",ESL,C3VROOM,"v",3); simMeta(); clasificador("c3oscuro",OSC,C3OSC,"o",3); pregunta("q3",Q3,3);
+initRec(); clasificador("c4cc",CC,C4CC,"c",4); clasificador("c4ref",REF,C4REF,"r",4); adams(); clasificador("c4jus",JUS,C4JUS,"j",4); gagne(0); pregunta("q4",Q4,4);
+clasificador("c5col",COL,C5COL,"c",5); jcm(); clasificador("c5jdr",JDR,C5JDR,"d",5); clasificador("c5jc",JC,C5JC,"j",5); pregunta("q5",Q5,5);
+initMitos();
+</script>
+</body>
+</html>

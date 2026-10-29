@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de fundamentos del CO · Personas y Equipos UDP</title>
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* clasificador */
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .cat.elegida{outline:2px solid var(--tinta)}
+  .clasif .feedback{font-size:.88rem}
+  /* ordenar */
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .hip{font-family:Georgia,serif;font-size:1.05rem;background:#fff;border:1px dashed var(--acero);border-radius:.5rem;padding:.8rem 1rem;margin:.6rem 0}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:11rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden} .barra .tr>div{height:100%;background:var(--acero)} .barra .vv{width:3.2rem;font-weight:700}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  .tag{display:inline-block;font-family:system-ui,sans-serif;font-size:.75rem;font-weight:700;padding:.05rem .5rem;border-radius:1rem;background:var(--gris-claro);color:var(--acero);margin-left:.3rem}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Tema 1</p>
+  <h1>Fundamentos del comportamiento organizacional: seis estaciones para pensar con evidencia</h1>
+  <p class="meta">Personas y Equipos, secciones 02 y 03 · 2º semestre 2026 · Acompaña a las clases 1 a 4 y a los apuntes 1, 2, 3 y 4<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/pye/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0: INICIO ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Seis estaciones, cada una con algo que manipular, algo que clasificar y una o dos preguntas con retroalimentación. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. Al final, la ficha de salida resume lo que completaste y qué conviene repasar. No hay registro ni nota: es material para estudiar el Tema 1 (y para preparar la solemne).</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. El mapa del CO.</strong> Qué estudia el comportamiento organizacional, sus tres niveles de análisis y las tres variables de resultado del curso: desempeño, actitudes y bienestar.</div>
+    <div class="caja"><strong>2. ¿Ciencia o charlatanería?</strong> Tipos de argumento, hipótesis falsables, la jerarquía de la evidencia y un simulador del experimento de India.</div>
+    <div class="caja"><strong>3. Desempeño.</strong> Conductas, resultados y productividad en un simulador de ventas; las cuatro caras; cuánto pesa cada una en la nota del jefe.</div>
+    <div class="caja"><strong>4. Actitudes.</strong> La palabra técnica y la de la calle, el zoológico de constructos, qué tan grande es una correlación y las cuatro respuestas a la insatisfacción.</div>
+    <div class="caja"><strong>5. Bienestar.</strong> Estrés, burnout y riesgos psicosociales; el modelo demanda-control; el CEAL-SM y sus niveles de riesgo; detector de fachadas.</div>
+    <div class="caja"><strong>6. ¿Mito o evidencia?</strong> Dieciocho afirmaciones que circulan en empresas, con su veredicto, su magnitud y su fuente.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 45 a 60 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en los apuntes 1 a 4.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<!-- ============ ESTACIÓN 1: MAPA DEL CO ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · El mapa del comportamiento organizacional</h2>
+  <p>El CO estudia lo que las personas <strong>sienten, piensan y hacen</strong> en las organizaciones (individuos, grupos y estructura) y usa ese conocimiento para mejorar el <strong>desempeño</strong>, las <strong>actitudes</strong> y el <strong>bienestar</strong> de quienes trabajan. Es un campo de estudio construido con investigación (encuestas, experimentos, metaanálisis), no un área de RRHH: RRHH aplica; el CO explica y predice.</p>
+
+  <h3>Tres niveles de análisis</h3>
+  <p>Un mismo fenómeno (la motivación de Camila, por ejemplo) se explica en los tres niveles a la vez. Clasifica cada explicación según el nivel en que opera.</p>
+  <div id="c1niv"></div>
+
+  <h3>Las tres variables de resultado</h3>
+  <p>Todo el curso gira en torno a tres cosas que la gestión intenta mejorar. La clave para no confundirlas: el desempeño es lo que la persona <strong>hace</strong> (conductas observables), la actitud es su <strong>predisposición evaluativa hacia su trabajo</strong> (es interna; hay que medirla), y el bienestar es su <strong>salud en el trabajo</strong> (también hay que medirlo). Clasifica cada dato.</p>
+  <div id="c1out"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2: CIENCIA O CHARLATANERÍA ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · ¿Ciencia o charlatanería?</h2>
+  <p>Cuando dos afirmaciones sobre gestión se contradicen, ¿cómo decides a cuál creerle? Esta estación entrena las cuatro herramientas del Apunte 1: los tipos de argumento, la hipótesis falsable, la jerarquía de la evidencia y la diferencia entre correlación y causa.</p>
+
+  <h3>A. Cinco tipos de argumento</h3>
+  <p>Gerring y Christenson (2017) distinguen cinco tipos. Los <em>descriptivos, causales y predictivos</em> son empíricos (los datos pueden refutarlos); los <em>normativos y prescriptivos</em> involucran valores. Clasifica cada afirmación.</p>
+  <div id="c2arg"></div>
+
+  <h3>B. Arma una hipótesis</h3>
+  <p>Una hipótesis bien formulada tiene tres piezas: variable predictora, variable de resultado y dirección esperada. Combina y mira el veredicto.</p>
+  <div class="caja sans" style="font-size:.92rem">
+    <div class="grid g3">
+      <div><label>Variable predictora<br><select class="sel" id="hPred" onchange="armarH()"></select></label></div>
+      <div><label>Variable de resultado<br><select class="sel" id="hRes" onchange="armarH()"></select></label></div>
+      <div><label>Dirección esperada<br><select class="sel" id="hDir" onchange="armarH()"></select></label></div>
+    </div>
+    <div class="hip" id="hTexto"></div>
+    <div id="hVeredicto" class="nota" style="margin:0"></div>
+  </div>
+  <div class="desafio" id="d2a"><div class="chk">✓</div><div><strong>Desafío.</strong> Logra tres hipótesis bien formuladas distintas (cambiando al menos la predictora o el resultado). <span class="mini" id="d2aCount">0 de 3.</span></div></div>
+
+  <h3>C. La salida de emergencia</h3>
+  <p>Muchas afirmaciones del área de gestión están construidas para que ningún dato pueda contradecirlas: incluyen una cláusula que reinterpreta la evidencia en contra como evidencia a favor. ¿Cuáles de estas son falsables?</p>
+  <div id="c2fal"></div>
+
+  <h3>D. Ordena la jerarquía de la evidencia</h3>
+  <p>De <strong>menor</strong> a <strong>mayor</strong> confiabilidad. Usa las flechas y luego comprueba.</p>
+  <ul class="orden" id="ordJer"></ul>
+  <button class="btn" onclick="checkOrden('ordJer', JER_OK, 'jer')">Comprobar orden</button>
+  <div id="ordJerRes" class="nota" style="display:none"></div>
+
+  <h3>E. ¿Qué verbo permite esta evidencia?</h3>
+  <p>Regla de oro del curso: si la evidencia es correlacional, decimos "se asocia con"; solo si es experimental decimos "causa". Lee el diseño y elige el verbo.</p>
+  <div id="c2verbo"></div>
+
+  <h3>F. Simulador: por qué importa la asignación aleatoria</h3>
+  <p>Bloom et al. (2013) tenían 28 plantas textiles. ¿Qué habría pasado si, en vez de sortear, hubieran dejado que los dueños más motivados aceptaran la consultoría? Fija el efecto verdadero de la consultoría (puedes ponerlo en cero) y compara los dos métodos de asignación. Las plantas mejor gestionadas tienen menos defectos de partida, y en el mundo real son también las que más aceptan ayuda.</p>
+  <div class="caja">
+    <div class="slider">Efecto verdadero de la consultoría sobre los defectos: <span class="v" id="simEfV">−43%</span><input type="range" id="simEf" min="0" max="60" value="43" oninput="simular()"></div>
+    <button class="btn light" onclick="simular(true)">Repetir con otras 28 plantas</button>
+    <div class="grid g2" style="margin-top:.8rem">
+      <div class="stat"><div class="lbl">ASIGNACIÓN POR VOLUNTARIOS (los dueños más motivados aceptan)</div><div class="num" id="simVol">–</div><div class="lbl">diferencia observada en defectos, plantas con consultoría vs sin</div><svg id="svgVol" viewBox="0 0 300 80"></svg></div>
+      <div class="stat"><div class="lbl">ASIGNACIÓN AL AZAR (como Bloom et al.)</div><div class="num" id="simAz">–</div><div class="lbl">diferencia observada en defectos, plantas con consultoría vs sin</div><svg id="svgAz" viewBox="0 0 300 80"></svg></div>
+    </div>
+    <div class="nota" id="simLectura" style="margin-top:.8rem"></div>
+    <p class="mini">Simulación ilustrativa con 28 plantas sintéticas: la calidad inicial de gestión varía entre plantas, y en el modo "voluntarios" aceptan las 14 mejor gestionadas. Los valores de Bloom et al. (2013) fueron −43% en defectos, −22% en inventario y +17% en productividad, con asignación aleatoria.</p>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3: DESEMPEÑO ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Desempeño: conductas, no resultados</h2>
+  <p>El desempeño es el conjunto de <strong>conductas</strong> de una persona que son relevantes para los objetivos de la organización y están bajo su control (Campbell, 1990). Los <strong>resultados</strong> dependen del desempeño y de factores externos; la <strong>productividad</strong> es resultados por unidad de insumo. Tres palabras, tres cosas.</p>
+
+  <h3>A. Simulador de ventas: la misma vendedora, tres números distintos</h3>
+  <p>Mueve las palancas. Solo la primera es desempeño.</p>
+  <div class="caja">
+    <div class="grid g3">
+      <div class="slider">Conductas de venta (visitas bien preparadas, seguimiento, cooperación): <span class="v" id="vCondV">6</span>/10<input type="range" id="vCond" min="1" max="10" value="6" oninput="ventas()"></div>
+      <div class="slider">Territorio asignado (factor externo): <span class="v" id="vTerrV">medio</span><input type="range" id="vTerr" min="1" max="3" value="2" oninput="ventas()"></div>
+      <div class="slider">Horas trabajadas a la semana: <span class="v" id="vHorV">45</span><input type="range" id="vHor" min="30" max="60" value="45" oninput="ventas()"></div>
+    </div>
+    <div class="grid g3" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">DESEMPEÑO (conducta)</div><div class="num" id="vD">–</div><div class="lbl">lo que la vendedora hace y controla</div></div>
+      <div class="stat"><div class="lbl">RESULTADOS (ventas del mes)</div><div class="num" id="vR">–</div><div class="lbl">conducta × territorio; en millones</div></div>
+      <div class="stat"><div class="lbl">PRODUCTIVIDAD</div><div class="num" id="vP">–</div><div class="lbl">ventas por hora trabajada; en miles</div></div>
+    </div>
+    <div style="margin:.6rem 0 0">
+      <button class="btn light" onclick="presetV(9,1,45)">Impecable en territorio muerto</button>
+      <button class="btn light" onclick="presetV(4,3,45)">Mediocre en territorio de oro</button>
+      <button class="btn light" onclick="presetV(6,2,60)">Mismas conductas, 60 horas</button>
+    </div>
+    <div class="nota" id="vLectura" style="margin-top:.8rem"></div>
+  </div>
+  <div class="desafio" id="d3a"><div class="chk">✓</div><div><strong>Desafío.</strong> Encuentra una configuración donde el desempeño sea alto (≥ 8) y los resultados queden por debajo de otra configuración con desempeño bajo (≤ 4). <span class="mini">Si evaluaras por resultados, premiarías la segunda. Eso es premiar azar.</span></div></div>
+
+  <h3>B. Las cuatro caras</h3>
+  <p>Tarea (el núcleo técnico), contextual o ciudadanía (lo que sostiene el ambiente), adaptativo (ajustarse al cambio) y contraproducente (lo que daña). Clasifica cada viñeta.</p>
+  <div id="c3caras"></div>
+
+  <h3>C. La nota del jefe: cuánto pesa cada cara</h3>
+  <p>Rotundo y Sackett (2002) pidieron a gerentes evaluar perfiles que variaban en tarea, ciudadanía y conductas contraproducentes. Hallazgo: lo contraproducente pesó <strong>tanto como</strong> la tarea, y más que la ciudadanía. Arma un perfil y mira qué nota global le pondría el evaluador promedio.</p>
+  <div class="caja">
+    <div class="grid g3">
+      <div class="slider">Desempeño de tarea: <span class="v" id="nTV">7</span>/10<input type="range" id="nT" min="1" max="10" value="7" oninput="nota()"></div>
+      <div class="slider">Ciudadanía: <span class="v" id="nCV">5</span>/10<input type="range" id="nC" min="1" max="10" value="5" oninput="nota()"></div>
+      <div class="slider">Conductas contraproducentes: <span class="v" id="nXV">2</span>/10<input type="range" id="nX" min="0" max="10" value="2" oninput="nota()"></div>
+    </div>
+    <div class="grid g2" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">NOTA GLOBAL DEL EVALUADOR PROMEDIO</div><div class="num" id="nG">–</div><span class="nivel" id="nGN"></span></div>
+      <div class="stat"><div class="lbl">PRESETS</div><button class="btn light" onclick="presetN(10,4,8)">El crack tóxico</button><button class="btn light" onclick="presetN(6,9,0)">El que sostiene a todos</button><button class="btn light" onclick="presetN(9,8,1)">Buen trabajador completo</button></div>
+    </div>
+    <div class="nota" id="nLectura" style="margin-top:.8rem"></div>
+    <p class="mini">Modelo ilustrativo: la nota pondera tarea y conductas contraproducentes con el mismo peso y la ciudadanía con la mitad, respetando el orden hallado por Rotundo y Sackett (2002). Los pesos exactos del estudio están en el artículo.</p>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4: ACTITUDES ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · Actitudes laborales: juicios evaluativos hacia el trabajo</h2>
+  <p>En CO, una <strong>actitud</strong> es una evaluación: un juicio favorable o desfavorable hacia un objeto (el trabajo, el jefe, la organización), con tres componentes: <strong>cognitivo</strong> (lo que pienso), <strong>afectivo</strong> (lo que siento) y <strong>disposición conductual</strong> (lo que me dan ganas de hacer). En la calle, "actitud" significa energía o empuje. Esa confusión produce diagnósticos equivocados todos los días.</p>
+
+  <h3>A. Los tres componentes</h3>
+  <div id="c4comp"></div>
+
+  <h3>B. El jefe dice "tiene mala actitud". ¿Qué está describiendo?</h3>
+  <p>Separa qué <strong>hace</strong> la persona (conducta: desempeño), qué <strong>evalúa</strong> de su trabajo (actitud: predisposición interna) y su <strong>salud en el trabajo</strong> (bienestar).</p>
+  <div id="c4jefe"></div>
+
+  <h3>C. El zoológico de las actitudes laborales</h3>
+  <p>Siete constructos, cada uno con su autor fundacional y su década de moda. Une cada definición con su nombre.</p>
+  <div class="match" id="zoo"></div>
+  <button class="btn" onclick="checkZoo()">Comprobar</button>
+  <div id="zooRes" class="nota" style="display:none"></div>
+  <div class="nota info" style="margin-top:.8rem"><strong>Y al final, todas muy parecidas.</strong> Corrigiendo el error de medición, satisfacción laboral y compromiso organizacional correlacionan .91 (Le et al., 2010). Antes de pagar por medir "engagement", pregunta qué agrega sobre lo que ya mides.</div>
+
+  <h3>D. ¿Qué tan grande es una correlación?</h3>
+  <p>Mueve el valor de <em>r</em> o elige una de las relaciones del Apunte 3. Cada punto es una persona (o una unidad); mira cuánto orden hay realmente en la nube.</p>
+  <div class="caja">
+    <div class="slider">r = <span class="v" id="rV">.30</span><input type="range" id="rSl" min="0" max="95" value="30" oninput="dibR(+this.value/100, null)"></div>
+    <div>
+      <button class="btn light" onclick="dibR(.15,'sueldo y satisfacción laboral (Judge et al., 2010)')">Sueldo y satisfacción: .15</button>
+      <button class="btn light" onclick="dibR(.17,'sueldo y renuncia real (Rubenstein et al., 2018)')">Sueldo y renuncia: .17</button>
+      <button class="btn light" onclick="dibR(.30,'satisfacción y desempeño individual (Judge et al., 2001)')">Satisfacción y desempeño: .30</button>
+      <button class="btn light" onclick="dibR(.56,'intención de renunciar y renuncia real (Rubenstein et al., 2018)')">Intención de renunciar y renuncia: .56</button>
+      <button class="btn light" onclick="dibR(.91,'satisfacción y compromiso, corregida (Le et al., 2010)')">Satisfacción y compromiso: .91</button>
+    </div>
+    <div class="grid g2" style="margin-top:.6rem;align-items:start">
+      <svg id="svgR" viewBox="0 0 300 220" style="background:#fff;border:1px solid var(--borde);border-radius:.5rem"></svg>
+      <div class="nota" id="rLectura" style="margin:0"></div>
+    </div>
+    <p class="mini">Nube de 150 puntos generados con la correlación indicada. En CO, r en torno a .10 es pequeña, .20 a .30 moderada y útil, sobre .40 grande. Ninguna de estas correlaciones dice por sí sola quién causa a quién.</p>
+  </div>
+
+  <h3>E. Ordena los predictores de la renuncia</h3>
+  <p>Cuatro antecedentes de la renuncia real, según el metaanálisis de Rubenstein et al. (2018). Ordénalos de <strong>menor</strong> a <strong>mayor</strong> capacidad predictiva.</p>
+  <ul class="orden" id="ordRen"></ul>
+  <button class="btn" onclick="checkOrden('ordRen', REN_OK, 'ren')">Comprobar orden</button>
+  <div id="ordRenRes" class="nota" style="display:none"></div>
+
+  <h3>F. Cuatro respuestas a la insatisfacción</h3>
+  <p>Salida, voz, lealtad y negligencia (Farrell, 1983, sobre Hirschman, 1970): dos dimensiones, activo-pasivo y constructivo-destructivo. Para la gestión, solo una entrega información. Clasifica cada reacción.</p>
+  <div id="c4evln"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5: BIENESTAR ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Bienestar laboral: lo que importa son las condiciones laborales</h2>
+  <p>El bienestar es la tercera variable de resultado: salud en el trabajo, en un sentido amplio, incluyendo las dimensiones física, mental y social. Su cara negativa incluye el estrés y el burnout; sus causas organizacionales se llaman <strong>riesgos psicosociales</strong>, y son consecuencia de cómo se organiza el trabajo, y no de rasgos de las personas. En Chile, desde 2023, evaluarlos es obligación legal.</p>
+
+  <h3>A. Estrés, burnout, riesgo psicosocial: no son lo mismo</h3>
+  <div id="c5con"></div>
+
+  <h3>B. El modelo demanda-control</h3>
+  <p>Karasek (1979) mostró que el riesgo mayor no está en la exigencia por sí sola, sino en la combinación de <strong>alta exigencia con poco control</strong> sobre el propio trabajo. Ubica un puesto en el mapa o prueba los ejemplos.</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div>
+        <div class="slider">Demandas del puesto: <span class="v" id="kDV">5</span>/10<input type="range" id="kD" min="1" max="10" value="5" oninput="karasek()"></div>
+        <div class="slider">Control sobre el propio trabajo: <span class="v" id="kCV">5</span>/10<input type="range" id="kC" min="1" max="10" value="5" oninput="karasek()"></div>
+        <button class="btn light" onclick="presetK(9,2)">Cajera en hora punta</button>
+        <button class="btn light" onclick="presetK(9,8)">Cirujana jefa</button>
+        <button class="btn light" onclick="presetK(2,2)">Guardia nocturno sin tareas</button>
+        <button class="btn light" onclick="presetK(3,8)">Arquitecto con cartera estable</button>
+      </div>
+      <svg id="svgK" viewBox="0 0 300 260" style="background:#fff;border:1px solid var(--borde);border-radius:.5rem"></svg>
+    </div>
+    <div class="nota" id="kLectura" style="margin-top:.8rem"></div>
+  </div>
+
+  <h3>C. ¿Qué dimensión del CEAL-SM mide este ítem?</h3>
+  <p>Ítems textuales del cuestionario oficial (se responden con Siempre, A menudo, A veces, Rara vez, Nunca o casi nunca). Fíjate en la factura: cada ítem pregunta una sola cosa, sobre condiciones concretas, nunca diagnósticos.</p>
+  <div class="match" id="ceal"></div>
+  <button class="btn" onclick="checkCeal()">Comprobar</button>
+  <div id="cealRes" class="nota" style="display:none"></div>
+
+  <h3>D. El puntaje del centro de trabajo y lo que obliga</h3>
+  <p>El puntaje de cada centro de trabajo se convierte en un nivel de riesgo, y cada nivel obliga a algo distinto. Mueve el puntaje.</p>
+  <div class="caja">
+    <div class="slider">Puntaje del centro de trabajo: <span class="v" id="pV">0</span><input type="range" id="pSl" min="-24" max="30" value="0" oninput="nivelCeal()"></div>
+    <div class="stat"><div class="lbl">NIVEL DE RIESGO</div><div class="num" id="pN">–</div><div class="lbl" id="pO"></div></div>
+  </div>
+
+  <h3>E. Detector de fachadas (<em>wellness washing</em>)</h3>
+  <p>Ante cualquier iniciativa de bienestar, la pregunta es qué condición del trabajo modifica. Clasifica cada iniciativa según si actúa sobre alguna de las 12 dimensiones de riesgo o sobre la fachada.</p>
+  <div id="c5ww"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q5"></div>
+</section>
+
+<!-- ============ ESTACIÓN 6: MITOS ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · ¿Mito o evidencia?</h2>
+  <p>Dieciocho afirmaciones que circulan en empresas, charlas y redes, varias de ellas del pretest de la clase 1. Marca verdadero o falso; luego aparece el veredicto, la magnitud y la fuente. Las referencias completas están en los apuntes 1 a 4.</p>
+  <div id="mitos"></div>
+  <div class="nota" id="mitosRes" style="display:none"></div>
+</section>
+
+<!-- ============ FICHA DE SALIDA ============ -->
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div id="fichaRepaso"></div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y UTILIDADES =====================
+const estado = { hechas: {}, respuestas: {} };
+function guardar(){ try{ localStorage.setItem("lab_fund_v1", JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem("lab_fund_v1"); if(s){ Object.assign(estado, JSON.parse(s)); } }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+const NOMBRES = ["Inicio","1 · Mapa del CO","2 · Ciencia","3 · Desempeño","4 · Actitudes","5 · Bienestar","6 · Mitos","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+function pintarNav(){
+  const n = document.getElementById("nav"); n.innerHTML = "";
+  NOMBRES.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t; b.onclick=()=>ir(i);
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista"); n.appendChild(b); });
+  const k = EST.filter(i=>estado.hechas[i]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de 6`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa")); document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===7) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+const r2 = x => (Math.round(x*100)/100).toFixed(2);
+const r1 = x => (Math.round(x*10)/10).toFixed(1);
+const mean = a => a.reduce((s,x)=>s+x,0)/a.length;
+function randn(){ let u=0,v=0; while(u===0) u=Math.random(); while(v===0) v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+
+// Preguntas de opción múltiple
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML="";
+  items.forEach((q,qi)=>{
+    const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML = `<strong>${q.p}</strong><br>` + q.o.map((o,oi)=>`<span class="opc" data-o="${oi}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const oi=+el.dataset.o; const ok = oi===q.c;
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[q.c].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML = (ok?"<strong>Correcto.</strong> ":"<strong>No es eso.</strong> ") + q.f + (q.r?` <span class="cita">${q.r}</span>`:"");
+      estado.respuestas[`${estacion}_q${qi}`] = ok?1:0; guardar();
+      if(items.every((_,k)=> (`${estacion}_q${k}`) in estado.respuestas)) marcar(estacion);
+    });
+  });
+}
+// Clasificador: items = [enunciado, índice categoría correcta, feedback]; cats = nombres
+function clasificador(contId, cats, items, clave, estacion, onDone){
+  const cont=document.getElementById(contId); cont.innerHTML="";
+  items.forEach((it,i)=>{
+    const d=document.createElement("div"); d.className="clasif";
+    d.innerHTML = `<p class="enun"><strong>${i+1}.</strong> ${it[0]}</p><div class="cats">${cats.map((c,ci)=>`<span class="cat" data-c="${ci}">${c}</span>`).join("")}</div><div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".cat").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const ci=+el.dataset.c, ok=ci===it[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".cat")[it[1]].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=(ok?"<strong>Correcto.</strong> ":`<strong>No: es ${cats[it[1]].toLowerCase()}.</strong> `)+it[2];
+      estado.respuestas[`${estacion}_${clave}${i}`]=ok?1:0; guardar();
+      if(items.every((_,k)=>(`${estacion}_${clave}${k}`) in estado.respuestas) && onDone) onDone();
+    });
+  });
+}
+// Ordenar con flechas
+function initOrden(id, items){
+  const ul=document.getElementById(id); ul.innerHTML="";
+  const arr=[...items].sort(()=>Math.random()-.5);
+  arr.forEach(t=>{ const li=document.createElement("li"); li.dataset.k=t[0]; li.innerHTML=`<span class="n"></span><span class="txt">${t[1]}</span><button title="subir" onclick="mover(this,-1)">▲</button><button title="bajar" onclick="mover(this,1)">▼</button>`; ul.appendChild(li); });
+  numerar(ul);
+}
+function numerar(ul){ [...ul.children].forEach((li,i)=>li.querySelector(".n").textContent=i+1); }
+function mover(btn,dir){ const li=btn.closest("li"), ul=li.parentElement; const sib=dir<0?li.previousElementSibling:li.nextElementSibling; if(!sib) return; if(dir<0) ul.insertBefore(li,sib); else ul.insertBefore(sib,li); numerar(ul); }
+function checkOrden(id, ok, clave){
+  const ul=document.getElementById(id); let bien=0;
+  [...ul.children].forEach((li,i)=>{ const b=li.dataset.k===ok[i]; li.classList.remove("bien","mal"); li.classList.add(b?"bien":"mal"); if(b) bien++; });
+  const res=document.getElementById(id+"Res"); res.style.display="block";
+  const est = clave==="jer"?2:4;
+  if(bien===ok.length){ res.className="nota ok"; res.innerHTML = clave==="jer"? "<strong>Orden correcto.</strong> Anécdota, caso descriptivo, estudio correlacional, experimento aleatorizado, metaanálisis. La anécdota sirve para ilustrar un mecanismo, no para demostrar ni generalizar; el metaanálisis es la mejor estimación disponible del estado del conocimiento." : "<strong>Orden correcto.</strong> Sueldo ρ ≈ .17, satisfacción ≈ .28, compromiso ≈ .29, intención de renunciar ≈ .56. El sueldo importa para aceptar un trabajo; una vez dentro, la experiencia diaria pesa más. Y la intención es el mejor antecedente inmediato de la acción."; estado.respuestas[`${est}_${clave}`]=1; }
+  else { res.className="nota"; res.innerHTML = `<strong>${bien} de ${ok.length} en su lugar.</strong> Los que quedaron en rojo están fuera de posición. Reordena y vuelve a comprobar.`; if(!(`${est}_${clave}` in estado.respuestas)) estado.respuestas[`${est}_${clave}`]=0; }
+  guardar();
+}
+
+// ===================== ESTACIÓN 1 =====================
+const NIV = ["Individual","Grupal","Organizacional"];
+const C1NIV = [
+  ["La personalidad de Camila determina qué recompensas la motivan de verdad.",0,"Personalidad, actitudes, motivación, emociones y percepción son variables del nivel individual."],
+  ["El estilo de su jefa influye en la cohesión y la motivación de todo el equipo.",1,"Liderazgo, comunicación, normas y conflicto operan en el nivel grupal: el equipo y su jefatura."],
+  ["La cultura y las políticas de incentivos de la empresa definen qué liderazgos son posibles.",2,"Cultura, estructura, políticas e incentivos son el nivel organizacional."],
+  ["Un cambio en la estructura de la empresa (de áreas a células) reorganiza quién depende de quién.",2,"La estructura es una propiedad de la organización completa."],
+  ["Las normas no escritas del equipo castigan a quien se va a la hora.",1,"Las normas de grupo son un fenómeno grupal, aunque las sufra cada individuo."],
+  ["Camila percibe el nuevo bono como injusto y baja su esfuerzo.",0,"Percepción y motivación: nivel individual. Aunque el bono sea una política organizacional, la explicación aquí está en cómo la persona lo evalúa."]
+];
+const OUT = ["Desempeño (conductas observables)","Actitud (predisposición evaluativa; hay que medirla)","Bienestar (salud en el trabajo; hay que medirlo)"];
+const C1OUT = [
+  ["Entregó los tres informes a tiempo y avisó con anticipación del retraso del cuarto.",0,"Conductas observables, relevantes y bajo su control: desempeño de tarea."],
+  ["Responde 6 de 7 en \"en general, estoy satisfecho con mi trabajo\".",1,"Una evaluación favorable del propio trabajo medida por autoinforme: satisfacción laboral, la actitud más estudiada del campo."],
+  ["Lleva tres meses con agotamiento, cinismo hacia su trabajo y sensación de no servir para nada.",2,"Las tres dimensiones del burnout (Maslach et al., 2001): bienestar, en su cara negativa."],
+  ["Piensa que su jefe es injusto y le da rabia cada vez que lo ve.",1,"Componentes cognitivo y afectivo de una actitud hacia el jefe. No es conducta todavía."],
+  ["Ayudó a un compañero nuevo a entender el sistema sin que nadie se lo pidiera.",0,"Conducta de ciudadanía: desempeño contextual."],
+  ["Declara que su trabajo le consume demasiada energía, con efecto negativo en su vida privada.",2,"Ítem textual del CEAL-SM (equilibrio trabajo-vida): mide bienestar, no desempeño ni actitud."],
+  ["Llega 20 minutos tarde tres veces por semana.",0,"Conducta contraproducente: una cara del desempeño. \"Mala actitud\" sería una inferencia sobre lo que piensa; lo que se observa es la conducta."],
+  ["Tiene la intención de renunciar en los próximos seis meses.",1,"La disposición conductual es el tercer componente de la actitud; es una intención, no la conducta misma. Y predice la renuncia real mejor que nada (ρ ≈ .56)."]
+];
+const Q1 = [
+  {p:"¿Cuál de estas afirmaciones describe mejor la relación entre comportamiento organizacional y recursos humanos?", o:["Son lo mismo con distinto nombre","El CO es un área dentro de RRHH","RRHH aplica; el CO explica y predice, y es una disciplina central del management","RRHH es la base científica del CO"], c:2, f:"El CO es un campo de estudio construido con investigación; RRHH es la función que aplica ese conocimiento (y muchas veces no lo aplica: el 57% de Rynes et al., 2002)."},
+  {p:"Un gerente dice: \"Pedro no está comprometido\". Según el mapa del curso, ¿qué está haciendo?", o:["Describiendo el desempeño de Pedro","Infiriendo una actitud (que habría que medir) a partir de conductas que no nombró","Midiendo el bienestar de Pedro","Describiendo un riesgo psicosocial"], c:1, f:"El compromiso es una actitud: un juicio interno que no se observa. Lo que el gerente observó son conductas; la actitud es su inferencia. El diagnóstico correcto separa las tres cosas.", r:"Apunte 3, sección C."}
+];
+
+// ===================== ESTACIÓN 2 =====================
+const ARG = ["Descriptivo","Causal","Predictivo","Normativo","Prescriptivo"];
+const C2ARG = [
+  ["El 67% de las enfermedades profesionales calificadas en Chile en 2022 fueron de salud mental.",0,"Dice cómo se distribuye un fenómeno (cuánto, cuándo, dónde) sin afirmar causas. Empírico: podría ser falso."],
+  ["Mejorar las prácticas de gestión aumenta la productividad de las plantas.",1,"X produce un cambio en Y. Es la afirmación que Bloom et al. (2013) pudieron sostener gracias al experimento."],
+  ["La intención de renunciar permite anticipar quién renunciará el próximo año.",2,"Anticipa sin presumir causa. Predecir no es explicar: la intención sirve para anticipar, pero intervenir exige conocer las causas de esa intención."],
+  ["Las empresas deben cuidar la salud mental de sus trabajadores.",3,"Un juicio de valor (bueno o malo, deseable o no). No se resuelve solo con datos, aunque los datos informen el debate."],
+  ["Para retener talento, rediseñe los puestos antes que subir sueldos.",4,"Qué conviene hacer para lograr un objetivo. La buena prescripción se apoya en un argumento causal, y ese en evidencia; pregunta siempre por ambos."],
+  ["La antigüedad en la empresa anticipa la rotación: los recién llegados renuncian más.",2,"Predictivo. \"Tener poca antigüedad\" no es la causa de renunciar; es una señal que permite anticipar."],
+  ["Chile promedia 2.83 sobre 5 en calidad de gestión en 316 empresas manufactureras.",0,"Descriptivo: una medición, no una causa ni una recomendación (Bloom et al., 2012)."],
+  ["Un supervisor que fija metas específicas y difíciles consigue más desempeño que uno que pide \"el mejor esfuerzo\".",1,"Causal, y con respaldo experimental abundante (Locke y Latham, 2002). Lo replicarás en la clase 7."],
+  ["Si quieres que la encuesta de clima mida actitudes y no miedo, garantiza anonimato real.",4,"Prescriptivo: una recomendación para lograr un objetivo (medir bien)."],
+  ["No es aceptable evaluar a las personas por resultados que no controlan.",3,"Normativo: juicio sobre lo que es aceptable. Puede apoyarse en la distinción conducta-resultado, pero sigue siendo un juicio de valor."]
+];
+const PRED = [["Autonomía en el puesto",1],["Reconocimiento no monetario del jefe",1],["Ambigüedad de rol",1],["Presión de tiempo",1],["Trabajo híbrido",1],["La capacitación (sin especificar)",0],["El liderazgo (sin especificar)",0],["La cultura organizacional",0]];
+const RESU = [["Satisfacción laboral",1],["Compromiso afectivo",1],["Desempeño de tarea",1],["Intención de renunciar",1],["Creatividad",1],["El desempeño (sin especificar)",0],["El éxito",0],["Los equipos (sin especificar)",0]];
+const DIRS = [["Positiva (más X, más Y)","se asocia positivamente con",1],["Negativa (más X, menos Y)","se asocia negativamente con",1],["Curvilínea (U invertida)","tiene una relación de U invertida con",1],["No declarada (\"influye en\", \"impacta a\")","influye en",0]];
+const hechasBien = new Set();
+function initH(){
+  const f=(id,arr)=>{ const s=document.getElementById(id); s.innerHTML=arr.map((a,i)=>`<option value="${i}">${a[0]}</option>`).join(""); };
+  f("hPred",PRED); f("hRes",RESU); f("hDir",DIRS); armarH();
+}
+function armarH(){
+  const p=PRED[+document.getElementById("hPred").value], r=RESU[+document.getElementById("hRes").value], d=DIRS[+document.getElementById("hDir").value];
+  document.getElementById("hTexto").textContent = `"${p[0]} ${d[1]} ${r[0].charAt(0).toLowerCase()+r[0].slice(1)}."`;
+  const prob=[]; if(!p[1]) prob.push("la variable predictora es difusa (¿qué aspecto, de qué tipo?)"); if(!r[1]) prob.push("la variable de resultado no es medible tal como está (¿qué resultado, exactamente?)"); if(!d[2]) prob.push("la dirección no está declarada (¿lo mejora?, ¿lo empeora?): ningún resultado podría contradecirla");
+  const v=document.getElementById("hVeredicto");
+  if(prob.length===0){ v.className="nota ok"; v.innerHTML="<strong>Hipótesis bien formulada.</strong> Predictora específica, resultado medible y dirección declarada: algún resultado posible la dejaría en evidencia. Es falsable."; hechasBien.add(p[0]+"|"+r[0]); const n=Math.min(hechasBien.size,3); document.getElementById("d2aCount").textContent=`${n} de 3.`; if(n>=3){ document.getElementById("d2a").classList.add("hecho"); estado.respuestas["2_d2a"]=1; guardar(); } }
+  else { v.className="nota"; v.innerHTML="<strong>Mal formulada:</strong> "+prob.join("; ")+"."; }
+}
+const FAL = ["Falsable","No falsable (tiene salida de emergencia)"];
+const C2FAL = [
+  ["Cada persona tiene un potencial infinito que solo un buen líder sabe despertar.",1,"Un potencial infinito no se puede medir, y si no aparece, siempre se puede culpar al líder. Ningún resultado la refuta."],
+  ["La sobrecarga de trabajo se asocia negativamente con el bienestar de los analistas de un banco.",0,"Predictora, resultado y dirección. Si los analistas más sobrecargados reportaran igual o más bienestar, la hipótesis quedaría refutada."],
+  ["El coaching siempre funciona; si no ves resultados, es porque el proceso todavía no termina de madurar.",1,"La cláusula final absorbe cualquier fracaso: éxito y fracaso confirman la afirmación por igual."],
+  ["Los equipos de alto desempeño tienen una energía especial que se siente pero no se puede medir.",1,"Si no se puede medir, no se puede contrastar; la \"energía\" se diagnostica después de conocer el resultado."],
+  ["Las metas específicas y difíciles producen mejor desempeño que pedir \"haz tu mejor esfuerzo\".",0,"Falsable, y de hecho contrastada cientos de veces: es uno de los hallazgos más replicados de la psicología organizacional."],
+  ["Tu tipo de personalidad revela quién eres; si no te identificas con el resultado, es porque aún no te conoces lo suficiente.",1,"Clásico de los test pseudocientíficos tipo MBTI: el acuerdo confirma y el desacuerdo también."],
+  ["Si visualizas el éxito con suficiente convicción, los resultados llegarán; si no llegaron, te faltó convicción.",1,"La \"convicción suficiente\" solo se conoce después del resultado: incontrastable por diseño."],
+  ["La relación entre presión de tiempo y creatividad tiene forma de U invertida.",0,"Falsable: una relación monótona (o ninguna) la refutaría. Declara incluso la forma esperada."]
+];
+const JER = [["a","Anécdota u opinión (\"a mí me funcionó\", \"un gurú lo dijo\")"],["b","Caso o estudio descriptivo"],["c","Estudio correlacional (asociaciones en muchas personas u organizaciones)"],["d","Experimento aleatorizado (la intervención se asigna por azar)"],["e","Metaanálisis (síntesis estadística de muchos estudios)"]];
+const JER_OK = ["a","b","c","d","e"];
+const VERBO = ["\"Se asocia con\"","\"Causa\"","Ninguno: no hay evidencia utilizable"];
+const C2VERBO = [
+  ["Se midió satisfacción y desempeño en 7.939 personas de 312 muestras; la correlación media fue .30 (Judge et al., 2001).",0,"Correlacional, aunque sea un metaanálisis enorme. No separa si la satisfacción mejora el desempeño, si rendir bien pone contento, o si un buen jefe explica ambas."],
+  ["28 plantas fueron sorteadas: unas recibieron consultoría y otras no; un año después, las tratadas tenían 43% menos defectos (Bloom et al., 2013).",1,"La asignación aleatoria garantiza que los grupos eran equivalentes antes; la diferencia posterior se puede atribuir a la intervención."],
+  ["Un consultor cuenta que en tres empresas donde implantó su programa la rotación bajó.",2,"Anécdota sin grupo de comparación ni contrafactual. Sirve, como mucho, para ilustrar un mecanismo; no permite ni \"se asocia\" (no hay muestra) ni \"causa\"."],
+  ["Las unidades con mejores actitudes de sus trabajadores tienen más clientes satisfechos y menos accidentes (ρ entre .17 y .38; Harter et al., 2002).",0,"Metaanálisis de datos de unidades: asociación real y generalizable, pero correlacional."],
+  ["En call centers de British Telecom se midió la felicidad semanal y se usó la variación del clima local como fuente de variación exógena; semanas más felices produjeron más ventas (Bellet et al., 2024).",1,"Diseño causal (variación exógena del ánimo): por eso el Apunte 3 lo cita como la evidencia causal disponible, y la acota a ese contexto."],
+  ["Una encuesta de LinkedIn con 2.000 respuestas muestra que quienes usan la app de bienestar de la empresa reportan menos estrés.",0,"Correlación con autoselección: quienes usan la app pueden ser distintos de antemano. Lo honesto es \"se asocia\", y con cautela."]
+];
+let plantas=[];
+function nuevasPlantas(){ plantas=[]; for(let i=0;i<28;i++){ const q=randn(); plantas.push({q, base:100-12*q}); } }
+function simular(nuevas){
+  if(nuevas||plantas.length===0) nuevasPlantas();
+  const ef=+document.getElementById("simEf").value/100; document.getElementById("simEfV").textContent="−"+Math.round(ef*100)+"%";
+  const despues=(p,trat)=> p.base*(1+0.06*randn())*(trat?1-ef:1);
+  // voluntarios: las 14 mejor gestionadas (menor base) aceptan
+  const ordenadas=[...plantas].sort((a,b)=>a.base-b.base);
+  const volT=ordenadas.slice(0,14).map(p=>despues(p,true)), volC=ordenadas.slice(14).map(p=>despues(p,false));
+  const idx=[...Array(28).keys()].sort(()=>Math.random()-.5);
+  const azT=idx.slice(0,14).map(i=>despues(plantas[i],true)), azC=idx.slice(14).map(i=>despues(plantas[i],false));
+  const dVol=(mean(volT)-mean(volC))/mean(volC)*100, dAz=(mean(azT)-mean(azC))/mean(azC)*100;
+  document.getElementById("simVol").textContent=(dVol>0?"+":"−")+Math.abs(dVol).toFixed(0)+"%"; document.getElementById("simAz").textContent=(dAz>0?"+":"−")+Math.abs(dAz).toFixed(0)+"%";
+  dibBarras("svgVol",mean(volT),mean(volC)); dibBarras("svgAz",mean(azT),mean(azC));
+  const L=document.getElementById("simLectura");
+  if(ef===0) L.innerHTML=`<strong>Lectura:</strong> el efecto verdadero es cero y aun así el método "voluntarios" muestra una diferencia de ${Math.abs(dVol).toFixed(0)}% a favor de la consultoría. No es la consultoría: es que aceptaron las plantas que ya estaban mejor. El sorteo da una diferencia cercana a cero, que es la verdad. Esto se llama sesgo de selección, y es la razón por la que "a mí me funcionó" no sirve como evidencia.`;
+  else L.innerHTML=`<strong>Lectura:</strong> el efecto verdadero es −${Math.round(ef*100)}%. El sorteo lo recupera aproximadamente (${Math.abs(dAz).toFixed(0)}%, con ruido de muestreo). El método "voluntarios" lo exagera (${Math.abs(dVol).toFixed(0)}%) porque mezcla el efecto de la consultoría con la ventaja previa de las plantas que aceptaron. Baja el efecto a cero y mira qué pasa.`;
+  estado.respuestas["2_sim"]=1; guardar();
+}
+function dibBarras(id,t,c){ const s=document.getElementById(id); const mx=Math.max(t,c,1)*1.15; const w=x=>Math.max(2,x/mx*200);
+  s.innerHTML=`<text x="0" y="22" font-size="11" fill="#6B7280">Con</text><rect x="42" y="10" width="${w(t)}" height="18" fill="#C8102E"/><text x="${46+w(t)}" y="23" font-size="11" fill="#1F2937">${t.toFixed(0)}</text>
+  <text x="0" y="57" font-size="11" fill="#6B7280">Sin</text><rect x="42" y="45" width="${w(c)}" height="18" fill="#9CA3AF"/><text x="${46+w(c)}" y="58" font-size="11" fill="#1F2937">${c.toFixed(0)}</text><text x="0" y="76" font-size="9" fill="#9CA3AF">índice de defectos al año (menos es mejor)</text>`; }
+const Q2 = [
+  {p:"Un influencer afirma: \"Las empresas con oficinas abiertas son más innovadoras: mira Google\". ¿Cuál es la objeción más precisa?", o:["Google no es una empresa chilena, así que no aplica","Es una anécdota: ilustra, pero no demuestra causalidad ni permite generalizar; además no hay contrafactual","Es un argumento normativo disfrazado de causal","Es falsa porque la lluvia de ideas no funciona"], c:1, f:"Un caso (o varios) convence a la audiencia; solo un buen diseño convence a la evidencia. Falta saber qué habría pasado sin oficinas abiertas, y falta una muestra que permita generalizar."},
+  {p:"Un estudio con 5.000 trabajadores encuentra que quienes teletrabajan están más satisfechos. ¿Qué afirmación respeta la evidencia?", o:["El teletrabajo causa satisfacción","El teletrabajo se asocia con mayor satisfacción; falta saber si quienes teletrabajan eran distintos de antemano","No se puede concluir nada con 5.000 personas","La satisfacción causa el teletrabajo"], c:1, f:"Correlacional: el verbo honesto es \"se asocia\". Para hablar de causa haría falta asignación aleatoria (o un diseño que la imite). El simulador de esta estación muestra por qué.", r:"Apunte 1, sección C."},
+  {p:"Rynes et al. (2002) aplicaron 35 ítems de verdadero o falso a 959 profesionales de RRHH. ¿Cuál fue la moraleja del Apunte 1?", o:["Que los profesionales de RRHH son incompetentes","Que la intuición gerencial, sin contrapeso de evidencia, falla de manera sistemática y predecible (el promedio acertó 57%)","Que los tests de habilidad cognitiva no sirven","Que la investigación no es aplicable a la práctica"], c:1, f:"Si esto les pasa a los especialistas, la moraleja no es la burla: es que leer la evidencia es una ventaja competitiva real."}
+];
+
+// ===================== ESTACIÓN 3 =====================
+function ventas(){
+  const c=+document.getElementById("vCond").value, t=+document.getElementById("vTerr").value, h=+document.getElementById("vHor").value;
+  document.getElementById("vCondV").textContent=c; document.getElementById("vTerrV").textContent=["muerto","medio","de oro"][t-1]; document.getElementById("vHorV").textContent=h;
+  const res = c*[0.4,1.0,1.8][t-1]*2; // millones
+  const prod = res*1000/(h*4); // miles por hora
+  document.getElementById("vD").textContent=c+"/10"; document.getElementById("vR").textContent="$"+r1(res)+" M"; document.getElementById("vP").textContent="$"+prod.toFixed(0)+" mil/h";
+  const L=[];
+  L.push(`Desempeño ${c}/10: es lo único que la vendedora controla y lo único que se puede retroalimentar y desarrollar.`);
+  if(t===1&&c>=8) L.push("Conductas impecables en un territorio muerto: resultados mediocres que no son culpa de nadie. Evaluarla por el número castiga azar.");
+  if(t===3&&c<=4) L.push("Conductas flojas en un territorio de oro: buenos resultados que no reflejan desempeño. Premiarla por el número regala mérito.");
+  if(h>=55) L.push("Más horas con las mismas conductas: los resultados no cambian y la productividad (resultados por hora) baja. Las horas son un insumo, no desempeño.");
+  document.getElementById("vLectura").innerHTML="<strong>Lectura:</strong> "+L.join(" ");
+  // desafío: registrar mejor resultado con desempeño bajo y peor con desempeño alto
+  if(!window._v) window._v={altoMin:Infinity, bajoMax:-Infinity};
+  if(c>=8) window._v.altoMin=Math.min(window._v.altoMin,res); if(c<=4) window._v.bajoMax=Math.max(window._v.bajoMax,res);
+  if(window._v.altoMin<window._v.bajoMax){ document.getElementById("d3a").classList.add("hecho"); estado.respuestas["3_d3a"]=1; guardar(); }
+}
+function presetV(c,t,h){ document.getElementById("vCond").value=c; document.getElementById("vTerr").value=t; document.getElementById("vHor").value=h; ventas(); }
+const CARAS=["De tarea","Contextual / ciudadanía","Adaptativo","Contraproducente"];
+const C3CARAS=[
+  ["Un analista entrega el informe mensual completo, sin errores y antes del plazo.",0,"El núcleo técnico del puesto: calidad, cantidad y precisión del trabajo central."],
+  ["Una operaria se queda media hora extra, sin que se lo pidan, para enseñarle la máquina al recién llegado.",1,"Ayudar, cooperar, esfuerzo extra: conductas que sostienen el ambiente en que ocurre el trabajo técnico (Organ, 1988)."],
+  ["Cuando la empresa cambió a un sistema nuevo, un vendedor aprendió a usarlo en una semana y luego apoyó a sus pares.",2,"Aprender tecnologías y roles nuevos es una de las ocho dimensiones del desempeño adaptativo (Pulakos et al., 2000). El apoyo a pares, además, es ciudadanía."],
+  ["Un jefe de turno oculta información a otra área para que no le ganen el presupuesto.",3,"Conducta voluntaria que daña a la organización: contraproducente, aunque sea sutil y nadie la sancione."],
+  ["Una ejecutiva de cuentas llega 20 minutos tarde tres veces por semana sin motivo.",3,"Ausentismo y atrasos evitables están en la tipología de conductas contraproducentes (Robinson y Bennett, 1995)."],
+  ["Un ingeniero propone una mejora al proceso que no era su responsabilidad y la empuja hasta implementarla.",1,"Proponer mejoras y representar bien a la organización: ciudadanía (contextual)."],
+  ["Durante una crisis de abastecimiento, una compradora improvisa proveedores alternativos y mantiene la línea funcionando.",2,"Manejar emergencias y situaciones inciertas con eficacia: desempeño adaptativo."],
+  ["Un contador cierra el balance correctamente, pero trata con desprecio a quienes le piden información.",3,"Dos caras a la vez: tarea bien (el balance) y conducta contraproducente (incivilidad). En el juicio global del jefe, la segunda pesa tanto como la primera."],
+  ["Una recepcionista atiende con precisión y rapidez a cada visita según el protocolo del cargo.",0,"Es el núcleo técnico de su puesto: desempeño de tarea, no ciudadanía, aunque implique trato con personas."]
+];
+function nota(){
+  const t=+document.getElementById("nT").value, c=+document.getElementById("nC").value, x=+document.getElementById("nX").value;
+  document.getElementById("nTV").textContent=t; document.getElementById("nCV").textContent=c; document.getElementById("nXV").textContent=x;
+  const g = (0.4*t + 0.2*c + 0.4*(10-x)); // 0-10
+  document.getElementById("nG").textContent=r1(g)+"/10";
+  const n=document.getElementById("nGN"); n.className="nivel "+(g>=7.5?"bien":g>=5?"mod":"max"); n.textContent=g>=7.5?"buen desempeño global":g>=5?"desempeño medio":"mal desempeño global";
+  const L=[];
+  if(t>=9&&x>=6) L.push("Técnicamente brillante con conductas dañinas: para el evaluador promedio no es \"un crack con mal genio\", es un mal desempeño. Lo contraproducente le cuesta lo mismo que le aporta la tarea.");
+  if(c>=8&&t<=6&&x<=1) L.push("Técnico promedio que sostiene a todos: la ciudadanía suma, pero pesa menos que la tarea en la nota global. Si solo evaluaras lo técnico, lo verías como mediocre; si solo evaluaras ciudadanía, como estrella.");
+  if(t>=8&&c>=7&&x<=1) L.push("Las cuatro caras alineadas: esto es lo que \"buen trabajador\" significa con apellido.");
+  if(L.length===0) L.push("Mueve los tres controles y compara: subir lo contraproducente de 0 a 5 cuesta lo mismo que bajar la tarea de 10 a 5.");
+  document.getElementById("nLectura").innerHTML="<strong>Lectura:</strong> "+L.join(" ");
+}
+function presetN(t,c,x){ document.getElementById("nT").value=t; document.getElementById("nC").value=c; document.getElementById("nX").value=x; nota(); }
+const Q3=[
+  {p:"Una empresa evalúa a sus vendedores solo por cumplimiento de la meta de ventas. Según el Apunte 2, ¿cuál es el problema de fondo?", o:["Las metas no sirven para motivar","Evalúa resultados que dependen también de factores que la persona no controla: premia y castiga azar","Las ventas no son una variable relevante","Debería evaluar solo ciudadanía"], c:1, f:"El desempeño son conductas bajo control de la persona; los resultados dependen además del territorio, el mercado y la suerte. Lo correcto es comparar contra pares en condiciones similares y mirar la conducta, no solo el número.", r:"Campbell (1990); Campbell y Wiernik (2015)."},
+  {p:"En Motowidlo y Van Scotter (1994), con 421 mecánicos, ¿qué se encontró sobre el desempeño de tarea y el contextual?", o:["Que son lo mismo medido dos veces","Que cada uno aporta información propia a la evaluación global y tienen antecedentes distintos (experiencia vs personalidad)","Que el contextual no importa a los supervisores","Que la experiencia predice mejor el contextual"], c:1, f:"La experiencia predecía mejor la tarea; la personalidad, lo contextual. Si solo evalúas lo técnico, mides la mitad de lo que tus propios jefes consideran importante."},
+  {p:"\"El desempeño es un rasgo: hay gente buena y gente mala trabajando, y eso no cambia\". ¿Qué evidencia del curso contradice esta idea?", o:["La correlación de .30 entre satisfacción y desempeño","El experimento de India: las mismas plantas, con la misma gente, redujeron 43% sus defectos al cambiar la gestión","El World Management Survey: Chile puntúa 2.83","La Ley de 40 horas"], c:1, f:"El desempeño varía dentro de la misma persona en el tiempo y entre condiciones, y responde causalmente a la gestión. No solo se selecciona: se produce.", r:"Bloom et al. (2013)."}
+];
+
+// ===================== ESTACIÓN 4 =====================
+const COMP=["Cognitivo (lo que pienso)","Afectivo (lo que siento)","Disposición conductual (lo que me dan ganas de hacer)"];
+const C4COMP=[
+  ["\"Mi jefe es injusto.\"",0,"Una creencia o juicio sobre el objeto: componente cognitivo."],
+  ["\"Mi jefe me da rabia.\"",1,"Una emoción hacia el objeto: componente afectivo."],
+  ["\"Quiero cambiarme de trabajo.\"",2,"Una intención. Fíjate en la palabra \"disposición\": es lo que me dan ganas de hacer, no la conducta misma."],
+  ["\"Este trabajo no me permite aprender nada.\"",0,"Evaluación cognitiva del propio trabajo."],
+  ["\"Me da orgullo decir dónde trabajo.\"",1,"Afectivo. Es también la semilla de la identificación organizacional (Ashforth y Mael, 1989)."],
+  ["\"Voy a empezar a mandar currículums este mes.\"",2,"Intención de renunciar en estado puro: la disposición conductual, y el mejor predictor de la renuncia real."]
+];
+const JEFE=["Conducta (desempeño)","Actitud (hay que medirla)","Bienestar (hay que medirlo)"];
+const C4JEFE=[
+  ["\"Llega atrasado, contesta con desgano y no entregó dos informes.\"",0,"Puro desempeño observable (atrasos, desidia, tarea incumplida). Decir que \"tiene mala actitud\" es una inferencia sobre lo que no se ve."],
+  ["\"Cree que la empresa no valora lo que hace.\"",1,"Apoyo organizacional percibido (Eisenberger et al., 1986): una actitud. Solo se sabe preguntando."],
+  ["\"Anda agotado, dice que ya nada le importa y que no sirve para esto.\"",2,"Agotamiento, cinismo y eficacia reducida: burnout. Es bienestar, no \"mala actitud\"."],
+  ["\"En la encuesta puso 2 de 7 en satisfacción con su jefe.\"",1,"Una faceta de la satisfacción laboral, medida por autoinforme: actitud."],
+  ["\"Se ofreció para cubrir el turno de un compañero enfermo.\"",0,"Conducta de ciudadanía: desempeño contextual. Lo que PIENSA del trabajo no se deduce de un acto."],
+  ["\"Dice que el trabajo le invade la vida y no logra desconectarse.\"",2,"Equilibrio trabajo-vida, una de las 12 dimensiones del CEAL-SM: bienestar."]
+];
+const ZOO=[["Satisfacción laboral","Evaluación global (o por facetas) del propio trabajo; la actitud más estudiada del campo, desde los años 30 (Hoppock, 1935; Locke, 1976)"],["Involucramiento en el trabajo","Cuán central es el trabajo para la identidad y la autoestima de la persona (Lodahl y Kejner, 1965)"],["Compromiso organizacional","El lazo psicológico con la organización: apego, lealtad, intención de permanecer (Porter et al., 1974; Meyer y Allen, 1991)"],["Apoyo organizacional percibido","El juicio de cuánto la organización valora mi aporte y se preocupa por mi bienestar (Eisenberger et al., 1986)"],["Identificación organizacional","Cuánto la pertenencia a la organización define quién soy: \"nosotros\" en vez de \"ellos\" (Ashforth y Mael, 1989)"],["Engagement","Estado positivo de vigor, dedicación y absorción en el trabajo (Kahn, 1990; Schaufeli et al., 2002); la estrella del marketing de consultoría"],["Intención de renunciar","Pensamientos y planes de dejar la organización (Mobley, 1977); pieza central de los modelos de rotación"]];
+function initZoo(){
+  const c=document.getElementById("zoo"); c.innerHTML="";
+  const defs=ZOO.map((z,i)=>({d:z[1],i})).sort(()=>Math.random()-.5);
+  defs.forEach(o=>{ const d=document.createElement("div"); d.className="def"; d.textContent=o.d; d.dataset.i=o.i; c.appendChild(d);
+    const s=document.createElement("select"); s.className="sel"; s.innerHTML=`<option value="">elige...</option>`+ZOO.map((z,k)=>`<option value="${k}">${z[0]}</option>`).join(""); c.appendChild(s); });
+}
+function checkZoo(){
+  const defs=[...document.querySelectorAll("#zoo .def")], sels=[...document.querySelectorAll("#zoo select")]; let ok=0;
+  defs.forEach((d,k)=>{ const b=sels[k].value!==""&&+sels[k].value===+d.dataset.i; d.classList.remove("bien","mal"); d.classList.add(b?"bien":"mal"); if(b) ok++; });
+  const r=document.getElementById("zooRes"); r.style.display="block";
+  if(ok===7){ r.className="nota ok"; r.innerHTML="<strong>Siete de siete.</strong> Ahora la pregunta psicométrica: ¿qué agrega cada uno sobre los demás? A veces algo (el engagement enfatiza la energía; el apoyo percibido, la reciprocidad); muchas veces, el nombre."; estado.respuestas["4_zoo"]=1; }
+  else { r.className="nota"; r.innerHTML=`<strong>${ok} de 7.</strong> Corrige los que están en rojo y vuelve a comprobar.`; if(!("4_zoo" in estado.respuestas)) estado.respuestas["4_zoo"]=0; }
+  guardar();
+}
+function dibR(r, etiqueta){
+  document.getElementById("rSl").value=Math.round(r*100); document.getElementById("rV").textContent=r.toFixed(2).replace(/^0/,"");
+  const s=document.getElementById("svgR"); let pts="";
+  for(let i=0;i<150;i++){ const x=randn(), y=r*x+Math.sqrt(1-r*r)*randn(); const px=150+x*42, py=110-y*42; if(px>4&&px<296&&py>4&&py<216) pts+=`<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3" fill="#475569" fill-opacity=".55"/>`; }
+  s.innerHTML=`<line x1="10" y1="110" x2="290" y2="110" stroke="#E5E7EB"/><line x1="150" y1="10" x2="150" y2="210" stroke="#E5E7EB"/>${pts}<text x="286" y="206" font-size="10" text-anchor="end" fill="#6B7280">variable X →</text><text x="14" y="18" font-size="10" fill="#6B7280">↑ variable Y</text>`;
+  const var_=Math.round(r*r*100);
+  const L=document.getElementById("rLectura");
+  let t= etiqueta? `<strong>${etiqueta}:</strong> r = ${r.toFixed(2).replace(/^0/,"")}. ` : `<strong>r = ${r.toFixed(2).replace(/^0/,"")}.</strong> `;
+  t+= r<.2? "Pequeña: la nube casi no tiene forma; saber X dice muy poco sobre Y en un caso individual." : r<.4? "Moderada y útil: hay una tendencia visible, pero con muchísimas excepciones individuales. Es el tamaño típico de las relaciones importantes en CO." : r<.7? "Grande para el área: la tendencia es clara. Aun así, hay personas que contradicen la regla." : "Casi redundante: las dos variables miden en buena parte lo mismo. Es lo que pasa entre satisfacción y compromiso.";
+  t+=` Explica alrededor del ${var_}% de la varianza. ${r>=.25&&r<=.35?"Que la satisfacción se asocie con el desempeño así no dice si la satisfacción mejora el desempeño, si rendir bien pone contento, o si un buen jefe explica ambas.":""}`;
+  L.innerHTML=t; estado.respuestas["4_r"]=1; guardar();
+}
+const REN=[["a","Nivel de sueldo"],["b","Satisfacción laboral"],["c","Compromiso organizacional"],["d","Intención de renunciar"]];
+const REN_OK=["a","b","c","d"];
+const EVLN=["Salida","Voz","Lealtad","Negligencia"];
+const C4EVLN=[
+  ["Empieza a enviar currículums y acepta la primera oferta razonable.",0,"Activa y destructiva para la relación: salida. La organización pierde a la persona y la información."],
+  ["Pide una reunión con su jefa para plantear que la carga está mal repartida y propone dos cambios.",1,"Activa y constructiva: voz. La única de las cuatro que entrega información a la gestión."],
+  ["Sigue cumpliendo y espera, confiando en que la nueva gerencia va a arreglar las cosas.",2,"Pasiva y constructiva: lealtad. Mantiene la relación, pero no entrega información."],
+  ["Hace lo mínimo, deja de proponer y empieza a llegar justo a la hora.",3,"Pasiva y destructiva: negligencia. La \"renuncia silenciosa\" de las redes es esto con mejor marketing."],
+  ["Responde la encuesta de clima con comentarios detallados sobre lo que falla y cómo mejorarlo.",1,"Voz por un canal formal. Solo aparece donde no se castiga: si en tu equipo nadie reclama nunca, no tienes un equipo satisfecho, tienes un canal cerrado."],
+  ["Deja que la calidad de sus informes caiga y no avisa de los errores que ve.",3,"Negligencia: dejar que la calidad del propio trabajo decaiga."],
+  ["Renuncia sin decir por qué.",0,"Salida. La organización se entera de la insatisfacción cuando ya es tarde: por eso la gestión debe cuidar la voz."],
+  ["Defiende a la empresa cuando los demás se quejan y aguanta sin reclamar.",2,"Lealtad. Valiosa para el clima, pero deja a la gestión sin información sobre lo que falla."]
+];
+const Q4=[
+  {p:"En la encuesta del curso, el ítem global de satisfacción con la carrera tuvo media 6.33 sobre 7, con 26 de 46 personas en el máximo. ¿Qué lección de lectura de encuestas ilustra esto?", o:["Que la carrera no tiene problemas","Que la media esconde la distribución: hay que mirar las colas y los ítems específicos, donde aparecieron respuestas en el mínimo","Que los estudiantes mintieron","Que las encuestas de un solo ítem no sirven"], c:1, f:"Un promedio alto con un grupo en el mínimo no es una buena noticia: es un grupo en riesgo que el dashboard no muestra. Las tres preguntas: ¿cuál es la media?, ¿cómo es la distribución?, ¿qué ítems están mal construidos?"},
+  {p:"LaPiere (1934) fue atendido en 250 de 251 establecimientos; meses después, el 92% respondió por carta que no aceptaría clientes como los suyos. ¿Qué enseña el estudio, según el Apunte 3?", o:["Que las actitudes nunca predicen conducta","Que medir actitudes es inútil","Las condiciones para medir bien: anonimato, especificidad y compatibilidad entre lo que se pregunta y lo que se quiere predecir","Que la gente siempre miente en las encuestas"], c:2, f:"El principio de compatibilidad: actitudes generales predicen agregados amplios de conducta; actitudes específicas e intenciones predicen conductas específicas. La conclusión correcta era \"así no se mide\", no \"no se puede medir\"."},
+  {p:"Un proveedor ofrece medir \"la experiencia del colaborador\" como algo distinto del clima que la empresa ya mide. ¿Cuál es la pregunta correcta?", o:["¿Cuánto cuesta?","¿Qué agrega este constructo sobre la satisfacción y el compromiso que ya medimos, dado que estos correlacionan .91 corregidos?","¿Es una tendencia internacional?","¿Lo usan empresas grandes?"], c:1, f:"Compra constructos, no nombres. La redundancia documentada entre actitudes (Le et al., 2010; Woznyj et al., 2022) es tu mejor argumento de negociación con proveedores."}
+];
+
+// ===================== ESTACIÓN 5 =====================
+const CON=["Estrés laboral","Burnout","Riesgo psicosocial (condición del trabajo)","Ninguno de los tres"];
+const C5CON=[
+  ["Una enfermera lleva un año con agotamiento, trata a los pacientes con distancia y cinismo, y siente que ya no sirve para esto.",1,"Las tres dimensiones del síndrome (Maslach et al., 2001): agotamiento, distancia mental y eficacia reducida, producidas por estrés crónico mal gestionado."],
+  ["En la planta norte, los turnos cambian sin aviso y nadie sabe hasta cuándo durará el contrato.",2,"Inseguridad en las condiciones de trabajo: una característica de la organización del trabajo, es decir, un riesgo psicosocial. No es un estado de nadie: es una condición."],
+  ["Un analista siente que las demandas de cierre de mes exceden lo que alcanza a hacer y termina la semana tenso y sin dormir bien.",0,"Respuesta del organismo cuando las demandas exceden los recursos: estrés laboral. Sostenido en el tiempo, enferma; aún no es el síndrome de tres dimensiones."],
+  ["Una jefatura que no planifica, no resuelve conflictos y no apoya a su equipo.",2,"Calidad del liderazgo: una de las 12 dimensiones del CEAL-SM. Es una condición del trabajo, no un estado de salud."],
+  ["Un cajero termina cansado el viernes después de una semana normal y el lunes vuelve con energía.",3,"Fatiga transitoria que el descanso repara. Ni estrés sostenido ni burnout: usar \"quemado\" para esto es el uso de la calle, no el técnico."],
+  ["En un centro de atención, la mitad del equipo declara haber estado expuesto a intimidación o acoso en los últimos 12 meses.",2,"Violencia y acoso: una dimensión de riesgo psicosocial que el CEAL-SM mide a nivel de centro de trabajo."]
+];
+function karasek(){
+  const d=+document.getElementById("kD").value, c=+document.getElementById("kC").value;
+  document.getElementById("kDV").textContent=d; document.getElementById("kCV").textContent=c;
+  const s=document.getElementById("svgK");
+  const px=30+(d-1)/9*240, py=230-(c-1)/9*200;
+  s.innerHTML=`<rect x="30" y="30" width="120" height="100" fill="#DCFCE7"/><rect x="150" y="30" width="120" height="100" fill="#DBEAFE"/><rect x="30" y="130" width="120" height="100" fill="#F3F4F6"/><rect x="150" y="130" width="120" height="100" fill="#FDF2F3"/>
+  <text x="90" y="55" font-size="10" text-anchor="middle" fill="#15803D" font-weight="700">BAJA TENSIÓN</text><text x="90" y="68" font-size="9" text-anchor="middle" fill="#15803D">pocas demandas, mucho control</text>
+  <text x="210" y="55" font-size="10" text-anchor="middle" fill="#1D4ED8" font-weight="700">ACTIVO</text><text x="210" y="68" font-size="9" text-anchor="middle" fill="#1D4ED8">exige, pero con control: aprende</text>
+  <text x="90" y="155" font-size="10" text-anchor="middle" fill="#6B7280" font-weight="700">PASIVO</text><text x="90" y="168" font-size="9" text-anchor="middle" fill="#6B7280">pocas demandas, poco control</text>
+  <text x="210" y="155" font-size="10" text-anchor="middle" fill="#C8102E" font-weight="700">ALTA TENSIÓN</text><text x="210" y="168" font-size="9" text-anchor="middle" fill="#C8102E">el cuadrante del riesgo</text>
+  <text x="150" y="250" font-size="10" text-anchor="middle" fill="#1F2937">Demandas del puesto →</text><text x="12" y="130" font-size="10" text-anchor="middle" fill="#1F2937" transform="rotate(-90 12 130)">Control →</text>
+  <circle cx="${px}" cy="${py}" r="8" fill="#1F2937" stroke="#fff" stroke-width="2"/>`;
+  const alta=d>5.5, ctrl=c>5.5; const L=document.getElementById("kLectura");
+  const cuad = alta&&!ctrl? "<strong>Alta tensión.</strong> Mucha exigencia y poco margen para decidir cómo responder: la combinación que Karasek (1979) identificó como la de mayor riesgo para la salud. La solución no es \"aguantar más\": es rediseñar la carga o devolver control." : alta&&ctrl? "<strong>Activo.</strong> El puesto exige mucho, pero la persona decide cómo enfrentarlo: es el cuadrante del aprendizaje y el desarrollo. La exigencia por sí sola no es el problema." : !alta&&ctrl? "<strong>Baja tensión.</strong> Pocas demandas y mucho control: cómodo, con bajo riesgo de daño (y, a veces, poco desafío)." : "<strong>Pasivo.</strong> Pocas demandas y poco control: sin tensión aguda, pero sin desarrollo. Karasek lo asoció con desgaste de habilidades y desmotivación.";
+  L.innerHTML=cuad+" Siegrist (1996) agregó el otro gran modelo: el desbalance entre lo que se entrega y lo que se recibe (sueldo, estima, seguridad, perspectivas)."; estado.respuestas["5_k"]=1; guardar();
+}
+function presetK(d,c){ document.getElementById("kD").value=d; document.getElementById("kC").value=c; karasek(); }
+const DIMS=["Carga de trabajo","Exigencias emocionales","Desarrollo profesional","Reconocimiento y claridad de rol","Conflicto de rol","Calidad del liderazgo","Compañerismo","Inseguridad en las condiciones de trabajo","Equilibrio trabajo y vida privada","Confianza y justicia organizacional","Vulnerabilidad","Violencia y acoso"];
+const CEAL=[["¿Con qué frecuencia le falta tiempo para completar sus tareas?",0],["Su trabajo, ¿es reconocido y valorado por sus superiores?",3],["¿Tiene miedo a pedir mejores condiciones de trabajo?",10],["¿Siente que su trabajo le consume demasiada energía, con un efecto negativo en su vida privada?",8],["¿Ha estado expuesta/o a acoso sexual? (últimos 12 meses)",11]];
+function initCeal(){
+  const c=document.getElementById("ceal"); c.innerHTML="";
+  CEAL.forEach((it,i)=>{ const d=document.createElement("div"); d.className="def"; d.textContent=`"${it[0]}"`; d.dataset.i=it[1]; c.appendChild(d);
+    const s=document.createElement("select"); s.className="sel"; s.innerHTML=`<option value="">elige la dimensión...</option>`+DIMS.map((z,k)=>`<option value="${k}">${z}</option>`).join(""); c.appendChild(s); });
+}
+function checkCeal(){
+  const defs=[...document.querySelectorAll("#ceal .def")], sels=[...document.querySelectorAll("#ceal select")]; let ok=0;
+  defs.forEach((d,k)=>{ const b=sels[k].value!==""&&+sels[k].value===+d.dataset.i; d.classList.remove("bien","mal"); d.classList.add(b?"bien":"mal"); if(b) ok++; });
+  const r=document.getElementById("cealRes"); r.style.display="block";
+  if(ok===CEAL.length){ r.className="nota ok"; r.innerHTML="<strong>Cinco de cinco.</strong> El cuestionario tiene 88 preguntas, 54 de ellas para las 12 dimensiones; se aplica por centro de trabajo, en forma anónima, a través de un comité paritario, y no sirve (ni puede usarse) para evaluar personas."; estado.respuestas["5_ceal"]=1; }
+  else { r.className="nota"; r.innerHTML=`<strong>${ok} de 5.</strong> Corrige los que están en rojo. Pista: cada ítem nombra una condición concreta; la dimensión es el nombre general de esa condición.`; if(!("5_ceal" in estado.respuestas)) estado.respuestas["5_ceal"]=0; }
+  guardar();
+}
+function nivelCeal(){
+  const p=+document.getElementById("pSl").value; document.getElementById("pV").textContent=(p>0?"+":"")+p;
+  const n=document.getElementById("pN"), o=document.getElementById("pO");
+  if(p<=1){ n.textContent="Riesgo bajo"; n.style.color="#15803D"; o.textContent="(−24 a +1) Mantener y reforzar los factores protectores; reevaluar en 2 años. Es el piso desde donde empieza la agenda positiva, no la meta final."; }
+  else if(p<=12){ n.textContent="Riesgo medio"; n.style.color="#B45309"; o.textContent="(+2 a +12) Diseñar intervenciones con grupos de discusión participativos que analicen causas y propongan cambios organizacionales."; }
+  else { n.textContent="Riesgo alto"; n.style.color="#C8102E"; o.textContent="(+13 o más) Intervención obligatoria sobre las condiciones, con apoyo del organismo administrador del seguro (la mutualidad). Llegar aquí sin plan ni presupuesto es gestión reactiva de manual."; }
+  estado.respuestas["5_niv"]=1; guardar();
+}
+const WW=["Modifica una condición del trabajo","Fachada (wellness washing)"];
+const C5WW=[
+  ["Fruta fresca en la cocina y una app de meditación con licencia corporativa.",1,"Visible, barato y fotografiable. No toca carga, control, apoyo, reconocimiento ni ninguna de las 12 dimensiones."],
+  ["Redistribuir la carga del cierre de mes entre dos equipos y contratar un refuerzo para el peak.",0,"Actúa directamente sobre la carga de trabajo, la dimensión más habitual en rojo."],
+  ["Capacitar a las jefaturas en planificación, resolución de conflictos y apoyo a sus equipos, con seguimiento.",0,"Calidad del liderazgo es una de las 12 dimensiones. Mejorar jefaturas es caro y lento, y por eso funciona."],
+  ["Un \"día de la felicidad\" con charla motivacional y pizza, mientras los turnos siguen cambiando sin aviso.",1,"La inseguridad en las condiciones queda intacta. Pintar la fachada."],
+  ["Prohibir reuniones y correos fuera del horario, con la jefatura dando el ejemplo.",0,"Equilibrio trabajo y vida privada: una condición concreta que cambia."],
+  ["Un taller de \"manejo del estrés\" para los trabajadores de la planta que salió en riesgo alto, sin cambiar nada más.",1,"Entrena la resistencia de las personas en vez de intervenir las condiciones, que es lo que la norma y la evidencia exigen. El reflejo que el Protocolo quiere evitar."],
+  ["Un canal de denuncia de acoso con investigación independiente y plazos, y sanciones efectivas.",0,"Violencia y acoso, y vulnerabilidad: condiciones del trabajo que un canal real modifica."],
+  ["Publicar la frase \"nos importa tu bienestar\" en la intranet y en los avisos de empleo.",1,"Comunicación sin intervención. Si la iniciativa no puede responder qué dimensión del CEAL espera mover y cómo lo verificará, es fachada."]
+];
+const Q5=[
+  {p:"El informe del CEAL-SM de la empresa muestra riesgo alto en \"carga de trabajo\" en la planta norte. ¿Cuál es la lectura correcta, según el Apunte 4?", o:["Identificar qué jefe de la planta norte es el problema","Identificar qué trabajadores están mal para apoyarlos","Es una lectura organizacional: la condición \"carga\" está en rojo en ese centro de trabajo y obliga a intervenir con participación de los trabajadores","Descartar el resultado porque la gente contesta con miedo"], c:2, f:"Lo que se vigila son las condiciones del centro de trabajo, no la salud mental de los individuos. El cuestionario es anónimo, se analiza por centro de trabajo y no puede usarse para evaluar personas (SUSESO, 2022)."},
+  {p:"¿Cuál es el estatus del burnout en la CIE-11 de la OMS (2019)?", o:["Una enfermedad mental","Un fenómeno ocupacional con tres dimensiones: no es una enfermedad en sí, pero es un problema legítimo asociado al empleo","Un sinónimo de estrés","Un rasgo de personalidad"], c:1, f:"Agotamiento, distancia mental o cinismo, y eficacia reducida. \"Ando quemado\" se usa para cualquier cansancio; el burnout técnico es un cuadro serio que no se arregla durmiendo un fin de semana.", r:"Maslach et al. (2001); OMS (2019)."},
+  {p:"El 67% de las enfermedades profesionales diagnosticadas en Chile en 2022 fueron de salud mental (SUSESO, 2023). ¿Qué tipo de argumento es este, y qué NO permite concluir por sí solo?", o:["Causal; permite concluir que el trabajo causa enfermedad mental","Descriptivo; no permite por sí solo atribuir causas ni prescribir intervenciones, aunque dimensiona el problema","Normativo; obliga a las empresas a intervenir","Predictivo; anticipa la cifra de 2023"], c:1, f:"Es un dato descriptivo (cuánto, cuándo, dónde). Dimensiona el problema y justifica la vigilancia, pero la atribución causal viene de los modelos (Karasek, Siegrist) y de la evidencia sobre riesgos psicosociales."}
+];
+
+// ===================== ESTACIÓN 6: MITOS =====================
+const MITOS = [
+  ["El dinero es el principal motivador de los trabajadores.", false, "Incentivos y motivación intrínseca predicen cosas distintas: los incentivos se asocian más con la cantidad del desempeño y la motivación intrínseca con su calidad (metaanálisis de 40 años). El dinero importa; \"principal\" es insostenible como afirmación general.", "Cerasoli et al. (2014)."],
+  ["El trabajador feliz es siempre más productivo.", false, "La correlación media entre satisfacción y desempeño es r ≈ .30: moderada, útil y probablemente bidireccional. Ni \"siempre\", ni automática, ni espectacular. En un contexto específico (call centers) sí hay evidencia causal: un punto más de felicidad semanal produjo alrededor de 12% más ventas.", "Judge et al. (2001); Bellet et al. (2024)."],
+  ["La lluvia de ideas en grupo produce más y mejores ideas que pensar primero por separado.", false, "Los grupos interactivos generan menos ideas, y no de mejor calidad, que el mismo número de personas trabajando primero en forma individual. La secuencia \"primero solo, después juntos\" rinde más.", "Mullen et al. (1991)."],
+  ["Para que alguien rinda, basta pedirle que \"haga su mejor esfuerzo\".", false, "Las metas específicas y difíciles producen mejor desempeño que las metas vagas: uno de los hallazgos más replicados de la psicología organizacional (más de 100 tareas, 40.000 participantes).", "Locke y Latham (2002)."],
+  ["Mejorar la forma en que se gestiona una empresa no cambia mucho sus resultados.", false, "En el experimento de India, con asignación aleatoria, mejorar 38 prácticas de gestión redujo los defectos 43%, el inventario 22% y subió la productividad 17%: unos US$325.000 de utilidad adicional por planta al año.", "Bloom et al. (2013)."],
+  ["Los profesionales de RRHH, en promedio, conocen bien lo que dice la investigación sobre prácticas eficaces.", false, "959 profesionales de RRHH de EE.UU. acertaron en promedio el 57% de 35 afirmaciones con respuesta establecida por la investigación (rango 26% a 86%). Las mayores brechas, en selección de personas.", "Rynes et al. (2002)."],
+  ["En el World Management Survey, Chile puntúa peor en gestión de personas e incentivos que en monitoreo de procesos.", true, "Chile promedia 2.83 sobre 5 (316 empresas): 3.14 en monitoreo, 2.72 en metas y 2.67 en incentivos y personas. La brecha chilena está precisamente en la gestión de personas.", "Bloom et al. (2012)."],
+  ["El desempeño de una persona son sus resultados: sus ventas, sus cifras, su cumplimiento de metas.", false, "El desempeño son conductas bajo control de la persona; los resultados dependen además del mercado, el territorio y el azar. Es la diferencia entre evaluar lo que la persona hizo y evaluar la suerte que tuvo.", "Campbell (1990); Campbell y Wiernik (2015)."],
+  ["Cuando un jefe pone la nota global, las conductas contraproducentes pesan tanto como el desempeño técnico.", true, "En un diseño de captura de políticas con gerentes, lo contraproducente pesó tanto como la tarea y más que la ciudadanía. El \"crack tóxico\" no es un buen trabajador con un defecto: es un mal desempeño para el evaluador promedio.", "Rotundo y Sackett (2002)."],
+  ["El que se queda hasta más tarde es el que más rinde.", false, "Las horas son un insumo, el desempeño son conductas y la productividad es resultado por hora: tres cosas distintas. Quedarse tarde puede reflejar carga mal diseñada, ineficiencia o presentismo. La Ley 21.561 (45 a 40 horas, 2024-2028) apuesta exactamente a esa distinción.", "Apunte 2; Ley 21.561."],
+  ["El engagement es un constructo revolucionario, claramente distinto de la satisfacción laboral.", false, "Las actitudes laborales se superponen masivamente: satisfacción y compromiso corregidos correlacionan .91. El engagement aporta un énfasis (la energía), pero comparte la mayor parte de su varianza con las actitudes clásicas. Los constructos nuevos venden servicios nuevos.", "Le et al. (2010); Woznyj et al. (2022)."],
+  ["La intención de renunciar predice la renuncia real mejor que el sueldo.", true, "Intención de renunciar ρ ≈ .56 con la renuncia real; sueldo ρ ≈ .17; satisfacción y compromiso ≈ .28 y .29. La intención es el mejor antecedente inmediato de la acción.", "Rubenstein et al. (2018)."],
+  ["Las encuestas de actitudes no sirven porque la gente no contesta la verdad.", false, "Los autoinformes tienen sesgos conocidos y aun así, agregados y bien medidos, predicen renuncias efectivas y resultados de negocio de las unidades. LaPiere enseñó las condiciones para medir bien (anonimato, especificidad, compatibilidad), no que medir sea inútil.", "Rubenstein et al. (2018); Harter et al. (2002); LaPiere (1934)."],
+  ["El sueldo es lo que más pesa en la satisfacción con el trabajo.", false, "El nivel de sueldo correlaciona apenas .15 con la satisfacción laboral. Importa para aceptar un trabajo y como piso de justicia; una vez dentro, la experiencia diaria pesa más.", "Judge et al. (2010)."],
+  ["Un solo ítem bien construido puede medir la satisfacción global con confiabilidad aceptable.", true, "La medición global con un ítem es simple y sorprendentemente confiable; la medición por facetas es más larga pero más diagnóstica (dice dónde está el problema, no solo cuánto).", "Ock (2020)."],
+  ["En Chile, la mayoría de las enfermedades profesionales diagnosticadas en 2022 fueron de salud mental.", true, "El 67% (en mujeres, 77%), un salto desde el 52% de 2021. El total de enfermedades profesionales subió de 5.325 a 8.700 casos. Es hoy el problema número uno de la salud laboral chilena.", "SUSESO (2023)."],
+  ["El estrés es un problema personal: el que se estresa es porque no aguanta la presión.", false, "Los determinantes más potentes son condiciones del trabajo: alta exigencia con bajo control, y desbalance esfuerzo-recompensa. Por eso la ley chilena obliga a evaluar e intervenir las condiciones organizacionales, no a entrenar la resistencia de las personas.", "Karasek (1979); Siegrist (1996)."],
+  ["Desde 2023, aplicar el CEAL-SM/SUSESO es obligatorio en Chile para organizaciones con 10 o más personas, con reevaluación cada dos años.", true, "Vía plataforma electrónica de SUSESO, con un comité de aplicación paritario, anonimato obligatorio y meta de participación de al menos 60%. El resultado no se archiva: el nivel de riesgo obliga a intervenir.", "Ministerio de Salud (2022); SUSESO (2022)."]
+];
+function initMitos(){
+  const c=document.getElementById("mitos"); c.innerHTML="";
+  MITOS.forEach((m,i)=>{ const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML=`<strong>${i+1}. ${m[0]}</strong><br><span class="opc" data-v="1">Verdadero</span><span class="opc" data-v="0">Falso</span><div class="feedback" style="display:none"></div>`;
+    c.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ if(d.dataset.done) return; d.dataset.done="1"; const v=el.dataset.v==="1"; const ok=v===m[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[m[1]?0:1].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=`<strong>${m[1]?"Verdadero":"Falso"}.</strong> ${m[2]} <span class="cita">${m[3]}</span>`;
+      estado.respuestas["6_m"+i]=ok?1:0; guardar();
+      const done=MITOS.every((_,k)=>("6_m"+k) in estado.respuestas);
+      if(done){ const ac=MITOS.filter((_,k)=>estado.respuestas["6_m"+k]===1).length; const r=document.getElementById("mitosRes"); r.style.display="block"; r.innerHTML=`<strong>Resultado:</strong> ${ac} de ${MITOS.length} veredictos correctos. Lo que importa no es el puntaje sino el hábito: ante cada afirmación, "¿cómo sé que esto es verdadero?", "¿de qué tipo es la evidencia?", "¿esta evidencia permite el verbo que están usando?".`; marcar(6); }
+    }); });
+}
+
+// ===================== FICHA DE SALIDA =====================
+const REPASO = {1:"Clase 1 y Apunte 3 (sección C): qué estudia el CO, los tres niveles y la distinción conducta observable / predisposición evaluativa / salud en el trabajo.",2:"Apunte 1: tipos de argumento, hipótesis falsable, jerarquía de la evidencia, correlación y causalidad, y el experimento de India.",3:"Apunte 2: desempeño como conducta, las cuatro caras, Motowidlo y Van Scotter (1994), Rotundo y Sackett (2002).",4:"Apunte 3: actitud técnica vs de la calle, el zoológico y su redundancia (Le et al., 2010), la tabla de magnitudes, principio de compatibilidad y salida-voz-lealtad-negligencia.",5:"Apunte 4: estrés, burnout y riesgos psicosociales; Karasek y Siegrist; el CEAL-SM (dimensiones, aplicación, niveles) y el wellness washing.",6:"Apuntes 1 a 4, secciones E (Mito versus evidencia)."};
+function pintarFicha(){
+  const k=EST.filter(i=>estado.hechas[i]); const falt=EST.filter(i=>!estado.hechas[i]);
+  const resp=Object.entries(estado.respuestas).filter(([key])=>/^[1-6]_/.test(key) && !/_(sim|r|k|niv|d2a|d3a)$/.test(key));
+  const ac=resp.filter(([,v])=>v===1).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas:</strong> ${k.length? k.map(i=>NOMBRES[i]).join(" · "):"ninguna todavía"}.` + (falt.length? ` <strong>Faltan:</strong> ${falt.map(i=>NOMBRES[i]).join(" · ")}.`:" Las seis.") + (resp.length? `<br><strong>Preguntas y clasificaciones respondidas:</strong> ${resp.length}, con ${ac} aciertos a la primera.`:"");
+  const errores={}; resp.forEach(([key,v])=>{ if(v===0){ const e=+key.split("_")[0]; errores[e]=(errores[e]||0)+1; } });
+  const lista=Object.keys(errores).map(e=>`<li>${NOMBRES[e]}: ${errores[e]} ${errores[e]===1?"error":"errores"}. Repasa: ${REPASO[e]}</li>`).join("");
+  document.getElementById("fichaRepaso").innerHTML = lista? `<h3>Sugerencias de repaso</h3><ul class="sans" style="font-size:.92rem">${lista}</ul>` : (resp.length? `<div class="nota ok">Sin errores en lo respondido. Si quieres poner a prueba lo aprendido, vuelve al simulador de la estación 2, deja el efecto en cero y explica con tus palabras por qué "a mí me funcionó" no es evidencia.</div>`:"");
+}
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem("lab_fund_v1"); }catch(e){} location.reload(); }
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1niv", NIV, C1NIV, "n", 1); clasificador("c1out", OUT, C1OUT, "o", 1); pregunta("q1", Q1, 1);
+clasificador("c2arg", ARG, C2ARG, "a", 2); initH(); clasificador("c2fal", FAL, C2FAL, "f", 2); initOrden("ordJer", JER); clasificador("c2verbo", VERBO, C2VERBO, "v", 2); simular(true); pregunta("q2", Q2, 2);
+ventas(); clasificador("c3caras", CARAS, C3CARAS, "c", 3); nota(); pregunta("q3", Q3, 3);
+clasificador("c4comp", COMP, C4COMP, "c", 4); clasificador("c4jefe", JEFE, C4JEFE, "j", 4); initZoo(); dibR(.30, null); initOrden("ordRen", REN); clasificador("c4evln", EVLN, C4EVLN, "e", 4); pregunta("q4", Q4, 4);
+clasificador("c5con", CON, C5CON, "c", 5); karasek(); initCeal(); nivelCeal(); clasificador("c5ww", WW, C5WW, "w", 5); pregunta("q5", Q5, 5);
+initMitos();
+</script>
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundamentos y modelos de diagnóstico organizacional · Diagnóstico Organizacional MCG UDP</title>
+<meta name="description" content="Apunte del curso Diagnóstico Organizacional (MCG, UDP). Qué es diagnosticar una organización, fases del proceso, paradigmas, modelos clásicos y su lugar en el sistema de control de gestión.">
+<meta name="author" content="René Gempp">
+<style>
+  /* ===== Plantilla base de la serie de apuntes DO MCG, v1 (2026) · misma línea que la serie PyE ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+    --ambar:#B45309; --ambar-claro:#FEF3C7;
+    --verde:#15803D; --verde-claro:#DCFCE7;
+    /* alias para figuras SVG heredadas */
+    --fg:var(--tinta); --muted:var(--gris); --accent:var(--rojo); --accent-soft:var(--tinte);
+    --rule:var(--borde); --note-bg:var(--gris-claro); --note-border:var(--acero);
+    --ex-bg:var(--tinte); --ex-border:var(--rojo); --warn-bg:var(--ambar-claro); --warn-border:var(--ambar);
+    --code-bg:var(--gris-claro); --bg:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  .lead{margin:1rem 0 0; color:var(--acero); font-size:1rem}
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros: idea clave (.box), ejemplo de caso (.box.ejemplo), atención (.box.atencion), mito versus evidencia (.mito) */
+  .box,.mito{
+    border:1px solid var(--borde); border-left:5px solid var(--acero);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--gris-claro);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .box p,.mito p{margin:0 0 .55rem}
+  .box p:last-child,.mito p:last-child{margin-bottom:0}
+  .box ul,.box ol{margin-bottom:.4rem}
+  .box .label{
+    display:block; font-weight:700; color:var(--acero);
+    font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.35rem;
+  }
+  .box.ejemplo,.mito{border-left-color:var(--rojo); background:var(--tinte)}
+  .box.ejemplo .label{color:var(--rojo)}
+  .box.atencion{border-left-color:var(--ambar); background:var(--ambar-claro)}
+  .box.atencion .label{color:var(--ambar)}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tablas */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Figuras */
+  figure,.figura{margin:0 0 1.4rem}
+  figure img,figure svg{max-width:100%;height:auto;display:block;margin:0 auto}
+  figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
+  code{background:var(--gris-claro);padding:.1em .35em;border-radius:4px}
+  pre{background:var(--gris-claro);padding:.9rem 1rem;border-radius:8px;overflow-x:auto}
+  /* Glosario */
+  dl.glosario dt{font-weight:700;margin-top:.7rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.95rem}
+  dl.glosario dd{margin:0 0 .3rem 0}
+  /* Referencias con sangría francesa */
+  .referencias p,.refs p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .box,.mito,table,figure{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes · Diagnóstico Organizacional · N° 1</p>
+  <h1>Fundamentos y modelos de diagnóstico organizacional</h1>
+  <p class="meta">
+    Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026<br>
+    Apunte N° 1 · Sesión 1 (viernes 06-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a>
+  </p>
+  <p class="lead">Los sistemas de control financiero y operacional informan sobre resultados, pero callan sobre las variables que los producen: clima, cultura, liderazgo, capacidades. Este apunte presenta el diagnóstico organizacional como el mecanismo que produce esa información y la incorpora al sistema de control. Al terminar, el lector podrá describir las fases del proceso, distinguir los tres paradigmas que lo orientan, comparar los modelos clásicos y seleccionar uno con argumentos para un contexto dado.</p>
+</header>
+
+<h2 id="s1">1. Qué es diagnosticar una organización</h2>
+
+<h3>1.1 Etimología y analogía médica</h3>
+<p>El verbo griego <em>diagignoskein</em> combina <em>dia</em> (a través de) y <em>gignoskein</em> (conocer): conocer a través de los signos y, por extensión, distinguir una condición de otra. La medicina adoptó el término para la inferencia que va de síntomas observables a causas no observables, y la gestión lo tomó prestado con ese sentido (Harrison, 2004; Rodríguez, 2009). Los síntomas (rotación, quejas de clientes, conflicto) rara vez coinciden con el problema, y tratarlos sin inferir causas produce recaídas.</p>
+<p>La analogía tiene límites. En medicina existe un catálogo relativamente estable de enfermedades y un paciente que desea curarse. En las organizaciones no hay catálogo cerrado, los actores tienen intereses distintos respecto del resultado y el propio acto de diagnosticar modifica el sistema (Alderfer, 2011; Rodríguez, 2009): una encuesta de clima genera expectativas de cambio que, si no se cumplen, deterioran la variable que pretendía medir (Borg &amp; Mastrangelo, 2008). El diagnosticador no observa desde fuera; interviene desde el primer contacto.</p>
+
+<h3>1.2 Definición operativa</h3>
+<p>En el marco de la gestión basada en evidencia (Rousseau, 2006), el diagnóstico organizacional puede definirse como un proceso analítico que permite conocer la situación real de la organización en un momento dado, con el fin de descubrir problemas y áreas de oportunidad, corregir los primeros y aprovechar las segundas (Cummings &amp; Worley, 2014; Rodríguez, 2009). Dos rasgos merecen subrayarse. El diagnóstico no es un fin en sí mismo: surge de una necesidad de cambio y se justifica por las decisiones que informa (Cummings &amp; Worley, 2014). Y la expresión "situación real" contrapone la organización efectiva a la declarada en organigramas y discursos directivos, distinción que Weisbord (1976) formalizó como brecha entre sistema formal e informal.</p>
+<p>Rousseau (2006) define la gestión basada en evidencia como la traducción de principios respaldados por investigación a prácticas organizacionales, frente a decisiones apoyadas en experiencia personal, modas y creencias no contrastadas. Para un controller, el diagnóstico es a las variables organizacionales lo que la auditoría es a las financieras: un procedimiento que reemplaza la impresión por la medición.</p>
+
+<div class="box">
+  <span class="label">Idea clave</span>
+  <p>Diagnosticar es inferir causas a partir de síntomas con un procedimiento sistemático. El producto no es una descripción, sino una explicación que justifica una decisión de intervención o de no intervención.</p>
+</div>
+
+<h3>1.3 Características del diagnóstico basado en evidencia</h3>
+<p>De la definición se desprenden seis características (Cummings &amp; Worley, 2014; Harrison, 2004; Rousseau, 2006). El diagnóstico es <strong>sistemático</strong>: sigue un procedimiento explícito y reproducible. Está <strong>basado en evidencia</strong>: sus conclusiones se apoyan en datos recogidos con instrumentos cuya calidad puede evaluarse. Está <strong>orientado a la acción</strong>: su valor depende de las decisiones que permite. Es <strong>participativo</strong>: la validez de los datos y la aceptación de las conclusiones dependen de la colaboración de los miembros (Alderfer, 2011). Es <strong>contextualizado</strong>: un mismo indicador significa cosas distintas en una startup y en un hospital público. Y es <strong>temporal</strong>: describe un momento y pierde vigencia a medida que la organización cambia, lo que obliga a decidir con qué periodicidad se repite.</p>
+
+<h3>1.4 Brecha de desempeño y brecha de oportunidad</h3>
+<p>La necesidad de cambio que origina el diagnóstico adopta dos formas (Cummings &amp; Worley, 2014). La <strong>brecha de desempeño</strong> es la distancia entre un resultado esperado y uno obtenido: metas no cumplidas, costos sobre presupuesto, rotación superior a la del sector. La <strong>brecha de oportunidad</strong> es la distancia entre lo que la organización logra y lo que podría lograr si aprovechara una capacidad, una tecnología o una condición del entorno que hoy no explota. La distinción importa porque los sistemas de control diagnóstico, en el sentido de Simons (1995), detectan brechas de desempeño respecto de estándares predefinidos, mientras que las brechas de oportunidad rara vez aparecen en un tablero: requieren debate y búsqueda deliberada.</p>
+
+<figure>
+<svg viewBox="0 0 760 260" width="100%" role="img" aria-labelledby="figtb" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figtb">Brecha de desempeño y brecha de oportunidad</title>
+  <defs><marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <line x1="40" y1="200" x2="360" y2="200"/><line x1="40" y1="200" x2="40" y2="30"/>
+    <line x1="400" y1="200" x2="720" y2="200"/><line x1="400" y1="200" x2="400" y2="30"/>
+    <path d="M60,120 L200,110 L340,105" stroke="var(--muted)" stroke-dasharray="5 4"/>
+    <path d="M60,125 L200,150 L340,175" stroke="var(--accent)" stroke-width="2"/>
+    <path d="M420,150 L560,140 L700,135" stroke="var(--accent)" stroke-width="2"/>
+    <path d="M420,145 L560,100 L700,60" stroke="var(--muted)" stroke-dasharray="5 4"/>
+    <line x1="340" y1="108" x2="340" y2="172" stroke="var(--accent)" marker-start="url(#arrb)" marker-end="url(#arrb)"/>
+    <line x1="700" y1="63" x2="700" y2="132" stroke="var(--accent)" marker-start="url(#arrb)" marker-end="url(#arrb)"/>
+  </g>
+  <g fill="currentColor">
+    <text x="200" y="22" text-anchor="middle" font-weight="700">Brecha de desempeño</text>
+    <text x="560" y="22" text-anchor="middle" font-weight="700">Brecha de oportunidad</text>
+    <text x="62" y="108" fill="var(--muted)">resultado esperado</text>
+    <text x="62" y="170" fill="var(--accent)">resultado obtenido</text>
+    <text x="422" y="52" fill="var(--muted)">resultado posible</text>
+    <text x="422" y="172" fill="var(--accent)">resultado actual</text>
+    <text x="200" y="222" text-anchor="middle" fill="var(--muted)">tiempo</text>
+    <text x="560" y="222" text-anchor="middle" fill="var(--muted)">tiempo</text>
+    <text x="200" y="245" text-anchor="middle">¿Qué estamos haciendo mal o podríamos hacer mejor?</text>
+    <text x="560" y="245" text-anchor="middle">¿Qué podríamos hacer que hoy no hacemos?</text>
+  </g>
+</svg>
+<figcaption>Figura 1. Las dos brechas que originan un diagnóstico. Adaptado de Cummings y Worley (2014).</figcaption>
+</figure>
+
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · TechNova</span>
+  <p>TechNova es una startup de 50 personas cuya aplicación tuvo éxito hace dos años y que creció sin estructura formal. Los síntomas son visibles: 50% de rotación anual entre desarrolladores, clientes que reportan errores, cofundadores en conflicto sobre la dirección estratégica, inversionistas que presionan por rentabilidad. El CEO, ingeniero de 28 años, resume su postura: "no queremos burocratizarnos". La brecha de desempeño es evidente (calidad del producto, costo de reemplazar personal). Menos visible es la brecha de oportunidad: una base de clientes ya conquistada que podría monetizarse mejor con un equipo estable. Un diagnóstico que solo mida clima describirá el malestar; uno que infiera causas preguntará si la ausencia de estructura, que el CEO defiende como ventaja, produce ambos efectos.</p>
+</div>
+
+<h2 id="s2">2. El ciclo del proceso diagnóstico</h2>
+<p>El diagnóstico forma parte de un ciclo más amplio de cambio planificado (entrada y contratación, diagnóstico, intervención, evaluación e institucionalización), que aquí se descompone en siete fases (Cummings &amp; Worley, 2014; Harrison, 2004; Rodríguez, 2009).</p>
+
+<figure>
+<svg viewBox="0 0 760 250" width="100%" role="img" aria-labelledby="fig1t" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig1t">Ciclo del proceso diagnóstico en siete fases</title>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <rect x="10" y="60" width="92" height="56" rx="8"/>
+    <rect x="118" y="60" width="92" height="56" rx="8"/>
+    <rect x="226" y="60" width="92" height="56" rx="8"/>
+    <rect x="334" y="60" width="92" height="56" rx="8"/>
+    <rect x="442" y="60" width="92" height="56" rx="8"/>
+    <rect x="550" y="60" width="92" height="56" rx="8"/>
+    <rect x="658" y="60" width="92" height="56" rx="8" stroke="var(--accent)" stroke-width="2"/>
+    <line x1="102" y1="88" x2="116" y2="88" marker-end="url(#arr)"/>
+    <line x1="210" y1="88" x2="224" y2="88" marker-end="url(#arr)"/>
+    <line x1="318" y1="88" x2="332" y2="88" marker-end="url(#arr)"/>
+    <line x1="426" y1="88" x2="440" y2="88" marker-end="url(#arr)"/>
+    <line x1="534" y1="88" x2="548" y2="88" marker-end="url(#arr)"/>
+    <line x1="642" y1="88" x2="656" y2="88" marker-end="url(#arr)"/>
+    <path d="M704,116 L704,170 L56,170 L56,118" stroke="var(--accent)" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="56" y="84">1. Entrada</text>
+    <text x="164" y="84">2. Contra-</text><text x="164" y="100">tación</text>
+    <text x="272" y="84">3. Recolec-</text><text x="272" y="100">ción</text>
+    <text x="380" y="84">4. Análisis</text>
+    <text x="488" y="84">5. Devolu-</text><text x="488" y="100">ción</text>
+    <text x="596" y="84">6. Acción</text>
+    <text x="704" y="84">7. Evalua-</text><text x="704" y="100">ción</text>
+    <text x="380" y="192" fill="var(--accent)">La evaluación reabre el ciclo: nueva demanda, nuevo contrato</text>
+    <text x="380" y="36" fill="var(--muted)">Diagnóstico en sentido estricto: fases 3 a 5</text>
+  </g>
+  <g stroke="var(--muted)" stroke-dasharray="3 3" fill="none">
+    <rect x="220" y="46" width="320" height="84" rx="10"/>
+  </g>
+</svg>
+<figcaption>Figura 2. Ciclo del proceso diagnóstico. Adaptado de Cummings y Worley (2014) y Harrison (2004).</figcaption>
+</figure>
+
+<p><strong>Entrada.</strong> Alguien percibe un problema y solicita ayuda; se clarifica la demanda, se identifica al cliente (que no siempre coincide con quien solicita) y se estima si el problema está bien formulado (Alderfer, 2011; Cummings &amp; Worley, 2014). <strong>Contratación.</strong> Se acuerdan objetivos, alcance, acceso a datos, confidencialidad, uso de los resultados y plazos; en control de gestión esto equivale a definir el perímetro de un indicador antes de calcularlo. <strong>Recolección.</strong> Se obtienen datos con uno o varios métodos (encuestas, entrevistas, observación, registros administrativos), guiados por un modelo conceptual (Harrison, 2004). <strong>Análisis.</strong> Los datos se organizan según el modelo para identificar brechas, desajustes y causas probables. <strong>Devolución.</strong> Los resultados se presentan a quienes aportaron los datos y a quienes deciden, en un formato que permita discutirlos (Cummings &amp; Worley, 2014). <strong>Acción.</strong> Se diseñan e implementan intervenciones. <strong>Evaluación.</strong> Se verifica si la intervención produjo el efecto esperado, lo que reabre el ciclo.</p>
+<p>El diagnóstico en sentido estricto ocupa las fases 3 a 5, pero su calidad depende de las dos primeras: un contrato ambiguo sobre el uso de los resultados contamina la recolección, porque los encuestados responden de otro modo cuando sospechan que sus respuestas servirán para evaluar a su jefatura (Borg &amp; Mastrangelo, 2008). La fase 7 convierte el diagnóstico en un ciclo de control: solo cuando la evaluación se compara con una meta y retroalimenta decisiones futuras, el diagnóstico deja de ser un evento y pasa a ser un sistema (Merchant &amp; Van der Stede, 2017).</p>
+
+<h2 id="s3">3. Tres paradigmas</h2>
+<p>Un diagnóstico supone una concepción previa de qué es una organización. Burrell y Morgan (1979) mostraron que la teoría organizacional se distribuye entre paradigmas con supuestos ontológicos y epistemológicos incompatibles, y Morgan (2006) tradujo esa idea en metáforas (máquina, organismo, cultura, sistema político, entre otras). Tres de ellas concentran la práctica diagnóstica.</p>
+
+<figure>
+<svg viewBox="0 0 760 290" width="100%" role="img" aria-labelledby="figtp" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figtp">Tres paradigmas como tres lentes sobre la misma organización</title>
+  <defs><marker id="arrp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <rect x="300" y="18" width="160" height="44" rx="8"/>
+    <circle cx="130" cy="150" r="58"/><circle cx="380" cy="150" r="58" stroke="var(--accent)" stroke-width="2"/><circle cx="630" cy="150" r="58"/>
+    <line x1="350" y1="62" x2="160" y2="96" marker-end="url(#arrp)"/><line x1="380" y1="62" x2="380" y2="90" marker-end="url(#arrp)"/><line x1="410" y1="62" x2="600" y2="96" marker-end="url(#arrp)"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="380" y="45" font-weight="700">La misma organización</text>
+    <text x="130" y="140" font-weight="700">Máquina</text><text x="130" y="158" fill="var(--muted)">positivista</text>
+    <text x="380" y="140" font-weight="700" fill="var(--accent)">Cultura</text><text x="380" y="158" fill="var(--muted)">interpretativo</text>
+    <text x="630" y="140" font-weight="700">Arena política</text><text x="630" y="158" fill="var(--muted)">crítico</text>
+    <text x="130" y="236">Qué se ve: partes y rendimiento</text><text x="130" y="254" fill="var(--muted)">encuestas, indicadores, metas</text><text x="130" y="272" fill="var(--muted)">producto: tablero</text>
+    <text x="380" y="236">Qué se ve: significados compartidos</text><text x="380" y="254" fill="var(--muted)">entrevistas, grupos focales</text><text x="380" y="272" fill="var(--muted)">producto: explicación</text>
+    <text x="630" y="236">Qué se ve: intereses y poder</text><text x="630" y="254" fill="var(--muted)">mapeo de actores, investigación-acción</text><text x="630" y="272" fill="var(--muted)">producto: plan de transformación</text>
+  </g>
+</svg>
+<figcaption>Figura 3. Tres paradigmas, tres lentes: cada uno decide qué datos recoger, quién interpreta y qué producto se entrega. Basado en Burrell y Morgan (1979) y Morgan (2006).</figcaption>
+</figure>
+
+<p>En el <strong>paradigma positivista</strong> la organización es una máquina: partes diseñadas para producir un resultado, cuyo funcionamiento puede medirse con instrumentos estandarizados y compararse con normas (Morgan, 2006). La mayoría de los modelos de la sección 5 y la lógica del control por resultados (Merchant &amp; Van der Stede, 2017) pertenecen a este paradigma. En el <strong>paradigma interpretativo</strong> la organización es una cultura: una red de significados que los miembros construyen y reproducen, y que el consultor reconstruye mediante entrevistas, observación y relatos (Morgan, 2006). En el <strong>paradigma crítico</strong> la organización es una arena política: una estructura de intereses y poder donde el diagnóstico mismo es un recurso que algunos actores usan contra otros (Burrell &amp; Morgan, 1979; Morgan, 2006).</p>
+
+<table>
+  <thead><tr><th>Dimensión</th><th>Máquina (positivista)</th><th>Cultura (interpretativo)</th><th>Arena política (crítico)</th></tr></thead>
+  <tbody>
+    <tr><td>Ontología</td><td>La organización existe con independencia de los observadores; sus propiedades son medibles</td><td>La organización es un sistema de significados construido por sus miembros</td><td>La organización es un campo de intereses en conflicto estructurado por el poder</td></tr>
+    <tr><td>Rol del consultor</td><td>Experto que mide, compara con normas y prescribe</td><td>Intérprete que reconstruye los significados locales</td><td>Analista que revela intereses y asimetrías; eventualmente, aliado de los menos poderosos</td></tr>
+    <tr><td>Métodos</td><td>Encuestas estandarizadas, indicadores, comparación con benchmarks</td><td>Entrevistas en profundidad, observación, análisis de narrativas</td><td>Análisis de decisiones, de asignación de recursos y de quién define el problema</td></tr>
+    <tr><td>Producto</td><td>Informe con brechas cuantificadas y recomendaciones</td><td>Descripción densa de cómo se vive la organización</td><td>Mapa de intereses y propuesta de redistribución de voz o recursos</td></tr>
+    <tr><td>Criterio de validez</td><td>Fiabilidad y validez psicométrica; replicabilidad</td><td>Credibilidad para los participantes; coherencia interpretativa</td><td>Capacidad de explicar a quién sirve el orden actual y de habilitar el cambio</td></tr>
+  </tbody>
+</table>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · Tres miradas sobre el mismo dato</span>
+  <p>En una empresa, el 40% de las mujeres profesionales renuncia antes de cumplir tres años, frente al 15% de los hombres. Desde la máquina, el problema es un desajuste medible: se comparan sueldos, cargas, tasas de promoción y puntajes de clima por género, se identifica la variable con mayor diferencia y se corrige el proceso. Desde la cultura, la pregunta es qué significa "hacer carrera" en esa empresa, qué relatos circulan sobre quién asciende y por qué, y cómo esos relatos son vividos por hombres y mujeres. Desde la arena política, el dato es la consecuencia previsible de un orden que beneficia a quienes ya ocupan los cargos de decisión, y el diagnóstico debe preguntar por qué el problema no fue abordado antes y quién pierde si se aborda ahora. Las tres miradas son compatibles con los mismos datos, pero producen intervenciones distintas.</p>
+</div>
+
+<p>Para el control de gestión, la elección de paradigma es un asunto de diseño. Un indicador de clima en un tablero supone el paradigma de la máquina: detecta desviaciones, no explica por qué ocurren. Explicarlas suele requerir métodos interpretativos, y cuando la desviación persiste pese a intervenciones repetidas, conviene sospechar intereses en juego que el tablero no registra (Alderfer, 2011).</p>
+
+<h2 id="s4">4. Las cinco decisiones del proceso</h2>
+<p>Todo diagnóstico exige cinco decisiones encadenadas; la secuencia que sigue ordena, con fines didácticos, las etapas de entrada, contratación y diseño que describen Harrison (2004) y Rodríguez (2009).</p>
+
+<figure>
+<svg viewBox="0 0 760 185" width="100%" role="img" aria-labelledby="figtd" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figtd">Las cinco decisiones del proceso diagnóstico en secuencia</title>
+  <defs><marker id="arrd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <rect x="10" y="40" width="130" height="70" rx="8" stroke="var(--accent)" stroke-width="2"/>
+    <rect x="165" y="40" width="130" height="70" rx="8"/><rect x="320" y="40" width="130" height="70" rx="8"/><rect x="475" y="40" width="130" height="70" rx="8"/>
+    <rect x="630" y="40" width="120" height="70" rx="8" stroke="var(--accent)" stroke-width="2"/>
+    <line x1="140" y1="75" x2="163" y2="75" marker-end="url(#arrd)"/><line x1="295" y1="75" x2="318" y2="75" marker-end="url(#arrd)"/><line x1="450" y1="75" x2="473" y2="75" marker-end="url(#arrd)"/><line x1="605" y1="75" x2="628" y2="75" marker-end="url(#arrd)"/>
+    <path d="M690,110 L690,150 L75,150 L75,112" stroke="var(--muted)" stroke-dasharray="5 4" marker-end="url(#arrd)"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="75" y="68" font-weight="700">1. Demanda</text><text x="75" y="86" fill="var(--muted)">qué, para qué, quién</text><text x="75" y="102" fill="var(--muted)">tiene poder</text>
+    <text x="230" y="68" font-weight="700">2. Modelo</text><text x="230" y="86" fill="var(--muted)">qué variables,</text><text x="230" y="102" fill="var(--muted)">síntomas y causas</text>
+    <text x="385" y="68" font-weight="700">3. Metodología</text><text x="385" y="86" fill="var(--muted)">cuanti, cuali,</text><text x="385" y="102" fill="var(--muted)">mixta</text>
+    <text x="540" y="68" font-weight="700">4. Alianzas</text><text x="540" y="86" fill="var(--muted)">promoción,</text><text x="540" y="102" fill="var(--muted)">participación</text>
+    <text x="690" y="68" font-weight="700">5. Resultados</text><text x="690" y="86" fill="var(--muted)">devolución,</text><text x="690" y="102" fill="var(--muted)">seguimiento</text>
+    <text x="380" y="172" fill="var(--muted)">Lo decidido sobre el uso de los resultados condiciona la demanda del siguiente ciclo</text>
+    <text x="380" y="22">Un error en la decisión 1 invalida las cuatro siguientes</text>
+  </g>
+</svg>
+<figcaption>Figura 4. Las cinco decisiones del proceso diagnóstico. Elaboración propia a partir de Harrison (2004) y Rodríguez (2009).</figcaption>
+</figure>
+
+<p><strong>Demanda inicial.</strong> Qué se quiere saber, para qué, quién tiene poder sobre los resultados y cuáles son las hipótesis iniciales. La demanda explícita ("queremos medir el clima") suele encubrir una hipótesis implícita ("el problema son los mandos medios") que conviene hacer visible, porque orienta qué datos se recogerán y qué conclusiones serán aceptables (Alderfer, 2011). <strong>Modelo.</strong> Qué marco conceptual organizará la indagación (sección 5). <strong>Metodología.</strong> Qué fuentes, instrumentos, muestras y análisis se usarán, con qué nivel de agregación y qué garantías de anonimato. <strong>Alianzas y promoción.</strong> Cómo anticipar la desconfianza de los distintos grupos y evitar que el consultor sea percibido como instrumento de una de las partes, pues cada grupo lo ubica en su mapa de relaciones, quiera o no (Alderfer, 2011). <strong>Gestión de resultados.</strong> A quién, cuándo y cómo se devuelven.</p>
+<p>En la última decisión el diagnóstico se encuentra con las actitudes gerenciales hacia la información. McGregor (1960) distinguió dos conjuntos de supuestos sobre las personas: la teoría X (evitan el trabajo y requieren control externo) y la teoría Y (buscan responsabilidad cuando las condiciones lo permiten). Esos supuestos predicen el uso de las encuestas: bajo supuestos X, la encuesta es un instrumento de vigilancia cuyos resultados se reservan a la cúpula; bajo supuestos Y, un instrumento de participación cuyos resultados se devuelven a los encuestados para que colaboren en la acción (Borg &amp; Mastrangelo, 2008). La devolución a los trabajadores, seguida de acción visible, distingue a las encuestas que mejoran resultados de las que solo generan cinismo (Borg &amp; Mastrangelo, 2008).</p>
+
+<div class="box atencion">
+  <span class="label">Atención</span>
+  <p>Un error frecuente es tratar la gestión de resultados como un asunto de comunicación al final del proceso. La decisión sobre quién verá qué, y con qué nivel de desagregación, debe cerrarse en la contratación, porque condiciona la tasa de respuesta y la sinceridad. Prometer anonimato y luego reportar por unidades de cinco personas equivale a romper el contrato.</p>
+</div>
+
+<h2 id="s5">5. Modelos de diagnóstico</h2>
+
+<h3>5.1 Qué es un modelo y para qué sirve</h3>
+<p>Un modelo de diagnóstico es una representación simplificada de la organización que indica qué variables observar, cómo se relacionan y qué cuenta como problema (Harrison, 2004). Sin modelo, el diagnosticador recoge datos según su intuición y los interpreta según sus prejuicios; con un modelo, aunque sea incompleto, la indagación se vuelve explícita y criticable (Burke, 2017; Cummings &amp; Worley, 2014). Box (1976) formuló el principio que gobierna el uso de cualquier modelo: todos son erróneos, porque simplifican, y la pregunta relevante es cuáles resultan útiles para el propósito. En la misma dirección apunta el aforismo atribuido a Alfred Korzybski: el mapa no es el territorio. Para el controller el paralelo es exacto: un mapa estratégico del Balanced Scorecard también es un modelo causal simplificado de cómo la organización produce resultados (Kaplan &amp; Norton, 2004).</p>
+
+<h3>5.2 Sistemas abiertos</h3>
+<p>Katz y Kahn (1978) concibieron la organización como un sistema abierto que importa insumos del entorno (personas, capital, información), los transforma y exporta productos cuyo destino retroalimenta al sistema. De ahí derivan propiedades que los modelos posteriores asumen: subsistemas jerárquicos (organización, grupos, individuos), límites permeables, equifinalidad (el mismo resultado por caminos distintos) y supervivencia condicionada a importar más energía de la que se consume (Katz &amp; Kahn, 1978). Más que una herramienta de diagnóstico, es el lenguaje común en que se escriben las demás.</p>
+
+<figure>
+<svg viewBox="0 0 760 250" width="100%" role="img" aria-labelledby="figto" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figto">Modelo de sistemas abiertos</title>
+  <defs><marker id="arro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <rect x="10" y="10" width="740" height="230" rx="12" stroke="var(--muted)" stroke-dasharray="5 4"/>
+    <rect x="40" y="60" width="170" height="110" rx="8"/><rect x="290" y="60" width="180" height="110" rx="8" stroke="var(--accent)" stroke-width="2"/><rect x="550" y="60" width="170" height="110" rx="8"/>
+    <line x1="210" y1="115" x2="288" y2="115" marker-end="url(#arro)"/><line x1="470" y1="115" x2="548" y2="115" marker-end="url(#arro)"/>
+    <path d="M635,170 L635,205 L125,205 L125,172" stroke="var(--accent)" marker-end="url(#arro)"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="60" y="32" text-anchor="start" fill="var(--muted)">Entorno</text>
+    <text x="125" y="84" font-weight="700">Insumos</text><text x="125" y="104" fill="var(--muted)">personas, capital,</text><text x="125" y="120" fill="var(--muted)">información, tecnología,</text><text x="125" y="136" fill="var(--muted)">demandas del entorno</text>
+    <text x="380" y="84" font-weight="700" fill="var(--accent)">Transformación</text><text x="380" y="104" fill="var(--muted)">subsistemas técnico,</text><text x="380" y="120" fill="var(--muted)">gerencial, de mantención,</text><text x="380" y="136" fill="var(--muted)">adaptativo, de límites</text>
+    <text x="635" y="84" font-weight="700">Resultados</text><text x="635" y="104" fill="var(--muted)">productos y servicios,</text><text x="635" y="120" fill="var(--muted)">resultados financieros,</text><text x="635" y="136" fill="var(--muted)">satisfacción, retención</text>
+    <text x="380" y="224" fill="var(--accent)">Retroalimentación: la función que cumple el sistema de control de gestión</text>
+  </g>
+</svg>
+<figcaption>Figura 5. Modelo de sistemas abiertos. Adaptado de Katz y Kahn (1978).</figcaption>
+</figure>
+
+
+<h3>5.3 Seis cajas (Weisbord, 1976)</h3>
+<p>Weisbord (1976) propuso un modelo deliberadamente práctico, para consultores que necesitan saber dónde mirar "con o sin teoría". Las seis cajas son propósitos, estructura, relaciones, recompensas, liderazgo y mecanismos de apoyo (planificación, control, presupuesto, información); el liderazgo ocupa el centro porque su tarea es mantener las otras cinco en equilibrio. El modelo se organiza en torno a dos brechas: entre el sistema formal (lo declarado) y el informal (lo que ocurre), y entre la organización y las demandas del entorno (Weisbord, 1976). Las cajas de mecanismos de apoyo y de recompensas contienen los sistemas de control mismos y permiten preguntar si ayudan o entorpecen el logro de los propósitos.</p>
+
+<figure>
+<svg viewBox="0 0 760 300" width="100%" role="img" aria-labelledby="figtw" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figtw">Las seis cajas de Weisbord con el liderazgo al centro</title>
+  <defs><marker id="arrw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <ellipse cx="380" cy="150" rx="365" ry="140" stroke="var(--muted)" stroke-dasharray="5 4"/>
+    <rect x="320" y="30" width="120" height="44" rx="8" fill="var(--bg)"/><rect x="570" y="110" width="130" height="44" rx="8" fill="var(--bg)"/><rect x="520" y="225" width="130" height="44" rx="8" fill="var(--bg)"/>
+    <rect x="110" y="225" width="130" height="44" rx="8" fill="var(--bg)"/><rect x="60" y="110" width="140" height="44" rx="8" fill="var(--bg)"/>
+    <rect x="320" y="128" width="120" height="44" rx="8" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+    <g stroke="var(--muted)"><line x1="380" y1="74" x2="380" y2="128"/><line x1="440" y1="145" x2="570" y2="132"/><line x1="430" y1="172" x2="540" y2="225"/><line x1="330" y1="172" x2="220" y2="225"/><line x1="320" y1="145" x2="200" y2="132"/></g>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="380" y="57">Propósitos</text><text x="635" y="137">Estructura</text><text x="585" y="252">Relaciones</text>
+    <text x="175" y="252">Recompensas</text><text x="130" y="137">Mecanismos útiles</text>
+    <text x="380" y="155" fill="var(--accent)" font-weight="700">Liderazgo</text>
+    <text x="60" y="28" text-anchor="start" fill="var(--muted)">Entorno</text>
+  </g>
+</svg>
+<figcaption>Figura 6. Las seis cajas: el liderazgo observa y equilibra las otras cinco; el diagnóstico busca brechas entre lo formal y lo real, entre cajas y con el entorno. Adaptado de Weisbord (1976).</figcaption>
+</figure>
+
+
+<h3>5.4 Congruencia (Nadler y Tushman, 1980)</h3>
+<p>Nadler y Tushman (1980) refinaron el esquema de sistemas abiertos al especificar cuatro insumos (entorno, recursos, historia y estrategia), cuatro componentes del proceso de transformación (tarea, individuos, arreglos organizacionales formales y organización informal) y productos en tres niveles (individual, grupal y organizacional). Su aporte es la hipótesis de congruencia: la efectividad depende del grado en que las necesidades, demandas y estructuras de cada componente son consistentes con las de los otros, y el diagnóstico evalúa los seis pares de ajuste posibles entre los cuatro componentes de transformación (Nadler &amp; Tushman, 1980). Un sistema de incentivos técnicamente impecable puede ser incongruente con normas informales que premian la lealtad al grupo por sobre el desempeño individual; la incongruencia, no el sistema aislado, explica el resultado.</p>
+
+<figure>
+<svg viewBox="0 0 760 295" width="100%" role="img" aria-labelledby="figtc" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figtc">Modelo de congruencia de Nadler y Tushman</title>
+  <defs><marker id="arrc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <rect x="10" y="70" width="140" height="130" rx="8" fill="var(--bg)"/>
+    <rect x="200" y="20" width="360" height="230" rx="12" stroke="var(--muted)" stroke-dasharray="5 4"/>
+    <g stroke="var(--accent)"><line x1="335" y1="80" x2="285" y2="115"/><line x1="425" y1="80" x2="475" y2="115"/><line x1="380" y1="80" x2="380" y2="190"/><line x1="335" y1="135" x2="425" y2="135"/><line x1="285" y1="155" x2="335" y2="190"/><line x1="475" y1="155" x2="425" y2="190"/></g><rect x="320" y="40" width="120" height="40" rx="8" fill="var(--bg)"/><rect x="215" y="115" width="120" height="40" rx="8" fill="var(--bg)"/><rect x="425" y="115" width="120" height="40" rx="8" fill="var(--bg)"/><rect x="320" y="190" width="120" height="40" rx="8" fill="var(--bg)"/>
+    
+    <rect x="610" y="70" width="140" height="130" rx="8" fill="var(--bg)"/>
+    <line x1="150" y1="135" x2="198" y2="135" marker-end="url(#arrc)"/><line x1="560" y1="135" x2="608" y2="135" marker-end="url(#arrc)"/>
+    <path d="M680,200 L680,268 L80,268 L80,202" stroke="var(--muted)" stroke-dasharray="5 4" marker-end="url(#arrc)"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="80" y="98" font-weight="700">Insumos</text><text x="80" y="120" fill="var(--muted)">entorno</text><text x="80" y="138" fill="var(--muted)">recursos</text><text x="80" y="156" fill="var(--muted)">historia</text><text x="80" y="178" font-weight="700">estrategia</text>
+    <text x="380" y="65">Trabajo</text><text x="275" y="140">Personas</text><text x="485" y="140">Org. formal</text><text x="380" y="215">Org. informal</text>
+    <text x="680" y="98" font-weight="700">Resultados</text><text x="680" y="120" fill="var(--muted)">organización</text><text x="680" y="138" fill="var(--muted)">unidad</text><text x="680" y="156" fill="var(--muted)">individuo</text>
+    <text x="380" y="285" fill="var(--accent)">Seis pares de congruencia: a mayor ajuste entre componentes, mayor efectividad</text>
+  </g>
+</svg>
+<figcaption>Figura 7. Modelo de congruencia: cuatro componentes del proceso de transformación y sus seis pares de ajuste. Adaptado de Nadler y Tushman (1980).</figcaption>
+</figure>
+
+
+<h3>5.5 Burke-Litwin (1992)</h3>
+<p>Burke y Litwin (1992) construyeron un modelo de doce variables con relaciones causales direccionales. Las variables <strong>transformacionales</strong> (entorno externo, liderazgo, misión y estrategia, cultura) son aquellas cuyo cambio obliga a modificar el comportamiento de toda la organización. Las <strong>transaccionales</strong> (estructura, prácticas de gestión, sistemas y políticas, clima de la unidad de trabajo, requisitos de la tarea y habilidades, motivación, necesidades y valores individuales) operan en el intercambio cotidiano y producen cambio incremental. El <strong>desempeño</strong> individual y organizacional es el resultado. La hipótesis central es que las variables superiores pesan más sobre las inferiores que a la inversa, aunque todas las relaciones son recíprocas (Burke &amp; Litwin, 1992).</p>
+
+<figure>
+<svg viewBox="0 0 720 330" width="100%" role="img" aria-labelledby="fig2t" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig2t">Modelo de Burke-Litwin simplificado en tres niveles</title>
+  <defs>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <rect x="20" y="16" width="680" height="70" rx="10" stroke="var(--accent)" stroke-width="2"/>
+    <rect x="20" y="126" width="680" height="96" rx="10"/>
+    <rect x="200" y="262" width="320" height="50" rx="10"/>
+    <line x1="360" y1="86" x2="360" y2="124" marker-end="url(#arr2)"/>
+    <line x1="360" y1="222" x2="360" y2="260" marker-end="url(#arr2)"/>
+    <path d="M700,51 C740,51 740,287 522,287" stroke="var(--muted)" stroke-dasharray="4 4" marker-end="url(#arr2)"/>
+  </g>
+  <g stroke="var(--accent)" fill="none" stroke-width="1">
+    <rect x="34" y="40" width="150" height="34" rx="6"/>
+    <rect x="200" y="40" width="150" height="34" rx="6"/>
+    <rect x="366" y="40" width="150" height="34" rx="6"/>
+    <rect x="532" y="40" width="150" height="34" rx="6"/>
+  </g>
+  <g stroke="currentColor" fill="none" stroke-width="1">
+    <rect x="34" y="150" width="150" height="30" rx="6"/>
+    <rect x="200" y="150" width="150" height="30" rx="6"/>
+    <rect x="366" y="150" width="150" height="30" rx="6"/>
+    <rect x="532" y="150" width="150" height="30" rx="6"/>
+    <rect x="117" y="186" width="150" height="30" rx="6"/>
+    <rect x="283" y="186" width="150" height="30" rx="6"/>
+    <rect x="449" y="186" width="150" height="30" rx="6"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="360" y="32" fill="var(--accent)" font-weight="600">NIVEL TRANSFORMACIONAL</text>
+    <text x="109" y="62">Entorno externo</text>
+    <text x="275" y="62">Liderazgo</text>
+    <text x="441" y="62">Misión y estrategia</text>
+    <text x="607" y="62">Cultura</text>
+    <text x="360" y="142" font-weight="600">NIVEL TRANSACCIONAL</text>
+    <text x="109" y="170">Estructura</text>
+    <text x="275" y="170">Prácticas de gestión</text>
+    <text x="441" y="170">Sistemas y políticas</text>
+    <text x="607" y="170">Clima de la unidad</text>
+    <text x="192" y="206">Tarea y habilidades</text>
+    <text x="358" y="206">Motivación</text>
+    <text x="524" y="206">Necesidades y valores</text>
+    <text x="360" y="292" font-weight="600">DESEMPEÑO individual y organizacional</text>
+    <text x="360" y="110" fill="var(--muted)" font-size="11">mayor peso causal hacia abajo; relaciones recíprocas</text>
+    <text x="640" y="245" fill="var(--muted)" font-size="11">retroalimentación</text>
+  </g>
+</svg>
+<figcaption>Figura 8. Modelo de Burke-Litwin simplificado en tres niveles. Adaptado de Burke y Litwin (1992).</figcaption>
+</figure>
+
+<p>El valor del modelo para el control de gestión reside en su estructura causal. Si el desempeño es la variable final y el clima, la motivación y las prácticas de gestión son intermedias, un indicador de clima es un indicador adelantado del desempeño, como la perspectiva de aprendizaje y crecimiento lo es respecto de la financiera en el Balanced Scorecard (Kaplan &amp; Norton, 1996). Burke y Litwin (1992) distinguen además clima (percepciones colectivas inmediatas de la unidad, variable transaccional) de cultura (supuestos y valores profundos, variable transformacional), lo que evita un error habitual: intentar cambiar la cultura con una encuesta de clima.</p>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · TechNova</span>
+  <p>Leído con Burke-Litwin, el caso muestra un conflicto en el nivel transformacional (los cofundadores discrepan sobre misión y estrategia; los inversionistas, parte del entorno externo, presionan por rentabilidad) que se transmite hacia abajo: sin estrategia acordada no hay criterio para diseñar estructura ni sistemas, las prácticas de gestión quedan libradas a cada líder, el clima se tensa y la motivación cae. La rotación del 50% y los errores en el producto son el desempeño resultante. El modelo predice que intervenir solo en el nivel transaccional (un programa de bienestar, una revisión de sueldos) producirá cambio transitorio mientras el conflicto estratégico persista: el indicador de rotación no mejorará de forma sostenida hasta que se resuelva una variable que ningún tablero operacional mide.</p>
+</div>
+
+<h3>5.6 Las 7S (Waterman, Peters y Phillips, 1980)</h3>
+<p>Waterman, Peters y Phillips (1980) argumentaron que la estructura no es la organización, y que la efectividad depende de la congruencia entre siete variables: estrategia, estructura, sistemas, estilo, personal (<em>staff</em>), habilidades (<em>skills</em>) y valores compartidos (<em>superordinate goals</em>). Las tres primeras son "duras": están documentadas y pueden rediseñarse por decisión directiva. Las cuatro restantes son "blandas", y el aporte del marco fue sostener que los cambios de estrategia y estructura fracasan cuando no van acompañados de cambios en ellas (Waterman et al., 1980). El modelo no especifica relaciones causales ni distingue niveles, lo que lo hace útil como lista de verificación y limitado como herramienta explicativa (Burke, 2017).</p>
+
+<figure>
+<svg viewBox="0 0 760 305" width="100%" role="img" aria-labelledby="figts" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figts">Modelo de las 7S</title>
+  <defs><marker id="arrs" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <g stroke="var(--muted)"><line x1="380" y1="150" x2="380" y2="40"/><line x1="380" y1="150" x2="560" y2="80"/><line x1="380" y1="150" x2="560" y2="220"/><line x1="380" y1="150" x2="380" y2="260"/><line x1="380" y1="150" x2="200" y2="220"/><line x1="380" y1="150" x2="200" y2="80"/></g>
+    <rect x="325" y="20" width="110" height="40" rx="8" fill="var(--bg)"/><rect x="505" y="60" width="110" height="40" rx="8" fill="var(--bg)"/><rect x="505" y="200" width="110" height="40" rx="8" fill="var(--bg)" stroke="var(--accent)"/>
+    <rect x="325" y="240" width="110" height="40" rx="8" fill="var(--bg)" stroke="var(--accent)"/><rect x="145" y="200" width="110" height="40" rx="8" fill="var(--bg)" stroke="var(--accent)"/><rect x="145" y="60" width="110" height="40" rx="8" fill="var(--bg)"/>
+    <ellipse cx="380" cy="150" rx="70" ry="32" fill="var(--bg)" stroke="var(--accent)" stroke-width="2"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="380" y="45">Strategy</text><text x="560" y="85">Structure</text><text x="560" y="225" fill="var(--accent)">Skills</text>
+    <text x="380" y="265" fill="var(--accent)">Staff</text><text x="200" y="225" fill="var(--accent)">Style</text><text x="200" y="85">Systems</text>
+    <text x="380" y="155" fill="var(--accent)" font-weight="700">Shared values</text>
+    <text x="80" y="295" text-anchor="start" fill="var(--muted)">Duras: strategy, structure, systems</text>
+    <text x="680" y="295" text-anchor="end" fill="var(--accent)">Blandas: shared values, style, staff, skills</text>
+  </g>
+</svg>
+<figcaption>Figura 9. Las 7S: tres elementos duros y cuatro blandos, con los valores compartidos al centro. Adaptado de Waterman, Peters y Phillips (1980).</figcaption>
+</figure>
+
+
+<h3>5.7 Modelo de trabajo de Cummings y Worley (2014)</h3>
+<p>Cummings y Worley (2014) integran los marcos anteriores en un modelo de sistemas abiertos aplicado a tres niveles: organización, grupo e individuo. En cada nivel se distinguen insumos, componentes de diseño y resultados, y el diseño del nivel superior opera como insumo del inferior. La efectividad depende del ajuste entre los componentes de diseño del propio nivel, con sus insumos y con el nivel inferior (Cummings &amp; Worley, 2014).</p>
+
+<table>
+  <thead><tr><th>Nivel</th><th>Insumos</th><th>Componentes de diseño</th><th>Resultados</th></tr></thead>
+  <tbody>
+    <tr><td>Organización</td><td>Entorno general; estructura de la industria</td><td>Estrategia; tecnología; estructura; sistemas de medición; sistemas de recursos humanos; cultura (como producto intermedio del diseño)</td><td>Efectividad organizacional: desempeño financiero, productividad, satisfacción de los grupos de interés</td></tr>
+    <tr><td>Grupo</td><td>Diseño de la organización</td><td>Claridad de metas; estructura de la tarea; composición del grupo; funcionamiento del equipo; normas de desempeño</td><td>Efectividad del equipo: desempeño, calidad de la vida laboral de sus miembros</td></tr>
+    <tr><td>Individuo</td><td>Diseño de la organización; diseño del grupo; características personales</td><td>Variedad de habilidades; identidad de la tarea; significado de la tarea; autonomía; retroalimentación sobre resultados</td><td>Efectividad individual: desempeño, ausentismo, satisfacción, desarrollo</td></tr>
+  </tbody>
+</table>
+
+<p>Dos rasgos hacen a este modelo afín al control de gestión. Los <em>sistemas de medición</em> figuran como componente de diseño del nivel organizacional, junto a la estrategia y la estructura: el propio sistema de control es objeto de diagnóstico, y su ajuste con la estrategia y la tecnología es una pregunta que el modelo obliga a formular (Cummings &amp; Worley, 2014). Y la cascada de niveles reproduce la lógica del despliegue de metas: lo que la organización decide se convierte en restricción para los equipos, y lo que los equipos deciden, en restricción para los puestos.</p>
+
+<h3>5.8 Comparación y criterios de elección</h3>
+
+<table>
+  <thead><tr><th>Modelo</th><th>Variables</th><th>Relaciones causales</th><th>Niveles</th><th>Uso típico</th></tr></thead>
+  <tbody>
+    <tr><td>Sistemas abiertos (Katz &amp; Kahn, 1978)</td><td>Insumos, transformación, productos, entorno, retroalimentación</td><td>Genéricas (flujo)</td><td>Jerarquía de subsistemas</td><td>Lenguaje base; encuadre inicial</td></tr>
+    <tr><td>Seis cajas (Weisbord, 1976)</td><td>6</td><td>No especificadas; liderazgo al centro</td><td>Organización</td><td>Diagnóstico rápido, organizaciones pequeñas, consultores sin modelo propio</td></tr>
+    <tr><td>Congruencia (Nadler &amp; Tushman, 1980)</td><td>4 insumos, 4 componentes, 3 tipos de producto</td><td>Ajuste entre pares de componentes</td><td>Organización, grupo, individuo (en los productos)</td><td>Problemas de desalineación entre diseño formal e informal</td></tr>
+    <tr><td>Burke-Litwin (1992)</td><td>12</td><td>Direccionales, con pesos desiguales</td><td>Transformacional, transaccional, desempeño</td><td>Cambio a gran escala; encuestas de diagnóstico con mapa causal</td></tr>
+    <tr><td>7S (Waterman et al., 1980)</td><td>7</td><td>Interdependencia sin dirección</td><td>Organización</td><td>Lista de verificación en procesos de cambio estratégico</td></tr>
+    <tr><td>Cummings &amp; Worley (2014)</td><td>Insumos, diseño y resultados por nivel</td><td>Ajuste dentro y entre niveles</td><td>Organización, grupo, individuo</td><td>Diagnóstico integral con intervenciones por nivel</td></tr>
+  </tbody>
+</table>
+
+<p>La elección de modelo depende de siete criterios, que sintetizan las recomendaciones de la literatura de diagnóstico (Harrison, 2004) y la práctica del curso. El <strong>tamaño</strong>: las seis cajas bastan para una empresa de 50 personas; un hospital de 800 funcionarios requiere un modelo multinivel. El <strong>momento</strong>: una crisis pide un modelo rápido; una transformación planificada, uno con estructura causal. La <strong>naturaleza del problema</strong>: una desalineación invita al modelo de congruencia; un problema de desempeño general, a Burke-Litwin. La <strong>cultura</strong>, que determina qué vocabulario será aceptado: un hospital tolera mal el lenguaje de la consultoría, y una startup, lo que parezca burocracia. Los <strong>recursos</strong> de tiempo, acceso y competencia analítica. El <strong>propósito</strong>: descripción, explicación o seguimiento periódico. Y la <strong>audiencia</strong>: un directorio espera un mapa causal con indicadores; un equipo espera reconocerse en los resultados.</p>
+
+<div class="box">
+  <span class="label">Idea clave</span>
+  <p>Ningún modelo es correcto; algunos son útiles para un propósito. El criterio decisivo para un controller es si el modelo permite conectar variables organizacionales con resultados que ya se miden, de modo que el diagnóstico se integre al sistema de control en vez de correr en paralelo.</p>
+</div>
+
+<h2 id="s6">6. El diagnóstico en el sistema de control de gestión</h2>
+
+<h3>6.1 Tipos de control y el lugar de las variables blandas</h3>
+<p>Merchant y Van der Stede (2017) clasifican los controles en cuatro tipos. Los <strong>controles por resultados</strong> fijan metas, miden el resultado y lo recompensan. Los <strong>controles por acción</strong> prescriben o restringen comportamientos (aprobaciones, procedimientos, restricciones físicas). Los <strong>controles de personal</strong> operan sobre la selección, la formación y el diseño del puesto, de modo que las personas se controlen a sí mismas. Los <strong>controles culturales</strong> operan mediante normas compartidas y presión del grupo. La elección entre estas formas depende de cuánto se conoce el proceso de transformación y cuán medibles son los productos; cuando ambos son bajos, como en el trabajo profesional y creativo, solo quedan los controles de personal y culturales, el control de clan (Ouchi, 1979).</p>
+<p>Aquí aparece el problema que el diagnóstico resuelve. Los controles por resultados y por acción producen su propia información: el presupuesto registra la desviación y el procedimiento, el cumplimiento. Los controles de personal y culturales no la producen: nadie sabe, a partir de los estados financieros, si las normas compartidas apoyan la estrategia o la sabotean, ni si las personas tienen las capacidades que la tarea exige. El diagnóstico organizacional es el mecanismo que produce esa información (Burke, 2017; Merchant &amp; Van der Stede, 2017). Un sistema de control que carece de él controla la mitad de la organización.</p>
+
+<h3>6.2 Control diagnóstico y control interactivo</h3>
+<p>Simons (1995) distingue cuatro palancas de control: sistemas de creencias, de límites, de control diagnóstico y de control interactivo. Los <strong>sistemas de control diagnóstico</strong> son los tableros clásicos: variables críticas con metas predefinidas, seguimiento por excepción y corrección de desviaciones. Los <strong>sistemas de control interactivo</strong> son los que la alta dirección usa personal y regularmente para debatir incertidumbres estratégicas y forzar el aprendizaje en toda la organización (Simons, 1995). Un diagnóstico puede alimentar ambos. Convertido en indicadores con meta, frecuencia y responsable, opera como control diagnóstico: una caída del compromiso en una unidad dispara una revisión. Discutido en el comité de dirección para preguntar si la estrategia es comprendida y apoyada, opera como control interactivo. La diferencia no está en el instrumento, sino en el uso (Simons, 1995).</p>
+
+<h3>6.3 Activos intangibles y el modelo como mapa causal</h3>
+<p>Kaplan y Norton (1996) incluyeron en el Balanced Scorecard la perspectiva de aprendizaje y crecimiento con un argumento explícito: las capacidades de las personas, los sistemas de información y el alineamiento organizacional son las causas últimas de los resultados en las otras tres perspectivas. Kaplan y Norton (2004) la reformulan como gestión de tres activos intangibles (capital humano, de información y organizacional), y presentan el mapa estratégico como la cadena de hipótesis causales que conecta esos activos con procesos, clientes y resultados financieros. Becker et al. (2001) extendieron la lógica a los indicadores de recursos humanos: una medida de personas tiene valor de control solo cuando puede ubicarse en esa cadena.</p>
+<p>Un modelo como Burke-Litwin (1992) o el de Cummings y Worley (2014) cumple, para las variables organizacionales, la función que el mapa estratégico cumple para la estrategia: declara qué causa qué, y por lo tanto qué indicadores son adelantados y cuáles rezagados. Esta es la primera de las tres ideas que articulan el curso. La segunda es que un diagnóstico puntual se convierte en control cuando cada variable relevante del modelo se transforma en un indicador con fuente, frecuencia, meta, responsable y retroalimentación (Merchant &amp; Van der Stede, 2017; Simons, 1995). La tercera, desarrollada en las sesiones siguientes, es que la calidad del indicador depende de la calidad de la medición: la psicometría opera como control de calidad del dato.</p>
+
+<figure>
+<svg viewBox="0 0 760 300" width="100%" role="img" aria-labelledby="figtm" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figtm">Mapa estratégico y modelo de diagnóstico como mapas causales</title>
+  <defs><marker id="arrm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <rect x="60" y="40" width="240" height="40" rx="8"/><rect x="60" y="100" width="240" height="40" rx="8"/><rect x="60" y="160" width="240" height="40" rx="8"/><rect x="60" y="220" width="240" height="40" rx="8" stroke="var(--accent)" stroke-width="2"/>
+    <rect x="460" y="40" width="240" height="40" rx="8"/><rect x="460" y="100" width="240" height="40" rx="8"/><rect x="460" y="160" width="240" height="40" rx="8"/><rect x="460" y="220" width="240" height="40" rx="8" stroke="var(--accent)" stroke-width="2"/>
+    <g stroke="var(--muted)"><line x1="180" y1="220" x2="180" y2="202" marker-end="url(#arrm)"/><line x1="180" y1="160" x2="180" y2="142" marker-end="url(#arrm)"/><line x1="180" y1="100" x2="180" y2="82" marker-end="url(#arrm)"/>
+    <line x1="580" y1="220" x2="580" y2="202" marker-end="url(#arrm)"/><line x1="580" y1="160" x2="580" y2="142" marker-end="url(#arrm)"/><line x1="580" y1="100" x2="580" y2="82" marker-end="url(#arrm)"/></g>
+    <path d="M300,240 C 380,240 380,240 460,240" stroke="var(--accent)" stroke-dasharray="5 4"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="180" y="22" font-weight="700">Mapa estratégico (BSC)</text><text x="580" y="22" font-weight="700">Modelo de diagnóstico (Burke-Litwin)</text>
+    <text x="180" y="65">Finanzas</text><text x="180" y="125">Clientes</text><text x="180" y="185">Procesos internos</text><text x="180" y="245" fill="var(--accent)">Aprendizaje y crecimiento</text>
+    <text x="580" y="65">Desempeño</text><text x="580" y="125">Motivación y ajuste individual</text><text x="580" y="185">Prácticas, sistemas y clima</text><text x="580" y="245" fill="var(--accent)">Liderazgo y cultura</text>
+    <text x="380" y="232" fill="var(--accent)">detalla</text>
+    <text x="380" y="285" fill="var(--muted)">Ambos ordenan pocas variables conectadas causalmente desde la base hacia los resultados</text>
+  </g>
+</svg>
+<figcaption>Figura 10. El modelo de diagnóstico detalla la perspectiva de aprendizaje y crecimiento del mapa estratégico. Elaboración propia a partir de Kaplan y Norton (2004) y Burke y Litwin (1992).</figcaption>
+</figure>
+
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · TechNova</span>
+  <p>Los inversionistas de TechNova reciben un tablero con ingresos recurrentes, costo de adquisición de clientes y tasa de abandono. Ninguna de esas cifras explica por qué los desarrolladores se van. Con el modelo de Cummings y Worley (2014) como mapa causal, el tablero incorporaría tres indicadores adelantados del nivel grupal (claridad de metas, normas de desempeño, funcionamiento del equipo) y dos del individual (autonomía y retroalimentación), medidos trimestralmente con una encuesta breve, con meta y responsable para cada uno. La rotación seguiría siendo el indicador rezagado, pero dejaría de ser una sorpresa. Lo que el CEO debe resolver es si ese tablero es la burocracia que teme o la estructura mínima que le falta.</p>
+</div>
+
+<h3>6.4 Qué puede y qué no puede controlarse con una encuesta</h3>
+<p>La conversión de variables diagnósticas en indicadores de control tiene límites. Goodhart (1984) formuló, para la política monetaria, un principio que se cumple en cualquier sistema de control: cuando una regularidad estadística se usa como objetivo de control, tiende a desaparecer. Campbell (1979) lo había enunciado para los programas sociales: cuanto más se usa un indicador cuantitativo para decidir, más sujeto está a presiones de corrupción y más distorsiona el proceso que pretende medir. Una encuesta de clima que mide percepciones sinceras mientras no tiene consecuencias deja de medirlas cuando se usa para asignar bonos a las jefaturas: los jefes aprenden a gestionar la encuesta en vez del clima, y los subordinados, que sus respuestas afectan a personas concretas.</p>
+
+<figure>
+<svg viewBox="0 0 760 220" width="100%" role="img" aria-labelledby="figtg" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="figtg">Bucle de degradación de un indicador de encuesta usado como meta</title>
+  <defs><marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+
+  <g stroke="currentColor" stroke-width="1.4" fill="none">
+    <rect x="20" y="80" width="150" height="60" rx="8"/><rect x="215" y="80" width="150" height="60" rx="8"/><rect x="410" y="80" width="150" height="60" rx="8"/><rect x="605" y="80" width="145" height="60" rx="8" stroke="var(--accent)" stroke-width="2"/>
+    <line x1="170" y1="110" x2="213" y2="110" marker-end="url(#arrg)"/><line x1="365" y1="110" x2="408" y2="110" marker-end="url(#arrg)"/><line x1="560" y1="110" x2="603" y2="110" marker-end="url(#arrg)"/>
+    <path d="M677,140 L677,185 L95,185 L95,142" stroke="var(--accent)" stroke-dasharray="5 4" marker-end="url(#arrg)"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="95" y="105">Índice de clima</text><text x="95" y="123" fill="var(--muted)">medida válida</text>
+    <text x="290" y="105">Se vuelve meta</text><text x="290" y="123" fill="var(--muted)">bono del jefe de unidad</text>
+    <text x="485" y="105">Presión sobre</text><text x="485" y="123" fill="var(--muted)">quienes responden</text>
+    <text x="677" y="105" fill="var(--accent)">Puntaje sube,</text><text x="677" y="123" fill="var(--accent)">validez baja</text>
+    <text x="380" y="205" fill="var(--accent)">El tablero controla ruido: la medida dejó de medir lo que medía</text>
+    <text x="380" y="30">Efecto Goodhart (1984) y ley de Campbell (1979)</text>
+  </g>
+</svg>
+<figcaption>Figura 11. Cuando un indicador de percepción se convierte en meta evaluativa, el proceso que mide se distorsiona. Elaboración propia a partir de Goodhart (1984) y Campbell (1979).</figcaption>
+</figure>
+
+<p>Tres condiciones agravan el riesgo. El <strong>uso evaluativo</strong>: cuando el resultado afecta la remuneración o la carrera de alguien identificable, la encuesta se convierte en un control por resultados sobre esa persona, con los incentivos a la manipulación propios de cualquier medida de desempeño (Merchant &amp; Van der Stede, 2017). Las <strong>unidades pequeñas</strong>: en un equipo de cinco personas no existe anonimato efectivo (Borg &amp; Mastrangelo, 2008). La <strong>ausencia de retroalimentación</strong>: una encuesta repetida sin acción visible enseña que responder no sirve, y la tasa de respuesta y la sinceridad caen en la siguiente aplicación (Borg &amp; Mastrangelo, 2008).</p>
+
+<div class="box atencion">
+  <span class="label">Atención</span>
+  <p>Un indicador de clima puede ser excelente como control diagnóstico a nivel de organización o de gerencia, y pésimo como control por resultados sobre jefaturas de equipos pequeños. El mismo dato cambia de naturaleza según el nivel de agregación y el uso. Antes de incorporar una variable blanda al sistema de incentivos, conviene preguntar qué comportamiento premiará: mejorar el clima o mejorar el puntaje.</p>
+</div>
+
+<h2 id="sintesis">Síntesis</h2>
+<ul>
+  <li>Diagnosticar es inferir causas a partir de síntomas mediante un procedimiento sistemático y basado en evidencia; el producto es una explicación que justifica una decisión (Harrison, 2004; Rousseau, 2006).</li>
+  <li>El diagnóstico forma parte de un ciclo de siete fases, y la calidad de la recolección y el análisis depende de lo acordado en la entrada y la contratación (Cummings &amp; Worley, 2014).</li>
+  <li>Los paradigmas de máquina, cultura y arena política producen diagnósticos distintos a partir de los mismos datos; un tablero de indicadores supone el primero y requiere los otros dos cuando las desviaciones no se explican (Morgan, 2006).</li>
+  <li>Las cinco decisiones del proceso (demanda, modelo, metodología, alianzas, gestión de resultados) deben cerrarse antes de recoger datos; la devolución a los trabajadores distingue a las encuestas que producen cambio de las que producen cinismo (Borg &amp; Mastrangelo, 2008).</li>
+  <li>Los modelos de diagnóstico son mapas simplificados; difieren en número de variables, estructura causal y niveles, y se eligen según tamaño, momento, problema, cultura, recursos, propósito y audiencia (Harrison, 2004).</li>
+  <li>Burke-Litwin (1992) y Cummings y Worley (2014) cumplen para las variables organizacionales la función que el mapa estratégico cumple para la estrategia: declaran qué causa qué (Kaplan &amp; Norton, 2004).</li>
+  <li>El diagnóstico produce la información que los controles de personal y culturales no generan por sí mismos (Merchant &amp; Van der Stede, 2017), y puede operar como control diagnóstico o interactivo según el uso (Simons, 1995).</li>
+  <li>Cuando una variable blanda se usa con fines evaluativos, en unidades pequeñas o sin retroalimentación, el indicador se corrompe (Campbell, 1979; Goodhart, 1984).</li>
+</ul>
+
+<h2 id="glosario">Glosario</h2>
+<dl class="glosario">
+  <dt>Diagnóstico organizacional</dt><dd>Proceso analítico y sistemático que describe la situación real de una organización en un momento dado para identificar problemas y oportunidades y fundamentar decisiones de intervención.</dd>
+  <dt>Gestión basada en evidencia</dt><dd>Práctica gerencial que traduce principios respaldados por investigación en decisiones organizacionales, en lugar de apoyarse en experiencia personal o modas (Rousseau, 2006).</dd>
+  <dt>Brecha de desempeño</dt><dd>Diferencia entre un resultado esperado y el obtenido; origen reactivo del diagnóstico.</dd>
+  <dt>Brecha de oportunidad</dt><dd>Diferencia entre lo que la organización logra y lo que podría lograr si explotara una capacidad o condición disponible; origen proactivo del diagnóstico.</dd>
+  <dt>Paradigma</dt><dd>Conjunto de supuestos sobre la naturaleza de la organización y sobre cómo puede conocerse, que determina métodos, productos y criterios de validez del diagnóstico (Burrell &amp; Morgan, 1979).</dd>
+  <dt>Modelo de diagnóstico</dt><dd>Representación simplificada de la organización que indica qué variables observar, cómo se relacionan y qué constituye un problema.</dd>
+  <dt>Congruencia</dt><dd>Grado en que las necesidades, demandas y estructuras de un componente organizacional son consistentes con las de otro (Nadler &amp; Tushman, 1980).</dd>
+  <dt>Variables transformacionales y transaccionales</dt><dd>En Burke-Litwin (1992), las primeras (entorno, liderazgo, misión y estrategia, cultura) exigen cambio de toda la organización; las segundas (estructura, sistemas, prácticas, clima, motivación, entre otras) producen cambio incremental.</dd>
+  <dt>Clima y cultura</dt><dd>El clima es el conjunto de percepciones colectivas inmediatas sobre la unidad de trabajo; la cultura, el conjunto de supuestos y valores profundos de la organización (Burke &amp; Litwin, 1992).</dd>
+  <dt>Controles de personal y culturales</dt><dd>Mecanismos de control que operan a través de la selección, la formación, el diseño del puesto y las normas compartidas, en vez de medir resultados o prescribir acciones (Merchant &amp; Van der Stede, 2017).</dd>
+  <dt>Control diagnóstico e interactivo</dt><dd>Sistemas de control usados, respectivamente, para seguir variables críticas por excepción y para debatir incertidumbres estratégicas con participación de la alta dirección (Simons, 1995).</dd>
+  <dt>Mapa estratégico</dt><dd>Representación de la cadena de hipótesis causales que conecta los activos intangibles con los procesos, los clientes y los resultados financieros (Kaplan &amp; Norton, 2004).</dd>
+  <dt>Efecto Goodhart</dt><dd>Tendencia de una regularidad estadística a desaparecer cuando se la usa como objetivo de control (Goodhart, 1984); en Campbell (1979), tendencia de un indicador a corromperse y distorsionar el proceso cuando se usa para decisiones de alto impacto.</dd>
+  <dt>Devolución (feedback)</dt><dd>Fase del ciclo diagnóstico en que los resultados se presentan a quienes aportaron los datos y a quienes deciden, como condición para la acción (Cummings &amp; Worley, 2014).</dd>
+</dl>
+
+<h2 id="refs">Referencias</h2>
+<div class="referencias">
+  <p>Alderfer, C. P. (2011). <em>The practice of organizational diagnosis: Theory and methods</em>. Oxford University Press.</p>
+  <p>Becker, B. E., Huselid, M. A., &amp; Ulrich, D. (2001). <em>The HR scorecard</em>. Harvard Business School Press.</p>
+  <p>Borg, I., &amp; Mastrangelo, P. M. (2008). <em>Employee surveys in management: Theories, tools, and practical applications</em>. Hogrefe.</p>
+  <p>Box, G. E. P. (1976). Science and statistics. <em>Journal of the American Statistical Association, 71</em>(356), 791–799. https://doi.org/10.1080/01621459.1976.10480949</p>
+  <p>Burke, W. W. (2017). <em>Organization change: Theory and practice</em> (5th ed.). Sage.</p>
+  <p>Burke, W. W., &amp; Litwin, G. H. (1992). A causal model of organizational performance and change. <em>Journal of Management, 18</em>(3), 523–545. https://doi.org/10.1177/014920639201800306</p>
+  <p>Burrell, G., &amp; Morgan, G. (1979). <em>Sociological paradigms and organisational analysis</em>. Heinemann.</p>
+  <p>Campbell, D. T. (1979). Assessing the impact of planned social change. <em>Evaluation and Program Planning, 2</em>(1), 67–90. https://doi.org/10.1016/0149-7189(79)90048-X</p>
+  <p>Cummings, T. G., &amp; Worley, C. G. (2014). <em>Organization development and change</em> (10th ed.). Cengage Learning.</p>
+  <p>Goodhart, C. A. E. (1984). Problems of monetary management: The UK experience. In <em>Monetary theory and practice</em> (pp. 91–121). Macmillan.</p>
+  <p>Harrison, M. I. (2004). <em>Diagnosing organizations: Methods, models, and processes</em> (3rd ed.). Sage.</p>
+  <p>Kaplan, R. S., &amp; Norton, D. P. (1996). <em>The balanced scorecard: Translating strategy into action</em>. Harvard Business School Press.</p>
+  <p>Kaplan, R. S., &amp; Norton, D. P. (2004). <em>Strategy maps: Converting intangible assets into tangible outcomes</em>. Harvard Business School Press.</p>
+  <p>Katz, D., &amp; Kahn, R. L. (1978). <em>The social psychology of organizations</em> (2nd ed.). Wiley.</p>
+  <p>McGregor, D. (1960). <em>The human side of enterprise</em>. McGraw-Hill.</p>
+  <p>Merchant, K. A., &amp; Van der Stede, W. A. (2017). <em>Management control systems: Performance measurement, evaluation and incentives</em> (4th ed.). Pearson.</p>
+  <p>Morgan, G. (2006). <em>Images of organization</em> (Updated ed.). Sage.</p>
+  <p>Nadler, D. A., &amp; Tushman, M. L. (1980). A model for diagnosing organizational behavior. <em>Organizational Dynamics, 9</em>(2), 35–51. https://doi.org/10.1016/0090-2616(80)90039-X</p>
+  <p>Ouchi, W. G. (1979). A conceptual framework for the design of organizational control mechanisms. <em>Management Science, 25</em>(9), 833–848. https://doi.org/10.1287/mnsc.25.9.833</p>
+  <p>Rodríguez, D. (2009). <em>Diagnóstico organizacional</em> (7a ed.). Ediciones Universidad Católica de Chile.</p>
+  <p>Rousseau, D. M. (2006). Is there such a thing as "evidence-based management"? <em>Academy of Management Review, 31</em>(2), 256–269. https://doi.org/10.5465/amr.2006.20208679</p>
+  <p>Simons, R. (1995). <em>Levers of control: How managers use innovative control systems to drive strategic renewal</em>. Harvard Business School Press.</p>
+  <p>Waterman, R. H., Peters, T. J., &amp; Phillips, J. R. (1980). Structure is not organization. <em>Business Horizons, 23</em>(3), 14–26. https://doi.org/10.1016/0007-6813(80)90027-0</p>
+  <p>Weisbord, M. R. (1976). Organizational diagnosis: Six places to look for trouble with or without a theory. <em>Group &amp; Organization Studies, 1</em>(4), 430–447. https://doi.org/10.1177/105960117600100405</p>
+</div>
+
+<footer>
+  Serie de apuntes · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas.
+</footer>
+
+</div>
+</body>
+</html>

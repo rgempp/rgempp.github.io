@@ -1,0 +1,213 @@
+---
+title: "Diagnóstico Organizacional"
+subtitle: "Magíster en Control de Gestión · FAE, Universidad Diego Portales · 2-2026"
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+::: callout-important
+## Página oficial del curso
+
+Todo el material oficial del curso (programa, presentaciones, enunciados
+de los controles, bases de datos, examen final) está disponible en la
+página del curso en Canvas.
+<!-- TODO: agregar URL de Canvas cuando esté creada la página del curso -->
+:::
+
+## Descripción
+
+En el marco de la gestión basada en evidencia, el diagnóstico
+organizacional es el proceso analítico mediante el cual se examina la
+situación real de una organización, en un momento dado, para identificar
+problemas y áreas de oportunidad, con el fin de corregir los primeros y
+aprovechar las segundas. Es, por tanto, un insumo clave para el cambio
+planificado y para el diseño de intervenciones, tanto a nivel global
+como en ámbitos específicos de funcionamiento.
+
+Este curso, pensado para profesionales del control de gestión, aborda el
+diagnóstico como una herramienta del sistema de control de la
+organización: el mecanismo que produce información sobre las variables
+organizacionales que los controles financieros y operacionales no
+capturan (clima, cultura, liderazgo, compromiso, capacidades) y que
+permite convertirlas en indicadores, tableros de seguimiento y
+decisiones de intervención. A lo largo de seis sesiones se revisan los
+modelos conceptuales de diagnóstico, el diseño metodológico del proceso,
+las técnicas cuantitativas (encuestas organizacionales y análisis
+psicométrico de cuestionarios) y cualitativas (entrevistas, grupos
+focales, codificación), y el análisis, integración y comunicación de
+resultados.
+
+**Profesor**: [René Gempp](https://www.gempp.cl)
+([rene.gempp\@udp.cl](mailto:rene.gempp@udp.cl)) **Sesiones**: 6
+sesiones de 4 horas (24 horas); viernes y miércoles de 18:00 a 22:00 hrs
+online por Zoom, sábados de 9:30 a 13:30 hrs presencial **Software**:
+[JASP](https://jasp-stats.org/) (gratuito; instalarlo antes de la sesión
+5) **Prerrequisitos**: No tiene.
+
+## Resultados de Aprendizaje
+
+Al aprobar el curso, los estudiantes serán capaces de:
+
+- Describir el propósito, los modelos y las dimensiones del diagnóstico
+  organizacional, y situarlo dentro del sistema de control de gestión.
+- Diseñar un proceso diagnóstico (problema, objetivos, variables,
+  alcance, enfoque metodológico, resguardos éticos) y aplicar técnicas
+  cualitativas de recolección y análisis de información organizacional.
+- Construir, adaptar y aplicar cuestionarios para medir variables
+  individuales, grupales y organizacionales con fines diagnósticos, y
+  evaluar su calidad psicométrica.
+- Analizar, interpretar y comunicar los resultados de un diagnóstico,
+  integrando información cuantitativa y cualitativa, y traducirlos en
+  indicadores y tableros de control de las variables organizacionales.
+
+## Calendario de Clases
+
+*Este calendario es tentativo y puede estar sujeto a cambios en caso de
+imprevistos.*
+
++--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
+| Sesión | Fecha       | Contenido                 | Tipo       | Material complementario\*                                                    |
++:======:+:===========:+:==========================+:===========+:============================================================================:+
+| 1      | vie 06-11   | Fundamentos y modelos de  | Clase      | [Apunte 1: Fundamentos y modelos de diagnóstico                              |
+|        |             | diagnóstico               | online     | organizacional](A1_Fundamentos_y_modelos_de_diagnostico_organizacional.html) |
+|        | 18:00–22:00 | organizacional:           | (Zoom)     |                                                                              |
+|        |             | paradigmas, modelos       |            | [Laboratorio interactivo sesión 1: síntomas y causas, paradigmas, modelos,   |
+|        |             | clásicos, el diagnóstico  |            | tipos de control](Laboratorio_Sesion_1.html)                                 |
+|        |             | en el sistema de control  |            |                                                                              |
+|        |             | de gestión                |            |                                                                              |
++--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
+| 2      | sáb 07-11   | Diseño metodológico del   | Clase      | [Apunte 2: Diseño del proceso                                                |
+|        |             | proceso diagnóstico:      | presencial | diagnóstico](A2_Diseno_del_proceso_diagnostico.html)                         |
+|        | 9:30–13:30  | problema presentado y     |            |                                                                              |
+|        |             | real, objetivos,          |            | [Laboratorio interactivo sesión 2: diseño del proceso                        |
+|        |             | variables e indicadores,  |            | diagnóstico](Laboratorio_Sesion_2.html)                                      |
+|        |             | enfoques, ética, análisis |            |                                                                              |
+|        |             | de flujos de Porras       |            |                                                                              |
++--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
+| 3      | mié 11-11   | Encuestas                 | Clase      | [Apunte 3: Encuestas organizacionales y diseño de                            |
+|        |             | organizacionales y diseño | online     | cuestionarios](A3_Encuestas_organizacionales_y_diseno_de_cuestionarios.html) |
+|        | 18:00–22:00 | de cuestionarios: la      | (Zoom)     |                                                                              |
+|        |             | encuesta como sistema de  |            | [Apunte 0: Guía rápida de JASP para diagnóstico                              |
+|        |             | monitoreo, redacción de   |            | organizacional](A0_Guia_rapida_JASP.html)                                    |
+|        |             | ítems, instrumentos       |            |                                                                              |
+|        |             | estandarizados, fuentes   |            | [Laboratorio interactivo sesión 3: del ítem al indicador, error de encuesta, |
+|        |             | de error                  |            | fiabilidad y validez](Laboratorio_Sesion_3.html)                             |
++--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
+| 4      | vie 13-11   | Técnicas cualitativas:    | Clase      | Apunte 4                                                                     |
+|        |             | entrevistas, grupos       | online     |                                                                              |
+|        | 18:00–22:00 | focales, observación y    | (Zoom)     |                                                                              |
+|        |             | análisis documental;      |            |                                                                              |
+|        |             | codificación abierta,     |            |                                                                              |
+|        |             | axial y selectiva         |            |                                                                              |
++--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
+| 5      | vie 20-11   | Análisis psicométrico de  | Clase      | Apunte 5                                                                     |
+|        |             | cuestionarios:            | online     |                                                                              |
+|        | 18:00–22:00 | descriptivos de ítems,    | (Zoom)     |                                                                              |
+|        |             | dimensionalidad,          |            |                                                                              |
+|        |             | confiabilidad,            |            |                                                                              |
+|        |             | puntuaciones; la          |            |                                                                              |
+|        |             | psicometría como control  |            |                                                                              |
+|        |             | de calidad de los         |            |                                                                              |
+|        |             | indicadores               |            |                                                                              |
++--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
+| 6      | sáb 21-11   | Análisis de resultados,   | Clase      | Apunte 6                                                                     |
+|        |             | tableros de control y     | presencial |                                                                              |
+|        | 9:30–13:30  | comunicación: métricas de |            | Guía del examen final                                                        |
+|        |             | personas, análisis por    |            |                                                                              |
+|        |             | subgrupos, integración    |            |                                                                              |
+|        |             | cuantitativa-cualitativa, |            |                                                                              |
+|        |             | tablero de personas,      |            |                                                                              |
+|        |             | informe y devolución.     |            |                                                                              |
+|        |             | **Entrega del examen      |            |                                                                              |
+|        |             | final**                   |            |                                                                              |
++--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
+
+\* Todo el material oficial del curso (presentaciones, enunciados de los
+controles, bases de datos, examen) está disponible en la página oficial
+del curso en Canvas. En esta columna se listan únicamente los apuntes y
+laboratorios complementarios, que se agregan a medida que se publican.
+
+## Evaluación
+
++------------------+-------------+---------------------+-------------+
+| Componente       | Cuándo      | Formato             | Peso        |
++:=================+:===========:+:====================+:===========:+
+| Trabajos         | Sesiones 1  | Grupal, en clases;  | 60%         |
+| grupales en      | a 6         | grupos estables de  |             |
+| clases (6, uno   |             | 3 a 4 personas. Se  |             |
+| por sesión)      |             | promedian las 5     |             |
+|                  |             | mejores             |             |
+|                  |             | calificaciones de   |             |
+|                  |             | las 6               |             |
++------------------+-------------+---------------------+-------------+
+| Examen final     | Se entrega  | Individual o en     | 40%         |
+|                  | el 21-11;   | parejas, no         |             |
+|                  | plazo dom   | presencial          |             |
+|                  | 06-12,      |                     |             |
+|                  | 23:59 hrs   |                     |             |
++------------------+-------------+---------------------+-------------+
+
+Todos los trabajos grupales tienen solución abierta y se entregan en
+Canvas al terminar la actividad, en formato PPT o PDF. El examen final
+consiste en el análisis de un caso real con datos de una encuesta
+organizacional; se entrega en la sesión 6 y se sube a Canvas hasta el
+domingo 6 de diciembre de 2026, 23:59 hrs.
+
+## Política de Uso de Inteligencia Artificial (IA)
+
+En los trabajos grupales en clases y en el examen final se puede usar IA
+generativa como apoyo (comprender conceptos, revisar redacción, explorar
+alternativas de análisis), con dos condiciones: cada entrega declara en
+una línea qué herramienta se usó y para qué, y el grupo o la persona es
+responsable de verificar todo lo que entrega. Las referencias, los
+resultados de análisis y las citas generados por IA deben comprobarse
+contra las fuentes; una referencia inexistente o un resultado no
+reproducible en JASP se evalúa como error del autor.
+
+## Comunicación
+
+Para dudas puntuales, escribe a
+[rene.gempp\@udp.cl](mailto:rene.gempp@udp.cl) desde tu correo
+institucional, con asunto **DIAGNÓSTICO ORGANIZACIONAL MCG**. Las
+reuniones por Zoom se agendan por correo.
+
+## Bibliografía
+
+### Textos de referencia
+
+- Alderfer, C. P. (2011). *The practice of organizational diagnosis:
+  Theory and methods*. Oxford University Press.
+- Cummings, T. G. & Worley, C. G. (2014). *Organization development and
+  change* (10ª ed.). Cengage Learning.
+- Harrison, M. I. (2004). *Diagnosing organizations: Methods, models,
+  and processes* (3ª ed.). Sage.
+- Rodríguez, D. (2009). *Diagnóstico organizacional*. Ediciones
+  Universidad Católica de Chile.
+
+### Encuestas, medición y análisis
+
+- Borg, I. & Mastrangelo, P. M. (2008). *Employee surveys in management:
+  Theories, tools, and practical applications*. Hogrefe.
+- DeVellis, R. F. & Thorpe, C. T. (2022). *Scale development: Theory and
+  applications* (5ª ed.). Sage.
+- Fields, D. L. (2002). *Taking the measure of work: A guide to
+  validated scales for organizational research and diagnosis*. Sage.
+- Porras, J. I. (1987). *Stream analysis: A powerful way to diagnose and
+  manage organizational change*. Addison-Wesley.
+
+### Control de gestión y cambio organizacional
+
+- Becker, B. E., Huselid, M. A. & Ulrich, D. (2001). *The HR scorecard:
+  Linking people, strategy, and performance*. Harvard Business School
+  Press.
+- Burke, W. W. (2017). *Organization change: Theory and practice* (5ª
+  ed.). Sage.
+- Kaplan, R. S. & Norton, D. P. (1996). *The balanced scorecard:
+  Translating strategy into action*. Harvard Business School Press.
+- Merchant, K. A. & Van der Stede, W. A. (2017). *Management control
+  systems: Performance measurement, evaluation and incentives* (4ª ed.).
+  Pearson.
+- Simons, R. (1995). *Levers of control: How managers use innovative
+  control systems to drive strategic renewal*. Harvard Business School
+  Press.

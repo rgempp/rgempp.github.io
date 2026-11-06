@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Diagnóstico Organizacional – René Gempp</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-9e0b913096b4405525fd8b9c824cf29a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../../custom.css">
+<meta property="og:title" content="Diagnóstico Organizacional – René Gempp">
+<meta property="og:description" content="Magíster en Control de Gestión · FAE, Universidad Diego Portales · 2-2026">
+<meta property="og:site_name" content="René Gempp">
+<meta name="twitter:title" content="Diagnóstico Organizacional – René Gempp">
+<meta name="twitter:description" content="Magíster en Control de Gestión · FAE, Universidad Diego Portales · 2-2026">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">René Gempp</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-research" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Research</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-research">    
+        <li>
+    <a class="dropdown-item" href="../../publications.html">
+ <span class="dropdown-text">Publications</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../grants.html">
+ <span class="dropdown-text">Grants &amp; Projects</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-teaching" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Teaching</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-teaching">    
+        <li>
+    <a class="dropdown-item" href="../../teaching-courses.html">
+ <span class="dropdown-text">Courses</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../teaching-workshops.html">
+ <span class="dropdown-text">Workshops</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../teaching-tutorials.html">
+ <span class="dropdown-text">Tutorials &amp; Lecture Notes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../teaching-supervision.html">
+ <span class="dropdown-text">Thesis Supervision</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../tests-scales.html"> 
+<span class="menu-text">Tests &amp; Scales</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../software.html"> 
+<span class="menu-text">Software &amp; Code</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../service-consulting.html"> 
+<span class="menu-text">Service &amp; Consulting</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:rene.gempp@udp.cl"> <i class="bi bi-envelope" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/rgempp"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://scholar.google.com/citations?user=pyyrrFMAAAAJ&amp;hl=es&amp;oi=ao"> <i class="bi bi-mortarboard" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#descripción" id="toc-descripción" class="nav-link active" data-scroll-target="#descripción">Descripción</a></li>
+  <li><a href="#resultados-de-aprendizaje" id="toc-resultados-de-aprendizaje" class="nav-link" data-scroll-target="#resultados-de-aprendizaje">Resultados de Aprendizaje</a></li>
+  <li><a href="#calendario-de-clases" id="toc-calendario-de-clases" class="nav-link" data-scroll-target="#calendario-de-clases">Calendario de Clases</a></li>
+  <li><a href="#evaluación" id="toc-evaluación" class="nav-link" data-scroll-target="#evaluación">Evaluación</a></li>
+  <li><a href="#política-de-uso-de-inteligencia-artificial-ia" id="toc-política-de-uso-de-inteligencia-artificial-ia" class="nav-link" data-scroll-target="#política-de-uso-de-inteligencia-artificial-ia">Política de Uso de Inteligencia Artificial (IA)</a></li>
+  <li><a href="#comunicación" id="toc-comunicación" class="nav-link" data-scroll-target="#comunicación">Comunicación</a></li>
+  <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">Bibliografía</a>
+  <ul class="collapse">
+  <li><a href="#textos-de-referencia" id="toc-textos-de-referencia" class="nav-link" data-scroll-target="#textos-de-referencia">Textos de referencia</a></li>
+  <li><a href="#encuestas-medición-y-análisis" id="toc-encuestas-medición-y-análisis" class="nav-link" data-scroll-target="#encuestas-medición-y-análisis">Encuestas, medición y análisis</a></li>
+  <li><a href="#control-de-gestión-y-cambio-organizacional" id="toc-control-de-gestión-y-cambio-organizacional" class="nav-link" data-scroll-target="#control-de-gestión-y-cambio-organizacional">Control de gestión y cambio organizacional</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Diagnóstico Organizacional</h1>
+<p class="subtitle lead">Magíster en Control de Gestión · FAE, Universidad Diego Portales · 2-2026</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Página oficial del curso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Todo el material oficial del curso (programa, presentaciones, enunciados de los controles, bases de datos, examen final) está disponible en la página del curso en Canvas. <!-- TODO: agregar URL de Canvas cuando esté creada la página del curso --></p>
+</div>
+</div>
+<section id="descripción" class="level2">
+<h2 class="anchored" data-anchor-id="descripción">Descripción</h2>
+<p>En el marco de la gestión basada en evidencia, el diagnóstico organizacional es el proceso analítico mediante el cual se examina la situación real de una organización, en un momento dado, para identificar problemas y áreas de oportunidad, con el fin de corregir los primeros y aprovechar las segundas. Es, por tanto, un insumo clave para el cambio planificado y para el diseño de intervenciones, tanto a nivel global como en ámbitos específicos de funcionamiento.</p>
+<p>Este curso, pensado para profesionales del control de gestión, aborda el diagnóstico como una herramienta del sistema de control de la organización: el mecanismo que produce información sobre las variables organizacionales que los controles financieros y operacionales no capturan (clima, cultura, liderazgo, compromiso, capacidades) y que permite convertirlas en indicadores, tableros de seguimiento y decisiones de intervención. A lo largo de seis sesiones se revisan los modelos conceptuales de diagnóstico, el diseño metodológico del proceso, las técnicas cuantitativas (encuestas organizacionales y análisis psicométrico de cuestionarios) y cualitativas (entrevistas, grupos focales, codificación), y el análisis, integración y comunicación de resultados.</p>
+<p><strong>Profesor</strong>: <a href="https://www.gempp.cl">René Gempp</a> (<a href="mailto:rene.gempp@udp.cl">rene.gempp@udp.cl</a>) <strong>Sesiones</strong>: 6 sesiones de 4 horas (24 horas); viernes y miércoles de 18:00 a 22:00 hrs online por Zoom, sábados de 9:30 a 13:30 hrs presencial <strong>Software</strong>: <a href="https://jasp-stats.org/">JASP</a> (gratuito; instalarlo antes de la sesión 5) <strong>Prerrequisitos</strong>: No tiene.</p>
+</section>
+<section id="resultados-de-aprendizaje" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-de-aprendizaje">Resultados de Aprendizaje</h2>
+<p>Al aprobar el curso, los estudiantes serán capaces de:</p>
+<ul>
+<li>Describir el propósito, los modelos y las dimensiones del diagnóstico organizacional, y situarlo dentro del sistema de control de gestión.</li>
+<li>Diseñar un proceso diagnóstico (problema, objetivos, variables, alcance, enfoque metodológico, resguardos éticos) y aplicar técnicas cualitativas de recolección y análisis de información organizacional.</li>
+<li>Construir, adaptar y aplicar cuestionarios para medir variables individuales, grupales y organizacionales con fines diagnósticos, y evaluar su calidad psicométrica.</li>
+<li>Analizar, interpretar y comunicar los resultados de un diagnóstico, integrando información cuantitativa y cualitativa, y traducirlos en indicadores y tableros de control de las variables organizacionales.</li>
+</ul>
+</section>
+<section id="calendario-de-clases" class="level2">
+<h2 class="anchored" data-anchor-id="calendario-de-clases">Calendario de Clases</h2>
+<p><em>Este calendario es tentativo y puede estar sujeto a cambios en caso de imprevistos.</em></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Sesión</th>
+<th style="text-align: center;">Fecha</th>
+<th style="text-align: left;">Contenido</th>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: center;">Material complementario*</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><p>vie 06-11</p>
+<p>18:00–22:00</p></td>
+<td style="text-align: left;">Fundamentos y modelos de diagnóstico organizacional: paradigmas, modelos clásicos, el diagnóstico en el sistema de control de gestión</td>
+<td style="text-align: left;">Clase online (Zoom)</td>
+<td style="text-align: center;"><p><a href="A1_Fundamentos_y_modelos_de_diagnostico_organizacional.html">Apunte 1: Fundamentos y modelos de diagnóstico organizacional</a></p>
+<p><a href="Laboratorio_Sesion_1.html">Laboratorio interactivo sesión 1: síntomas y causas, paradigmas, modelos, tipos de control</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"><p>sáb 07-11</p>
+<p>9:30–13:30</p></td>
+<td style="text-align: left;">Diseño metodológico del proceso diagnóstico: problema presentado y real, objetivos, variables e indicadores, enfoques, ética, análisis de flujos de Porras</td>
+<td style="text-align: left;">Clase presencial</td>
+<td style="text-align: center;"><p><a href="A2_Diseno_del_proceso_diagnostico.html">Apunte 2: Diseño del proceso diagnóstico</a></p>
+<p><a href="Laboratorio_Sesion_2.html">Laboratorio interactivo sesión 2: diseño del proceso diagnóstico</a></p></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"><p>mié 11-11</p>
+<p>18:00–22:00</p></td>
+<td style="text-align: left;">Encuestas organizacionales y diseño de cuestionarios: la encuesta como sistema de monitoreo, redacción de ítems, instrumentos estandarizados, fuentes de error</td>
+<td style="text-align: left;">Clase online (Zoom)</td>
+<td style="text-align: center;"><p><a href="A3_Encuestas_organizacionales_y_diseno_de_cuestionarios.html">Apunte 3: Encuestas organizacionales y diseño de cuestionarios</a></p>
+<p><a href="A0_Guia_rapida_JASP.html">Apunte 0: Guía rápida de JASP para diagnóstico organizacional</a></p>
+<p><a href="Laboratorio_Sesion_3.html">Laboratorio interactivo sesión 3: del ítem al indicador, error de encuesta, fiabilidad y validez</a></p></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"><p>vie 13-11</p>
+<p>18:00–22:00</p></td>
+<td style="text-align: left;">Técnicas cualitativas: entrevistas, grupos focales, observación y análisis documental; codificación abierta, axial y selectiva</td>
+<td style="text-align: left;">Clase online (Zoom)</td>
+<td style="text-align: center;">Apunte 4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"><p>vie 20-11</p>
+<p>18:00–22:00</p></td>
+<td style="text-align: left;">Análisis psicométrico de cuestionarios: descriptivos de ítems, dimensionalidad, confiabilidad, puntuaciones; la psicometría como control de calidad de los indicadores</td>
+<td style="text-align: left;">Clase online (Zoom)</td>
+<td style="text-align: center;">Apunte 5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"><p>sáb 21-11</p>
+<p>9:30–13:30</p></td>
+<td style="text-align: left;">Análisis de resultados, tableros de control y comunicación: métricas de personas, análisis por subgrupos, integración cuantitativa-cualitativa, tablero de personas, informe y devolución. <strong>Entrega del examen final</strong></td>
+<td style="text-align: left;">Clase presencial</td>
+<td style="text-align: center;"><p>Apunte 6</p>
+<p>Guía del examen final</p></td>
+</tr>
+</tbody>
+</table>
+<p>* Todo el material oficial del curso (presentaciones, enunciados de los controles, bases de datos, examen) está disponible en la página oficial del curso en Canvas. En esta columna se listan únicamente los apuntes y laboratorios complementarios, que se agregan a medida que se publican.</p>
+</section>
+<section id="evaluación" class="level2">
+<h2 class="anchored" data-anchor-id="evaluación">Evaluación</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 19%">
+<col style="width: 30%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Componente</th>
+<th style="text-align: center;">Cuándo</th>
+<th style="text-align: left;">Formato</th>
+<th style="text-align: center;">Peso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Trabajos grupales en clases (6, uno por sesión)</td>
+<td style="text-align: center;">Sesiones 1 a 6</td>
+<td style="text-align: left;">Grupal, en clases; grupos estables de 3 a 4 personas. Se promedian las 5 mejores calificaciones de las 6</td>
+<td style="text-align: center;">60%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Examen final</td>
+<td style="text-align: center;">Se entrega el 21-11; plazo dom 06-12, 23:59 hrs</td>
+<td style="text-align: left;">Individual o en parejas, no presencial</td>
+<td style="text-align: center;">40%</td>
+</tr>
+</tbody>
+</table>
+<p>Todos los trabajos grupales tienen solución abierta y se entregan en Canvas al terminar la actividad, en formato PPT o PDF. El examen final consiste en el análisis de un caso real con datos de una encuesta organizacional; se entrega en la sesión 6 y se sube a Canvas hasta el domingo 6 de diciembre de 2026, 23:59 hrs.</p>
+</section>
+<section id="política-de-uso-de-inteligencia-artificial-ia" class="level2">
+<h2 class="anchored" data-anchor-id="política-de-uso-de-inteligencia-artificial-ia">Política de Uso de Inteligencia Artificial (IA)</h2>
+<p>En los trabajos grupales en clases y en el examen final se puede usar IA generativa como apoyo (comprender conceptos, revisar redacción, explorar alternativas de análisis), con dos condiciones: cada entrega declara en una línea qué herramienta se usó y para qué, y el grupo o la persona es responsable de verificar todo lo que entrega. Las referencias, los resultados de análisis y las citas generados por IA deben comprobarse contra las fuentes; una referencia inexistente o un resultado no reproducible en JASP se evalúa como error del autor.</p>
+</section>
+<section id="comunicación" class="level2">
+<h2 class="anchored" data-anchor-id="comunicación">Comunicación</h2>
+<p>Para dudas puntuales, escribe a <a href="mailto:rene.gempp@udp.cl">rene.gempp@udp.cl</a> desde tu correo institucional, con asunto <strong>DIAGNÓSTICO ORGANIZACIONAL MCG</strong>. Las reuniones por Zoom se agendan por correo.</p>
+</section>
+<section id="bibliografía" class="level2">
+<h2 class="anchored" data-anchor-id="bibliografía">Bibliografía</h2>
+<section id="textos-de-referencia" class="level3">
+<h3 class="anchored" data-anchor-id="textos-de-referencia">Textos de referencia</h3>
+<ul>
+<li>Alderfer, C. P. (2011). <em>The practice of organizational diagnosis: Theory and methods</em>. Oxford University Press.</li>
+<li>Cummings, T. G. &amp; Worley, C. G. (2014). <em>Organization development and change</em> (10ª ed.). Cengage Learning.</li>
+<li>Harrison, M. I. (2004). <em>Diagnosing organizations: Methods, models, and processes</em> (3ª ed.). Sage.</li>
+<li>Rodríguez, D. (2009). <em>Diagnóstico organizacional</em>. Ediciones Universidad Católica de Chile.</li>
+</ul>
+</section>
+<section id="encuestas-medición-y-análisis" class="level3">
+<h3 class="anchored" data-anchor-id="encuestas-medición-y-análisis">Encuestas, medición y análisis</h3>
+<ul>
+<li>Borg, I. &amp; Mastrangelo, P. M. (2008). <em>Employee surveys in management: Theories, tools, and practical applications</em>. Hogrefe.</li>
+<li>DeVellis, R. F. &amp; Thorpe, C. T. (2022). <em>Scale development: Theory and applications</em> (5ª ed.). Sage.</li>
+<li>Fields, D. L. (2002). <em>Taking the measure of work: A guide to validated scales for organizational research and diagnosis</em>. Sage.</li>
+<li>Porras, J. I. (1987). <em>Stream analysis: A powerful way to diagnose and manage organizational change</em>. Addison-Wesley.</li>
+</ul>
+</section>
+<section id="control-de-gestión-y-cambio-organizacional" class="level3">
+<h3 class="anchored" data-anchor-id="control-de-gestión-y-cambio-organizacional">Control de gestión y cambio organizacional</h3>
+<ul>
+<li>Becker, B. E., Huselid, M. A. &amp; Ulrich, D. (2001). <em>The HR scorecard: Linking people, strategy, and performance</em>. Harvard Business School Press.</li>
+<li>Burke, W. W. (2017). <em>Organization change: Theory and practice</em> (5ª ed.). Sage.</li>
+<li>Kaplan, R. S. &amp; Norton, D. P. (1996). <em>The balanced scorecard: Translating strategy into action</em>. Harvard Business School Press.</li>
+<li>Merchant, K. A. &amp; Van der Stede, W. A. (2017). <em>Management control systems: Performance measurement, evaluation and incentives</em> (4ª ed.). Pearson.</li>
+<li>Simons, R. (1995). <em>Levers of control: How managers use innovative control systems to drive strategic renewal</em>. Harvard Business School Press.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/gempp\.cl");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© 2026 René Gempp</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

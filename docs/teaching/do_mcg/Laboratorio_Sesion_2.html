@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de la sesión 2 · Diagnóstico Organizacional MCG UDP</title>
+<meta name="description" content="Laboratorio interactivo: problema presentado y real, objetivos, variables e indicadores, diseño mixto, ética y análisis de flujos de Porras. Curso Diagnóstico Organizacional, MCG UDP.">
+<meta name="author" content="René Gempp">
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  .pregunta label.opc{display:flex;gap:.5rem;align-items:flex-start}
+  .pregunta label.opc input{margin-top:.25rem}
+  .clasif table{margin:.4rem 0 .6rem}
+
+  /* Porras (estación 5) */
+  .porras-item{border:1px solid var(--borde);border-radius:.5rem;padding:.7rem .9rem;margin:0 0 .6rem;background:#fff}
+  .porras-item .enun{margin:0 0 .5rem;font-weight:600}
+  .porras-item .sel{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  @media (max-width:560px){.porras-item .sel{grid-template-columns:1fr}}
+  .porras-item label{display:block;font-size:.75rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gris);margin-bottom:.2rem}
+  .porras-item select{width:100%;font:inherit;padding:.35rem .5rem;border:1px solid var(--borde);border-radius:.4rem;background:#fff;color:var(--tinta)}
+  .porras-item.bien{border-color:var(--verde);background:var(--verde-claro)} .porras-item.mal{border-color:var(--rojo);background:var(--tinte)}
+  .porras-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.4rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0 1rem}
+  @media (max-width:640px){.porras-grid{grid-template-columns:repeat(2,1fr)}}
+  .pcol{border:1px dashed var(--borde);border-radius:.4rem;padding:.4rem;min-height:5rem;min-width:0}
+  .pcol h4{margin:0 0 .4rem;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gris)}
+  .pbox{border-radius:.3rem;padding:.3rem .4rem;margin:.25rem 0;line-height:1.25}
+  .pbox.S{background:var(--gris-claro)} .pbox.B{background:var(--azul);color:#fff} .pbox.F{background:var(--rojo);color:#fff}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Sesión 2</p>
+  <h1>Del problema presentado al diseño diagnóstico: objetivos, variables, indicadores y análisis de flujos</h1>
+  <p class="meta">Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026 · Acompaña a la sesión 2 (sábado 07-11-2026) y al apunte 2<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+<nav class="estaciones" id="nav"></nav>
+
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Cinco estaciones, cada una con algo que clasificar, decidir o construir, y preguntas de cierre con retroalimentación. El hilo es el de la sesión: la demanda de un cliente se convierte en un diseño diagnóstico defendible, y ese diseño termina diciendo qué hay que poner en el tablero. Los ejercicios usan los cuatro casos del curso (TechNova, Muebles del Sur, EcoAcción y Hospital Regional).</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. Problema presentado y problema real.</strong> Distinguir síntomas, causas accionables y juicios, y verificar cada eslabón de una cadena de porqués (TechNova).</div>
+    <div class="caja"><strong>2. Objetivos y preguntas.</strong> Reconocer objetivos diagnósticos, interventivos y vagos, y clasificar preguntas por el tipo de relación que plantean.</div>
+    <div class="caja"><strong>3. Variables, niveles e indicadores.</strong> Ubicar variables en su nivel, completar la ficha que convierte un dato en indicador de control y separar leading de lagging.</div>
+    <div class="caja"><strong>4. Enfoque y ética.</strong> Elegir la secuencia del diseño mixto que cada caso justifica y decidir qué se puede prometer a los participantes.</div>
+    <div class="caja"><strong>5. Análisis de flujos de Porras.</strong> Clasificar diez problemas de TechNova por corriente y por tipo; el diagrama se dibuja con sus respuestas y se compara con la solución propuesta.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 40 a 50 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en el apunte 2.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Problema presentado y problema real</h2>
+  <p>El <b>problema presentado</b> es la formulación con que llega el cliente, casi siempre un síntoma. El <b>problema real</b> es la condición que lo produce; se formula como hipótesis y el diagnóstico la contrasta. La cadena de porqués lleva de uno a otro, con una condición: cada eslabón debe poder verificarse con un dato.</p>
+  <h3>A. Clasifica: síntoma, causa accionable o juicio</h3>
+  <p class="mini">Síntoma: efecto visible, lo que el tablero ya mide. Causa accionable: condición verificable sobre la que la organización puede actuar. Juicio: atribución a la actitud o la cultura, no verificable ni accionable tal como está.</p>
+  <div id="c1"></div>
+  <h3>B. Cinco porqués verificables (TechNova)</h3>
+  <p class="mini">Para cada eslabón de la cadena, elige con qué dato o fuente se verificaría la respuesta.</p>
+  <div id="p1"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Objetivos y preguntas diagnósticas</h2>
+  <p>El objetivo general dice qué se quiere comprender; los específicos descomponen el general en componentes ligados a variables; las preguntas se contestan con una técnica. Los verbos distinguen diagnóstico de intervención, y el tipo de pregunta (descriptiva, relacional, causal) determina el diseño y la fuerza de la conclusión.</p>
+  <h3>A. Clasifica: diagnóstico, intervención o vago</h3>
+  <div id="c2"></div>
+  <h3>B. Tipo de pregunta</h3>
+  <p class="mini">Descriptiva: cuánto hay de una variable. Relacional: cómo covarían dos variables en los mismos casos (incluida la comparación de grupos). Causal: efecto de una variable sobre otra. No es diagnóstica: es una decisión que hay que reformular.</p>
+  <div id="c2b"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Variables, niveles e indicadores</h2>
+  <p>Las variables existen en un nivel (individuo, grupo, organización) y se concluyen en ese nivel. Una variable diagnóstica describe; un indicador de control compromete: pasa de dato a control cuando tiene definición operacional, fuente, frecuencia, unidad, meta, responsable, acción y retroalimentación. Los indicadores de resultado (lagging) llegan tarde; los de proceso (leading) anticipan.</p>
+  <h3>A. Nivel de análisis</h3>
+  <div id="c3"></div>
+  <h3>B. ¿Dato o indicador? Qué falta en la ficha</h3>
+  <div id="m3"></div>
+  <h3>C. Leading o lagging</h3>
+  <div id="c3b"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<section class="estacion" id="e4">
+  <h2>Estación 4 · Enfoque metodológico y ética</h2>
+  <p>En diagnóstico organizacional el diseño mixto es la norma; lo que se decide es la secuencia: exploratorio (cuali → cuanti), explicativo (cuanti → cuali) o convergente (en paralelo). La ética no es un anexo: el uso previsto de los resultados decide el consentimiento, el anonimato posible y la validez de las respuestas.</p>
+  <h3>A. Secuencia del diseño mixto</h3>
+  <div id="c4"></div>
+  <h3>B. Qué se puede prometer</h3>
+  <div id="c4b"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Análisis de flujos de Porras</h2>
+  <p>Diez problemas del caso TechNova. Para cada uno, asigna la <b>corriente</b> (arreglos organizacionales, factores sociales, tecnología, ambiente físico) y el <b>tipo</b> según su posición en la red causal: síntoma (solo recibe flechas), básico (recibe y emite), fundamental (emite y casi no recibe). El diagrama se dibuja con tus respuestas; al completar los diez aparece la solución propuesta y la lectura del núcleo.</p>
+  <h3>A. Clasifica los problemas</h3>
+  <div id="p5"></div>
+  <div id="porras-view"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q5"></div>
+</section>
+
+<section class="estacion" id="e6">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div class="caja">
+    <strong>Lo que conviene llevarse a la sesión 3</strong>
+    <ul>
+      <li>El problema presentado se registra textualmente; el problema real se formula como hipótesis a partir de una cadena de porqués cuyos eslabones deben ser verificables.</li>
+      <li>Los verbos distinguen diagnóstico de intervención; cada pregunta diagnóstica nombra una variable y un nivel.</li>
+      <li>Una variable se convierte en indicador de control cuando tiene fuente, frecuencia, unidad, meta, responsable y acción; los leading anticipan, los lagging llegan tarde.</li>
+      <li>Mixto sin secuencia no es una decisión de diseño; cada objetivo necesita dos fuentes.</li>
+      <li>El diagrama de flujos separa síntomas, básicos y fundamentales; el indicador leading se define sobre el núcleo.</li>
+    </ul>
+  </div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas. El avance se guarda solo en este navegador.
+</footer>
+</div>
+<script>
+// ===================== ESTADO Y NAVEGACIÓN (mismo patrón que lab_personalidad) =====================
+const CLAVE = "lab_do_s2_v1";
+const NOMBRES = ["Inicio", "1 · Problema real", "2 · Objetivos y preguntas", "3 · Variables e indicadores", "4 · Enfoque y ética", "5 · Análisis de flujos", "Ficha de salida"];
+const EST = [1,2,3,4,5];
+
+const estado = { hechas: {}, resp: {} };
+function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(CLAVE); if(s) Object.assign(estado, JSON.parse(s)); }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+function pintarNav(){
+  const nav = document.getElementById("nav"); nav.innerHTML = "";
+  NOMBRES.forEach((n,i)=>{ const b = document.createElement("button"); b.textContent = n;
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista");
+    b.onclick = ()=>ir(i); nav.appendChild(b); });
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de ${EST.length}`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa"));
+  document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===NOMBRES.length-1) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem(CLAVE); }catch(e){} location.reload(); }
+
+// ===================== COMPONENTES =====================
+// Cada estación puede tener varios componentes; se marca cuando todos terminan.
+const PEND = {};
+function registrar(est, id){ PEND[est] = PEND[est] || new Set(); PEND[est].add(id); }
+function terminar(est, id){ PEND[est].delete(id); if(PEND[est].size===0) marcar(est); }
+
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId);
+  let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.q}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(+s.dataset.j===it.ok ? "correcta" : "incorrecta");
+      d.querySelectorAll(".opc")[it.ok].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb;
+      estado.resp[contId+"_"+k] = +s.dataset.j; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+function clasificador(contId, cats, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "clasif";
+    d.innerHTML = `<p class="enun">${it.t}</p><div class="cats">` + cats.map(c=>`<span class="cat" data-c="${c}">${c}</span>`).join("") + `</div><div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".cat").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(s.dataset.c===it.c ? "correcta" : "incorrecta");
+      d.querySelector(`.cat[data-c="${it.c}"]`).classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+// multisel: items = [{t, opts:[...], ok:[índices], fb}] ; el usuario marca varias y comprueba
+function multisel(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.t}</strong></p><p class="mini">Marca todas las condiciones que faltan y comprueba.</p>` +
+      it.opts.map((o,j)=>`<label class="opc"><input type="checkbox" data-j="${j}"> ${o}</label>`).join("") +
+      `<button class="btn" style="margin-top:.5rem">Comprobar</button><div class="feedback" style="display:none"></div>`;
+    d.querySelector("button").onclick = ()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      const marcadas = [...d.querySelectorAll("input")].filter(i=>i.checked).map(i=>+i.dataset.j);
+      d.querySelectorAll(".opc").forEach((l,j)=>{ const esOk = it.ok.includes(j); const m = marcadas.includes(j);
+        if(esOk) l.classList.add("correcta"); if(m && !esOk) l.classList.add("incorrecta"); l.querySelector("input").disabled = true; });
+      const aciertos = it.ok.filter(j=>marcadas.includes(j)).length; const extra = marcadas.filter(j=>!it.ok.includes(j)).length;
+      const f = d.querySelector(".feedback"); f.style.display = "block";
+      f.innerHTML = `<b>${aciertos} de ${it.ok.length} condiciones faltantes identificadas${extra?`, ${extra} marcada${extra>1?"s":""} de más`:""}.</b> ${it.fb}`;
+      d.querySelector("button").disabled = true; guardar(); if(hechas===items.length) terminar(estacion, contId);
+    };
+    cont.appendChild(d);
+  });
+}
+function pintarFicha(){
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas: ${k} de ${EST.length}.</strong> ` + (k===EST.length ? "Laboratorio completo." : "Faltan: " + EST.filter(e=>!estado.hechas[e]).map(e=>NOMBRES[e]).join(", ") + ".");
+}
+
+// porras: dos selects por problema; diagrama con las respuestas; solución al completar
+function porras(contId, viewId, cols, tipos, items, estacion){
+  const cont = document.getElementById(contId), view = document.getElementById(viewId); cont.innerHTML = ""; registrar(estacion, contId);
+  const sels = []; let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "porras-item";
+    d.innerHTML = `<p class="enun">${k+1}. ${it.t}</p><div class="sel"><div><label>Corriente</label><select data-s="c"><option value="">Elegir…</option>${cols.map((c,i)=>`<option value="${i}">${c}</option>`).join("")}</select></div><div><label>Tipo</label><select data-s="t"><option value="">Elegir…</option>${tipos.map((c,i)=>`<option value="${i}">${c}</option>`).join("")}</select></div></div><div class="feedback" style="display:none"></div>`;
+    const sc = d.querySelector('[data-s="c"]'), st = d.querySelector('[data-s="t"]'); sels.push([sc, st]);
+    const check = ()=>{ if(sc.value===""||st.value==="") { dibujar(); return; }
+      if(d.dataset.done) { dibujar(); return; } d.dataset.done = 1; hechas++;
+      const ok = +sc.value===it.c && +st.value===it.tp; d.classList.add(ok ? "bien" : "mal"); sc.disabled = st.disabled = true;
+      const f = d.querySelector(".feedback"); f.style.display = "block";
+      f.innerHTML = (ok ? "<b>Correcto.</b> " : `<b>No.</b> Corriente: <b>${cols[it.c]}</b>; tipo: <b>${tipos[it.tp]}</b>. `) + it.fb;
+      estado.resp[contId+"_"+k] = [+sc.value, +st.value]; guardar(); dibujar(); if(hechas===items.length) terminar(estacion, contId); };
+    sc.onchange = check; st.onchange = check; cont.appendChild(d);
+  });
+  function dibujar(){
+    view.innerHTML = ""; const completo = sels.every(s=>s[0].value!==""&&s[1].value!=="");
+    [["Tu diagrama (con lo que has respondido)", i=>[sels[i][0].value, sels[i][1].value]], ["Solución propuesta", i=>[items[i].c, items[i].tp]]].forEach(([tit,get],gi)=>{
+      if(gi===1 && !completo) return;
+      const p = document.createElement("p"); p.className = "mini"; p.innerHTML = `<b>${tit}</b> · gris: síntoma · azul: básico · rojo: fundamental`; view.appendChild(p);
+      const g = document.createElement("div"); g.className = "porras-grid";
+      cols.forEach((c,ci)=>{ const col = document.createElement("div"); col.className = "pcol"; col.innerHTML = `<h4>${c}</h4>`;
+        [2,1,0].forEach(t=>items.forEach((it,i)=>{ const [cc,tt] = get(i); if(cc!=="" && +cc===ci && +tt===t){ const b = document.createElement("div"); b.className = "pbox "+"SBF"[t]; b.textContent = it.t; col.appendChild(b); } }));
+        g.appendChild(col); });
+      view.appendChild(g); });
+    if(completo){ const n = document.createElement("div"); n.className = "nota"; n.innerHTML = "<b>Lectura.</b> El núcleo es la ausencia de estructura de decisión entre cofundadores: emite hacia prioridades inestables, conflicto y diseño de cargos, y de ahí a rotación, bugs, tickets y ambiente. El indicador leading se define sobre el núcleo (proporción de decisiones de producto revertidas por trimestre); los lagging ya están en el sistema de control de TechNova (rotación por antigüedad, bugs por release, tiempo de tickets)."; view.appendChild(n); }
+  }
+  dibujar();
+}
+
+// ===================== DATOS =====================
+const CAT1 = ["Síntoma","Causa accionable","Juicio"]; const C1 = [{"t": "“Rotación de desarrolladores del 50% anual” (TechNova)", "c": "Síntoma", "fb": "Es lo que el tablero ya mide; la pregunta diagnóstica es por qué."}, {"t": "“Los trabajadores antiguos son resistentes al cambio” (Muebles del Sur)", "c": "Juicio", "fb": "Atribuye el problema a la actitud de un grupo; no es verificable ni accionable tal como está. La cadena de porqués debe seguir: ¿resistentes a qué, desde cuándo, ante qué señales?"}, {"t": "“Las decisiones de producto se revierten cada pocas semanas porque los cofundadores no coinciden” (TechNova)", "c": "Causa accionable", "fb": "Condición verificable (registro de decisiones) sobre la que se puede actuar (estructura de decisión)."}, {"t": "“Cuatro horas de espera promedio en urgencias” (Hospital Regional)", "c": "Síntoma", "fb": "Problema presentado por excelencia: la caja con más flechas entrantes en el diagrama de flujos."}, {"t": "“Falta de compromiso del personal”", "c": "Juicio", "fb": "Etiqueta global sin referente observable; suele esconder incentivos desalineados o decisiones opacas."}, {"t": "“La razón enfermera-paciente por turno supera el umbral de referencia en tres servicios”", "c": "Causa accionable", "fb": "Verificable con el sistema de turnos y accionable con dotación o redistribución."}, {"t": "“Voluntarios activos cayeron de 100 a 55 en ocho meses” (EcoAcción)", "c": "Síntoma", "fb": "Resultado ya ocurrido; indicador lagging."}, {"t": "“Las metas y KPI por programa se fijaron sin participación de los equipos y sin línea base” (EcoAcción)", "c": "Causa accionable", "fb": "Condición del sistema de control, verificable en documentos y actas; accionable."}, {"t": "“Mala comunicación entre áreas”", "c": "Juicio", "fb": "Demasiado general; detrás suele haber ausencia de una estructura de decisión o recursos en competencia."}, {"t": "“Tres sistemas (ficha, farmacia, agenda) no se comunican entre sí” (Hospital Regional)", "c": "Causa accionable", "fb": "Condición tecnológica verificable y accionable, aunque costosa."}]; const P1 = [{"q": "Eslabón 1. ¿Por qué se van los desarrolladores a los 14 meses? Porque las prioridades cambian cada pocas semanas y el trabajo hecho se desecha. ¿Con qué dato se verifica?", "opts": ["Historial de releases y de cambios en el backlog", "Encuesta de clima general", "Opinión del CEO en la reunión inicial", "No es verificable"], "ok": 0, "fb": "El backlog y el historial de releases muestran cuánto trabajo planificado se abandonó. Una encuesta de clima mediría una percepción global, no este hecho."}, {"q": "Eslabón 2. ¿Por qué cambian las prioridades? Porque las decisiones las toman los dos cofundadores y no coinciden en la dirección.", "opts": ["Entrevistas por separado a cada cofundador y registro de decisiones revertidas", "Encuesta a los clientes", "Los inversionistas lo afirman", "No es verificable"], "ok": 0, "fb": "Decisiones revertidas (actas, mensajes) más las dos versiones por separado. Lo que afirman los inversionistas es un dato sobre los inversionistas."}, {"q": "Eslabón 3. ¿Por qué no coinciden? Porque no existe un mecanismo para resolver el desacuerdo: ni directorio operativo ni roles definidos.", "opts": ["Documentos de gobierno (estatutos, actas, descripciones de cargo) y entrevistas a líderes de equipo", "Medir la satisfacción laboral", "Observar el ambiente en la oficina", "No es verificable"], "ok": 0, "fb": "La ausencia de un mecanismo se verifica en documentos y en cómo describen los líderes de equipo a quién obedecen cuando los fundadores difieren."}, {"q": "Eslabón 4. ¿Por qué no hay mecanismo? Porque la empresa pasó de 8 a 50 personas sin diseñar estructura ni cargos, y los fundadores leen la formalización como burocracia.", "opts": ["Cronología de contrataciones y entrevistas a los fundadores sobre qué significa “burocratizarse”", "Encuesta a los 50 empleados sobre burocracia", "NPS de clientes", "No es verificable"], "ok": 0, "fb": "La primera parte es un hecho (dotación por fecha); la segunda es un significado y se explora en entrevista. Preguntar a 50 personas por “burocracia” mediría otra cosa."}, {"q": "Eslabón 5. ¿Y los bugs? Porque nadie prioriza calidad frente a velocidad: no hay proceso de revisión ni responsable.", "opts": ["Registro de bugs por release y descripción del flujo de desarrollo (¿existe revisión de código? ¿quién la hace?)", "Entrevistas a clientes que se quejan", "Comparar con el promedio de la industria", "No es verificable"], "ok": 0, "fb": "Bugs por release ya está en el sistema de control; falta describir el proceso. Los clientes informan del síntoma, no de la causa."}]; const Q1 = [{"q": "¿Dónde termina la cadena de porqués de TechNova?", "opts": ["En “los fundadores tienen mal liderazgo”", "En la ausencia de una estructura de decisión y de un diseño organizacional mínimo tras el crecimiento", "En la rotación de desarrolladores", "En el ambiente tenso"], "ok": 1, "fb": "El problema real es una condición accionable y verificable (gobierno y diseño), no un juicio sobre personas ni un síntoma reetiquetado."}, {"q": "Un grupo escribe como problema real: “la rotación se explica por el mal clima”. ¿Qué falla?", "opts": ["Nada: el clima es una causa", "Explica un síntoma con otro síntoma; falta seguir la cadena hasta una condición accionable", "Falta citar la fuente", "El clima no se puede medir"], "ok": 1, "fb": "El clima es un efecto del ambiente de trabajo; la cadena debe llegar a arreglos organizacionales, sociales o tecnológicos que lo producen."}, {"q": "¿Qué hace la regla “cada eslabón debe ser verificable”?", "opts": ["Convierte la cadena en un plan de recolección de datos", "Garantiza que la cadena tenga cinco pasos", "Elimina las hipótesis del diseño", "Obliga a usar solo registros administrativos"], "ok": 0, "fb": "Cada eslabón es una pregunta diagnóstica y una fuente; los que no se pueden verificar se declaran como hipótesis."}];
+const CAT2 = ["Diagnóstico","Intervención","Vago"]; const C2 = [{"t": "Mejorar el clima laboral en la planta de terminaciones", "c": "Intervención", "fb": "“Mejorar” describe un cambio deseado. Versión diagnóstica: analizar los factores que explican la insatisfacción en terminaciones."}, {"t": "Identificar los factores organizacionales y tecnológicos que alargan el tiempo de espera en urgencias", "c": "Diagnóstico", "fb": "Verbo diagnóstico, variable nombrada, alcance definido."}, {"t": "Conocer la situación de la empresa", "c": "Vago", "fb": "“Conocer” no compromete a nada y “la situación” no es una variable."}, {"t": "Comparar la carga de trabajo de enfermería entre servicios y turnos y su asociación con las licencias", "c": "Diagnóstico", "fb": "Relacional, con variables y nivel (servicio y turno)."}, {"t": "Implementar un sistema de evaluación de desempeño para las jefaturas", "c": "Intervención", "fb": "Es una recomendación posible, no un objetivo de diagnóstico."}, {"t": "Entender la cultura organizacional", "c": "Vago", "fb": "Demasiado amplio: ¿qué aspectos, para qué? Versión aceptable: identificar los valores que facilitan u obstaculizan el trabajo remoto."}, {"t": "Describir cómo se toman y se revierten las decisiones operativas entre el dueño, la gerente y los jefes de taller", "c": "Diagnóstico", "fb": "Describe un proceso observable con actores definidos."}, {"t": "Lograr mayor compromiso de los voluntarios con los nuevos KPI", "c": "Intervención", "fb": "“Lograr” compromete al diagnóstico con una solución antes de tener datos."}, {"t": "Evaluar a los jefes de sucursal a partir de la encuesta de clima", "c": "Intervención", "fb": "Evaluar personas es otro estudio, con otras reglas de consentimiento y uso; mezclarlo con el diagnóstico compromete la validez de las respuestas."}, {"t": "Estimar la proporción de desarrolladores con intención de salida en 12 meses y las variables con que se asocia", "c": "Diagnóstico", "fb": "Descriptiva y relacional a la vez; contestable con una encuesta censal."}]; const CAT2B = ["Descriptiva","Relacional","Causal","No es diagnóstica"]; const C2B = [{"t": "¿Cuál es el nivel de satisfacción laboral de los trabajadores de la empresa?", "c": "Descriptiva", "fb": "Una variable, se describe."}, {"t": "¿Podemos predecir el desempeño a partir de la nota de egreso de la universidad?", "c": "Relacional", "fb": "Dos variables en las mismas personas; predicción, no causa."}, {"t": "¿Las mujeres tienen un estilo de liderazgo distinto al de los hombres?", "c": "Relacional", "fb": "Comparación de grupos formados por una variable; “estilo de liderazgo” es un conjunto de variables."}, {"t": "¿Cuál es el retorno del programa de capacitación del último semestre?", "c": "Causal", "fb": "Efecto de asistir al programa (VI) sobre la productividad (VD): exige descartar explicaciones alternativas."}, {"t": "¿Deberíamos capacitar a las jefaturas este año?", "c": "No es diagnóstica", "fb": "Es una decisión. Reformular: ¿qué brechas de competencias tienen las jefaturas y cuáles se asocian con los resultados de sus equipos?"}, {"t": "¿Cuántos trabajadores faltaron el último mes?", "c": "Descriptiva", "fb": "Descriptiva (ausentismo)."}, {"t": "Si cambiamos al jefe, ¿mejorará el clima?", "c": "Causal", "fb": "Causal y contrafactual; un diagnóstico transversal no la contesta, aunque la evidencia sobre liderazgo y clima permita una hipótesis fundada."}, {"t": "¿Difiere la intención de salida entre los equipos con roles definidos y los que no los tienen?", "c": "Relacional", "fb": "Comparación de grupos; el diseño es transversal y la conclusión, asociativa."}]; const Q2 = [{"q": "¿Cuál de estos verbos puede abrir un objetivo diagnóstico?", "opts": ["Lograr", "Implementar", "Comparar", "Mejorar"], "ok": 2, "fb": "Describir, identificar, analizar, comparar, explicar y comprender describen un estado por conocer; lograr, implementar y mejorar describen intervenciones."}, {"q": "Un objetivo específico “no tiene variable”. ¿Qué significa en la práctica?", "opts": ["Que está bien formulado pero es ambicioso", "Que no se puede decir qué dato lo contesta ni cuándo se dio por cumplido", "Que necesita más de una técnica", "Que es un objetivo general"], "ok": 1, "fb": "La prueba rápida: un objetivo está bien formulado si se puede decir qué dato lo contesta y qué resultado lo daría por cumplido."}, {"q": "¿Por qué “medible” se reemplaza por “evaluable” en los criterios de un objetivo diagnóstico?", "opts": ["Porque los objetivos diagnósticos nunca se miden", "Porque muchos se contestan con evidencia cualitativa (entrevistas, documentos), no con un número", "Porque la medición corresponde a la sesión 5", "Porque evaluar es más preciso que medir"], "ok": 1, "fb": "Un objetivo como “describir cómo se toman las decisiones entre dirección y jefaturas” se contesta con evidencia de entrevistas y documentos."}];
+const CAT3 = ["Individuo","Grupo o unidad","Organización"]; const C3 = [{"t": "Intención de salida en 12 meses", "c": "Individuo", "fb": "Se pregunta a la persona y se reporta agregada por grupo."}, {"t": "Razón enfermera-paciente por turno", "c": "Grupo o unidad", "fb": "Propiedad del servicio y el turno, no de una persona."}, {"t": "Estructura de decisión entre cofundadores", "c": "Organización", "fb": "Propiedad de la organización; se describe con documentos y entrevistas a la dirección."}, {"t": "Clima de la unidad de desarrollo", "c": "Grupo o unidad", "fb": "Percepción compartida: requiere acuerdo intragrupo y n suficiente para representarla."}, {"t": "Rotación anual de desarrolladores (50%)", "c": "Organización", "fb": "Tasa organizacional (o por unidad si se desagrega); dato de registro, no de percepción."}, {"t": "Claridad de rol percibida", "c": "Individuo", "fb": "Cada persona informa sobre su propio rol; se agrega por equipo si hay n."}, {"t": "Sistema de KPI por programa en EcoAcción", "c": "Organización", "fb": "Arreglo organizacional; se describe con documentos."}, {"t": "Estabilidad de las prioridades por equipo (decisiones revertidas por trimestre)", "c": "Grupo o unidad", "fb": "Indicador de la unidad, construido desde registros."}, {"t": "Carga de trabajo percibida", "c": "Individuo", "fb": "Percepción individual; difiere de la carga objetiva por turno, que es grupal."}]; const M3 = [{"t": "“La empresa publica cada año los resultados de la encuesta de clima por área, en una escala de 1 a 5, y los comenta en la reunión de gerencia.”", "opts": ["Definición operacional", "Fuente", "Frecuencia", "Unidad de análisis", "Meta o umbral", "Responsable", "Acción asociada", "Mecanismo de retroalimentación"], "ok": [4, 5, 6], "fb": "Tiene definición (escala), fuente (encuesta), frecuencia (anual), unidad (área) y un mecanismo de retroalimentación débil (reunión). Sin meta, responsable ni acción es un reporte, no un control."}, {"t": "“Razón enfermera-paciente por turno, calculada desde el sistema de turnos y el censo diario; se revisa semanalmente por servicio; cuando supera el umbral de referencia del servicio, la jefatura de enfermería redistribuye dotación o abre un turno de refuerzo y registra la decisión en el comité semanal.”", "opts": ["Definición operacional", "Fuente", "Frecuencia", "Unidad de análisis", "Meta o umbral", "Responsable", "Acción asociada", "Mecanismo de retroalimentación"], "ok": [], "fb": "Ficha completa: es un indicador de control. Si marcó algo, relea la descripción."}, {"t": "“Proporción de decisiones de producto revertidas por trimestre, según el registro de decisiones; meta: menos del 10%.”", "opts": ["Definición operacional", "Fuente", "Frecuencia", "Unidad de análisis", "Meta o umbral", "Responsable", "Acción asociada", "Mecanismo de retroalimentación"], "ok": [3, 5, 6, 7], "fb": "Tiene definición, fuente, frecuencia y meta. Falta decir sobre qué unidad se calcula (¿equipo? ¿toda la empresa?), quién responde, qué se hace si se supera y dónde se revisa."}, {"t": "“Rotación voluntaria de desarrolladores: 50% en 12 meses.”", "opts": ["Definición operacional", "Fuente", "Frecuencia", "Unidad de análisis", "Meta o umbral", "Responsable", "Acción asociada", "Mecanismo de retroalimentación"], "ok": [2, 3, 4, 5, 6, 7], "fb": "Es un dato: tiene definición implícita y fuente (registros de RR. HH.), pero nada más. Sirve como síntoma, no como control."}]; const CAT3B = ["Lagging (resultado)","Leading (proceso)"]; const C3B = [{"t": "Rotación voluntaria a 12 meses", "c": "Lagging (resultado)", "fb": "Mide lo que ya ocurrió."}, {"t": "Intención de salida declarada en una encuesta pulso", "c": "Leading (proceso)", "fb": "Anticipa la rotación; mezcla percepción y requiere medición de calidad."}, {"t": "Días perdidos por licencias médicas", "c": "Lagging (resultado)", "fb": "Resultado ya ocurrido."}, {"t": "Razón enfermera-paciente por turno", "c": "Leading (proceso)", "fb": "Condición que anticipa licencias y rotación."}, {"t": "Costo de reemplazo por desarrollador", "c": "Lagging (resultado)", "fb": "Consecuencia de la rotación; llega aún más tarde."}, {"t": "Proporción de decisiones de producto revertidas por trimestre", "c": "Leading (proceso)", "fb": "Condición de proceso que anticipa rotación y bugs en TechNova."}, {"t": "Bugs críticos por release", "c": "Lagging (resultado)", "fb": "Resultado del proceso de desarrollo; para el cliente es un síntoma."}, {"t": "Porcentaje de releases con revisión de código completada", "c": "Leading (proceso)", "fb": "Proceso que anticipa los bugs."}, {"t": "Retención de voluntarios a 90 días", "c": "Lagging (resultado)", "fb": "Mide lo que ya ocurrió con la cohorte."}, {"t": "Proporción de decisiones de programa tomadas con participación del equipo (actas)", "c": "Leading (proceso)", "fb": "Condición que, según la hipótesis de EcoAcción, anticipa la retención."}]; const Q3 = [{"q": "Un promedio de respuestas individuales representa a la unidad solo si…", "opts": ["La unidad tiene jefatura", "Hay acuerdo entre sus miembros y n suficiente para no identificar a nadie", "La encuesta es anónima", "Se usa una escala de 1 a 5"], "ok": 1, "fb": "El nivel al que se pregunta debe coincidir con el nivel al que se concluye; la agregación exige acuerdo intragrupo y n mínimo (sesión 5)."}, {"q": "¿Qué diferencia a una variable diagnóstica de un indicador de control?", "opts": ["El indicador es numérico y la variable no", "El indicador compromete a alguien con un valor: tiene meta, responsable, acción y retroalimentación", "La variable se mide con encuesta y el indicador con registros", "No hay diferencia"], "ok": 1, "fb": "La diferencia no está en el dato sino en lo que lo rodea: fuente, frecuencia, unidad, meta, responsable, acción y mecanismo de retroalimentación."}, {"q": "Convertir prematuramente una variable diagnóstica en meta…", "opts": ["Mejora la calidad de la medición", "Invita a gestionar el número en lugar de la condición (efecto Goodhart)", "Es obligatorio en un sistema de control", "Elimina la necesidad de un diagnóstico"], "ok": 1, "fb": "Cuando una medida se convierte en meta deja de ser buena medida (Strathern, 1997, glosando a Goodhart, 1984)."}];
+const CAT4 = ["Exploratorio secuencial","Explicativo secuencial","Convergente"]; const C4 = [{"t": "TechNova: nunca se ha medido nada, el CEO tiene su propia explicación y los desarrolladores que se fueron no han sido escuchados.", "c": "Exploratorio secuencial", "fb": "Primero entrevistas para saber qué preguntar; después una encuesta censal que mida la prevalencia de lo que apareció."}, {"t": "Hospital Regional: abundan registros (flujos, dotación, licencias, producción) y hay que entregar en cuatro meses; lo que falta es la explicación.", "c": "Explicativo secuencial", "fb": "Los datos localizan los servicios críticos; entrevistas y grupos focales por estamento explican."}, {"t": "EcoAcción: tiempo acotado, versiones contradictorias (directorio, director, coordinadores, voluntarios, donantes) y necesidad de contrastar fuentes independientes.", "c": "Convergente", "fb": "Entrevistas, talleres, encuesta breve y documentos en paralelo; la integración en el análisis muestra dónde convergen y divergen las versiones."}, {"t": "Una cadena de 50 sucursales con una encuesta de clima aplicada hace un mes que muestra tres sucursales con resultados muy bajos y sin explicación.", "c": "Explicativo secuencial", "fb": "La encuesta dice dónde; el trabajo cualitativo en esas sucursales dice por qué."}]; const CAT4B = ["Se puede prometer","No se puede prometer"]; const C4B = [{"t": "“Sus respuestas individuales no serán compartidas con su jefatura.”", "c": "Se puede prometer", "fb": "Es la promesa central y debe cumplirse: solo el equipo de diagnóstico ve datos crudos."}, {"t": "“Todo será 100% anónimo.” (en una unidad de 6 personas)", "c": "No se puede prometer", "fb": "El contexto identifica; con n pequeño se agregan unidades o se omite el reporte."}, {"t": "“Los resultados se reportarán de forma agregada, sin identificar personas.”", "c": "Se puede prometer", "fb": "Se puede y se debe escribir en el consentimiento."}, {"t": "“Lo que digan no tendrá ninguna consecuencia.” (sin que el cliente lo haya garantizado)", "c": "No se puede prometer", "fb": "Solo se promete lo que el contrato con el cliente garantiza; de lo contrario se dice antes de recolectar."}, {"t": "“Si surge información sobre acoso o riesgo grave, el equipo tiene obligación de reportarla.”", "c": "Se puede prometer", "fb": "Es un límite de la confidencialidad que debe declararse de antemano."}, {"t": "“Nadie sabrá jamás quién dijo qué.”", "c": "No se puede prometer", "fb": "Una cita textual en un informe puede identificar por contexto; se negocia el uso o se busca otra vía."}, {"t": "“Recibirán una devolución de los resultados.”", "c": "Se puede prometer", "fb": "Principio de justicia: quienes aportan los datos reciben la devolución; se acuerda con el cliente antes."}, {"t": "“Esta encuesta no se usará para evaluar a las jefaturas.” (cuando el directorio ya decidió usarla para eso)", "c": "No se puede prometer", "fb": "Prometerlo sería falso. Si el uso es evaluativo, cambian el consentimiento, el anonimato posible y la validez de las respuestas."}]; const Q4 = [{"q": "“Mixto” sin indicar la secuencia…", "opts": ["Es el diseño más completo", "No es una decisión de diseño: hay que decir qué va primero y por qué", "Solo sirve en organizaciones grandes", "Equivale a convergente"], "ok": 1, "fb": "La decisión relevante no es si combinar sino en qué orden, y eso se justifica desde el problema real y el paradigma."}, {"q": "¿Cuántas fuentes necesita cada objetivo específico en la matriz objetivos por técnicas?", "opts": ["Una, la principal", "Al menos dos, para triangular", "Todas las disponibles", "Depende del presupuesto"], "ok": 1, "fb": "Dos reglas: cada objetivo necesita al menos dos fuentes y cada técnica debe servir a más de un objetivo."}, {"q": "Un diagnóstico cuyos resultados se usarán para evaluar o sancionar…", "opts": ["Sigue siendo un diagnóstico con más cuidado", "Pasa a ser una evaluación de desempeño: cambian el consentimiento, el anonimato posible y la validez de las respuestas", "Es ilegal", "Exige una muestra más grande"], "ok": 1, "fb": "El uso previsto de los resultados es una decisión ética y metodológica a la vez, y debe conocerse antes de recolectar datos."}];
+const CORR = ["Arreglos organizacionales", "Factores sociales", "Tecnología", "Ambiente físico"]; const TIPOS = ["Síntoma", "Básico", "Fundamental"]; const P5 = [{"t": "Sin estructura de decisión entre cofundadores", "c": 0, "tp": 2, "fb": "Núcleo del diagrama: emite flechas hacia prioridades, conflicto y diseño de cargos, y no recibe ninguna defendible."}, {"t": "Sin diseño de cargos ni roles tras el crecimiento", "c": 0, "tp": 2, "fb": "Fundamental: el crecimiento sin diseño es la condición de partida; explica la claridad de rol y parte del conflicto."}, {"t": "Prioridades de producto que cambian y trabajo desechado", "c": 2, "tp": 1, "fb": "Tecnología (cómo se hace el trabajo); recibe de la estructura de decisión y emite hacia rotación y bugs."}, {"t": "Rotación de desarrolladores 50% anual", "c": 1, "tp": 0, "fb": "Síntoma: solo recibe. Es lo que el CEO trae."}, {"t": "Bugs críticos de 3 a 11 por release", "c": 2, "tp": 0, "fb": "Síntoma del proceso de desarrollo; recibe de prioridades y de la ausencia de proceso de calidad."}, {"t": "Sin proceso de revisión ni responsable de calidad", "c": 0, "tp": 1, "fb": "Arreglo organizacional (procedimientos); recibe del diseño organizacional ausente y emite hacia bugs."}, {"t": "Conflicto público entre cofundadores", "c": 1, "tp": 1, "fb": "Factor social; recibe de la falta de estructura de decisión y emite hacia el ambiente tenso."}, {"t": "Ambiente tenso: reuniones en silencio, canales de Slack vacíos", "c": 1, "tp": 0, "fb": "Síntoma social; recibe del conflicto y de la inestabilidad."}, {"t": "Recompensas en equity poco creíbles para desarrolladores", "c": 0, "tp": 1, "fb": "Sistema de recompensas (arreglos organizacionales); básico: emite hacia rotación y recibe de la falta de diseño."}, {"t": "Tickets de clientes de 2 a 6 días de resolución", "c": 2, "tp": 0, "fb": "Síntoma tecnológico; recibe de bugs y prioridades. Ningún problema cae en ambiente físico: el caso no lo describe, y eso también es información."}]; const Q5 = [{"q": "¿Qué caracteriza a un problema fundamental en el diagrama?", "opts": ["Es el que más molesta al cliente", "Emite flechas y casi no recibe; suele estar en arreglos organizacionales o factores sociales", "Recibe muchas flechas", "Está en la corriente de tecnología"], "ok": 1, "fb": "Los síntomas solo reciben; los básicos reciben y emiten; los fundamentales emiten y casi no reciben. El núcleo es el fundamental con más efectos aguas abajo."}, {"q": "¿Dónde se define el indicador leading del tablero?", "opts": ["Sobre el síntoma más visible", "Sobre el problema núcleo", "Sobre cada caja del diagrama", "No se define en el diagrama"], "ok": 1, "fb": "Los lagging siguen a los síntomas y ya suelen existir; el leading se define sobre el núcleo, donde se interviene."}, {"q": "Un problema formulado como “falta integrar los sistemas”…", "opts": ["Está bien: es claro", "Es una solución disfrazada de problema; debe formularse como condición (“tres sistemas no integrados”)", "Es un síntoma", "Debe ir en ambiente físico"], "ok": 1, "fb": "Un problema por caja, formulado como condición observable, no como ausencia de solución."}];
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1", CAT1, C1, 1); pregunta("p1", P1, 1); pregunta("q1", Q1, 1);
+clasificador("c2", CAT2, C2, 2); clasificador("c2b", CAT2B, C2B, 2); pregunta("q2", Q2, 2);
+clasificador("c3", CAT3, C3, 3); multisel("m3", M3, 3); clasificador("c3b", CAT3B, C3B, 3); pregunta("q3", Q3, 3);
+clasificador("c4", CAT4, C4, 4); clasificador("c4b", CAT4B, C4B, 4); pregunta("q4", Q4, 4);
+porras("p5", "porras-view", CORR, TIPOS, P5, 5); pregunta("q5", Q5, 5);
+</script>
+</body>
+</html>

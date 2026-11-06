@@ -6,6 +6,13 @@ Teaching is one of the most rewarding aspects of my academic work. My approach e
 
 ## Spring 2026
 
+### [Diagnóstico Organizacional - MCG \[Organizational Diagnosis - MCG \]](teaching/do_mcg/)
+
+**Program**: Magíster en Control de Gestión · FAE, Universidad Diego Portales
+
+Graduate course that prepares students to design and conduct rigorous organizational diagnoses. Students work with real-world cases applying theoretical frameworks and organizational analysis tools.
+
+
 ### [Personas y Equipos \[Organizational Behavior\]](teaching/pye/)
 
 **Program**: Ingeniería Comercial (undergraduate) · FAE, Universidad Diego Portales

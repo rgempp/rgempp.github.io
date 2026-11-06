@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuestas organizacionales y diseño de cuestionarios · Diagnóstico Organizacional MCG UDP</title>
+<meta name="description" content="Apunte del curso Diagnóstico Organizacional (MCG, UDP). Método de encuesta, la encuesta como instrumento de control, seis pasos, redacción de ítems, referente, formato de respuesta, anatomía del cuestionario, instrumentos estandarizados, pulso y eNPS, fuentes de error.">
+<meta name="author" content="René Gempp">
+<style>
+  /* ===== Plantilla base de la serie de apuntes DO MCG, v1 (2026) · misma línea que la serie PyE ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+    --ambar:#B45309; --ambar-claro:#FEF3C7;
+    --verde:#15803D; --verde-claro:#DCFCE7;
+    /* alias para figuras SVG heredadas */
+    --fg:var(--tinta); --muted:var(--gris); --accent:var(--rojo); --accent-soft:var(--tinte);
+    --rule:var(--borde); --note-bg:var(--gris-claro); --note-border:var(--acero);
+    --ex-bg:var(--tinte); --ex-border:var(--rojo); --warn-bg:var(--ambar-claro); --warn-border:var(--ambar);
+    --code-bg:var(--gris-claro); --bg:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  .lead{margin:1rem 0 0; color:var(--acero); font-size:1rem}
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros: idea clave (.box), ejemplo de caso (.box.ejemplo), atención (.box.atencion), mito versus evidencia (.mito) */
+  .box,.mito{
+    border:1px solid var(--borde); border-left:5px solid var(--acero);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--gris-claro);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .box p,.mito p{margin:0 0 .55rem}
+  .box p:last-child,.mito p:last-child{margin-bottom:0}
+  .box ul,.box ol{margin-bottom:.4rem}
+  .box .label{
+    display:block; font-weight:700; color:var(--acero);
+    font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.35rem;
+  }
+  .box.ejemplo,.mito{border-left-color:var(--rojo); background:var(--tinte)}
+  .box.ejemplo .label{color:var(--rojo)}
+  .box.atencion{border-left-color:var(--ambar); background:var(--ambar-claro)}
+  .box.atencion .label{color:var(--ambar)}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tablas */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Figuras */
+  figure,.figura{margin:0 0 1.4rem}
+  figure img,figure svg{max-width:100%;height:auto;display:block;margin:0 auto}
+  figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
+  code{background:var(--gris-claro);padding:.1em .35em;border-radius:4px}
+  pre{background:var(--gris-claro);padding:.9rem 1rem;border-radius:8px;overflow-x:auto}
+  /* Glosario */
+  dl.glosario dt{font-weight:700;margin-top:.7rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.95rem}
+  dl.glosario dd{margin:0 0 .3rem 0}
+  /* Referencias con sangría francesa */
+  .referencias p,.refs p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .box,.mito,table,figure{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes · Diagnóstico Organizacional · N° 3</p>
+  <h1>Encuestas organizacionales y diseño de cuestionarios</h1>
+  <p class="meta">
+    Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026<br>
+    Apunte N° 3 · Sesión 3 (miércoles 11-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a>
+  </p>
+  <p class="lead">Este apunte explica cómo se planifica una encuesta organizacional, cómo se redactan y organizan los ítems de un cuestionario y qué fuentes de error amenazan la calidad de los datos. Al terminarlo, el lector podrá distinguir encuesta de cuestionario, decidir entre reutilizar, adaptar o construir un instrumento, escribir ítems con referente y formato justificados, y reconocer las condiciones que una encuesta debe cumplir para alimentar un tablero de control de personas.</p>
+</header>
+
+<h2 id="s1">1. El método de encuesta y la encuesta organizacional</h2>
+<p>Una encuesta es un método sistemático de recolección de información que aplica un cuestionario, mediante alguna técnica de administración, a una población o a una muestra, en un momento o a lo largo del tiempo, con el fin de construir descriptores cuantitativos de esa población (Groves et al., 2009). La definición tiene una consecuencia práctica: encuesta y cuestionario no son sinónimos. El cuestionario es el instrumento; la encuesta es el proceso completo, que incluye la definición del objetivo, la promoción, el instrumento, la aplicación, el análisis y la devolución de resultados. Un buen cuestionario mal aplicado produce datos inútiles, y una encuesta bien promovida con un cuestionario deficiente produce números precisos sobre nada.</p>
+<p>La encuesta organizacional es un caso particular: se aplica a los miembros de una organización, habitualmente sus trabajadores, con el propósito de monitorear, diagnosticar o evaluar variables relevantes para los objetivos de la organización (Borg &amp; Mastrangelo, 2008; Kraut, 1996). Tres rasgos la distinguen de la encuesta social. Primero, casi siempre es censal: se invita a todos los miembros, de modo que no existe error de muestreo, pero sí error de cobertura y de no respuesta. Segundo, tiene patrocinio y consecuencias internas: la dirección la encarga, los resultados afectan a quienes responden y a sus jefaturas, y esa circunstancia condiciona la sinceridad de las respuestas. Tercero, es autoadministrada, lo que traslada al cuestionario todo el trabajo que en otras encuestas hace el encuestador.</p>
+<p>La encuesta aporta escala (llega a todos en una o dos semanas), magnitud (cuantifica lo que las entrevistas solo sugieren), comparación (entre unidades, grupos y olas de medición) y estandarización. No aporta explicación: muestra que algo ocurre y rara vez por qué. Tampoco aporta verdad objetiva, porque mide percepciones y reportes sujetos a sesgo. Por eso, en la mayoría de los diseños diagnósticos de la sesión 2, la encuesta va después o junto con técnicas cualitativas (sesión 4): los indicadores muestran la desviación, las entrevistas la explican.</p>
+
+<div class="box">
+  <span class="label">Idea clave</span>
+  <p>El cuestionario es el instrumento; la encuesta es el proceso. La calidad del dato final depende del eslabón más débil del proceso, no solo del instrumento.</p>
+</div>
+
+<h3>1.1 Tres propósitos y seis tipos</h3>
+<p>Las encuestas organizacionales sirven a tres propósitos (Borg &amp; Mastrangelo, 2008). El monitoreo es la medición periódica de un proceso o estado, como la encuesta de clima cada uno o dos años o la encuesta pulso trimestral; su valor está en la comparación entre olas. El diagnóstico es la identificación de situaciones problemáticas y de sus causas para diseñar una intervención; su valor está en el análisis por subgrupos y en las relaciones entre variables. La evaluación es la retroalimentación o la medición del impacto de una intervención; su valor está en el antes y el después. Un mismo cuestionario puede servir a los tres propósitos solo si fue diseñado para ello.</p>
+<p>Según el contenido, los tipos más frecuentes son las encuestas de clima (percepciones compartidas del ambiente de trabajo), de cultura (valores, supuestos y normas), de engagement y compromiso (vigor, dedicación, absorción, vínculo afectivo), de liderazgo y 360 grados (conductas de la jefatura vistas por reportes, pares y superiores) y de pulso (pocos ítems ancla aplicados con alta frecuencia). No todos sirven como indicador periódico: la cultura se diagnostica, el clima y el engagement se monitorean, y el 360 evalúa a personas, por lo que exige reglas propias de anonimato y de número mínimo de evaluadores.</p>
+
+<h2 id="s2">2. La encuesta en el sistema de control de gestión</h2>
+<p>En el marco del curso, la encuesta es el mecanismo que produce la información sobre las variables que los sistemas formales de control no capturan: clima, confianza, claridad de prioridades, intención de salida. Esa información alimenta los controles de personal y culturales (Merchant &amp; Van der Stede, 2017), los sistemas de control diagnóstico e interactivo (Simons, 1995) y la perspectiva de aprendizaje y crecimiento del cuadro de mando integral (Kaplan &amp; Norton, 1996). Para cumplir esa función, la encuesta tiene que diseñarse como un sistema de monitoreo y no como un estudio puntual.</p>
+
+<h3>2.1 Dos ritmos: encuesta periódica y encuesta pulso</h3>
+<p>La encuesta periódica de clima o engagement es un instrumento largo (30 a 50 ítems), aplicado cada 12 a 24 meses a toda la organización. Produce el mapa completo: índices por dimensión, análisis por unidad y por grupo, correlatos de rotación e intención de salida. En el sistema de control fija la línea base y las metas plurianuales. Su limitación es la lentitud: no detecta una crisis en una unidad hasta la ola siguiente.</p>
+
+<figure>
+<svg viewBox="0 0 760 230" width="100%" role="img" aria-labelledby="fig-ritmos" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-ritmos">Encuesta periódica y encuesta pulso en el tiempo</title>
+  <defs><marker id="fig-ritmos-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-ritmos-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<line x1="60" y1="125" x2="720" y2="125" stroke="currentColor" stroke-width="1.4"/>
+<line x1="60" y1="121" x2="60" y2="129" stroke="currentColor"/>
+<text x="60.0" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">ene</text>
+<rect x="34" y="69" width="52" height="42" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="60.0" y="93" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="700">clima</text>
+<text x="60.0" y="105" text-anchor="middle" fill="var(--accent)" font-size="9.5">40 ítems</text>
+<line x1="142" y1="121" x2="142" y2="129" stroke="currentColor"/>
+<text x="142.5" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">abr</text>
+<rect x="126" y="95" width="34" height="18" rx="3" fill="var(--note-bg)" stroke="var(--note-border)"/>
+<text x="142.5" y="107.5" text-anchor="middle" fill="var(--note-border)" font-size="9.5" font-weight="700">pulso</text>
+<line x1="225" y1="121" x2="225" y2="129" stroke="currentColor"/>
+<text x="225.0" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">jul</text>
+<rect x="208" y="95" width="34" height="18" rx="3" fill="var(--note-bg)" stroke="var(--note-border)"/>
+<text x="225.0" y="107.5" text-anchor="middle" fill="var(--note-border)" font-size="9.5" font-weight="700">pulso</text>
+<line x1="308" y1="121" x2="308" y2="129" stroke="currentColor"/>
+<text x="307.5" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">oct</text>
+<rect x="290" y="95" width="34" height="18" rx="3" fill="var(--note-bg)" stroke="var(--note-border)"/>
+<text x="307.5" y="107.5" text-anchor="middle" fill="var(--note-border)" font-size="9.5" font-weight="700">pulso</text>
+<line x1="390" y1="121" x2="390" y2="129" stroke="currentColor"/>
+<text x="390.0" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">ene</text>
+<rect x="364" y="69" width="52" height="42" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="390.0" y="93" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="700">clima</text>
+<text x="390.0" y="105" text-anchor="middle" fill="var(--accent)" font-size="9.5">40 ítems</text>
+<line x1="472" y1="121" x2="472" y2="129" stroke="currentColor"/>
+<text x="472.5" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">abr</text>
+<rect x="456" y="95" width="34" height="18" rx="3" fill="var(--note-bg)" stroke="var(--note-border)"/>
+<text x="472.5" y="107.5" text-anchor="middle" fill="var(--note-border)" font-size="9.5" font-weight="700">pulso</text>
+<line x1="555" y1="121" x2="555" y2="129" stroke="currentColor"/>
+<text x="555.0" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">jul</text>
+<rect x="538" y="95" width="34" height="18" rx="3" fill="var(--note-bg)" stroke="var(--note-border)"/>
+<text x="555.0" y="107.5" text-anchor="middle" fill="var(--note-border)" font-size="9.5" font-weight="700">pulso</text>
+<line x1="638" y1="121" x2="638" y2="129" stroke="currentColor"/>
+<text x="637.5" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">oct</text>
+<rect x="620" y="95" width="34" height="18" rx="3" fill="var(--note-bg)" stroke="var(--note-border)"/>
+<text x="637.5" y="107.5" text-anchor="middle" fill="var(--note-border)" font-size="9.5" font-weight="700">pulso</text>
+<line x1="720" y1="121" x2="720" y2="129" stroke="currentColor"/>
+<text x="720.0" y="145" text-anchor="middle" fill="var(--muted)" font-size="11">ene</text>
+<rect x="694" y="69" width="52" height="42" rx="4" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="720.0" y="93" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="700">clima</text>
+<text x="720.0" y="105" text-anchor="middle" fill="var(--accent)" font-size="9.5">40 ítems</text>
+<text x="60" y="30" text-anchor="start" fill="var(--accent)" font-size="12" font-weight="700">Encuesta periódica (anual): línea base, mapa completo, metas plurianuales</text>
+<text x="60" y="48" text-anchor="start" fill="var(--note-border)" font-size="12" font-weight="700">Encuesta pulso (trimestral, 3 a 10 ítems ancla): serie de tiempo, alerta temprana por unidad</text>
+<polyline points="60,177 142,179 225,181 308,195 390,203 472,199 555,183 638,181 720,179" fill="none" stroke="var(--accent)" stroke-width="2"/>
+<circle cx="60" cy="177" r="3" fill="var(--accent)"/>
+<circle cx="142" cy="179" r="3" fill="var(--accent)"/>
+<circle cx="225" cy="181" r="3" fill="var(--accent)"/>
+<circle cx="308" cy="195" r="3" fill="var(--accent)"/>
+<circle cx="390" cy="203" r="3" fill="var(--accent)"/>
+<circle cx="472" cy="199" r="3" fill="var(--accent)"/>
+<circle cx="555" cy="183" r="3" fill="var(--accent)"/>
+<circle cx="638" cy="181" r="3" fill="var(--accent)"/>
+<circle cx="720" cy="179" r="3" fill="var(--accent)"/>
+<text x="60" y="167" text-anchor="start" fill="var(--muted)" font-size="11">ítem ancla 'claridad de prioridades', equipo B (promedio 1 a 5)</text>
+<text x="400.0" y="215" text-anchor="start" fill="var(--accent)" font-size="11">caída detectada en julio: conversación con el equipo</text>
+<text x="54.0" y="181" text-anchor="end" fill="var(--muted)" font-size="10">4,2</text>
+<text x="384.0" y="213" text-anchor="end" fill="var(--muted)" font-size="10">3,1</text>
+</svg>
+<figcaption>Figura 1. Dos ritmos de medición. La encuesta anual fija la línea base y las metas; la encuesta pulso sigue uno o dos ítems ancla por unidad y detecta una desviación meses antes de la ola siguiente. Ejemplo del caso TechNova.</figcaption>
+</figure>
+
+<p>La encuesta pulso es un instrumento corto (3 a 10 ítems ancla), aplicado cada uno a tres meses, a veces a una muestra rotativa. Produce la serie de tiempo: tendencia por unidad, alerta temprana, efecto de una decisión reciente. En el sistema de control funciona como indicador leading del tablero de personas y permite tanto el control diagnóstico (desviación frente a una meta) como el control interactivo (la conversación entre jefatura y equipo sobre esa desviación). Su riesgo es la fatiga de encuesta y la caída de la respuesta cuando no hay devolución visible entre olas. Periódica y pulso no compiten: la primera define qué medir y con qué meta; la segunda lo sigue en el tiempo.</p>
+
+<h3>2.2 Condiciones para que una encuesta alimente un tablero</h3>
+<table>
+  <thead><tr><th>Condición</th><th>Qué significa</th><th>Qué pasa si no se cumple</th></tr></thead>
+  <tbody>
+    <tr><td>Ítems ancla estables</td><td>Un núcleo de ítems que no cambia de redacción ni de formato entre olas</td><td>Cada cambio de redacción rompe la serie: la variación mide el cambio del ítem, no de la organización</td></tr>
+    <tr><td>Comparabilidad entre olas</td><td>Misma población objetivo, misma modalidad, mismo momento del año, misma escala de respuesta</td><td>Diferencias atribuibles al método se leen como cambios reales</td></tr>
+    <tr><td>Cobertura por unidad</td><td>Tasa de respuesta suficiente y conocida en cada unidad comparada; número mínimo de respuestas para reportar</td><td>Unidades pequeñas o con baja respuesta producen promedios inestables y rompen el anonimato</td></tr>
+    <tr><td>Periodicidad definida</td><td>Calendario fijo, conocido por los participantes, con devolución entre olas</td><td>Sin ritmo no hay tendencia; sin devolución cae la respuesta en la ola siguiente</td></tr>
+    <tr><td>Calidad de la medición</td><td>Escalas con validez y fiabilidad verificadas antes de fijar metas (sesión 5)</td><td>El indicador controla ruido: metas fijadas sobre error de medición y comparaciones sin significado</td></tr>
+  </tbody>
+</table>
+
+<h3>2.3 Diagnosticar no es evaluar</h3>
+<p>Una encuesta diseñada para diagnosticar pregunta por percepciones del ambiente, agrega por unidad para proteger el anonimato, busca patrones y no culpables, y trata sus resultados como hipótesis a verificar con otras fuentes. Cuando esa misma encuesta se usa para evaluar jefaturas o fijar metas, cambian tres cosas. Aparece el incentivo a manipular: jefaturas que preparan a su equipo, respuestas estratégicas, presión sobre quién contesta. Las unidades pequeñas dejan de ser anónimas y su promedio depende de una o dos respuestas. Y la meta sobre una percepción desplaza el objetivo: se gestiona el puntaje y no el problema, el fenómeno que la literatura de control conoce como ley de Goodhart, en la formulación de Strathern (1997): cuando una medida se convierte en meta, deja de ser una buena medida.</p>
+
+<figure>
+<svg viewBox="0 0 760 300" width="100%" role="img" aria-labelledby="fig-goodhart" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-goodhart">El ciclo de Goodhart en una encuesta usada para evaluar</title>
+  <defs><marker id="fig-goodhart-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-goodhart-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<rect x="20" y="70" width="170" height="60" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="105.0" y="96.6" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">Encuesta de clima</text><text x="105.0" y="112.1" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">mide percepciones</text>
+<rect x="295" y="70" width="170" height="60" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="380.0" y="89.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">El puntaje se vuelve</text><text x="380.0" y="104.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">meta y evaluación</text><text x="380.0" y="119.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">de la jefatura</text>
+<rect x="570" y="70" width="170" height="60" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="655.0" y="96.6" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">Incentivo a</text><text x="655.0" y="112.1" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">manipular</text>
+<line x1="192" y1="100" x2="293" y2="100" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-goodhart-a)"/>
+<line x1="467" y1="100" x2="568" y2="100" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#fig-goodhart-r)"/>
+<rect x="295" y="200" width="170" height="60" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="380.0" y="226.6" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">El puntaje sube;</text><text x="380.0" y="242.1" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">el problema sigue</text>
+<path d="M655,132 L655,230 L467,230" fill="none" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#fig-goodhart-r)"/>
+<path d="M293,230 L105,230 L105,132" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#fig-goodhart-a)"/>
+<text x="645" y="165" text-anchor="end" fill="var(--muted)" font-size="10.5">jefaturas que 'preparan' al equipo,</text>
+<text x="645" y="178" text-anchor="end" fill="var(--muted)" font-size="10.5">respuestas estratégicas,</text>
+<text x="645" y="191" text-anchor="end" fill="var(--muted)" font-size="10.5">unidades de 4 personas sin anonimato</text>
+<text x="115" y="165" text-anchor="start" fill="var(--muted)" font-size="10.5">la ola siguiente mide</text>
+<text x="115" y="178" text-anchor="start" fill="var(--muted)" font-size="10.5">un puntaje gestionado,</text>
+<text x="115" y="191" text-anchor="start" fill="var(--muted)" font-size="10.5">no el clima</text>
+<text x="380" y="40" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Ley de Goodhart: cuando una medida se convierte en meta, deja de ser una buena medida (Strathern, 1997)</text>
+<text x="380" y="290" text-anchor="middle" fill="var(--muted)" font-size="11.5">Condiciones para un uso evaluativo defendible: ítems validados, error de medición conocido, comparabilidad, n mínimo y reglas explícitas</text>
+</svg>
+<figcaption>Figura 2. El ciclo que se activa cuando una encuesta diseñada para diagnosticar se usa para evaluar jefaturas o fijar metas. Es la situación del caso del examen final.</figcaption>
+</figure>
+
+<p>El uso evaluativo no es ilegítimo en sí mismo, pero exige lo que el diagnóstico no exige: ítems validados, error de medición conocido, comparabilidad entre unidades, número mínimo de respuestas y reglas explícitas de consecuencia. El caso del examen final (un cuestionario de 53 ítems aplicado sin pilotaje a 978 trabajadores de 50 sucursales con la intención de definir indicadores y evaluar a los jefes de sucursal) es el ejemplo de lo que ocurre cuando esas condiciones no se cumplen.</p>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · TechNova</span>
+  <p>El diseño del Control 2 propuso como indicador leading del problema núcleo (prioridades inestables por falta de estructura de decisión entre cofundadores) un ítem de claridad de prioridades en una encuesta pulso trimestral, junto con la proporción de decisiones de producto revertidas. Para que ese ítem funcione como indicador necesita redacción estable, aplicación trimestral a todos los equipos de desarrollo, un mínimo de cinco respuestas por equipo para reportar y una verificación inicial de que mide lo que dice medir (sesión 5). Si además se usara para evaluar a los líderes de equipo, los desarrolladores responderían pensando en quién leerá.</p>
+</div>
+
+<h2 id="s3">3. Seis pasos de una encuesta organizacional</h2>
+<p>Los pasos de una encuesta organizacional son los de todo estudio diagnóstico (sesión 2), aplicados al método de encuesta (Borg &amp; Mastrangelo, 2008; Church &amp; Waclawski, 2001).</p>
+
+<figure>
+<svg viewBox="0 0 760 205" width="100%" role="img" aria-labelledby="fig-seis" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-seis">Seis pasos de una encuesta organizacional</title>
+  <defs><marker id="fig-seis-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-seis-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<rect x="20" y="50" width="108" height="48" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="74.0" y="78.4" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">1 Objetivo</text>
+<text x="74" y="118" text-anchor="middle" fill="var(--muted)" font-size="11">qué decisión</text>
+<text x="74" y="133" text-anchor="middle" fill="var(--muted)" font-size="11">quién responde</text>
+<line x1="130" y1="74" x2="140" y2="74" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-seis-a)"/>
+<rect x="142" y="50" width="108" height="48" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="196.0" y="78.4" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">2 Promoción</text>
+<text x="196" y="118" text-anchor="middle" fill="var(--muted)" font-size="11">confianza</text>
+<text x="196" y="133" text-anchor="middle" fill="var(--muted)" font-size="11">quién verá qué</text>
+<line x1="252" y1="74" x2="262" y2="74" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-seis-a)"/>
+<rect x="264" y="50" width="108" height="48" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="318.0" y="78.4" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">3 Cuestionario</text>
+<text x="318" y="118" text-anchor="middle" fill="var(--muted)" font-size="11">reutilizar, adaptar</text>
+<text x="318" y="133" text-anchor="middle" fill="var(--muted)" font-size="11">o construir; pilotar</text>
+<line x1="374" y1="74" x2="384" y2="74" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-seis-a)"/>
+<rect x="386" y="50" width="108" height="48" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="440.0" y="78.4" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">4 Aplicación</text>
+<text x="440" y="118" text-anchor="middle" fill="var(--muted)" font-size="11">censo, en línea</text>
+<text x="440" y="133" text-anchor="middle" fill="var(--muted)" font-size="11">10 a 15 días</text>
+<line x1="496" y1="74" x2="506" y2="74" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-seis-a)"/>
+<rect x="508" y="50" width="108" height="48" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="562.0" y="78.4" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">5 Análisis</text>
+<text x="562" y="118" text-anchor="middle" fill="var(--muted)" font-size="11">calidad, puntuaciones</text>
+<text x="562" y="133" text-anchor="middle" fill="var(--muted)" font-size="11">subgrupos</text>
+<line x1="618" y1="74" x2="628" y2="74" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-seis-a)"/>
+<rect x="630" y="50" width="108" height="48" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="684.0" y="78.4" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">6 Devolución</text>
+<text x="684" y="118" text-anchor="middle" fill="var(--muted)" font-size="11">dirección y</text>
+<text x="684" y="133" text-anchor="middle" fill="var(--muted)" font-size="11">trabajadores</text>
+<path d="M684,100 L684,158 L74,158 L74,142" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-seis-a)"/>
+<text x="380" y="172" text-anchor="middle" fill="var(--muted)" font-size="11.5">la devolución decide la respuesta de la ola siguiente</text>
+<text x="380" y="198" text-anchor="middle" fill="var(--muted)" font-size="12">Sesión 3: pasos 1 a 4 (el paso 3 ocupa casi toda la sesión). Sesiones 5 y 6: pasos 5 y 6.</text>
+</svg>
+<figcaption>Figura 3. Los seis pasos de una encuesta organizacional. El cuestionario (paso 3, en rojo) es el instrumento; la encuesta es el ciclo completo. Adaptado de Borg y Mastrangelo (2008) y Church y Waclawski (2001).</figcaption>
+</figure>
+
+<ol>
+  <li><strong>Objetivo.</strong> Qué decisión se tomará con los resultados; si no hay decisión, no hay encuesta. Si la información ya existe en registros administrativos (rotación, licencias, tickets, ausentismo), la encuesta no es la mejor fuente. Quiénes deben responder, qué unidades se compararán y si es factible en el tiempo, la plataforma y el clima de confianza disponibles.</li>
+  <li><strong>Promoción.</strong> Tanto o más importante que el cuestionario: decide la tasa de respuesta y la sinceridad. Consiste en anticiparse a la desconfianza (quién verá qué, cómo se protege el anonimato, qué pasó con la encuesta anterior), no tomar partido (el patrocinio visible debe ser amplio, no de la gerencia ni del sindicato) y comunicar antes, durante y después, con recordatorios por unidad y no por persona. Dillman et al. (2014) sistematizan estos elementos en el método de diseño a medida: contactos múltiples, patrocinio creíble y utilidad visible para quien responde.</li>
+  <li><strong>Cuestionario.</strong> Reutilizar, adaptar o construir; decidir referente y formato; pilotar. Es el tema de las secciones 4 a 9.</li>
+  <li><strong>Aplicación.</strong> En diagnóstico organizacional la regla es el censo: todos deben poder opinar y el análisis por unidad exige a todos. La muestra se reserva para poblaciones muy grandes, encuestas pulso o aplicaciones costosas. La modalidad habitual es autoadministrada en línea (Qualtrics, SurveyMonkey, Microsoft Forms, Google Forms, LimeSurvey), con papel o aplicación asistida para el personal sin correo o sin acceso. La ventana de aplicación es de 10 a 15 días, con dos recordatorios, evitando cierres de mes, vacaciones y procesos de evaluación. Se reporta siempre la tasa de respuesta global y por unidad.</li>
+  <li><strong>Análisis.</strong> Calidad de los datos, puntuaciones de escala, análisis por subgrupos y relaciones, integración con otras fuentes (sesiones 5 y 6).</li>
+  <li><strong>Devolución.</strong> A la dirección y a los trabajadores, con un plan de acción y un vínculo explícito con la ola siguiente (sesión 6). Es el paso que con más frecuencia se omite y el que más determina la respuesta de la siguiente aplicación.</li>
+</ol>
+
+<h2 id="s4">4. Reutilizar, adaptar o construir el cuestionario</h2>
+<p>Construir buenos ítems es difícil, y la mayoría de los constructos que interesan en diagnóstico organizacional ya tienen escalas publicadas con evidencia de validez y fiabilidad. Fields (2002) compila decenas de ellas con ítems, propiedades psicométricas y fuente original. Hay tres opciones. Reutilizar un instrumento validado completo, respetando sus condiciones de uso y ajustando el vocabulario al mínimo. Adaptar una o más escalas validadas al contexto (sector, país, tamaño), conservando su estructura, y añadir un bloque contextual propio; es la opción recomendada. Construir un instrumento ad hoc cuando el constructo es específico de la organización o del problema; exige definición conceptual, banco de ítems, revisión por jueces, pilotaje y análisis psicométrico (DeVellis &amp; Thorpe, 2022; Hinkin, 1998).</p>
+<p>Adaptar no es traducir: la adaptación exige revisar el constructo, el vocabulario local y el referente, y documentar la fuente de cada ítem en la planilla de ítems por dimensión (original, adaptado de, propio). Sin ese registro no se puede saber qué parte del cuestionario tiene respaldo.</p>
+
+<h3>4.1 Del constructo a la pregunta</h3>
+<p>Cada ítem es una definición operacional de una variable del diseño diagnóstico. La cadena que define la validez tiene cinco eslabones: el constructo (la variable: claridad de rol, carga, confianza en la dirección), su definición (qué incluye, qué excluye, en qué se diferencia de constructos vecinos), sus indicadores (conductas, percepciones o hechos observables que lo manifiestan: el universo de posibles ítems), los ítems (una muestra de ese universo, redactada en un formato común) y la validez (el grado en que las respuestas reflejan el constructo y no otra cosa). Cualquier pregunta es una muestra de un universo de preguntas posibles: "¿Qué edad tiene?" y "¿Cuántos años cumplió en su último cumpleaños?" son indicadores del mismo constructo. Con la edad, el supuesto de que la respuesta refleja el constructo es razonable; con la confianza en la dirección, hay que construir el argumento (DeVellis &amp; Thorpe, 2022; Nunnally &amp; Bernstein, 1994).</p>
+
+<figure>
+<svg viewBox="0 0 760 330" width="100%" role="img" aria-labelledby="fig-cadena" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-cadena">Del constructo al ítem y a la validez</title>
+  <defs><marker id="fig-cadena-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-cadena-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<rect x="20" y="20" width="130" height="44" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="85.0" y="46.5" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">Constructo</text>
+<text x="170" y="47" text-anchor="start" fill="currentColor" font-size="12">Claridad de prioridades del equipo</text>
+<line x1="85" y1="66" x2="85" y2="76" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-cadena-a)"/>
+<rect x="20" y="78" width="130" height="44" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="85.0" y="104.5" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">Definición</text>
+<text x="170" y="98" text-anchor="start" fill="currentColor" font-size="12">Grado en que las prioridades se mantienen el tiempo suficiente para completar</text>
+<text x="170" y="114" text-anchor="start" fill="currentColor" font-size="12">lo planificado; excluye carga y claridad de rol</text>
+<line x1="85" y1="124" x2="85" y2="134" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-cadena-a)"/>
+<rect x="20" y="136" width="130" height="44" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="85.0" y="162.6" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">Indicadores</text>
+<text x="170" y="156" text-anchor="start" fill="currentColor" font-size="12">Decisiones revertidas; instrucciones contradictorias; trabajo terminado que se</text>
+<text x="170" y="172" text-anchor="start" fill="currentColor" font-size="12">usa; horizonte de planificación</text>
+<line x1="85" y1="182" x2="85" y2="192" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-cadena-a)"/>
+<rect x="20" y="194" width="130" height="44" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="85.0" y="220.6" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">Ítems</text>
+<text x="170" y="214" text-anchor="start" fill="currentColor" font-size="12">'En mi equipo, las prioridades de un sprint se mantienen hasta su término' (1</text>
+<text x="170" y="230" text-anchor="start" fill="currentColor" font-size="12">nunca a 5 casi siempre); al menos tres</text>
+<line x1="85" y1="240" x2="85" y2="250" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-cadena-a)"/>
+<rect x="20" y="252" width="130" height="44" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="85.0" y="278.6" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">Validez</text>
+<text x="170" y="272" text-anchor="start" fill="currentColor" font-size="12">¿Las respuestas reflejan la estabilidad de prioridades y no el ánimo, la carga</text>
+<text x="170" y="288" text-anchor="start" fill="currentColor" font-size="12">o la deseabilidad social? Se argumenta y se verifica (sesión 5)</text>
+<text x="380" y="318" text-anchor="middle" fill="var(--muted)" font-size="11.5">Cada ítem es una muestra del universo de indicadores posibles; la validez es el supuesto de que la muestra representa al constructo.</text>
+</svg>
+<figcaption>Figura 4. La cadena que define la validez, ilustrada con una dimensión del diseño diagnóstico de TechNova. Adaptado de DeVellis y Thorpe (2022).</figcaption>
+</figure>
+
+
+<h2 id="s5">5. Tipos de preguntas</h2>
+<p>Según el formato, las preguntas son abiertas (enunciado sin alternativas; capturan lo no previsto a costa de un análisis costoso) o cerradas (alternativas fijas, excluyentes y exhaustivas; comparables y rápidas, pero solo capturan lo previsto). En una encuesta organizacional bastan dos o tres abiertas al final: qué es lo mejor de trabajar aquí, qué cambiaría, otros comentarios.</p>
+<p>Según la información que buscan, Fowler (2014) distingue cuatro tipos. Las preguntas factuales piden datos de clasificación (área, antigüedad, tipo de contrato); un ítem por constructo. Las conductuales piden qué hace la persona y con qué frecuencia, siempre con un período de referencia ("en el último mes"); un ítem por constructo. Las de conocimiento verifican qué sabe la persona sobre hechos o políticas; uno o pocos ítems. Las de estado subjetivo piden actitudes, percepciones, intenciones y satisfacción; son las centrales en diagnóstico organizacional y las únicas que exigen escalas multi-ítem.</p>
+
+<div class="box">
+  <span class="label">Regla de al menos tres ítems</span>
+  <p>Un constructo subjetivo es complejo y ningún ítem lo agota. Varios ítems promedian el error de cada uno y permiten estimar la fiabilidad de la escala (sesión 5). Con un solo ítem no se puede saber cuánto ruido tiene el indicador. La excepción aparente, el eNPS, no pretende medir un constructo sino emitir una señal (sección 10).</p>
+</div>
+
+<h2 id="s6">6. Redacción de ítems</h2>
+<p>Seis errores explican la mayoría de los ítems deficientes (Fowler, 2014; Krosnick &amp; Presser, 2010; Dillman et al., 2014). El ítem doble pregunta dos cosas y recibe una respuesta ("el liderazgo es claro y efectivo"); se separa o se elige la faceta que importa. La ambigüedad usa términos que cada persona entiende de forma distinta ("¿su jefe es bueno?"); se especifica la conducta ("mi jefatura me da retroalimentación útil sobre mi trabajo"). La jerga traslada el vocabulario de la consultora o de la gerencia a quien responde ("¿la organización tiene un governance adecuado?"). El ítem cargado induce la respuesta o presupone algo ("¿está de acuerdo con la brillante nueva estrategia?"). La doble negación obliga a un cálculo lógico ("no estoy en desacuerdo con que no se respete el horario"). El ítem largo acumula condiciones y subordinadas; la regla práctica es una idea por ítem y no más de 20 palabras.</p>
+<p>Dos errores adicionales son frecuentes en cuestionarios de clima. Los cuantificadores absolutos o vagos ("todas las jefaturas", "hay jefaturas que en ocasiones") hacen el ítem imposible de negar o de afirmar. La ausencia de período de referencia en las preguntas conductuales deja a cada persona decidir sobre qué lapso responde.</p>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · cuestionario real de clima</span>
+  <p>"Todas las jefaturas con que interactúo promueven confianza y adecuadas relaciones laborales al interior de la empresa" contiene un cuantificador absoluto, es doble (confianza y relaciones) y tiene referente múltiple. Una reescritura: "Mi jefatura directa genera confianza en el equipo", con formato de acuerdo de 1 a 5. "Los trabajadores de esta empresa se sienten orgullosos de trabajar aquí" pide a la persona opinar por otros y duplica, con otro referente, el ítem "Me siento orgulloso de trabajar en esta empresa"; conviene eliminarlo.</p>
+</div>
+
+<p>Una prueba rápida de cualquier ítem consiste en leerlo en voz alta a alguien que no trabaja en la organización: si tiene que preguntar qué significa, hay que reescribirlo. La psicología de la respuesta (Tourangeau et al., 2000) explica por qué: responder exige comprender la pregunta, recuperar la información, formar un juicio y ajustarlo al formato; cada paso falla si el ítem es ambiguo, largo o mal anclado.</p>
+
+<h2 id="s7">7. El referente del ítem</h2>
+<p>El referente es el objeto del que habla el ítem. Con referente individual ("me gusta trabajar en esta empresa"), la persona informa sobre sí misma o sobre su situación; es el referente adecuado para explicar variables individuales como satisfacción, intención de salida, carga percibida o clima psicológico. Con referente endogrupal ("en mi equipo nos gusta trabajar en esta empresa"), cada persona informa sobre el colectivo al que pertenece; es el referente adecuado para variables grupales y para el clima organizacional o de unidad, que se agrega por unidad y exige medir el consenso. Con referente exogrupal ("a los miembros de mi equipo les gusta trabajar en esta empresa"), la persona informa sobre otros desde fuera, mezclando observación y atribución; en general no se recomienda, salvo para informantes clave.</p>
+
+<figure>
+<svg viewBox="0 0 760 295" width="100%" role="img" aria-labelledby="fig-referente" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-referente">Tres referentes del ítem</title>
+  <defs><marker id="fig-referente-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-referente-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<rect x="20" y="20" width="230" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="135.0" y="44.5" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">Individual: 'yo'</text>
+<rect x="20" y="70" width="230" height="52" rx="6" fill="var(--bg)" stroke="var(--rule)"/><text x="135.0" y="92.8" text-anchor="middle" fill="currentColor" font-size="11.5">'Me gusta trabajar</text><text x="135.0" y="107.3" text-anchor="middle" fill="currentColor" font-size="11.5">en esta empresa'</text>
+<text x="135" y="148" text-anchor="middle" fill="currentColor" font-size="11.5">clima psicológico,</text>
+<text x="135" y="163" text-anchor="middle" fill="currentColor" font-size="11.5">satisfacción, intención</text>
+<text x="135" y="178" text-anchor="middle" fill="currentColor" font-size="11.5">de salida</text>
+<line x1="135" y1="196" x2="135" y2="214" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-referente-a)"/>
+<rect x="20" y="216" width="230" height="34" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="135.0" y="237.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Nivel: individuo</text>
+<rect x="265" y="20" width="230" height="40" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="380.0" y="44.5" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">Endogrupal: 'nosotros'</text>
+<rect x="265" y="70" width="230" height="52" rx="6" fill="var(--bg)" stroke="var(--rule)"/><text x="380.0" y="92.8" text-anchor="middle" fill="currentColor" font-size="11.5">'En mi equipo nos gusta</text><text x="380.0" y="107.3" text-anchor="middle" fill="currentColor" font-size="11.5">trabajar en esta empresa'</text>
+<text x="380" y="148" text-anchor="middle" fill="currentColor" font-size="11.5">clima de unidad; se agrega</text>
+<text x="380" y="163" text-anchor="middle" fill="currentColor" font-size="11.5">por equipo si hay acuerdo</text>
+<text x="380" y="178" text-anchor="middle" fill="currentColor" font-size="11.5">(rwg, ICC) y n mínimo</text>
+<line x1="380" y1="196" x2="380" y2="214" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-referente-a)"/>
+<rect x="265" y="216" width="230" height="34" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="380.0" y="237.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Nivel: grupo o unidad</text>
+<rect x="510" y="20" width="230" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="625.0" y="44.5" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">Exogrupal: 'ellos'</text>
+<rect x="510" y="70" width="230" height="52" rx="6" fill="var(--bg)" stroke="var(--rule)"/><text x="625.0" y="92.8" text-anchor="middle" fill="currentColor" font-size="11.5">'A los miembros de mi equipo</text><text x="625.0" y="107.3" text-anchor="middle" fill="currentColor" font-size="11.5">les gusta trabajar aquí'</text>
+<text x="625" y="148" text-anchor="middle" fill="currentColor" font-size="11.5">observación más atribución;</text>
+<text x="625" y="163" text-anchor="middle" fill="currentColor" font-size="11.5">solo informantes clave</text>
+<line x1="625" y1="196" x2="625" y2="214" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-referente-a)"/>
+<rect x="510" y="216" width="230" height="34" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="625.0" y="237.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">No recomendado</text>
+<text x="380" y="280" text-anchor="middle" fill="var(--muted)" font-size="11.5">Regla: el referente lo decide el nivel de análisis de la pregunta diagnóstica (sesión 2); una escala no mezcla referentes.</text>
+</svg>
+<figcaption>Figura 5. Tres referentes posibles para un mismo contenido y el nivel de análisis al que cada uno permite concluir. Adaptado de Chan (1998) y Klein et al. (2001).</figcaption>
+</figure>
+
+<p>La decisión no es de estilo sino de diseño. Chan (1998) distingue los modelos de composición por consenso directo (ítems con referente individual, cuyas respuestas se agregan) y con cambio de referente (ítems con referente grupal), y Klein et al. (2001) muestran que el referente afecta el acuerdo dentro de los grupos. James et al. (2008) formalizan la distinción entre clima psicológico (percepción individual) y clima organizacional (percepción compartida, fenómeno emergente por consenso). La regla práctica es que el referente del ítem se decide por el nivel de análisis del diseño diagnóstico: si la pregunta es sobre equipos, el ítem habla de "mi equipo"; si es sobre personas, habla de "yo". Una escala no debe mezclar referentes.</p>
+
+<div class="box atencion">
+  <span class="label">Atención · tableros por unidad</span>
+  <p>Un tablero que compara áreas usa, por definición, variables agregadas. Si los ítems tienen referente individual y no se verificó el acuerdo intragrupo (sesión 5), el promedio del área no es un atributo del área sino el promedio de opiniones privadas. Comparar áreas exige referente grupal o, al menos, verificar el acuerdo antes de agregar.</p>
+</div>
+
+<h2 id="s8">8. Formato de respuesta</h2>
+<p>Las escalas de valoración (rating scales) presentan un enunciado y tres o más categorías ordenadas de respuesta, cada una con un anclaje verbal, numérico o gráfico. Likert (1932) propuso el formato de acuerdo de cinco puntos que sigue siendo el más usado. Cinco decisiones definen el formato.</p>
+
+<figure>
+<svg viewBox="0 0 760 330" width="100%" role="img" aria-labelledby="fig-formato" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-formato">Cuatro formatos de respuesta</title>
+  <defs><marker id="fig-formato-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-formato-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<text x="20" y="26" text-anchor="start" fill="currentColor" font-size="12" font-weight="700">A. Acuerdo, 5 puntos, todos etiquetados (recomendado para percepciones)</text>
+<line x1="80" y1="50" x2="620" y2="50" stroke="var(--rule)" stroke-width="2"/>
+<circle cx="80" cy="50" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="80.0" y="54" text-anchor="middle" fill="currentColor" font-size="9">1</text>
+<text x="80.0" y="72" text-anchor="middle" fill="var(--muted)" font-size="10.5">Muy en desacuerdo</text>
+<circle cx="215" cy="50" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="215.0" y="54" text-anchor="middle" fill="currentColor" font-size="9">2</text>
+<text x="215.0" y="72" text-anchor="middle" fill="var(--muted)" font-size="10.5">En desacuerdo</text>
+<circle cx="350" cy="50" r="7" fill="var(--bg)" stroke="var(--accent)" stroke-width="1.5"/>
+<text x="350.0" y="54" text-anchor="middle" fill="currentColor" font-size="9">3</text>
+<text x="350.0" y="72" text-anchor="middle" fill="var(--muted)" font-size="10.5">Ni de acuerdo ni en desacuerdo</text>
+<circle cx="485" cy="50" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="485.0" y="54" text-anchor="middle" fill="currentColor" font-size="9">4</text>
+<text x="485.0" y="72" text-anchor="middle" fill="var(--muted)" font-size="10.5">De acuerdo</text>
+<circle cx="620" cy="50" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="620.0" y="54" text-anchor="middle" fill="currentColor" font-size="9">5</text>
+<text x="620.0" y="72" text-anchor="middle" fill="var(--muted)" font-size="10.5">Muy de acuerdo</text>
+<text x="20" y="101" text-anchor="start" fill="currentColor" font-size="12" font-weight="700">B. Frecuencia, 5 puntos (recomendado para conductas, con período de referencia)</text>
+<line x1="80" y1="125" x2="620" y2="125" stroke="var(--rule)" stroke-width="2"/>
+<circle cx="80" cy="125" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="80.0" y="129" text-anchor="middle" fill="currentColor" font-size="9">1</text>
+<text x="80.0" y="147" text-anchor="middle" fill="var(--muted)" font-size="10.5">Nunca</text>
+<circle cx="215" cy="125" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="215.0" y="129" text-anchor="middle" fill="currentColor" font-size="9">2</text>
+<text x="215.0" y="147" text-anchor="middle" fill="var(--muted)" font-size="10.5">Pocas veces</text>
+<circle cx="350" cy="125" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="350.0" y="129" text-anchor="middle" fill="currentColor" font-size="9">3</text>
+<text x="350.0" y="147" text-anchor="middle" fill="var(--muted)" font-size="10.5">A veces</text>
+<circle cx="485" cy="125" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="485.0" y="129" text-anchor="middle" fill="currentColor" font-size="9">4</text>
+<text x="485.0" y="147" text-anchor="middle" fill="var(--muted)" font-size="10.5">Muchas veces</text>
+<circle cx="620" cy="125" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="620.0" y="129" text-anchor="middle" fill="currentColor" font-size="9">5</text>
+<text x="620.0" y="147" text-anchor="middle" fill="var(--muted)" font-size="10.5">Siempre</text>
+<text x="20" y="176" text-anchor="start" fill="currentColor" font-size="12" font-weight="700">C. 7 puntos, solo extremos etiquetados: más discriminación, pero los puntos intermedios se leen de forma distinta</text>
+<line x1="80" y1="200" x2="620" y2="200" stroke="var(--rule)" stroke-width="2"/>
+<circle cx="80" cy="200" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="80.0" y="204" text-anchor="middle" fill="currentColor" font-size="9">1</text>
+<text x="80.0" y="222" text-anchor="middle" fill="var(--muted)" font-size="10.5">Muy en desacuerdo</text>
+<circle cx="170" cy="200" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="170.0" y="204" text-anchor="middle" fill="currentColor" font-size="9">2</text>
+<circle cx="260" cy="200" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="260.0" y="204" text-anchor="middle" fill="currentColor" font-size="9">3</text>
+<circle cx="350" cy="200" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="350.0" y="204" text-anchor="middle" fill="currentColor" font-size="9">4</text>
+<circle cx="440" cy="200" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="440.0" y="204" text-anchor="middle" fill="currentColor" font-size="9">5</text>
+<circle cx="530" cy="200" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="530.0" y="204" text-anchor="middle" fill="currentColor" font-size="9">6</text>
+<circle cx="620" cy="200" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="620.0" y="204" text-anchor="middle" fill="currentColor" font-size="9">7</text>
+<text x="620.0" y="222" text-anchor="middle" fill="var(--muted)" font-size="10.5">Muy de acuerdo</text>
+<text x="20" y="251" text-anchor="start" fill="currentColor" font-size="12" font-weight="700">D. 4 puntos sin punto medio ('no sé' y 'no aplica' separados, nunca en el centro)</text>
+<line x1="80" y1="275" x2="620" y2="275" stroke="var(--rule)" stroke-width="2"/>
+<circle cx="80" cy="275" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="80.0" y="279" text-anchor="middle" fill="currentColor" font-size="9">1</text>
+<text x="80.0" y="297" text-anchor="middle" fill="var(--muted)" font-size="10.5">Muy en desacuerdo</text>
+<circle cx="260" cy="275" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="260.0" y="279" text-anchor="middle" fill="currentColor" font-size="9">2</text>
+<text x="260.0" y="297" text-anchor="middle" fill="var(--muted)" font-size="10.5">En desacuerdo</text>
+<circle cx="440" cy="275" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="440.0" y="279" text-anchor="middle" fill="currentColor" font-size="9">3</text>
+<text x="440.0" y="297" text-anchor="middle" fill="var(--muted)" font-size="10.5">De acuerdo</text>
+<circle cx="620" cy="275" r="7" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>
+<text x="620.0" y="279" text-anchor="middle" fill="currentColor" font-size="9">4</text>
+<text x="620.0" y="297" text-anchor="middle" fill="var(--muted)" font-size="10.5">Muy de acuerdo</text>
+<rect x="640" y="263" width="100" height="24" rx="12" fill="var(--note-bg)" stroke="var(--note-border)"/>
+<text x="690" y="279" text-anchor="middle" fill="var(--note-border)" font-size="10.5" font-weight="700">No sé · No aplica</text>
+<text x="380" y="318" text-anchor="middle" fill="var(--muted)" font-size="11.5">Dentro de una misma escala aditiva: mismo anclaje, mismo número de puntos, misma dirección (Spector, 1992).</text>
+</svg>
+<figcaption>Figura 6. Cuatro formatos de respuesta y cuándo conviene cada uno. El punto medio (en rojo en A) es una posición legítima distinta de 'no sé'. Basado en Krosnick y Presser (2010) y Weijters et al. (2010).</figcaption>
+</figure>
+
+<ul>
+  <li><strong>Tipo de anclaje.</strong> Acuerdo (muy en desacuerdo a muy de acuerdo), frecuencia (nunca a siempre), satisfacción, magnitud (nada a mucho), evaluación (muy malo a muy bueno). El anclaje debe corresponder al enunciado: frecuencia para conductas, acuerdo para percepciones. Conviene etiquetar todos los puntos, no solo los extremos (Krosnick &amp; Presser, 2010).</li>
+  <li><strong>Número de puntos.</strong> De 3 a 11; lo habitual es 5 o 7. Cinco puntos bastan para encuestas organizacionales generales; siete cuando se necesita más discriminación (Weijters et al., 2010). Nunca se mezclan dentro de una escala.</li>
+  <li><strong>Punto medio.</strong> Incluirlo cuando la neutralidad es una posición legítima; omitirlo (4 o 6 puntos) cuando se sospecha respuesta central habitual. Las opciones "no sé" y "no aplica" se ofrecen separadas del punto medio, porque desconocer no es ser neutral.</li>
+  <li><strong>Dirección y numeración.</strong> Mantener la misma dirección en todo el cuestionario (de negativo a positivo) y numerar de 1 a k; evitar escalas de 0 a 10 salvo para el eNPS.</li>
+  <li><strong>Ítems inversos.</strong> Redactados en sentido contrario para controlar la aquiescencia. En encuestas autoadministradas conviene usar pocos o ninguno: reducen la fiabilidad y generan factores de método. Si se usan, se recodifican antes de analizar.</li>
+</ul>
+<p>La práctica de construir escalas aditivas (sumar o promediar los ítems) impone una restricción adicional: todos los ítems de una misma escala deben compartir formato, número de alternativas y anclajes (Spector, 1992).</p>
+
+<h2 id="s9">9. Anatomía, orden, longitud y pilotaje</h2>
+<p>Un cuestionario organizacional tiene cinco partes. La introducción (máximo 150 palabras) indica el propósito, quién realiza la encuesta, las garantías de confidencialidad o anonimato, el uso que se dará a los resultados, el tiempo estimado y el plazo; debe responder a las tres preguntas de quien recibe la invitación: quién pregunta, para qué y qué pasa con mis respuestas. Las preguntas de clasificación (5 a 10 factuales: área, nivel, antigüedad, tipo de contrato) son el mínimo para el análisis por subgrupo; cada una es una posible dimensión de análisis del informe y del tablero, pero también un riesgo para el anonimato, y pueden ir al final si se teme que inhiban la respuesta. Los bloques centrales contienen 20 a 50 ítems de estado subjetivo organizados por dimensión, con un mismo formato dentro de cada escala. Dos o tres preguntas abiertas y un cierre con agradecimiento y próximos pasos completan el instrumento.</p>
+
+<figure>
+<svg viewBox="0 0 760 195" width="100%" role="img" aria-labelledby="fig-anatomia" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-anatomia">Anatomía del cuestionario</title>
+  <defs><marker id="fig-anatomia-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-anatomia-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<rect x="20" y="60" width="62" height="54" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="51.03448275862069" y="92" text-anchor="middle" fill="currentColor" font-size="10.5" font-weight="700">Introducción</text>
+<text x="51.03448275862069" y="134" text-anchor="middle" fill="var(--muted)" font-size="10.5">150 palabras</text>
+<text x="51.03448275862069" y="148" text-anchor="middle" fill="var(--muted)" font-size="10.5">1 min</text>
+<rect x="82" y="60" width="93" height="54" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="128.6206896551724" y="92" text-anchor="middle" fill="currentColor" font-size="10.5" font-weight="700">Clasificación</text>
+<text x="128.6206896551724" y="134" text-anchor="middle" fill="var(--muted)" font-size="10.5">5 a 10 preguntas</text>
+<text x="128.6206896551724" y="148" text-anchor="middle" fill="var(--muted)" font-size="10.5">1 min</text>
+<rect x="175" y="60" width="434" height="54" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="392.41379310344826" y="92" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Bloques centrales por dimensión</text>
+<text x="392.41379310344826" y="134" text-anchor="middle" fill="var(--muted)" font-size="10.5">20 a 50 ítems, mismo formato por escala</text>
+<text x="392.41379310344826" y="148" text-anchor="middle" fill="var(--muted)" font-size="10.5">7 a 9 min</text>
+<rect x="610" y="60" width="93" height="54" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="656.2068965517242" y="92" text-anchor="middle" fill="currentColor" font-size="10.5" font-weight="700">Abiertas</text>
+<text x="656.2068965517242" y="134" text-anchor="middle" fill="var(--muted)" font-size="10.5">2 o 3</text>
+<text x="656.2068965517242" y="148" text-anchor="middle" fill="var(--muted)" font-size="10.5">2 min</text>
+<rect x="703" y="60" width="37" height="54" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="721.3793103448277" y="52" text-anchor="middle" fill="currentColor" font-size="10.5" font-weight="700">Cierre</text>
+<text x="20" y="35" text-anchor="start" fill="currentColor" font-size="12.5" font-weight="700">Un cuestionario organizacional de 10 a 12 minutos</text>
+<text x="20" y="165" text-anchor="start" fill="var(--muted)" font-size="11">Orden: embudo (de lo general a lo específico); fáciles primero; sensibles (jefatura directa, remuneración) cuando ya hay confianza;</text>
+<text x="20" y="180" text-anchor="start" fill="var(--muted)" font-size="11">agrupadas por tema; abiertas al final. Después de los 15 minutos aumentan la respuesta central y el abandono.</text>
+</svg>
+<figcaption>Figura 7. Las cinco partes de un cuestionario organizacional y el tiempo aproximado de cada una. Adaptado de Borg y Mastrangelo (2008) y Dillman et al. (2014).</figcaption>
+</figure>
+
+<p>El orden importa (Tourangeau et al., 2000; Dillman et al., 2014): de lo general a lo específico, las fáciles primero, las sensibles (jefatura directa, remuneración) cuando ya hay confianza, agrupadas por tema y con atención al efecto de contexto, por el cual una pregunta condiciona la siguiente. La duración objetivo es de 10 a 12 minutos, con 15 como máximo razonable: después de ese punto aumentan la respuesta central y el abandono. Es preferible una encuesta corta con 70% de respuesta a una larga con 30%, y cada ítem debe justificar su lugar con una decisión que dependa de él.</p>
+<p>El pilotaje es la etapa que más se omite y la que más daño evita. Consiste en que 5 a 15 personas de distintas áreas y niveles, que no sean las que luego analizan, respondan pensando en voz alta mientras se registran el tiempo, las dudas y las repeticiones; después se ajusta y, si los cambios fueron grandes, se vuelve a pilotar. Cuesta una semana. Un cuestionario con errores de tipeo es un cuestionario que no fue pilotado.</p>
+
+<h2 id="s10">10. Instrumentos estandarizados, encuestas pulso y eNPS</h2>
+<p>Los instrumentos estandarizados tienen validez y fiabilidad documentadas, a veces normas o benchmarks, ahorran diseño y dan credibilidad; a cambio pueden no ajustarse al contexto o al problema, algunos exigen licencia y existe el riesgo de medir lo que el instrumento mide y no lo que el diseño pide. Los cuestionarios ad hoc se ajustan al problema y al vocabulario local, sin costo de licencia, pero carecen de validación previa y de comparación externa, y sus errores de redacción y de dimensionalidad nadie los detecta hasta el análisis. La recomendación es un núcleo estandarizado (una o dos escalas validadas para las variables centrales) más un bloque contextual propio, pilotado. La lista de recursos publicada en Canvas reúne escalas de clima (Litwin &amp; Stringer, 1968), riesgo psicosocial en Chile (CEAL-SM/SUSESO), cultura (Cameron &amp; Quinn, 2011; Denison &amp; Mishra, 1995), engagement (Schaufeli et al., 2006), satisfacción (Spector, 1985), compromiso (Meyer &amp; Allen, 1991), seguridad psicológica (Edmondson, 1999), claridad de rol (Rizzo et al., 1970) y apoyo organizacional percibido (Eisenberger et al., 1986), entre otras.</p>
+<p>El eNPS (employee net promoter score) es un ítem único: "¿qué tan probable es que recomiende esta organización como lugar para trabajar?", de 0 a 10. Se calcula como el porcentaje de promotores (9 y 10) menos el de detractores (0 a 6), en puntos porcentuales; los pasivos (7 y 8) no cuentan. Es la versión para empleados del NPS propuesto por Reichheld (2003) para clientes, con la misma aritmética y las mismas críticas: pierde información al colapsar once puntos en tres categorías y es volátil con pocos respondientes. No es una medida de un constructo sino una señal, útil en el tablero como indicador lagging de actitud, no como diagnóstico.</p>
+
+<figure>
+<svg viewBox="0 0 760 230" width="100%" role="img" aria-labelledby="fig-enps" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-enps">Cálculo del eNPS</title>
+  <defs><marker id="fig-enps-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-enps-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<rect x="40" y="60" width="56" height="40" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="68.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">0</text>
+<rect x="100" y="60" width="56" height="40" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="128.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">1</text>
+<rect x="160" y="60" width="56" height="40" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="188.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">2</text>
+<rect x="220" y="60" width="56" height="40" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="248.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">3</text>
+<rect x="280" y="60" width="56" height="40" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="308.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">4</text>
+<rect x="340" y="60" width="56" height="40" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="368.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">5</text>
+<rect x="400" y="60" width="56" height="40" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="428.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">6</text>
+<rect x="460" y="60" width="56" height="40" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="488.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">7</text>
+<rect x="520" y="60" width="56" height="40" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="548.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">8</text>
+<rect x="580" y="60" width="56" height="40" fill="var(--bg)" stroke="var(--note-border)"/>
+<text x="608.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">9</text>
+<rect x="640" y="60" width="56" height="40" fill="var(--bg)" stroke="var(--note-border)"/>
+<text x="668.0" y="85" text-anchor="middle" fill="currentColor" font-size="13" font-weight="700">10</text>
+<text x="248.0" y="45" text-anchor="middle" fill="var(--accent)" font-size="12" font-weight="700">Detractores (0 a 6)</text>
+<text x="518.0" y="45" text-anchor="middle" fill="var(--muted)" font-size="12" font-weight="700">Pasivos (7 y 8)</text>
+<text x="638.0" y="45" text-anchor="middle" fill="var(--note-border)" font-size="12" font-weight="700">Promotores (9 y 10)</text>
+<text x="380" y="130" text-anchor="middle" fill="currentColor" font-size="12">'¿Qué tan probable es que recomiende esta organización como lugar para trabajar?'</text>
+<text x="380" y="165" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">Ejemplo TechNova (n = 128): 22% promotores, 46% pasivos, 32% detractores</text>
+<text x="380" y="185" text-anchor="middle" fill="currentColor" font-size="12.5">eNPS = 22 − 32 = −10 puntos. Rango posible: −100 a +100. Los pasivos no cuentan.</text>
+<text x="380" y="215" text-anchor="middle" fill="var(--muted)" font-size="11.5">Es una señal, no la medida de un constructo: colapsa once puntos en tres categorías y es volátil con n pequeño (Reichheld, 2003).</text>
+</svg>
+<figcaption>Figura 8. Cómo se calcula el eNPS a partir del ítem de recomendación de 0 a 10. Los porcentajes del ejemplo son ilustrativos.</figcaption>
+</figure>
+
+<p>Una encuesta pulso se diseña con 3 a 10 ítems ancla idénticos en cada ola, uno o dos ítems rotativos sobre un tema del momento, formato breve y estable, sin preguntas de clasificación más allá de la unidad, frecuencia mensual o trimestral, devolución por unidad en una semana y un umbral de reporte (número mínimo de respuestas por unidad; si no se alcanza, se agrega al nivel superior). El eNPS y dos o tres ítems ancla (claridad de prioridades, carga, intención de permanencia) son el núcleo de un tablero de personas; la encuesta anual los interpreta y la métrica administrativa (rotación) los valida.</p>
+
+<h2 id="s11">11. Calidad de la encuesta: fuentes de error</h2>
+<p>El marco del error total de encuesta (Groves et al., 2009) organiza las fuentes de error en dos familias. La calidad de la representación responde a la pregunta de a quién llegamos. En encuestas censales no hay error de muestreo, pero sí error de cobertura (¿se invitó a toda la población objetivo? ¿quedaron fuera turnos, contratistas, personas sin correo?) y error de no respuesta (¿quién no contestó y en qué unidades? una tasa global de 60% con 20% en un área es un problema de esa área). La consecuencia es que los promedios describen a quienes respondieron, no a la organización; por eso la tasa de respuesta por unidad debería figurar en el tablero como indicador de proceso junto al índice de clima.</p>
+
+<figure>
+<svg viewBox="0 0 760 420" width="100%" role="img" aria-labelledby="fig-error" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-error">Error total de encuesta</title>
+  <defs><marker id="fig-error-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-error-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<text x="20" y="28" text-anchor="start" fill="var(--accent)" font-size="13" font-weight="700">Representación: ¿a quién llegamos?</text>
+<text x="740" y="28" text-anchor="end" fill="var(--note-border)" font-size="13" font-weight="700">Medición: ¿qué tan bien medimos?</text>
+<rect x="20" y="45" width="160" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="100.0" y="69.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Población objetivo</text>
+<text x="100" y="99" text-anchor="middle" fill="var(--muted)" font-size="10.5">todos los trabajadores</text>
+<line x1="100" y1="105" x2="100" y2="121" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-error-a)"/>
+<text x="188" y="109" text-anchor="start" fill="var(--accent)" font-size="10" font-weight="700">Error de cobertura:</text>
+<text x="188" y="122" text-anchor="start" fill="var(--accent)" font-size="10">turnos, contratistas, sin correo</text>
+<line x1="184" y1="113" x2="108" y2="113" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 3"/>
+<rect x="20" y="123" width="160" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="100.0" y="147.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Invitados</text>
+<text x="100" y="177" text-anchor="middle" fill="var(--muted)" font-size="10.5">quienes recibieron el enlace</text>
+<line x1="100" y1="183" x2="100" y2="199" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-error-a)"/>
+<text x="188" y="187" text-anchor="start" fill="var(--accent)" font-size="10" font-weight="700">Error de no respuesta:</text>
+<text x="188" y="200" text-anchor="start" fill="var(--accent)" font-size="10">quién no contestó, en qué unidad</text>
+<line x1="184" y1="191" x2="108" y2="191" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 3"/>
+<rect x="20" y="201" width="160" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="100.0" y="225.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Respondientes</text>
+<text x="100" y="255" text-anchor="middle" fill="var(--muted)" font-size="10.5">quienes contestaron</text>
+<line x1="100" y1="261" x2="100" y2="277" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-error-a)"/>
+<text x="188" y="265" text-anchor="start" fill="var(--accent)" font-size="10" font-weight="700">Error de procesamiento:</text>
+<text x="188" y="278" text-anchor="start" fill="var(--accent)" font-size="10">codificación, perdidos</text>
+<line x1="184" y1="269" x2="108" y2="269" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3 3"/>
+<rect x="20" y="279" width="160" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="100.0" y="303.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Datos procesados</text>
+<text x="100" y="333" text-anchor="middle" fill="var(--muted)" font-size="10.5">recodificación, perdidos</text>
+<rect x="580" y="45" width="160" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="660.0" y="69.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Constructo</text>
+<text x="660" y="99" text-anchor="middle" fill="var(--muted)" font-size="10.5">claridad de prioridades</text>
+<line x1="660" y1="105" x2="660" y2="121" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-error-a)"/>
+<text x="572" y="109" text-anchor="end" fill="var(--note-border)" font-size="10" font-weight="700">Error de validez:</text>
+<text x="572" y="122" text-anchor="end" fill="var(--note-border)" font-size="10">los ítems miden otra cosa</text>
+<line x1="576" y1="113" x2="652" y2="113" stroke="var(--note-border)" stroke-width="1.2" stroke-dasharray="3 3"/>
+<rect x="580" y="123" width="160" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="660.0" y="147.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Ítems</text>
+<text x="660" y="177" text-anchor="middle" fill="var(--muted)" font-size="10.5">la muestra de indicadores</text>
+<line x1="660" y1="183" x2="660" y2="199" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-error-a)"/>
+<text x="572" y="187" text-anchor="end" fill="var(--note-border)" font-size="10" font-weight="700">Error de medición:</text>
+<text x="572" y="200" text-anchor="end" fill="var(--note-border)" font-size="10">deseabilidad, estilos, ambigüedad</text>
+<line x1="576" y1="191" x2="652" y2="191" stroke="var(--note-border)" stroke-width="1.2" stroke-dasharray="3 3"/>
+<rect x="580" y="201" width="160" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="660.0" y="225.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Respuestas</text>
+<text x="660" y="255" text-anchor="middle" fill="var(--muted)" font-size="10.5">lo que la persona marca</text>
+<line x1="660" y1="261" x2="660" y2="277" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-error-a)"/>
+<text x="572" y="265" text-anchor="end" fill="var(--note-border)" font-size="10" font-weight="700">Error de procesamiento:</text>
+<text x="572" y="278" text-anchor="end" fill="var(--note-border)" font-size="10">inversos sin recodificar</text>
+<line x1="576" y1="269" x2="652" y2="269" stroke="var(--note-border)" stroke-width="1.2" stroke-dasharray="3 3"/>
+<rect x="580" y="279" width="160" height="40" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/><text x="660.0" y="303.2" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Puntuación</text>
+<text x="660" y="333" text-anchor="middle" fill="var(--muted)" font-size="10.5">promedio de la escala</text>
+<line x1="180" y1="335" x2="300" y2="352" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-error-a)"/>
+<line x1="580" y1="335" x2="458" y2="352" stroke="currentColor" stroke-width="1.4" marker-end="url(#fig-error-a)"/>
+<rect x="295" y="350" width="165" height="36" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="377.5" y="372.4" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">Indicador del tablero</text>
+<text x="380" y="410" text-anchor="middle" fill="var(--muted)" font-size="11.5">La calidad del indicador es la del eslabón más débil: cada paso añade una fuente de error (Groves et al., 2009).</text>
+</svg>
+<figcaption>Figura 9. El marco del error total de encuesta: la rama de la representación (quién responde) y la rama de la medición (qué tan bien se mide) convergen en el indicador. Adaptado de Groves et al. (2009).</figcaption>
+</figure>
+
+<p>La calidad de la medición responde a la pregunta de qué tan bien medimos. La validez es el grado en que los ítems representan el constructo y no otro, y en que las dimensiones son distintas entre sí. La fiabilidad es la consistencia de las respuestas entre los ítems de una escala y entre aplicaciones. El error de procesamiento (codificación, recodificación de inversos, datos perdidos) es infrecuente pero grave. La consecuencia es que un índice con baja validez o fiabilidad controla ruido.</p>
+
+<h3>11.1 Fuentes de invalidez</h3>
+<p>Las fuentes de invalidez originadas en el investigador son controlables: constructo mal definido o ítems que miden otro constructo, preguntas dobles, ambiguas, cargadas o mal traducidas, instrucciones confusas, formato inadecuado, exceso de preguntas, mal diseño visual, errores de aplicación, y el error de sustitución, que consiste en preguntar por lo fácil de medir en lugar de lo que importa. Se corrigen con diseño y pilotaje. Las originadas en el encuestado son difíciles de controlar: características estables (comprensión lectora, memoria, familiaridad con encuestas), factores transitorios (fatiga, estrés, falta de tiempo), factores situacionales (presencia de la jefatura, ruido, dispositivo), el deseo de agradar o de protegerse, la deseabilidad social y los estilos de respuesta. Se mitigan con anonimato, promoción y formato, y se detectan en el análisis. Podsakoff et al. (2003) catalogan las fuentes de sesgo de método común y sus remedios de diseño.</p>
+
+<h3>11.2 Deseabilidad social</h3>
+<p>La deseabilidad social es la tendencia a responder dando una imagen positiva o socialmente aceptable de uno mismo o del grupo. Paulhus (1991) distingue el manejo de impresiones, deliberado, del autoengaño, que opera sin conciencia; ambos reducen la validez. Depende del contenido del ítem: aumenta con los temas sensibles (conflictos, consumo, errores, opiniones sobre la jefatura directa), con la aplicación presencial o identificada, en unidades pequeñas y, sobre todo, cuando los resultados tienen consecuencias para quien responde o para su jefatura. Se mitiga con anonimato creíble y número mínimo por unidad, redacción neutra que normalice la conducta, referente grupal en temas delicados, recolección por un tercero y, de manera decisiva, no usando la encuesta para evaluar personas. La paradoja para el control de gestión es que la condición que vuelve defendible un indicador de clima como KPI es la misma que lo distorsiona: cuanto más consecuencias tiene el resultado, más deseabilidad social.</p>
+
+<h3>11.3 Estilos de respuesta</h3>
+<p>Los estilos de respuesta son tendencias sistemáticas a responder de cierta manera frente a un formato, con independencia del contenido del ítem (Baumgartner &amp; Steenkamp, 2001; Van Vaerenbergh &amp; Thomas, 2013). La aquiescencia es la tendencia a estar de acuerdo con cualquier afirmación; infla los promedios y produce correlaciones espurias entre ítems redactados en la misma dirección; se mitiga con redacción equilibrada y formatos que no sean solo de acuerdo. La respuesta extrema usa solo los extremos de la escala; aumenta la varianza y exagera diferencias entre grupos; se mitiga etiquetando todos los puntos. La respuesta central usa siempre el punto medio; reduce la varianza y oculta problemas; es frecuente en Chile en estudios organizacionales, y se mitiga decidiendo con argumento si se omite el punto medio, separando "no sé" y con una promoción que legitime opinar. A diferencia de la deseabilidad social, que depende del contenido, el estilo depende del formato y es estable en la persona; además de reducir la validez, contamina la comparación entre grupos: si una unidad tiene más respuesta central que otra, su índice de clima no es comparable sin corrección.</p>
+
+<figure>
+<svg viewBox="0 0 760 238" width="100%" role="img" aria-labelledby="fig-estilos" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-estilos">Tres estilos de respuesta</title>
+  <defs><marker id="fig-estilos-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-estilos-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<text x="100" y="25" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Aquiescencia</text>
+<rect x="20" y="144" width="26" height="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="33" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">1</text>
+<rect x="52" y="140" width="26" height="10" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="65" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">2</text>
+<rect x="84" y="131" width="26" height="19" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="97" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">3</text>
+<rect x="116" y="89" width="26" height="61" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="129" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">4</text>
+<rect x="148" y="86" width="26" height="64" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="161" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">5</text>
+<line x1="16" y1="150" x2="182" y2="150" stroke="currentColor"/>
+<text x="100" y="185" text-anchor="middle" fill="var(--accent)" font-size="11">infla los promedios</text>
+<text x="285" y="25" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Respuesta extrema</text>
+<rect x="205" y="96" width="26" height="54" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="218" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">1</text>
+<rect x="237" y="134" width="26" height="16" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="250" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">2</text>
+<rect x="269" y="137" width="26" height="13" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="282" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">3</text>
+<rect x="301" y="131" width="26" height="19" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="314" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">4</text>
+<rect x="333" y="92" width="26" height="58" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="346" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">5</text>
+<line x1="201" y1="150" x2="367" y2="150" stroke="currentColor"/>
+<text x="285" y="185" text-anchor="middle" fill="var(--accent)" font-size="11">exagera las diferencias</text>
+<text x="470" y="25" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Respuesta central</text>
+<rect x="390" y="144" width="26" height="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="403" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">1</text>
+<rect x="422" y="134" width="26" height="16" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="435" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">2</text>
+<rect x="454" y="44" width="26" height="106" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="467" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">3</text>
+<rect x="486" y="128" width="26" height="22" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="499" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">4</text>
+<rect x="518" y="140" width="26" height="10" fill="var(--accent-soft)" stroke="var(--accent)"/>
+<text x="531" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">5</text>
+<line x1="386" y1="150" x2="552" y2="150" stroke="currentColor"/>
+<text x="470" y="185" text-anchor="middle" fill="var(--accent)" font-size="11">oculta los problemas</text>
+<text x="655" y="25" text-anchor="middle" fill="currentColor" font-size="12" font-weight="700">Sin estilo (referencia)</text>
+<rect x="575" y="137" width="26" height="13" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="588" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">1</text>
+<rect x="607" y="121" width="26" height="29" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="620" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">2</text>
+<rect x="639" y="102" width="26" height="48" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="652" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">3</text>
+<rect x="671" y="105" width="26" height="45" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="684" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">4</text>
+<rect x="703" y="124" width="26" height="26" fill="var(--note-bg)" stroke="var(--rule)"/>
+<text x="716" y="165" text-anchor="middle" fill="var(--muted)" font-size="10.5">5</text>
+<line x1="571" y1="150" x2="737" y2="150" stroke="currentColor"/>
+<text x="380" y="212" text-anchor="middle" fill="var(--muted)" font-size="11">Porcentaje de respuestas por punto de una escala de 1 a 5 bajo cada estilo.</text>
+<text x="380" y="227" text-anchor="middle" fill="var(--muted)" font-size="11">El estilo depende del formato y es estable en la persona; contamina la comparación entre unidades.</text>
+</svg>
+<figcaption>Figura 10. Cómo se ven tres estilos de respuesta en la distribución de un ítem, frente a una distribución sin estilo. Basado en Baumgartner y Steenkamp (2001).</figcaption>
+</figure>
+
+
+<h3>11.4 Fiabilidad: anticipo de la sesión 5</h3>
+<p>La respuesta de una persona es una muestra de las respuestas que podría dar; el error de medición es la diferencia entre esa respuesta y su promedio hipotético, y la fiabilidad es la consistencia o replicabilidad de la medida, lo contrario del error de medición. Se estima por test-retest (correlación entre dos aplicaciones del mismo ítem, poco usada en encuestas organizacionales) o por consistencia interna (acuerdo entre los ítems de una misma escala, mediante los coeficientes alfa y omega), lo que exige escalas multi-ítem (Nunnally &amp; Bernstein, 1994). El umbral orientativo de .70 es adecuado para uso grupal y descriptivo; las decisiones sobre personas exigen más. Para el control de gestión la fiabilidad importa porque un índice con fiabilidad .60 tiene 40% de varianza de error: dos áreas con promedios de 3,8 y 4,1 pueden no diferir, y las metas fijadas sobre ese índice premian o castigan ruido. Se verifica antes de reportar y antes de fijar metas, nunca después. En la sesión 5 se calculan en JASP descriptivos, correlaciones, análisis factorial, alfa y omega sobre un cuestionario real de ambiente laboral.</p>
+
+<figure>
+<svg viewBox="0 0 760 248" width="100%" role="img" aria-labelledby="fig-fiab" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-fiab">Fiabilidad y comparación entre áreas</title>
+  <defs><marker id="fig-fiab-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-fiab-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<text x="190" y="25" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">Fiabilidad .60: 40% de la varianza es error</text>
+<line x1="40" y1="150" x2="340" y2="150" stroke="currentColor"/>
+<text x="40.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">2,5</text>
+<text x="100.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">3,0</text>
+<text x="160.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">3,5</text>
+<text x="220.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">4,0</text>
+<text x="280.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">4,5</text>
+<text x="340.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">5,0</text>
+<line x1="55" y1="70" x2="337" y2="70" stroke="var(--note-border)" stroke-width="3"/>
+<circle cx="196" cy="70" r="5" fill="var(--note-border)"/>
+<text x="195.99999999999997" y="58" text-anchor="middle" fill="var(--note-border)" font-size="11" font-weight="700">Área 1: 3,8</text>
+<line x1="91" y1="115" x2="373" y2="115" stroke="var(--accent)" stroke-width="3"/>
+<circle cx="232" cy="115" r="5" fill="var(--accent)"/>
+<text x="231.99999999999997" y="103" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="700">Área 2: 4,1</text>
+<text x="190" y="195" text-anchor="middle" fill="var(--muted)" font-size="11">error típico de medida ≈ 0,60</text>
+<text x="570" y="25" text-anchor="middle" fill="currentColor" font-size="12.5" font-weight="700">Fiabilidad .90: 10% de la varianza es error</text>
+<line x1="420" y1="150" x2="720" y2="150" stroke="currentColor"/>
+<text x="420.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">2,5</text>
+<text x="480.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">3,0</text>
+<text x="540.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">3,5</text>
+<text x="600.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">4,0</text>
+<text x="660.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">4,5</text>
+<text x="720.0" y="168" text-anchor="middle" fill="var(--muted)" font-size="10.5">5,0</text>
+<line x1="505" y1="70" x2="647" y2="70" stroke="var(--note-border)" stroke-width="3"/>
+<circle cx="576" cy="70" r="5" fill="var(--note-border)"/>
+<text x="576.0" y="58" text-anchor="middle" fill="var(--note-border)" font-size="11" font-weight="700">Área 1: 3,8</text>
+<line x1="541" y1="115" x2="683" y2="115" stroke="var(--accent)" stroke-width="3"/>
+<circle cx="612" cy="115" r="5" fill="var(--accent)"/>
+<text x="612.0" y="103" text-anchor="middle" fill="var(--accent)" font-size="11" font-weight="700">Área 2: 4,1</text>
+<text x="570" y="195" text-anchor="middle" fill="var(--muted)" font-size="11">error típico de medida ≈ 0,30</text>
+<text x="380" y="222" text-anchor="middle" fill="var(--muted)" font-size="11">Barras: ±1,96 errores típicos de medida en torno a la media de cada área (DE observada 0,95).</text>
+<text x="380" y="237" text-anchor="middle" fill="var(--muted)" font-size="11">Con fiabilidad .60 las áreas no se distinguen; con .90 sí.</text>
+</svg>
+<figcaption>Figura 11. Qué le pasa a la comparación entre dos áreas cuando cambia la fiabilidad del índice. El error típico de medida es DE × √(1 − fiabilidad) (Nunnally y Bernstein, 1994).</figcaption>
+</figure>
+
+
+<h3>11.5 Correlación y validez: lo que la matriz debe mostrar</h3>
+<p>La validez no se declara: se argumenta con el contenido de los ítems (sección 4.1) y se verifica con datos. La primera verificación empírica es la matriz de correlaciones entre ítems. Un coeficiente de correlación mide cuánto covarían dos variables en los mismos casos, de −1 a +1; en encuestas organizacionales las correlaciones entre ítems de una misma escala suelen estar entre .30 y .70, y rara vez superan .80, porque cada ítem contiene error propio. Lo que se busca no es un valor sino un patrón: los ítems de una misma escala deben correlacionar más entre sí que con los ítems de otras escalas (evidencia de que miden algo común y distinto), y las escalas deben correlacionar con otras variables en la dirección que la teoría predice, por ejemplo, claridad de prioridades negativamente con intención de salida (Nunnally &amp; Bernstein, 1994; DeVellis &amp; Thorpe, 2022).</p>
+
+<figure>
+<svg viewBox="0 0 760 450" width="100%" role="img" aria-labelledby="fig-matriz" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig-matriz">Patrón esperado de la matriz de correlaciones</title>
+  <defs><marker id="fig-matriz-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker><marker id="fig-matriz-r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<text x="102" y="79" text-anchor="end" fill="currentColor" font-size="11.5" font-weight="700">CP1</text>
+<text x="133" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="700">CP1</text>
+<text x="102" y="125" text-anchor="end" fill="currentColor" font-size="11.5" font-weight="700">CP2</text>
+<text x="179" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="700">CP2</text>
+<text x="102" y="171" text-anchor="end" fill="currentColor" font-size="11.5" font-weight="700">CP3</text>
+<text x="225" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="700">CP3</text>
+<text x="102" y="217" text-anchor="end" fill="currentColor" font-size="11.5" font-weight="700">CR1</text>
+<text x="271" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="700">CR1</text>
+<text x="102" y="263" text-anchor="end" fill="currentColor" font-size="11.5" font-weight="700">CR2</text>
+<text x="317" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="700">CR2</text>
+<text x="102" y="309" text-anchor="end" fill="currentColor" font-size="11.5" font-weight="700">CR3</text>
+<text x="363" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="700">CR3</text>
+<text x="102" y="355" text-anchor="end" fill="currentColor" font-size="11.5" font-weight="700">IS1</text>
+<text x="409" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="700">IS1</text>
+<text x="102" y="401" text-anchor="end" fill="currentColor" font-size="11.5" font-weight="700">IS2</text>
+<text x="455" y="42" text-anchor="middle" fill="currentColor" font-size="11.5" font-weight="700">IS2</text>
+<rect x="110" y="50" width="44" height="44" fill="var(--note-bg)"/>
+<rect x="156" y="50" width="44" height="44" fill="rgba(200,16,46,0.49)"/>
+<text x="178" y="78" text-anchor="middle" fill="currentColor" font-size="10.5">.50</text>
+<rect x="202" y="50" width="44" height="44" fill="rgba(200,16,46,0.54)"/>
+<text x="224" y="78" text-anchor="middle" fill="currentColor" font-size="10.5">.56</text>
+<rect x="248" y="50" width="44" height="44" fill="rgba(200,16,46,0.27)"/>
+<text x="270" y="78" text-anchor="middle" fill="currentColor" font-size="10.5">.21</text>
+<rect x="294" y="50" width="44" height="44" fill="rgba(200,16,46,0.29)"/>
+<text x="316" y="78" text-anchor="middle" fill="currentColor" font-size="10.5">.24</text>
+<rect x="340" y="50" width="44" height="44" fill="rgba(200,16,46,0.29)"/>
+<text x="362" y="78" text-anchor="middle" fill="currentColor" font-size="10.5">.24</text>
+<rect x="386" y="50" width="44" height="44" fill="rgba(71,85,105,0.41)"/>
+<text x="408" y="78" text-anchor="middle" fill="currentColor" font-size="10.5">−.39</text>
+<rect x="432" y="50" width="44" height="44" fill="rgba(71,85,105,0.41)"/>
+<text x="454" y="78" text-anchor="middle" fill="currentColor" font-size="10.5">−.40</text>
+<rect x="110" y="96" width="44" height="44" fill="rgba(200,16,46,0.49)"/>
+<text x="132" y="124" text-anchor="middle" fill="currentColor" font-size="10.5">.50</text>
+<rect x="156" y="96" width="44" height="44" fill="var(--note-bg)"/>
+<rect x="202" y="96" width="44" height="44" fill="rgba(200,16,46,0.59)"/>
+<text x="224" y="124" text-anchor="middle" fill="currentColor" font-size="10.5">.62</text>
+<rect x="248" y="96" width="44" height="44" fill="rgba(200,16,46,0.25)"/>
+<text x="270" y="124" text-anchor="middle" fill="currentColor" font-size="10.5">.19</text>
+<rect x="294" y="96" width="44" height="44" fill="rgba(200,16,46,0.25)"/>
+<text x="316" y="124" text-anchor="middle" fill="currentColor" font-size="10.5">.19</text>
+<rect x="340" y="96" width="44" height="44" fill="rgba(200,16,46,0.34)"/>
+<text x="362" y="124" text-anchor="middle" fill="currentColor" font-size="10.5">.30</text>
+<rect x="386" y="96" width="44" height="44" fill="rgba(71,85,105,0.36)"/>
+<text x="408" y="124" text-anchor="middle" fill="currentColor" font-size="10.5">−.33</text>
+<rect x="432" y="96" width="44" height="44" fill="rgba(71,85,105,0.31)"/>
+<text x="454" y="124" text-anchor="middle" fill="currentColor" font-size="10.5">−.27</text>
+<rect x="110" y="142" width="44" height="44" fill="rgba(200,16,46,0.54)"/>
+<text x="132" y="170" text-anchor="middle" fill="currentColor" font-size="10.5">.56</text>
+<rect x="156" y="142" width="44" height="44" fill="rgba(200,16,46,0.59)"/>
+<text x="178" y="170" text-anchor="middle" fill="currentColor" font-size="10.5">.62</text>
+<rect x="202" y="142" width="44" height="44" fill="var(--note-bg)"/>
+<rect x="248" y="142" width="44" height="44" fill="rgba(200,16,46,0.27)"/>
+<text x="270" y="170" text-anchor="middle" fill="currentColor" font-size="10.5">.22</text>
+<rect x="294" y="142" width="44" height="44" fill="rgba(200,16,46,0.30)"/>
+<text x="316" y="170" text-anchor="middle" fill="currentColor" font-size="10.5">.25</text>
+<rect x="340" y="142" width="44" height="44" fill="rgba(200,16,46,0.23)"/>
+<text x="362" y="170" text-anchor="middle" fill="currentColor" font-size="10.5">.17</text>
+<rect x="386" y="142" width="44" height="44" fill="rgba(71,85,105,0.34)"/>
+<text x="408" y="170" text-anchor="middle" fill="currentColor" font-size="10.5">−.30</text>
+<rect x="432" y="142" width="44" height="44" fill="rgba(71,85,105,0.31)"/>
+<text x="454" y="170" text-anchor="middle" fill="currentColor" font-size="10.5">−.27</text>
+<rect x="110" y="188" width="44" height="44" fill="rgba(200,16,46,0.27)"/>
+<text x="132" y="216" text-anchor="middle" fill="currentColor" font-size="10.5">.21</text>
+<rect x="156" y="188" width="44" height="44" fill="rgba(200,16,46,0.25)"/>
+<text x="178" y="216" text-anchor="middle" fill="currentColor" font-size="10.5">.19</text>
+<rect x="202" y="188" width="44" height="44" fill="rgba(200,16,46,0.27)"/>
+<text x="224" y="216" text-anchor="middle" fill="currentColor" font-size="10.5">.22</text>
+<rect x="248" y="188" width="44" height="44" fill="var(--note-bg)"/>
+<rect x="294" y="188" width="44" height="44" fill="rgba(200,16,46,0.53)"/>
+<text x="316" y="216" text-anchor="middle" fill="currentColor" font-size="10.5">.55</text>
+<rect x="340" y="188" width="44" height="44" fill="rgba(200,16,46,0.57)"/>
+<text x="362" y="216" text-anchor="middle" fill="currentColor" font-size="10.5">.60</text>
+<rect x="386" y="188" width="44" height="44" fill="rgba(71,85,105,0.34)"/>
+<text x="408" y="216" text-anchor="middle" fill="currentColor" font-size="10.5">−.30</text>
+<rect x="432" y="188" width="44" height="44" fill="rgba(71,85,105,0.41)"/>
+<text x="454" y="216" text-anchor="middle" fill="currentColor" font-size="10.5">−.39</text>
+<rect x="110" y="234" width="44" height="44" fill="rgba(200,16,46,0.29)"/>
+<text x="132" y="262" text-anchor="middle" fill="currentColor" font-size="10.5">.24</text>
+<rect x="156" y="234" width="44" height="44" fill="rgba(200,16,46,0.25)"/>
+<text x="178" y="262" text-anchor="middle" fill="currentColor" font-size="10.5">.19</text>
+<rect x="202" y="234" width="44" height="44" fill="rgba(200,16,46,0.30)"/>
+<text x="224" y="262" text-anchor="middle" fill="currentColor" font-size="10.5">.25</text>
+<rect x="248" y="234" width="44" height="44" fill="rgba(200,16,46,0.53)"/>
+<text x="270" y="262" text-anchor="middle" fill="currentColor" font-size="10.5">.55</text>
+<rect x="294" y="234" width="44" height="44" fill="var(--note-bg)"/>
+<rect x="340" y="234" width="44" height="44" fill="rgba(200,16,46,0.57)"/>
+<text x="362" y="262" text-anchor="middle" fill="currentColor" font-size="10.5">.60</text>
+<rect x="386" y="234" width="44" height="44" fill="rgba(71,85,105,0.34)"/>
+<text x="408" y="262" text-anchor="middle" fill="currentColor" font-size="10.5">−.31</text>
+<rect x="432" y="234" width="44" height="44" fill="rgba(71,85,105,0.38)"/>
+<text x="454" y="262" text-anchor="middle" fill="currentColor" font-size="10.5">−.35</text>
+<rect x="110" y="280" width="44" height="44" fill="rgba(200,16,46,0.29)"/>
+<text x="132" y="308" text-anchor="middle" fill="currentColor" font-size="10.5">.24</text>
+<rect x="156" y="280" width="44" height="44" fill="rgba(200,16,46,0.34)"/>
+<text x="178" y="308" text-anchor="middle" fill="currentColor" font-size="10.5">.30</text>
+<rect x="202" y="280" width="44" height="44" fill="rgba(200,16,46,0.23)"/>
+<text x="224" y="308" text-anchor="middle" fill="currentColor" font-size="10.5">.17</text>
+<rect x="248" y="280" width="44" height="44" fill="rgba(200,16,46,0.57)"/>
+<text x="270" y="308" text-anchor="middle" fill="currentColor" font-size="10.5">.60</text>
+<rect x="294" y="280" width="44" height="44" fill="rgba(200,16,46,0.57)"/>
+<text x="316" y="308" text-anchor="middle" fill="currentColor" font-size="10.5">.60</text>
+<rect x="340" y="280" width="44" height="44" fill="var(--note-bg)"/>
+<rect x="386" y="280" width="44" height="44" fill="rgba(71,85,105,0.41)"/>
+<text x="408" y="308" text-anchor="middle" fill="currentColor" font-size="10.5">−.40</text>
+<rect x="432" y="280" width="44" height="44" fill="rgba(71,85,105,0.31)"/>
+<text x="454" y="308" text-anchor="middle" fill="currentColor" font-size="10.5">−.27</text>
+<rect x="110" y="326" width="44" height="44" fill="rgba(71,85,105,0.41)"/>
+<text x="132" y="354" text-anchor="middle" fill="currentColor" font-size="10.5">−.39</text>
+<rect x="156" y="326" width="44" height="44" fill="rgba(71,85,105,0.36)"/>
+<text x="178" y="354" text-anchor="middle" fill="currentColor" font-size="10.5">−.33</text>
+<rect x="202" y="326" width="44" height="44" fill="rgba(71,85,105,0.34)"/>
+<text x="224" y="354" text-anchor="middle" fill="currentColor" font-size="10.5">−.30</text>
+<rect x="248" y="326" width="44" height="44" fill="rgba(71,85,105,0.34)"/>
+<text x="270" y="354" text-anchor="middle" fill="currentColor" font-size="10.5">−.30</text>
+<rect x="294" y="326" width="44" height="44" fill="rgba(71,85,105,0.34)"/>
+<text x="316" y="354" text-anchor="middle" fill="currentColor" font-size="10.5">−.31</text>
+<rect x="340" y="326" width="44" height="44" fill="rgba(71,85,105,0.41)"/>
+<text x="362" y="354" text-anchor="middle" fill="currentColor" font-size="10.5">−.40</text>
+<rect x="386" y="326" width="44" height="44" fill="var(--note-bg)"/>
+<rect x="432" y="326" width="44" height="44" fill="rgba(200,16,46,0.52)"/>
+<text x="454" y="354" text-anchor="middle" fill="currentColor" font-size="10.5">.54</text>
+<rect x="110" y="372" width="44" height="44" fill="rgba(71,85,105,0.41)"/>
+<text x="132" y="400" text-anchor="middle" fill="currentColor" font-size="10.5">−.40</text>
+<rect x="156" y="372" width="44" height="44" fill="rgba(71,85,105,0.31)"/>
+<text x="178" y="400" text-anchor="middle" fill="currentColor" font-size="10.5">−.27</text>
+<rect x="202" y="372" width="44" height="44" fill="rgba(71,85,105,0.31)"/>
+<text x="224" y="400" text-anchor="middle" fill="currentColor" font-size="10.5">−.27</text>
+<rect x="248" y="372" width="44" height="44" fill="rgba(71,85,105,0.41)"/>
+<text x="270" y="400" text-anchor="middle" fill="currentColor" font-size="10.5">−.39</text>
+<rect x="294" y="372" width="44" height="44" fill="rgba(71,85,105,0.38)"/>
+<text x="316" y="400" text-anchor="middle" fill="currentColor" font-size="10.5">−.35</text>
+<rect x="340" y="372" width="44" height="44" fill="rgba(71,85,105,0.31)"/>
+<text x="362" y="400" text-anchor="middle" fill="currentColor" font-size="10.5">−.27</text>
+<rect x="386" y="372" width="44" height="44" fill="rgba(200,16,46,0.52)"/>
+<text x="408" y="400" text-anchor="middle" fill="currentColor" font-size="10.5">.54</text>
+<rect x="432" y="372" width="44" height="44" fill="var(--note-bg)"/>
+<rect x="110" y="50" width="136" height="136" fill="none" stroke="var(--accent)" stroke-width="2"/>
+<rect x="248" y="188" width="136" height="136" fill="none" stroke="var(--accent)" stroke-width="2"/>
+<rect x="386" y="326" width="90" height="90" fill="none" stroke="var(--accent)" stroke-width="2"/>
+<text x="500" y="70" text-anchor="start" fill="currentColor" font-size="12" font-weight="700">CP: claridad de prioridades (3 ítems)</text>
+<text x="500" y="88" text-anchor="start" fill="currentColor" font-size="12" font-weight="700">CR: claridad de rol (3 ítems)</text>
+<text x="500" y="106" text-anchor="start" fill="currentColor" font-size="12" font-weight="700">IS: intención de salida (2 ítems)</text>
+<text x="500" y="140" text-anchor="start" fill="var(--accent)" font-size="11.5" font-weight="700">Dentro de cada escala (bloques rojos):</text>
+<text x="500" y="156" text-anchor="start" fill="currentColor" font-size="11.5">correlaciones altas y positivas (.45 a .65)</text>
+<text x="500" y="180" text-anchor="start" fill="currentColor" font-size="11.5">Entre CP y CR: moderadas (.15 a .30),</text>
+<text x="500" y="196" text-anchor="start" fill="currentColor" font-size="11.5">constructos distintos pero relacionados</text>
+<text x="500" y="220" text-anchor="start" fill="currentColor" font-size="11.5">Con intención de salida: negativas (−.25 a −.40),</text>
+<text x="500" y="236" text-anchor="start" fill="currentColor" font-size="11.5">en la dirección que la teoría predice</text>
+<text x="500" y="270" text-anchor="start" fill="var(--muted)" font-size="11">Un ítem con correlaciones ~0 con su escala</text>
+<text x="500" y="286" text-anchor="start" fill="var(--muted)" font-size="11">mide otra cosa o está invertido sin recodificar</text>
+<text x="380" y="438" text-anchor="middle" fill="var(--muted)" font-size="11">Matriz simulada para tres escalas del cuestionario TechNova. El patrón de bloques es la evidencia mínima de validez (sesión 5).</text>
+</svg>
+<figcaption>Figura 12. El patrón de correlaciones que respalda la validez de tres escalas: bloques altos dentro de cada escala, correlaciones moderadas entre escalas vecinas y negativas con el criterio. Valores simulados.</figcaption>
+</figure>
+
+<p>Tres lecturas prácticas de la matriz. Un ítem cuyas correlaciones con el resto de su escala son cercanas a cero, o negativas, mide otra cosa o es un ítem inverso que nadie recodificó. Dos escalas cuyas correlaciones cruzadas son tan altas como las internas no son dos dimensiones sino una, y el tablero no debería reportarlas por separado. Y una correlación entre dos escalas se atenúa con el error de medición de ambas: con fiabilidades de .60, una correlación verdadera de .50 se observa como .30. Esa atenuación es otra razón por la cual la fiabilidad se verifica antes de interpretar relaciones. El análisis factorial exploratorio de la sesión 5 formaliza esta lectura; la guía A0 muestra cómo obtener la matriz en JASP.</p>
+
+<h2 id="sintesis">Síntesis</h2>
+<ul>
+  <li>El cuestionario es el instrumento; la encuesta es el proceso de seis pasos. Los pasos de promoción y devolución deciden la tasa de respuesta y la sinceridad.</li>
+  <li>La encuesta es control solo con condiciones: ítems ancla estables, comparabilidad entre olas, cobertura conocida por unidad, periodicidad y calidad de medición verificada. Usarla para evaluar jefaturas exige lo que el diagnóstico no exige y eleva la deseabilidad social.</li>
+  <li>Antes de construir, buscar: la mayoría de los constructos tienen escalas validadas. Adaptar no es traducir, y la fuente de cada ítem se documenta.</li>
+  <li>Cada ítem es una definición operacional. Una idea por ítem, sin jerga, sin carga, sin doble negación, sin cuantificadores absolutos, con período de referencia en las conductuales; al menos tres ítems por constructo subjetivo.</li>
+  <li>El referente se decide por el nivel de análisis y no se mezcla dentro de una escala; comparar unidades exige referente grupal o verificar el acuerdo antes de agregar.</li>
+  <li>El formato de respuesta es único dentro de la escala: anclaje adecuado al enunciado, 5 o 7 puntos etiquetados, punto medio decidido con argumento, "no sé" separado.</li>
+  <li>Cobertura, no respuesta, deseabilidad social y estilos de respuesta se mitigan antes de aplicar; validez y fiabilidad se verifican antes de reportar. Después es tarde.</li>
+</ul>
+
+<h2 id="glosario">Glosario</h2>
+<dl class="glosario">
+  <dt>Aquiescencia</dt><dd>Estilo de respuesta consistente en estar de acuerdo con cualquier afirmación, con independencia de su contenido.</dd>
+  <dt>Deseabilidad social</dt><dd>Tendencia a responder dando una imagen positiva o socialmente aceptable; depende del contenido del ítem.</dd>
+  <dt>Encuesta pulso</dt><dd>Encuesta breve (3 a 10 ítems ancla) aplicada con alta frecuencia para seguir una tendencia por unidad.</dd>
+  <dt>eNPS</dt><dd>Employee net promoter score: porcentaje de promotores (9 y 10) menos porcentaje de detractores (0 a 6) en el ítem de recomendación de la organización como lugar para trabajar.</dd>
+  <dt>Error de cobertura</dt><dd>Diferencia entre la población objetivo y la población efectivamente invitada a responder.</dd>
+  <dt>Error de no respuesta</dt><dd>Diferencia entre quienes fueron invitados y quienes respondieron, cuando ambos grupos difieren en lo que se mide.</dd>
+  <dt>Escala aditiva</dt><dd>Conjunto de ítems con el mismo formato cuyas respuestas se suman o promedian para obtener una puntuación del constructo.</dd>
+  <dt>Fiabilidad</dt><dd>Consistencia o replicabilidad de una medida; lo contrario del error de medición.</dd>
+  <dt>Ítem ancla</dt><dd>Ítem cuya redacción y formato se mantienen idénticos entre olas para permitir la comparación en el tiempo.</dd>
+  <dt>Ítem inverso</dt><dd>Ítem redactado en sentido contrario al resto de la escala; se recodifica antes de analizar.</dd>
+  <dt>Referente</dt><dd>Objeto del que habla el ítem: la propia persona (individual), el grupo al que pertenece (endogrupal) o terceros (exogrupal).</dd>
+  <dt>Validez</dt><dd>Grado en que las respuestas a los ítems reflejan el constructo que se pretende medir y no otro.</dd>
+</dl>
+
+<h2 id="refs">Referencias</h2>
+<div class="referencias">
+  <p>Baumgartner, H., &amp; Steenkamp, J.-B. E. M. (2001). Response styles in marketing research: A cross-national investigation. <em>Journal of Marketing Research, 38</em>(2), 143–156. https://doi.org/10.1509/jmkr.38.2.143.18840</p>
+  <p>Borg, I., &amp; Mastrangelo, P. M. (2008). <em>Employee surveys in management: Theories, tools, and practical applications</em>. Hogrefe.</p>
+  <p>Cameron, K. S., &amp; Quinn, R. E. (2011). <em>Diagnosing and changing organizational culture: Based on the competing values framework</em> (3rd ed.). Jossey-Bass.</p>
+  <p>Chan, D. (1998). Functional relations among constructs in the same content domain at different levels of analysis: A typology of composition models. <em>Journal of Applied Psychology, 83</em>(2), 234–246. https://doi.org/10.1037/0021-9010.83.2.234</p>
+  <p>Church, A. H., &amp; Waclawski, J. (2001). <em>Designing and using organizational surveys: A seven-step process</em>. Jossey-Bass.</p>
+  <p>Denison, D. R., &amp; Mishra, A. K. (1995). Toward a theory of organizational culture and effectiveness. <em>Organization Science, 6</em>(2), 204–223. https://doi.org/10.1287/orsc.6.2.204</p>
+  <p>DeVellis, R. F., &amp; Thorpe, C. T. (2022). <em>Scale development: Theory and applications</em> (5th ed.). Sage.</p>
+  <p>Dillman, D. A., Smyth, J. D., &amp; Christian, L. M. (2014). <em>Internet, phone, mail, and mixed-mode surveys: The tailored design method</em> (4th ed.). Wiley.</p>
+  <p>Edmondson, A. (1999). Psychological safety and learning behavior in work teams. <em>Administrative Science Quarterly, 44</em>(2), 350–383. https://doi.org/10.2307/2666999</p>
+  <p>Eisenberger, R., Huntington, R., Hutchison, S., &amp; Sowa, D. (1986). Perceived organizational support. <em>Journal of Applied Psychology, 71</em>(3), 500–507. https://doi.org/10.1037/0021-9010.71.3.500</p>
+  <p>Fields, D. L. (2002). <em>Taking the measure of work: A guide to validated scales for organizational research and diagnosis</em>. Sage.</p>
+  <p>Fowler, F. J. (2014). <em>Survey research methods</em> (5th ed.). Sage.</p>
+  <p>Groves, R. M., Fowler, F. J., Couper, M. P., Lepkowski, J. M., Singer, E., &amp; Tourangeau, R. (2009). <em>Survey methodology</em> (2nd ed.). Wiley.</p>
+  <p>Hinkin, T. R. (1998). A brief tutorial on the development of measures for use in survey questionnaires. <em>Organizational Research Methods, 1</em>(1), 104–121. https://doi.org/10.1177/109442819800100106</p>
+  <p>James, L. R., Choi, C. C., Ko, C.-H. E., McNeil, P. K., Minton, M. K., Wright, M. A., &amp; Kim, K. (2008). Organizational and psychological climate: A review of theory and research. <em>European Journal of Work and Organizational Psychology, 17</em>(1), 5–32. https://doi.org/10.1080/13594320701662550</p>
+  <p>Kaplan, R. S., &amp; Norton, D. P. (1996). <em>The balanced scorecard: Translating strategy into action</em>. Harvard Business School Press.</p>
+  <p>Klein, K. J., Conn, A. B., Smith, D. B., &amp; Sorra, J. S. (2001). Is everyone in agreement? An exploration of within-group agreement in employee perceptions of the work environment. <em>Journal of Applied Psychology, 86</em>(1), 3–16. https://doi.org/10.1037/0021-9010.86.1.3</p>
+  <p>Kraut, A. I. (Ed.). (1996). <em>Organizational surveys: Tools for assessment and change</em>. Jossey-Bass.</p>
+  <p>Krosnick, J. A., &amp; Presser, S. (2010). Question and questionnaire design. In P. V. Marsden &amp; J. D. Wright (Eds.), <em>Handbook of survey research</em> (2nd ed., pp. 263–313). Emerald.</p>
+  <p>Likert, R. (1932). A technique for the measurement of attitudes. <em>Archives of Psychology, 22</em>(140), 5–55.</p>
+  <p>Litwin, G. H., &amp; Stringer, R. A. (1968). <em>Motivation and organizational climate</em>. Harvard University, Graduate School of Business Administration.</p>
+  <p>Merchant, K. A., &amp; Van der Stede, W. A. (2017). <em>Management control systems: Performance measurement, evaluation and incentives</em> (4th ed.). Pearson.</p>
+  <p>Meyer, J. P., &amp; Allen, N. J. (1991). A three-component conceptualization of organizational commitment. <em>Human Resource Management Review, 1</em>(1), 61–89. https://doi.org/10.1016/1053-4822(91)90011-Z</p>
+  <p>Nunnally, J. C., &amp; Bernstein, I. H. (1994). <em>Psychometric theory</em> (3rd ed.). McGraw-Hill.</p>
+  <p>Paulhus, D. L. (1991). Measurement and control of response bias. In J. P. Robinson, P. R. Shaver, &amp; L. S. Wrightsman (Eds.), <em>Measures of personality and social psychological attitudes</em> (pp. 17–59). Academic Press.</p>
+  <p>Podsakoff, P. M., MacKenzie, S. B., Lee, J.-Y., &amp; Podsakoff, N. P. (2003). Common method biases in behavioral research: A critical review of the literature and recommended remedies. <em>Journal of Applied Psychology, 88</em>(5), 879–903. https://doi.org/10.1037/0021-9010.88.5.879</p>
+  <p>Reichheld, F. F. (2003). The one number you need to grow. <em>Harvard Business Review, 81</em>(12), 46–54.</p>
+  <p>Rizzo, J. R., House, R. J., &amp; Lirtzman, S. I. (1970). Role conflict and ambiguity in complex organizations. <em>Administrative Science Quarterly, 15</em>(2), 150–163. https://doi.org/10.2307/2391486</p>
+  <p>Schaufeli, W. B., Bakker, A. B., &amp; Salanova, M. (2006). The measurement of work engagement with a short questionnaire: A cross-national study. <em>Educational and Psychological Measurement, 66</em>(4), 701–716. https://doi.org/10.1177/0013164405282471</p>
+  <p>Simons, R. (1995). <em>Levers of control: How managers use innovative control systems to drive strategic renewal</em>. Harvard Business School Press.</p>
+  <p>Spector, P. E. (1985). Measurement of human service staff satisfaction: Development of the Job Satisfaction Survey. <em>American Journal of Community Psychology, 13</em>(6), 693–713. https://doi.org/10.1007/BF00929796</p>
+  <p>Spector, P. E. (1992). <em>Summated rating scale construction: An introduction</em>. Sage.</p>
+  <p>Strathern, M. (1997). 'Improving ratings': Audit in the British University system. <em>European Review, 5</em>(3), 305–321. https://doi.org/10.1002/(SICI)1234-981X(199707)5:3&lt;305::AID-EURO184&gt;3.0.CO;2-4</p>
+  <p>Tourangeau, R., Rips, L. J., &amp; Rasinski, K. (2000). <em>The psychology of survey response</em>. Cambridge University Press.</p>
+  <p>Van Vaerenbergh, Y., &amp; Thomas, T. D. (2013). Response styles in survey research: A literature review of antecedents, consequences, and remedies. <em>International Journal of Public Opinion Research, 25</em>(2), 195–217. https://doi.org/10.1093/ijpor/eds021</p>
+  <p>Weijters, B., Cabooter, E., &amp; Schillewaert, N. (2010). The effect of rating scale format on response styles: The number of response categories and response category labels. <em>International Journal of Research in Marketing, 27</em>(3), 236–247. https://doi.org/10.1016/j.ijresmar.2010.02.004</p>
+</div>
+
+<footer>
+  Serie de apuntes · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas.
+</footer>
+
+</div>
+</body>
+</html>

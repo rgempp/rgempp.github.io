@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de la sesión 1 · Diagnóstico Organizacional MCG UDP</title>
+<meta name="description" content="Laboratorio interactivo de la sesión 1 del curso Diagnóstico Organizacional (MCG, UDP): síntomas y causas, paradigmas, elección de modelo, Burke-Litwin, límites de una encuesta y tipos de control.">
+<meta name="author" content="René Gempp">
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  .pregunta .opc.parcial{background:var(--ambar-claro);border-color:var(--ambar)}
+  .nivel-tag{display:inline-block;font-weight:700;margin-right:.3rem}
+  .semaforo{display:flex;flex-wrap:wrap;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.5rem 0 1rem}
+  .semaforo div{border:1px solid var(--borde);border-radius:.4rem;padding:.5rem .7rem;min-width:9rem;background:#fff}
+  .semaforo div.si{border-bottom:4px solid var(--verde)} .semaforo div.no{border-bottom:4px solid var(--rojo)} .semaforo div.dudoso{border-bottom:4px solid var(--ambar)}
+</style>
+</head>
+
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Sesión 1</p>
+  <h1>Síntomas, paradigmas y modelos: elegir con qué lente diagnosticar</h1>
+  <p class="meta">Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026 · Acompaña a la sesión 1 (viernes 06-11-2026) y al apunte 1<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0 ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Seis estaciones con material de los cuatro casos de la sesión (TechNova, Muebles del Sur, EcoAcción, Hospital Regional). En cada una hay algo que clasificar, a veces algo que manipular, y preguntas de cierre con retroalimentación. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. No hay registro ni nota.</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. Síntoma o causa.</strong> Separar lo que se observa de la variable del modelo que lo explicaría, la distinción que ordena el Control 1.</div>
+    <div class="caja"><strong>2. Qué paradigma habla.</strong> Reconocer el paradigma detrás de una pregunta, un método, un producto o un criterio de validez.</div>
+    <div class="caja"><strong>3. Elige el modelo.</strong> Seis situaciones; cada modelo se califica como defendible, aceptable o débil, con la justificación.</div>
+    <div class="caja"><strong>4. Mapa Burke-Litwin.</strong> Ubicar variables de los casos en el nivel transformacional, transaccional, individual o de resultado.</div>
+    <div class="caja"><strong>5. Límites de una encuesta.</strong> Un simulador de anonimato por unidad y ocho usos propuestos para juzgar (Goodhart, Campbell, n mínimo).</div>
+    <div class="caja"><strong>6. Tipos de control.</strong> Merchant y Van der Stede, Simons, la perspectiva del BSC y el modelo como mapa causal.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 35 a 45 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en el apunte 1.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<!-- ============ ESTACIÓN 1 ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Síntoma o causa</h2>
+  <p>Un <b>síntoma</b> es lo que se observa (rotación, quejas, espera). Una <b>causa probable</b> es la variable del modelo que lo explicaría (liderazgo, diseño del trabajo, recompensas, sistemas). Para un controller, los síntomas suelen ser indicadores de salida; las causas son las palancas. Lee cada afirmación tomada de los casos y clasifícala.</p>
+  <h3>A. Clasifica</h3>
+  <div id="c1"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2 ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Qué paradigma habla</h2>
+  <p>Cada frase describe una pregunta, un método, un producto o un criterio de validez. Identifica desde qué paradigma se formula: <b>positivista</b> (la organización como máquina), <b>interpretativo</b> (como cultura) o <b>crítico</b> (como arena política).</p>
+  <h3>A. Clasifica</h3>
+  <div id="c2"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3 ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Elige el modelo</h2>
+  <p>No hay un modelo correcto por situación: hay elecciones <b>defendibles</b>, <b>aceptables</b> y <b>débiles</b>, según los criterios de la sesión (propósito, naturaleza del problema, tamaño, momento, cultura, recursos, audiencia). Elige y compara tu justificación con la del profesor. La retroalimentación califica la opción que marcaste y señala la más defendible.</p>
+  <h3>A. Seis situaciones</h3>
+  <div id="g3"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4 ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · Mapa Burke-Litwin</h2>
+  <p>En el modelo de Burke y Litwin (1992) las variables <b>transformacionales</b> (entorno, misión y estrategia, liderazgo, cultura) exigen cambio profundo; las <b>transaccionales</b> (estructura, prácticas de gestión, sistemas, clima de la unidad) admiten ajustes incrementales; las <b>individuales</b> (ajuste tarea-habilidades, motivación, necesidades y valores) median hacia el <b>desempeño</b>. Ubica cada variable de los casos.</p>
+  <h3>A. Clasifica</h3>
+  <div id="c4"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5 ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Límites de una encuesta</h2>
+  <p>Una encuesta puede seguir variables perceptuales en el tiempo y detectar unidades que se desvían; no puede, sin condiciones, evaluar jefaturas de unidades pequeñas ni reemplazar la explicación. Esta estación anticipa el problema del examen final.</p>
+  <h3>A. Manipula: anonimato y lectura por unidad</h3>
+  <p class="mini">Mueve el tamaño de la unidad y la tasa de respuesta. La regla práctica del curso: una unidad se reporta por separado solo si tiene al menos 5 respuestas (anonimato) y al menos 60% de respuesta (representatividad). Con menos, se agrupa con otra unidad o se reporta solo el agregado.</p>
+  <div class="caja">
+    <div class="slider">Personas en la unidad: <span class="v" id="vN">8</span><input type="range" id="sN" min="3" max="40" value="8"></div>
+    <div class="slider">Tasa de respuesta: <span class="v" id="vR">75%</span><input type="range" id="sR" min="20" max="100" value="75" step="5"></div>
+    <div class="semaforo" id="semaforo"></div>
+    <p id="simTexto" class="mini"></p>
+  </div>
+  <h3>B. Ocho usos propuestos</h3>
+  <div id="g5"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q5"></div>
+</section>
+
+<!-- ============ ESTACIÓN 6 ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · Tipos de control</h2>
+  <p>El diagnóstico organizacional produce la información que necesitan los <b>controles de personal y culturales</b> (Merchant &amp; Van der Stede, 2017), puede operar en modo <b>diagnóstico</b> o <b>interactivo</b> (Simons, 1995) y alimenta la perspectiva de <b>aprendizaje y crecimiento</b> del Balanced Scorecard (Kaplan &amp; Norton, 1996).</p>
+  <h3>A. Clasifica: tipo de control</h3>
+  <div id="c6"></div>
+  <h3>B. Clasifica: uso del sistema (Simons)</h3>
+  <div id="c6b"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q6"></div>
+</section>
+
+<!-- ============ FICHA ============ -->
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div class="caja">
+    <strong>Tres ideas para llevar al Control 1 y a la sesión 2.</strong>
+    <ol>
+      <li>Las variables del mapa derivan del modelo, no de la lista de quejas del caso; cada síntoma debe quedar explicado por una variable del modelo.</li>
+      <li>El paradigma declarado tiene que ser coherente con el método: el positivista construye el tablero, el interpretativo explica las desviaciones, el crítico vigila quién define y quién usa el indicador.</li>
+      <li>Antes de levantar datos nuevos, leer los indicadores que la organización ya tiene y preguntarse cuáles están distorsionados por el uso que se les da.</li>
+    </ol>
+  </div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas. El avance se guarda solo en este navegador.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y NAVEGACIÓN (mismo patrón que lab_personalidad) =====================
+const CLAVE = "lab_do_s1_v2";
+const NOMBRES = ["Inicio","1 · Síntoma o causa","2 · Paradigmas","3 · Elige el modelo","4 · Burke-Litwin","5 · Límites de la encuesta","6 · Tipos de control","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+const estado = { hechas: {}, resp: {} };
+function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(CLAVE); if(s) Object.assign(estado, JSON.parse(s)); }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+function pintarNav(){
+  const nav = document.getElementById("nav"); nav.innerHTML = "";
+  NOMBRES.forEach((n,i)=>{ const b = document.createElement("button"); b.textContent = n;
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista");
+    b.onclick = ()=>ir(i); nav.appendChild(b); });
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de ${EST.length}`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa"));
+  document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===NOMBRES.length-1) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem(CLAVE); }catch(e){} location.reload(); }
+
+// ===================== COMPONENTES =====================
+// Cada estación puede tener varios componentes; se marca cuando todos terminan.
+const PEND = {};
+function registrar(est, id){ PEND[est] = PEND[est] || new Set(); PEND[est].add(id); }
+function terminar(est, id){ PEND[est].delete(id); if(PEND[est].size===0) marcar(est); }
+
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId);
+  let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.q}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(+s.dataset.j===it.ok ? "correcta" : "incorrecta");
+      d.querySelectorAll(".opc")[it.ok].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb;
+      estado.resp[contId+"_"+k] = +s.dataset.j; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+function clasificador(contId, cats, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "clasif";
+    d.innerHTML = `<p class="enun">${it.t}</p><div class="cats">` + cats.map(c=>`<span class="cat" data-c="${c}">${c}</span>`).join("") + `</div><div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".cat").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(s.dataset.c===it.c ? "correcta" : "incorrecta");
+      d.querySelector(`.cat[data-c="${it.c}"]`).classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+// graduada: items = [{t, opts:[{o, g:2|1|0, fb}]}] ; 2 defendible, 1 aceptable, 0 débil. Muestra la retroalimentación de la opción elegida y la más defendible.
+const NIVEL = {2:"Defendible", 1:"Aceptable, con matices", 0:"Débil"};
+function graduada(contId, items, estacion, etiquetas){
+  const L = etiquetas || NIVEL;
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.t}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o.o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      const j = +s.dataset.j, o = it.opts[j];
+      s.classList.add(o.g===2 ? "correcta" : (o.g===1 ? "parcial" : "incorrecta"));
+      const best = it.opts.findIndex(x=>x.g===2); if(best>=0) d.querySelectorAll(".opc")[best].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block";
+      f.innerHTML = `<span class="nivel-tag">${L[o.g]}.</span>${o.fb}` + (o.g<2 && best>=0 ? `<br><b>Opción más defendible: ${it.opts[best].o}.</b> ${it.opts[best].fb}` : "");
+      estado.resp[contId+"_"+k] = j; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+function pintarFicha(){
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas: ${k} de ${EST.length}.</strong> ` + (k===EST.length ? "Laboratorio completo." : "Faltan: " + EST.filter(e=>!estado.hechas[e]).map(e=>NOMBRES[e]).join(", ") + ".");
+}
+
+// ===================== ESTACIÓN 1 · SÍNTOMA O CAUSA =====================
+const CAT1 = ["Síntoma","Causa probable"];
+const C1 = [
+ { t:"TechNova: la rotación de desarrolladores alcanza el 50% anual.", c:"Síntoma", fb:"La rotación es un resultado observable, un indicador de salida (lagging). El diagnóstico busca qué variable la explica; intervenir sobre ella directamente (bonos de retención) deja intacta la causa." },
+ { t:"TechNova: los dos cofundadores sostienen estrategias distintas y lo discuten frente al equipo.", c:"Causa probable", fb:"Es la hipótesis más fuerte del caso: liderazgo dividido y misión ambigua (nivel transformacional en Burke-Litwin) explican decisiones que cambian, tensión y salida de desarrolladores." },
+ { t:"TechNova: no existen procesos de control de calidad antes de cada release.", c:"Causa probable", fb:"Un componente de diseño ausente (sistemas en Burke-Litwin; organización formal en Nadler-Tushman) que explica el síntoma de los bugs y las quejas de clientes." },
+ { t:"Muebles del Sur: el sindicato rechazó el programa piloto de turnos.", c:"Síntoma", fb:"El rechazo es una conducta observable. Tratar la resistencia como causa lleva al diagnóstico perezoso de 'trabajadores antiguos resistentes'. La pregunta es por qué resisten: autoridad disputada entre dueño y gerente, cambio percibido como traición a la cultura de familia." },
+ { t:"Muebles del Sur: los jefes de taller se saltan a la gerente y van directamente al dueño.", c:"Causa probable", fb:"Una estructura de autoridad dual (variable de diseño) que explica la resistencia y el fracaso de los cambios. En el modelo de congruencia: organización formal frente a organización informal." },
+ { t:"EcoAcción: los voluntarios activos bajaron de 100 a 55 en ocho meses.", c:"Síntoma", fb:"Un resultado medible, el equivalente de la rotación en una organización con voluntarios. Es un indicador para el tablero, no una explicación." },
+ { t:"EcoAcción: las asambleas donde se decidía dejaron de convocarse cuando llegó el nuevo director.", c:"Causa probable", fb:"Se retiró el mecanismo que sostenía el control cultural y la legitimidad de las decisiones. Explica la desafección de fundadores y voluntarios mejor que los KPI en sí." },
+ { t:"Hospital Regional: el tiempo de espera en urgencias promedia cuatro horas.", c:"Síntoma", fb:"El síntoma más visible del caso y el error más frecuente en el control: tratarlo como causa. Detrás hay dotación, sistemas no integrados e indicadores desalineados. Si se trata como causa, la intervención será reclasificar pacientes para mejorar el número." },
+ { t:"Hospital Regional: la ficha clínica, la farmacia y la agenda usan tres sistemas que no se comunican.", c:"Causa probable", fb:"Un componente de diseño deficiente (mecanismos útiles en Weisbord; sistemas en Burke-Litwin) que explica parte de la espera, la sobrecarga y los reclamos." },
+ { t:"Hospital Regional: la reforma vincula el presupuesto a indicadores de producción por servicio.", c:"Causa probable", fb:"Un cambio en el entorno (sistemas abiertos) y en los controles de resultados que, sin recursos ni alineación con el trabajo clínico, genera presión, licencias y conflicto. Es un insumo que desencadena el resto." },
+];
+const Q1 = [
+ { q:"Un grupo propone como 'causa' de la rotación de TechNova la 'falta de compromiso de los desarrolladores'. ¿Cuál es el problema de esa lectura?", opts:["Ninguno: el compromiso es una variable del modelo","Describe otro síntoma (una actitud de salida) y lo presenta como causa; falta la variable de diseño que lo explica","Debería medirse con una encuesta antes de afirmarlo"], ok:1, fb:"El bajo compromiso es un estado individual que también requiere explicación. La cadena del modelo va de liderazgo y sistemas (causas) a clima, motivación y compromiso (mediadores) y a la rotación (resultado)." },
+ { q:"¿Qué distingue, para un controller, un síntoma de una causa en un tablero de personas?", opts:["El síntoma es cualitativo y la causa cuantitativa","El síntoma suele ser un indicador de salida (lagging) y la causa una palanca o indicador de proceso (leading)","No hay diferencia: ambos se miden con encuestas"], ok:1, fb:"Los indicadores lagging (rotación, ausentismo, reclamos) muestran que algo pasó; los leading (clima, carga, calidad de la supervisión) anticipan y se pueden gestionar. Un buen tablero combina ambos conectados por el modelo." },
+];
+
+// ===================== ESTACIÓN 2 · PARADIGMAS =====================
+const CAT2 = ["Positivista","Interpretativo","Crítico"];
+const C2 = [
+ { t:"Pregunta: ¿qué variables predicen la renuncia de las profesionales antes de los tres años?", c:"Positivista", fb:"Busca relaciones entre variables medibles para explicar un resultado; es la lógica del análisis de registros y de la regresión." },
+ { t:"Pregunta: ¿quién decide los ascensos y qué les ocurre a las mujeres que reclaman?", c:"Crítico", fb:"Intereses, poder y voces silenciadas: la organización como arena política." },
+ { t:"Método: entrevistas en profundidad a quienes se fueron y a quienes se quedaron, para reconstruir las historias que circulan.", c:"Interpretativo", fb:"Narrativas, significados compartidos, comprensión desde dentro. El positivista usaría una encuesta de salida estandarizada." },
+ { t:"Producto: un tablero con la rotación a 36 meses por género y antigüedad, con meta anual.", c:"Positivista", fb:"El tablero de indicadores con metas es el producto típico del paradigma positivista y del control diagnóstico." },
+ { t:"Criterio de validez: los hallazgos son válidos si las propias participantes los reconocen como una descripción fiel de su experiencia.", c:"Interpretativo", fb:"Credibilidad interpretativa, verificada con los participantes. La validez positivista se juzga por objetividad y fiabilidad; la crítica, por utilidad emancipatoria." },
+ { t:"Supuesto: el diagnóstico nunca es neutral; alguien lo encarga y alguien lo usa.", c:"Crítico", fb:"Es el supuesto que vigila quién define y quién usa el indicador. El positivista asume neutralidad posible; el interpretativo, co-construcción." },
+ { t:"Rol del consultor: experto neutral que entrega un informe técnico.", c:"Positivista", fb:"Experto neutral, informe técnico, objetividad estadística. El consultor interpretativo es co-constructor; el crítico, facilitador que explicita intereses." },
+ { t:"Uso en el sistema de control: grupos focales para entender por qué una sucursal cayó en compromiso mientras las demás subieron.", c:"Interpretativo", fb:"Lo interpretativo explica las desviaciones que el tablero muestra. El positivista ya hizo su parte al detectar la desviación." },
+ { t:"Método: benchmarking de los índices de clima contra el promedio del sector.", c:"Positivista", fb:"Comparación estandarizada entre organizaciones. El interpretativo desconfía de comparar puntajes cuyo significado varía entre contextos; el crítico preguntaría quién construyó el benchmark." },
+ { t:"Pregunta: ¿qué significa, para los operarios de Muebles del Sur, que la empresa sea 'una familia'?", c:"Interpretativo", fb:"Significados compartidos y símbolos; la organización como cultura. Un ítem Likert sobre 'sentido de pertenencia' no captura el significado de esa palabra en esa planta." },
+];
+const Q2 = [
+ { q:"En el ejercicio 'Tres miradas' (40% de las mujeres profesionales renuncia antes de tres años; 15% de los hombres), ¿qué indicador de tablero propondría el paradigma crítico?", opts:["Tasa de rotación por género y antigüedad","Percepción de inclusión medida con escala Likert","Proporción de mujeres en los comités que deciden ascensos"], ok:2, fb:"El crítico mira las reglas de decisión y quién las controla. La rotación por género es el indicador positivista; la percepción de inclusión, un intento de medir lo interpretativo." },
+ { q:"¿Cuál es la relación más útil entre los tres paradigmas en un sistema de control de gestión?", opts:["Son excluyentes: hay que elegir uno para todo el diagnóstico","El positivista construye el tablero, el interpretativo explica las desviaciones y el crítico vigila quién define y quién usa el indicador","El crítico reemplaza a los otros dos cuando hay conflicto"], ok:1, fb:"Un diagnóstico serio combina al menos dos lentes y declara cuál domina. Cada uno tiene un lugar en el ciclo de control." },
+];
+
+// ===================== ESTACIÓN 3 · ELIGE EL MODELO =====================
+const G3 = [
+ { t:"Una empresa de 60 personas, sin crisis declarada, pide un diagnóstico rápido para 'ver cómo estamos' antes de definir su plan anual. Hay dos semanas y poco presupuesto.", opts:[
+   {o:"Seis cajas (Weisbord)", g:2, fb:"Diagnóstico rápido o inicial, organización pequeña, lenguaje accesible. Busca las tres brechas: formal-real, entre cajas, organización-entorno."},
+   {o:"Burke-Litwin", g:1, fb:"Sobredimensionado: doce variables y muchas relaciones para dos semanas y 60 personas."},
+   {o:"Modelo de congruencia", g:1, fb:"Serviría si hubo un cambio reciente que pudo desalinear componentes; aquí no se menciona."},
+   {o:"Sistemas abiertos", g:0, fb:"Demasiado abstracto para guiar la recolección de datos en un diagnóstico rápido."}]},
+ { t:"Tras una fusión, dos culturas conviven en la misma estructura; la nueva estrategia exige colaboración entre unidades que antes competían.", opts:[
+   {o:"Modelo de congruencia (Nadler-Tushman)", g:2, fb:"El problema es de ajuste entre estrategia, organización formal, organización informal y personas tras un cambio. Las seis congruencias son la pauta."},
+   {o:"7S", g:1, fb:"La alineación de las siete S y los valores compartidos hablan de fusión, pero sin flechas ni prioridades."},
+   {o:"Seis cajas", g:1, fb:"Sirve como primera pasada; no captura bien la dimensión del ajuste tras el cambio."},
+   {o:"Sistemas abiertos", g:0, fb:"No ayuda a localizar las desalineaciones internas."}]},
+ { t:"Un directorio quiere decidir si el problema de desempeño de la empresa requiere un cambio de estrategia y liderazgo o solo mejoras operativas.", opts:[
+   {o:"Burke-Litwin", g:2, fb:"Es el único de los clásicos que distingue lo transformacional de lo transaccional y postula causalidad. Responde exactamente la pregunta del directorio."},
+   {o:"7S", g:1, fb:"Útil para presentar al directorio, pero no dice qué pesa más ni qué causa qué."},
+   {o:"Seis cajas", g:0, fb:"No distingue niveles de cambio."},
+   {o:"Modelo de congruencia", g:1, fb:"Detecta desalineaciones, pero no jerarquiza entre cambio profundo e incremental."}]},
+ { t:"Un hospital público de 800 personas, con cuatro gremios, bajo una reforma que impone indicadores desde fuera y sin recursos.", opts:[
+   {o:"Sistemas abiertos combinado con seis cajas o congruencia", g:2, fb:"El entorno (reforma, autoridad, pacientes) es protagonista y los estamentos exigen un modelo multinivel: enmarcar con sistemas abiertos y bajar con un modelo que localice brechas."},
+   {o:"7S", g:0, fb:"No capta actores externos ni la multiplicidad de intereses."},
+   {o:"Burke-Litwin", g:1, fb:"Separa el entorno (transformacional) de sistemas y prácticas (transaccional); exige muchos datos."},
+   {o:"Seis cajas sola", g:1, fb:"Primera pasada razonable, pero deja afuera la presión del entorno que origina el problema."}]},
+ { t:"El gerente general pide un marco que su comité ejecutivo entienda en una reunión de una hora para ordenar una conversación sobre alineación.", opts:[
+   {o:"7S", g:2, fb:"Lenguaje reconocido por ejecutivos, alineación como principio, elementos duros y blandos. El criterio decisivo es la audiencia."},
+   {o:"Burke-Litwin", g:1, fb:"Posible si el comité tolera complejidad; en una hora suele perder a la audiencia."},
+   {o:"Sistemas abiertos", g:0, fb:"Demasiado genérico para ordenar una conversación ejecutiva."},
+   {o:"Modelo de trabajo de Cummings y Worley", g:1, fb:"Adecuado para el equipo técnico que diseña el diagnóstico, no para la conversación del comité."}]},
+ { t:"Un equipo de control de gestión necesita ordenar las variables de un diagnóstico por nivel (organización, grupo, individuo) y por tipo (insumo, diseño, resultado) para convertirlas en indicadores.", opts:[
+   {o:"Modelo de trabajo de Cummings y Worley", g:2, fb:"Es exactamente un esquema por niveles y tipos de variable: los resultados son los indicadores de salida y los componentes de diseño, las palancas."},
+   {o:"Burke-Litwin", g:1, fb:"Aporta causalidad, pero no distingue niveles de análisis con la misma claridad."},
+   {o:"Seis cajas", g:0, fb:"Un solo nivel y sin tipos de variable."},
+   {o:"7S", g:0, fb:"Sin niveles ni distinción entre insumos y resultados."}]},
+];
+const Q3 = [
+ { q:"¿Cuál de estas justificaciones es más sólida para el Control 1?", opts:["'Elegimos Burke-Litwin porque es el más completo'","'Elegimos congruencia porque el problema de Muebles del Sur es una desalineación entre una estrategia nueva y una organización informal antigua, y el modelo está hecho para evaluar ese ajuste'","'Elegimos 7S porque es el más conocido'"], ok:1, fb:"La justificación aplica criterios (naturaleza del problema, momento) a hechos del caso. La completitud o la popularidad de un modelo no son criterios de elección." },
+ { q:"¿Qué estrategia recomienda la sesión cuando ningún modelo calza del todo?", opts:["Elegir el más simple siempre","Combinar un modelo macro para enmarcar y uno focalizado para la variable crítica","Prescindir de modelo y dejar que los datos hablen"], ok:1, fb:"La combinación macro más focalizado es la práctica habitual. Sin modelo, un diagnóstico es una lista de quejas." },
+];
+
+// ===================== ESTACIÓN 4 · BURKE-LITWIN =====================
+const CAT4 = ["Transformacional","Transaccional","Individual","Resultado"];
+const C4 = [
+ { t:"Conflicto entre los cofundadores de TechNova sobre la dirección de la empresa.", c:"Transformacional", fb:"Liderazgo y misión-estrategia son variables transformacionales: cambiarlas exige transformación, no ajustes." },
+ { t:"Ausencia de procedimientos de control de calidad antes de cada release.", c:"Transaccional", fb:"Sistemas (políticas y procedimientos) es una variable transaccional; se corrige con rediseño de procesos." },
+ { t:"Clima tenso en el equipo de desarrollo.", c:"Transaccional", fb:"El clima de la unidad de trabajo es transaccional; en el modelo, la cultura es causa y el clima, efecto." },
+ { t:"Valores de 'familia' arraigados en los operarios de Muebles del Sur.", c:"Transformacional", fb:"Cultura organizacional, nivel transformacional. Por eso la modernización de procesos (transaccional) no basta." },
+ { t:"Reforma de salud que vincula el presupuesto a indicadores.", c:"Transformacional", fb:"Entorno externo, la variable de la que parte la cadena causal." },
+ { t:"Desajuste entre las habilidades de un supervisor y las exigencias del cargo.", c:"Individual", fb:"Ajuste entre tareas y habilidades individuales: nivel individual." },
+ { t:"Motivación de los voluntarios de EcoAcción para seguir participando.", c:"Individual", fb:"La motivación es una variable individual que media entre clima y desempeño; las prácticas y recompensas (transaccionales) influyen en ella." },
+ { t:"Estructura jerárquica nueva impuesta por el director de EcoAcción.", c:"Transaccional", fb:"Estructura es una variable transaccional. El error del director es cambiarla sin tocar lo transformacional (cultura, legitimidad del liderazgo)." },
+ { t:"Estilo de supervisión de los jefes de taller.", c:"Transaccional", fb:"Prácticas de gestión, nivel transaccional; se intervienen con coaching o rediseño de roles. 'Liderazgo' (transformacional) se refiere a la alta dirección." },
+ { t:"Rentabilidad y satisfacción de clientes de TechNova.", c:"Resultado", fb:"Desempeño individual y organizacional es la variable de salida del modelo, hacia la que apuntan todas las flechas." },
+];
+const Q4 = [
+ { q:"Un grupo propone capacitar a los supervisores de TechNova para resolver la rotación. Según Burke-Litwin, ¿qué riesgo corre?", opts:["Ninguno: la capacitación siempre ayuda","Aplica una intervención transaccional a un problema cuya causa raíz es transformacional (liderazgo dividido); el síntoma volverá","La capacitación es transformacional y por eso tardará demasiado"], ok:1, fb:"Principio del modelo: las intervenciones transaccionales no resuelven problemas transformacionales. Capacitar supervisores no arregla un conflicto entre dueños." },
+ { q:"Para un tablero de personas, ¿qué implicación tiene la distinción transformacional/transaccional?", opts:["Solo deben medirse variables transaccionales","Las variables transaccionales (clima, rotación) se mueven rápido y admiten frecuencia alta; las transformacionales (cultura, liderazgo) se mueven lento y exigen otra frecuencia y otro método","Las transformacionales no se pueden medir"], ok:1, fb:"La frecuencia de medición y el tipo de instrumento deben ajustarse a la velocidad de cambio de la variable. Un pulso mensual de cultura no tiene sentido; uno de clima sí." },
+];
+
+// ===================== ESTACIÓN 5 · LÍMITES DE UNA ENCUESTA =====================
+function pintarSim(){
+  const n = +document.getElementById("sN").value, r = +document.getElementById("sR").value;
+  document.getElementById("vN").textContent = n; document.getElementById("vR").textContent = r + "%";
+  const resp = Math.round(n*r/100);
+  const anon = resp >= 5, rep = r >= 60;
+  const cls = !anon ? "no" : (rep ? "si" : "dudoso");
+  document.getElementById("semaforo").innerHTML =
+    `<div class="${anon?'si':'no'}"><b>${resp}</b> respuestas esperadas<br><span class="mini">${anon ? "anonimato suficiente (5 o más)" : "menos de 5: identificable"}</span></div>` +
+    `<div class="${rep?'si':'no'}"><b>${r}%</b> de respuesta<br><span class="mini">${rep ? "representatividad aceptable" : "bajo 60%: sesgo de no respuesta"}</span></div>` +
+    `<div class="${cls}"><b>${cls==='si' ? "Se reporta por unidad" : (cls==='dudoso' ? "Reportar con cautela" : "No se reporta por unidad")}</b><br><span class="mini">${cls==='si' ? "y aun así, sin uso evaluativo individual" : "agrupar con otra unidad o reportar el agregado"}</span></div>`;
+  document.getElementById("simTexto").textContent = n < 8
+    ? "Con unidades de este tamaño (típicas de una startup o de sucursales pequeñas), usar el puntaje para evaluar al jefe expone a quienes respondieron y hace que el error de medición domine la comparación. Es el problema central del caso del examen final."
+    : (r < 60 ? "La unidad es grande, pero con esta tasa de respuesta quienes contestan no representan a la unidad: los descontentos (o los más leales) pueden estar sobrerrepresentados." : "Condiciones mínimas cumplidas para describir la unidad. Comparar unidades entre sí exige además considerar el error de medición del índice (sesión 5).");
+}
+const G5 = [
+ { t:"Seguir cada año el nivel de compromiso de la empresa con los mismos ítems ancla.", opts:[
+   {o:"Defendible", g:2, fb:"Es el uso natural: misma medida, otro momento. Condición implícita: comparabilidad entre olas y cobertura similar."},
+   {o:"Con condiciones", g:1, fb:"Habría que asegurar cobertura y tasa de respuesta comparables; pero el uso en sí es el adecuado."},
+   {o:"No defendible", g:0, fb:"Al contrario, es para lo que sirve una encuesta de monitoreo."}]},
+ { t:"Calcular el bono anual de cada jefe de sucursal según el puntaje de clima de su unidad (sucursales de 8 a 15 personas).", opts:[
+   {o:"Defendible", g:0, fb:"Con unidades pequeñas no hay anonimato real, el error de medición es alto y el puntaje se convierte en meta: los jefes presionan a su gente a responder bien."},
+   {o:"Con condiciones", g:1, fb:"Solo con instrumento validado, n mínimo por unidad, tasa de respuesta alta y homogénea, triangulación y uso complementario. En sucursales de 8 personas esas condiciones casi nunca se cumplen."},
+   {o:"No defendible", g:2, fb:"Es la regla general para unidades pequeñas y el problema del examen final. Ley de Campbell: cuanto más se usa el indicador para decidir, más se distorsiona."}]},
+ { t:"Comparar unidades por su puntaje de liderazgo y publicar un ranking interno.", opts:[
+   {o:"Defendible", g:0, fb:"Comparar sin considerar el error de medición y la tasa de respuesta produce rankings que ordenan ruido."},
+   {o:"Con condiciones", g:2, fb:"Solo si las diferencias superan el error de medición, con n y tasa de respuesta comparables, y sin uso punitivo. Aun así, publicar rankings suele degradar la medida."},
+   {o:"No defendible", g:1, fb:"Postura prudente; la comparación en sí puede hacerse con condiciones."}]},
+ { t:"Detectar que una unidad se desvía del promedio y enviar a alguien a conversar con el equipo.", opts:[
+   {o:"Defendible", g:2, fb:"La encuesta muestra que algo pasa; la conversación (control interactivo, método cualitativo) explica por qué."},
+   {o:"Con condiciones", g:1, fb:"La condición es que el n de la unidad permita leer la desviación; pero el uso es el correcto."},
+   {o:"No defendible", g:0, fb:"Es justamente el uso que combina tablero y explicación."}]},
+ { t:"Explicar por qué se van los desarrolladores a partir de los puntajes de la encuesta de clima.", opts:[
+   {o:"Defendible", g:0, fb:"La encuesta dice que algo pasa y dónde; no dice por qué. Para la explicación hacen falta entrevistas o encuestas de salida con preguntas abiertas."},
+   {o:"Con condiciones", g:2, fb:"Solo como pista (qué dimensiones correlacionan con la intención de salida) que luego se explica con métodos cualitativos."},
+   {o:"No defendible", g:1, fb:"Advertencia razonable, pero la encuesta sí aporta indicios que orientan la explicación."}]},
+ { t:"Fijar como meta estratégica subir el puntaje de clima de 3,8 a 4,2 en dos años.", opts:[
+   {o:"Defendible", g:0, fb:"Una meta sobre una percepción, sin acciones definidas, invita a gestionar la encuesta en lugar del clima."},
+   {o:"Con condiciones", g:2, fb:"Solo si la meta se acompaña de acciones sobre causas, se mide con un instrumento confiable y se vigila el efecto Goodhart. La meta debería estar sobre las palancas, no solo sobre la percepción."},
+   {o:"No defendible", g:1, fb:"Regla estricta defendible, pero una meta de percepción puede ser razonable si se controla cómo se persigue."}]},
+ { t:"Evaluar si el programa de desarrollo de jefaturas tuvo efecto, midiendo antes y después en las unidades participantes y en otras que no participaron.", opts:[
+   {o:"Defendible", g:2, fb:"Antes y después, con grupo de comparación: es el uso evaluativo más sólido que admite una encuesta."},
+   {o:"Con condiciones", g:1, fb:"Las condiciones (mismo instrumento, cobertura) ya están implícitas en el diseño descrito."},
+   {o:"No defendible", g:0, fb:"Al contrario: es un diseño de evaluación correcto."}]},
+ { t:"Usar un índice construido con tres ítems de fiabilidad desconocida como KPI del tablero de personas.", opts:[
+   {o:"Defendible", g:0, fb:"Un KPI construido sobre una escala sin fiabilidad conocida controla ruido. La psicometría es el control de calidad del indicador (sesión 5)."},
+   {o:"Con condiciones", g:2, fb:"Primero verificar dimensionalidad y fiabilidad; si la escala no pasa, el índice no entra al tablero."},
+   {o:"No defendible", g:1, fb:"Postura defendible; lo que falta es la verificación, no el índice en sí."}]},
+];
+const Q5 = [
+ { q:"¿Qué enuncia el efecto Goodhart aplicado a una encuesta de clima?", opts:["Las encuestas largas tienen menor tasa de respuesta","Cuando el puntaje se convierte en meta del jefe, deja de ser una buena medida del clima","Los puntajes suben con el tiempo por aprendizaje del cuestionario"], ok:1, fb:"Goodhart (1984) y Campbell (1979): cuanto más se usa un indicador para decidir, más presión recibe y más distorsiona el proceso que pretende medir." },
+ { q:"¿Cuál de estas condiciones NO es necesaria para un uso evaluativo defensible de una encuesta?", opts:["Instrumento con validez y fiabilidad demostradas","n mínimo por unidad y tasa de respuesta alta y homogénea","Que la encuesta sea anual en lugar de pulso"], ok:2, fb:"La frecuencia no determina la defensibilidad del uso evaluativo; sí lo hacen la calidad de la medida, el n, la cobertura, la comparabilidad entre olas y la triangulación con otras fuentes." },
+];
+
+// ===================== ESTACIÓN 6 · TIPOS DE CONTROL =====================
+const CAT6 = ["Control de resultados","Control de acciones","Control de personal","Control cultural"];
+const C6 = [
+ { t:"Bono a los jefes de sucursal según el margen de su sucursal.", c:"Control de resultados", fb:"Meta e incentivo sobre un output medible y atribuible." },
+ { t:"Toda compra sobre cierto monto requiere aprobación previa de dos firmas.", c:"Control de acciones", fb:"Restricción y revisión previa de una conducta específica." },
+ { t:"Selección rigurosa y programa de inducción de seis meses para que las personas puedan y quieran hacer bien su trabajo.", c:"Control de personal", fb:"Selección, capacitación y diseño del trabajo son controles de personal. Si la inducción busca socializar en normas compartidas, se acerca al cultural." },
+ { t:"En EcoAcción, antes del nuevo director, las decisiones se legitimaban en asambleas y la presión de pares mantenía el compromiso con la causa.", c:"Control cultural", fb:"Normas compartidas y presión de pares (control de clan en Ouchi, 1979). El director lo reemplazó por control de resultados sin transición." },
+ { t:"Clima, compromiso y liderazgo: variables que no aparecen en los estados financieros ni en los reportes operacionales.", c:"Control de personal", fb:"Sobre estas variables operan los controles de personal y culturales, que necesitan la información que produce un diagnóstico. (También es defendible 'control cultural'; el punto es que no son controles de resultados ni de acciones.)" },
+];
+const CAT6B = ["Control diagnóstico","Control interactivo"];
+const C6B = [
+ { t:"Encuesta anual de clima con metas por unidad; la gerencia interviene solo donde el índice cae bajo el umbral.", c:"Control diagnóstico", fb:"Variables críticas, metas y seguimiento por excepción. Riesgo: el índice se vuelve fin (Goodhart)." },
+ { t:"Encuestas de pulso mensuales que el comité ejecutivo revisa en su reunión para discutir qué pasa con la retención y ajustar decisiones.", c:"Control interactivo", fb:"Información que la alta dirección usa para dialogar y aprender sobre una incertidumbre estratégica. Exige continuidad y atención directiva." },
+ { t:"El mismo cuestionario de clima, pero ahora sus resultados por sucursal definen el bono del jefe.", c:"Control diagnóstico", fb:"Pasa a operar como control diagnóstico con uso evaluativo. El instrumento no cambió; cambió el uso, y con él las exigencias de medición y de diseño del control (caso del examen)." },
+];
+const Q6 = [
+ { q:"¿En qué perspectiva del Balanced Scorecard se ubican los indicadores que produce un diagnóstico organizacional (competencias, clima, liderazgo, cultura)?", opts:["Financiera","Clientes","Procesos internos","Aprendizaje y crecimiento"], ok:3, fb:"Capital humano, de información y organizacional (Kaplan & Norton, 2004). Es la perspectiva que peor se llena en la práctica, con indicadores de actividad en lugar de indicadores de estado, y la que el diagnóstico puede alimentar." },
+ { q:"¿Qué función cumple un modelo de diagnóstico como Burke-Litwin respecto del tablero de personas?", opts:["Lista de métricas de RRHH disponibles","Mapa causal que indica qué pocas variables medir y cómo se conectan con el desempeño","Instrumento de medición"], ok:1, fb:"Cumple la función que el mapa estratégico cumple en el BSC: pocos indicadores conectados causalmente, con capacidad de anticipar. El instrumento (cuestionario) mide; el modelo decide qué medir y por qué." },
+ { q:"¿Cuándo un diagnóstico puntual se convierte en control?", opts:["Cuando se presenta al directorio","Cuando sus variables pasan a tener fuente, frecuencia, meta, responsable y un mecanismo de retroalimentación","Cuando se aplica con un cuestionario estandarizado"], ok:1, fb:"Sin esos cinco elementos, el diagnóstico es un informe más en un cajón. La quinta decisión del proceso (gestión de resultados) es la que lo convierte en control." },
+];
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1", CAT1, C1, 1); pregunta("q1", Q1, 1);
+clasificador("c2", CAT2, C2, 2); pregunta("q2", Q2, 2);
+graduada("g3", G3, 3); pregunta("q3", Q3, 3);
+clasificador("c4", CAT4, C4, 4); pregunta("q4", Q4, 4);
+graduada("g5", G5, 5, {2:"Correcto", 1:"Defendible, con matices", 0:"Revisar"}); pregunta("q5", Q5, 5);
+document.getElementById("sN").oninput = pintarSim; document.getElementById("sR").oninput = pintarSim; pintarSim();
+clasificador("c6", CAT6, C6, 6); clasificador("c6b", CAT6B, C6B, 6); pregunta("q6", Q6, 6);
+</script>
+</body>
+</html>

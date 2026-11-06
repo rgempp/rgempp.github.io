@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de la sesión 3 · Diagnóstico Organizacional MCG UDP</title>
+<meta name="author" content="René Gempp">
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  .pregunta label.opc{display:flex;gap:.5rem;align-items:flex-start}
+  .pregunta label.opc input{margin-top:.25rem}
+  .clasif table{margin:.4rem 0 .6rem}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Sesión 3</p>
+  <h1>Del ítem al indicador: constructos, error de encuesta, fiabilidad y validez</h1>
+  <p class="meta">Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026 · Acompaña a la sesión 3 (miércoles 11-11-2026) y al apunte 3<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0 ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Seis estaciones, cada una con algo que manipular, algo que clasificar y preguntas con retroalimentación. El hilo es el de la sesión: un ítem de encuesta termina siendo un indicador de un tablero de personas, y cada decisión de diseño (constructo, redacción, cobertura, fiabilidad, validez) cambia lo que ese indicador puede decir. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. No hay registro ni nota.</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. Constructo, indicador, ítem.</strong> Distinguir los eslabones de la cadena que define la validez, con ejemplos de los casos del curso.</div>
+    <div class="caja"><strong>2. Redacción de ítems.</strong> Detectar el error de cada ítem con el vocabulario de la sesión (doble, cargado, referente, cuantificador).</div>
+    <div class="caja"><strong>3. Error total de encuesta.</strong> Separar errores de representación y de medición, y decidir qué unidades de un tablero se pueden reportar según su cobertura.</div>
+    <div class="caja"><strong>4. Fiabilidad.</strong> Un simulador de tablero: cambia la fiabilidad del índice y el tamaño de las áreas, repite la ola y observa qué pasa con los semáforos y el ranking.</div>
+    <div class="caja"><strong>5. Correlación y validez.</strong> Cómo la fiabilidad atenúa las correlaciones y qué patrón de la matriz respalda la validez de una escala.</div>
+    <div class="caja"><strong>6. Del ítem al KPI.</strong> Qué condiciones faltan para que un ítem de encuesta sea un indicador defendible de un tablero, y cuándo su uso evaluativo se vuelve un problema.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 45 a 60 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en el apunte 3; la guía A0 muestra cómo obtener en JASP los estadísticos que aquí se simulan.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<!-- ============ ESTACIÓN 1 ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Constructo, indicador, ítem</h2>
+  <p>Un <b>constructo</b> es la variable del diseño diagnóstico (un concepto que no se observa directamente). Un <b>indicador</b> es algo observable que manifiesta el constructo. Un <b>ítem</b> es la pregunta concreta, con formato de respuesta, que mide uno de esos indicadores. Un <b>dato administrativo</b> es un registro que ya existe en la organización y que no requiere encuesta.</p>
+  <h3>A. Clasifica</h3>
+  <div id="c1"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2 ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Redacción de ítems</h2>
+  <p>Los ítems provienen del cuestionario real de clima que se usa en el Control 3 y de los casos del curso. Para cada uno, elige el <b>error principal</b>. Algunos están bien redactados.</p>
+  <h3>A. Clasifica</h3>
+  <div id="c2"></div>
+  <h3>B. Tipo de información</h3>
+  <p class="mini">Clasifica cada pregunta según la información que busca. Recuerda la regla: solo los estados subjetivos exigen escalas multi-ítem.</p>
+  <div id="c2b"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3 ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Error total de encuesta</h2>
+  <p>El error total de encuesta tiene dos ramas (Groves et al., 2009). <b>Representación</b>: ¿a quién llegamos? Error de <b>cobertura</b> (quién no fue invitado) y de <b>no respuesta</b> (quién no contestó). <b>Medición</b>: ¿qué tan bien medimos? Error de <b>validez</b> (los ítems miden otra cosa), de <b>medición</b> (deseabilidad social, estilos de respuesta, ambigüedad; fiabilidad) y de <b>procesamiento</b> (codificación, inversos sin recodificar).</p>
+  <h3>A. Clasifica la fuente de error</h3>
+  <div id="c3"></div>
+  <h3>B. Cobertura por unidad: ¿qué se puede reportar?</h3>
+  <p class="mini">Encuesta de clima de TechNova por equipo. Fija el número mínimo de respuestas y la tasa de respuesta mínima para reportar una unidad por separado, y observa qué equipos quedan en el tablero y cuáles se agregan al nivel superior. La regla protege el anonimato (n mínimo) y la representatividad (tasa mínima).</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div class="slider">n mínimo por unidad: <span class="v" id="v_nmin">5</span><input type="range" id="s_nmin" min="3" max="12" value="5"></div>
+      <div class="slider">Tasa de respuesta mínima: <span class="v" id="v_tmin">60%</span><input type="range" id="s_tmin" min="30" max="90" value="60" step="5"></div>
+    </div>
+    <div id="cobertura"></div>
+  </div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4 ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · Fiabilidad: un tablero que controla ruido</h2>
+  <p>Cinco áreas de una organización tienen un nivel <b>verdadero</b> de claridad de prioridades que no cambia entre olas (3,6; 3,8; 3,9; 4,1; 4,3 en una escala de 1 a 5). Lo que el tablero muestra es el promedio <b>observado</b> en cada ola, que contiene error de medición. El error típico de medida de una persona es DE × √(1 − fiabilidad); el del promedio de un área se reduce con √n. Cambia la fiabilidad del índice y el tamaño de las áreas, lanza una nueva ola y mira el semáforo (meta: 4,0) y el ranking.</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div class="slider">Fiabilidad del índice (alfa u omega): <span class="v" id="v_rel">0,60</span><input type="range" id="s_rel" min="30" max="95" value="60" step="5"></div>
+      <div class="slider">Respuestas por área (n): <span class="v" id="v_n">8</span><input type="range" id="s_n" min="4" max="60" value="8" step="2"></div>
+    </div>
+    <button class="btn" id="b_ola">Nueva ola de medición</button>
+    <button class="btn sec" id="b_100">Simular 200 olas</button>
+    <span class="mini" id="ola_txt"></span>
+    <div id="tablero"></div>
+    <div id="sim100" class="mini"></div>
+  </div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5 ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Correlación y validez</h2>
+  <p>La correlación entre dos escalas que se observa en los datos es menor que la correlación entre los constructos, porque cada escala tiene error de medición: r observada = r verdadera × √(fiabilidad 1 × fiabilidad 2). Mueve las fiabilidades y observa cómo se atenúa la relación entre claridad de prioridades e intención de salida en TechNova (r verdadera = −0,50).</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div class="slider">Fiabilidad de "claridad de prioridades": <span class="v" id="v_r1">0,80</span><input type="range" id="s_r1" min="30" max="95" value="80" step="5"></div>
+      <div class="slider">Fiabilidad de "intención de salida": <span class="v" id="v_r2">0,80</span><input type="range" id="s_r2" min="30" max="95" value="80" step="5"></div>
+    </div>
+    <div class="grid g2">
+      <div id="disp"></div>
+      <div>
+        <div class="stat"><div class="num" id="r_obs">−0,40</div><div class="lbl">correlación observada (n = 128 simulados)</div></div>
+        <div class="stat" style="margin-top:.6rem"><div class="num" id="r_var">16%</div><div class="lbl">varianza compartida observada (r²)</div></div>
+        <p class="mini" style="margin-top:.6rem">La correlación verdadera entre los constructos es −0,50 en todos los casos. Lo que cambia es cuánto de ella sobrevive al error de medición de cada escala.</p>
+      </div>
+    </div>
+  </div>
+  <h3>B. ¿Qué matriz respalda la validez?</h3>
+  <p class="mini">Tres escalas (CP claridad de prioridades, CR claridad de rol, IS intención de salida). Para cada matriz, decide qué muestra.</p>
+  <div id="c5"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q5"></div>
+</section>
+
+<!-- ============ ESTACIÓN 6 ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · Del ítem al KPI</h2>
+  <p>Una variable de encuesta se convierte en indicador de control cuando cumple condiciones de diseño (ítems ancla estables, comparabilidad entre olas, cobertura conocida por unidad, periodicidad, calidad de medición verificada) y de uso (n mínimo, reglas de consecuencia, devolución). Lee cada propuesta y marca <b>todas</b> las condiciones que faltan; luego comprueba.</p>
+  <div id="m6"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q6"></div>
+</section>
+
+<!-- ============ FICHA ============ -->
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div class="caja">
+    <strong>Lo que conviene llevarse a la sesión 5</strong>
+    <ul>
+      <li>Un ítem es una muestra del universo de indicadores de un constructo; la validez es el supuesto de que esa muestra lo representa, y se verifica con el patrón de correlaciones.</li>
+      <li>La cobertura por unidad y el n mínimo deciden qué se puede reportar; sin tasa de respuesta por unidad, el tablero compara cosas distintas.</li>
+      <li>Con fiabilidad baja y áreas pequeñas, el semáforo cambia de color entre olas sin que nada haya cambiado: el tablero controla ruido.</li>
+      <li>El error de medición atenúa las correlaciones: antes de concluir que dos variables no se relacionan, hay que mirar la fiabilidad de ambas.</li>
+      <li>Usar la encuesta para evaluar jefaturas exige condiciones que el diagnóstico no exige, y activa el ciclo de Goodhart.</li>
+    </ul>
+  </div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas. El avance se guarda solo en este navegador.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y NAVEGACIÓN (mismo patrón que lab_personalidad) =====================
+const CLAVE = "lab_do_s3_v1";
+const NOMBRES = ["Inicio","1 · Constructo e ítem","2 · Redacción","3 · Error de encuesta","4 · Fiabilidad","5 · Correlación y validez","6 · Del ítem al KPI","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+const estado = { hechas: {}, resp: {} };
+function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(CLAVE); if(s) Object.assign(estado, JSON.parse(s)); }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+function pintarNav(){
+  const nav = document.getElementById("nav"); nav.innerHTML = "";
+  NOMBRES.forEach((n,i)=>{ const b = document.createElement("button"); b.textContent = n;
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista");
+    b.onclick = ()=>ir(i); nav.appendChild(b); });
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de ${EST.length}`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa"));
+  document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===NOMBRES.length-1) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem(CLAVE); }catch(e){} location.reload(); }
+
+// ===================== COMPONENTES =====================
+// Cada estación puede tener varios componentes; se marca cuando todos terminan.
+const PEND = {};
+function registrar(est, id){ PEND[est] = PEND[est] || new Set(); PEND[est].add(id); }
+function terminar(est, id){ PEND[est].delete(id); if(PEND[est].size===0) marcar(est); }
+
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId);
+  let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.q}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(+s.dataset.j===it.ok ? "correcta" : "incorrecta");
+      d.querySelectorAll(".opc")[it.ok].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb;
+      estado.resp[contId+"_"+k] = +s.dataset.j; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+function clasificador(contId, cats, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "clasif";
+    d.innerHTML = `<p class="enun">${it.t}</p><div class="cats">` + cats.map(c=>`<span class="cat" data-c="${c}">${c}</span>`).join("") + `</div><div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".cat").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(s.dataset.c===it.c ? "correcta" : "incorrecta");
+      d.querySelector(`.cat[data-c="${it.c}"]`).classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+// multisel: items = [{t, opts:[...], ok:[índices], fb}] ; el usuario marca varias y comprueba
+function multisel(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.t}</strong></p><p class="mini">Marca todas las condiciones que faltan y comprueba.</p>` +
+      it.opts.map((o,j)=>`<label class="opc"><input type="checkbox" data-j="${j}"> ${o}</label>`).join("") +
+      `<button class="btn" style="margin-top:.5rem">Comprobar</button><div class="feedback" style="display:none"></div>`;
+    d.querySelector("button").onclick = ()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      const marcadas = [...d.querySelectorAll("input")].filter(i=>i.checked).map(i=>+i.dataset.j);
+      d.querySelectorAll(".opc").forEach((l,j)=>{ const esOk = it.ok.includes(j); const m = marcadas.includes(j);
+        if(esOk) l.classList.add("correcta"); if(m && !esOk) l.classList.add("incorrecta"); l.querySelector("input").disabled = true; });
+      const aciertos = it.ok.filter(j=>marcadas.includes(j)).length; const extra = marcadas.filter(j=>!it.ok.includes(j)).length;
+      const f = d.querySelector(".feedback"); f.style.display = "block";
+      f.innerHTML = `<b>${aciertos} de ${it.ok.length} condiciones faltantes identificadas${extra?`, ${extra} marcada${extra>1?"s":""} de más`:""}.</b> ${it.fb}`;
+      d.querySelector("button").disabled = true; guardar(); if(hechas===items.length) terminar(estacion, contId);
+    };
+    cont.appendChild(d);
+  });
+}
+function pintarFicha(){
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas: ${k} de ${EST.length}.</strong> ` + (k===EST.length ? "Laboratorio completo." : "Faltan: " + EST.filter(e=>!estado.hechas[e]).map(e=>NOMBRES[e]).join(", ") + ".");
+}
+const fmt = (x,d=2)=>x.toFixed(d).replace(".",",");
+// normal estándar (Box-Muller)
+function rnorm(){ let u=0,v=0; while(u===0) u=Math.random(); while(v===0) v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); }
+
+// ===================== CONTENIDO · ESTACIÓN 1 =====================
+const CAT1 = ["Constructo","Indicador","Ítem","Dato administrativo"];
+const C1 = [
+ { t:"Claridad de prioridades del equipo (TechNova)", c:"Constructo", fb:"Es la variable del diseño diagnóstico: un concepto que no se observa directamente y que hay que definir antes de medir." },
+ { t:"Proporción de decisiones de producto revertidas en el trimestre, según el registro de decisiones", c:"Dato administrativo", fb:"Existe en los registros de la organización (actas, backlog); no requiere encuesta. Es, además, un indicador conductual del constructo anterior." },
+ { t:"\"En mi equipo, las prioridades definidas al inicio de un sprint se mantienen hasta su término\" (1 nunca a 5 casi siempre)", c:"Ítem", fb:"Pregunta concreta con formato de respuesta y referente ('mi equipo'). Es una muestra del universo de indicadores de claridad de prioridades." },
+ { t:"Que las personas sepan qué es lo más importante que deben entregar en las próximas semanas", c:"Indicador", fb:"Es una manifestación observable del constructo (todavía sin redacción ni formato). De aquí sale un ítem." },
+ { t:"Confianza en la dirección (Muebles del Sur)", c:"Constructo", fb:"Variable latente del diseño; hay que definirla (confianza en qué: en la competencia, en la honestidad, en que se cumpla lo anunciado) antes de escribir ítems." },
+ { t:"Tasa de rotación voluntaria de desarrolladores en los últimos 12 meses", c:"Dato administrativo", fb:"Métrica de RRHH que sale del sistema de personal. Es el indicador lagging del tablero, no una variable de encuesta." },
+ { t:"\"Pienso con frecuencia en dejar esta organización\" (1 a 5)", c:"Ítem", fb:"Ítem de intención de salida, referente individual, formato de acuerdo." },
+ { t:"Que los indicadores de un servicio se puedan cumplir con la dotación disponible (Hospital Regional)", c:"Indicador", fb:"Faceta observable de la percepción de los indicadores de la reforma; un ítem la convertirá en pregunta con formato." },
+ { t:"Número de respuestas recibidas por equipo en la última ola", c:"Dato administrativo", fb:"Lo produce la plataforma de encuesta; es el indicador de proceso (tasa de respuesta por unidad) que debería acompañar a cualquier índice del tablero." },
+ { t:"Participación en las decisiones del programa (EcoAcción)", c:"Constructo", fb:"Variable del diseño; su definición (qué decisiones, con qué grado de influencia) determina los indicadores y los ítems." },
+];
+const Q1 = [
+ { q:"¿Por qué un constructo subjetivo requiere al menos tres ítems?", opts:["Porque así lo exige la plataforma de encuestas","Porque ningún ítem agota el constructo y varios ítems promedian el error de cada uno, lo que además permite estimar la fiabilidad","Porque con tres ítems el cuestionario parece más serio"], ok:1, fb:"Cada ítem es una muestra del universo de indicadores y contiene error propio. Con un solo ítem no se puede saber cuánto ruido tiene el indicador." },
+ { q:"La rotación de desarrolladores en TechNova es del 50% anual. ¿Qué debería medir la encuesta?", opts:["La rotación, con un ítem que pregunte si la persona renunció","Los constructos que explican la rotación (claridad de prioridades, confianza, intención de salida), porque la rotación ya tiene registro administrativo","Nada: la rotación ya se conoce"], ok:1, fb:"Cuando existe el dato administrativo, la encuesta no es la mejor fuente. La encuesta mide lo que los registros no capturan: las percepciones que anteceden al resultado." },
+ { q:"¿Cuál es el supuesto que se llama validez?", opts:["Que el cuestionario fue aprobado por la gerencia","Que las respuestas a los ítems reflejan el constructo y no otra cosa","Que la tasa de respuesta superó el 60%"], ok:1, fb:"Validez es el grado en que las respuestas representan el constructo. Se argumenta con el contenido y se verifica con datos (patrón de correlaciones, análisis factorial, sesión 5)." },
+];
+
+// ===================== ESTACIÓN 2 =====================
+const CAT2 = ["Doble","Ambiguo","Jerga","Cargado","Doble negación","Cuantificador absoluto","Referente exogrupal","Bien redactado"];
+const C2 = [
+ { t:"Todas las jefaturas cuentan con el respeto y la validación de la empresa", c:"Cuantificador absoluto", fb:"'Todas' hace el ítem imposible de afirmar con honestidad; además pide observar algo (la validación de la empresa) que quien responde rara vez ve." },
+ { t:"Mi jefatura es clara y justa al asignar el trabajo", c:"Doble", fb:"Claridad y justicia son dos cosas; una respuesta no puede reflejar ambas. Separar en dos ítems." },
+ { t:"Los trabajadores de esta empresa se sienten orgullosos de trabajar aquí", c:"Referente exogrupal", fb:"La persona opina sobre otros desde fuera: mezcla observación y atribución. Con referente individual ('me siento orgulloso') o endogrupal ('en mi equipo nos sentimos') el ítem mejora." },
+ { t:"En esta tienda existen instancias grupales para generar soluciones cooperativas", c:"Jerga", fb:"'Instancias grupales' y 'soluciones cooperativas' es vocabulario de consultoría; quien responde no sabe si se refiere a reuniones, comités u otra cosa." },
+ { t:"¿Está de acuerdo con la excelente política de beneficios de la empresa?", c:"Cargado", fb:"'Excelente' induce la respuesta. Redacción neutra: 'La política de beneficios de la empresa responde a mis necesidades'." },
+ { t:"No considero que la capacitación que recibo no sea útil", c:"Doble negación", fb:"Obliga a un cálculo lógico; muchas personas contestan al revés de lo que piensan. 'La capacitación que recibo es útil para mi trabajo'." },
+ { t:"¿La comunicación es buena?", c:"Ambiguo", fb:"Comunicación de quién, sobre qué, por qué canal. Cada persona responde a una pregunta distinta." },
+ { t:"Cuento de manera oportuna con la información precisa que necesito para realizar mi trabajo", c:"Bien redactado", fb:"Una idea, referente individual, conducta concreta. Es uno de los ítems que se conservan del cuestionario real." },
+ { t:"Me quedaría en este trabajo aun si me ofrecieran otro con condiciones similares", c:"Bien redactado", fb:"El ítem está bien escrito; su problema es de dimensión (mide intención de permanencia, no 'ambiente y relaciones'), que es otro tipo de error." },
+ { t:"Hay jefaturas en la empresa que en ocasiones enfatizan el sentido del trabajo que realizamos", c:"Cuantificador absoluto", fb:"El cuantificador vago ('hay jefaturas que en ocasiones') es la versión inversa del absoluto: casi nadie puede estar en desacuerdo, y el ítem no discrimina." },
+];
+const CAT2B = ["Factual","Conductual","De conocimiento","Estado subjetivo"];
+const C2B = [
+ { t:"¿Cuántos años lleva en la empresa? (menos de 1 · 1 a 3 · 4 a 10 · más de 10)", c:"Factual", fb:"Dato de clasificación; un solo ítem, con rangos para proteger el anonimato." },
+ { t:"En el último mes, ¿cuántas veces trabajó más de 10 horas en un día?", c:"Conductual", fb:"Qué hace la persona y con qué frecuencia, con período de referencia. Un solo ítem, aunque conviene contrastar con el registro de asistencia." },
+ { t:"Según el reglamento interno, ¿con cuántos días de anticipación debe solicitarse un permiso?", c:"De conocimiento", fb:"Verifica si la política se conoce; se corrige contra la respuesta correcta." },
+ { t:"Mi jefatura directa me da el apoyo que necesito para hacer bien mi trabajo (1 a 5)", c:"Estado subjetivo", fb:"Percepción; requiere escala multi-ítem para medir apoyo de la jefatura con fiabilidad estimable." },
+ { t:"¿Qué tan probable es que recomiende esta organización como lugar para trabajar? (0 a 10)", c:"Estado subjetivo", fb:"Es una actitud. El eNPS usa un solo ítem porque se concibe como señal, no como medida de un constructo." },
+];
+const Q2 = [
+ { q:"Un cuestionario de clima mezcla, en la misma dimensión, ítems con referente 'esta empresa', 'este local' y 'nosotros'. ¿Cuál es el problema principal?", opts:["Ninguno: el referente es una cuestión de estilo","Que no se puede agregar por tienda con sentido, porque los ítems hablan de objetos distintos y no se sabe a qué nivel se concluye","Que el cuestionario queda demasiado largo"], ok:1, fb:"El referente lo decide el nivel de análisis. Una escala que mezcla referentes no permite saber si mide clima psicológico, clima de unidad o una opinión sobre la organización." },
+ { q:"¿Qué formato de respuesta corresponde al ítem 'Cuando hay cambios, me entero por los canales oficiales antes que por rumores'?", opts:["Acuerdo de 1 a 5","Frecuencia (nunca a siempre)","Sí o no"], ok:1, fb:"Es una conducta o experiencia repetida: el anclaje de frecuencia corresponde al enunciado. El acuerdo se reserva para percepciones y actitudes." },
+ { q:"Un cuestionario de 53 ítems tiene errores de tipeo en cuatro de ellos. ¿Qué indica eso?", opts:["Nada relevante; se corrige en la siguiente ola","Que no fue pilotado ni revisado, lo que hace sospechar de los demás errores que no se ven a simple vista","Que la plataforma de encuestas falló"], ok:1, fb:"Un cuestionario con errores de tipeo no pasó por un pilotaje. Es el caso del examen final." },
+];
+
+// ===================== ESTACIÓN 3 =====================
+const CAT3 = ["Cobertura","No respuesta","Validez","Error de medición","Procesamiento"];
+const C3 = [
+ { t:"La encuesta se envió por correo corporativo; el personal de planta y los contratistas no tienen correo.", c:"Cobertura", fb:"Parte de la población objetivo nunca fue invitada. Rama de la representación." },
+ { t:"La tasa de respuesta global fue 62%, pero en el área de operaciones fue 18%.", c:"No respuesta", fb:"Quienes no contestaron pueden diferir de quienes sí; el promedio del área describe a una minoría. La tasa por unidad debería estar en el tablero." },
+ { t:"Los ítems de 'resolución de conflictos' preguntan en realidad por el nivel de conflicto y por la intención de permanencia.", c:"Validez", fb:"Los ítems miden constructos distintos al declarado. Rama de la medición; se detecta en la matriz de correlaciones y en el análisis factorial." },
+ { t:"En una unidad de cuatro personas, los resultados se entregarán a la jefatura directa con su nombre.", c:"Error de medición", fb:"Sin anonimato aumenta la deseabilidad social: las respuestas se desplazan hacia lo aceptable. Es un error de medición inducido por el diseño de la aplicación." },
+ { t:"Dos ítems inversos de la escala de carga se promediaron sin recodificar.", c:"Procesamiento", fb:"Error de procesamiento: la puntuación de la escala queda sin sentido y la fiabilidad se desploma. Se revisa en los descriptivos y correlaciones (A0)." },
+ { t:"Un ítem pregunta por 'la comunicación en la empresa' y cada persona lo interpreta de forma distinta.", c:"Error de medición", fb:"Ambigüedad: la respuesta refleja interpretaciones distintas, no diferencias reales. Reduce la fiabilidad y la validez." },
+ { t:"La encuesta se aplicó la semana posterior a un despido masivo; la ola anterior fue en un mes tranquilo.", c:"Error de medición", fb:"Comparabilidad entre olas rota: la diferencia atribuible al momento se leerá como cambio real del clima. Es un error de medición por el contexto de aplicación." },
+ { t:"Una parte de los trabajadores usa siempre el punto medio de la escala, sea cual sea el ítem.", c:"Error de medición", fb:"Estilo de respuesta central: depende del formato y es estable en la persona; reduce la varianza y oculta problemas." },
+ { t:"La base exportada por la plataforma trae las respuestas como texto ('De acuerdo') y se importó sin recodificar a números.", c:"Procesamiento", fb:"Error de procesamiento; JASP las tratará como nominales y no podrá calcular correlaciones ni fiabilidad (A0, problemas frecuentes)." },
+ { t:"Se encuestó a quienes estaban conectados a la intranet el martes a las 10:00; los turnos de noche no fueron invitados.", c:"Cobertura", fb:"La población invitada excluye a una parte de la población objetivo. Error de cobertura." },
+];
+const EQUIPOS = [["Backend",12,9],["Frontend",10,8],["Datos",6,3],["Plataforma",5,5],["Producto",4,4],["QA",7,2]];
+function pintarCobertura(){
+  const nmin = +document.getElementById("s_nmin").value, tmin = +document.getElementById("s_tmin").value;
+  document.getElementById("v_nmin").textContent = nmin; document.getElementById("v_tmin").textContent = tmin+"%";
+  let rows = "", agg = [], aggN = 0, aggR = 0;
+  EQUIPOS.forEach(([e,n,r])=>{ const t = Math.round(100*r/n); const ok = r>=nmin && t>=tmin;
+    const motivo = ok ? "se reporta" : (r<nmin && t<tmin ? "n y tasa insuficientes" : r<nmin ? "n insuficiente (anonimato)" : "tasa insuficiente (representatividad)");
+    if(!ok){ agg.push(e); aggN+=n; aggR+=r; }
+    rows += `<tr><td>${e}</td><td>${n}</td><td>${r}</td><td>${t}%</td><td style="color:${ok?'var(--verde)':'var(--rojo)'};font-weight:600">${motivo}</td></tr>`; });
+  let foot = agg.length ? `<p class="mini">Se agregan al nivel superior: ${agg.join(", ")} (${aggR} respuestas de ${aggN}, ${Math.round(100*aggR/aggN)}%)${aggR>=nmin?" y se reportan como un solo grupo.":" , y aun así no alcanzan el n mínimo: solo se reportan en el total de la organización."}</p>` : `<p class="mini">Todos los equipos se reportan por separado.</p>`;
+  document.getElementById("cobertura").innerHTML = `<table><thead><tr><th>Equipo</th><th>Personas</th><th>Respuestas</th><th>Tasa</th><th>Decisión</th></tr></thead><tbody>${rows}</tbody></table>` + foot;
+}
+const Q3 = [
+ { q:"En una encuesta censal a toda la organización, ¿qué error de representación desaparece?", opts:["El error de cobertura","El error de no respuesta","El error de muestreo"], ok:2, fb:"Sin muestra no hay error de muestreo. Cobertura (a quién se invitó) y no respuesta (quién contestó) siguen existiendo, y suelen ser mayores." },
+ { q:"Con n mínimo 5 y tasa mínima 60%, el equipo Datos (6 personas, 3 respuestas) no se reporta. ¿Cuál es la mejor decisión?", opts:["Reportarlo igual, porque la gerencia lo pide","Agregarlo con otro equipo pequeño del mismo nivel, o reportarlo solo en el total, y registrar la decisión en la ficha del indicador","Eliminar al equipo de la encuesta"], ok:1, fb:"La regla de reporte protege el anonimato y la representatividad; se documenta en la ficha del indicador y se aplica igual en todas las olas, para que la serie sea comparable." },
+ { q:"¿Por qué la tasa de respuesta por unidad debería ser un indicador del tablero?", opts:["Porque permite premiar a los equipos que contestan","Porque sin ella no se sabe si el índice de clima de una unidad describe a la unidad o a una minoría, y porque su caída anticipa la pérdida de confianza en la encuesta","Porque es fácil de calcular"], ok:1, fb:"Es un indicador de proceso de la propia encuesta. Una unidad con 25% de respuesta no se compara con otra con 90%, y una caída sostenida avisa que la devolución no está funcionando." },
+];
+
+// ===================== ESTACIÓN 4 =====================
+const AREAS = [["Backend",3.6],["Frontend",3.8],["Datos",3.9],["Plataforma",4.1],["Producto",4.3]];
+const SD = 0.95; let ola = 0;
+function sem(rel, n){ return SD*Math.sqrt(1-rel)/Math.sqrt(n); }
+function simularOla(rel, n){ return AREAS.map(([a,mu])=>[a, mu, mu + sem(rel,n)*rnorm()]); }
+function pintarTablero(){
+  const rel = +document.getElementById("s_rel").value/100, n = +document.getElementById("s_n").value;
+  document.getElementById("v_rel").textContent = fmt(rel); document.getElementById("v_n").textContent = n;
+  const res = simularOla(rel, n); ola++;
+  const orden = [...res].sort((a,b)=>b[2]-a[2]).map(r=>r[0]);
+  let html = `<div class="grid g5">`;
+  res.forEach(([a,mu,obs])=>{ const color = obs>=4.0 ? "bien" : obs>=3.8 ? "mod" : "max"; const txt = obs>=4.0 ? "en meta" : obs>=3.8 ? "atención" : "bajo meta";
+    html += `<div class="stat"><div class="lbl">${a}</div><div class="num">${fmt(obs,2)}</div><span class="nivel ${color}">${txt}</span><div class="lbl">verdadero: ${fmt(mu,1)} · ranking: ${orden.indexOf(a)+1}°</div></div>`; });
+  html += `</div><p class="mini">Error típico de medida del promedio de un área: ${fmt(sem(rel,n),2)} (DE 0,95 × √(1 − ${fmt(rel)}) / √${n}). Meta: 4,0. Semáforo: verde ≥ 4,0; ámbar 3,8 a 4,0; rojo &lt; 3,8.</p>`;
+  document.getElementById("tablero").innerHTML = html;
+  document.getElementById("ola_txt").textContent = `Ola ${ola}`;
+}
+function simular200(){
+  const rel = +document.getElementById("s_rel").value/100, n = +document.getElementById("s_n").value;
+  let cambia = 0, prodVerde = 0, backVerde = 0, platMenorQueDatos = 0, K = 200;
+  for(let k=0;k<K;k++){ const r = simularOla(rel,n); const m = Object.fromEntries(r.map(x=>[x[0],x[2]]));
+    if(m.Producto>=4.0) prodVerde++; if(m.Backend>=4.0) backVerde++; if(m.Plataforma<m.Datos) platMenorQueDatos++;
+    const orden = [...r].sort((a,b)=>b[2]-a[2]).map(x=>x[0]).join(","); if(orden!=="Producto,Plataforma,Datos,Frontend,Backend") cambia++; }
+  document.getElementById("sim100").innerHTML = `<div class="nota info" style="margin-top:.6rem"><b>En ${K} olas simuladas con fiabilidad ${fmt(rel)} y n = ${n}:</b> el ranking observado difirió del verdadero en ${Math.round(100*cambia/K)}% de las olas; Producto (verdadero 4,3) apareció en verde en ${Math.round(100*prodVerde/K)}% y Backend (verdadero 3,6) en ${Math.round(100*backVerde/K)}%; Plataforma (4,1) quedó por debajo de Datos (3,9) en ${Math.round(100*platMenorQueDatos/K)}% de las olas. Nada cambió en las áreas: cambió el ruido.</div>`;
+}
+const Q4 = [
+ { q:"Con fiabilidad .60 y n = 8 por área, Plataforma (verdadero 4,1) aparece bajo meta en una ola. ¿Qué debería hacer el controller?", opts:["Pedir explicaciones a la jefatura de Plataforma","Reconocer que con ese error típico (≈ 0,21) una diferencia de 0,1 no es interpretable, y mejorar la fiabilidad o el n antes de fijar metas sobre el índice","Cambiar la meta a 3,9"], ok:1, fb:"Con un error típico de 0,21, un intervalo de ±0,4 alrededor de la media cubre desde 'bajo meta' hasta 'en meta'. El tablero controla ruido. La fiabilidad se verifica antes de reportar y antes de fijar metas." },
+ { q:"¿Qué dos cosas reducen el error típico del promedio de un área?", opts:["Más ítems bien construidos en la escala (mayor fiabilidad) y más respuestas por área","Una meta más baja y un semáforo con más colores","Aplicar la encuesta con más frecuencia"], ok:0, fb:"El error típico es DE × √(1 − fiabilidad) / √n. La fiabilidad sube con ítems homogéneos y bien redactados; el n sube con cobertura y tasa de respuesta. Medir más seguido con el mismo ruido no lo reduce." },
+ { q:"Un índice con fiabilidad .60 tiene 40% de varianza de error. ¿Qué pasa si se usa para evaluar a las jefaturas?", opts:["Nada, porque .60 supera el mínimo","Se premia o castiga ruido: una parte de las diferencias entre áreas no refleja diferencias reales, y además el uso evaluativo eleva la deseabilidad social","Mejora la fiabilidad, porque las jefaturas se esfuerzan más"], ok:1, fb:"Las dos razones se combinan: error de medición en el índice y distorsión por el uso. El umbral de .70 es para uso descriptivo y grupal; las decisiones sobre personas exigen más." },
+];
+
+// ===================== ESTACIÓN 5 =====================
+const RT = -0.50;
+function pintarDisp(){
+  const r1 = +document.getElementById("s_r1").value/100, r2 = +document.getElementById("s_r2").value/100;
+  document.getElementById("v_r1").textContent = fmt(r1); document.getElementById("v_r2").textContent = fmt(r2);
+  const ro = RT*Math.sqrt(r1*r2);
+  document.getElementById("r_obs").textContent = fmt(ro).replace("-","−"); document.getElementById("r_var").textContent = Math.round(100*ro*ro)+"%";
+  // dispersión simulada: n=128, correlación ro
+  let pts = ""; const W=300,H=240,m=30;
+  for(let i=0;i<128;i++){ const z1=rnorm(); const z2=ro*z1+Math.sqrt(1-ro*ro)*rnorm();
+    const x = m + (W-2*m)*(0.5+z1/6), y = H-m - (H-2*m)*(0.5+z2/6); pts += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="var(--rojo)" fill-opacity=".55"/>`; }
+  // recta de regresión
+  const x1=m, x2=W-m, yc=H/2, k=(H-2*m)/(W-2*m);
+  const y1 = yc - ro*(x1-W/2)*k, y2 = yc - ro*(x2-W/2)*k;
+  document.getElementById("disp").innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="100%"><rect x="0" y="0" width="${W}" height="${H}" fill="#fff" stroke="var(--borde)"/><line x1="${m}" y1="${H-m}" x2="${W-m}" y2="${H-m}" stroke="var(--gris)"/><line x1="${m}" y1="${m}" x2="${m}" y2="${H-m}" stroke="var(--gris)"/>${pts}<line x1="${x1}" y1="${y1.toFixed(1)}" x2="${x2}" y2="${y2.toFixed(1)}" stroke="var(--tinta)" stroke-width="2"/><text x="${W/2}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--gris)">claridad de prioridades (puntuación observada)</text><text x="12" y="${H/2}" text-anchor="middle" font-size="11" fill="var(--gris)" transform="rotate(-90 12 ${H/2})">intención de salida (observada)</text></svg>`;
+}
+function matriz(vals){ // vals: 8x8 inferior; devuelve tabla html
+  const it=["CP1","CP2","CP3","CR1","CR2","CR3","IS1","IS2"]; let h=`<table style="font-size:.78rem"><tr><th></th>${it.map(x=>`<th>${x}</th>`).join("")}</tr>`;
+  for(let i=0;i<8;i++){ h+=`<tr><th style="background:var(--gris-claro);color:var(--tinta)">${it[i]}</th>`; for(let j=0;j<8;j++){ const v = i===j? "" : (j<i ? vals[i][j] : vals[j][i]); const a = v===""?0:Math.min(Math.abs(v)/0.7,1);
+    const bg = v==="" ? "var(--gris-claro)" : (v>0 ? `rgba(200,16,46,${(0.08+0.5*a).toFixed(2)})` : `rgba(71,85,105,${(0.08+0.5*a).toFixed(2)})`); h+=`<td style="background:${bg};text-align:center">${v===""?"":fmt(v).replace("0,",",").replace("-","−")}</td>`; } h+="</tr>"; }
+  return h+"</table>";
+}
+const MA = [[],[.55],[.58,.52],[.22,.25,.21],[.24,.19,.26,.53],[.20,.27,.23,.49,.56],[-.35,-.31,-.33,-.30,-.28,-.27],[-.38,-.30,-.34,-.33,-.31,-.29,.57]];
+const MB = [[],[.55],[.58,.52],[.52,.55,.51],[.54,.49,.56,.53],[.50,.57,.53,.49,.56],[-.35,-.31,-.33,-.30,-.28,-.27],[-.38,-.30,-.34,-.33,-.31,-.29,.57]];
+const MC = [[],[.55],[-.42,-.39],[.22,.25,.21],[.24,.19,.26,.53],[.20,.27,.23,.49,.56],[-.35,-.31,.30,-.30,-.28,-.27],[-.38,-.30,.31,-.33,-.31,-.29,.57]];
+const C5 = [
+ { t:"Matriz A"+matriz(MA), c:"Respalda la validez de las tres escalas", fb:"Bloques altos dentro de cada escala, correlaciones moderadas entre CP y CR (constructos vecinos pero distintos) y negativas con intención de salida, en la dirección prevista." },
+ { t:"Matriz B"+matriz(MB), c:"CP y CR son una sola dimensión", fb:"Las correlaciones entre CP y CR son tan altas como las internas: no hay evidencia de dos constructos distintos. El tablero no debería reportarlos por separado, y el análisis factorial mostrará un solo factor." },
+ { t:"Matriz C"+matriz(MC), c:"CP3 está invertido o mide otra cosa", fb:"CP3 correlaciona negativamente con CP1 y CP2 y positivamente con intención de salida: o es un ítem inverso sin recodificar, o mide un constructo distinto. Revisar su redacción antes de calcular la escala." },
+];
+const CAT5 = ["Respalda la validez de las tres escalas","CP y CR son una sola dimensión","CP3 está invertido o mide otra cosa"];
+const Q5 = [
+ { q:"Con fiabilidades de .60 en ambas escalas, la correlación observada es −0,30 aunque la verdadera sea −0,50. ¿Qué conclusión es correcta?", opts:["La relación entre claridad de prioridades e intención de salida es débil","La relación observada subestima la verdadera por el error de medición; antes de concluir hay que mirar la fiabilidad de ambas escalas","Hay que aumentar la muestra para que la correlación suba"], ok:1, fb:"La atenuación depende de la fiabilidad, no del n. Aumentar la muestra hace la estimación más precisa, pero sigue estimando la correlación atenuada." },
+ { q:"¿Cuál es la evidencia mínima de validez que se revisa en la matriz de correlaciones?", opts:["Que todas las correlaciones sean significativas","Que los ítems de una escala correlacionen más entre sí que con los de otras escalas, y que las escalas se relacionen con otras variables en la dirección prevista","Que ninguna correlación supere .30"], ok:1, fb:"Es el patrón de bloques de la matriz A. La significación aporta poco en encuestas censales de cientos de casos; importa la magnitud y el patrón." },
+ { q:"Un ítem tiene correlaciones cercanas a cero con el resto de su escala. ¿Qué se hace?", opts:["Se mantiene, porque fue aprobado por la gerencia","Se revisa: puede ser un inverso sin recodificar, un ítem que mide otra cosa o un ítem ambiguo; se decide mantener, reasignar, reescribir o eliminar","Se duplica para compensar"], ok:1, fb:"Es el árbol de decisión sobre ítems de la sesión 5. La decisión se documenta en la planilla de ítems por dimensión." },
+];
+
+// ===================== ESTACIÓN 6 =====================
+const COND = ["Ítems ancla con redacción estable entre olas","Comparabilidad entre olas (misma población, modalidad, momento)","Cobertura y tasa de respuesta conocidas por unidad","Periodicidad definida y devolución entre olas","Validez y fiabilidad verificadas antes de fijar metas","n mínimo por unidad para reportar (anonimato)","Reglas explícitas de consecuencia (qué pasa con el resultado)","Escala multi-ítem para el constructo (no un ítem único)"];
+const M6 = [
+ { t:"TechNova propone un KPI trimestral: el promedio del ítem 'En mi equipo las prioridades se mantienen hasta el fin del sprint', aplicado por Google Forms a todos los equipos, reportado por equipo (hay equipos de 4 personas), sin análisis previo del ítem, con la intención de incluirlo en el bono de los líderes de equipo.", opts:COND, ok:[4,5,6,7], fb:"Falta verificar la calidad de la medida (un ítem único no permite estimar fiabilidad: se necesitan al menos tres), fijar n mínimo (equipos de 4 no son anónimos), y explicitar las consecuencias; ligarlo al bono sin esas condiciones activa el ciclo de Goodhart. La periodicidad, la modalidad y la cobertura censal están definidas." },
+ { t:"Una cadena de servicios aplicó, sin pilotaje, un cuestionario de 53 ítems a 978 trabajadores de 50 sucursales, una sola vez, por una consultora externa, con 61% de respuesta global (se desconoce por sucursal). Quiere usar los índices por dimensión para evaluar a los jefes de sucursal y fijar metas para el año siguiente, cambiando algunos ítems 'que no funcionaron'.", opts:COND, ok:[0,1,2,3,4,5,6], fb:"Es el caso del examen final: casi todo falta. Sin ítems ancla ni segunda ola no hay serie; sin tasa por sucursal no hay comparabilidad entre unidades; sin análisis psicométrico no se sabe qué miden los índices; sin n mínimo ni reglas, el uso evaluativo es indefendible. Lo único presente es que las dimensiones tienen varios ítems." },
+ { t:"El Hospital Regional incorpora a su tablero de personas un índice de 'carga percibida por turno' de 5 ítems adaptados del CEAL-SM/SUSESO, con alfa .84 en la primera aplicación, aplicado cada seis meses por servicio con tablet en cada turno, reportado solo para servicios con 10 o más respuestas y tasa ≥ 60%, con devolución a los equipos y sin vínculo con la evaluación de jefaturas.", opts:COND, ok:[6], fb:"Cumple casi todas las condiciones. Falta explicitar qué ocurre con el resultado (qué acción asociada tiene el indicador cuando se pone en rojo), que es parte de la ficha del indicador de la sesión 6. Que no se use para evaluar jefaturas es una decisión, no una omisión." },
+];
+const Q6 = [
+ { q:"¿Qué distingue a una encuesta de monitoreo de un estudio diagnóstico puntual?", opts:["La longitud del cuestionario","Que sus variables se convierten en indicadores con fuente, frecuencia, meta, responsable y mecanismo de retroalimentación, y que sus ítems ancla se mantienen entre olas","Que la aplica una consultora"], ok:1, fb:"Es la segunda idea transversal del curso: un diagnóstico se convierte en control cuando sus variables se transforman en indicadores con esas propiedades." },
+ { q:"¿Cuál es la relación entre el uso evaluativo de una encuesta y la deseabilidad social?", opts:["No tienen relación","Cuanto más consecuencias tiene el resultado para quien responde o para su jefatura, mayor es la deseabilidad social; la condición que vuelve 'útil' el KPI es la que lo distorsiona","El uso evaluativo reduce la deseabilidad social porque la gente responde con más cuidado"], ok:1, fb:"Es la paradoja del apunte 3 (sección 11.2) y la razón por la que la pregunta (a) del examen pide condiciones de diseño del sistema de control, no solo condiciones psicométricas." },
+ { q:"¿Qué par de indicadores conviene reportar siempre juntos en un tablero de personas?", opts:["El índice de clima por unidad y la tasa de respuesta de esa unidad","El eNPS y el presupuesto de capacitación","La rotación y el número de ítems del cuestionario"], ok:0, fb:"Sin la tasa de respuesta por unidad no se sabe a quién describe el índice. Es el indicador de proceso de la propia encuesta." },
+];
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1", CAT1, C1, 1); pregunta("q1", Q1, 1);
+clasificador("c2", CAT2, C2, 2); clasificador("c2b", CAT2B, C2B, 2); pregunta("q2", Q2, 2);
+clasificador("c3", CAT3, C3, 3); pregunta("q3", Q3, 3);
+["s_nmin","s_tmin"].forEach(id=>document.getElementById(id).addEventListener("input", pintarCobertura)); pintarCobertura();
+["s_rel","s_n"].forEach(id=>document.getElementById(id).addEventListener("input", ()=>{ ola=0; pintarTablero(); document.getElementById("sim100").innerHTML=""; }));
+document.getElementById("b_ola").onclick = pintarTablero; document.getElementById("b_100").onclick = simular200; pintarTablero();
+pregunta("q4", Q4, 4);
+["s_r1","s_r2"].forEach(id=>document.getElementById(id).addEventListener("input", pintarDisp)); pintarDisp();
+clasificador("c5", CAT5, C5, 5); pregunta("q5", Q5, 5);
+multisel("m6", M6, 6); pregunta("q6", Q6, 6);
+</script>
+</body>
+</html>

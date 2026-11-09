@@ -139,7 +139,7 @@ Al aprobar el curso, los estudiantes serán capaces de:
 |             |              |                                                                                     |                                                                                                                                        |
 |             |              |                                                                                     | [Laboratorio Interactivo Tema 5: Diferencias individuales y personalidad](lab_personalidad.html)                                       |
 +-------------+--------------+-------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
-|             | mié 11-11    | *Prueba Solemne 2*                                                                  |                                                                                                                                        |
+|             | mié 11-11    | *Prueba Solemne 2*                                                                  | [Laboratorio de preparación de la Solemne 2: el caso Frío Norte](lab_preparacion_solemne2.html)                                        |
 +-------------+--------------+-------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | **Ciclo 3** |              | **Equipos y liderazgo**                                                             |                                                                                                                                        |
 +-------------+--------------+-------------------------------------------------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
@@ -168,12 +168,17 @@ Al aprobar el curso, los estudiantes serán capaces de:
 
 ## Evaluación
 
-| Componente | Cuándo | Formato | Peso |
-|:---|:--:|:---|:--:|
-| Prueba individual, fin de ciclo 1 | 22 al 28-09 | Individual, presencial | 20% |
-| Prueba individual, fin de ciclo 2 | 09 al 13-11 | Individual, presencial | 20% |
-| Actividades evaluadas en ayudantía | Continuo | Individual (se borra la nota más baja) | 30% |
-| Evaluación final integrativa (portafolio) | Desde el 10-12 | Individual, presencial | 30% |
++-------------------------------------------+----------------+----------------------------------------+----------------+
+| Componente                                | Cuándo         | Formato                                | Peso           |
++:==========================================+:==============:+:=======================================+:==============:+
+| Prueba individual, fin de ciclo 1         | 22 al 28-09    | Individual, presencial                 | 20%            |
++-------------------------------------------+----------------+----------------------------------------+----------------+
+| Prueba individual, fin de ciclo 2         | 09 al 13-11    | Individual, presencial                 | 20%            |
++-------------------------------------------+----------------+----------------------------------------+----------------+
+| Actividades evaluadas en ayudantía        | Continuo       | Individual (se borra la nota más baja) | 30%            |
++-------------------------------------------+----------------+----------------------------------------+----------------+
+| Evaluación final integrativa (portafolio) | Desde el 10-12 | Individual, presencial                 | 30%            |
++-------------------------------------------+----------------+----------------------------------------+----------------+
 
 Las pruebas de fin de ciclo y la evaluación final son comunes a todas las secciones del curso y evalúan todos los contenidos del ciclo respectivo: clases, lecturas, ayudantías, foros y ejercicios. La nota de presentación a examen es 3.5.
 

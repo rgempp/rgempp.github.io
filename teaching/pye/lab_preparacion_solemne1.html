@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de preparación de la Solemne 1: el caso Farmacias Del Valle</title>
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  h4{font-family:system-ui,sans-serif;font-size:.95rem;margin:1rem 0 .3rem;font-weight:700;color:var(--acero)}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  td.c, th.c{text-align:center}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  details{border:1px solid var(--borde);border-radius:.6rem;padding:.6rem 1rem;margin:0 0 1rem;background:#fff}
+  summary{cursor:pointer;font-family:system-ui,sans-serif;font-weight:700;color:var(--rojo)}
+  .caso p{font-size:.98rem}
+  .caso h4{color:var(--tinta);font-size:1rem;margin-top:1rem}
+  textarea.resp{width:100%;min-height:9rem;font-family:Georgia,serif;font-size:.98rem;padding:.7rem;border:1px solid var(--borde);border-radius:.5rem;resize:vertical}
+  .check{font-family:system-ui,sans-serif;font-size:.92rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:.6rem 0}
+  .check label{display:flex;gap:.6rem;align-items:flex-start;padding:.3rem 0;border-bottom:1px dashed var(--borde);cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{margin-top:.3rem;flex:none}
+  .check .pts{color:var(--gris);font-size:.82rem;white-space:nowrap}
+  .etq{display:inline-block;font-family:system-ui,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.1rem .5rem;border-radius:1rem;background:var(--gris-claro);color:var(--acero);margin-right:.4rem}
+  .etq.ob{background:var(--tinte);color:var(--rojo)} .etq.op{background:var(--azul-claro);color:var(--azul)}
+  .miembro{border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;background:#fff;font-family:system-ui,sans-serif;font-size:.85rem;cursor:pointer}
+  .miembro.jefe{border-top:4px solid var(--acero)} .miembro.op{border-top:4px solid var(--ambar)}
+  .miembro.on{background:var(--tinta);color:#fff}
+  .miembro.revelado{background:var(--verde-claro);border-color:var(--verde)}
+  .subgrupo{display:flex;flex-wrap:wrap;gap:.3rem;margin:.3rem 0}
+  .ficha{display:inline-block;border-radius:1rem;padding:.15rem .6rem;font-size:.8rem;font-family:system-ui,sans-serif;background:#fff;border:1px solid var(--borde)}
+  .ficha.a{background:#E0E7FF;border-color:#A5B4FC} .ficha.b{background:var(--ambar-claro);border-color:#FCD34D}
+  .circ{cursor:crosshair}
+  .toggle{display:flex;flex-wrap:wrap;gap:.4rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.4rem 0}
+  .toggle label{border:1px solid var(--borde);border-radius:1rem;padding:.25rem .7rem;background:#fff;cursor:pointer}
+  .toggle input{margin-right:.3rem}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Temas 1 y 2</p>
+  <h1>Laboratorio de preparación de la Solemne 1: el caso Farmacias Del Valle</h1>
+  <p class="meta">Personas y Equipos, secciones 02 y 03 · 2º semestre 2026 · Temas 1 y 2 · Apuntes 1 a 9 · Clases 1 a 10<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0 ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Este laboratorio gira en torno a un caso, <strong>Farmacias Del Valle</strong>, distinto del que se usó en la prueba pero con los mismos contenidos. La idea es que practiques el movimiento completo: leer un caso, reconocer qué concepto está en juego, aplicarlo con la evidencia del curso y escribir una respuesta que un corrector pueda puntuar. Las estaciones 2, 3 y 4 trabajan los contenidos con actividades interactivas sobre el caso; la estación 5 tiene dieciséis preguntas de desarrollo con una pauta de autocorrección por elementos; la 6 revisa los mitos que más aparecieron en las respuestas de la Solemne 1.</p>
+  <p>Puedes hacer las estaciones en cualquier orden; el avance se guarda en este navegador. No hay registro ni nota.</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. El caso.</strong> Lee Farmacias Del Valle y entrena el ojo: ¿de qué tema es cada pista, y de qué es evidencia cada número?</div>
+    <div class="caja"><strong>2. Tema 1 · Cómo sabemos lo que sabemos.</strong> Jerarquía de evidencia, correlación y causalidad, gestión basada en evidencia, las tres variables criterio (desempeño y sus cuatro caras, actitudes y su medición, bienestar y riesgo psicosocial), CEAL-SM, hipótesis.</div>
+    <div class="caja"><strong>3. Tema 2 · Por qué, qué y cómo.</strong> Qué es la motivación y qué no es, teorías zombis, el continuo de la autodeterminación con su evidencia, metas y su lado oscuro, expectativas, autoeficacia, reforzamiento.</div>
+    <div class="caja"><strong>4. Tema 2 · Dinero, justicia y trabajo.</strong> Qué compra el dinero, recompensas y motivación intrínseca, equidades y justicia, características del puesto, demandas y recursos, job crafting, fusión medios-fines.</div>
+    <div class="caja"><strong>5. Preguntas de desarrollo.</strong> Dieciséis preguntas sobre el caso, por tema y una de integración, con espacio para escribir y pauta de autocorrección por elementos.</div>
+    <div class="caja"><strong>6. ¿Mito o evidencia?</strong> Veintiséis afirmaciones que aparecieron, equivocadas, en las respuestas de la Solemne 1.</div>
+  </div>
+  <h3>Objetivos de aprendizaje y dónde se trabajan</h3>
+  <table>
+    <tr><th>Objetivo evaluativo</th><th class="c">Estación</th><th class="c">Apunte</th></tr>
+    <tr><td>Ubicar una afirmación en la jerarquía de evidencia y usar el verbo que corresponde ("se asocia" o "causa")</td><td class="c">2A, 2B</td><td class="c">1</td></tr>
+    <tr><td>Distinguir las tres lecturas de una correlación y elegir el diseño que permite hablar de causa; nombrar las fuentes de la gestión basada en evidencia</td><td class="c">2B, 2K</td><td class="c">1</td></tr>
+    <tr><td>Clasificar datos como desempeño (y su cara), resultado, actitud o bienestar</td><td class="c">1B, 2C</td><td class="c">2, 3, 4</td></tr>
+    <tr><td>Definir desempeño como conducta (no resultado, insumo ni productividad), describir sus cuatro caras en un perfil y explicar cuánto pesa cada una en la evaluación global</td><td class="c">2D</td><td class="c">2</td></tr>
+    <tr><td>Definir actitud laboral (tres componentes), distinguir los constructos de la familia y su solapamiento, aplicar el principio de compatibilidad y leer una distribución; EVLN</td><td class="c">2E, 2F</td><td class="c">3</td></tr>
+    <tr><td>Detectar ítems mal construidos, explicar cómo se miden las actitudes y las condiciones de aplicación; LaPiere</td><td class="c">2G</td><td class="c">3</td></tr>
+    <tr><td>Distinguir estrés, burnout y riesgo psicosocial; aplicar demanda-control y esfuerzo-recompensa; explicar qué mide el CEAL-SM/SUSESO, cómo se aplica, qué no mide y qué obliga cada nivel de riesgo</td><td class="c">2H, 2I</td><td class="c">4</td></tr>
+    <tr><td>Formular una hipótesis falsable con predictora, resultado, dirección y mecanismo</td><td class="c">2J</td><td class="c">1</td></tr>
+    <tr><td>Definir motivación, distinguirla de entusiasmo, satisfacción, desempeño y rasgo; reconocer teorías zombis y lo que se rescata de cada una</td><td class="c">3A, 3B</td><td class="c">5</td></tr>
+    <tr><td>Ubicar frases en el continuo de la SDT, nombrar las necesidades y usar la evidencia metaanalítica sobre los tres resultados</td><td class="c">3C, 3D</td><td class="c">6</td></tr>
+    <tr><td>Evaluar un sistema de metas (condiciones, moderadores, efectos secundarios, trampa cerca de la meta)</td><td class="c">3E</td><td class="c">7</td></tr>
+    <tr><td>Aplicar expectativas (E × I × V), autoeficacia y reforzamiento, incluido el involuntario</td><td class="c">3F, 3G, 3H</td><td class="c">7, 8</td></tr>
+    <tr><td>Decidir sobre incentivos con la evidencia sobre cantidad y calidad y sobre recompensas y motivación intrínseca; aplicar equidades y justicia organizacional</td><td class="c">4A, 4B, 4C, 4D</td><td class="c">8</td></tr>
+    <tr><td>Diagnosticar un puesto con las cinco características y el PPM, con demandas y recursos (desafío y bloqueo), y elegir la forma de rediseño que mueve lo que está bajo</td><td class="c">4E, 4F, 4G</td><td class="c">9</td></tr>
+    <tr><td>Distinguir el job crafting que suma del que resta; anticipar el efecto de enriquecer una sola tarea; usar la fusión medios-fines</td><td class="c">4H, 4I</td><td class="c">9</td></tr>
+    <tr><td>Escribir respuestas de desarrollo puntuables: concepto + aplicación + justificación, con el lenguaje de la evidencia</td><td class="c">5</td><td class="c">todos</td></tr>
+  </table>
+  <p class="mini">Tiempo estimado: 120 a 150 minutos, más lo que dediques a escribir en la estación 5. Funciona sin conexión una vez cargado.</p>
+  <button class="btn" onclick="ir(1)">Empezar por el caso</button>
+</section>
+
+<!-- ============ ESTACIÓN 1: EL CASO ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · El caso Farmacias Del Valle</h2>
+  <p>Léelo completo una vez, sin subrayar. Después vuelve con las dos actividades de abajo: practica leer buscando pistas, no memorizando.</p>
+  <details open>
+    <summary>Abrir o cerrar el caso completo</summary>
+    <div class="caso"><h3 style="margin-top:.4rem">El caso: Farmacias Del Valle (Talca y Curicó)</h3><h4>La empresa y el problema</h4><p>Farmacias Del Valle es una cadena regional de 22 locales en la Región del Maule, con 240 trabajadores: 150 vendedores de mesón, 30 químicos farmacéuticos, 30 operarios en el centro de distribución de Talca y 30 personas en administración. Hace ocho meses, la gerencia comercial instaló un sistema de metas e incentivos para aumentar la venta de "productos recomendados" (suplementos y marcas propias de mayor margen). En la reunión de directorio de noviembre de 2026, el gerente general, Andrés Lagos, presentó los datos del año: las unidades de productos recomendados subieron 28%; los reclamos de clientes por "productos que no necesitaba" se duplicaron; la rotación de vendedores pasó de 22% a 35% anual; las licencias médicas aumentaron 18%; en seis locales, los químicos farmacéuticos informan que los vendedores "no registran las contraindicaciones en el sistema aunque es obligatorio"; y en varios locales los vendedores se quedan después del turno ayudando a cuadrar la caja de los compañeros sin que nadie se los pida.</p><p>Una encuesta interna, hecha por un practicante, incluyó el ítem "Estoy satisfecho con mi jefe y con mi sueldo" (escala 1 a 7); la media fue 4.2 y el gerente concluyó que "la gente está más o menos conforme". La evaluación CEAL-SM/SUSESO aplicada en 2025 en seis locales dejó a dos en riesgo alto en carga de trabajo y en exigencias emocionales; el informe está archivado y nadie lo ha abierto desde entonces. Andrés tiene su propio diagnóstico: "El problema es que los vendedores de hoy no tienen compromiso; a nosotros nos pagaban menos y nos sacábamos la mugre".</p><p>Una consultora le propone el programa "Energía Positiva" (charlas de un coach por local, una aplicación de gratitud diaria y un taller de "mentalidad ganadora") por 42 millones de pesos, con el argumento de que "está científicamente demostrado que un trabajador feliz vende un 37% más: un estudio con 2.000 empresas muestra que las que tienen programas de bienestar tienen 20% menos rotación". Andrés está entusiasmado: "Yo hice el taller el año pasado y me cambió la vida. Lo probamos en cuatro locales, comparamos las ventas con el año pasado y, si suben, lo extendemos a los 22".</p><h4>El sistema de metas e incentivos</h4><p>El sistema funciona así. Cada vendedor de mesón tiene una meta mensual individual de 150 unidades de productos recomendados; la fijó la gerencia comercial sin consultar a los locales (el año anterior la mediana de venta por vendedor era de 95 unidades) y nadie explicó cómo se calculó ni para qué. El bono es de $80.000 si se cumple la meta y nada si se llega a 149; el cumplimiento se informa al cierre de cada mes. Un ranking mensual con el nombre de todos los vendedores se publica en el grupo de WhatsApp de la cadena. En cada local, el jefe decide "según su criterio" quién atiende el mesón principal, que tiene tres veces más flujo de clientes que los otros, sin explicar la decisión.</p><p>Auditoría detectó en dos locales devoluciones inusuales de productos que habían sido registrados como vendidos el último día del mes por vendedores que ese mes terminaron con 150 o 151 unidades. En el local de Curicó Centro, el jefe, Rodolfo, tiene un método propio: cuando llegan reclamos de clientes, grita delante del equipo; el reclamo se resuelve rápido esa tarde y Rodolfo deja de gritar hasta el próximo reclamo. "Funciona", dice. La gerencia defiende el sistema de metas: "Primero hay que asegurar lo básico con plata; el compromiso viene después, como dice la pirámide de Maslow". Para el próximo año propone duplicar el bono, instalar un "Vendedor del mes" con foto en el local y $50.000, y sumar un taller de motivación.</p><h4>Cuatro vendedores, en sus propias palabras</h4><p>En una conversación informal en el local de Talca Norte, cuatro vendedores explicaron cómo viven el sistema.</p><table><tr><th>Vendedor</th><th>Lo que dice</th></tr><tr><td>Valentina</td><td>"Yo vendo lo que me piden, cumplo la meta y me llevo el bono. Si mañana sacaran el bono, volvería a vender lo normal, ni más ni menos."</td></tr><tr><td>Rodrigo</td><td>"Me carga empujar suplementos que la gente no necesita, pero cuando salgo abajo en el ranking me siento un fracasado y no puedo mirar a mis compañeros. Llevo dos meses durmiendo mal por esto."</td></tr><tr><td>Paula</td><td>"Yo le recomiendo al cliente lo que de verdad le sirve, sea o no producto recomendado. Prefiero que vuelva porque confía en mí. Esto es lo que quiero hacer: ser la farmacéutica del barrio. La meta de 150 me da lo mismo, no la voy a cumplir."</td></tr><tr><td>Tomás</td><td>"No tengo idea para qué existe la meta ni por qué es 150 y no otro número. Nadie lo explicó. Llego, atiendo lo que me toca y me voy."</td></tr></table><p>Un quinto vendedor, Matías, describe su trabajo así: "Me dan libertad total para atender como quiera, pero nunca sé si lo que recomendé le sirvió al cliente, y el químico nunca me dice nada. Si me esforzara más, no creo que cambiara nada: el bono depende del mesón que te toque, y a mí me toca el chico".</p><h4>La evaluación de desempeño, la encuesta y las licencias</h4><p>En Curicó Centro, Rodolfo evalúa a sus vendedores una vez al año con una nota global de 1 a 7 que, según él, "sale sola de las unidades vendidas, que es lo objetivo; lo demás es opinión". Valentina tiene la nota más alta del local y es, según el químico farmacéutico, la que menos contraindicaciones registra; además, dos vendedores nuevos pidieron cambio de turno para no trabajar con ella "por cómo los trata delante de los clientes". Paula tiene la nota más baja ("no llega a la meta"), pero los clientes mayores preguntan por ella por su nombre, entrenó sola a los dos últimos vendedores que entraron y fue la primera en aprender el nuevo sistema de receta electrónica, que después les enseñó a todos. Rodolfo resume: "Valentina es un crack con mal genio; Paula es buena persona, pero no rinde. Y el que de verdad quiere, se queda hasta tarde: eso se nota".</p><p>La encuesta del practicante se aplicó en una reunión de local, con el jefe presente y una hoja que llevaba el nombre de cada vendedor "para hacer seguimiento". Además del ítem sobre el jefe y el sueldo, incluía "En general, estoy satisfecho con mi trabajo" (media 5.9 de 7; el 61% marcó 6 o 7) y "Pienso buscar otro trabajo en los próximos seis meses" (media 4.1; un tercio marcó 6 o 7). Andrés leyó el primer resultado y descartó el segundo: "La gente contesta lo que le conviene; las encuestas no sirven". Otra consultora, Pulso360, ofrece medir "el engagement, que no tiene nada que ver con la satisfacción: mide la energía", con una encuesta mensual de 40 ítems. Mientras tanto, en el grupo de WhatsApp de los vendedores hay tres tipos de mensajes: los que proponen cambios al sistema de metas y piden una reunión con gerencia, los que dicen que "esto se va a arreglar solo, hay que aguantar", y los que avisan que ya están entrevistándose en otra cadena. Felipe, en el centro de distribución, no escribe nada.</p><p>Las licencias médicas subieron 18% en el año, concentradas en los dos locales que el CEAL-SM/SUSESO había dejado en riesgo alto. Rodrigo, además de dormir mal, dice que "ya me da lo mismo lo que recomiende, total nadie se fija", que llega "sin energía desde la mañana" y que "ya no sé si sirvo para esto". Andrés lo interpreta así: "El que se estresa es porque no aguanta la presión; esto siempre fue así y nadie se quejaba". La gerencia de personas, para "cumplir con el tema del CEAL", propone un programa de bienestar: fruta los lunes, una aplicación de meditación con licencia corporativa y un "Día de la felicidad" con clase de yoga en cada local. La evaluación CEAL de 2025 se había aplicado sin Comité de Aplicación, por correo desde la gerencia, y en los locales de riesgo alto respondió el 45% del personal.</p><h4>El centro de distribución de Talca</h4><p>Los 30 operarios del centro de distribución arman los pedidos que cada noche salen a los 22 locales. El trabajo está organizado por tramos: un operario toma los medicamentos refrigerados, otro los de venta directa, otro la cosmética; nadie arma un pedido completo ni sabe a qué local va. El sistema dicta el orden y el tiempo de cada tramo. La carga habitual es de 80 líneas por hora, alcanzable con experiencia, con peaks los lunes y a fin de mes. Las instrucciones de armado cambian por correo y provienen de dos jefaturas (operaciones y químico jefe) que no siempre coinciden. Los errores de armado (un medicamento equivocado, una cantidad de menos) se detectan en el local al día siguiente y se informan al centro en una planilla mensual. La rotación del centro es de 30% y el engagement medido en la encuesta es el más bajo de la empresa.</p><p>Un operario, Ignacio, hace algo por su cuenta: llama a dos locales cada mañana para saber qué errores tuvieron los pedidos de la noche anterior, armó una planilla propia para registrar los suyos y aprender de ellos, y le dice a sus compañeros que "nosotros somos los que hacemos que el remedio llegue a la abuela a tiempo". Otro operario, Felipe, dejó de hacer el conteo de inventario de fin de turno "porque estorba y nadie lo revisa".</p><p>La gerencia de personas propone para el centro tres medidas: un taller de motivación y trabajo en equipo de un día; rotación semanal de los operarios entre los tres tramos; y un "proyecto estrella": los cinco operarios con mejor evaluación participarán en un proyecto de automatización con inteligencia artificial, interesante y visible, además de su carga habitual. Sobre la retroalimentación, el gerente de operaciones dice: "Si pagamos un bono trimestral por pedidos sin errores, la gente se va a fijar sola; no hace falta cambiar el sistema para que avise al tiro".</p></div>
+  </details>
+
+  <h3>A. ¿De qué tema es esta pista?</h3>
+  <p>Cada frase del caso fue puesta ahí por algo. Indica a qué bloque de contenidos pertenece la pista y lee qué concepto activa.</p>
+  <div id="c1tema"></div>
+
+  <h3>B. ¿De qué es evidencia este número?</h3>
+  <p>El caso tiene cifras a propósito. Un buen argumento usa el número correcto para la afirmación correcta. Clasifica qué variable o concepto respalda cada dato.</p>
+  <div id="c1dato"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2: TEMA 1 ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Tema 1: cómo sabemos lo que sabemos</h2>
+  <p>El Tema 1 valió 12 puntos en la prueba y casi nadie los sacó completos. Aquí entrenas lo que la pregunta pedía: juzgar evidencia, clasificar datos y escribir hipótesis.</p>
+
+  <h3>A. ¿Qué nivel de evidencia es esto?</h3>
+  <p>Clasifica cada afirmación o fuente del caso en la jerarquía del curso. Recuerda: el nivel no depende de cuánto convence sino de cómo se obtuvo el dato.</p>
+  <div id="c2jer"></div>
+
+  <h3>B. Una correlación, tres explicaciones</h3>
+  <p>"Los locales con mejor clima venden más productos recomendados" (r ≈ .30 en los 22 locales). Empareja cada lectura con su nombre, y después decide qué diseño las separa.</p>
+  <div class="match" id="c2tres"></div>
+  <button class="btn" onclick="checkMatch('c2tres',TRES,'2_tres','Las tres lecturas son compatibles con el mismo r. Separarlas exige diseño, no más datos del mismo tipo.')">Comprobar</button>
+  <div id="c2tresRes" class="nota" style="display:none"></div>
+  <div id="q2b"></div>
+
+  <h3>C. ¿Desempeño, resultado, actitud o bienestar?</h3>
+  <p>El error más frecuente de la Solemne: tratar un resultado económico como desempeño, o una conducta como actitud. Clasifica cada dato del caso y, si es desempeño, piensa en la cara.</p>
+  <div id="c2vc"></div>
+
+  <h3>D. Las cuatro caras del desempeño: la nota de Rodolfo</h3>
+  <p>Rodolfo pone una nota global "que sale sola de las unidades vendidas". Clasifica cada conducta o dato del caso en la cara del desempeño que corresponde, o indica que no es desempeño. Después responde sobre lo que pesa cada cara en la evaluación.</p>
+  <div id="c2caras"></div>
+  <div id="q2d"></div>
+
+  <h3>E. Actitudes: tres componentes, siete nombres y una familia</h3>
+  <p>Una actitud es una evaluación, no energía ni ganas. Primero separa, en frases del caso, el componente cognitivo, el afectivo, la disposición conductual y lo que ya es conducta observable. Después empareja cada constructo del "zoológico" con lo que evalúa.</p>
+  <div id="c2act"></div>
+  <h4>El zoológico de las actitudes laborales</h4>
+  <div class="match" id="c2zoo"></div>
+  <button class="btn" onclick="checkMatch('c2zoo',ZOO,'2_zoo','Siete nombres, una familia: satisfacción y compromiso corregidos correlacionan .91 (Le et al., 2010). La pregunta profesional es qué agrega cada constructo sobre los que ya se miden.')">Comprobar</button>
+  <div id="c2zooRes" class="nota" style="display:none"></div>
+  <div id="q2act"></div>
+
+  <h3>F. Salida, voz, lealtad, negligencia</h3>
+  <p>Cuando la insatisfacción se instala, las personas responden por cuatro vías (Farrell, 1983). Clasifica las respuestas de los vendedores y de Felipe.</p>
+  <div id="c2evln"></div>
+
+  <h3>G. Medir lo que no se ve: el taller de ítems</h3>
+  <p>Una actitud se infiere de autoinformes. Un ítem mal construido produce un número que parece dato y no lo es. ¿Qué tiene cada ítem?</p>
+  <div id="c2item"></div>
+  <div class="nota info"><strong>LaPiere (1934) y la lección moderna.</strong> 250 de 251 establecimientos atendieron a la pareja; por carta, más del 90% dijo que no lo haría. Decir no es hacer, pero las actitudes <em>específicas</em> sí predicen conductas específicas: la intención de renunciar predice la renuncia real (ρ ≈ .56, Rubenstein et al., 2018) mucho mejor que un ítem global de orgullo o satisfacción.</div>
+
+  <h4>Cómo se aplicó la encuesta y cómo se leyó</h4>
+  <div id="q2med"></div>
+
+  <h3>H. El CEAL-SM/SUSESO: qué es y qué obliga</h3>
+  <div id="q2e"></div>
+
+  <h3>I. Estrés, burnout y riesgo psicosocial: no son lo mismo</h3>
+  <p>Rodrigo "está quemado", Andrés dice que "el que se estresa es porque no aguanta" y la gerencia propone fruta los lunes. Clasifica cada frase o dato del caso y después responde sobre los modelos y la norma.</p>
+  <div id="c2bien"></div>
+  <div id="q2bien"></div>
+
+  <h3>J. Arma una hipótesis que se pueda refutar</h3>
+  <p>Una hipótesis bien formada tiene cuatro piezas. Empareja cada pieza con el fragmento que la ocupa en esta hipótesis sobre Del Valle: <em>"A mayor presión por la meta de 150 unidades, mayor intención de renunciar de los vendedores, porque la presión sostenida por un resultado que no controlan agota sus recursos y deteriora su evaluación del trabajo".</em></p>
+  <div class="match" id="c2hip"></div>
+  <button class="btn" onclick="checkMatch('c2hip',HIP,'2_hip','Cuatro piezas, una hipótesis contrastable: si la presión sube y la intención no se mueve, la hipótesis queda refutada.')">Comprobar</button>
+  <div id="c2hipRes" class="nota" style="display:none"></div>
+  <h4>¿Es falsable?</h4>
+  <div id="c2fal"></div>
+
+  <h3>K. Elige el diseño</h3>
+  <div id="q2g"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3: TEMA 2 MOTIVACIÓN ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Tema 2: por qué, qué y cómo</h2>
+  <p>Las clases 5 a 8 ordenadas con el mapa de Kanfer y Chen: por qué actúa la gente (necesidades, SDT), qué elige (metas) y cómo (expectativas, autoeficacia, reforzamiento).</p>
+
+  <h3>A. ¿Es motivación o es otra cosa?</h3>
+  <p>La definición del curso: fuerzas que inician la conducta y determinan su dirección, intensidad y persistencia. Cuatro cosas que no son motivación: entusiasmo, satisfacción, desempeño y rasgo. Clasifica.</p>
+  <div id="c3mot"></div>
+
+  <h3>B. Teorías zombis: ¿de quién es esta idea y qué le pasó?</h3>
+  <div id="c3zombi"></div>
+
+  <h3>C. El continuo de la autodeterminación</h3>
+  <p>Ubica cada frase del caso (y algunas nuevas) en el continuo. La casilla que confunde a todo el mundo es la introyectada: viene de adentro, pero no es autónoma.</p>
+  <div id="c3sdt"></div>
+
+  <h3>D. ¿Qué predice cada tipo de motivación? El simulador de Van den Broeck</h3>
+  <p>Elige un tipo de regulación y mira las correlaciones metaanalíticas corregidas con los tres resultados (124 muestras; Van den Broeck et al., 2021). Fíjate en la regulación externa, en la identificada frente a la intrínseca, y en la introyección.</p>
+  <div class="toggle" id="sdtSel"></div>
+  <div class="caja" id="sdtBox">
+    <div class="barra"><span class="lb">Desempeño</span><div class="tr"><div id="bS1"></div></div><span class="vv" id="vS1"></span></div>
+    <div class="barra"><span class="lb">Satisfacción laboral</span><div class="tr"><div id="bS2"></div></div><span class="vv" id="vS2"></span></div>
+    <div class="barra"><span class="lb">Burnout</span><div class="tr"><div id="bS3"></div></div><span class="vv" id="vS3"></span></div>
+    <p class="mini" id="sdtTxt" style="margin:.6rem 0 0"></p>
+  </div>
+  <div id="q3d"></div>
+
+  <h3>E. El sistema de metas, condición por condición</h3>
+  <p>Marca qué condiciones y moderadores cumple el sistema de Del Valle (meta de 150, asignada sin propósito, bono todo o nada, informe al cierre del mes, ranking público).</p>
+  <div class="toggle" id="metaT">
+    <label><input type="checkbox" data-k="esp" onchange="metas()">Específica</label>
+    <label><input type="checkbox" data-k="dif" onchange="metas()">Difícil</label>
+    <label><input type="checkbox" data-k="acep" onchange="metas()">Aceptada (compromiso)</label>
+    <label><input type="checkbox" data-k="fb" onchange="metas()">Con retroalimentación durante el período</label>
+    <label><input type="checkbox" data-k="simple" onchange="metas()">Tarea simple (efecto mayor)</label>
+  </div>
+  <div class="nota" id="metaOut"></div>
+  <h4>¿Quién hace trampa? Los anagramas de Schweitzer, Ordóñez y Douma (2004)</h4>
+  <div class="caja">
+    <div class="barra"><span class="lb">Sin meta (pago fijo)</span><div class="tr"><div id="bSch1"></div></div><span class="vv">10,5%</span></div>
+    <div class="barra"><span class="lb">Meta, pago fijo</span><div class="tr"><div id="bSch2"></div></div><span class="vv">22,7%</span></div>
+    <div class="barra"><span class="lb">Meta + recompensa</span><div class="tr"><div id="bSch3"></div></div><span class="vv">30,2%</span></div>
+    <div class="barra"><span class="lb">A UNA palabra de la meta, con recompensa</span><div class="tr"><div id="bSch4"></div></div><span class="vv">48,5%</span></div>
+    <p class="mini" style="margin:.5rem 0 0">Porcentaje que sobredeclaró su desempeño al menos una vez. La meta sola, sin un peso en juego, ya duplicó la trampa; y quienes mienten no son los que están lejos sino los que quedan justo debajo. Con 150 todo o nada, el vendedor con 148 el día 30 es el caso de riesgo.</p>
+  </div>
+  <div id="c3ord"></div>
+
+  <h3>F. La calculadora de Vroom</h3>
+  <p>Fuerza motivacional = Expectativa × Instrumentalidad × Valencia. Es un producto: un cero en cualquiera deja todo en cero. Mueve los tres deslizadores o carga a un vendedor del caso.</p>
+  <div class="toggle"><button class="btn light" onclick="vroomSet(.2,.3,.8)">Matías ("no creo que cambiara nada")</button><button class="btn light" onclick="vroomSet(.9,.9,.8)">Valentina ("cumplo y me llevo el bono")</button><button class="btn light" onclick="vroomSet(.8,.1,.9)">Paula (bono por lo que no quiere vender)</button><button class="btn light" onclick="vroomSet(.7,.6,.05)">Tomás ("no sé para qué")</button></div>
+  <div class="caja">
+    <div class="slider">Expectativa: si me esfuerzo, ¿logro el desempeño? <span class="v" id="vE">0.50</span><input type="range" id="sE" min="0" max="1" step="0.05" value="0.5" oninput="vroom()"></div>
+    <div class="slider">Instrumentalidad: si logro el desempeño, ¿recibo la recompensa? <span class="v" id="vI">0.50</span><input type="range" id="sI" min="0" max="1" step="0.05" value="0.5" oninput="vroom()"></div>
+    <div class="slider">Valencia: ¿me importa esa recompensa? <span class="v" id="vV">0.50</span><input type="range" id="sV" min="0" max="1" step="0.05" value="0.5" oninput="vroom()"></div>
+    <div class="grid g2" style="margin-top:.6rem"><div class="stat"><div class="lbl">Fuerza motivacional (E × I × V)</div><div class="num" id="vF">0.13</div></div><div class="stat"><div class="lbl">Qué eslabón arreglar primero</div><div id="vTxt" style="font-size:.9rem"></div></div></div>
+  </div>
+
+  <h3>G. Reforzamiento: situación, conducta, consecuencia</h3>
+  <p>Toda consecuencia que sigue a una conducta cambia la probabilidad de que se repita, aunque nadie la haya diseñado. Clasifica qué proceso opera en cada situación del caso.</p>
+  <div id="c3ref"></div>
+
+  <h3>H. Fuentes de autoeficacia</h3>
+  <p>Empareja cada acción con la fuente de autoeficacia que activa (Bandura).</p>
+  <div class="match" id="c3ae"></div>
+  <button class="btn" onclick="checkMatch('c3ae',AEF,'3_ae','Experiencias de logro primero: por eso las metas próximas y la retroalimentación inmediata construyen autoeficacia, y por eso Matías no tiene de dónde sacarla.')">Comprobar</button>
+  <div id="c3aeRes" class="nota" style="display:none"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4: TEMA 2 INCENTIVOS Y DISEÑO ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · Tema 2: dinero, justicia y trabajo</h2>
+  <p>Las clases 8, 9 y 10: dónde y cuándo se enciende la motivación. Incentivos, justicia, diseño del trabajo y la fusión medios-fines.</p>
+
+  <h3>A. ¿Qué compra el dinero?</h3>
+  <div class="caja">
+    <h4 style="margin-top:0">Incentivos financieros y desempeño (Jenkins et al., 1998; 39 estudios)</h4>
+    <div class="barra"><span class="lb">Con CANTIDAD</span><div class="tr"><div id="bJ1"></div></div><span class="vv">r = .34</span></div>
+    <div class="barra"><span class="lb">Con CALIDAD</span><div class="tr"><div id="bJ2"></div></div><span class="vv">r = .08</span></div>
+    <h4>Pesos relativos en regresión conjunta (Cerasoli et al., 2014; 183 muestras)</h4>
+    <div class="barra"><span class="lb">Calidad: motivación intrínseca</span><div class="tr"><div id="bC1"></div></div><span class="vv">β = .35</span></div>
+    <div class="barra"><span class="lb">Calidad: incentivos</span><div class="tr"><div id="bC2"></div></div><span class="vv">β = .06</span></div>
+    <div class="barra"><span class="lb">Cantidad: incentivos</span><div class="tr"><div id="bC3"></div></div><span class="vv">β = .33</span></div>
+    <div class="barra"><span class="lb">Cantidad: motivación intrínseca</span><div class="tr"><div id="bC4"></div></div><span class="vv">β = .24</span></div>
+    <p class="mini" style="margin:.5rem 0 0">Dos metaanálisis separados por dieciséis años, misma conclusión: el dinero compra volumen, no calidad. Para cada objetivo de abajo, decide qué tipo de desempeño es.</p>
+  </div>
+  <div id="c4cc"></div>
+
+  <h3>B. Recompensas y motivación intrínseca</h3>
+  <div class="caja">
+    <h4 style="margin-top:0">Efecto sobre la motivación intrínseca, conducta de libre elección (Deci, Koestner y Ryan, 1999; 128 experimentos)</h4>
+    <div class="barra"><span class="lb">Recompensa verbal (elogio)</span><div class="tr"><div id="bD1"></div></div><span class="vv">d = +.33</span></div>
+    <div class="barra"><span class="lb">Tangible inesperada</span><div class="tr"><div id="bD2"></div></div><span class="vv">d = +.01</span></div>
+    <div class="barra"><span class="lb">Tangible no contingente</span><div class="tr"><div id="bD3"></div></div><span class="vv">d = −.10</span></div>
+    <div class="barra"><span class="lb">Tangible esperada</span><div class="tr"><div id="bD4"></div></div><span class="vv">d = −.36</span></div>
+    <p class="mini" style="margin:.5rem 0 0">El titular que circula es la última barra. Las otras tres casi nadie las cita. Clasifica las recompensas de Del Valle.</p>
+  </div>
+  <div id="c4rec"></div>
+
+  <h3>C. Las tres equidades</h3>
+  <p>Un sistema de compensación resuelve tres comparaciones independientes. ¿Cuál está en juego en cada situación?</p>
+  <div id="c4eq"></div>
+
+  <h3>D. Justicia organizacional: cuatro preguntas</h3>
+  <div class="caja">
+    <h4 style="margin-top:0">Correlaciones corregidas con el desempeño (Colquitt et al., 2001; 183 estudios)</h4>
+    <div class="barra"><span class="lb">Justicia procedimental</span><div class="tr"><div id="bQ1"></div></div><span class="vv">ρ = .36</span></div>
+    <div class="barra"><span class="lb">Justicia distributiva</span><div class="tr"><div id="bQ2"></div></div><span class="vv">ρ = .15</span></div>
+    <p class="mini" style="margin:.5rem 0 0">El procedimiento predice el desempeño más del doble que el resultado, y es gratis. Clasifica qué dimensión viola cada situación.</p>
+  </div>
+  <div id="c4jus"></div>
+
+  <h3>E. El puesto de operario: calculadora del puntaje potencial motivador</h3>
+  <p>Mueve las cinco características (1 a 7) según cómo está el puesto de operario del centro de distribución, o carga el diagnóstico del caso. Compara la fórmula con el promedio simple.</p>
+  <div class="toggle"><button class="btn light" onclick="ppmSet([2,1,5,1,1])">Operario hoy (según el caso)</button><button class="btn light" onclick="ppmSet([3,6,6,5,6])">Operario rediseñado (pedido completo, feedback en el sistema)</button></div>
+  <div class="caja">
+    <div class="slider">Variedad de habilidades <span class="v" id="vP1">4</span><input type="range" id="sP1" min="1" max="7" value="4" oninput="ppm()"></div>
+    <div class="slider">Identidad de la tarea <span class="v" id="vP2">4</span><input type="range" id="sP2" min="1" max="7" value="4" oninput="ppm()"></div>
+    <div class="slider">Significancia de la tarea <span class="v" id="vP3">4</span><input type="range" id="sP3" min="1" max="7" value="4" oninput="ppm()"></div>
+    <div class="slider">Autonomía <span class="v" id="vP4">4</span><input type="range" id="sP4" min="1" max="7" value="4" oninput="ppm()"></div>
+    <div class="slider">Retroalimentación del puesto <span class="v" id="vP5">4</span><input type="range" id="sP5" min="1" max="7" value="4" oninput="ppm()"></div>
+    <div class="grid g3" style="margin-top:.6rem"><div class="stat"><div class="lbl">PPM (fórmula multiplicativa)</div><div class="num" id="ppmF">64</div><div class="lbl">máximo 343</div></div><div class="stat"><div class="lbl">Promedio simple de las cinco</div><div class="num" id="ppmM">4.0</div><div class="lbl">máximo 7</div></div><div class="stat"><div class="lbl">Lectura</div><div id="ppmTxt" style="font-size:.88rem"></div></div></div>
+  </div>
+  <div id="q4e"></div>
+
+  <h3>F. Demandas y recursos: ¿desafío, bloqueo o recurso?</h3>
+  <div class="caja">
+    <h4 style="margin-top:0">Correlaciones corregidas (LePine, Podsakoff y LePine, 2005)</h4>
+    <div class="barra"><span class="lb">Desafío con tensión</span><div class="tr"><div id="bL1"></div></div><span class="vv">.40</span></div>
+    <div class="barra"><span class="lb">Bloqueo con tensión</span><div class="tr"><div id="bL2"></div></div><span class="vv">.58</span></div>
+    <div class="barra"><span class="lb">Desafío con motivación</span><div class="tr"><div id="bL3"></div></div><span class="vv">+.16</span></div>
+    <div class="barra"><span class="lb">Bloqueo con motivación</span><div class="tr"><div id="bL4"></div></div><span class="vv">−.12</span></div>
+    <div class="barra"><span class="lb">Desafío con desempeño</span><div class="tr"><div id="bL5"></div></div><span class="vv">+.12</span></div>
+    <div class="barra"><span class="lb">Bloqueo con desempeño</span><div class="tr"><div id="bL6"></div></div><span class="vv">−.20</span></div>
+    <p class="mini" style="margin:.5rem 0 0">Ninguna demanda sale gratis: ambas se asocian con tensión. Difieren en el signo con motivación y desempeño.</p>
+  </div>
+  <div id="c4jdr"></div>
+
+  <h3>G. ¿Qué mueve la intención de irse? Humphrey, Nahrgang y Morgeson (2007)</h3>
+  <div class="caja">
+    <h4 style="margin-top:0">Varianza explicada (%): características motivacionales, y lo que agregan las sociales</h4>
+    <div class="barra"><span class="lb">Satisfacción: motivacionales</span><div class="tr"><div id="bH1"></div></div><span class="vv">34%</span></div>
+    <div class="barra"><span class="lb">Satisfacción: + sociales</span><div class="tr"><div id="bH2"></div></div><span class="vv">+17%</span></div>
+    <div class="barra"><span class="lb">Compromiso: motivacionales</span><div class="tr"><div id="bH3"></div></div><span class="vv">24%</span></div>
+    <div class="barra"><span class="lb">Compromiso: + sociales</span><div class="tr"><div id="bH4"></div></div><span class="vv">+40%</span></div>
+    <div class="barra"><span class="lb">Percepción de rotación: motivacionales</span><div class="tr"><div id="bH5"></div></div><span class="vv">2%</span></div>
+    <div class="barra"><span class="lb">Percepción de rotación: + sociales</span><div class="tr"><div id="bH6"></div></div><span class="vv">+24%</span></div>
+    <p class="mini" style="margin:.5rem 0 0">Hacer el puesto más interesante casi no mueve la intención de irse; el lado social del trabajo sí. La gente no renuncia a un puesto aburrido: renuncia a un lugar. Y las formas de rediseño mueven características distintas.</p>
+  </div>
+  <div class="match" id="c4forma"></div>
+  <button class="btn" onclick="checkMatch('c4forma',FORMA,'4_forma','Antes de elegir la forma, decide qué característica está baja: rotar puestos cuando el problema es la autonomía no arregla nada.')">Comprobar</button>
+  <div id="c4formaRes" class="nota" style="display:none"></div>
+
+  <h3>H. Job crafting: ¿suma o resta?</h3>
+  <div class="caja">
+    <h4 style="margin-top:0">Correlaciones corregidas (Rudolph et al., 2017; 122 muestras)</h4>
+    <table><tr><th>Dimensión</th><th class="c">Engagement</th><th class="c">Desempeño</th><th class="c">Tensión</th></tr>
+    <tr><td>Aumentar recursos estructurales</td><td class="c">.59</td><td class="c">.40</td><td class="c">−.16</td></tr>
+    <tr><td>Aumentar demandas desafiantes</td><td class="c">.45</td><td class="c">.31</td><td class="c">−.14</td></tr>
+    <tr><td>Aumentar recursos sociales</td><td class="c">.35</td><td class="c">.13</td><td class="c">−.05</td></tr>
+    <tr><td>Disminuir demandas obstaculizadoras</td><td class="c">−.09</td><td class="c">−.07</td><td class="c">+.15</td></tr></table>
+    <p class="mini" style="margin:0">La oveja negra: sacarse de encima lo que estorba parece buena idea y sistemáticamente no lo es.</p>
+  </div>
+  <div id="c4jc"></div>
+  <div id="q4h"></div>
+
+  <h3>I. Fusión medios-fines: cuatro palancas</h3>
+  <p>La motivación intrínseca no es una propiedad de la actividad sino de la relación entre la actividad y su meta. Empareja cada acción con la palanca que activa (Kruglanski et al., 2018; Fishbach y Woolley, 2022).</p>
+  <div class="match" id="c4fus"></div>
+  <button class="btn" onclick="checkMatch('c4fus',FUS,'4_fus','Ninguna de las cuatro exige que la actividad sea entretenida. La más barata es la inmediatez: acercar la señal de resultado al momento de la ejecución.')">Comprobar</button>
+  <div id="c4fusRes" class="nota" style="display:none"></div>
+  <div class="caja">
+    <h4 style="margin-top:0">Woolley y Fishbach (2018), estudio 3: porcentaje que sigue trabajando cuando YA NO le pagan</h4>
+    <div class="barra"><span class="lb">Bono inmediato</span><div class="tr"><div id="bW1"></div></div><span class="vv">84,2%</span></div>
+    <div class="barra"><span class="lb">Bono diferido</span><div class="tr"><div id="bW2"></div></div><span class="vv">70,3%</span></div>
+    <div class="barra"><span class="lb">Sin bono</span><div class="tr"><div id="bW3"></div></div><span class="vv">52,1%</span></div>
+    <p class="mini" style="margin:.5rem 0 0">Estudio 5: el momento del pago importó (p = .017) y la magnitud no (p = .175). El bono trimestral del gerente de operaciones está lo más lejos posible de la conducta que quiere premiar.</p>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5: SIMULACRO ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Preguntas de desarrollo con pauta de autocorrección</h2>
+  <p>Dieciséis preguntas sobre el caso, agrupadas por tema y una de integración. Escribe tu respuesta (se guarda en este navegador) y recién después abre la pauta y marca qué elementos incluiste. Cada pregunta vale 10 puntos; el resumen de abajo muestra el porcentaje por tema.</p>
+  <div class="nota info"><strong>Cómo escribir una respuesta puntuable.</strong> Cada elemento de la pauta pide lo mismo: (1) el concepto correcto, nombrado; (2) aplicado explícitamente a algo del caso (una frase, un dato, una persona); (3) justificado con la teoría o la evidencia, con el lenguaje que corresponde ("se asocia con" para correlaciones; "causa" solo para experimentos). Parafrasear el caso no es responder; culpar a las personas tampoco; nombrar una teoría sin decir qué elemento del caso la activa vale la mitad.</div>
+  <div id="simulacro"></div>
+  <div class="caja">
+    <h4 style="margin-top:0">Tu autoevaluación</h4>
+    <div class="grid g5" id="simTot"></div>
+    <p class="mini" style="margin:.5rem 0 0">Referencia: 85% o más, Logrado; 60% a 84%, Parcial alto; 35% a 59%, Parcial; menos, vuelve al apunte antes de reescribir. La autocorrección tiende a ser generosa: si dudas de haber incluido un elemento, no lo marques.</p>
+  </div>
+</section>
+
+<!-- ============ ESTACIÓN 6: MITOS ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · ¿Mito o evidencia?</h2>
+  <p>Veintiséis afirmaciones de los dos temas, muchas de ellas tomadas de respuestas reales de la Solemne 1. Verdadero o falso según la evidencia del curso.</p>
+  <div id="mitos"></div>
+  <div id="mitosRes" class="nota" style="display:none"></div>
+</section>
+
+<!-- ============ ESTACIÓN 7: FICHA ============ -->
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div id="fichaRepaso"></div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · Personas y Equipos, UDP · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y UTILIDADES =====================
+const KEY="lab_prep_s1_v1";
+const estado = { hechas: {}, respuestas: {}, textos: {}, checks: {} };
+function guardar(){ try{ localStorage.setItem(KEY, JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(KEY); if(s){ Object.assign(estado, JSON.parse(s)); } }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+const NOMBRES = ["Inicio","1 · El caso","2 · Tema 1 Evidencia","3 · Tema 2 Motivación","4 · Tema 2 Trabajo","5 · Desarrollo","6 · Mitos","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+function pintarNav(){
+  const n = document.getElementById("nav"); n.innerHTML = "";
+  NOMBRES.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t; b.onclick=()=>ir(i);
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista"); n.appendChild(b); });
+  const k = EST.filter(i=>estado.hechas[i]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de 6`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa")); document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===7) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML="";
+  items.forEach((q,qi)=>{
+    const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML = `<strong>${q.p}</strong><br>` + q.o.map((o,oi)=>`<span class="opc" data-o="${oi}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const oi=+el.dataset.o; const ok = oi===q.c;
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[q.c].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML = (ok?"<strong>Correcto.</strong> ":"<strong>No es eso.</strong> ") + q.f + (q.r?` <span class="cita">${q.r}</span>`:"");
+      estado.respuestas[`${estacion}_${contId}_q${qi}`] = ok?1:0; guardar();
+      if(/^q\d$/.test(contId) && items.every((_,k)=> (`${estacion}_${contId}_q${k}`) in estado.respuestas)) marcar(estacion);
+    });
+  });
+}
+function clasificador(contId, cats, items, clave, estacion){
+  const cont=document.getElementById(contId); cont.innerHTML="";
+  items.forEach((it,i)=>{
+    const d=document.createElement("div"); d.className="clasif";
+    d.innerHTML = `<p class="enun"><strong>${i+1}.</strong> ${it[0]}</p><div class="cats">${cats.map((c,ci)=>`<span class="cat" data-c="${ci}">${c}</span>`).join("")}</div><div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".cat").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const ci=+el.dataset.c, ok=ci===it[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".cat")[it[1]].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=(ok?"<strong>Correcto.</strong> ":`<strong>No: ${cats[it[1]].toLowerCase()}.</strong> `)+it[2];
+      estado.respuestas[`${estacion}_${clave}${i}`]=ok?1:0; guardar();
+    });
+  });
+}
+function initMatch(id, pares, placeholder){
+  const c=document.getElementById(id); c.innerHTML="";
+  const defs=pares.map((z,i)=>({d:z[1],i})).sort(()=>Math.random()-.5);
+  defs.forEach(o=>{ const d=document.createElement("div"); d.className="def"; d.textContent=o.d; d.dataset.i=o.i; c.appendChild(d);
+    const s=document.createElement("select"); s.className="sel"; s.innerHTML=`<option value="">${placeholder}</option>`+pares.map((z,k)=>`<option value="${k}">${z[0]}</option>`).join(""); c.appendChild(s); });
+}
+function checkMatch(id, pares, clave, msgOk){
+  const defs=[...document.querySelectorAll(`#${id} .def`)], sels=[...document.querySelectorAll(`#${id} select`)]; let ok=0;
+  defs.forEach((d,k)=>{ const b=sels[k].value!==""&&+sels[k].value===+d.dataset.i; d.classList.remove("bien","mal"); d.classList.add(b?"bien":"mal"); if(b) ok++; });
+  const r=document.getElementById(id+"Res"); r.style.display="block";
+  if(ok===pares.length){ r.className="nota ok"; r.innerHTML="<strong>"+msgOk+"</strong>"; estado.respuestas[clave]=1; }
+  else { r.className="nota"; r.innerHTML=`<strong>${ok} de ${pares.length}.</strong> Corrige los que están en rojo y vuelve a comprobar.`; if(!(clave in estado.respuestas)) estado.respuestas[clave]=0; }
+  guardar();
+}
+function barra(id, val, min, max, cls){ const el=document.getElementById(id); const w=(max-min); const zero=(0-min)/w*100; const x=(val-min)/w*100; el.className=cls||""; if(val>=0){ el.style.left=zero+"%"; el.style.width=(x-zero)+"%"; } else { el.style.left=x+"%"; el.style.width=(zero-x)+"%"; } }
+
+// ===================== ESTACIÓN 1: EL CASO =====================
+const TEMAS=["Tema 1 · Evidencia y variables criterio","Tema 2 · Motivación (por qué, qué, cómo)","Tema 2 · Incentivos, justicia y trabajo"];
+const C1TEMA=[
+  ["\"Está científicamente demostrado que un trabajador feliz vende un 37% más: un estudio con 2.000 empresas...\".",0,"Una afirmación para ubicar en la jerarquía de evidencia: no cita el estudio, y aunque fuera real sería correlacional (empresas con y sin programa). El verbo honesto es \"se asocia\"."],
+  ["\"Yo hice el taller el año pasado y me cambió la vida\".",0,"Anécdota (n = 1, sin comparación): punto de partida, jamás de llegada. Es la fuente \"experiencia profesional\" de la gestión basada en evidencia, sin las otras tres."],
+  ["\"Si mañana sacaran el bono, volvería a vender lo normal, ni más ni menos\".",1,"Regulación externa en el continuo de la SDT: la conducta depende por completo de la contingencia. Compra permanencia y cantidad mientras dure el bono; no compra compromiso ni calidad."],
+  ["Bono de $80.000 si se cumple la meta y nada si se llega a 149; el cumplimiento se informa al cierre del mes.",1,"Meta todo o nada sin retroalimentación durante el período: la condición que falla en la teoría de metas, y el punto de referencia que produce la trampa de Schweitzer et al. (2004)."],
+  ["El jefe decide \"según su criterio\" quién atiende el mesón principal, sin explicar la decisión.",2,"Justicia procedimental (sin criterio consistente ni voz) e informacional (sin explicación); y equidad interna: mismo cargo, tres veces más flujo."],
+  ["Nadie arma un pedido completo ni sabe a qué local va; el sistema dicta el orden y el tiempo.",2,"Características del puesto: identidad y autonomía en el piso. Es el diagnóstico de Hackman y Oldham antes de cualquier rediseño."],
+  ["\"El problema es que los vendedores de hoy no tienen compromiso\".",0,"La atribución a las personas que el ciclo completo vino a corregir: confunde una actitud (compromiso) con el sistema que la produce, y contradice los datos (los mismos vendedores se quedan a cuadrar cajas ajenas)."],
+  ["\"Cuando salgo abajo en el ranking me siento un fracasado... llevo dos meses durmiendo mal\".",1,"Regulación introyectada: culpa y vergüenza autoadministradas. Es la que más predice la intención de renunciar (Hagger y Star, 2026) y la frase trae el costo de bienestar."],
+  ["Los errores de armado se detectan en el local al día siguiente y se informan al centro en una planilla mensual.",2,"Retroalimentación del puesto casi nula y lejana en el tiempo: la palanca de inmediatez de la fusión medios-fines está apagada, y el conocimiento de los resultados también."],
+  ["El ítem \"Estoy satisfecho con mi jefe y con mi sueldo\" tuvo una media de 4.2.",0,"Ítem de doble cañón: el número existe, pero no se sabe qué evaluó cada persona. Un dato ininterpretable disfrazado de dato razonable."],
+  ["Rodolfo grita cuando llegan reclamos; el reclamo se resuelve esa tarde y deja de gritar.",1,"Reforzamiento involuntario: la consecuencia agradable para el jefe (el problema desaparece) sigue a su conducta de gritar y la hace más probable. Nadie lo diseñó."],
+  ["Felipe dejó de hacer el conteo de inventario \"porque estorba y nadie lo revisa\".",2,"Job crafting de la dimensión que se comporta al revés: disminuir demandas obstaculizadoras se asocia con más tensión y menor desempeño (Rudolph et al., 2017)."],
+];
+const DATOS=["Desempeño (conducta)","Resultado (no conducta)","Actitud o conducta de retiro","Bienestar y riesgo psicosocial","Nivel de evidencia","Condición del puesto o del sistema"];
+const C1DATO=[
+  ["Las unidades de productos recomendados subieron 28%.",1,"Es un resultado agregado (ventas), no una conducta observable: depende de la conducta de los vendedores y de muchas otras cosas. Evaluar solo resultados premia y castiga azar."],
+  ["Los vendedores \"no registran las contraindicaciones en el sistema aunque es obligatorio\".",0,"Conducta observable del núcleo del cargo que no se ejecuta: déficit de desempeño de tarea (se acepta contraproducente si se argumenta omisión deliberada)."],
+  ["Rotación de vendedores de 22% a 35% anual.",2,"La rotación es una conducta de salida; su antecedente actitudinal es la intención de renunciar (Rubenstein et al., 2018: ρ ≈ .56). El contraste entre locales dice que es del sistema, no de \"la gente de hoy\"."],
+  ["CEAL-SM 2025: dos locales en riesgo alto en carga de trabajo y exigencias emocionales.",3,"Riesgos psicosociales: condiciones de la organización del trabajo, no diagnósticos de personas. El nivel alto obliga a intervenir con la mutualidad; archivar el informe es incumplimiento."],
+  ["Un estudio con 2.000 empresas: las que tienen programa de bienestar tienen 20% menos rotación.",4,"Correlacional (comparación de empresas sin asignación al azar): una tercera variable, como mejor gestión general, puede explicar ambas cosas. Muestra grande no es causalidad."],
+  ["Vendedores que se quedan después del turno a cuadrar la caja de otros, sin que nadie se los pida.",0,"Desempeño contextual: conducta discrecional que sostiene el ambiente. Y desmiente \"no tienen compromiso\"."],
+  ["Licencias médicas +18%; el engagement del centro es el más bajo de la empresa.",3,"Indicadores de bienestar (licencias) y un estado afectivo-motivacional (engagement) que se miden por autoinforme o registro; no son desempeño."],
+  ["Cuota de 80 líneas por hora, alcanzable con experiencia, e instrucciones contradictorias de dos jefaturas.",5,"Demandas del puesto: la cuota es de desafío (permite el logro) y el conflicto de instrucciones es de bloqueo (estorba y no depende del operario). Ambas se asocian con tensión."],
+];
+const Q1=[
+  {p:"En una pregunta de desarrollo, ¿qué diferencia a una respuesta de nivel Logrado de una Parcial?",o:["La Lograda cita más autores","La Lograda nombra el concepto, lo aplica a algo concreto del caso y lo justifica con la teoría o la evidencia; la Parcial nombra el concepto sin aplicarlo o parafrasea el caso sin concepto","La Lograda es más larga","La Lograda usa cifras exactas"],c:1,f:"Las cifras suman pero no se exigen; la longitud no puntúa. Lo que puntúa es la cadena concepto → aplicación → justificación. Nombrar un concepto equivocado da cero en ese elemento."},
+  {p:"\"Los vendedores renuncian porque no tienen compromiso; hay que contratar gente con más actitud\". En una pauta de corrección, esta afirmación...",o:["Es una respuesta Parcial alta","Recibe un descuento: atribuye a las personas lo que el caso muestra como un problema del sistema (meta todo o nada, ranking, mesón por criterio del jefe, instrucciones contradictorias)","Es correcta si se cita la rotación","Es correcta para el Tema 2"],c:1,f:"El caso está construido para desmontar esa lectura: la rotación subió cuando cambió el sistema de incentivos, con la misma gente; y esa misma gente se queda a cuadrar cajas ajenas."},
+  {p:"\"El piloto en cuatro locales demostrará que el programa funciona\". El problema de la frase es...",o:["Que no cita a Judge","Que usa lenguaje causal (\"demostrará\") para un diseño sin grupo de control ni asignación al azar, comparado con el año anterior","Que un taller no puede cambiar nada","Ninguno; es correcta"],c:1,f:"Comparar cuatro locales con su propio año anterior no descarta la estacionalidad, el mercado ni la atención extra de la gerencia. Para \"causa\" hace falta azar: locales con y sin programa, asignados al azar, medidos antes y después."},
+];
+
+// ===================== ESTACIÓN 2: TEMA 1 =====================
+const JER=["Metaanálisis","Experimento aleatorizado","Correlacional","Caso o descriptivo","Anécdota u opinión"];
+const C2JER=[
+  ["\"Un estudio con 2.000 empresas muestra que las que tienen programas de bienestar tienen 20% menos rotación\".",2,"Compara empresas que eligieron tener programa con las que no: asociación, no causa. El tamaño de la muestra no cambia el nivel."],
+  ["\"Yo hice el taller y me cambió la vida\".",4,"n = 1, sin comparación, de quien ya decidió. Punto de partida, jamás de llegada."],
+  ["Judge et al. (2001): r ≈ .30 entre satisfacción y desempeño en 312 estudios combinados.",0,"Síntesis estadística de todos los estudios sobre una pregunta: la mejor estimación disponible, y por eso el curso los cita tanto. Sigue siendo correlacional en su contenido."],
+  ["Bloom et al. (2013): plantas textiles asignadas al azar a recibir consultoría en gestión; los defectos cayeron 43%.",1,"Asignación al azar y comparación: permite el verbo \"causa\". Es el nivel 2 y el único (con el metaanálisis de experimentos) que lo permite."],
+  ["Gallup (2026): 33% de los trabajadores chilenos está \"engaged\".",3,"Descriptivo: retrata el paisaje, no explica ni predice. Útil para situar, no para decidir qué causa qué."],
+  ["\"Probamos Energía Positiva en cuatro locales y comparamos las ventas con el año pasado\".",3,"Un pre-post sin control en cuatro unidades elegidas a dedo: ilustra, no permite generalizar ni hablar de causa. Con azar y un grupo de comparación subiría a experimento de campo."],
+  ["Harter et al. (2002): 7.939 unidades de negocio; engagement correlaciona .17 a .38 con clientes, productividad y utilidades.",0,"Metaanálisis a nivel de unidades: relación real, modesta y de dirección incierta. El verbo sigue siendo \"se asocia\"."],
+  ["\"Mi experiencia de veinte años me dice que el dinero es lo único que mueve a los vendedores\".",4,"Opinión basada en experiencia: una de las cuatro fuentes de la GBE, legítima pero una entre cuatro, y la de menor nivel en la jerarquía."],
+];
+const TRES=[["X → Y: el clima mejora las ventas","Trabajar contento hace vender más productos recomendados"],["Y → X: las ventas mejoran el clima","Vender más (y ganar bonos) pone contento al equipo"],["Z → X, Y: una tercera variable causa ambas","Un buen jefe de local produce a la vez buen clima y buenas ventas"]];
+const Q2B=[{p:"¿Qué diseño permitiría separar las tres lecturas?",o:["Medir clima y ventas en los 22 locales durante tres años","Asignar al azar a la mitad de los locales una intervención sobre el clima y comparar las ventas con la otra mitad, antes y después","Encuestar a los vendedores sobre qué creen que causa qué","Aumentar la muestra a 100 locales"],c:1,f:"Solo el azar descarta la tercera variable y fija el orden causal. Un diseño longitudinal (medir en el tiempo) ordena qué vino primero, pero no reemplaza al azar. Más locales con el mismo diseño es la misma correlación con más decimales."}];
+const VC=["Desempeño de tarea","Desempeño contextual","Desempeño contraproducente","Resultado","Actitud","Bienestar"];
+const C2VC=[
+  ["Un vendedor registra las contraindicaciones de cada producto recomendado antes de cerrar la venta.",0,"Conducta del núcleo del cargo, observable: desempeño de tarea."],
+  ["Un vendedor registra como vendidos productos que devuelve el día 1 del mes siguiente.",2,"Conducta deliberada que daña a la organización: contraproducente. No es \"mal desempeño de tarea\": es intencional."],
+  ["Las ventas de productos recomendados del local subieron 28%.",3,"Resultado agregado que depende de las conductas y de muchas otras cosas (flujo, mesón, temporada). No se observa en una persona."],
+  ["\"Esto es lo que quiero hacer: ser la farmacéutica del barrio\" (Paula).",4,"Evaluación favorable del propio trabajo: una actitud (satisfacción, identificación), que se infiere de lo que la persona dice."],
+  ["Rodrigo lleva dos meses durmiendo mal por el ranking.",5,"Indicador de bienestar (estrés, sueño) producido por una condición del trabajo: la comparación pública."],
+  ["Una vendedora se queda después del turno ayudando a cuadrar la caja de un compañero.",1,"Conducta discrecional que sostiene el ambiente social: contextual."],
+  ["\"Llego, atiendo lo que me toca y me voy\" (Tomás).",4,"Describe su disposición hacia el trabajo (amotivación respecto de la meta): un juicio interno, no una conducta medida. Para saber cómo rinde habría que observarlo."],
+  ["La rotación del centro de distribución es de 30% anual.",3,"Indicador agregado de la unidad (conducta de salida sumada): un resultado organizacional cuyo antecedente individual es la intención de renunciar."],
+  ["Un operario aprende el nuevo sistema de picking en una semana y ayuda a los demás a usarlo.",1,"Dos caras a la vez: adaptativo (ajustarse al cambio) y contextual (ayudar). Se acepta cualquiera de las dos; la clave es que es conducta, no resultado."],
+  ["Media de 4.2 en \"Estoy satisfecho con mi jefe y con mi sueldo\".",4,"Pretende medir una actitud (satisfacción por facetas), pero el ítem es de doble cañón: la media no es interpretable."],
+];
+const CARAS=["Desempeño de tarea","Desempeño contextual","Desempeño adaptativo","Desempeño contraproducente","No es desempeño (resultado o insumo)"];
+const C2CARAS=[
+  ["Valentina cumple 150 unidades todos los meses.",4,"Las unidades vendidas son un resultado: dependen de su conducta y además del mesón que le toque (tres veces más flujo), del local y de la temporada. Rodolfo evalúa resultado, no desempeño."],
+  ["Valentina es la vendedora que menos contraindicaciones registra, aunque es obligatorio.",0,"Es el núcleo técnico del cargo que no se ejecuta: déficit de desempeño de tarea en su dimensión de calidad. Solo pasa a contraproducente si se argumenta omisión deliberada."],
+  ["Dos vendedores nuevos pidieron cambio de turno \"por cómo los trata delante de los clientes\".",3,"Incivilidad hacia compañeros: conducta voluntaria que daña a miembros de la organización (Robinson y Bennett, 1995). En la nota global de un jefe pesa tanto como lo técnico (Rotundo y Sackett, 2002)."],
+  ["Paula entrenó sola a los dos últimos vendedores que entraron.",1,"Conducta discrecional que sostiene el entorno social y organizacional: ciudadanía (Organ, 1988). No está en su descripción de cargo y nadie la evalúa."],
+  ["Paula fue la primera en aprender el sistema de receta electrónica y después les enseñó a todos.",2,"Aprender tecnologías nuevas es una de las ocho dimensiones del desempeño adaptativo (Pulakos et al., 2000); enseñarlo a los demás suma la cara contextual. Dos caras en una conducta."],
+  ["Los clientes mayores preguntan por Paula por su nombre.",4,"Es un resultado de sus conductas (recomendar lo que sirve), no la conducta misma. Vale como indicador de la calidad de su desempeño de tarea, pero el desempeño es lo que ella hace."],
+  ["Paula recomienda al cliente lo que de verdad le sirve, sea o no producto recomendado.",0,"El núcleo técnico del cargo de un vendedor de farmacia, hecho con calidad. En el sistema de Rodolfo esta conducta no existe: solo cuenta la cantidad."],
+  ["\"El que de verdad quiere se queda hasta tarde: eso se nota\".",4,"Las horas son un insumo, no desempeño. Quedarse tarde puede reflejar carga mal diseñada, ineficiencia o presentismo. Desempeño → resultado → productividad son tres cosas distintas (Campbell y Wiernik, 2015)."],
+  ["Vendedores que registran como vendidos productos que devuelven el día 1 del mes siguiente.",3,"Manipulación deliberada del registro para capturar el bono: conducta contraproducente, la forma de trampa que produce una meta todo o nada cuando se está a un paso (Schweitzer et al., 2004)."],
+];
+const Q2D=[
+  {p:"Rodolfo dice: \"Valentina es un crack con mal genio\". Según Rotundo y Sackett (2002), ¿cómo pesa esa combinación cuando un jefe pone una nota global?",o:["Lo técnico domina: el mal genio es un detalle","Las conductas contraproducentes pesan tanto como el desempeño de tarea, y más que la ciudadanía: Valentina es un perfil de desempeño mixto con una cara en rojo","La ciudadanía pesa más que todo lo demás","Depende del sector"],c:1,f:"Diseño de captura de políticas con gerentes evaluando perfiles: lo contraproducente pesó igual que la tarea. \"Crack con mal genio\" no es un buen trabajador con un defecto: para el evaluador promedio es un mal desempeño."},
+  {p:"¿Por qué el desempeño de tarea y el contextual deben evaluarse por separado?",o:["Porque así lo exige la ley","Porque aportan información independiente a la evaluación global y tienen antecedentes distintos: la experiencia predice mejor la tarea y la personalidad predice mejor lo contextual (Motowidlo y Van Scotter, 1994)","Porque el contextual no importa","Porque el contextual es un rasgo"],c:1,f:"421 mecánicos de la Fuerza Aérea: cada cara aportó información propia a la nota de los supervisores. Evaluar solo lo técnico mide la mitad de lo que los propios jefes consideran importante."},
+  {p:"\"Paula es buena persona, pero no rinde\". ¿Qué error contiene?",o:["Ninguno: no cumple la meta","Confunde resultado (unidades) con desempeño (conductas): Paula tiene desempeño de tarea de calidad, contextual y adaptativo; lo que no tiene es cantidad en un resultado que además depende del mesón asignado","Confunde actitud con bienestar","Es correcto porque la meta es específica"],c:1,f:"La nota de Rodolfo mide una fracción del desempeño (cantidad) con un indicador contaminado (el mesón). El perfil completo de Paula es el que la farmacia dice necesitar: calidad, clientes que vuelven, formación de nuevos."},
+  {p:"\"El desempeño es un rasgo: hay gente que rinde y gente que no\". ¿Qué dice la evidencia?",o:["Es correcto: el desempeño es estable","El desempeño varía dentro de la misma persona en el tiempo y entre condiciones, y responde a la gestión: en Bloom et al. (2013) las mismas plantas con la misma gente redujeron defectos 43% al cambiar las prácticas","Depende de la personalidad únicamente","Solo cambia con capacitación"],c:1,f:"El desempeño no solo se selecciona: se produce. Atribuirlo a la persona es el error de atribución más cómodo para la gestión; si el problema es el diseño, la solución es trabajo propio."},
+];
+const ACT=["Componente cognitivo (lo que pienso)","Componente afectivo (lo que siento)","Disposición conductual (intención)","Conducta observable (no es actitud)"];
+const C2ACT=[
+  ["\"No tengo idea para qué existe la meta ni por qué es 150 y no otro número\" (Tomás).",0,"Una creencia o juicio sobre el objeto (la meta es arbitraria, no tiene sentido): componente cognitivo."],
+  ["\"Me carga empujar suplementos que la gente no necesita\" (Rodrigo).",1,"Lo que siente hacia una parte de su trabajo: rechazo. Componente afectivo."],
+  ["\"Ya estoy entrevistándome en otra cadena\" (mensajes del WhatsApp).",2,"Intención de renunciar: la disposición conductual, el eslabón más próximo a la acción (ρ ≈ .56 con la renuncia; Rubenstein et al., 2018). Todavía no es la renuncia."],
+  ["Vendedores que se quedan después del turno a cuadrar la caja de un compañero.",3,"Conducta observable: desempeño contextual. Una actitud se infiere de lo que la persona dice; esto se ve."],
+  ["\"Esto es lo que quiero hacer: ser la farmacéutica del barrio\" (Paula).",1,"Evaluación favorable del propio trabajo, con carga afectiva e identificación: componente afectivo de una actitud favorable (se acepta cognitivo si se argumenta como juicio de ajuste)."],
+  ["Valentina no registra las contraindicaciones.",3,"Conducta (omisión) observable y verificable en el sistema. Decir que Valentina \"tiene mala actitud\" por esto es el uso de la calle: describe conducta, no un juicio interno medido."],
+  ["\"La meta de 150 me da lo mismo, no la voy a cumplir\" (Paula).",2,"Disposición conductual respecto de la meta: intención explícita de no perseguirla. Nota que convive con una actitud muy favorable hacia el trabajo mismo: las actitudes tienen objeto."],
+  ["\"Cuando salgo abajo en el ranking me siento un fracasado\" (Rodrigo).",1,"Reacción afectiva (vergüenza) ante el objeto ranking. Es también la pista de regulación introyectada en el Tema 2: la misma frase sirve para dos preguntas."],
+];
+const ZOO=[["Satisfacción laboral","Evaluación global o por facetas del propio trabajo (Locke, 1976)"],["Compromiso organizacional","Lazo psicológico con la organización: apego, lealtad, intención de permanecer (Meyer y Allen, 1991)"],["Engagement","Estado de vigor, dedicación y absorción en el trabajo (Schaufeli et al., 2002)"],["Apoyo organizacional percibido","Juicio de cuánto la organización valora mi aporte y se preocupa por mi bienestar (Eisenberger et al., 1986)"],["Identificación organizacional","Cuánto la pertenencia define quién soy: \"nosotros\" en vez de \"ellos\" (Ashforth y Mael, 1989)"],["Intención de renunciar","Pensamientos y planes de dejar la organización (Mobley, 1977)"]];
+const Q2ACT=[
+  {p:"Pulso360 dice que el engagement \"no tiene nada que ver con la satisfacción\". ¿Qué dice la evidencia?",o:["Es cierto: miden cosas distintas","Las actitudes laborales se superponen de forma masiva: satisfacción y compromiso corregidos correlacionan .91 (Le et al., 2010) y forman una actitud laboral general (Harrison et al., 2006); el engagement aporta el énfasis en la energía, no una variable nueva","El engagement es un rasgo de personalidad","La satisfacción ya no se usa"],c:1,f:"Los constructos nuevos venden servicios nuevos. La pregunta psicométrica correcta: ¿qué agrega sobre lo que ya medimos? A veces algo; muchas veces, el nombre."},
+  {p:"Andrés se queda con el 5.9 de satisfacción global y descarta el 4.1 de \"pienso buscar otro trabajo\". Por el principio de compatibilidad...",o:["Hace bien: la satisfacción es la actitud más importante","Se equivoca: la actitud general predice el paquete amplio de conductas, pero la conducta específica (renunciar) la predice la actitud específica correspondiente: la intención de renunciar (ρ ≈ .56) mucho más que la satisfacción (ρ ≈ .28) o el sueldo (ρ ≈ .17; Rubenstein et al., 2018)","Ambos ítems miden lo mismo","Hay que promediar los dos"],c:1,f:"Además, 5.9 con 61% en 6 o 7 es una distribución pegada al techo que esconde la cola; y el 4.1 con un tercio en 6 o 7 es la alerta temprana más barata que existe en una empresa con 35% de rotación."},
+  {p:"\"Un punto más de felicidad semanal produjo alrededor de 12% más de ventas\" (Bellet et al., 2024, call centers de British Telecom). ¿Qué permite decir ese estudio que Judge et al. (2001) no permite?",o:["Que la satisfacción es más alta en ventas","Usar el verbo \"produce\": es evidencia causal en un contexto específico, mientras r ≈ .30 es correlacional y admite tres lecturas","Que el efecto es gigante en todos los sectores","Nada: son equivalentes"],c:1,f:"Las dos lecturas honestas: las actitudes mueven la aguja (no hacen magia; Riketta, 2008) y son de las agujas más baratas de mover. La causalidad de Bellet et al. es local: interacción con clientes."},
+  {p:"\"Hay que contratar gente con más actitud\". En el sentido técnico de la palabra, la frase...",o:["Es correcta","Usa \"actitud\" como energía o disposición al esfuerzo, que es el uso de la calle; en CO la actitud es una evaluación con causas medibles en las condiciones del trabajo, y lo que Andrés llama \"mala actitud\" son conductas producidas por el sistema","Es correcta si se mide con engagement","Describe una conducta contraproducente"],c:1,f:"Separar qué HACE la persona (desempeño, observable), qué PIENSA Y SIENTE del trabajo (actitud, se mide) y cómo LO PASA (bienestar, también se mide) es el diagnóstico correcto."},
+];
+const EVLN=["Salida","Voz","Lealtad","Negligencia"];
+const C2EVLN=[
+  ["Vendedores que proponen cambios al sistema de metas y piden una reunión con gerencia.",1,"Activa y constructiva: la única respuesta que entrega información a la organización. Castigarla (o ignorarla) enseña a elegir las otras tres."],
+  ["\"Esto se va a arreglar solo, hay que aguantar\".",2,"Pasiva y constructiva: esperar con confianza a que mejore. Cómoda para la gerencia, pero no mueve nada y se agota."],
+  ["Vendedores que avisan que ya están entrevistándose en otra cadena.",0,"Activa y destructiva para la organización: la intención de renunciar en camino a la rotación (22% → 35%)."],
+  ["Felipe dejó de hacer el conteo de inventario y no escribe nada en el grupo.",3,"Pasiva y destructiva: dejar que la calidad del propio trabajo caiga. La \"renuncia silenciosa\" de las redes es negligencia con mejor marketing."],
+  ["Paula sigue recomendando lo que sirve aunque no cumpla la meta, y le dice al jefe que la meta está mal diseñada.",1,"Voz: intenta mejorar las cosas desde dentro, con su conducta y su palabra. Que el sistema la castigue (nota más baja) es la señal de que el sistema está mal."],
+];
+const Q2MED=[
+  {p:"La encuesta se aplicó en una reunión de local, con el jefe presente y una hoja con el nombre de cada vendedor. ¿Qué midió?",o:["Satisfacción, con algo de error","Miedo: sin anonimato real, el autoinforme refleja lo que conviene decir, no la evaluación de la persona. Las condiciones de aplicación importan tanto como los ítems","Compromiso organizacional","Nada, porque las encuestas no sirven"],c:1,f:"La conclusión correcta de LaPiere (1934) no es \"no se puede medir\" sino \"así no se mide\": anonimato, especificidad y compatibilidad entre lo que se pregunta y lo que se quiere predecir."},
+  {p:"\"La gente contesta lo que le conviene; las encuestas no sirven\". ¿Qué muestra la evidencia?",o:["Que Andrés tiene razón","Que los autoinformes tienen sesgos conocidos y aun así, agregados y bien medidos, predicen conducta real: renuncias efectivas (Rubenstein et al., 2018) y resultados de negocio por unidad (Harter et al., 2002)","Que solo sirven las encuestas largas","Que hay que medir engagement"],c:1,f:"Todos hemos contestado encuestas con un jefe mirando y generalizamos esa experiencia. El problema del caso es de aplicación, y se corrige."},
+  {p:"La media global es 5.9 de 7 con el 61% en 6 o 7. ¿Qué lectura es correcta?",o:["La gente está muy satisfecha, fin del análisis","La distribución está pegada al techo: el promedio esconde la cola; hay que mirar la dispersión y los ítems específicos (intención de buscar trabajo), que es donde aparece el problema","El ítem está mal construido","Hay que subir la escala a 10 puntos"],c:1,f:"Es lo que mostró la encuesta del propio curso: media global 6.33 con 26 personas en el máximo, y el ítem \"elegiría la misma carrera\" con una cola real en el mínimo. Leer distribuciones, no promedios."},
+];
+const BIEN=["Estrés laboral","Burnout (síndrome)","Riesgo psicosocial (condición del trabajo)","Programa periférico (wellness washing)","Actitud (no es bienestar)"];
+const C2BIEN=[
+  ["\"Llego sin energía desde la mañana\" (Rodrigo).",1,"Agotamiento: la primera de las tres dimensiones del burnout (Maslach et al., 2001). Sola sería fatiga; con las otras dos, síndrome."],
+  ["\"Ya me da lo mismo lo que recomiende, total nadie se fija\" (Rodrigo).",1,"Cinismo o distancia mental hacia el propio trabajo: segunda dimensión del burnout."],
+  ["\"Ya no sé si sirvo para esto\" (Rodrigo).",1,"Eficacia profesional reducida: tercera dimensión. Las tres juntas, ligadas al trabajo, son el fenómeno ocupacional de la CIE-11 (OMS, 2019), no cansancio que se pase con vacaciones."],
+  ["Meta de 150 unidades contra una mediana de 95, con el mesón asignado por el jefe y sin consulta.",2,"Alta exigencia con bajo control: la combinación de mayor riesgo del modelo demanda-control (Karasek, 1979). Es una característica de la organización del trabajo, no de Rodrigo."],
+  ["Bono todo o nada, nada a 149, sin reconocimiento y comparación pública en el ranking.",2,"Desbalance esfuerzo-recompensa (Siegrist, 1996): lo que se entrega frente a lo que se recibe en sueldo, estima y seguridad. Dimensiones del CEAL: reconocimiento, confianza y justicia."],
+  ["Semana de fin de mes: Rodrigo duerme mal y llega irritable, y el lunes siguiente se recupera.",0,"Respuesta del organismo cuando las demandas exceden los recursos, en este caso episódica y reversible. Sostenida en el tiempo, enferma; cronificada y mal gestionada, deriva en burnout."],
+  ["Fruta los lunes, aplicación de meditación y \"Día de la felicidad\" con yoga \"para cumplir con el CEAL\".",3,"No modifica ninguna de las 12 dimensiones del CEAL-SM ni cumple la obligación de intervenir las condiciones con la mutualidad. Es pintar la fachada."],
+  ["\"Me carga empujar suplementos que la gente no necesita\" (Rodrigo).",4,"Evaluación desfavorable hacia una parte del trabajo: actitud (componente afectivo). Las tres variables criterio conviven en la misma persona y hay que nombrarlas por separado."],
+  ["Licencias médicas +18%, concentradas en los dos locales en riesgo alto.",0,"Indicador de bienestar (salud) producido por condiciones de trabajo: el costo visible del estrés sostenido. Que se concentre donde el CEAL marcó rojo es la asociación que el informe archivado anticipaba. (Se acepta riesgo psicosocial si se argumenta como su consecuencia.)"],
+];
+const Q2BIEN=[
+  {p:"\"El que se estresa es porque no aguanta la presión\". ¿Qué dicen los dos modelos clásicos?",o:["Que el estrés depende de la personalidad","Que los determinantes más potentes son condiciones del trabajo: alta exigencia con bajo control (Karasek, 1979) y desbalance entre esfuerzo y recompensa (Siegrist, 1996); por eso la ley chilena obliga a intervenir las condiciones, no a entrenar la resistencia de las personas","Que depende del sueldo","Que la presión siempre motiva"],c:1,f:"La variación individual existe (no todos respondemos igual) y esa parte visible tapa la parte estructural. Atribuir el estrés al individuo es más barato para la organización."},
+  {p:"La evaluación CEAL de 2025 se aplicó por correo desde la gerencia, sin Comité de Aplicación, y en los locales de riesgo alto respondió el 45%. ¿Qué está mal?",o:["Nada: lo importante es aplicarlo","El procedimiento exige un Comité de Aplicación paritario (empresa y trabajadores), aplicación por la plataforma de SUSESO con 30 días por centro de trabajo, participación de al menos 60% y anonimato garantizado; sin eso el resultado no es representativo","Que debió aplicarse cada año","Que debió incluir una pregunta sobre felicidad"],c:1,f:"La lógica es de vigilancia (como el ruido o los químicos): instrumento estandarizado, periódico, con participación de los afectados. El nivel de riesgo que resulta obliga, y archivarlo es incumplimiento."},
+  {p:"¿Por qué el curso dice que el bienestar \"no es filantropía\"?",o:["Porque la fruta es barata","Porque el 67% de las enfermedades profesionales diagnosticadas en Chile en 2022 fue de salud mental (77% en mujeres; SUSESO, 2023), y rotación, licencias y accidentes se asocian con las condiciones del trabajo: es la gestión de un riesgo caro","Porque la OMS lo exige","Porque mejora la imagen de marca"],c:1,f:"Las enfermedades profesionales pasaron de 1.0 a 1.6 por mil personas entre 2021 y 2022. Las licencias +18% del caso son la versión local de esa cifra."},
+  {p:"¿Cuál es la diferencia entre la agenda preventiva y la agenda positiva del bienestar?",o:["Ninguna: son sinónimos","La preventiva detecta y reduce daño (estrés, burnout, riesgos) y llega hasta el cero; la positiva pregunta qué hace florecer a la gente (sentido, desarrollo, autonomía, vínculos), y el puente entre ambas son las necesidades psicológicas de la SDT","La positiva es yoga y la preventiva es el CEAL","La preventiva es para los jefes"],c:1,f:"\"La salud es un estado de completo bienestar físico, mental y social, y no solamente la ausencia de afecciones\" (OMS, 1946). En el caso, lo primero es salir del rojo; lo segundo, rediseñar el sistema de metas."},
+];
+const ITEM=["Doble cañón","Dirigido (induce la respuesta)","Vago o general","Bien construido"];
+const C2ITEM=[
+  ["\"Estoy satisfecho con mi jefe y con mi sueldo\".",0,"Dos objetos en un ítem. Si el jefe es bueno y el sueldo malo, ¿qué respondes? Separar: \"Estoy satisfecho con mi jefe\" / \"Estoy satisfecho con mi sueldo\"."],
+  ["\"¿No cree usted que el nuevo sistema de metas, diseñado para ayudarlo, ha mejorado su motivación?\".",1,"Induce la respuesta (\"diseñado para ayudarlo\", \"¿no cree usted?\"). Un buen ítem no dirige."],
+  ["\"En general, estoy satisfecho con mi trabajo\" (1 a 7).",3,"Un objeto, lenguaje simple, sin dirigir: ítem global de satisfacción, sorprendentemente confiable incluso solo."],
+  ["\"Las cosas en la farmacia andan bien\".",2,"¿Qué cosas? ¿Para quién? No se sabe qué evalúa cada persona. Vago."],
+  ["\"Pienso renunciar a este trabajo en los próximos seis meses\" (1 a 7).",3,"Un ítem de intención de renunciar: actitud específica que predice una conducta específica (Rubenstein et al., 2018). Es el ítem que el caso necesita."],
+  ["\"Mi jefe es justo y me explica sus decisiones\".",0,"Justicia procedimental e informacional son dimensiones distintas (Colquitt et al., 2001); mezcladas, el dato no dice cuál falla. Separar."],
+];
+const Q2E=[
+  {p:"El gerente quiere usar el CEAL-SM/SUSESO para \"identificar a los vendedores más quemados y derivarlos a apoyo\". ¿Corresponde?",o:["Sí, es su propósito","No: mide condiciones de la organización del trabajo por centro de trabajo, es anónimo y obliga a intervenir sobre esas condiciones según el nivel de riesgo, no sobre personas","Solo si el riesgo es alto","Sí, porque el instrumento es obligatorio"],c:1,f:"Es un instrumento de riesgo psicosocial, no un diagnóstico clínico ni una encuesta de clima. Mide carga, exigencias emocionales, liderazgo, claridad de rol, entre otras dimensiones, y su resultado obliga."},
+  {p:"Dos locales quedaron en riesgo alto en carga y exigencias emocionales y el informe está archivado. ¿Qué obliga ese resultado?",o:["Reevaluar en dos años y nada más","Diseñar intervenciones con grupos de discusión participativos","Intervenir sobre las condiciones de trabajo, con apoyo del organismo administrador (mutualidad); archivar el informe es incumplimiento","Entregar el informe a cada trabajador"],c:2,f:"Riesgo bajo: mantener y reevaluar en dos años; medio: intervenir con grupos de discusión; alto: intervención obligatoria sobre las condiciones con la mutualidad. Obligatorio desde el 1 de enero de 2023 para organizaciones de 10 o más personas."},
+  {p:"\"El bienestar de los vendedores mejoró porque dijeron que se sienten mejor con el ranking\". ¿Qué variable es \"sentirse mejor con el trabajo\"?",o:["Bienestar","Una actitud (evaluación del trabajo), no una mejora del riesgo psicosocial ni de la salud","Desempeño contextual","Un resultado"],c:1,f:"Sentirse mejor con el trabajo es satisfacción: actitud. El bienestar se mide en estrés, burnout, licencias y condiciones de riesgo; y el ranking es una condición que lo deteriora (Rodrigo)."},
+];
+const HIP=[["Variable predictora","Presión por la meta de 150 unidades"],["Variable resultado","Intención de renunciar de los vendedores"],["Dirección de la relación","A mayor presión, mayor intención (positiva)"],["Mecanismo","La presión sostenida por un resultado que no controlan agota sus recursos y deteriora su evaluación del trabajo"]];
+const FAL=["Falsable","No falsable"];
+const C2FAL=[
+  ["\"Los vendedores con regulación introyectada tendrán mayor intención de renunciar que los de regulación identificada\".",0,"Predictora, resultado, dirección y comparación explícita: puede resultar falsa con datos (y la evidencia la apoya: Hagger y Star, 2026)."],
+  ["\"Hay que motivar más a la gente\".",1,"Es una recomendación, no una predicción: no hay dato que pueda refutarla."],
+  ["\"Si el programa funciona, la gente estará más motivada; si no se nota, es porque la gente no se abrió al cambio\".",1,"Tiene salida de emergencia: cualquier resultado la confirma. Es el patrón de la charlatanería: no falsable."],
+  ["\"Los locales donde el mesón principal se asigna por turno rotativo tendrán menor rotación que los locales donde lo asigna el jefe según su criterio\".",0,"Comparación entre condiciones con resultado medible: si la rotación es igual o mayor, queda refutada."],
+  ["\"El dinero es el principal motivador, aunque a veces no se note\".",1,"\"Aunque a veces no se note\" la protege de cualquier dato en contra. No falsable."],
+];
+const Q2G=[{p:"Andrés acepta probar Energía Positiva. ¿Qué diseño le permitiría afirmar después que el programa causó un cambio en la rotación?",o:["Aplicarlo en los cuatro locales con peor rotación y comparar con su año anterior","Aplicarlo en los 22 locales y encuestar la satisfacción después","Asignar al azar once locales al programa y once a lista de espera, medir rotación, reclamos y actitudes (con ítems bien construidos) antes y después en ambos grupos","Pedirle a la consultora el estudio de las 2.000 empresas"],c:2,f:"Azar, grupo de comparación y medición antes y después: la lógica de Bloom et al. (2013) en India y de Trip.com. Elegir los cuatro peores locales garantiza la regresión a la media: mejorarían solos."}];
+const Q2=[
+  {p:"\"Las ventas subieron 28%, así que el desempeño de los vendedores mejoró\". ¿Qué le falta a la frase?",o:["Nada, es correcta","Distinguir resultado (ventas) de desempeño (conducta): las ventas subieron mientras los reclamos se duplicaron y se dejó de registrar contraindicaciones, es decir, subió la cantidad y cayó la calidad del desempeño de tarea","Citar a Campbell","Indicar el porcentaje de cada local"],c:1,f:"Desempeño = conductas relevantes para la organización; resultado = lo que depende de esas conductas y de mil cosas más. El 28% describe cantidad; los reclamos y las contraindicaciones no registradas describen calidad."},
+  {p:"¿Cuál de estas afirmaciones usa el lenguaje que corresponde a la evidencia?",o:["\"Harter et al. (2002) demuestran que el engagement causa utilidades\"","\"El engagement de las unidades se asocia modestamente (.17 a .38) con sus resultados, y la dirección es incierta\"","\"La satisfacción explica el desempeño (r = .30)\"","\"El clima produce ventas\""],c:1,f:"Correlacional → \"se asocia\"; experimental → \"causa\". Y r = .30 es una relación modesta: no \"explica\" el desempeño, se asocia con él."},
+  {p:"En una misma frase de Rodrigo (\"me carga empujar suplementos... me siento un fracasado... llevo dos meses durmiendo mal\") conviven las tres variables criterio. ¿Cuál es cuál?",o:["Todo es bienestar","\"Me carga empujar suplementos\" es actitud (evaluación afectiva); \"me siento un fracasado\" es actitud hacia sí mismo en el ranking (y pista de introyección); \"durmiendo mal\" es bienestar; el desempeño no aparece: habría que observar lo que hace","Todo es actitud","Es desempeño contraproducente"],c:1,f:"Nombrar las tres variables por separado, en la misma persona, es exactamente lo que la pregunta 1a de la Solemne pedía y casi nadie hizo."},
+  {p:"\"Valentina rinde, Paula no\" (por las unidades) y \"Rodrigo tiene mala actitud\" (por dormir mal). ¿Cuántos errores de clasificación hay?",o:["Ninguno","Dos: unidades es resultado, no desempeño (Paula tiene tarea de calidad, contextual y adaptativo); dormir mal es bienestar, no actitud","Uno: solo el de Valentina","Tres"],c:1,f:"La prueba descuenta por confundir variables criterio porque el diagnóstico equivocado lleva a la intervención equivocada: evaluar a Paula por unidades la expulsa; tratar a Rodrigo como problema de actitud ignora el sistema que lo enferma."},
+  {p:"Una hipótesis bien formulada para el caso debe tener...",o:["Una recomendación y un responsable","Predictora, resultado, dirección y mecanismo, y un dato que podría refutarla","Al menos tres autores citados","Un nivel de significación"],c:1,f:"Es la anatomía de la ayudantía 1 (Gerring y Christenson, 2017). Sin mecanismo es una apuesta; sin condición de refutación no es ciencia."},
+];
+
+// ===================== ESTACIÓN 3: TEMA 2 MOTIVACIÓN =====================
+const MOT=["Es motivación (dirección, intensidad o persistencia)","Entusiasmo (estado afectivo)","Satisfacción (actitud)","Desempeño (conducta eficaz)","Rasgo estable"];
+const C3MOT=[
+  ["Paula vuelve tres tardes seguidas a buscar la alternativa que de verdad le sirve a un cliente con un problema raro.",0,"Persistencia dirigida a una meta: motivación en el sentido del curso, aunque no suba el ranking."],
+  ["Tomás llega sonriente y conversa con todos, pero atiende lo que le toca y se va.",1,"Entusiasmo visible sin dirección hacia una meta de trabajo: un estado afectivo, no evidencia de motivación laboral."],
+  ["\"Estoy contenta en la farmacia, es un buen lugar\" (una vendedora que vende 60 unidades al mes).",2,"Satisfacción: evaluación del trabajo. Se puede estar satisfecho y poco motivado hacia la meta, y al revés."],
+  ["Valentina cumple las 150 unidades todos los meses.",3,"Un resultado de desempeño: dice qué logró, no por qué ni con qué tipo de motivación. Desempeño = f(motivación, habilidad, recursos)."],
+  ["\"Hay gente motivada y gente floja; a Tomás no hay cómo moverlo\".",4,"Tratar la motivación como rasgo. La misma persona varía entre tareas, días y sistemas; si varía con la situación, la situación es una palanca."],
+  ["Rodrigo se queda después de la hora ofreciendo suplementos para no quedar abajo en el ranking.",0,"Intensidad y persistencia dirigidas a una meta: es motivación. De qué tipo, lo dice el continuo (introyectada), y ese tipo tiene costo."],
+];
+const ZOM=["Maslow (jerarquía)","McGregor (Teoría X e Y)","Herzberg (dos factores)","McClelland (motivos)","Teoría vigente (SDT)"];
+const C3ZOMBI=[
+  ["\"Primero hay que cubrir lo básico con plata; después viene el compromiso\". ¿De quién es la idea de que las necesidades se satisfacen una a la vez, en orden?",1,"Es de McGregor (1960), no de Maslow, que escribió que la conducta está determinada por varias necesidades a la vez. La pirámide la construyeron consultores y manuales (Bridgman et al., 2019)."],
+  ["\"La revisión de la evidencia no encontró apoyo ni para los cinco niveles ni para la progresión\" (Wahba y Bridwell, 1976: 0 de 10 estudios factoriales, 0 de 2 longitudinales).",0,"La autopsia de Maslow: casi una teoría no testeable; sobrevive porque es fácil de dibujar, no porque funcione."],
+  ["\"Los vendedores de hoy no tienen compromiso; hay que controlarlos con premios y castigos\" (Andrés).",1,"Supuestos del jefe sobre su gente: Teoría X. No es una teoría de la motivación del trabajador sino de las atribuciones del administrador, que se vuelven profecías autocumplidas."],
+  ["\"Un buen sueldo no motiva; solo evita la insatisfacción. Lo que motiva es el logro y el reconocimiento\".",2,"Dos factores: la separación limpia no se sostuvo y puede ser un artefacto del método (incidentes críticos). Se rescata que prevenir el malestar y promover el bienestar son agendas distintas."],
+  ["\"Hay personas que prefieren tareas de dificultad media con retroalimentación rápida y responsabilidad personal\".",3,"Necesidad de logro: la única de las cuatro que dejó un programa de investigación vivo (motivos explícitos e implícitos), aunque la medición proyectiva original fuera discutible."],
+  ["\"Tres necesidades (autonomía, competencia, relación) que operan a la vez, sin pirámide ni turnos\".",4,"La sucesora, no la versión mejorada: décadas de metaanálisis respaldan su efecto sobre motivación, bienestar y desempeño (Van den Broeck et al., 2016)."],
+];
+const SDT=["Amotivación","Regulación externa","Regulación introyectada","Regulación identificada","Intrínseca (o integrada)"];
+const C3SDT=[
+  ["\"Yo vendo lo que me piden, cumplo la meta y me llevo el bono. Si sacaran el bono, volvería a lo normal\" (Valentina).",1,"La conducta depende por completo del premio externo. Externa: ρ ≈ .04 con desempeño, casi plana con todo."],
+  ["\"Cuando salgo abajo en el ranking me siento un fracasado y no puedo mirar a mis compañeros\" (Rodrigo).",2,"Culpa y vergüenza autoadministradas: el premio y el castigo siguen ahí, pero ahora los administra él. La que más predice intención de renunciar (β ≈ .515)."],
+  ["\"Le recomiendo lo que de verdad le sirve. Esto es lo que quiero hacer: ser la farmacéutica del barrio\" (Paula).",3,"Ve el sentido y se identifica con el rol: identificada (o integrada). Autónoma; el mejor predictor del desempeño (ρ ≈ .43)."],
+  ["\"No tengo idea para qué existe la meta. Llego, atiendo lo que me toca y me voy\" (Tomás).",0,"Ausencia de regulación respecto de la meta: no es \"poca motivación extrínseca\", es que nada regula esa conducta. Solo consecuencias negativas."],
+  ["\"Me quedo hasta tarde porque si no me siento culpable con el equipo\".",2,"Introyectada: viene de adentro pero no es autónoma. La casilla que confunde a todo el mundo."],
+  ["\"Armar los pedidos refrigerados me entretiene; se me pasa la hora\".",4,"Interés y disfrute de la actividad en sí: intrínseca. La que más se asocia con satisfacción (ρ ≈ .57) y menos con burnout (−.40)."],
+  ["\"El trabajo del centro es agotador y a ratos ingrato, pero sé que si el pedido sale bien el remedio llega a tiempo, y eso me importa\" (Ignacio).",3,"La actividad no le gusta; la razón es suya. Identificada: extrínseca por definición y autónoma al mismo tiempo."],
+  ["\"Hago el conteo de inventario porque si no me descuentan\".",1,"Evitar un castigo externo: regulación externa. Compra permanencia de la conducta mientras dure la amenaza."],
+];
+const SDTD={
+  "Amotivación":{v:[-.28,-.32,.44],t:"Solo consecuencias negativas en los tres resultados. Tomás no necesita \"más\" motivación: necesita que la meta tenga sentido."},
+  "Regulación externa":{v:[.04,.03,.08],t:"Una barra plana: trabajar por el premio o por el castigo no se asocia ni positiva ni negativamente con casi nada. El 76.8% de lo que explica del compromiso de continuidad (quedarse porque irse sale caro) y el 0.8% del desempeño."},
+  "Regulación introyectada":{v:[.28,.17,.08],t:"Consecuencias positivas y negativas a la vez: rinde, pero con costo. Hagger y Star (2026): la que más predice la intención de renunciar (β ≈ .515)."},
+  "Regulación identificada":{v:[.43,.47,-.25],t:"El mejor predictor del desempeño: ver el sentido rinde más que disfrutar (35.3% de lo explicado contra 23.7% de la intrínseca). Y es mucho más fácil de producir en una organización."},
+  "Intrínseca (o integrada)":{v:[.36,.57,-.40],t:"La más importante para satisfacción y bienestar; en desempeño, por debajo de la identificada. El continuo no es monotónico: \"más intrínseco\" no siempre es mejor para todo."},
+};
+function initSDT(){ const c=document.getElementById("sdtSel"); c.innerHTML=Object.keys(SDTD).map((k,i)=>`<label><input type="radio" name="sdtR" value="${k}" ${i===3?"checked":""} onchange="sdtPaint()">${k}</label>`).join(""); sdtPaint(); }
+function sdtPaint(){ const k=document.querySelector("input[name=sdtR]:checked").value; const d=SDTD[k]; const f=x=>(x<0?"−":"+")+Math.abs(x).toFixed(2).replace(/^0/,""); ["bS1","bS2","bS3"].forEach((id,i)=>{ barra(id,d.v[i],-.5,.6,d.v[i]<0?"neg":"pos"); document.getElementById("vS"+(i+1)).textContent=f(d.v[i]); }); document.getElementById("sdtTxt").textContent=d.t; estado.respuestas["3_sdtsim"]=1; guardar(); }
+const Q3D=[{p:"Si tuvieras que elegir un solo tipo de motivación para que un equipo rinda, ¿cuál elegirías según Van den Broeck et al. (2021)?",o:["Intrínseca, porque es la más autónoma","Identificada: ver el sentido de lo que se hace predice mejor el desempeño (ρ ≈ .43) que disfrutarlo (ρ ≈ .36), aunque la intrínseca gane en satisfacción y bienestar","Externa, porque los incentivos son lo que mueve la cantidad","Introyectada, porque implica compromiso emocional"],c:1,f:"Traducción para un jefe: no necesitas que le apasione hacer informes; necesitas que entienda para qué sirven. Y el sentido es más fácil de fabricar que el disfrute."}];
+function metas(){ const s={}; document.querySelectorAll("#metaT input").forEach(c=>s[c.dataset.k]=c.checked); const o=document.getElementById("metaOut"); const bien=s.esp&&s.dif&&!s.acep&&!s.fb&&s.simple; const txt=[];
+  txt.push(s.esp?"Específica: sí, 150 unidades.":"La meta ES específica (150 unidades): esa condición se cumple."); txt.push(s.dif?"Difícil: sí, 58% sobre la mediana previa de 95.":"La meta ES difícil (58% sobre la mediana de 95): esa condición se cumple.");
+  txt.push(!s.acep?"Aceptada: no. Asignada sin explicar el propósito; Tomás no sabe para qué, Paula la rechaza. Una meta asignada a secas, sin propósito, reduce el desempeño de forma significativa; con propósito funciona igual que una participativa.":"No se cumple: fue asignada a secas, sin propósito; Tomás no sabe para qué existe y Paula la rechaza. Sin compromiso no hay efecto.");
+  txt.push(!s.fb?"Retroalimentación: no. El cumplimiento se informa al cierre; nadie puede ajustar esfuerzo ni estrategia durante el mes. El ranking público no es retroalimentación informativa: es presión social.":"No se cumple: el cumplimiento se informa solo al cierre del mes y el ranking compara personas, no informa avance.");
+  txt.push(s.simple?"Tarea simple: sí, el efecto de las metas es mayor (d ≈ .77) que en tareas complejas (d ≈ .41).":"Vender unidades es una tarea simple: ahí el efecto de las metas es mayor (d ≈ .77 vs .41 en tareas complejas), lo que hace más fuerte el empuje hacia la cantidad.");
+  o.className="nota "+(bien?"ok":"aviso"); o.innerHTML=(bien?"<strong>Diagnóstico correcto.</strong> ":"<strong>Revisa:</strong> ")+txt.join(" "); if(bien){ estado.respuestas["3_metas"]=1; guardar(); } }
+const ORD=["Foco estrecho","Conducta antiética","Cultura corroída","Motivación intrínseca reducida","Riesgo distorsionado","Aprendizaje inhibido"];
+const C3ORD=[
+  ["Las unidades subieron 28% y los reclamos por productos innecesarios se duplicaron.",0,"La meta ilumina una dimensión (cantidad) y deja la otra (calidad de la asesoría) en la oscuridad."],
+  ["Devoluciones de productos registrados como vendidos el último día por vendedores con 150 o 151 unidades.",1,"Trampa para cerrar la brecha; concentrada, como en Schweitzer et al. (2004), en quienes quedan a un paso."],
+  ["Los vendedores dejaron de ayudarse a cuadrar la caja desde que existe el ranking.",2,"El énfasis en metas individuales y la comparación pública erosionan la cooperación."],
+  ["Paula: \"la meta de 150 me da lo mismo\"; Rodrigo: \"me carga empujar suplementos\".",3,"La meta externa desplaza el impulso de hacer bien la tarea por sí misma, justo en quienes lo tenían."],
+  ["Un vendedor recomienda un suplemento caro a un cliente con tratamiento anticoagulante sin revisar contraindicaciones.",4,"La meta como punto de referencia empuja a estrategias más riesgosas de lo razonable; además es foco estrecho."],
+  ["Nadie en el local probó formas nuevas de asesorar: todos repiten el \"combo\" que suma unidades.",5,"El foco en el resultado impide explorar métodos y entender el problema. La alternativa son las metas de aprendizaje."],
+];
+function vroom(){ const E=+document.getElementById("sE").value, I=+document.getElementById("sI").value, V=+document.getElementById("sV").value; document.getElementById("vE").textContent=E.toFixed(2); document.getElementById("vI").textContent=I.toFixed(2); document.getElementById("vV").textContent=V.toFixed(2); const F=E*I*V; document.getElementById("vF").textContent=F.toFixed(2); const m=Math.min(E,I,V); let t; if(m===E) t="Expectativa: la persona no cree que su esfuerzo produzca el desempeño. Palancas: capacitación, metas próximas, modelamiento (autoeficacia)."; else if(m===I) t="Instrumentalidad: no cree que el desempeño lleve a la recompensa (mesón por criterio del jefe, bono todo o nada). Palancas: reglas claras y consistentes, justicia procedimental."; else t="Valencia: la recompensa no le importa o va en contra de lo que valora (Paula, Tomás). Palancas: explicar el propósito, recompensas que calcen con lo que la persona valora."; document.getElementById("vTxt").textContent=t+(F<.1?" Un cero en cualquiera deja todo en cero: por eso la pregunta útil no es \"¿está motivado?\" sino \"¿cuál eslabón está roto?\".":""); estado.respuestas["3_vroom"]=1; guardar(); }
+function vroomSet(e,i,v){ document.getElementById("sE").value=e; document.getElementById("sI").value=i; document.getElementById("sV").value=v; vroom(); }
+const REF=["Reforzamiento positivo","Reforzamiento negativo","Castigo","Extinción"];
+const C3REF=[
+  ["Rodolfo grita cuando llega un reclamo; el reclamo se resuelve esa tarde y deja de gritar. Cada vez grita más.",1,"Reforzamiento negativo para Rodolfo: su conducta (gritar) elimina algo desagradable (el reclamo). Nadie lo diseñó; es reforzamiento involuntario, y aprende a gritar."],
+  ["Un vendedor que cumple 150 recibe $80.000 y al mes siguiente vuelve a empujar suplementos.",0,"Consecuencia agradable contingente a la conducta: reforzamiento positivo de la cantidad (no de la calidad)."],
+  ["Ignacio llamaba a los locales para saber sus errores; nadie respondió sus llamados durante un mes y dejó de llamar.",3,"La conducta deja de tener consecuencias y se extingue. Es lo que le pasará a cualquier programa que dependa de que alguien conteste."],
+  ["El químico corrige en público al vendedor que registró mal una contraindicación; el vendedor deja de preguntar dudas.",2,"Consecuencia desagradable que reduce la conducta; pero reduce la conducta equivocada (preguntar), no la que se quería (registrar bien). Los castigos públicos suprimen conductas colaterales."],
+  ["Una vendedora que atiende bien el mesón chico es asignada por el jefe al mesón principal, y desde entonces atiende aún mejor.",0,"Reforzamiento positivo. Y muestra que la asignación del mesón, hoy \"según criterio\", es una consecuencia que podría usarse con un procedimiento justo."],
+];
+const AEF=[["Experiencias de logro","Dividir la meta mensual en metas semanales que el vendedor sí alcanza"],["Modelamiento","Que un vendedor parecido a Matías le muestre cómo asesora y cierra una venta de calidad"],["Persuasión verbal","Que el químico le diga, con ejemplos, que su asesoría fue correcta"],["Estado fisiológico","Enseñarle a leer el nerviosismo frente a un cliente difícil como señal de que la venta importa, no de que no puede"]];
+const Q3=[
+  {p:"Rodrigo rinde, hace horas extra y no reclama; Andrés dice que es \"el más comprometido\". Según la evidencia, Rodrigo es...",o:["El modelo a seguir","El de mayor riesgo de renuncia y de burnout: regulación introyectada, la que más predice la intención de renunciar (β ≈ .515; Hagger y Star, 2026), y ya duerme mal","Un caso de motivación intrínseca","Un caso de regulación externa"],c:1,f:"La introyección es el tipo que más se confunde con el compromiso. La persona rinde hasta que se quema y se va."},
+  {p:"¿Qué distingue una meta de desempeño de una meta de aprendizaje, y cuándo conviene la segunda?",o:["La de aprendizaje es más fácil","La de aprendizaje fija cuántas estrategias o métodos descubrir (\"identificar tres formas de detectar una contraindicación\"); conviene en tareas complejas, donde una meta de desempeño interfiere con adquirir el conocimiento necesario","Son lo mismo con otro nombre","La de aprendizaje no tiene cifra"],c:1,f:"Kanfer y Ackerman (1989) y Winters y Latham (1996): en tareas complejas la meta de desempeño rinde peor que \"hazlo lo mejor posible\"; la de aprendizaje específica y difícil vuelve a ganar."},
+  {p:"Matías dice \"si me esforzara más, no creo que cambiara nada: el bono depende del mesón que te toque\". En Vroom, ¿qué eslabón está roto?",o:["La valencia","La expectativa, porque no se cree capaz","La instrumentalidad: cree que el desempeño no lleva a la recompensa, porque la asignación del mesón es arbitraria","Ninguno: le falta motivación"],c:2,f:"\"No cambiaría nada\" apunta al vínculo desempeño → recompensa. Y lo que lo rompe es un problema de justicia procedimental: el mesón por criterio del jefe."},
+];
+
+// ===================== ESTACIÓN 4: TEMA 2 INCENTIVOS Y DISEÑO =====================
+const CC=["Cantidad (los incentivos ayudan)","Calidad (manda la motivación intrínseca)"];
+const C4CC=[
+  ["Reducir los reclamos por productos que el cliente no necesitaba.",1,"Calidad de la asesoría: β ≈ .35 para la motivación intrínseca contra .06 de los incentivos (Cerasoli et al., 2014). El bono no la compra."],
+  ["Aumentar el número de clientes atendidos por hora en el mesón en diciembre.",0,"Cantidad: r ≈ .34 con incentivos (Jenkins et al., 1998); el efecto es mayor en terreno que en laboratorio."],
+  ["Que los vendedores registren las contraindicaciones en todas las ventas.",1,"Precisión y cumplimiento de un paso de calidad: la motivación intrínseca y la identificada pesan más; y Ramírez y Kausel (2025) muestran que una insignia privada mejoró la precisión donde el bono chico la redujo."],
+  ["Armar más líneas por hora en el centro de distribución en los peaks de fin de mes.",0,"Volumen: ahí los incentivos funcionan, con el riesgo de que la calidad (errores de armado) pague el precio."],
+  ["Que los operarios cometan menos errores de armado.",1,"Calidad. Y el bono trimestral del gerente de operaciones está, además, lo más lejos posible de la conducta (inmediatez)."],
+];
+const REC=["Tangible esperada","Tangible inesperada","Verbal informativa (elogio)","Control o comparación social"];
+const C4REC=[
+  ["Bono de $80.000 anunciado si se llega a 150 unidades.",0,"Tangible, esperada y contingente: d ≈ −.36 sobre la motivación intrínseca. Compra cantidad y desplaza el interés por asesorar bien."],
+  ["El químico le dice a un vendedor, al cierre: \"la asesoría que diste hoy al cliente con anticoagulantes fue exactamente la correcta\".",2,"Elogio informativo sobre la calidad: d ≈ +.33. Es la única categoría con efecto positivo en Deci et al. (1999)."],
+  ["Ranking mensual con nombres en el grupo de WhatsApp.",3,"Comparación pública: no informa, controla; alimenta introyección (Rodrigo) y daña la justicia procedimental."],
+  ["La gerencia regala, sin aviso, una gift card al equipo de un local después de un mes sin reclamos.",1,"Tangible inesperada: d ≈ +.01, no daña la motivación intrínseca; tampoco la sostiene. Y si se repite, se vuelve esperada."],
+  ["\"Vendedor del mes\" con foto en el local y $50.000.",0,"Tangible esperada más comparación: combina el −.36 con el control social. Recompensa a uno y señala a los demás."],
+];
+const EQ=["Equidad externa","Equidad interna","Equidad de desempeño"];
+const C4EQ=[
+  ["Un vendedor de Del Valle gana $120.000 menos que un vendedor de la cadena nacional de la esquina.",0,"Comparación con el mercado: si se paga bajo, se pierde gente y cuesta reclutar."],
+  ["Dos vendedores con el mismo cargo y la misma antigüedad: uno atiende el mesón principal (tres veces más flujo) y el otro el chico; su bono depende de eso.",1,"Mismo cargo, distinta exposición: la comparación que la gente hace todos los días. Es la que más conflictos genera."],
+  ["Quien vende 150 recibe $80.000; quien vende 149, nada.",2,"Variabilidad dentro del cargo según el desempeño: la única equidad que trae todos los efectos secundarios, y el todo o nada la hace peor."],
+  ["El químico farmacéutico y el jefe de local ganan lo mismo, aunque el químico responde legalmente por cada receta.",1,"Valorización de cargos (habilidades, responsabilidad, condiciones): equidad interna entre cargos distintos."],
+];
+const JUS=["Distributiva","Procedimental","Interpersonal","Informacional"];
+const C4JUS=[
+  ["El jefe asigna el mesón principal \"según su criterio\", distinto cada mes, sin que nadie pueda opinar.",1,"Consistencia, ausencia de sesgo, voz y corregibilidad del procedimiento: lo que falla es cómo se decide. ρ ≈ .36 con desempeño."],
+  ["Nadie explicó cómo se calculó la meta de 150 ni para qué.",3,"Justicia informacional: calidad y sinceridad de la explicación. Es gratis y no se usó."],
+  ["Rodolfo comunica los resultados del ranking a gritos delante del equipo.",2,"Trato con dignidad y respeto al comunicar la decisión: interpersonal. Colquitt et al. (2013): el mejor predictor de la ciudadanía organizacional."],
+  ["Paula vende 148 unidades asesorando bien y no recibe nada; Valentina vende 150 empujando suplementos y recibe $80.000.",0,"Comparación entre aporte y resultado: distributiva. Importa, pero predice el desempeño menos de la mitad que la procedimental (.15 vs .36)."],
+];
+function ppm(){ const v=[1,2,3,4,5].map(i=>+document.getElementById("sP"+i).value); v.forEach((x,i)=>document.getElementById("vP"+(i+1)).textContent=x); const F=((v[0]+v[1]+v[2])/3)*v[3]*v[4]; const M=v.reduce((a,b)=>a+b,0)/5; document.getElementById("ppmF").textContent=Math.round(F); document.getElementById("ppmM").textContent=M.toFixed(1); let t; if(v[3]<=2||v[4]<=2) t="Autonomía o retroalimentación cerca de cero: la fórmula multiplica y el potencial se desploma aunque las otras tres estén altas. Es la afirmación fuerte del modelo (y la menos respaldada)."; else if(F>150) t="Puesto enriquecido: significado, responsabilidad y conocimiento de resultados pueden producirse. La evidencia dice que el promedio simple predice igual o mejor: úsalo como diagnóstico, no como métrica."; else t="Potencial medio. Pregunta útil: ¿cuál de las cinco está más baja? Esa decide la forma de rediseño."; document.getElementById("ppmTxt").textContent=t; estado.respuestas["4_ppm"]=1; guardar(); }
+function ppmSet(a){ a.forEach((x,i)=>document.getElementById("sP"+(i+1)).value=x); ppm(); }
+const Q4E=[{p:"La fórmula del PPM multiplica autonomía y retroalimentación y promedia las otras tres. ¿Qué dice la evidencia sobre esa forma?",o:["Está ampliamente confirmada","La forma multiplicativa nunca tuvo buen respaldo: un promedio simple de las cinco predice tan bien o mejor; úsala para ordenar el diagnóstico, no como indicador con propiedades métricas","La fórmula debería sumar las cinco","No se ha estudiado"],c:1,f:"Regla de oficio: cuando un modelo de gestión propone una fórmula, pregúntate si alguien probó que funciona mejor que sumar."}];
+const JDR=["Demanda de desafío","Demanda de bloqueo","Recurso"];
+const C4JDR=[
+  ["Cuota de 80 líneas por hora, alcanzable con experiencia, con peaks los lunes.",0,"Exige esfuerzo pero permite el logro y el crecimiento. Se asocia con tensión (.40) y positivamente con motivación y desempeño."],
+  ["Instrucciones de armado que cambian por correo desde dos jefaturas que no coinciden.",1,"Conflicto y ambigüedad de rol: estorban el logro y no dependen del operario. Tensión .58, motivación −.12, desempeño −.20."],
+  ["Un supervisor que explica el porqué de cada cambio y responde dudas el mismo día.",2,"Apoyo de la jefatura: recurso que amortigua el efecto de las demandas y alimenta las necesidades."],
+  ["Saber al día siguiente qué errores tuvo tu pedido y poder corregir el método.",2,"Retroalimentación: el recurso que el centro no tiene y que Ignacio fabrica solo."],
+  ["Exigencias emocionales del mesón: clientes molestos por reclamos de productos innecesarios.",1,"En general, de bloqueo: desgastan sin permitir logro. El CEAL las dejó en riesgo alto en dos locales."],
+  ["Un plazo apretado pero posible para montar la campaña de invierno, con un propósito claro.",0,"Urgencia con propósito: desafío. Sigue teniendo costo en tensión; ninguna demanda sale gratis."],
+];
+const FORMA=[["Rotación de puestos","Mueve variedad; barata; no cambia el puesto en sí"],["Ampliación (horizontal)","Más tareas del mismo nivel: variedad e identidad; riesgo de \"más de lo mismo\""],["Enriquecimiento (vertical)","Devuelve control y decisión: autonomía y retroalimentación; la de mayor efecto"],["Horario flexible","Autonomía sobre el cuándo, no sobre el qué ni el cómo"],["Equipos autoadministrados","Autonomía, identidad y relación: el rediseño más completo y el más difícil de instalar"]];
+const JC=["Suma (fomentar)","Resta (evitar)"];
+const C4JC=[
+  ["Ignacio llama a dos locales cada mañana para saber qué errores tuvieron los pedidos.",0,"Aumentar recursos estructurales (retroalimentación) y sociales: .59 con engagement, .40 con desempeño. Fabrica el recurso que el puesto no da."],
+  ["Felipe dejó de hacer el conteo de inventario \"porque estorba y nadie lo revisa\".",1,"Disminuir demandas obstaculizadoras: +.15 con tensión y −.07 con desempeño. La oveja negra."],
+  ["Un operario pide armar además los pedidos de cadena de frío para aprender el proceso completo.",0,"Aumentar demandas desafiantes: .45 con engagement, .31 con desempeño."],
+  ["Ignacio les dice a sus compañeros: \"nosotros hacemos que el remedio llegue a la abuela a tiempo\".",0,"Frontera cognitiva (Wrzesniewski y Dutton): redefine el significado del trabajo. Es significancia fabricada desde abajo."],
+  ["Un vendedor deja de atender a los clientes \"difíciles\" pasándoselos siempre a un compañero.",1,"Reducir lo que estorba a costa de otro: sube la tensión propia en el metaanálisis y la ajena en el local."],
+];
+const Q4H=[{p:"El \"proyecto estrella\" (automatización con IA para los cinco mejores operarios, además de su carga). Según Shin y Grant (2019)...",o:["Mejorará todo su trabajo por contagio de la motivación intrínseca","Puede empeorar su desempeño en las tareas rutinarias del mismo puesto por contraste y aburrimiento; el efecto es curvilíneo (la motivación moderada protege mejor); y agrega carga","No afecta las otras tareas","Solo funciona si es voluntario"],c:1,f:"Enriquecer una parte del puesto vuelve el resto más aburrido por contraste. Argumento a favor de intervenir sobre el puesto completo, y advertencia contra el \"proyecto entretenido\" que se suma a las tareas de siempre."}];
+const FUS=[["Inmediatez temporal","Que el sistema avise al operario el mismo turno si el pedido salió con errores, en vez de la planilla mensual"],["Similitud percibida","Que cada operario arme el pedido completo de un local, para que la actividad se parezca a su resultado (un pedido que llega)"],["Unicidad del vínculo","Que la única forma de que un local reciba su pedido a tiempo sea el trabajo de ese turno, sin \"parches\" de última hora que lo reemplacen"],["Emparejamiento repetido","Cerrar cada semana con el dato de cuántos pedidos del turno llegaron completos, una y otra vez, hasta que armar y lograr se fundan"]];
+const Q4=[
+  {p:"El gerente de operaciones: \"si pagamos un bono trimestral por pedidos sin errores, la gente se va a fijar sola\". Con la evidencia del curso...",o:["Es correcto: el bono compra calidad","El bono es tangible esperado (reduce la motivación intrínseca), compra cantidad y no calidad, y llega tres meses después de la conducta: la retroalimentación en el sistema, el mismo turno, es más barata y actúa por inmediatez","Es correcto si el bono es grande","Habría que agregar un ranking"],c:1,f:"Woolley y Fishbach (2018): el momento del pago importó y la magnitud no. Y la retroalimentación del puesto es la característica que estaba en cero."},
+  {p:"¿Qué dos palancas de la unidad mueven desempeño, actitudes y bienestar en la misma dirección, sin contraindicaciones documentadas?",o:["Metas específicas y difíciles e incentivos financieros","El diseño del trabajo y la justicia procedimental","El ranking y el reconocimiento público","La regulación externa bien administrada"],c:1,f:"Las metas suben cantidad y pueden bajar bienestar; los incentivos suben cantidad y no calidad, con costo de bienestar. Diseño del trabajo y justicia procedimental no tienen contraindicación documentada, y ninguna cuesta lo que cuesta subir sueldos."},
+  {p:"Rediseñar el puesto de operario \"sin que nadie esté encima\" significa, sobre todo...",o:["Más supervisión automática","Que la retroalimentación sea una propiedad del sistema o del trabajo (validación en línea, retorno del estado del pedido), no de un supervisor que pide un informe; con identidad (pedido completo) y autonomía (orden y método)","Un bono por pedidos correctos","Un taller de motivación bien hecho"],c:1,f:"Humphrey et al. (2007): el diseño del trabajo explica en promedio 43% de la varianza de 19 resultados. Holman y Axtell (2016): cambiar control y retroalimentación mejoró bienestar y desempeño en un call center."},
+];
+
+// ===================== ESTACIÓN 5: SIMULACRO =====================
+const SIM=[{"tema":"Tema 1 · Evidencia, teoría y variables criterio","items":[{"id":"s1","titulo":"1. La consultora, el gerente y el piloto en cuatro locales","texto":"Evalúa desde la gestión basada en evidencia la propuesta \"Energía Positiva\": ubica en la jerarquía de evidencia la afirmación de la consultora (\"un estudio con 2.000 empresas\"), el argumento del gerente (\"me cambió la vida\") y el diseño del piloto que propone (cuatro locales comparados con el año anterior). Indica qué dice la evidencia acumulada sobre la relación entre actitudes y desempeño (dirección, magnitud, las tres explicaciones de una correlación), cuál es el verbo honesto, qué fuentes de la gestión basada en evidencia faltan en la decisión y qué diseño permitiría decir \"causa\".","pauta":[["Consultora: afirmación sin fuente identificable; aun si el estudio existe, es correlacional (empresas con y sin programa, sin azar): nivel 3. Gerente: anécdota (n = 1), nivel 5. Piloto: pre-post sin control en cuatro locales elegidos a dedo, comparado con el año anterior: caso, nivel 4.",2.5],["Evidencia acumulada: actitudes y desempeño se asocian de forma positiva y modesta (r ≈ .30, Judge et al., 2001; .17 a .38 a nivel de unidades, Harter et al., 2002); \"37% más\" no es una lectura posible de esas correlaciones.",2],["Las tres explicaciones de la correlación (satisfacción → desempeño; desempeño → satisfacción; tercera variable como el jefe o el local) y el verbo honesto: \"se asocia con\" o \"predice\".",2],["Fuentes de la GBE: están la experiencia (gerente) y datos internos sin analizar; faltan la literatura científica y los valores de los afectados; los seis pasos saltan directo a \"aplicar\".",1.5],["Diseño para \"causa\": asignación al azar de locales a programa y lista de espera, medición antes y después en ambos grupos, con auditoría de reclamos y rotación, no solo ventas contra el año anterior; advertir que elegir los cuatro peores locales produce regresión a la media.",2]],"errores":"aceptar que \"2.000 empresas\" implica causalidad; tratar el piloto como experimento porque \"compara\"; usar lenguaje causal (\"demostrará\"); olvidar la tercera variable."},{"id":"s2","titulo":"2. Ocho datos, tres variables criterio","texto":"Clasifica cada dato del primer párrafo del caso (unidades +28%, reclamos duplicados, rotación 22% a 35%, licencias +18%, no registrar contraindicaciones, quedarse a cuadrar la caja de otros, el ítem de la encuesta, el CEAL en riesgo alto) como desempeño (indicando la cara), resultado, actitud o bienestar, con una línea de justificación. Luego explica por qué el 28% de unidades y los reclamos duplicados describen caras distintas del desempeño y por qué \"el problema es que no tienen compromiso\" confunde una actitud con el sistema que la produce.","pauta":[["Unidades +28%: resultado (no conducta). Reclamos duplicados: resultado que señala caída de calidad del desempeño de tarea. Rotación 22% a 35%: conducta de salida agregada, con la intención de renunciar como actitud antecedente.",2],["Licencias +18%: bienestar. No registrar contraindicaciones: déficit de desempeño de tarea (contraproducente solo si se argumenta omisión deliberada). Quedarse a cuadrar la caja de otros: desempeño contextual.",2],["Ítem de la encuesta: pretende medir una actitud (satisfacción por facetas) pero es de doble cañón. CEAL en riesgo alto: bienestar y riesgo psicosocial (condiciones organizacionales, no personas).",2],["El 28% y los reclamos describen caras distintas: cantidad frente a calidad del desempeño de tarea; subió una y cayó la otra, que es lo que las metas de cantidad producen (foco estrecho).",2],["\"No tienen compromiso\": confunde una actitud (compromiso) con el sistema que la produce; el dato contextual (cuadrar cajas ajenas) la desmiente; y el cambio de rotación coincidió con el cambio del sistema de incentivos, no con un cambio de personas.",2]],"errores":"usar las ventas como medida de desempeño individual; llamar \"actitud\" a los atrasos o a la rotación; clasificar la omisión en peaks como contraproducente sin argumentar intencionalidad."},{"id":"s14","titulo":"3. La nota de Rodolfo: Valentina y Paula","texto":"Evalúa el sistema de evaluación de Rodolfo (\"la nota sale sola de las unidades vendidas\") con la definición de desempeño del curso (Campbell, 1990): qué confunde y por qué evaluar resultados brutos premia y castiga azar. Describe el perfil de desempeño de Valentina y de Paula en las cuatro caras (tarea, contextual, adaptativo, contraproducente), con una conducta del caso por cara, y explica con Motowidlo y Van Scotter (1994) y Rotundo y Sackett (2002) por qué \"un crack con mal genio\" y \"buena persona, pero no rinde\" son diagnósticos incompletos. Cierra con \"el que quiere se queda hasta tarde\": distingue insumo, desempeño, resultado y productividad.","pauta":[["Desempeño = conductas relevantes para la organización y bajo control de la persona (Campbell, 1990); las unidades vendidas son un resultado que depende además del mesón asignado, el flujo del local y la temporada: Rodolfo evalúa resultados y con ello premia y castiga azar (el mesón principal tiene tres veces más flujo).",2.5],["Valentina: tarea alta en cantidad y baja en calidad (no registra contraindicaciones), contraproducente (maltrato a los nuevos, incivilidad; devoluciones si se argumenta), contextual ausente. Paula: tarea de calidad (recomienda lo que sirve, clientes que vuelven), contextual (entrena a los nuevos), adaptativo (aprende primero la receta electrónica y la enseña), sin conductas contraproducentes.",3],["Motowidlo y Van Scotter (1994): tarea y contextual aportan información independiente a la evaluación global y tienen antecedentes distintos; una nota basada solo en unidades mide una fracción de lo que los propios jefes consideran desempeño.",1.5],["Rotundo y Sackett (2002): en el juicio global, las conductas contraproducentes pesan tanto como el desempeño de tarea y más que la ciudadanía; \"un crack con mal genio\" es un perfil de desempeño mixto con una cara en rojo, no un buen trabajador con un defecto.",1.5],["Horas: las horas son un insumo, el desempeño son conductas, el resultado es el estado del mundo que producen y la productividad es resultado por insumo; quedarse hasta tarde puede reflejar carga mal diseñada o presentismo (Campbell y Wiernik, 2015; apuesta de la Ley 21.561).",1.5]],"errores":"describir el desempeño de Valentina como \"excelente\" por sus unidades; llamar \"actitud\" al maltrato (es conducta); confundir desempeño adaptativo con contextual sin justificar; omitir que el mesón asignado contamina el resultado."},{"id":"s15","titulo":"4. Pulso360, el ítem global y la trampa de LaPiere","texto":"Explica qué es una actitud laboral (evaluación, tres componentes) y qué la distingue de una conducta, usando frases de los vendedores. Evalúa la lectura de Andrés de los dos ítems (satisfacción global 5.9 con el 61% en el techo; intención de buscar trabajo 4.1 con un tercio en 6 o 7) con el principio de compatibilidad y la evidencia de Rubenstein et al. (2018): qué ítem predice la rotación y cuánto. Evalúa la oferta de Pulso360 (\"el engagement no tiene nada que ver con la satisfacción\") con Le et al. (2010) y Harrison et al. (2006). Juzga la frase \"las encuestas no sirven\" a partir de las condiciones de aplicación (jefe presente, hoja con nombre) y de lo que LaPiere (1934) enseña. Clasifica los tres tipos de mensajes del WhatsApp y el silencio de Felipe con el modelo salida-voz-lealtad-negligencia y di cuál le sirve a la gerencia.","pauta":[["Actitud: evaluación favorable o desfavorable hacia un objeto, con componentes cognitivo (\"la meta es absurda\", Tomás), afectivo (\"me carga empujar suplementos\", Rodrigo) y disposición conductual (\"estoy entrevistándome\", intención); es un juicio interno que se mide, a diferencia de la conducta observable (cuadrar cajas, no registrar contraindicaciones).",2],["Principio de compatibilidad: una actitud general predice bien un paquete amplio de conductas, no una conducta específica; la intención de renunciar es el mejor predictor individual de la rotación (ρ ≈ .56; Rubenstein et al., 2018) frente a satisfacción (ρ ≈ .28) y sueldo (ρ ≈ .17); Andrés leyó el ítem que menos predice la rotación y descartó el que más la predice; la media 5.9 esconde una distribución pegada al techo.",2.5],["Pulso360: satisfacción y compromiso correlacionan .91 corregidos (Le et al., 2010) y las actitudes laborales forman una actitud general (Harrison et al., 2006); el engagement aporta el énfasis en la energía pero comparte la mayor parte de su varianza; la pregunta correcta es qué agrega sobre lo que ya se mide, no \"qué nombre tiene\".",2],["\"Las encuestas no sirven\": las condiciones de aplicación (jefe presente, hoja con nombre) miden miedo, no actitudes; LaPiere (1934) enseña las condiciones para medir bien (anonimato, especificidad, compatibilidad), no que medir sea inútil; bien medidas, las actitudes predicen renuncias reales y resultados de unidad (Harter et al., 2002).",2],["Modelo salida-voz-lealtad-negligencia (Farrell, 1983): proponer cambios y pedir reunión = voz; \"hay que aguantar\" = lealtad; entrevistarse en otra cadena = salida; Felipe que deja de contar inventario y no escribe = negligencia. La voz es la única respuesta que entrega información a la gerencia.",1.5]],"errores":"definir actitud como \"energía\" o \"ganas\"; tratar la rotación como actitud; concluir que el engagement es un constructo distinto por tener otro nombre; descartar la encuesta en vez de corregir cómo se aplicó."},{"id":"s16","titulo":"5. Rodrigo está quemado y la fruta de los lunes","texto":"Distingue estrés laboral, burnout y riesgo psicosocial y aplica cada concepto al caso: qué dimensiones del burnout (Maslach et al., 2001) aparecen en las frases de Rodrigo y por qué no es \"cansancio que se pasa con vacaciones\". Evalúa el diagnóstico de Andrés (\"el que se estresa es porque no aguanta\") con los modelos demanda-control (Karasek, 1979) y esfuerzo-recompensa (Siegrist, 1996), identificando en el sistema de metas las condiciones que corresponden a cada modelo. Explica qué dimensiones del CEAL-SM/SUSESO están en juego, qué errores de aplicación tuvo la evaluación de 2025 (sin Comité de Aplicación paritario, participación bajo 60%) y por qué el programa de bienestar propuesto no \"cumple con el CEAL\". Cierra con el dato chileno que justifica tratar esto como un riesgo caro y no como filantropía.","pauta":[["Tres conceptos: estrés laboral = respuesta cuando las demandas exceden los recursos; burnout = síndrome de estrés crónico mal gestionado con agotamiento, cinismo o distancia mental y eficacia reducida (Maslach et al., 2001), reconocido en la CIE-11 como fenómeno ocupacional (OMS, 2019); riesgo psicosocial = condición de la organización del trabajo que puede dañar la salud (no un rasgo de la persona).",2.5],["Rodrigo: \"sin energía desde la mañana\" (agotamiento), \"me da lo mismo lo que recomiende\" (cinismo), \"ya no sé si sirvo para esto\" (eficacia reducida); las tres dimensiones presentes, ligadas al ranking y a la meta, no a cansancio transitorio que se pase con descanso.",1.5],["Karasek (1979): alta exigencia (150 unidades contra una mediana de 95) con bajo control (mesón asignado por el jefe, meta impuesta sin consulta) es la combinación de mayor riesgo; Siegrist (1996): desbalance entre esfuerzo y recompensa (bono todo o nada, nada a 149, sin reconocimiento, comparación pública). El diagnóstico de Andrés atribuye a la persona lo que los modelos ubican en las condiciones.",2],["CEAL-SM/SUSESO: dimensiones en juego como carga de trabajo, exigencias emocionales, reconocimiento, calidad del liderazgo, confianza y justicia, vulnerabilidad; la aplicación de 2025 incumplió el procedimiento (sin Comité de Aplicación paritario, aplicación desde gerencia, participación 45% bajo el mínimo de 60%), lo que compromete la representatividad y el anonimato.",2],["El programa (fruta, aplicación, día de la felicidad) no modifica ninguna de las 12 dimensiones ni cumple la obligación de intervenir sobre las condiciones con la mutualidad: wellness washing. Dato chileno: 67% de las enfermedades profesionales diagnosticadas en 2022 fueron de salud mental (77% en mujeres; SUSESO, 2023); las licencias +18% concentradas en los locales en riesgo alto son el costo visible.",2]],"errores":"usar \"quemado\" como sinónimo de cansado; proponer talleres de manejo del estrés como intervención sobre el riesgo psicosocial; tratar el programa de bienestar como cumplimiento del CEAL; atribuir el estrés a la baja tolerancia de Rodrigo."},{"id":"s3","titulo":"6. El ítem del practicante y el informe archivado","texto":"Explica qué problema de medición tiene el ítem \"Estoy satisfecho con mi jefe y con mi sueldo\", por qué una media de 4.2 es ininterpretable y cómo lo reescribirías (dos ítems, una estrategia global o por facetas, anonimato). Después explica qué obliga el resultado del CEAL-SM/SUSESO (riesgo alto en carga y exigencias emocionales en dos locales), qué mide y qué no mide el instrumento, y por qué \"archivar el informe\" no es solo mala gestión.","pauta":[["Ítem de doble cañón: dos objetos (jefe y sueldo) en una sola pregunta; la media 4.2 es ininterpretable porque no se sabe qué evaluó cada persona.",2],["Reescritura: dos ítems separados, un objeto cada uno, lenguaje simple, sin dirigir; estrategia por facetas (dice dónde está el problema) o global (un ítem bien hecho es confiable); anonimato y encuesta diseñada, no hecha por un practicante.",2],["CEAL-SM/SUSESO: obligatorio desde el 1 de enero de 2023 para organizaciones de 10 o más personas, por centro de trabajo, anónimo, reevaluación cada dos años; mide condiciones de la organización del trabajo (carga, exigencias emocionales, liderazgo, claridad de rol...), no diagnostica personas ni es encuesta de clima.",2.5],["Riesgo alto obliga a intervenir sobre las condiciones con apoyo del organismo administrador (mutualidad); riesgo medio obliga a grupos de discusión; archivar el informe es incumplimiento legal, no solo mala gestión.",2],["Conexión con el caso: las licencias +18% y la rotación son coherentes con carga y exigencias emocionales altas; el ranking y el bono todo o nada agravan la presión en locales ya en riesgo.",1.5]],"errores":"tratar el CEAL como encuesta de clima o de satisfacción; proponer \"derivar a los más quemados\"; corregir el ítem agregando más palabras en vez de separarlo."},{"id":"s4","titulo":"7. Una hipótesis que se pueda refutar","texto":"Formula una hipótesis falsable, distinta de la de la consultora, que explique el aumento de la rotación de vendedores a partir de los datos del caso: variable predictora, variable resultado, dirección y mecanismo. Indica qué dato tendría que observarse para que quedara refutada, qué tercera variable podría explicar una asociación entre \"felicidad\" y ventas si el piloto fuera correlacional, y cómo diseñarías el piloto para poder usar el verbo \"causa\".","pauta":[["Hipótesis con las cuatro piezas (por ejemplo: a mayor presión por la meta de 150 / asignación arbitraria del mesón / ranking público → mayor intención de renunciar; dirección positiva; mecanismo: la presión por un resultado que no se controla y la comparación pública deterioran la evaluación del trabajo y agotan recursos).",3],["Es falsable: comparación explícita y dato que la refutaría (locales con la misma presión y sin aumento de intención de renunciar; o rotación igual tras quitar el ranking).",2],["Tercera variable para \"felicidad\" y ventas: el jefe de local, el mesón principal, la ubicación del local o la temporada producen ambas cosas.",2],["Diseño del piloto: asignación al azar de locales a programa y a lista de espera, medición antes y después en ambos, variables de resultado y de actitud con ítems bien construidos; o escalonamiento aleatorio si hay que llegar a todos.",2],["Lenguaje: \"se asocia\" para lo correlacional, \"causa\" solo con azar; y la hipótesis no es una recomendación.",1]],"errores":"escribir una recomendación (\"hay que motivar más\") como hipótesis; hipótesis con salida de emergencia; proponer \"medir más locales\" como diseño causal."}]},{"tema":"Tema 2 · Motivación: por qué, qué y cómo","items":[{"id":"s5","titulo":"8. \"Los vendedores de hoy no tienen compromiso\"","texto":"Evalúa el diagnóstico de Andrés con la definición de motivación del curso (inicio, dirección, intensidad, persistencia) y con las cuatro cosas que la motivación no es (entusiasmo, satisfacción, desempeño, rasgo). Usa a Valentina y a Tomás para mostrar que el problema no es \"cuánta\" motivación hay. Luego evalúa el argumento de la pirámide de Maslow: qué dice la evidencia sobre esa teoría, de quién es realmente la idea de \"una necesidad a la vez\" y qué error contiene \"primero lo básico, después el compromiso\".","pauta":[["Definición: fuerzas que inician la conducta y determinan dirección, intensidad y persistencia (Pinder, 1998); el diagnóstico de Andrés no distingue ninguna de las cuatro fases.",2],["Lo que no es: entusiasmo (Tomás sonriente), satisfacción, desempeño (Valentina cumple 150 pero su motivación es externa) y rasgo (\"la gente de hoy\"); si la motivación varía con el sistema, el sistema es la palanca.",2.5],["Valentina y Tomás: el problema no es cuánta motivación sino de qué tipo y hacia qué (externa dependiente del bono; amotivación frente a una meta sin sentido).",1.5],["Maslow: Wahba y Bridwell (1976) no encontraron apoyo para los cinco niveles ni para la progresión; \"una a la vez\" es de McGregor; Maslow nunca dibujó la pirámide (Bridgman et al., 2019).",2.5],["Error de \"primero lo básico, después el compromiso\": la regulación externa no produce compromiso afectivo sino compromiso de continuidad (76.8% de lo explicado; Van den Broeck et al., 2021); la calidad de la motivación no se compra en etapas.",1.5]],"errores":"aceptar la pirámide como evidencia; decir que Valentina \"está más motivada\" porque cumple; tratar \"compromiso\" como rasgo generacional."},{"id":"s6","titulo":"9. Cuatro vendedores en el continuo","texto":"Ubica a Valentina, Rodrigo, Paula y Tomás en el continuo de la teoría de la autodeterminación (tipo de regulación y frase que lo delata). Con la evidencia metaanalítica (Van den Broeck et al., 2021; Hagger y Star, 2026), predice qué se espera de cada uno en desempeño, actitudes y bienestar, indica quién tiene mayor riesgo de renunciar y por qué, y explica qué muestra el caso sobre cantidad y tipo de motivación. Cierra con las necesidades psicológicas que el sistema frustra en Matías.","pauta":[["Valentina: regulación externa (\"si sacaran el bono, volvería a lo normal\"). Rodrigo: introyectada (culpa, vergüenza, ranking). Paula: identificada o integrada (\"esto es lo que quiero hacer\"), sin compromiso con la meta. Tomás: amotivación respecto de la meta (\"no sé para qué\").",3],["Predicciones con la evidencia: externa casi plana (ρ ≈ .04 desempeño); introyectada rinde con costo (.28) y predice intención de renunciar (β ≈ .515); identificada el mejor desempeño (.43) y buena satisfacción; amotivación solo consecuencias negativas (−.28, −.32, +.44 burnout).",2.5],["Mayor riesgo de renunciar: Rodrigo (introyección; ya duerme mal) y, por otra vía, Paula (el sistema castiga su conducta autónoma); Valentina se queda mientras dure el bono (compromiso de continuidad, no lealtad).",1.5],["Cantidad vs tipo: dos vendedores \"muy motivados\" producen malos resultados en calidad y bienestar; la autónoma parece \"poco motivada\" para el sistema. La pregunta útil es de qué tipo.",1.5],["Matías: competencia frustrada (nunca sabe si lo que recomendó sirvió; el químico no le dice nada) y relación (invisibilidad); la autonomía sola no basta (Slemp et al., 2024: apoyo a la relación suma por sobre la autonomía).",1.5]],"errores":"usar solo intrínseca/extrínseca; confundir introyectada con autónoma; decir que Valentina rendirá mejor porque \"tiene más motivación\"."},{"id":"s7","titulo":"10. El sistema de metas, por dentro","texto":"Evalúa el sistema de metas de Del Valle con la teoría del establecimiento de metas: qué condiciones cumple (específica, difícil) y cuáles fallan (compromiso, retroalimentación), con la evidencia. Identifica al menos tres efectos secundarios sistemáticos (Ordóñez et al., 2009) ya visibles en los resultados y explica las devoluciones del último día con Schweitzer, Ordóñez y Douma (2004): quiénes hacen trampa, por qué, y qué implica para el \"todo o nada\" de 149 versus 150.","pauta":[["Cumple: específica (150) y difícil (58% sobre la mediana de 95). Falla: compromiso (asignada sin propósito; Tomás y Paula) y retroalimentación (solo al cierre; el ranking es presión, no información). Evidencia: metas con retroalimentación superan a metas solas; asignada sin propósito reduce el desempeño significativamente (Locke y Latham, 2002).",3],["Tres efectos secundarios con su dato: foco estrecho (28% y reclamos), conducta antiética (devoluciones), cultura corroída o motivación intrínseca reducida (ranking; Paula y Rodrigo), riesgo distorsionado (recomendar sin revisar contraindicaciones) (Ordóñez et al., 2009).",2.5],["Schweitzer et al. (2004): sobredeclaración 10.5% sin meta, 22.7% con meta y pago fijo, 30.2% con recompensa; la meta sola ya duplica la trampa.",1.5],["Quiénes: los que quedan a un paso (48.5% de quienes hicieron 8 palabras); la meta como punto de referencia y quedar debajo como pérdida (teoría prospectiva); el vendedor con 148 el día 30 es el caso de riesgo.",2],["Implicancia para el todo o nada: el corte 149/150 maximiza la pérdida percibida; alternativas: tramos, retroalimentación semanal, metas de aprendizaje o de calidad.",1]],"errores":"concluir que la meta \"es demasiado difícil\"; explicar la trampa solo por el bono; proponer metas fáciles como solución."},{"id":"s8","titulo":"11. Rodolfo grita y Matías no se esfuerza","texto":"Analiza con la teoría del reforzamiento por qué Rodolfo \"aprendió\" a gritar (situación, conducta, consecuencia, efecto a largo plazo) y qué tipo de reforzamiento opera. Luego analiza a Matías con la teoría de las expectativas: cuál de los tres eslabones (expectativa, instrumentalidad, valencia) está roto y por qué un eslabón en cero anula el producto. Indica qué palanca distinta corresponde a cada eslabón y qué fuente de autoeficacia le falta a Matías.","pauta":[["Tabla situación-conducta-consecuencia para Rodolfo: reclamo → grita → el reclamo se resuelve y desaparece esa tarde → aprende a gritar. Reforzamiento negativo (su conducta elimina algo desagradable), involuntario: nadie lo diseñó.",3],["Distinción: reforzamiento (aumenta la conducta) vs castigo (la reduce); y advertencia de que el grito castiga conductas colaterales del equipo (preguntar, avisar), no mejora la causa del reclamo.",1],["Matías en Vroom: instrumentalidad rota (\"el bono depende del mesón que te toque\"); expectativa también débil (\"no creo que cambiara nada\"); valencia probablemente intacta. Un cero anula el producto: fuerza = E × I × V.",3],["Palanca por eslabón: expectativa → capacitación, metas próximas, modelamiento; instrumentalidad → reglas consistentes y justicia procedimental en el mesón; valencia → recompensas alineadas con lo que la persona valora, propósito explicado.",2],["Autoeficacia: a Matías le faltan experiencias de logro reconocibles (nunca sabe si la recomendación sirvió) y persuasión verbal creíble (el químico no le dice nada).",1]],"errores":"llamar \"castigo\" al reforzamiento negativo; decir que a Matías \"le falta motivación\" sin identificar el eslabón; proponer subir el bono (valencia) cuando lo roto es la instrumentalidad."}]},{"tema":"Tema 2 · Incentivos, justicia y diseño del trabajo","items":[{"id":"s9","titulo":"12. Duplicar el bono, \"Vendedor del mes\" y el mesón principal","texto":"La gerencia quiere duplicar el bono, instalar el \"Vendedor del mes\" y mantener el ranking. Decide con evidencia qué tipo de desempeño necesita la farmacia (cantidad o calidad; Jenkins et al., 1998; Cerasoli et al., 2014), qué se sabe del efecto de las recompensas tangibles esperadas frente al elogio (Deci et al., 1999), y qué harás con el bono, el ranking y la asignación del mesón principal usando las tres equidades y las cuatro dimensiones de la justicia organizacional (Colquitt et al., 2001). Nombra un efecto adverso de tu propio sistema y su salvaguarda.","pauta":[["Diagnóstico: la farmacia necesita calidad de la asesoría (reclamos, contraindicaciones); los incentivos financieros compran cantidad (r ≈ .34) y no calidad (r ≈ .08; Jenkins et al., 1998); para calidad manda la motivación intrínseca (β ≈ .35 vs .06; Cerasoli et al., 2014). Duplicar el bono duplica el problema.",2.5],["Deci et al. (1999): tangible esperada d ≈ −.36; elogio d ≈ +.33; \"Vendedor del mes\" combina tangible esperada con comparación pública (control). Reemplazar por reconocimiento informativo privado sobre la calidad.",2],["Decisiones: eliminar el todo o nada o convertirlo en variable por indicadores de calidad o grupal por local; metas con propósito explicado, participación y retroalimentación durante el mes; eliminar el ranking.",2],["Mesón principal: procedimiento transparente y consistente (turnos rotativos o criterio conocido con voz), porque \"según su criterio\" viola la justicia procedimental, que predice el desempeño más del doble que la distributiva (.36 vs .15; Colquitt et al., 2001), y la informacional; equidad interna (mismo cargo, distinta exposición).",2],["Efecto adverso y salvaguarda: cae la cantidad de unidades (desempeño en cantidad, margen) → monitorear y aceptar o compensar con variable grupal por calidad; o flojera social en el variable grupal → locales pequeños y retroalimentación individual privada.",1.5]],"errores":"\"el dinero no motiva\" como argumento; mantener el incentivo por unidades sin advertir el problema; sistema sin costo declarado."},{"id":"s10","titulo":"13. El puesto de operario, por dentro","texto":"Diagnostica el puesto de operario del centro de distribución con las cinco características del modelo de Hackman y Oldham (identifica las dos más bajas con evidencia del caso y comenta qué predice la fórmula del puntaje potencial motivador y qué dice la evidencia sobre ella). Con el modelo de demandas y recursos, clasifica la cuota de 80 líneas por hora y las instrucciones contradictorias como demandas de desafío o de bloqueo (LePine et al., 2005) e identifica los recursos ausentes. Cierra con la necesidad psicológica más frustrada.","pauta":[["Cinco características con evidencia: variedad baja (un tramo), identidad muy baja (nadie arma un pedido completo ni sabe a qué local va), significancia alta pero invisible, autonomía nula (el sistema dicta orden y tiempo), retroalimentación casi nula (errores en planilla mensual). Las dos más bajas: cualquier par entre identidad, autonomía y retroalimentación.",3],["PPM: la fórmula multiplica autonomía y retroalimentación con el promedio de las otras tres → potencial cercano a cero; la evidencia dice que un promedio simple predice igual o mejor; usar la fórmula como diagnóstico.",2],["JD-R: cuota de 80 líneas = desafío (alcanzable con experiencia; tensión .40, motivación +.16); instrucciones contradictorias = bloqueo (conflicto de rol; tensión .58, motivación −.12, desempeño −.20; LePine et al., 2005). Ambas se asocian con tensión.",2.5],["Recursos ausentes: retroalimentación oportuna, apoyo y claridad de la jefatura (una sola fuente de instrucciones), oportunidades de aprender; los recursos amortiguan las demandas.",1.5],["Necesidad más frustrada: competencia (sin retroalimentación no hay forma de sentirse capaz) o autonomía (el sistema decide todo); relación también comprometida (no sabe a quién sirve). Se evalúa la justificación.",1]],"errores":"confundir características con resultados (\"el trabajo es aburrido\"); clasificar el conflicto de rol como desafío; nombrar \"el bono\" como recurso."},{"id":"s11","titulo":"14. Tres medidas, dos operarios","texto":"Evalúa las tres medidas propuestas para el centro (taller, rotación semanal, proyecto estrella): sobre qué interviene cada una (causa o efecto), qué característica del puesto mueve y si es la que está baja, y qué efectos esperas en desempeño, actitudes y bienestar (para el proyecto estrella, usa a Shin y Grant, 2019). Luego analiza lo que hacen Ignacio y Felipe como job crafting: fronteras que modifica cada uno (Wrzesniewski y Dutton, 2001) y qué dice el metaanálisis de Rudolph et al. (2017) sobre cuál conviene fomentar y cuál evitar.","pauta":[["Taller: interviene sobre el efecto, no sobre la causa; no mueve ninguna característica; efecto nulo o transitorio y agrega una demanda (un día menos para las 80 líneas).",2],["Rotación semanal: mueve variedad, no la característica baja (identidad, autonomía, retroalimentación); puede aumentar la ambigüedad de rol; efecto pequeño.",2],["Proyecto estrella: enriquece una parte del trabajo de cinco personas además de su carga; Shin y Grant (2019): la motivación intrínseca alta en una tarea empeora el desempeño en las tareas menos interesantes del mismo puesto (contraste, aburrimiento), efecto curvilíneo; más carga y problema de justicia para los 25 restantes.",2.5],["Ignacio: job crafting de frontera de tarea (planilla, llamados), relacional (contacto con locales) y cognitiva (\"hacemos que el remedio llegue\"); corresponde a aumentar recursos estructurales y sociales (Rudolph: .59 y .35 con engagement). Fomentar e institucionalizar.",2],["Felipe: disminuir demandas obstaculizadoras, la dimensión que se comporta al revés (+.15 con tensión, −.07 con desempeño); evitar. Y notar que \"nadie lo revisa\" es extinción: la organización produjo el crafting que no quiere.",1.5]],"errores":"considerar el taller o la rotación como suficientes; tratar a Ignacio como \"más comprometido\" sin nombrar las fronteras; mezclar las tradiciones (Wrzesniewski y Dutton vs Tims y Bakker) sin sentido."},{"id":"s12","titulo":"15. \"La gente se va a fijar sola\": rediseño sostenible","texto":"Evalúa la frase del gerente de operaciones (bono trimestral por pedidos sin errores en vez de cambiar el sistema para que avise al tiro) con el modelo de fusión medios-fines y los experimentos de Woolley y Fishbach (2018). Luego propón un rediseño del puesto de operario que haga sostenible el desempeño sin depender de alguien \"encima\": forma de rediseño, características que mueve, justificación desde los tres estados psicológicos críticos y una evidencia con magnitud (Humphrey et al., 2007; Holman y Axtell, 2016). Nombra un costo de tu propuesta sobre el bienestar, considerando el dato del CEAL, y su salvaguarda.","pauta":[["Fusión medios-fines: la motivación intrínseca es una propiedad de la relación actividad-meta; hoy el fin (pedido correcto que llega) está separado del medio por un día y una planilla mensual. Palancas: inmediatez (aviso el mismo turno), similitud e identidad (pedido completo).",2.5],["Woolley y Fishbach (2018): recompensas más inmediatas aumentan la motivación intrínseca (84.2% vs 70.3% siguen trabajando sin pago); el momento importó (p = .017) y la magnitud no (p = .175). El bono trimestral está lo más lejos posible de la conducta, y es tangible esperado (−.36).",2],["Rediseño: enriquecimiento vertical (o células por turno): retroalimentación como propiedad del sistema (validación en línea, retorno del estado del pedido en 24 horas), identidad (pedido completo de un local), autonomía (orden y método, especialmente en peaks), una sola jefatura de instrucciones.",2.5],["Justificación: características → estados psicológicos críticos (conocimiento de resultados, responsabilidad, significado) → motivación interna, desempeño de calidad y satisfacción sin supervisión constante; evidencia con magnitud (Humphrey et al., 2007: 43% de la varianza de 19 resultados; sociales +40% en compromiso; Holman y Axtell, 2016: control y retroalimentación mejoraron bienestar y desempeño).",2],["Costo y salvaguarda con el CEAL: la validación en línea puede alargar cada línea en los peaks (carga ya en riesgo alto) → campos mínimos en peaks y complemento diferido, o dotación de refuerzo los lunes; o seguir el pedido hasta el local puede volverse demanda de bloqueo si los locales no responden → acuerdo de servicio.",1]],"errores":"proponer más supervisión o el bono; rediseño que no toca la característica baja; sin costo declarado."}]},{"tema":"Integración","items":[{"id":"s13","titulo":"16. Por qué fallaron las tres cosas que ya probaron","texto":"Andrés dice que \"hicimos todo lo que se puede hacer\": subieron el sueldo base un 8% hace un año (la rotación bajó dos meses y volvió), instalaron el ranking y están por contratar el taller. Explica con la evidencia del ciclo por qué cada una de esas medidas no podía funcionar, usando un marco distinto para cada una, y cierra con la tabla consolidada de la unidad: qué dos palancas mueven desempeño, actitudes y bienestar en la misma dirección sin contraindicaciones, y cuál de ellas no cuesta lo que cuesta subir sueldos.","pauta":[["Aumento de sueldo base (8%): el pago explica alrededor del 10% de la motivación autónoma una vez controlado el diseño del trabajo (Gagné et al., 2026); el sueldo predice la renuncia débilmente (.17) frente a las actitudes (Rubenstein et al., 2018); la rotación volvió porque las condiciones que la producen (meta, ranking, mesón) siguieron iguales.",3],["Ranking: comparación pública que no informa, alimenta introyección (Rodrigo) y viola la justicia procedimental; para el desempeño, lo que pesa es el procedimiento (.36), no el premio.",2.5],["Taller: interviene sobre el efecto (estado de la persona), no sobre la causa (características del puesto y del sistema de metas); el diseño del trabajo explica en promedio 43% de la varianza de 19 resultados y un taller no toca ninguna característica.",2.5],["Tabla consolidada: diseño del trabajo y justicia procedimental mueven desempeño, actitudes y bienestar en la misma dirección sin contraindicaciones; metas e incentivos suben cantidad y pueden bajar bienestar; la justicia procedimental es gratis frente al costo de subir sueldos.",2]],"errores":"usar el mismo marco para las tres medidas; \"el dinero no motiva\" en vez de \"el pago explica poco una vez controlado el diseño\"; afirmar que el diseño del trabajo \"soluciona todo\" sin mencionar que las metas y el mesón siguen pendientes."}]}];
+function initSim(){ const c=document.getElementById("simulacro"); c.innerHTML="";
+  SIM.forEach(g=>{ const h=document.createElement("h3"); h.textContent=g.tema; c.appendChild(h);
+    g.items.forEach(pt=>{ const d=document.createElement("div"); d.className="pregunta";
+      d.innerHTML=`<strong>${pt.titulo}</strong><p style="margin:.5rem 0">${pt.texto}</p>
+        <textarea class="resp" id="t_${pt.id}" placeholder="Escribe aquí tu respuesta (se guarda en este navegador)..." oninput="guardarTexto('${pt.id}')">${estado.textos[pt.id]||""}</textarea>
+        <button class="btn sec" onclick="verPauta('${pt.id}')">Ver pauta y autocorregir</button>
+        <div id="p_${pt.id}" style="display:none"><div class="check">${pt.pauta.map((e,i)=>`<label><input type="checkbox" data-id="${pt.id}" data-i="${i}" onchange="checkSim('${pt.id}')" ${estado.checks[pt.id+"_"+i]?"checked":""}><span>${e[0]} <span class="pts">(${e[1]} pts)</span></span></label>`).join("")}</div>
+        <div class="nota aviso"><strong>Errores frecuentes:</strong> ${pt.errores}</div><div class="nota" id="s_${pt.id}"></div></div>`;
+      c.appendChild(d); }); });
+  SIM.forEach(g=>g.items.forEach(pt=>checkSim(pt.id,true))); totalSim(); }
+function guardarTexto(id){ estado.textos[id]=document.getElementById("t_"+id).value; guardar(); }
+function verPauta(id){ const p=document.getElementById("p_"+id); p.style.display=p.style.display==="none"?"block":"none"; }
+function partePorId(id){ for(const g of SIM) for(const pt of g.items) if(pt.id===id) return pt; }
+function checkSim(id,silent){ const pt=partePorId(id); let s=0; pt.pauta.forEach((e,i)=>{ const c=document.querySelector(`input[data-id="${id}"][data-i="${i}"]`); if(c&&c.checked){ s+=e[1]; estado.checks[id+"_"+i]=1; } else delete estado.checks[id+"_"+i]; }); const max=pt.pauta.reduce((a,e)=>a+e[1],0); document.getElementById("s_"+id).innerHTML=`<strong>Autoevaluación: ${s} de ${max} puntos.</strong> ${s>=max*.85?"Nivel Logrado.":s>=max*.6?"Nivel Parcial alto: revisa los elementos sin marcar.":s>=max*.35?"Nivel Parcial.":"Insuficiente: vuelve al apunte antes de reescribir."}`; estado.respuestas["5_s_"+id]=s; if(!silent){ guardar(); totalSim(); } }
+function simTotales(){ let tot=0,max=0; const porTema=SIM.map(g=>{ let t=0,m=0; g.items.forEach(pt=>{ t+=estado.respuestas["5_s_"+pt.id]||0; m+=pt.pauta.reduce((a,e)=>a+e[1],0); }); tot+=t; max+=m; return {tema:g.tema,t,m}; }); return {porTema,tot,max}; }
+function totalSim(){ const t=document.getElementById("simTot"); const r=simTotales(); t.innerHTML=r.porTema.map(x=>`<div class="stat"><div class="lbl">${x.tema}</div><div class="num">${x.m?Math.round(100*x.t/x.m):0}%</div><div class="lbl">${x.t} de ${x.m} puntos</div></div>`).join("")+`<div class="stat"><div class="lbl">Total</div><div class="num">${r.max?Math.round(100*r.tot/r.max):0}%</div><div class="lbl">${r.tot} de ${r.max} puntos</div></div>`;
+  const hechas=SIM.every(g=>g.items.some(pt=>(estado.textos[pt.id]||"").length>200)); if(hechas) marcar(5); }
+
+// ===================== ESTACIÓN 6: MITOS =====================
+const MITOS=[
+  ["Un trabajador feliz es un trabajador productivo, así que Energía Positiva subirá las ventas.",false,"Satisfacción y desempeño se asocian r ≈ .30 (Judge et al., 2001) con tres explicaciones posibles; nada en un pre-post sin control permite decir \"subirá\".","Apuntes 1 y 3."],
+  ["Si la evidencia es correlacional, el verbo honesto es \"se asocia con\".",true,"\"Causa\" hay que ganárselo con diseño: asignación al azar. Decirlo sin diseño no es un detalle, es un error de gestión.","Apunte 1."],
+  ["Las ventas subieron 28%, por lo tanto el desempeño de los vendedores mejoró.",false,"Las ventas son un resultado; el desempeño son conductas. Subió la cantidad y cayó la calidad (reclamos, contraindicaciones sin registrar).","Apunte 2."],
+  ["La rotación es una actitud laboral.",false,"La rotación es una conducta de salida; la actitud que la antecede es la intención de renunciar (ρ ≈ .56; Rubenstein et al., 2018).","Apunte 3."],
+  ["El CEAL-SM/SUSESO sirve para identificar a los trabajadores con burnout.",false,"Mide condiciones organizacionales por centro de trabajo, es anónimo y obliga a intervenir sobre las condiciones. No diagnostica personas.","Apunte 4."],
+  ["Una meta asignada funciona igual que una participativa si se explica su propósito.",true,"Locke y Latham (2002): asignada con propósito = participativa; asignada a secas, el desempeño cae de forma significativa.","Apunte 7."],
+  ["La motivación intrínseca es el mejor predictor del desempeño.",false,"Van den Broeck et al. (2021): la identificada (ρ ≈ .43) supera a la intrínseca (ρ ≈ .36) en desempeño; la intrínseca gana en satisfacción y bienestar.","Apunte 6."],
+  ["La regulación introyectada es la que más predice la intención de renunciar.",true,"Hagger y Star (2026): β ≈ .515, por encima de cualquier otro tipo. Es la que más se confunde con compromiso.","Apunte 6."],
+  ["Maslow dibujó la pirámide y propuso que las necesidades se satisfacen una a la vez.",false,"Nunca la dibujó (Bridgman et al., 2019); \"una a la vez\" es de McGregor. Maslow escribió que varias necesidades operan simultáneamente.","Apunte 5."],
+  ["El dinero no motiva.",false,"Compra cantidad (r ≈ .34) y no calidad (r ≈ .08; Jenkins et al., 1998). No es el dinero en sí sino cómo se administra (Deci, 1972).","Apunte 8."],
+  ["Las recompensas tangibles esperadas reducen la motivación intrínseca, y el elogio la aumenta.",true,"Deci, Koestner y Ryan (1999): d ≈ −.36 y d ≈ +.33. Las inesperadas no la tocan (+.01).","Apunte 8."],
+  ["Quien está más lejos de la meta es quien más hace trampa.",false,"Schweitzer et al. (2004): mienten los que quedan a un paso (48.5% de quienes hicieron 8 palabras); la meta es punto de referencia y quedar debajo es pérdida.","Apunte 7."],
+  ["La justicia procedimental predice el desempeño más del doble que la distributiva.",true,"Colquitt et al. (2001): .36 contra .15. La gente tolera recibir menos; no tolera la arbitrariedad. Y el procedimiento es gratis.","Apunte 8."],
+  ["Si el bono es grande, el efecto sobre la motivación intrínseca es mejor que si es chico.",false,"Woolley y Fishbach (2018): el momento importó (p = .017) y la magnitud no (p = .175). Un bono chico hoy hace más que uno grande en un mes.","Apunte 9."],
+  ["Hacer el puesto más interesante es la mejor forma de reducir la intención de renunciar.",false,"Humphrey et al. (2007): las características motivacionales explican 2% de las percepciones de rotación; las sociales agregan 24 puntos. La gente renuncia a un lugar, no a un puesto aburrido.","Apunte 9."],
+  ["Las demandas de desafío no producen tensión.",false,"LePine et al. (2005): desafío .40 y bloqueo .58 con tensión. Ninguna sale gratis; difieren en motivación y desempeño.","Apunte 9."],
+  ["Sacarse de encima las tareas que estorban es la forma de job crafting con mejores resultados.",false,"Rudolph et al. (2017): disminuir demandas obstaculizadoras se asocia con más tensión (+.15) y menor desempeño; aumentar recursos estructurales es la mejor (.59 con engagement).","Apunte 9."],
+  ["Enriquecer una sola tarea del puesto puede empeorar el desempeño en las demás.",true,"Shin y Grant (2019): contraste por aburrimiento; efecto curvilíneo. El rediseño parcial tiene costo.","Apunte 9."],
+  ["Un trabajador técnicamente brillante con conductas dañinas es, para el evaluador promedio, un buen trabajador con un defecto.",false,"Rotundo y Sackett (2002): en la nota global, las conductas contraproducentes pesan tanto como el desempeño de tarea. Es un perfil de desempeño mixto con una cara en rojo.","Apunte 2."],
+  ["Quedarse hasta tarde es evidencia de mejor desempeño.",false,"Las horas son un insumo; el desempeño son conductas; la productividad es resultado por insumo. Quedarse tarde puede reflejar carga mal diseñada o presentismo (Campbell y Wiernik, 2015).","Apunte 2."],
+  ["El engagement es un constructo distinto de la satisfacción laboral y hay que medirlo aparte.",false,"Satisfacción y compromiso corregidos correlacionan .91 (Le et al., 2010); la familia de actitudes forma una actitud laboral general (Harrison et al., 2006). El engagement enfatiza la energía; comparte casi toda su varianza.","Apunte 3."],
+  ["La intención de renunciar predice la renuncia mejor que el sueldo, las alternativas de mercado y el estrés.",true,"Rubenstein et al. (2018): ρ ≈ .56, el mejor predictor individual conocido; el sueldo, ρ ≈ .17. Principio de compatibilidad: actitud específica, conducta específica.","Apunte 3."],
+  ["El burnout es estar muy cansado y se pasa con vacaciones.",false,"Síndrome de tres dimensiones (agotamiento, cinismo, eficacia reducida) producido por estrés laboral crónico mal gestionado (Maslach et al., 2001); fenómeno ocupacional en la CIE-11 (OMS, 2019). El descanso alivia el agotamiento transitorio; el burnout exige cambiar condiciones.","Apunte 4."],
+  ["El estrés laboral depende sobre todo de condiciones del trabajo: alta exigencia con bajo control y desbalance entre esfuerzo y recompensa.",true,"Karasek (1979) y Siegrist (1996). Por eso la norma chilena obliga a evaluar e intervenir las condiciones organizacionales (CEAL-SM/SUSESO), no la resistencia de las personas.","Apunte 4."],
+  ["Un taller de motivación interviene sobre la causa del problema.",false,"Interviene sobre el efecto (el estado de la persona). Las causas son características del puesto y del sistema: autonomía, retroalimentación, metas, justicia.","Apunte 9."],
+  ["La motivación intrínseca se puede fabricar acercando el fin al medio.",true,"Fusión medios-fines (Kruglanski et al., 2018): emparejamiento, unicidad, similitud e inmediatez. No hace falta gente apasionada ni trabajos apasionantes.","Apunte 9."],
+];
+function initMitos(){
+  const c=document.getElementById("mitos"); c.innerHTML="";
+  MITOS.forEach((m,i)=>{ const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML=`<strong>${i+1}. ${m[0]}</strong><br><span class="opc" data-v="1">Verdadero</span><span class="opc" data-v="0">Falso</span><div class="feedback" style="display:none"></div>`;
+    c.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ if(d.dataset.done) return; d.dataset.done="1"; const v=el.dataset.v==="1"; const ok=v===m[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[m[1]?0:1].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=`<strong>${m[1]?"Verdadero":"Falso"}.</strong> ${m[2]} <span class="cita">${m[3]}</span>`;
+      estado.respuestas["6_m"+i]=ok?1:0; guardar();
+      const done=MITOS.every((_,k)=>("6_m"+k) in estado.respuestas);
+      if(done){ const ac=MITOS.filter((_,k)=>estado.respuestas["6_m"+k]===1).length; const r=document.getElementById("mitosRes"); r.style.display="block"; r.innerHTML=`<strong>Resultado:</strong> ${ac} de ${MITOS.length} veredictos correctos. En una respuesta de desarrollo, cada uno de estos mitos escrito como afirmación cuesta puntos: o es un concepto mal aplicado o lenguaje causal sin respaldo.`; marcar(6); }
+    }); });
+}
+
+// ===================== FICHA =====================
+const REPASO={1:"Vuelve a leer el caso marcando, por tema, las frases y los números; la estación 1 te dice qué concepto activa cada uno.",2:"Apunte 1 (jerarquía de evidencia, correlación y causalidad, GBE, hipótesis), apunte 2 (desempeño), apunte 3 (actitudes, medición, LaPiere) y apunte 4 (bienestar, CEAL-SM).",3:"Apunte 5 (qué es la motivación, teorías zombis), apunte 6 (SDT, Van den Broeck, Hagger y Star) y apunte 7 (metas, Ordóñez, Schweitzer, Vroom, autoeficacia).",4:"Apunte 8 (reforzamiento, incentivos, Deci, Cerasoli, equidades, justicia) y apunte 9 (características del puesto, JD-R, job crafting, Shin y Grant, fusión medios-fines).",5:"Reescribe las partes con autoevaluación bajo 60% siguiendo la pauta: concepto nombrado, aplicado a una frase o dato del caso, justificado con la teoría o la evidencia.",6:"Secciones E (Mito versus evidencia) de los apuntes 1 a 9."};
+function pintarFicha(){
+  const k=EST.filter(i=>estado.hechas[i]); const falt=EST.filter(i=>!estado.hechas[i]);
+  const EXCL=new Set(["3_sdtsim","3_metas","3_vroom","4_ppm"]);
+  const resp=Object.entries(estado.respuestas).filter(([key])=>/^[12346]_/.test(key)&&!EXCL.has(key));
+  const ac=resp.filter(([,v])=>v===1).length;
+  const rs=simTotales(); const sim=rs.max?Math.round(100*rs.tot/rs.max):0; const simHecho=Object.keys(estado.respuestas).some(k=>k.startsWith("5_s_")&&estado.respuestas[k]>0);
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas:</strong> ${k.length? k.map(i=>NOMBRES[i]).join(" · "):"ninguna todavía"}.` + (falt.length? ` <strong>Faltan:</strong> ${falt.map(i=>NOMBRES[i]).join(" · ")}.`:" Las seis.") + (resp.length? `<br><strong>Preguntas y clasificaciones respondidas:</strong> ${resp.length}, con ${ac} aciertos a la primera.`:"") + (simHecho? `<br><strong>Preguntas de desarrollo:</strong> ${sim}% de los elementos de las pautas marcados (${rs.tot} de ${rs.max} puntos).`:"");
+  const errores={}; resp.forEach(([key,v])=>{ if(v===0){ const e=+key.split("_")[0]; errores[e]=(errores[e]||0)+1; } });
+  const lista=Object.keys(errores).map(e=>`<li>${NOMBRES[e]}: ${errores[e]} ${errores[e]===1?"error":"errores"}. Repasa: ${REPASO[e]}</li>`).join("") + (simHecho&&sim<60?`<li>Preguntas de desarrollo bajo 60%. ${REPASO[5]}</li>`:"");
+  document.getElementById("fichaRepaso").innerHTML = lista? `<h3>Sugerencias de repaso</h3><ul class="sans" style="font-size:.92rem">${lista}</ul>` : (resp.length? `<div class="nota ok">Sin errores en lo respondido. Último ejercicio: explica con tus palabras, en seis líneas, por qué instalar retroalimentación inmediata en el sistema del centro de distribución es a la vez una intervención sobre una característica del puesto, sobre la fusión medios-fines y sobre un recurso del modelo de demandas y recursos.</div>`:"");
+}
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado, incluidas tus respuestas del simulacro?")) return; try{ localStorage.removeItem(KEY); }catch(e){} location.reload(); }
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1tema",TEMAS,C1TEMA,"t",1); clasificador("c1dato",DATOS,C1DATO,"d",1); pregunta("q1",Q1,1);
+clasificador("c2jer",JER,C2JER,"jer",2); initMatch("c2tres",TRES,"elige la lectura..."); pregunta("q2b",Q2B,2); clasificador("c2vc",VC,C2VC,"vc",2); clasificador("c2caras",CARAS,C2CARAS,"caras",2); pregunta("q2d",Q2D,2); clasificador("c2act",ACT,C2ACT,"act",2); initMatch("c2zoo",ZOO,"elige la definición..."); pregunta("q2act",Q2ACT,2); clasificador("c2evln",EVLN,C2EVLN,"evln",2); clasificador("c2item",ITEM,C2ITEM,"item",2); pregunta("q2med",Q2MED,2); pregunta("q2e",Q2E,2); clasificador("c2bien",BIEN,C2BIEN,"bien",2); pregunta("q2bien",Q2BIEN,2); initMatch("c2hip",HIP,"elige la pieza..."); clasificador("c2fal",FAL,C2FAL,"fal",2); pregunta("q2g",Q2G,2); pregunta("q2",Q2,2);
+clasificador("c3mot",MOT,C3MOT,"mot",3); clasificador("c3zombi",ZOM,C3ZOMBI,"zom",3); clasificador("c3sdt",SDT,C3SDT,"sdt",3); initSDT(); pregunta("q3d",Q3D,3); metas();
+barra("bSch1",10.5,0,55,"pos"); barra("bSch2",22.7,0,55,"pos"); barra("bSch3",30.2,0,55,"neg"); barra("bSch4",48.5,0,55,"neg"); clasificador("c3ord",ORD,C3ORD,"ord",3); vroom(); clasificador("c3ref",REF,C3REF,"ref",3); initMatch("c3ae",AEF,"elige la fuente..."); pregunta("q3",Q3,3);
+barra("bJ1",.34,0,.4,"pos"); barra("bJ2",.08,0,.4,"pos"); barra("bC1",.35,0,.4,"pos"); barra("bC2",.06,0,.4,"pos"); barra("bC3",.33,0,.4,"pos"); barra("bC4",.24,0,.4,"pos"); clasificador("c4cc",CC,C4CC,"cc",4);
+barra("bD1",.33,-.4,.4,"pos"); barra("bD2",.01,-.4,.4,"pos"); barra("bD3",-.10,-.4,.4,"neg"); barra("bD4",-.36,-.4,.4,"neg"); clasificador("c4rec",REC,C4REC,"rec",4); clasificador("c4eq",EQ,C4EQ,"eq",4);
+barra("bQ1",.36,0,.4,"pos"); barra("bQ2",.15,0,.4,"pos"); clasificador("c4jus",JUS,C4JUS,"jus",4); ppm(); pregunta("q4e",Q4E,4);
+barra("bL1",.40,-.3,.6,"neg"); barra("bL2",.58,-.3,.6,"neg"); barra("bL3",.16,-.3,.6,"pos"); barra("bL4",-.12,-.3,.6,"neg"); barra("bL5",.12,-.3,.6,"pos"); barra("bL6",-.20,-.3,.6,"neg"); clasificador("c4jdr",JDR,C4JDR,"jdr",4);
+barra("bH1",34,0,45,"pos"); barra("bH2",17,0,45,"pos"); barra("bH3",24,0,45,"pos"); barra("bH4",40,0,45,"pos"); barra("bH5",2,0,45,"pos"); barra("bH6",24,0,45,"pos"); initMatch("c4forma",FORMA,"elige la forma...");
+clasificador("c4jc",JC,C4JC,"jc",4); pregunta("q4h",Q4H,4); initMatch("c4fus",FUS,"elige la palanca..."); barra("bW1",84.2,0,100,"pos"); barra("bW2",70.3,0,100,"pos"); barra("bW3",52.1,0,100,"pos"); pregunta("q4",Q4,4);
+initSim(); initMitos();
+</script>
+</body>
+</html>

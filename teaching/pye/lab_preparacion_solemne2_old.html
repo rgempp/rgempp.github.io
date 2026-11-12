@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de preparación de la Solemne 2 · Personas y Equipos UDP</title>
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  h4{font-family:system-ui,sans-serif;font-size:.95rem;margin:1rem 0 .3rem;font-weight:700;color:var(--acero)}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  td.c, th.c{text-align:center}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  details{border:1px solid var(--borde);border-radius:.6rem;padding:.6rem 1rem;margin:0 0 1rem;background:#fff}
+  summary{cursor:pointer;font-family:system-ui,sans-serif;font-weight:700;color:var(--rojo)}
+  .caso p{font-size:.98rem}
+  .caso h4{color:var(--tinta);font-size:1rem;margin-top:1rem}
+  textarea.resp{width:100%;min-height:9rem;font-family:Georgia,serif;font-size:.98rem;padding:.7rem;border:1px solid var(--borde);border-radius:.5rem;resize:vertical}
+  .check{font-family:system-ui,sans-serif;font-size:.92rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:.6rem 0}
+  .check label{display:flex;gap:.6rem;align-items:flex-start;padding:.3rem 0;border-bottom:1px dashed var(--borde);cursor:pointer}
+  .check label:last-child{border-bottom:none}
+  .check input{margin-top:.3rem;flex:none}
+  .check .pts{color:var(--gris);font-size:.82rem;white-space:nowrap}
+  .etq{display:inline-block;font-family:system-ui,sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.1rem .5rem;border-radius:1rem;background:var(--gris-claro);color:var(--acero);margin-right:.4rem}
+  .etq.ob{background:var(--tinte);color:var(--rojo)} .etq.op{background:var(--azul-claro);color:var(--azul)}
+  .miembro{border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;background:#fff;font-family:system-ui,sans-serif;font-size:.85rem;cursor:pointer}
+  .miembro.jefe{border-top:4px solid var(--acero)} .miembro.op{border-top:4px solid var(--ambar)}
+  .miembro.on{background:var(--tinta);color:#fff}
+  .miembro.revelado{background:var(--verde-claro);border-color:var(--verde)}
+  .subgrupo{display:flex;flex-wrap:wrap;gap:.3rem;margin:.3rem 0}
+  .ficha{display:inline-block;border-radius:1rem;padding:.15rem .6rem;font-size:.8rem;font-family:system-ui,sans-serif;background:#fff;border:1px solid var(--borde)}
+  .ficha.a{background:#E0E7FF;border-color:#A5B4FC} .ficha.b{background:var(--ambar-claro);border-color:#FCD34D}
+  .circ{cursor:crosshair}
+  .toggle{display:flex;flex-wrap:wrap;gap:.4rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.4rem 0}
+  .toggle label{border:1px solid var(--borde);border-radius:1rem;padding:.25rem .7rem;background:#fff;cursor:pointer}
+  .toggle input{margin-right:.3rem}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Preparación de la Solemne 2</p>
+  <h1>Laboratorio de preparación de la Solemne 2: el caso Frío Norte en seis estaciones</h1>
+  <p class="meta">Personas y Equipos, secciones 02 y 03 · 2º semestre 2026 · Temas 3, 4 y 5 · Apuntes 10 a 20 · Clases 11 a 19<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/pye/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0 ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Este laboratorio gira en torno a un caso de preparación, <strong>Frío Norte</strong>, que tiene la misma estructura que el caso de la prueba pero no es el mismo. La idea es que practiques el movimiento completo: leer un caso, reconocer qué concepto de cada tema está en juego, aplicarlo con la evidencia del curso y escribir una respuesta que un corrector pueda puntuar. Las estaciones 2, 3 y 4 trabajan cada tema con actividades interactivas sobre el caso; la estación 5 es un simulacro con las nueve preguntas guía y una pauta de autocorrección; la 6 revisa los mitos que más aparecen en las respuestas.</p>
+  <p>Puedes hacer las estaciones en cualquier orden; el avance se guarda en este navegador. No hay registro ni nota.</p>
+  <div class="grid g2">
+    <div class="caja"><strong>1. El caso.</strong> Lee Frío Norte y entrena el ojo: ¿de qué tema es cada pista, y de qué es evidencia cada número?</div>
+    <div class="caja"><strong>2. Tema 3 · Afecto en el mesón.</strong> Teoría de los eventos afectivos, circumplejo, asimetría, trabajo emocional, contagio (EASI), inteligencia emocional.</div>
+    <div class="caja"><strong>3. Tema 4 · El comité de verano.</strong> Calculadora de Harrison y Klein, la falla, los gatillos, la cadena del modelo de categorización-elaboración, el perfil oculto, qué palancas tienen evidencia.</div>
+    <div class="caja"><strong>4. Tema 5 · Seleccionar para el verano.</strong> Fuerza situacional, demandas y rasgos, comparador de candidatos, tríada oscura, el tribunal de los tests, faking, seleccionar o diseñar la situación.</div>
+    <div class="caja"><strong>5. Simulacro.</strong> Las nueve preguntas guía con la estructura de la prueba (obligatoria + optativas), espacio para escribir, cronómetro y pauta de autocorrección por elementos.</div>
+    <div class="caja"><strong>6. ¿Mito o evidencia?</strong> Veinte afirmaciones de los tres temas que suelen aparecer, equivocadas, en las respuestas.</div>
+  </div>
+  <h3>Qué cubre este laboratorio respecto de la prueba</h3>
+  <p class="mini">La prueba evalúa un subconjunto de esto. Aquí se cubre todo lo de la prueba y algo más, para que lo que estudies te sirva también para el examen.</p>
+  <table>
+    <tr><th>Objetivo evaluativo</th><th class="c">Estación</th><th class="c">Apunte</th></tr>
+    <tr><td>Aplicar la teoría de los eventos afectivos (cinco componentes) a un caso y ubicar reacciones en el circumplejo</td><td class="c">2A, 2B</td><td class="c">10</td></tr>
+    <tr><td>Usar la asimetría negativo/positivo (Miner et al., 2005) para evaluar una intervención</td><td class="c">2C</td><td class="c">10</td></tr>
+    <tr><td>Distinguir actuación superficial, profunda y regulación automática; reglas de exhibición y legitimidad; evidencia de Hülsheger y Schewe y precisión de Zapf</td><td class="c">2D</td><td class="c">11</td></tr>
+    <tr><td>Explicar el modelo EASI y la evidencia sobre el enojo del líder</td><td class="c">2E</td><td class="c">11</td></tr>
+    <tr><td>Evaluar un test o taller de inteligencia emocional (habilidad vs autoinforme, validez incremental, autoconocimiento)</td><td class="c">2F</td><td class="c">12</td></tr>
+    <tr><td>Clasificar separación, variedad y disparidad, con su estadístico, su consecuencia y el índice de Blau</td><td class="c">3A</td><td class="c">13</td></tr>
+    <tr><td>Describir una falla (ajuste comparativo), sus gatillos, y la cadena categorización → sesgo → bloqueo de la elaboración</td><td class="c">3B, 3C, 3D</td><td class="c">14</td></tr>
+    <tr><td>Explicar el perfil oculto y distinguir elaboración de conflicto</td><td class="c">3E</td><td class="c">14</td></tr>
+    <tr><td>Evaluar programas de diversidad con la evidencia y proponer palancas del modelo</td><td class="c">3F</td><td class="c">13, 14</td></tr>
+    <tr><td>Analizar un puesto con fuerza situacional y activación de rasgos; distinguir lo que se ve en la entrevista de lo que paga el trabajo</td><td class="c">4A, 4B</td><td class="c">17</td></tr>
+    <tr><td>Leer perfiles Big Five y de tríada oscura por demanda del puesto, con cautelas (normas, faking, etiquetas)</td><td class="c">4C, 4D, 4F</td><td class="c">16, 18, 19</td></tr>
+    <tr><td>Juzgar instrumentos con las seis reglas y proponer alternativas con validez</td><td class="c">4E</td><td class="c">19, 20</td></tr>
+    <tr><td>Distinguir seleccionar por honestidad de diseñar la situación (castigo improbable)</td><td class="c">4G</td><td class="c">18</td></tr>
+    <tr><td>Escribir respuestas puntuables: concepto + aplicación + justificación, con el lenguaje de la evidencia</td><td class="c">5</td><td class="c">todos</td></tr>
+  </table>
+  <p class="mini">Tiempo estimado: 90 a 120 minutos en total; el simulacro completo toma 80 minutos si lo haces con cronómetro. Funciona sin conexión una vez cargado.</p>
+  <button class="btn" onclick="ir(1)">Empezar por el caso</button>
+</section>
+
+<!-- ============ ESTACIÓN 1: EL CASO ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · El caso Frío Norte</h2>
+  <p>Léelo completo una vez, sin subrayar. Después vuelve con las dos actividades de abajo. En la prueba tendrás unos 15 minutos para leer el caso: practica leer buscando pistas, no memorizando.</p>
+  <details open>
+    <summary>Abrir o cerrar el caso completo</summary>
+    <div class="caso"><h3 style="margin-top:.4rem">El caso: Frío Norte, servicio técnico de climatización (Antofagasta)</h3><h4>La empresa y el verano</h4><p>Frío Norte vende, instala y repara equipos de aire acondicionado para hogares, oficinas y locales comerciales en Antofagasta y Calama. Tiene 140 trabajadores en verano (noviembre a marzo) y unos 95 el resto del año: técnicos en terreno, bodega, un mesón de atención y pagos en la casa matriz y un pequeño centro de llamados. El 31% del personal es extranjero (sobre todo de Bolivia, Perú y Colombia) y las edades van de 20 a 61 años. En octubre de 2026 asumió como jefa de personas Camila Ortiz, con el encargo del gerente general, Gonzalo Tapia, de "ordenar el mesón antes del verano": la rotación anual del mesón es de 58% (contra 19% en bodega y 27% en técnicos) y en el último verano cinco de las nueve ejecutivas de mesón pidieron licencia médica en enero.</p><h4>El mesón: "aquí nunca se dice que no"</h4><p>El mesón atiende a los clientes que llegan a reclamar, a pagar o a consultar por una visita técnica. El instructivo de atención, escrito por el área comercial, dice: "Al cliente nunca se le dice que no. No le des un plazo que no esté confirmado por el técnico. Si está molesto, escúchalo hasta el final con actitud positiva; no lo derives a un supervisor". El sistema de agendamiento (AgendaYa) asigna las visitas técnicas, pero cuando un cliente reagenda por WhatsApp la visita antigua no se borra y el técnico termina con dos clientes a la misma hora. En las olas de calor eso ocurre a diario: el cliente lleva tres días sin aire a 34 grados, el técnico no llegó, y viene al mesón a reclamar. La sala de espera no tiene aire acondicionado (el equipo lleva dos meses esperando un repuesto que la propia empresa vende).</p><p>El supervisor del mesón, Héctor Pizarro, lleva 11 años en la empresa. Cuando una ejecutiva comete un error en una boleta o en una agenda, lo corrige en voz alta desde su escritorio, delante de los clientes en espera. "Aquí se aprende a gritos; a mí me enseñaron así y salí bueno". La evaluación de riesgos psicosociales de 2025 (CEAL-SM/SUSESO) dejó al mesón en riesgo alto en exigencias emocionales y en riesgo medio-alto en liderazgo y en conflicto de rol; bodega y técnicos quedaron en riesgo medio o bajo en todas las dimensiones.</p><p>Camila pidió a tres ejecutivas que anotaran durante una semana de enero cada episodio que les hubiera "movido el ánimo". Registraron 27 episodios positivos (un cliente que agradece, una compañera que ayuda a cuadrar la caja, un técnico que avisa a tiempo) y 12 negativos: ocho fueron clientes furiosos por una visita duplicada o por una espera sin información; tres, correcciones en voz alta de Héctor; uno, un cliente grosero sin motivo aparente. Las tres dijeron que un solo episodio negativo "les arruinaba la tarde" y que los positivos "se olvidan a los diez minutos".</p><p>Dos testimonios. Fernanda Rojas (mesón, tres años): "Sonrío, digo que lo entiendo, y por dentro quiero gritarle que no fui yo la que agendó dos visitas. Cuando el cliente se va me tiemblan las manos; a las seis de la tarde no me queda nada". Brayan Mamani (mesón, un año y medio): "Al principio me iba a la casa con rabia. Ahora, cuando llega alguien gritando, pienso que lleva tres noches sin dormir por el calor y que yo soy la única persona de la empresa que tiene delante; me concentro en conseguirle una hora real con el técnico. Ya no finjo la calma: la tengo. Lo que todavía me saca de quicio es que el instructivo no me deje decirle la verdad sobre el plazo".</p><p>Gonzalo propone para el verano el programa "Buena Onda": una pizza para el mesón cada viernes, un bono de $20.000 para la ejecutiva con mejor nota de clientes del mes y un taller de tres horas, "Atención con Inteligencia Emocional", de una consultora que aplica antes y después un cuestionario de inteligencia emocional en línea de 12 minutos ("¿con qué frecuencia manejas bien tus emociones bajo presión?"). El programa cuesta más o menos lo mismo que corregir el defecto de AgendaYa, que el proveedor cotizó en $3,9 millones, y que el aire de la sala de espera.</p><h4>El comité de verano</h4><p>Para rediseñar la agenda de visitas y el protocolo de atención a clientes molestos, Gonzalo formó un comité de ocho personas (tabla). Antes de la primera reunión, Camila les preguntó por escrito, de 1 ("la agenda funciona bien, hay que exigir más a la gente") a 7 ("la agenda hay que cambiarla de raíz"), qué pensaban del sistema actual.</p><table><tr><th>Integrante</th><th>Cargo / área</th><th class="c">Edad</th><th>Nacionalidad</th><th class="c">Antigüedad</th><th>Sueldo líquido aprox.</th><th class="c">Encuesta previa (1-7)</th></tr><tr><td>Héctor Pizarro</td><td>Supervisor del mesón</td><td class="c">49</td><td>Chilena</td><td class="c">11 años</td><td>$1.350.000</td><td class="c">1</td></tr><tr><td>Mauricio Alvear</td><td>Jefe de técnicos</td><td class="c">54</td><td>Chilena</td><td class="c">15 años</td><td>$1.500.000</td><td class="c">2</td></tr><tr><td>Pamela Castro</td><td>Jefa de bodega</td><td class="c">45</td><td>Chilena</td><td class="c">9 años</td><td>$1.100.000</td><td class="c">2</td></tr><tr><td>Rosa Contreras</td><td>Ejecutiva de mesón</td><td class="c">47</td><td>Chilena</td><td class="c">7 años</td><td>$680.000</td><td class="c">1</td></tr><tr><td>Brayan Mamani</td><td>Ejecutivo de mesón</td><td class="c">26</td><td>Boliviana</td><td class="c">1 año y medio</td><td>$680.000</td><td class="c">7</td></tr><tr><td>Yesenia Quispe</td><td>Operadora del centro de llamados</td><td class="c">24</td><td>Peruana</td><td class="c">1 año</td><td>$620.000</td><td class="c">6</td></tr><tr><td>Luis Fernando Ríos</td><td>Técnico en terreno</td><td class="c">29</td><td>Colombiana</td><td class="c">2 años</td><td>$780.000</td><td class="c">7</td></tr><tr><td>Valentina Araya</td><td>Operadora del centro de llamados</td><td class="c">22</td><td>Chilena</td><td class="c">6 meses</td><td>$620.000</td><td class="c">6</td></tr></table><p>Gonzalo abrió la primera reunión así: "Los extranjeros son más serviciales que nosotros; quiero que los chicos de afuera nos enseñen a atender". Héctor agregó que "los nuevos todavía no cachan cómo es un verano aquí". En dos reuniones, los cuatro jefes y supervisores hablaron el 83% del tiempo (Camila lo cronometró). Se habló de lo que todos sabían: que en verano la demanda se triplica, que los clientes "vienen más agresivos" y que las notas en Google bajaron. El comité decidió por unanimidad un "protocolo de bienvenida" (saludar de pie, ofrecer agua, pedir disculpas por la espera) y mantener la agenda. "Fue una reunión ejecutiva, sin peleas", resumió Héctor.</p><p>En conversaciones individuales posteriores, Camila supo que cada integrante operativo sabía algo que nadie más sabía y que nunca se dijo. Brayan había detectado que las visitas duplicadas aparecen solo cuando el reagendamiento se hace por WhatsApp fuera del horario de oficina, y sabía cómo revisarlas cada mañana. Yesenia sabía que los clientes más agresivos son administradores de cuatro edificios con contrato de mantención, a los que nadie les asignó un técnico de referencia. Luis Fernando sabía que la mitad de los atrasos de los técnicos se produce porque bodega cierra a las 17:00 y los repuestos para el día siguiente no quedan preparados. Valentina sabía que la nota en Google baja los lunes porque el centro de llamados no trabaja el fin de semana y el lunes se acumulan 200 llamadas. Al preguntarles por qué no lo dijeron: "los jefes ya venían con la respuesta", "no era mi área", "después de lo que dijo don Gonzalo, lo que yo dijera iba a ser 'la opinión de los bolivianos', no la mía".</p><p>Como "hubo algunos roces entre chilenos y extranjeros en bodega", Gonzalo propone además una capacitación obligatoria en línea de una hora sobre diversidad para los 140 trabajadores y contratar una "encuesta de clima inclusivo" de cuatro preguntas que ofrece la misma consultora del taller.</p><h4>Seleccionar para el verano</h4><p>Para el verano hay que contratar diez ejecutivas o ejecutivos de mesón. El mesón recibe pagos en efectivo y con tarjeta; entre las 18:00 y las 20:00 queda una sola persona, el cierre de caja se hace una vez por semana y la cámara del local enfoca la puerta, no el mesón. El verano pasado hubo dos descuadres de caja de más de $150.000 que nunca se aclararon. Gonzalo: "Contratemos gente honesta y responsable y se acaba el tema".</p><p>La consultora Talento Andino propone tres herramientas: un test de colores (el postulante ordena ocho tarjetas de colores según su preferencia y el sistema entrega un perfil de personalidad), un DISC en línea (cuatro "estilos") y el mismo cuestionario de inteligencia emocional del taller, "para asegurar que llegue gente con tolerancia a la frustración". Héctor, que hace la entrevista final, tiene su propio método: "En diez minutos sé si sirve: busco gente simpática, conversadora, que le caiga bien al cliente". Camila revisó los dos últimos veranos: las personas que Héctor calificó como "muy simpáticas" no tuvieron mejores notas de clientes que el resto, concentraron la mayoría de las renuncias antes de marzo y el doble de reclamos de compañeras por cuadraturas de caja mal hechas.</p><p>Como prueba piloto, Camila aplicó a dos finalistas un inventario Big Five y una escala breve de tríada oscura. La tabla muestra percentiles respecto de las normas chilenas preliminares disponibles (estudiantes universitarios, n ≈ 1.800); un percentil más alto indica más del rasgo. Héctor prefiere al candidato A ("es el más simpático que he entrevistado en años").</p><table><tr><th>Dimensión</th><th class="c">Candidato A (percentil)</th><th class="c">Candidata B (percentil)</th></tr><tr><td>Narcisismo</td><td class="c">85</td><td class="c">30</td></tr><tr><td>Maquiavelismo</td><td class="c">65</td><td class="c">20</td></tr><tr><td>Psicopatía</td><td class="c">35</td><td class="c">25</td></tr><tr><td>Neuroticismo (N)</td><td class="c">30</td><td class="c">50</td></tr><tr><td>Extraversión (E)</td><td class="c">92</td><td class="c">55</td></tr><tr><td>Amabilidad (A)</td><td class="c">40</td><td class="c">72</td></tr><tr><td>Responsabilidad (C)</td><td class="c">38</td><td class="c">80</td></tr><tr><td>Apertura a la experiencia (O)</td><td class="c">65</td><td class="c">45</td></tr></table></div>
+  </details>
+
+  <h3>A. ¿De qué tema es esta pista?</h3>
+  <p>Cada frase del caso fue puesta ahí por algo. Indica a qué tema pertenece la pista y lee qué concepto activa.</p>
+  <div id="c1tema"></div>
+
+  <h3>B. ¿De qué es evidencia este número?</h3>
+  <p>El caso tiene cifras a propósito. Un buen argumento usa el número correcto para la afirmación correcta. Clasifica qué variable o concepto respalda cada dato.</p>
+  <div id="c1dato"></div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2: TEMA 3 ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Tema 3: afecto en el mesón</h2>
+  <p>La teoría de los eventos afectivos (Weiss & Cropanzano, 1996) dice que las <strong>características del ambiente de trabajo</strong> hacen probables ciertos <strong>eventos</strong>; los eventos producen <strong>reacciones afectivas</strong> (moduladas por las disposiciones de la persona); y las reacciones alimentan, por un lado, <strong>conductas impulsadas por el afecto</strong> (inmediatas) y, por otro, acumuladas, <strong>actitudes</strong> que a su vez producen <strong>conductas impulsadas por el juicio</strong> (renunciar, pedir licencia). La consecuencia práctica: no se gestionan ánimos, se gestionan eventos.</p>
+
+  <h3>A. Arma la teoría con el caso</h3>
+  <p>Clasifica cada frase del caso en el componente de la teoría que le corresponde. Es exactamente lo que pide la parte obligatoria de la Pregunta 1.</p>
+  <div id="c2tea"></div>
+
+  <h3>B. Ubica los estados en el circumplejo</h3>
+  <p>El afecto tiene dos dimensiones: valencia (horizontal) y activación (vertical). Haz clic en el cuadrante donde ubicarías cada estado. Recuerda: "estresada" y "comprometida" están en la misma fila (alta activación) y en columnas distintas.</p>
+  <div class="caja">
+    <div class="nota info" id="circTarea" style="margin-bottom:.6rem"></div>
+    <svg viewBox="0 0 520 330" id="svgCirc" class="circ"></svg>
+    <div class="nota" id="circOut" style="margin:.6rem 0 0;display:none"></div>
+    <button class="btn light" onclick="circReiniciar()">Reiniciar los cuatro estados</button>
+  </div>
+
+  <h3>C. ¿Dónde está el retorno? El simulador de la asimetría</h3>
+  <p>En el registro de la semana hubo 27 episodios positivos y 12 negativos (8 evitables: visitas duplicadas y esperas sin información; 3 de Héctor; 1 inevitable). Miner et al. (2005) estimaron que un evento negativo mueve el ánimo −0.96 desviaciones estándar y uno positivo +0.20. Mueve las dos palancas y compara.</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div class="slider">Eventos negativos evitables que eliminas (corregir AgendaYa, dar información real, que Héctor corrija en privado): <span class="v" id="asNv">0</span> de 11<input type="range" id="asN" min="0" max="11" value="0" oninput="asim()"></div>
+      <div class="slider">Eventos positivos que agregas ("Buena Onda": pizza, bono, reconocimiento): <span class="v" id="asPv">0</span> por semana<input type="range" id="asP" min="0" max="40" value="0" oninput="asim()"></div>
+    </div>
+    <div class="grid g3" style="margin-top:.5rem">
+      <div class="stat"><div class="lbl">Balance afectivo semanal (suma ponderada, en DE)</div><div class="num" id="asBal">–</div></div>
+      <div class="stat"><div class="lbl">Ganancia por eliminar negativos</div><div class="num" id="asGN">–</div></div>
+      <div class="stat"><div class="lbl">Ganancia por agregar positivos</div><div class="num" id="asGP">–</div></div>
+    </div>
+    <div class="nota" id="asOut" style="margin:.6rem 0 0"></div>
+    <div class="desafios" id="asDes"></div>
+  </div>
+  <p class="mini">Modelo ilustrativo: suma de eventos ponderados por las magnitudes de Miner et al. (2005), sin interacciones ni saturación. Sirve para ver el orden de magnitud, no para predecir el ánimo de nadie.</p>
+
+  <h3>D. Trabajo emocional: Fernanda, Brayan y el instructivo</h3>
+  <p>Las <strong>reglas de exhibición</strong> dicen qué emoción mostrar. Cumplirlas puede hacerse fingiendo la expresión (<strong>actuación superficial</strong>), cambiando lo que se siente, típicamente reinterpretando la situación (<strong>actuación profunda</strong> o reevaluación), o sin esfuerzo porque la práctica lo automatizó (<strong>regulación automática</strong>). Clasifica.</p>
+  <div id="c2te"></div>
+  <h4>Qué cuesta cada estrategia (Hülsheger & Schewe, 2011; correlaciones corregidas)</h4>
+  <div class="cont" id="teBox" style="grid-template-columns:repeat(2,1fr)"></div>
+  <div class="caja">
+    <div class="barra"><span class="lb">Agotamiento emocional</span><div class="tr"><div id="bAg"></div></div><span class="vv" id="vAg">–</span></div>
+    <div class="barra"><span class="lb">Despersonalización</span><div class="tr"><div id="bDe"></div></div><span class="vv" id="vDe">–</span></div>
+    <div class="barra"><span class="lb">Satisfacción laboral</span><div class="tr"><div id="bSa"></div></div><span class="vv" id="vSa">–</span></div>
+    <div class="barra"><span class="lb">Satisfacción del cliente</span><div class="tr"><div id="bCl"></div></div><span class="vv" id="vCl">–</span></div>
+    <div class="nota" id="teOut" style="margin:.6rem 0 0">Elige una estrategia.</div>
+  </div>
+  <div class="nota aviso"><strong>La precisión de Zapf et al. (2021):</strong> los ítems de actuación superficial ("finjo emociones que no siento") mezclan la máscara con la emoción negativa que la hizo necesaria. Cuando se miden por separado, la emoción sentida (el cliente gritando por una visita duplicada) se queda con la mayor parte del agotamiento. Por eso la primera palanca no es entrenar la sonrisa de Fernanda sino reducir los eventos que la obligan a fingir, y por eso a Brayan, que ya no finge, todavía lo desgasta la regla de "no dar plazos". La Ley 21.643 (Ley Karin) obliga a la empresa a prevenir y gestionar la violencia en el trabajo, incluida la de clientes.</div>
+  <h4>¿Legítimo o ilegítimo? Las reglas del instructivo</h4>
+  <div id="c2reglas"></div>
+
+  <h3>E. "Aquí se aprende a gritos": el modelo EASI</h3>
+  <p>La emoción que expresa Héctor llega a las ejecutivas por dos rutas (van Kleef): la <strong>afectiva</strong> (contagio por imitación automática: el enojo baja el ánimo del mesón) y la <strong>inferencial</strong> (deducen algo de la situación o de él: "aquí se castiga en público", "el error fue grave", "está descontrolado"). Clasifica cada reacción.</p>
+  <div id="c2easi"></div>
+  <div class="grid g3">
+    <div class="stat"><div class="lbl">Porat & Levy Paluck (2024), 4 experimentos prerregistrados, N ≈ 3.852</div><div class="num">menos</div><div class="lbl">competencia percibida y estatus para quien expresa enojo, frente a tristeza o nada</div></div>
+    <div class="stat"><div class="lbl">Sy et al. (2005)</div><div class="num">↓ coordinación</div><div class="lbl">el ánimo negativo del líder se contagia al grupo y empeora la coordinación</div></div>
+    <div class="stat"><div class="lbl">Barsade (2002)</div><div class="num">1 de 94</div><div class="lbl">personas notó el contagio provocado por el actor infiltrado</div></div>
+  </div>
+
+  <h3>F. El cuestionario de inteligencia emocional del taller</h3>
+  <p>El taller "Atención con Inteligencia Emocional" se mide con un cuestionario de autoinforme de 12 minutos, y la consultora quiere usar el mismo para seleccionar. Tres preguntas antes de comprar: ¿habilidad o autoinforme? ¿Qué predice por sobre la personalidad? ¿Para qué se va a usar? Clasifica cada instrumento.</p>
+  <div id="c2ie"></div>
+  <div class="caja">
+    <div class="barra"><span class="lb">IE mixta autoinformada → desempeño (sin controles)</span><div class="tr"><div id="bIe1"></div></div><span class="vv">+.29</span></div>
+    <div class="barra"><span class="lb">La misma, controlando personalidad, capacidad cognitiva y autoeficacia</span><div class="tr"><div id="bIe2"></div></div><span class="vv">−.02</span></div>
+    <div class="barra"><span class="lb">IE de habilidad → desempeño, trabajos de alta carga emocional</span><div class="tr"><div id="bIe3"></div></div><span class="vv">+.24</span></div>
+    <div class="barra"><span class="lb">IE de habilidad → desempeño, baja carga emocional</span><div class="tr"><div id="bIe4"></div></div><span class="vv">+.01</span></div>
+    <div class="barra"><span class="lb">Cuestionario de rasgo ↔ factor general de personalidad</span><div class="tr"><div id="bIe5"></div></div><span class="vv">+.85</span></div>
+    <p class="mini" style="margin:.5rem 0 0">Joseph et al. (2015); Joseph & Newman (2010); van der Linden et al. (2017). Sheldon et al. (2014): quienes tienen menos habilidad emocional se sobreestiman más (63 a 69 puntos percentiles en el decil inferior) y son los que menos quieren aprender. Un autoinforme en selección mide confianza y personalidad; la habilidad se mide con tareas o, mejor aún, observando la conducta en una simulación.</p>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3: TEMA 4 ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Tema 4: el comité de verano</h2>
+  <p>La diversidad es una propiedad del grupo, no de una persona, y "diferir" puede significar tres cosas (Harrison & Klein, 2007): estar en posiciones distintas de un continuo de opinión o actitud (<strong>separación</strong>), pertenecer a categorías distintas (<strong>variedad</strong>) o tener cantidades distintas de un recurso valioso (<strong>disparidad</strong>). Cada forma se mide con un estadístico distinto y predice cosas distintas.</p>
+
+  <h3>A. Calculadora de Harrison y Klein con el comité</h3>
+  <p>Elige un atributo del comité, decide primero qué tipo de diversidad es, y después mira el estadístico calculado con los datos de la tabla.</p>
+  <div class="caja">
+    <select class="sel" id="hkSel" onchange="hkElegir()"></select>
+    <div class="toggle" id="hkTipos" style="margin-top:.5rem">
+      <label><input type="radio" name="hkTipo" value="0" onchange="hkTipo()">Separación</label>
+      <label><input type="radio" name="hkTipo" value="1" onchange="hkTipo()">Variedad</label>
+      <label><input type="radio" name="hkTipo" value="2" onchange="hkTipo()">Disparidad</label>
+    </div>
+    <div class="nota" id="hkOut" style="display:none"></div>
+    <div class="grid g3" id="hkStats" style="display:none">
+      <div class="stat"><div class="lbl" id="hkL1"></div><div class="num" id="hkV1"></div></div>
+      <div class="stat"><div class="lbl" id="hkL2"></div><div class="num" id="hkV2"></div></div>
+      <div class="stat"><div class="lbl" id="hkL3"></div><div class="num" id="hkV3"></div></div>
+    </div>
+    <div class="caja" id="hkCalc" style="display:none;background:#fff;font-family:system-ui,sans-serif;font-size:.88rem"></div>
+  </div>
+
+  <h3>B. La falla: ¿cuántas líneas parten al comité por el mismo lugar?</h3>
+  <p>Una <strong>falla</strong> (faultline) es una línea hipotética que divide al grupo en subgrupos según la alineación de varios atributos. Activa atributos y mira si parten al comité por el mismo lugar (ajuste comparativo alto) o se cruzan.</p>
+  <div class="caja">
+    <div class="toggle" id="faToggles"></div>
+    <div id="faOut"></div>
+  </div>
+
+  <h3>C. ¿Gatillo o no?</h3>
+  <p>Una falla latente es inofensiva hasta que algo la activa. Chrobot-Mason et al. (2009) identificaron los gatillos: trato diferencial, valores distintos, presión para asimilarse, insultos o humillaciones, y contacto simple en condiciones de desigualdad. Clasifica cada episodio del caso.</p>
+  <div id="c3gat"></div>
+
+  <h3>D. La cadena del modelo de categorización-elaboración</h3>
+  <p>Ordena los pasos para explicar cómo el comité pasó de "diverso" a "decidió mal". La cadena correcta es la de la ruta superior del modelo (P5 a P7) y su efecto sobre la ruta inferior.</p>
+  <ul class="orden" id="ordCem"></ul>
+  <button class="btn" onclick="checkOrden()">Comprobar el orden</button>
+  <div id="ordRes" class="nota" style="display:none"></div>
+
+  <h3>E. El perfil oculto</h3>
+  <p>Haz clic en cada integrante para ver qué sabía. La información <strong>compartida</strong> (lo que todos sabían) aparece en gris; la <strong>única</strong>, en verde cuando la revelas. Mira cómo cambia la mejor decisión disponible a medida que se junta la información.</p>
+  <div class="caja">
+    <div class="grid g4" id="poMiembros"></div>
+    <div class="grid g2" style="margin-top:.6rem">
+      <div class="stat"><div class="lbl">Piezas de información única sobre la mesa</div><div class="num" id="poN">0 de 4</div></div>
+      <div class="stat"><div class="lbl">Decisión que el comité puede ver con esa información</div><div class="num" id="poDec" style="font-size:1rem">Protocolo de bienvenida (síntoma)</div></div>
+    </div>
+    <div class="nota" id="poOut" style="margin:.6rem 0 0">Lu et al. (2012), metaanálisis de 65 estudios: los grupos discuten la información compartida unas dos desviaciones estándar más que la única, y cuando la mejor opción solo se ve juntando los pedazos tienen ocho veces menos probabilidad de encontrarla. Y se sienten seguros de haber decidido bien (Phillips et al., 2009): "fue una reunión ejecutiva, sin peleas".</div>
+  </div>
+  <h4>Elaborar no es discutir</h4>
+  <p>El conflicto de tarea tiene efecto promedio nulo o negativo sobre el desempeño (De Dreu & Weingart, 2003; de Wit et al., 2012). Lo que mejora las decisiones es la cobertura de la información única. Clasifica.</p>
+  <div id="c3elab"></div>
+
+  <h3>F. ¿Qué palancas tienen evidencia?</h3>
+  <p>Gonzalo propone una capacitación obligatoria en línea de una hora y una encuesta de cuatro preguntas. Clasifica cada propuesta según la evidencia del curso.</p>
+  <div id="c3pal"></div>
+  <div class="caja">
+    <h4 style="margin-top:0">Cambio a cinco años en la proporción de mujeres y minorías en jefaturas (Dobbin & Kalev, 2016; 829 empresas, panel observacional: "se asoció con", no "produjo")</h4>
+    <div class="barra"><span class="lb">Capacitación obligatoria</span><div class="tr"><div id="bDk1"></div></div><span class="vv">−9%</span></div>
+    <div class="barra"><span class="lb">Pruebas escritas de contratación</span><div class="tr"><div id="bDk2"></div></div><span class="vv">−4 a −10%</span></div>
+    <div class="barra"><span class="lb">Capacitación voluntaria</span><div class="tr"><div id="bDk3"></div></div><span class="vv">+9 a +13%</span></div>
+    <div class="barra"><span class="lb">Mentoría formal</span><div class="tr"><div id="bDk4"></div></div><span class="vv">+9 a +24%</span></div>
+    <div class="barra"><span class="lb">Grupos de trabajo interdepartamentales</span><div class="tr"><div id="bDk5"></div></div><span class="vv">+9 a +30%</span></div>
+    <p class="mini" style="margin:.5rem 0 0">Chang et al. (2019): una hora de capacitación en línea cambió actitudes y ninguna conducta. Bezrukova et al. (2016): la capacitación funciona mejor cuando es larga, voluntaria o bien enmarcada, con habilidades concretas e integrada en un paquete. Un índice de inclusión sin fiabilidad, validez ni invarianza publicadas no sirve para medir un "antes y después".</p>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4: TEMA 5 ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · Tema 5: seleccionar para el verano</h2>
+  <p>Dos marcos deciden cuándo la personalidad se ve en el trabajo. La <strong>fuerza situacional</strong> (Meyer et al., 2010) pregunta cuánto margen deja la situación; la <strong>activación de rasgos</strong> (Tett & Burnett, 2003) pregunta qué rasgo convoca. Y una regla empírica ordena todo: la personalidad predice más lo <strong>discrecional</strong> (conducta cívica, contraproducente, satisfacción) que la tarea contractual.</p>
+
+  <h3>A. ¿Cuán fuerte es la situación del mesón entre las 18:00 y las 20:00?</h3>
+  <p>Evalúa las cuatro facetas para el puesto en ese horario (una sola persona, caja con cierre semanal, cámara a la puerta, instructivo que dice qué decir al cliente pero nada sobre la caja). Después compara con la lectura del laboratorio.</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div class="slider">Claridad (hay claves claras sobre qué hacer): <span class="v" id="fsCv">3</span><input type="range" id="fsC" min="1" max="5" value="3" oninput="fuerza()"></div>
+      <div class="slider">Consistencia (las claves de distintas fuentes coinciden): <span class="v" id="fsKv">3</span><input type="range" id="fsK" min="1" max="5" value="3" oninput="fuerza()"></div>
+      <div class="slider">Restricciones (poca libertad para decidir cómo hacer el trabajo): <span class="v" id="fsRv">3</span><input type="range" id="fsR" min="1" max="5" value="3" oninput="fuerza()"></div>
+      <div class="slider">Consecuencias (hacerlo bien o mal tiene efectos importantes y visibles): <span class="v" id="fsQv">3</span><input type="range" id="fsQ" min="1" max="5" value="3" oninput="fuerza()"></div>
+    </div>
+    <div class="grid g2" style="margin-top:.5rem">
+      <div class="stat"><div class="lbl">Fuerza situacional (promedio de tus cuatro juicios)</div><div class="num" id="fsTot">–</div></div>
+      <div class="stat"><div class="lbl">Margen para que la personalidad se exprese</div><div class="num" id="fsMar">–</div></div>
+    </div>
+    <div class="nota" id="fsOut" style="margin:.6rem 0 0"></div>
+    <button class="btn sec" onclick="fuerzaLectura()">Ver la lectura del laboratorio</button>
+    <div class="nota info" id="fsLect" style="display:none;margin-top:.6rem"><strong>Lectura del laboratorio.</strong> Claridad: alta sobre el trato al cliente (instructivo), baja sobre la caja. Consistencia: baja (el instructivo pide "actitud positiva" y "no dar plazos" mientras el cliente exige información; Héctor exige sin errores pero corrige a gritos). Restricciones: bajas de 18:00 a 20:00 (sola, sin supervisor, decide cómo resolver y cómo manejar el efectivo). Consecuencias: débiles para la caja (cierre semanal, cámara a la puerta, descuadres sin aclarar) y fuertes solo en lo visible al cliente. Conclusión: situación débil en lo que importa para la decisión de contratar (la caja, el cliente molesto), así que la personalidad se va a ver, sobre todo en la conducta discrecional.</div>
+  </div>
+
+  <h3>B. Demandas del puesto y rasgos que convocan</h3>
+  <p>Una <strong>demanda</strong> es una oportunidad de expresar un rasgo de forma valorada. Une cada demanda del puesto de mesón con el rasgo que convoca (Tett et al., 2021).</p>
+  <div class="match" id="dem"></div>
+  <button class="btn" onclick="checkMatch('dem', DEM, '4_dem', 'Seis de seis. Observa qué rasgo no aparece como demanda central: la extraversión. La sociabilidad ayuda en el mostrador, pero no es lo que el puesto paga a las 19:00 con la caja abierta.')">Comprobar</button>
+  <div id="demRes" class="nota" style="display:none"></div>
+  <div class="nota aviso"><strong>Lo que se ve en la entrevista y lo que paga el trabajo.</strong> Wiersma y Kappe (2017) siguieron a 96 egresados: la extraversión correlacionó .25 con el sueldo inicial y .04 con su crecimiento; la responsabilidad, .07 con el inicial y .26 con el crecimiento. Las entrevistas no estructuradas premian la soltura social; el trabajo premia después la disciplina de cumplir sin supervisión. Es el patrón de los "muy simpáticos" de Héctor: sin mejores notas de clientes, más renuncias y el doble de cuadraturas mal hechas.</div>
+
+  <h3>C. Comparador de candidatos</h3>
+  <p>Marca las demandas que consideras prioritarias para el puesto y lee cómo se compara cada perfil. Reglas: importa el perfil frente a la demanda, no el número aislado; ningún polo es "bueno" en abstracto; percentil alto en un rasgo oscuro no es un diagnóstico.</p>
+  <div class="caja">
+    <div class="toggle" id="cdDem"></div>
+    <table id="cdTabla"></table>
+    <div class="nota" id="cdOut">Marca al menos una demanda.</div>
+    <div class="nota info"><strong>Cautelas que suman puntos:</strong> las normas son de estudiantes universitarios, provisionales, no de postulantes (los postulantes puntúan más alto en los rasgos deseables: d ≈ .45 a .94; Birkeland et al., 2006; Anglim et al., 2018); con escalas breves, diferencias pequeñas de percentil son ruido; y nunca se decide solo con un cuestionario de personalidad.</div>
+  </div>
+
+  <h3>D. La tríada oscura y la honestidad-humildad</h3>
+  <p>Narcisismo, maquiavelismo y psicopatía subclínicos son dimensiones continuas en población general. Se relacionan sobre todo con baja honestidad-humildad (Muris et al., 2017). Haz clic en cada rasgo.</p>
+  <div class="cont" id="trBox" style="grid-template-columns:repeat(3,1fr)"></div>
+  <div class="caja">
+    <div class="barra"><span class="lb">Correlación con honestidad-humildad</span><div class="tr"><div id="bTrH"></div></div><span class="vv" id="vTrH">–</span></div>
+    <div class="barra"><span class="lb">Correlación con amabilidad (Big Five)</span><div class="tr"><div id="bTrA"></div></div><span class="vv" id="vTrA">–</span></div>
+    <div class="nota" id="trOut" style="margin:.6rem 0 0">Elige un rasgo.</div>
+  </div>
+
+  <h3>E. El tribunal de los tests</h3>
+  <p>Seis reglas que un instrumento usado para decidir sobre personas debe responder con datos publicados: confiabilidad (y estabilidad del tipo), estructura replicada, validez de constructo, validez de criterio e incremental, equidad y normas locales con manual, faking y consecuencias. Primero, clasifica qué regla incumple cada hallazgo.</p>
+  <div id="c4reg"></div>
+  <h4>Ordena los métodos por validez para predecir desempeño (Sackett et al., 2022)</h4>
+  <p class="mini">Arrastra con las flechas de mayor a menor validez. Es la tabla con la que se compara cualquier test nuevo (y la respuesta a "¿qué alternativa tiene mejor evidencia?").</p>
+  <ul class="orden" id="ordSack"></ul>
+  <button class="btn" onclick="checkSack()">Comprobar</button>
+  <div id="sackRes" class="nota" style="display:none"></div>
+
+  <h3>F. "Los postulantes mienten en todos los tests"</h3>
+  <p>Anglim et al. (2018) compararon 260 postulantes reales con 347 no postulantes y, 18 meses después, midieron su conducta contraproducente. Mueve el control para ver qué pasa con las medias y con la validez.</p>
+  <div class="caja">
+    <div class="slider">Proporción de la muestra que responde como postulante: <span class="v" id="fkV">0%</span><input type="range" id="fkS" min="0" max="100" value="0" oninput="faking()"></div>
+    <div class="grid g3">
+      <div class="stat"><div class="lbl">Media en honestidad-humildad (en DE, respecto de no postulantes)</div><div class="num" id="fkM">–</div></div>
+      <div class="stat"><div class="lbl">Varianza explicada de la conducta contraproducente</div><div class="num" id="fkR">–</div></div>
+      <div class="stat"><div class="lbl">Correlación de las escalas de "mentira" con el faking real (Lanz et al., 2022)</div><div class="num">.04</div></div>
+    </div>
+    <div class="nota" id="fkOut" style="margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>G. ¿Seleccionar o diseñar la situación?</h3>
+  <p>Hilbig et al. (2012): las personas bajas en honestidad-humildad eligen la opción egoísta cuando el castigo es improbable y cooperan cuando es probable; las altas cooperan en ambos casos. Clasifica cada medida como selección, diseño de la situación o ninguna de las dos, y luego arma el diseño de la caja.</p>
+  <div id="c4sel"></div>
+  <div class="caja">
+    <h4 style="margin-top:0">Arma el diseño de la caja del mesón</h4>
+    <div class="toggle" id="cajaT"></div>
+    <div class="grid g2" style="margin-top:.5rem">
+      <div class="stat"><div class="lbl">Probabilidad percibida de que un faltante se detecte (ilustrativa)</div><div class="num" id="cajaP">baja</div></div>
+      <div class="stat"><div class="lbl">Clave situacional que activa el bajo H</div><div class="num" id="cajaK" style="font-size:1rem">presente</div></div>
+    </div>
+    <div class="nota" id="cajaOut" style="margin:.6rem 0 0"></div>
+  </div>
+
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5: SIMULACRO ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Simulacro con pauta de autocorrección</h2>
+  <p>Las nueve preguntas guía del caso, con la estructura de la prueba: en cada tema una parte <span class="etq ob">obligatoria</span> de 12 puntos y dos <span class="etq op">optativas</span> de 8 de las que en la prueba respondes una. Escribe tu respuesta (se guarda en este navegador), y recién después abre la pauta y marca qué elementos incluiste. El puntaje simulado usa, como la prueba, la obligatoria más la mejor optativa de cada pregunta.</p>
+  <div class="nota info"><strong>Cómo escribir una respuesta puntuable.</strong> Cada elemento de la pauta pide lo mismo: (1) el concepto correcto, nombrado; (2) aplicado explícitamente a algo del caso (una frase, un dato, una persona); (3) justificado con la teoría o la evidencia, con el lenguaje que corresponde ("se asocia con" para correlaciones; "causa" solo para experimentos). Parafrasear el caso no es responder; culpar a las personas tampoco.</div>
+  <div class="caja" style="font-family:system-ui,sans-serif;font-size:.9rem">
+    <strong>Cronómetro:</strong> <span id="cronoV" style="font-weight:700;color:var(--rojo)">20:00</span>
+    <button class="btn light" onclick="cronoStart()">Iniciar 20 min</button>
+    <button class="btn light" onclick="cronoStart(80)">Iniciar 80 min (prueba completa)</button>
+    <button class="btn light" onclick="cronoStop()">Detener</button>
+  </div>
+  <div id="simulacro"></div>
+  <div class="caja">
+    <h4 style="margin-top:0">Tu puntaje simulado</h4>
+    <div class="grid g4" id="simTot"></div>
+    <p class="mini" style="margin:.5rem 0 0">Escala de la prueba: 36 puntos = 4.0 (exigencia 60%); tramo inferior nota = 1 + 3 × puntos/36; superior nota = 4 + 3 × (puntos − 36)/24. La autocorrección tiende a ser generosa: si dudas de haber incluido un elemento, no lo marques.</p>
+  </div>
+</section>
+
+<!-- ============ ESTACIÓN 6: MITOS ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · ¿Mito o evidencia?</h2>
+  <p>Veinte afirmaciones de los tres temas, muchas de ellas tomadas de respuestas reales que perdieron puntos. Verdadero o falso según la evidencia del curso.</p>
+  <div id="mitos"></div>
+  <div id="mitosRes" class="nota" style="display:none"></div>
+</section>
+
+<!-- ============ ESTACIÓN 7: FICHA ============ -->
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div id="fichaRepaso"></div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y UTILIDADES =====================
+const KEY="lab_prep_s2_v1";
+const estado = { hechas: {}, respuestas: {}, textos: {}, checks: {} };
+function guardar(){ try{ localStorage.setItem(KEY, JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(KEY); if(s){ Object.assign(estado, JSON.parse(s)); } }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+const NOMBRES = ["Inicio","1 · El caso","2 · Tema 3 Afecto","3 · Tema 4 Comité","4 · Tema 5 Selección","5 · Simulacro","6 · Mitos","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+function pintarNav(){
+  const n = document.getElementById("nav"); n.innerHTML = "";
+  NOMBRES.forEach((t,i)=>{ const b=document.createElement("button"); b.textContent=t; b.onclick=()=>ir(i);
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista"); n.appendChild(b); });
+  const k = EST.filter(i=>estado.hechas[i]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de 6`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa")); document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===7) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+const fmt = x => (x<0?"−":"+")+Math.abs(x).toFixed(2).replace(/^0/,"");
+const fmt0 = x => (x<0?"−":"")+Math.abs(x).toFixed(2).replace(/^0/,"");
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML="";
+  items.forEach((q,qi)=>{
+    const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML = `<strong>${q.p}</strong><br>` + q.o.map((o,oi)=>`<span class="opc" data-o="${oi}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const oi=+el.dataset.o; const ok = oi===q.c;
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[q.c].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML = (ok?"<strong>Correcto.</strong> ":"<strong>No es eso.</strong> ") + q.f + (q.r?` <span class="cita">${q.r}</span>`:"");
+      estado.respuestas[`${estacion}_q${qi}`] = ok?1:0; guardar();
+      if(items.every((_,k)=> (`${estacion}_q${k}`) in estado.respuestas)) marcar(estacion);
+    });
+  });
+}
+function clasificador(contId, cats, items, clave, estacion){
+  const cont=document.getElementById(contId); cont.innerHTML="";
+  items.forEach((it,i)=>{
+    const d=document.createElement("div"); d.className="clasif";
+    d.innerHTML = `<p class="enun"><strong>${i+1}.</strong> ${it[0]}</p><div class="cats">${cats.map((c,ci)=>`<span class="cat" data-c="${ci}">${c}</span>`).join("")}</div><div class="feedback" style="display:none"></div>`;
+    cont.appendChild(d);
+    d.querySelectorAll(".cat").forEach(el=>el.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done="1";
+      const ci=+el.dataset.c, ok=ci===it[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".cat")[it[1]].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=(ok?"<strong>Correcto.</strong> ":`<strong>No: ${cats[it[1]].toLowerCase()}.</strong> `)+it[2];
+      estado.respuestas[`${estacion}_${clave}${i}`]=ok?1:0; guardar();
+    });
+  });
+}
+function initMatch(id, pares, placeholder){
+  const c=document.getElementById(id); c.innerHTML="";
+  const defs=pares.map((z,i)=>({d:z[1],i})).sort(()=>Math.random()-.5);
+  defs.forEach(o=>{ const d=document.createElement("div"); d.className="def"; d.textContent=o.d; d.dataset.i=o.i; c.appendChild(d);
+    const s=document.createElement("select"); s.className="sel"; s.innerHTML=`<option value="">${placeholder}</option>`+pares.map((z,k)=>`<option value="${k}">${z[0]}</option>`).join(""); c.appendChild(s); });
+}
+function checkMatch(id, pares, clave, msgOk){
+  const defs=[...document.querySelectorAll(`#${id} .def`)], sels=[...document.querySelectorAll(`#${id} select`)]; let ok=0;
+  defs.forEach((d,k)=>{ const b=sels[k].value!==""&&+sels[k].value===+d.dataset.i; d.classList.remove("bien","mal"); d.classList.add(b?"bien":"mal"); if(b) ok++; });
+  const r=document.getElementById(id+"Res"); r.style.display="block";
+  if(ok===pares.length){ r.className="nota ok"; r.innerHTML="<strong>"+msgOk+"</strong>"; estado.respuestas[clave]=1; }
+  else { r.className="nota"; r.innerHTML=`<strong>${ok} de ${pares.length}.</strong> Corrige los que están en rojo y vuelve a comprobar.`; if(!(clave in estado.respuestas)) estado.respuestas[clave]=0; }
+  guardar();
+}
+function barra(id, val, min, max, cls){ const el=document.getElementById(id); const w=(max-min); const zero=(0-min)/w*100; const x=(val-min)/w*100; el.className=cls||""; if(val>=0){ el.style.left=zero+"%"; el.style.width=(x-zero)+"%"; } else { el.style.left=x+"%"; el.style.width=(zero-x)+"%"; } }
+
+// ===================== ESTACIÓN 1: EL CASO =====================
+const TEMAS=["Tema 3 · Afecto","Tema 4 · Diversidad","Tema 5 · Personalidad"];
+const C1TEMA=[
+  ["\"Al cliente nunca se le dice que no... escúchalo hasta el final con actitud positiva\".",0,"Reglas de exhibición: qué emoción mostrar y cuál suprimir. Es la pieza que abre el análisis de trabajo emocional y de la legitimidad de las reglas (desafío vs tarea ilegítima)."],
+  ["Cuando un cliente reagenda por WhatsApp, la visita antigua no se borra y el técnico termina con dos clientes a la misma hora.",0,"Una característica del ambiente de trabajo que hace probables los eventos negativos (TEA). También es información única que Brayan tenía (Tema 4), pero su primer uso es como fuente de eventos."],
+  ["Los cuatro jefes y supervisores hablaron el 83% del tiempo.",1,"Consecuencia típica de la disparidad (sueldo, estatus): deferencia y silencio de los de abajo. Es evidencia de que la elaboración no ocurrió."],
+  ["\"Los extranjeros son más serviciales que nosotros; quiero que los chicos de afuera nos enseñen\".",1,"Un gatillo que activa la falla: nombra la categoría, pide \"la perspectiva de los extranjeros\" y establece un trato diferencial, aunque suene elogioso."],
+  ["Entre las 18:00 y las 20:00 queda una sola persona, el cierre de caja es semanal y la cámara enfoca la puerta.",2,"Fuerza situacional baja y la clave situacional que activa el bajo H: castigo improbable. Define por qué la caja es una situación que \"espera\" al rasgo."],
+  ["\"En diez minutos sé si sirve: busco gente simpática, conversadora\".",2,"Entrevista no estructurada que premia la extraversión, el rasgo más visible y el que menos paga después (Wiersma & Kappe, 2017)."],
+  ["\"Sonrío, digo que lo entiendo, y por dentro quiero gritarle que no fui yo la que agendó dos visitas\".",0,"Actuación superficial: la expresión cambia y la emoción no. La frase está escrita para que la clasifiques."],
+  ["Encuesta previa: los jefes marcaron 1 o 2; los operativos, 6 o 7.",1,"Separación casi máxima (bimodal), y alineada con cargo, edad, antigüedad y sueldo: ajuste comparativo alto."],
+  ["Las personas \"muy simpáticas\" no tuvieron mejores notas de clientes, concentraron las renuncias y el doble de cuadraturas mal hechas.",2,"Evidencia local de que la personalidad predice más lo discrecional (cuadrar la caja, quedarse hasta marzo) que lo que se ve en la entrevista."],
+  ["\"Pienso que lleva tres noches sin dormir por el calor... me concentro en conseguirle una hora real\".",0,"Reevaluación cognitiva (actuación profunda) que con la práctica se volvió regulación automática: \"ya no finjo la calma: la tengo\"."],
+  ["El comité decidió por unanimidad un protocolo de bienvenida y mantener la agenda.",1,"Perfil oculto: decisión sobre la información compartida; la unanimidad rápida es la señal de alarma (Phillips et al., 2009), no de calidad."],
+  ["Percentil 85 en narcisismo y 38 en responsabilidad.",2,"Un perfil para leer frente a las demandas del puesto, no una etiqueta. Alto narcisismo se asocia con baja honestidad-humildad (Muris et al., 2017); baja C importa donde hay que cerrar caja sin supervisión."],
+];
+const DATOS=["Desempeño o conducta","Actitud o conducta de retiro","Bienestar y riesgo psicosocial","Frecuencia vs peso de los eventos","Estructura del grupo (disparidad, falla)","Situación del puesto (fuerza, claves)"];
+const C1DATO=[
+  ["Rotación anual del mesón 58%, contra 19% en bodega.",1,"La rotación es una conducta de salida; su antecedente actitudinal es la intención de renunciar. El contraste con bodega dice que es un problema del puesto, no de \"la gente de hoy\"."],
+  ["CEAL-SM 2025: riesgo alto en exigencias emocionales; medio-alto en liderazgo y conflicto de rol.",2,"Riesgos psicosociales son condiciones de la organización del trabajo, no rasgos de las personas; el nivel alto obliga a intervenir. El \"conflicto de rol\" es el instructivo que pide calma y prohíbe informar."],
+  ["27 episodios positivos y 12 negativos en una semana; un negativo \"arruina la tarde\".",3,"Los positivos son más frecuentes; los negativos pesan unas cinco veces más (Miner et al., 2005). Es el dato para evaluar \"Buena Onda\"."],
+  ["Los jefes hablaron el 83% del tiempo.",4,"Disparidad de estatus en acción: quien concentra el recurso habla, los demás callan. Es también la medida de que no hubo elaboración."],
+  ["Cierre de caja semanal, cámara a la puerta, dos descuadres sin aclarar.",5,"Consecuencias débiles e improbables: una situación débil que activa el bajo H y no deja ver la responsabilidad hasta que falla."],
+  ["Las \"muy simpáticas\" concentraron las renuncias y el doble de cuadraturas mal hechas.",0,"Conducta discrecional (cerrar bien la caja, quedarse) que la personalidad predice mejor que la tarea visible; y la extraversión no la predice."],
+  ["Cinco de las nueve ejecutivas pidieron licencia en enero.",2,"Licencias concentradas en el mes de mayor carga: bienestar, consecuencia de las condiciones, no de la \"resiliencia\" individual."],
+  ["Encuesta previa: 1, 2, 2, 1 frente a 7, 6, 7, 6.",4,"Separación bimodal alineada con el cargo: la falla, medida."],
+];
+const Q1=[
+  {p:"En la prueba, ¿qué diferencia a una respuesta de nivel Logrado de una Parcial?",o:["La Lograda cita más autores","La Lograda nombra el concepto, lo aplica a algo concreto del caso y lo justifica con la teoría o la evidencia; la Parcial nombra el concepto sin aplicarlo o parafrasea el caso sin concepto","La Lograda es más larga","La Lograda usa cifras exactas"],c:1,f:"Las cifras suman pero no se exigen; la longitud no puntúa. Lo que puntúa es la cadena concepto → aplicación → justificación. Nombrar un concepto equivocado da cero en ese elemento."},
+  {p:"\"Las ejecutivas renuncian porque no aguantan la presión; hay que contratar gente más resiliente\". En la pauta, esta afirmación...",o:["Es una respuesta Parcial alta","Recibe un descuento transversal: atribuye a las personas lo que el caso muestra como un problema del sistema (agenda, instructivo, supervisor)","Es correcta si se cita el CEAL","Es correcta para el Tema 5"],c:1,f:"El caso está construido para desmontar esa lectura: la rotación es 58% en el mesón y 19% en bodega, con la misma \"gente\". Lo mismo vale para \"los extranjeros no se integran\" o \"los jóvenes no se comprometen\"."},
+  {p:"\"El programa Buena Onda demostrará que los trabajadores felices rinden más\". El problema de la frase es...",o:["Que no cita a Miner","Que usa lenguaje causal (\"demostrará\") sin diseño experimental, y que la relación ánimo-desempeño explica menos del 5% de la varianza (Aitken et al., 2026)","Que la pizza no es un evento afectivo","Ninguno; es correcta"],c:1,f:"El lenguaje debe seguir a la evidencia: \"se asocia con\" para correlaciones, \"causa\" solo para experimentos. Y el mecanismo está al revés: el ánimo es efecto de los eventos, no una causa que se decreta."},
+];
+
+// ===================== ESTACIÓN 2: TEMA 3 =====================
+const TEA=["Característica del ambiente","Evento afectivo","Reacción afectiva","Conducta impulsada por el afecto","Actitud o conducta impulsada por el juicio"];
+const C2TEA=[
+  ["El instructivo prohíbe dar plazos y derivar a un supervisor.",0,"Una condición estable del trabajo que determina qué eventos son probables (clientes sin información que escalan) y cómo se puede responder a ellos."],
+  ["Un cliente que lleva tres días sin aire llega al mesón gritando.",1,"Un episodio discreto, con principio y fin, que produce una reacción. Es el evento, no la característica."],
+  ["\"Cuando el cliente se va me tiemblan las manos\".",2,"Reacción afectiva inmediata: displacentera y de alta activación (tensión), que al final del turno pasa a baja activación (\"no me queda nada\")."],
+  ["Fernanda responde con tono seco al siguiente cliente de la fila.",3,"Conducta impulsada por el afecto: inmediata, poco planificada, consecuencia directa del estado del momento."],
+  ["Cinco de las nueve ejecutivas pidieron licencia en enero; la rotación es de 58%.",4,"Conductas impulsadas por el juicio: resultan de la evaluación acumulada del trabajo (la actitud), no del estado de un momento."],
+  ["Héctor corrige un error en voz alta delante de los clientes.",1,"Evento afectivo producido por la jefatura. Dasborough (2006): los jefes son una de las fuentes más frecuentes de eventos, y los negativos se recuerdan más."],
+  ["La sala de espera no tiene aire acondicionado.",0,"Característica del ambiente que eleva la probabilidad de que un cliente que espera llegue furioso al mostrador."],
+  ["\"A las seis de la tarde no me queda nada\".",2,"Reacción afectiva de baja activación y valencia negativa (agotamiento, decaimiento), acumulada en el turno."],
+  ["Brayan evalúa que \"el instructivo no me deja decir la verdad\" y piensa en buscar otro trabajo.",4,"Juicio acumulado sobre el trabajo (insatisfacción con una condición) que puede traducirse en intención de renunciar: ruta de la actitud."],
+  ["Una compañera se queda diez minutos más para ayudar a cuadrar la caja.",1,"Evento afectivo positivo (apoyo de compañeros): existen, son más frecuentes que los negativos, y pesan menos."],
+];
+// circumplejo
+const CIRC=[
+  {t:"Fernanda, mientras el cliente le grita (\"por dentro quiero gritarle\")",q:"NA",f:"Displacentero y activado: tensión, enojo contenido. Es el cuadrante de la ansiedad y la ira; el estrés agudo vive aquí."},
+  {t:"Fernanda a las seis de la tarde (\"no me queda nada\")",q:"ND",f:"Displacentero y desactivado: agotamiento, decaimiento. El mismo día pasó de alta a baja activación sin cambiar de valencia; eso es lo que el CEAL llama agotamiento emocional."},
+  {t:"Brayan hoy, concentrado en conseguir una hora real para el cliente",q:"PA",f:"Placentero y activado: entusiasmo, concentración, compromiso con la tarea. Está tan activado como Fernanda durante la queja, pero en la otra columna: por eso estrés y compromiso no son opuestos."},
+  {t:"Una ejecutiva en una tarde sin incidentes, atendiendo pagos de rutina",q:"PD",f:"Placentero y desactivado: calma, tranquilidad. Un equipo \"sin problemas de clima\" puede estar aquí o en decaimiento, y las dos cosas piden intervenciones distintas."},
+];
+let circI=0;
+function circDraw(){
+  const svg=document.getElementById("svgCirc");
+  svg.innerHTML=`<rect x="60" y="20" width="200" height="130" fill="#FEF3C7" opacity=".6"/><rect x="260" y="20" width="200" height="130" fill="#DCFCE7" opacity=".6"/><rect x="60" y="150" width="200" height="130" fill="#E5E7EB" opacity=".7"/><rect x="260" y="150" width="200" height="130" fill="#DBEAFE" opacity=".6"/>
+  <line x1="60" y1="150" x2="460" y2="150" stroke="#1F2937"/><line x1="260" y1="20" x2="260" y2="280" stroke="#1F2937"/>
+  <text x="62" y="36" font-size="12" font-weight="700">Displacentero · activado</text><text x="62" y="50" font-size="11" fill="#6B7280">ansiedad, enojo, tensión</text>
+  <text x="300" y="36" font-size="12" font-weight="700">Placentero · activado</text><text x="300" y="50" font-size="11" fill="#6B7280">entusiasmo, energía, compromiso</text>
+  <text x="62" y="268" font-size="12" font-weight="700">Displacentero · desactivado</text><text x="62" y="254" font-size="11" fill="#6B7280">decaimiento, agotamiento, apatía</text>
+  <text x="300" y="268" font-size="12" font-weight="700">Placentero · desactivado</text><text x="300" y="254" font-size="11" fill="#6B7280">calma, serenidad, relajo</text>
+  <text x="260" y="300" font-size="11" text-anchor="middle" fill="#6B7280">Valencia →  (displacentero … placentero)</text>
+  <text x="30" y="150" font-size="11" text-anchor="middle" fill="#6B7280" transform="rotate(-90 30 150)">Activación →</text>
+  <rect class="zona" data-q="NA" x="60" y="20" width="200" height="130" fill="transparent"/><rect class="zona" data-q="PA" x="260" y="20" width="200" height="130" fill="transparent"/><rect class="zona" data-q="ND" x="60" y="150" width="200" height="130" fill="transparent"/><rect class="zona" data-q="PD" x="260" y="150" width="200" height="130" fill="transparent"/>`;
+  svg.querySelectorAll(".zona").forEach(z=>z.onclick=()=>circClick(z.dataset.q));
+  circTarea();
+}
+function circTarea(){ const t=document.getElementById("circTarea"); if(circI>=CIRC.length){ t.innerHTML="<strong>Listo.</strong> Los cuatro estados están ubicados. Fíjate en que dos personas del mismo mesón, el mismo día, están en cuadrantes distintos, y que la misma persona cambia de cuadrante en una tarde."; return; } t.innerHTML=`<strong>Estado ${circI+1} de 4:</strong> ${CIRC[circI].t}. Haz clic en el cuadrante.`; }
+function circClick(q){ if(circI>=CIRC.length) return; const c=CIRC[circI]; const ok=q===c.q; const o=document.getElementById("circOut"); o.style.display="block"; o.className="nota "+(ok?"ok":""); o.innerHTML=(ok?"<strong>Correcto.</strong> ":"<strong>No.</strong> ")+c.f; estado.respuestas["2_circ"+circI]=ok?1:0; circI++; guardar(); circTarea(); }
+function circReiniciar(){ circI=0; document.getElementById("circOut").style.display="none"; circTarea(); }
+// asimetría
+function asim(){
+  const n=+document.getElementById("asN").value, p=+document.getElementById("asP").value;
+  document.getElementById("asNv").textContent=n; document.getElementById("asPv").textContent=p;
+  const base=27*0.20-12*0.96; const bal=(27+p)*0.20-(12-n)*0.96;
+  document.getElementById("asBal").textContent=(bal>=0?"+":"−")+Math.abs(bal).toFixed(1);
+  document.getElementById("asGN").textContent="+"+(n*0.96).toFixed(1); document.getElementById("asGP").textContent="+"+(p*0.20).toFixed(1);
+  const o=document.getElementById("asOut");
+  let msg=`Punto de partida de la semana: ${base.toFixed(1)} DE (27 positivos no compensan 12 negativos). `;
+  if(n===0&&p===0) msg+="Mueve una palanca.";
+  else if(n===0) msg+=`Agregar ${p} eventos positivos por semana suma ${(p*0.2).toFixed(1)}: necesitarías unos ${Math.ceil(0.96/0.2)} positivos para compensar un solo negativo. Eso es \"Buena Onda\".`;
+  else if(p===0) msg+=`Eliminar ${n} negativos evitables suma ${(n*0.96).toFixed(1)}: cada evento que no ocurre vale casi cinco eventos positivos. Eso es corregir AgendaYa, dar información real y que Héctor corrija en privado.`;
+  else msg+=`Las dos palancas juntas suman ${(n*0.96+p*0.2).toFixed(1)}; ${(n*0.96/(n*0.96+p*0.2)*100).toFixed(0)}% viene de eliminar negativos.`;
+  o.innerHTML=msg;
+  const des=[[n>=8,"Eliminaste los 8 eventos evitables de clientes (AgendaYa, información)"],[n>=11,"Eliminaste también los 3 de Héctor (corregir en privado)"],[p>=0&&n===0&&p*0.2>=0.96,"Descubriste cuántos positivos hacen falta para compensar un negativo"]];
+  document.getElementById("asDes").innerHTML=des.map(d=>`<div class="desafio ${d[0]?"hecho":""}"><span class="chk">${d[0]?"✓":""}</span><span>${d[1]}</span></div>`).join("");
+  if(n>=11||p*0.2>=0.96){ estado.respuestas["2_asim"]=1; guardar(); }
+}
+// trabajo emocional
+const TEC=["Actuación superficial","Actuación profunda (reevaluación)","Regulación automática","No hay trabajo emocional"];
+const C2TE=[
+  ["\"Sonrío, digo que lo entiendo, y por dentro quiero gritarle que no fui yo\".",0,"Fernanda modifica la expresión y no la emoción: la brecha (disonancia) es la fuente del costo."],
+  ["\"Pienso que lleva tres noches sin dormir por el calor y que yo soy la única persona de la empresa que tiene delante\".",1,"Brayan reinterpreta la situación antes de que la emoción escale: reevaluación, estrategia centrada en el antecedente (Gross)."],
+  ["\"Ya no finjo la calma: la tengo\".",2,"La práctica automatizó el guion; la emoción requerida se genera sin regulación consciente. Zapf et al. (2021): es la vía más frecuente en trabajadores experimentados."],
+  ["Una ejecutiva cuadra la caja sola, sin clientes, al final del día.",3,"Sin interacción ni regla de exhibición que cumplir, no hay trabajo emocional. Puede haber carga, pero no disonancia."],
+  ["Una ejecutiva nueva se repite \"actitud positiva, actitud positiva\" y sostiene la sonrisa mientras un cliente la insulta.",0,"Supresión de la expresión: actuación superficial. Y la regla que la obliga a aguantar insultos sin derivar es una tarea ilegítima."],
+  ["\"Me digo que el cliente tiene derecho a estar molesto y que mi trabajo es darle una salida; me enfoco en eso\".",1,"Reevaluación: cambia el significado de la situación. Hülsheger & Schewe: se asocia con mejor satisfacción del cliente (.37) y no con agotamiento (.09)."],
+];
+const TEDAT={"Actuación superficial":[.44,.48,-.33,.05,"La máscara se asocia con agotamiento y despersonalización, con menor satisfacción y con ningún beneficio para el cliente. Pero recuerda a Zapf: parte de ese .44 es el cliente que gritó, no la máscara."],"Actuación profunda":[.09,.02,.08,.37,"Cambiar lo que se siente no se asocia con agotamiento y sí con la satisfacción del cliente, que nota la diferencia. Se entrena: dos ejercicios diarios de reevaluación durante tres semanas mejoraron afecto y desempeño sin desvanecerse al mes (Zhu et al., 2025)."]};
+function initTE(){ const b=document.getElementById("teBox"); b.innerHTML=""; Object.keys(TEDAT).forEach(k=>{ const d=document.createElement("div"); d.textContent=k; d.onclick=()=>{ [...b.children].forEach(x=>x.classList.remove("on")); d.classList.add("on"); const v=TEDAT[k]; barra("bAg",v[0],-.5,.5,v[0]>0?"neg":"pos"); barra("bDe",v[1],-.5,.5,v[1]>0?"neg":"pos"); barra("bSa",v[2],-.5,.5,v[2]<0?"neg":"pos"); barra("bCl",v[3],-.5,.5,v[3]<0?"neg":"pos"); ["vAg","vDe","vSa","vCl"].forEach((id,i)=>document.getElementById(id).textContent=fmt(v[i])); document.getElementById("teOut").innerHTML=`<strong>${k}.</strong> ${v[4]} <span class="cita">Hülsheger & Schewe (2011), 95 estudios, 23.574 personas.</span>`; estado.respuestas["2_te"]=1; guardar(); }; b.appendChild(d); }); }
+const LEG=["Desafío legítimo","Tarea ilegítima o disonancia impuesta"];
+const C2REG=[
+  ["\"Al cliente se le atiende con actitud positiva\".",0,"Una regla de exhibición positiva (mostrar calidez) es un estresor de desafío: legítimo, parte del rol."],
+  ["\"Si está molesto, escúchalo hasta el final con actitud positiva; no lo derives a un supervisor\".",1,"Aguantar insultos sin poder derivar ni cortar es una tarea que no corresponde al rol (Semmer: tarea ilegítima); además expone a violencia de terceros que la Ley Karin obliga a prevenir."],
+  ["\"No le des un plazo que no esté confirmado por el técnico\" (cuando casi nunca está confirmado).",1,"La regla obliga a sostener una interacción sin poder dar información: disonancia impuesta por la empresa, no por el cliente. Es lo que \"saca de quicio\" a Brayan aunque ya no finja."],
+  ["\"Saluda de pie y ofrece agua al cliente que espera\".",0,"Una conducta de servicio concreta, sin exigencia de fingir una emoción: legítima, y de bajo costo."],
+];
+// EASI
+const EASI=["Ruta afectiva (contagio)","Ruta inferencial (deducción)"];
+const C2EASI=[
+  ["Después del grito de Héctor, el tono del mesón baja y dos ejecutivas atienden en silencio, de mal humor.",0,"Imitación automática del estado del jefe: contagio. Sy et al. (2005): el ánimo negativo del líder baja el ánimo del grupo y empeora la coordinación."],
+  ["Una ejecutiva nueva concluye: \"aquí no conviene preguntar; si me equivoco me lo van a gritar delante de todos\".",1,"Deduce una norma del lugar a partir de la emoción expresada: ruta inferencial. Consecuencia: menos preguntas, menos voz, más errores no reportados."],
+  ["Los clientes en espera interpretan que la empresa está desorganizada y suben el tono.",1,"Inferencia de terceros: la emoción del supervisor informa sobre la situación. Y agrega un evento negativo más a la fila."],
+  ["Fernanda sale del turno \"con rabia\" sin saber bien por qué.",0,"Afecto transferido sin conciencia (1 de 94 lo notó en Barsade, 2002). El contagio es invisible para quien lo sufre y para quien lo produce."],
+  ["El equipo deja de respetar a Héctor: \"grita porque no sabe manejar la situación\".",1,"Porat & Levy Paluck (2024): quien expresa enojo es visto como menos competente y recibe menos estatus. La obediencia inmediata se confunde con respeto; la inferencia va en contra."],
+];
+// IE
+const IEC=["Habilidad (tareas con respuestas correctas)","Autoinforme (cuestionario)"];
+const C2IE=[
+  ["\"¿Con qué frecuencia manejas bien tus emociones bajo presión?\" (1 a 5).",1,"Autoinforme: mide lo que la persona cree de sí misma. Correlaciona ≈ .85 con el factor general de personalidad (van der Linden et al., 2017)."],
+  ["Mostrar fotos de rostros y pedir identificar la emoción, con respuesta correcta e incorrecta.",0,"Tarea de habilidad (rama de percepción): tiene respuestas mejores y peores, como un test de aptitud."],
+  ["Presentar una situación (\"un cliente te grita por un error que no cometiste\") y pedir elegir la mejor estrategia entre cuatro, calificada por expertos.",0,"Tarea de habilidad (rama de manejo), tipo juicio situacional. Es lo más cercano a observar la conducta sin una simulación."],
+  ["\"Soy una persona que sabe leer a los demás\" (muy en desacuerdo … muy de acuerdo).",1,"Autoinforme de rasgo: mide confianza en uno mismo y personalidad. Quienes menos habilidad tienen más se sobreestiman (Sheldon et al., 2014)."],
+  ["Un juego de roles con un actor que hace de cliente furioso, observado con pauta por dos evaluadores.",0,"Muestra de conducta: no es un test de IE, pero es la mejor forma de ver la habilidad en acción, y lo que el curso recomienda en vez de comprar el cuestionario."],
+];
+const Q2=[
+  {p:"Según la teoría de los eventos afectivos, ¿sobre qué componente actúa corregir el defecto de AgendaYa?",o:["Sobre las reacciones afectivas","Sobre las características del ambiente, reduciendo la probabilidad de los eventos negativos","Sobre las actitudes","Sobre las disposiciones de las ejecutivas"],c:1,f:"Corregir el sistema cambia la condición que produce los eventos. \"Buena Onda\" actúa agregando eventos positivos; el taller de IE actúa sobre la reacción. La teoría y la asimetría dicen dónde está el retorno.",r:"Weiss & Cropanzano (1996); Miner et al. (2005)."},
+  {p:"¿Por qué Zapf et al. (2021) cambian la lectura de la correlación .44 entre actuación superficial y agotamiento?",o:["Porque la correlación es en realidad negativa","Porque los ítems de actuación superficial mezclan la máscara con la emoción negativa sentida, y al separarlas la emoción sentida se lleva la mayor parte del daño","Porque la actuación profunda también agota","Porque el metaanálisis era pequeño"],c:1,f:"La conclusión no es que fingir no cueste, sino que el cliente que obliga a fingir cuesta al menos tanto. Primera línea de defensa: reducir esos eventos, no entrenar mejores máscaras."},
+  {p:"\"Un jefe que grita se hace respetar\". La evidencia dice...",o:["Que es cierto en culturas latinas","Que el enojo da poder percibido a veces, pero consistentemente menos competencia y menos estatus (Porat & Levy Paluck, 2024), y se contagia al equipo empeorando la coordinación (Sy et al., 2005)","Que depende de la personalidad del equipo","Que no hay estudios"],c:1,f:"La obediencia inmediata se confunde con respeto. Y en el caso, tres de los doce eventos negativos de la semana los produce el propio supervisor."},
+  {p:"La consultora quiere usar el cuestionario de IE de 12 minutos para seleccionar \"gente con tolerancia a la frustración\". La objeción más precisa es...",o:["Que la IE no existe","Que un autoinforme de IE mide personalidad y confianza en uno mismo (≈ .85 con el factor general), no agrega validez sobre la personalidad (β ≈ −.02 con controles) y es fácil de falsear; la habilidad se mide con tareas o se observa en una simulación","Que 12 minutos es poco tiempo","Que debería aplicarse después del taller"],c:1,f:"Si de verdad interesa la habilidad emocional para el mesón (alta carga emocional, donde la IE de habilidad sí vale ≈ .24), la mejor inversión es una simulación con pauta y, antes que eso, reducir los eventos que exigen regular.",r:"van der Linden et al. (2017); Joseph et al. (2015); Joseph & Newman (2010)."},
+];
+
+// ===================== ESTACIÓN 3: TEMA 4 =====================
+const MIEMBROS=[
+ {n:"Héctor Pizarro",c:"Supervisor del mesón",e:49,nac:"Chilena",ant:11,s:1350,op:1,j:1,info:null},
+ {n:"Mauricio Alvear",c:"Jefe de técnicos",e:54,nac:"Chilena",ant:15,s:1500,op:2,j:1,info:null},
+ {n:"Pamela Castro",c:"Jefa de bodega",e:45,nac:"Chilena",ant:9,s:1100,op:2,j:1,info:null},
+ {n:"Rosa Contreras",c:"Ejecutiva de mesón",e:47,nac:"Chilena",ant:7,s:680,op:1,j:1,info:null},
+ {n:"Brayan Mamani",c:"Ejecutivo de mesón",e:26,nac:"Boliviana",ant:1.5,s:680,op:7,j:0,info:"Las visitas duplicadas aparecen solo cuando el reagendamiento se hace por WhatsApp fuera de horario; se pueden revisar cada mañana."},
+ {n:"Yesenia Quispe",c:"Operadora centro de llamados",e:24,nac:"Peruana",ant:1,s:620,op:6,j:0,info:"Los clientes más agresivos son administradores de cuatro edificios con contrato, sin técnico de referencia asignado."},
+ {n:"Luis Fernando Ríos",c:"Técnico en terreno",e:29,nac:"Colombiana",ant:2,s:780,op:7,j:0,info:"La mitad de los atrasos ocurre porque bodega cierra a las 17:00 y los repuestos del día siguiente no quedan preparados."},
+ {n:"Valentina Araya",c:"Operadora centro de llamados",e:22,nac:"Chilena",ant:0.5,s:620,op:6,j:0,info:"La nota en Google baja los lunes porque el centro de llamados no trabaja el fin de semana y se acumulan 200 llamadas."},
+];
+const HK=[
+ {k:"nac",lbl:"Nacionalidad",tipo:1,val:m=>m.nac,stat:"Índice de Blau",cons:"Más perspectivas e información (potencial de elaboración) y también más categorías visibles que pueden volverse saliencia. Máximo con cuatro categorías: .75.",rel:"Con Blau = .56 el comité tenía variedad suficiente para elaborar; el problema no fue la composición sino que la variedad se alineó con el cargo y la edad."},
+ {k:"s",lbl:"Sueldo líquido",tipo:2,val:m=>m.s,stat:"Coeficiente de variación (o Gini)",cons:"Competencia, deferencia hacia quien concentra el recurso, menor participación de los de abajo y resentimiento.",rel:"Los cuatro de arriba hablaron el 83% del tiempo: la disparidad de estatus se tradujo en quién habla y quién calla."},
+ {k:"op",lbl:"Opinión sobre la agenda (1-7)",tipo:0,val:m=>m.op,stat:"Desviación estándar",cons:"Menos cohesión, más conflicto de relación, menor desempeño; máxima cuando el grupo se parte en dos polos.",rel:"DE = 2.4 sobre un máximo de 3: dos polos, y alineados con el cargo. Separación bimodal es la receta de una falla."},
+ {k:"e",lbl:"Edad",tipo:0,val:m=>m.e,stat:"Desviación estándar (como separación) o CV (si se lee como estatus)",cons:"La edad suele tratarse como separación (posición en un continuo); alineada con otras diferencias, alimenta la falla.",rel:"Mayores de 44 frente a menores de 30: la edad parte al comité exactamente por la misma línea que el cargo."},
+ {k:"c",lbl:"Cargo (jefatura u operativo)",tipo:1,val:m=>m.j?"Jefatura":"Operativo",stat:"Índice de Blau (dos categorías)",cons:"Como variedad, aporta funciones distintas; pero el cargo trae estatus, así que también opera como disparidad.",rel:"Blau = .50, el máximo con dos categorías: mitad y mitad. Es la línea que todas las demás diferencias copian."},
+];
+let hkAct=null;
+function initHK(){ const s=document.getElementById("hkSel"); s.innerHTML=`<option value="">elige un atributo del comité...</option>`+HK.map((h,i)=>`<option value="${i}">${h.lbl}</option>`).join(""); }
+function hkElegir(){ const i=document.getElementById("hkSel").value; document.querySelectorAll("input[name=hkTipo]").forEach(r=>r.checked=false); ["hkOut","hkStats","hkCalc"].forEach(id=>document.getElementById(id).style.display="none"); hkAct=i===""?null:HK[+i]; if(hkAct){ const o=document.getElementById("hkOut"); o.style.display="block"; o.className="nota info"; o.innerHTML=`<strong>${hkAct.lbl}.</strong> Primero decide: ¿separación, variedad o disparidad?`; } }
+function hkTipo(){ if(!hkAct) return; const t=+document.querySelector("input[name=hkTipo]:checked").value; const ok=t===hkAct.tipo; const o=document.getElementById("hkOut"); o.className="nota "+(ok?"ok":""); const nombres=["separación","variedad","disparidad"];
+  o.innerHTML=(ok?"<strong>Correcto: ":"<strong>No: es ")+nombres[hkAct.tipo]+".</strong> Se mide con "+hkAct.stat.toLowerCase()+". <em>Consecuencia típica:</em> "+hkAct.cons+" <em>En el caso:</em> "+hkAct.rel;
+  estado.respuestas["3_hk_"+hkAct.k]=ok?1:0; guardar(); hkStats(); }
+function hkStats(){ const vals=MIEMBROS.map(hkAct.val); const st=document.getElementById("hkStats"), cc=document.getElementById("hkCalc"); st.style.display="grid"; cc.style.display="block";
+  if(hkAct.tipo===1){ const cnt={}; vals.forEach(v=>cnt[v]=(cnt[v]||0)+1); const n=vals.length; const props=Object.entries(cnt); const blau=1-props.reduce((a,[,c])=>a+(c/n)**2,0); const k=props.length;
+    set("hkL1","Índice de Blau",fmt0(blau)); set("hkL2","Categorías",String(k)); set("hkL3","Máximo posible con esas categorías",fmt0(1-1/k));
+    cc.innerHTML=`<strong>Cálculo:</strong> Blau = 1 − Σ p² = 1 − (${props.map(([v,c])=>`(${c}/${n})²`).join(" + ")}) = 1 − (${props.map(([,c])=>((c/n)**2).toFixed(4)).join(" + ")}) = <strong>${blau.toFixed(4)}</strong>. Categorías: ${props.map(([v,c])=>`${v} ${c}`).join(", ")}.`; }
+  else if(hkAct.tipo===0){ const n=vals.length, m=vals.reduce((a,b)=>a+b,0)/n; const sd=Math.sqrt(vals.reduce((a,v)=>a+(v-m)**2,0)/n);
+    set("hkL1","Desviación estándar (poblacional)",sd.toFixed(2)); set("hkL2","Media",m.toFixed(1)); set("hkL3",hkAct.k==="op"?"Máximo posible en 1-7 (mitad en 1, mitad en 7)":"Rango",hkAct.k==="op"?"3.00":String(Math.max(...vals)-Math.min(...vals)));
+    cc.innerHTML=`<strong>Cálculo:</strong> valores ${vals.join(", ")}; media ${m.toFixed(2)}; DE = √(Σ(x − media)²/n) = <strong>${sd.toFixed(2)}</strong>. ${hkAct.k==="op"?"La distribución es bimodal (1-2 frente a 6-7): separación casi máxima.":""}`; }
+  else { const n=vals.length, m=vals.reduce((a,b)=>a+b,0)/n; const sd=Math.sqrt(vals.reduce((a,v)=>a+(v-m)**2,0)/n); const cv=sd/m; const sorted=[...vals].sort((a,b)=>a-b); let g=0; sorted.forEach((x,i)=>g+=(2*(i+1)-n-1)*x); g=g/(n*sorted.reduce((a,b)=>a+b,0));
+    set("hkL1","Coeficiente de variación",cv.toFixed(2)); set("hkL2","Índice de Gini",g.toFixed(2)); set("hkL3","Razón máximo/mínimo",(Math.max(...vals)/Math.min(...vals)).toFixed(1)+"×");
+    cc.innerHTML=`<strong>Cálculo:</strong> media $${Math.round(m)} mil; DE $${Math.round(sd)} mil; CV = DE/media = <strong>${cv.toFixed(2)}</strong>. Los cuatro de arriba ganan entre 1.6 y 2.4 veces lo que los cuatro de abajo.`; }
+}
+function set(l,lt,v){ document.getElementById(l).textContent=lt; document.getElementById(l.replace("L","V")).textContent=v; }
+// falla
+const FA=[["Cargo",m=>m.j?"A":"B"],["Edad (≥ 40)",m=>m.e>=40?"A":"B"],["Antigüedad (≥ 5 años)",m=>m.ant>=5?"A":"B"],["Sueldo (≥ $1.000.000)",m=>m.s>=1000?"A":"B"],["Opinión (1-3 vs 5-7)",m=>m.op<=3?"A":"B"],["Nacionalidad (chilena vs extranjera)",m=>m.nac==="Chilena"?"A":"B"]];
+function initFalla(){ const t=document.getElementById("faToggles"); t.innerHTML=FA.map((f,i)=>`<label><input type="checkbox" data-i="${i}" onchange="falla()">${f[0]}</label>`).join(""); falla(); }
+function falla(){ const on=[...document.querySelectorAll("#faToggles input")].filter(c=>c.checked).map(c=>+c.dataset.i); const o=document.getElementById("faOut");
+  if(!on.length){ o.innerHTML=`<div class="nota">Activa uno o más atributos.</div>`; return; }
+  const firmas=MIEMBROS.map(m=>on.map(i=>FA[i][1](m)).join("")); const grupos={}; firmas.forEach((f,k)=>{ (grupos[f]=grupos[f]||[]).push(MIEMBROS[k].n.split(" ")[0]); });
+  const ks=Object.keys(grupos); let html=`<div class="mini">Subgrupos que resultan de alinear ${on.length} atributo${on.length>1?"s":""}: <strong>${ks.length}</strong></div>`;
+  ks.forEach((k,i)=>{ html+=`<div class="subgrupo">${grupos[k].map(n=>`<span class="ficha ${i%2?"b":"a"}">${n}</span>`).join("")}</div>`; });
+  let lect; if(ks.length===2&&on.length>=2){ lect=`<div class="nota aviso"><strong>Ajuste comparativo máximo.</strong> ${on.length} atributos distintos parten al comité exactamente por la misma línea y en dos subgrupos homogéneos de cuatro: una falla fuerte. Las diferencias no se cruzan, se apilan. Thatcher et al. (2024): las fallas latentes solo dañan cuando se activan; con gatillos (sección C) se convierten en bandos.</div>`; }
+  else if(ks.length===2) lect=`<div class="nota">Un solo atributo siempre parte al grupo en dos. La pregunta es si los demás parten por el mismo lugar: agrega otro.</div>`;
+  else lect=`<div class="nota ok"><strong>Las líneas se cruzan.</strong> La nacionalidad no coincide del todo con el cargo (Valentina es chilena y operativa; Rosa es chilena, operativa y antigua). Cuando las categorías se cruzan, el ajuste comparativo baja y la categoría \"chilenos vs extranjeros\" parte peor al grupo. Es la palanca de \"cruzar las categorías\" (Homan et al., 2007b).</div>`;
+  o.innerHTML=html+lect; if(on.length>=3){ estado.respuestas["3_falla"]=1; guardar(); } }
+// gatillos
+const GAT=["Gatillo (activa la falla)","No es gatillo"];
+const C3GAT=[
+  ["\"Los extranjeros son más serviciales que nosotros; quiero que los chicos de afuera nos enseñen\".",0,"Nombra la categoría y pide \"la perspectiva de los extranjeros\": categoriza a las personas contra su voluntad y establece trato diferencial (aunque suene positivo). Aumenta la accesibilidad y el ajuste normativo de la categoría."],
+  ["\"Los nuevos todavía no cachan cómo es un verano aquí\".",0,"Cuestiona la competencia del subgrupo: amenaza a la identidad (P6) que convierte la categorización en sesgo."],
+  ["Camila cronometra quién habla cuánto tiempo.",1,"Medir el proceso no activa la falla; al contrario, es el primer paso para rendir cuentas por el proceso (Scholten et al., 2007)."],
+  ["Los cuatro jefes se sientan juntos a un lado de la mesa y los cuatro operativos al otro.",0,"Contacto simple en condiciones de desigualdad y disposición física que hace visible la línea: un gatillo que suele pasar inadvertido."],
+  ["La gerenta pide que cada integrante traiga por escrito un dato que solo su área conoce.",1,"Es una palanca de elaboración (representación compartida de la tarea), no un gatillo: hace saliente la información, no la categoría."],
+  ["Un jefe comenta que \"la gente de afuera trabaja por menos y por eso les gusta más\".",0,"Trato diferencial y valores atribuidos al subgrupo: dos de los gatillos de Chrobot-Mason et al. (2009)."],
+];
+// orden CEM
+const CEM=["El comité tiene varios atributos alineados (cargo, edad, antigüedad, sueldo, opinión, nacionalidad): ajuste comparativo alto, falla latente.","Un gatillo (la frase de Gonzalo, la de Héctor) hace saliente la categoría y cuestiona la identidad de un subgrupo (P5, P6).","Aparece el sesgo intergrupal: confianza y voz para los míos, descuento de lo que dicen los otros.","El sesgo interrumpe la elaboración: los operativos callan (17% del tiempo) y los jefes no preguntan (P7).","La información única (AgendaYa, los cuatro edificios, bodega a las 17:00, los lunes) nunca llega a la mesa: perfil oculto.","La decisión se toma sobre lo compartido: protocolo de bienvenida, agenda intacta, unanimidad y sensación de buena decisión."];
+let ordenAct=[];
+function initOrden(){ ordenAct=[0,1,2,3,4,5].sort(()=>Math.random()-.5); pintarOrden(); }
+function pintarOrden(){ const ul=document.getElementById("ordCem"); ul.innerHTML=""; ordenAct.forEach((k,i)=>{ const li=document.createElement("li"); li.innerHTML=`<span class="n">${i+1}</span><span class="txt">${CEM[k]}</span><button onclick="moverOrden(${i},-1)">▲</button><button onclick="moverOrden(${i},1)">▼</button>`; ul.appendChild(li); }); }
+function moverOrden(i,d){ const j=i+d; if(j<0||j>=ordenAct.length) return; [ordenAct[i],ordenAct[j]]=[ordenAct[j],ordenAct[i]]; pintarOrden(); }
+function checkOrden(){ const lis=[...document.querySelectorAll("#ordCem li")]; let ok=0; ordenAct.forEach((k,i)=>{ const b=k===i; lis[i].classList.remove("bien","mal"); lis[i].classList.add(b?"bien":"mal"); if(b) ok++; }); const r=document.getElementById("ordRes"); r.style.display="block";
+  if(ok===6){ r.className="nota ok"; r.innerHTML="<strong>Cadena completa.</strong> Fíjate en que la categorización no es el problema (es automática e inevitable); el daño empieza con la amenaza y el sesgo, y lo que se pierde es la elaboración. Por eso las palancas apuntan a los gatillos, a la distribución de la información y a las creencias, no a \"que la gente no categorice\"."; estado.respuestas["3_cem"]=1; }
+  else { r.className="nota"; r.innerHTML=`<strong>${ok} de 6 en su lugar.</strong> Pista: parte de la composición, sigue con lo que la activa, luego lo que produce en las cabezas, luego lo que deja de pasar en la mesa, y termina en la decisión.`; if(!("3_cem" in estado.respuestas)) estado.respuestas["3_cem"]=0; } guardar(); }
+// perfil oculto
+let poRev=new Set();
+function initPO(){ const c=document.getElementById("poMiembros"); c.innerHTML=""; MIEMBROS.forEach((m,i)=>{ const d=document.createElement("div"); d.className="miembro "+(m.j?"jefe":"op"); d.innerHTML=`<strong>${m.n}</strong><br><span class="mini">${m.c}</span>`; d.onclick=()=>poClick(i,d); c.appendChild(d); }); }
+function poClick(i,d){ const m=MIEMBROS[i]; const o=document.getElementById("poOut");
+  if(m.info){ poRev.add(i); d.classList.add("revelado"); d.innerHTML=`<strong>${m.n}</strong><br><span class="mini">${m.info}</span>`; }
+  else { d.classList.add("on"); d.innerHTML=`<strong>${m.n}</strong><br><span class="mini">Sabe lo que todos saben: en verano la demanda se triplica, los clientes vienen más agresivos, las notas en Google bajaron.</span>`; }
+  const n=poRev.size; document.getElementById("poN").textContent=`${n} de 4`;
+  const dec=["Protocolo de bienvenida (síntoma)","Revisar duplicados de AgendaYa cada mañana","+ técnico de referencia para los cuatro edificios","+ bodega prepara repuestos del día siguiente","Rediseño completo: agenda, bodega, convenios y refuerzo de lunes (la causa, no el síntoma)"];
+  document.getElementById("poDec").textContent=dec[n];
+  o.innerHTML=n<4?`Con ${n} pieza${n===1?"":"s"} sobre la mesa, la mejor decisión visible mejora, pero sigue incompleta. La información compartida (demanda, clientes agresivos, Google) solo permite tratar el síntoma. Lu et al. (2012): los grupos hablan de lo compartido unas dos DE más que de lo único.`:`<strong>Con las cuatro piezas, la decisión cambia de naturaleza:</strong> en vez de sonreír mejor, el comité puede atacar las causas de los eventos (y de paso resolver la Pregunta 1). Eso es un perfil oculto: la mejor opción solo se ve juntando lo que cada uno sabe, y los grupos tienen ocho veces menos probabilidad de encontrarla (Lu et al., 2012). Lo que lo habría destrabado: una ronda de información por fuente antes de opinar, y un líder que dijera \"aquí hay que juntar lo que cada uno sabe\" (van Ginkel & van Knippenberg, 2008).`;
+  if(n===4){ estado.respuestas["3_po"]=1; guardar(); } }
+const ELAB=["Elaboración de información","Conflicto de tarea sin elaboración","Ninguna de las dos"];
+const C3ELAB=[
+  ["Cada integrante expone un dato que solo su área conoce y el grupo lo anota en una tabla por fuente antes de opinar.",0,"Intercambiar, procesar y devolver al grupo la información relevante: la definición de elaboración (van Knippenberg et al., 2004)."],
+  ["Jefes y operativos discuten media hora sobre si \"los clientes vienen más agresivos\", sin datos nuevos.",1,"Desacuerdo sobre posiciones, no intercambio de información: conflicto de tarea, con efecto promedio nulo o negativo (De Dreu & Weingart, 2003; de Wit et al., 2012)."],
+  ["El comité vota y gana la opción con más manos levantadas.",2,"Votar agrega preferencias; no integra información. Es lo contrario de elaborar."],
+  ["Alguien pregunta a Yesenia, que no ha hablado, qué ve ella desde el centro de llamados.",0,"Preguntas dirigidas a quien menos ha hablado: una de las formas más baratas de elaboración con evidencia (van Ginkel & van Knippenberg, 2008)."],
+  ["\"Se discutió harto, así que aprovechamos la diversidad\".",1,"Confunde conflicto visible con elaboración silenciosa. Lo que mejora la decisión es la cobertura de la información única, que puede lograrse sin pelear."],
+];
+// palancas
+const PAL=["Con evidencia a favor","Sin evidencia o contraproducente"];
+const C3PAL=[
+  ["Capacitación obligatoria en línea de una hora sobre diversidad para los 140 trabajadores.",1,"Dobbin & Kalev (2016): la capacitación obligatoria se asoció con caídas (hasta −9%) en jefaturas diversas; Chang et al. (2019): una hora en línea cambió actitudes y ninguna conducta. Además trata un problema de proceso (quién habla, quién decide) como un problema de actitudes."],
+  ["Comprar una \"encuesta de clima inclusivo\" de cuatro preguntas sin fiabilidad ni validez publicadas.",1,"Un instrumento sin fiabilidad, evidencia de validez ni invarianza entre grupos (¿mide lo mismo en chilenos y extranjeros?) no sirve para un antes y después. Exigir expediente (Rezai et al., 2020; PGIS de Jansen et al., 2014 como alternativa validada)."],
+  ["Protocolo del próximo comité: ronda de información por fuente antes de opinar, tabla por fuente, preguntas dirigidas a quien menos ha hablado.",0,"Representación compartida de la tarea y protocolo de elaboración (van Ginkel & van Knippenberg, 2008): lo más barato que tiene evidencia."],
+  ["Rendir cuentas por el proceso: el comité debe explicar cómo llegó a la decisión, no solo cuál fue.",0,"Scholten et al. (2007): la rendición de cuentas por el proceso aumentó el uso de la información repartida y la calidad de la decisión."],
+  ["Repartir la relatoría y la facilitación entre operativos y jefes, y mezclar los asientos.",0,"Cruzar las categorías y distribuir roles de modo que quién sabe qué no coincida con cargo, edad u origen (Homan et al., 2007b; van Knippenberg & van Ginkel, 2010)."],
+  ["Que Gonzalo abra diciendo \"aquí la tarea es juntar lo que cada uno sabe; las diferencias de área son el recurso\".",0,"Creencias pro-diversidad y discurso de integración y aprendizaje (Homan et al., 2007a; Ely & Thomas, 2001): protegen a los grupos con falla."],
+  ["Evitar hablar de nacionalidad o edad en las reuniones \"para no dividir\".",1,"Suprimir la categoría también amenaza la identidad (P6). Lo que daña es la amenaza, no el reconocimiento; lo que se gestiona son los gatillos, la distribución y las creencias."],
+  ["Un grupo de trabajo permanente, mixto, responsable de la agenda de verano, con un cargo a cargo.",0,"Grupos de trabajo interdepartamentales y un responsable: +9% a +30% en Dobbin & Kalev (2016). Responsabilidad en vez de control."],
+];
+const Q3=[
+  {p:"Blau para la nacionalidad del comité (5 chilenos, 1 boliviano, 1 peruana, 1 colombiano):",o:["1 − (.625 + .125 × 3) = .00","1 − (.625² + 3 × .125²) = 1 − (.3906 + .0469) = .56","(.625² + 3 × .125²) = .44","1 − 4/8 = .50"],c:1,f:"Blau = 1 − Σp². Las proporciones se elevan al cuadrado antes de sumar. El máximo con cuatro categorías es .75, así que .56 es variedad intermedia-alta."},
+  {p:"\"El comité falló porque le faltó diversidad\". Según el modelo de categorización-elaboración...",o:["Es correcto: había pocos extranjeros","Es incorrecto: el comité era diverso en todo; falló porque la diversidad se alineó en una falla, un gatillo la activó, el sesgo bloqueó la elaboración y la información única quedó fuera","Es correcto: faltaba diversidad de género","Depende del índice que se use"],c:1,f:"La diversidad no es un recurso que se tiene sino un trabajo que se hace: componer para la tarea, cruzar las categorías, hacer explícita la elaboración, construir la creencia y vigilar los gatillos."},
+  {p:"¿Cuál de estas afirmaciones sobre la capacitación en diversidad es correcta según la evidencia?",o:["Cualquier capacitación es mejor que ninguna","La obligatoria y breve en línea tiene la peor evidencia (caídas en Dobbin & Kalev; sin cambio de conducta en Chang et al.); la voluntaria, larga, con habilidades concretas e integrada en un paquete funciona algo mejor (Bezrukova et al., 2016)","La capacitación reduce el sesgo implícito y eso cambia la conducta","La capacitación es la única medida con evidencia"],c:1,f:"Forscher et al. (2019): los cambios en sesgo implícito no predicen conducta. Lo que tiene evidencia es asignar responsabilidad: mentoría, grupos de trabajo, un cargo a cargo."},
+  {p:"¿Qué distingue un argumento de justicia de un argumento de negocio para la diversidad?",o:["Nada; son lo mismo","El de negocio promete resultados (y la evidencia promedio es r ≈ .02, condicional al contexto); el de justicia dice que discriminar está mal y es ilegal, y no necesita del primero","El de justicia es más débil porque no tiene cifras","El de negocio está probado por Wallrich et al. (2024)"],c:1,f:"Wallrich et al. (2024): r = .024 en 2.638 tamaños de efecto; Joshi & Roh (2009): 20% positivos, 20% negativos, 60% nulos. Si justificas la diversidad por resultados, debes estar dispuesto a mostrarlos."},
+];
+
+// ===================== ESTACIÓN 4: TEMA 5 =====================
+function fuerza(){ const v=["fsC","fsK","fsR","fsQ"].map(id=>+document.getElementById(id).value); ["fsCv","fsKv","fsRv","fsQv"].forEach((id,i)=>document.getElementById(id).textContent=v[i]); const m=v.reduce((a,b)=>a+b,0)/4; document.getElementById("fsTot").textContent=m.toFixed(1)+" / 5"; const mar=m<=2?"alto":m<=3.5?"medio":"bajo"; document.getElementById("fsMar").textContent=mar;
+  document.getElementById("fsOut").innerHTML=`Con tu lectura, la situación es ${m<=2?"débil":m<=3.5?"intermedia":"fuerte"}: la personalidad ${m<=2?"se verá mucho, sobre todo en lo que nadie supervisa":m<=3.5?"se verá en los bolsones débiles (la caja, el cliente molesto) y poco en lo pautado":"se verá poco... pero revisa: ¿de verdad la caja de las 19:00 tiene consecuencias fuertes y visibles?"}. Judge & Zapata (2015): la validez de la personalidad sube en situaciones débiles (extraversión de .11 a .29).`; estado.respuestas["4_fs"]=1; guardar(); }
+function fuerzaLectura(){ document.getElementById("fsLect").style.display="block"; }
+const DEM=[["Responsabilidad","Cerrar la caja sola, cuadrar sin que nadie revise hasta el fin de semana"],["Estabilidad emocional (bajo neuroticismo)","Mantener la calma con un cliente que lleva tres días sin aire y grita"],["Amabilidad","Seguir siendo cortés con un cliente que te trata mal y no tiene razón contigo"],["Honestidad-humildad","Tener efectivo a mano, sin cámara ni arqueo diario, y no tomarlo"],["Extraversión","Conversar con soltura con los clientes en el mostrador (demanda social secundaria)"],["Apertura","Proponer una mejora a la forma de agendar (demanda ocasional, no central)"]];
+// comparador
+const PERF={A:{Narcisismo:85,Maquiavelismo:65,Psicopatía:35,N:30,E:92,A:40,C:38,O:65},B:{Narcisismo:30,Maquiavelismo:20,Psicopatía:25,N:50,E:55,A:72,C:80,O:45}};
+const CD=[
+ {d:"Cuadrar la caja sin supervisión",ras:"Responsabilidad (C) y honestidad (vía bajo narcisismo y maquiavelismo)",eval:()=>["B","C 80 vs 38: la autodisciplina y el orden son lo que la caja pide. Y la tríada oscura de A (narcisismo 85, maquiavelismo 65) se asocia con baja honestidad-humildad (−.41 a −.61; Muris et al., 2017), el predictor más fuerte de la desviación laboral (ρ ≈ −.48; Pletzer et al., 2019)."]},
+ {d:"Mantener la calma con clientes furiosos",ras:"Estabilidad emocional (bajo N) y amabilidad (A)",eval:()=>["empate","N 30 (A) vs 50 (B): ambos en rango medio; A algo más estable. Amabilidad 72 (B) vs 40 (A): B sostiene mejor la cortesía cuando la explotan (ultimátum). En conjunto, leve ventaja de B."]},
+ {d:"Quedarse hasta marzo (no renunciar a mitad del verano)",ras:"Responsabilidad y, en los datos de Camila, no \"simpatía\"",eval:()=>["B","Las \"muy simpáticas\" concentraron las renuncias. Conducta discrecional: la personalidad predice más esto que la tarea visible, y la responsabilidad es el rasgo que generaliza (Wilmot & Ones, 2021)."]},
+ {d:"Caerle bien al cliente en el primer minuto",ras:"Extraversión (E)",eval:()=>["A","E 92 vs 55: aquí A gana. Pero es la demanda que Héctor ve en la entrevista y la que no se asocia con mejores notas de clientes en los datos de Camila. Wiersma & Kappe (2017): se selecciona por extraversión y se paga por responsabilidad."]},
+ {d:"Proponer mejoras al proceso",ras:"Apertura (O)",eval:()=>["A","O 65 vs 45: ventaja de A. Es una demanda ocasional del puesto; no debería pesar más que la caja y el cliente molesto."]},
+];
+function initCD(){ document.getElementById("cdDem").innerHTML=CD.map((c,i)=>`<label><input type="checkbox" data-i="${i}" onchange="comparar()">${c.d}</label>`).join("");
+  const t=document.getElementById("cdTabla"); t.innerHTML=`<tr><th>Dimensión</th><th class="c">Candidato A</th><th class="c">Candidata B</th></tr>`+Object.keys(PERF.A).map(k=>`<tr><td>${{N:"Neuroticismo (N)",E:"Extraversión (E)",A:"Amabilidad (A)",C:"Responsabilidad (C)",O:"Apertura (O)"}[k]||k}</td><td class="c">${PERF.A[k]}</td><td class="c">${PERF.B[k]}</td></tr>`).join(""); }
+function comparar(){ const on=[...document.querySelectorAll("#cdDem input")].filter(c=>c.checked).map(c=>+c.dataset.i); const o=document.getElementById("cdOut"); if(!on.length){ o.innerHTML="Marca al menos una demanda."; return; }
+  let a=0,b=0; const filas=on.map(i=>{ const c=CD[i]; const [g,txt]=c.eval(); if(g==="A") a++; else if(g==="B") b++; else {a+=.5;b+=.5;} return `<p style="margin:.3rem 0"><strong>${c.d}</strong> <span class="mini">(${c.ras})</span> → favorece a <strong>${g==="empate"?"ninguno claramente":g}</strong>. ${txt}</p>`; }).join("");
+  const central=on.includes(0)||on.includes(1)||on.includes(2);
+  o.innerHTML=filas+`<p style="margin:.5rem 0 0"><strong>Lectura:</strong> con las demandas marcadas, A ${a} · B ${b}. ${central?"Cuando entran las demandas centrales del puesto (caja, cliente molesto, quedarse), la candidata B es la elección defendible, y la \"simpatía\" de A es el rasgo visible que el puesto no paga.":"Marcaste solo demandas periféricas: así gana A. Pregúntate si eso es lo que el puesto de 18:00 a 20:00 realmente exige."} Y la cautela: percentiles de normas de estudiantes, autoinforme de postulantes (que inflan los rasgos deseables), escalas breves. Nunca decidir solo con el cuestionario.</p>`;
+  if(central){ estado.respuestas["4_cd"]=1; guardar(); } }
+// tríada
+const TRI=[["Narcisismo",-.41,-.21,"Grandiosidad y necesidad de admiración; va con baja modestia y codicia (facetas de H). Explica la \"simpatía\" inicial y la dificultad para aceptar correcciones. Desempeño: correlaciones de −.03 a −.10 con la conducta laboral; emergencia como líder, algo positiva; eficacia, no."],["Maquiavelismo",-.61,-.43,"Manipulación estratégica, cinismo; baja sinceridad y baja justicia. La formación ética sin consecuencias no cambia a los altos en maquiavelismo (Bloodgood et al., 2010): hay que diseñar la situación."],["Psicopatía",-.54,-.46,"Impulsividad, falta de remordimiento. La alarma de \"psicópatas en la cúpula\" está exagerada (Landay et al., 2019: .07 con emerger como líder). Es una dimensión continua, no un diagnóstico: un percentil no es una etiqueta clínica."]];
+function initTri(){ const b=document.getElementById("trBox"); b.innerHTML=""; TRI.forEach(t=>{ const d=document.createElement("div"); d.textContent=t[0]; d.onclick=()=>{ [...b.children].forEach(x=>x.classList.remove("on")); d.classList.add("on"); barra("bTrH",t[1],-.7,.7,"neg"); barra("bTrA",t[2],-.7,.7,"neg"); document.getElementById("vTrH").textContent=fmt(t[1]); document.getElementById("vTrA").textContent=fmt(t[2]); document.getElementById("trOut").innerHTML=`<strong>${t[0]}.</strong> ${t[3]} <span class="cita">Muris et al. (2017); Moshagen et al. (2018): el factor D correlaciona −.80 con H.</span>`; estado.respuestas["4_tri"]=1; guardar(); }; b.appendChild(d); }); }
+// reglas
+const REG=["Confiabilidad / estabilidad del tipo","Estructura replicada","Validez de constructo","Validez de criterio e incremental","Equidad y normas locales","Faking y consecuencias"];
+const C4REG=[
+  ["El test de colores entrega un perfil distinto si la persona lo repite una semana después.",0,"Sin confiabilidad test-retest no hay nada que validar. Para Lüscher y similares no hay un solo estudio publicado de validez predictiva en selección (Didier Pino, 2014)."],
+  ["Las cuatro escalas del DISC no son independientes y se reducen a dos o tres factores que coinciden con el Big Five.",1,"La estructura no replica la teoría del test: si dice cuatro estilos y los datos dan otra cosa, la teoría está mal. Y si se reduce al Big Five, un inventario Big Five validado mide lo mismo con expediente."],
+  ["El cuestionario de IE correlaciona .85 con el factor general de personalidad.",2,"Validez de constructo deficiente: converge con lo que no debería (personalidad) y no se distingue de ello. Mide personalidad con otro nombre (van der Linden et al., 2017)."],
+  ["La IE mixta autoinformada pasa de ρ = .29 a β = −.02 al controlar personalidad, capacidad cognitiva y autoeficacia.",3,"Sin validez incremental: no agrega nada sobre lo que ya se mide (Joseph et al., 2015). Es la regla que casi ningún proveedor sabe responder."],
+  ["El DISC se vende en Chile con normas estadounidenses y sin manual técnico público.",4,"Sin normas locales ni manual, un percentil no significa nada. \"Normas de 1985 en otro país\" no son normas."],
+  ["Los postulantes puntúan medio punto de DE más alto en responsabilidad que los empleados, y la consultora no lo advierte.",5,"Faking y consecuencias: hay que saber cuánto se puede fingir y qué pasa con las personas cuando se decide con el test. Messick (1995): la validez es de las inferencias y sus consecuencias."],
+  ["La entrevista de Héctor \"en diez minutos sé si sirve\" premia la extraversión y no se asocia con notas de clientes.",3,"Una entrevista no estructurada tiene validez de criterio baja (≈ .19 en Sackett et al., 2022) y se \"finge\" igual o más que un test. La estructurada sube a ≈ .42."],
+  ["El perfil del test de colores \"describe perfecto\" a los postulantes.",5,"Es el efecto Forer (1949: 4.26/5 para un perfil idéntico): la aceptación del usuario es la forma más débil de validez. Se acepta también \"validez de constructo\"; lo central es que gustar no es medir."],
+];
+const SACK=[["Entrevista estructurada",.42],["Conocimiento del puesto",.40],["Muestra de trabajo",.33],["Habilidad cognitiva general",.31],["Responsabilidad (contextualizada)",.25],["Entrevista no estructurada",.19],["Test de colores / grafología / DISC",0]];
+let sackAct=[];
+function initSack(){ sackAct=[0,1,2,3,4,5,6].sort(()=>Math.random()-.5); pintarSack(); }
+function pintarSack(){ const ul=document.getElementById("ordSack"); ul.innerHTML=""; sackAct.forEach((k,i)=>{ const li=document.createElement("li"); li.innerHTML=`<span class="n">${i+1}</span><span class="txt">${SACK[k][0]}</span><button onclick="moverSack(${i},-1)">▲</button><button onclick="moverSack(${i},1)">▼</button>`; ul.appendChild(li); }); }
+function moverSack(i,d){ const j=i+d; if(j<0||j>=sackAct.length) return; [sackAct[i],sackAct[j]]=[sackAct[j],sackAct[i]]; pintarSack(); }
+function checkSack(){ const lis=[...document.querySelectorAll("#ordSack li")]; let ok=0; sackAct.forEach((k,i)=>{ const b=k===i; lis[i].classList.remove("bien","mal"); lis[i].classList.add(b?"bien":"mal"); if(b) ok++; lis[i].querySelector(".txt").textContent=SACK[k][0]+" ("+(SACK[k][1]?fmt0(SACK[k][1]):"sin evidencia")+")"; }); const r=document.getElementById("sackRes"); r.style.display="block";
+  if(ok===7){ r.className="nota ok"; r.innerHTML="<strong>Orden correcto.</strong> La alternativa con mejor evidencia para evaluar el manejo de clientes molestos es una entrevista estructurada de incidentes críticos más una muestra de trabajo (simulación con un cliente furioso, observada con pauta), complementadas con un inventario de personalidad validado para C, estabilidad y H, con normas de postulantes. Entre las tres herramientas de Talento Andino, la \"menos mala\" sería el DISC o el cuestionario de IE, solo porque miden algo de personalidad; el test de colores no mide nada."; estado.respuestas["4_sack"]=1; }
+  else { r.className="nota"; r.innerHTML=`<strong>${ok} de 7 en su lugar.</strong> Pista: los métodos que observan conducta o conocimiento del puesto van arriba; la personalidad en el medio; lo que no tiene expediente, al final.`; if(!("4_sack" in estado.respuestas)) estado.respuestas["4_sack"]=0; } guardar(); }
+// faking
+function faking(){ const p=+document.getElementById("fkS").value/100; document.getElementById("fkV").textContent=Math.round(p*100)+"%"; const d=0.68*p; const r2=18-7*p; document.getElementById("fkM").textContent=(d>0?"+":"")+d.toFixed(2)+" DE"; document.getElementById("fkR").textContent=r2.toFixed(0)+"%";
+  document.getElementById("fkOut").innerHTML=p===0?"Mueve el control: compara una muestra de empleados respondiendo en confianza con una de postulantes.":`Con ${Math.round(p*100)}% de postulantes, la media en H sube ${d.toFixed(2)} DE (Anglim et al., 2018: H +.68, amabilidad +.94, responsabilidad +.65, extraversión +.64) y la varianza explicada de la conducta contraproducente baja de 18% a ${r2.toFixed(0)}% (en el estudio, 18% vs 11%, diferencia no significativa). <strong>La distorsión es grande en las medias y pequeña en la validez:</strong> se maneja con normas de postulantes, rasgos relevantes al puesto, formatos resistentes y sin decidir solo con el cuestionario. Las escalas de deseabilidad social no detectan nada (ρ = .04; Lanz et al., 2022) y la inteligencia artificial finge mejor que las personas.`; if(p>=.5){ estado.respuestas["4_fk"]=1; guardar(); } }
+// seleccionar vs diseñar
+const SD=["Seleccionar (la persona)","Diseñar la situación","Ninguna de las dos"];
+const C4SEL=[
+  ["Aplicar un inventario Big Five o HEXACO validado y ponderar C y H entre varios predictores.",0,"Selección: reduce la proporción de personas con la tendencia. Limitada por el faking en postulantes y porque nunca se decide solo con personalidad."],
+  ["Arqueo de caja al cierre de cada turno, con firma de quien entrega y de quien recibe.",1,"Diseño: hace probable la detección. Hilbig et al. (2012): los bajos en H cooperan cuando el castigo es probable. Convierte una situación débil en fuerte para esa conducta."],
+  ["Cámara sobre el mesón y la caja, no sobre la puerta.",1,"Diseño: quita la clave situacional (\"nadie ve\") que activa el bajo H. De Vries et al. (2016): el rasgo espera su situación."],
+  ["Charla de ética de media hora en la inducción.",2,"Bloodgood et al. (2010): la formación ética sin consecuencias no cambia a los altos en maquiavelismo. Sin cambio en las consecuencias, no es ni selección ni diseño."],
+  ["Contratar \"gente honesta\" según la impresión de Héctor en diez minutos.",2,"Ni selección válida (entrevista no estructurada, ≈ .19) ni diseño. Y la honestidad no se ve en diez minutos de simpatía: el narcisismo se presenta bien."],
+  ["Caja chica menor y depósito del efectivo en caja fuerte con registro cada dos horas.",1,"Diseño: reduce la oportunidad y aumenta la trazabilidad. Pletzer et al. (2019): reducir la desviación \"evitando las señales situacionales que activan la expresión de bajos H, C, A y E\"."],
+];
+const CAJA=[["Arqueo diario con doble firma",.35],["Cámara sobre la caja",.25],["Depósito en caja fuerte cada dos horas",.2],["Seleccionar por H y C (inventario validado)",.1],["Charla de ética en la inducción",0]];
+function initCaja(){ document.getElementById("cajaT").innerHTML=CAJA.map((c,i)=>`<label><input type="checkbox" data-i="${i}" onchange="caja()">${c[0]}</label>`).join(""); caja(); }
+function caja(){ const on=[...document.querySelectorAll("#cajaT input")].filter(c=>c.checked).map(c=>+c.dataset.i); const p=Math.min(.95,.1+on.reduce((a,i)=>a+CAJA[i][1],0)); const dis=on.some(i=>i<=2); document.getElementById("cajaP").textContent=p<.3?"baja":p<.6?"media":"alta"; document.getElementById("cajaK").textContent=dis?"debilitada":"presente";
+  document.getElementById("cajaOut").innerHTML=!on.length?"Hoy: cierre semanal, cámara a la puerta, dos descuadres sin aclarar. La clave situacional que activa el bajo H (castigo improbable) está completa, y la responsabilidad no se ve hasta que falla. Marca medidas.":(dis?`<strong>Dos palancas.</strong> ${on.includes(3)?"Seleccionar por H y C reduce la proporción de personas con la tendencia; ":"Sin selección, dependes solo del diseño; "}${dis?"el diseño (arqueo, cámara, depósito) quita la clave que activa el rasgo y hace probable la detección. ":""}${on.includes(4)?"La charla de ética no cambia nada sin consecuencias (Bloodgood et al., 2010). ":""}Gonzalo tenía media razón: la honestidad predice (ρ ≈ −.48 con la desviación), pero \"se acaba el tema\" solo si la situación deja de invitar.`:"Solo seleccionar (o solo una charla) deja intacta la situación: el rasgo espera su oportunidad. Agrega una medida de diseño."); if(dis&&on.includes(3)){ estado.respuestas["4_caja"]=1; guardar(); } }
+const Q4=[
+  {p:"\"La responsabilidad sirve para todo, así que seleccionemos por responsabilidad y listo\". Según la evidencia...",o:["Es correcto: es el único rasgo que predice en las nueve ocupaciones","Es cierto que generaliza, pero su validez va de ≈ .14 a ≈ .33 según la ocupación, es menor en situaciones fuertes y en trabajos de puro detalle, y sus facetas de orden y cautela predicen al revés en cargos gerenciales (Dudley et al., 2006)","Es falso: la responsabilidad no predice nada","Depende del test"],c:1,f:"Wilmot & Ones (2021); Judge & Zapata (2015). Sirve donde hay margen para ser o no ser responsable, como la caja a las 19:00."},
+  {p:"¿Por qué la \"chispa\" que Héctor ve en la entrevista no es lo que el puesto paga?",o:["Porque la extraversión es un rasgo negativo","Porque la entrevista no estructurada premia el rasgo más visible (extraversión), y el trabajo recompensa después la conducta discrecional (cerrar bien la caja, quedarse), que predice la responsabilidad (Wiersma & Kappe, 2017)","Porque los extravertidos mienten más","Porque Héctor entrevista mal"],c:1,f:"Los datos de Camila lo muestran: sin mejores notas de clientes, más renuncias, el doble de cuadraturas mal hechas. La personalidad predice más lo discrecional que lo obligatorio."},
+  {p:"Percentil 85 en narcisismo en el candidato A significa que...",o:["Es un narcisista clínico y no puede trabajar con público","Puntúa más alto que el 85% de una muestra de estudiantes en un rasgo continuo que se asocia con baja honestidad-humildad; frente a una caja sin control es un riesgo a ponderar, no una etiqueta","Es un buen líder, porque los narcisistas emergen como líderes","Nada, porque los postulantes mienten"],c:1,f:"Muris et al. (2017): dimensiones continuas en población general; correlaciones modestas con la conducta laboral. Lo que importa es el rasgo frente a la situación, y la situación de la caja es la que activa el bajo H."},
+  {p:"\"Da lo mismo qué test usemos, los postulantes mienten en todos\". La respuesta correcta es...",o:["Cierto: por eso hay que usar la entrevista","Los postulantes inflan las medias (≈ .5 a .9 DE), pero la validez se atenúa, no desaparece (18% vs 11% de varianza explicada en Anglim et al., 2018); las escalas de mentira no sirven (.04) y la entrevista no estructurada se finge igual; se maneja con diseño","Cierto: la personalidad no sirve para seleccionar","Falso: los postulantes no mienten"],c:1,f:"Prácticas: normas de postulantes, rasgos relevantes al puesto, formatos resistentes, combinar con métodos difíciles de fingir (entrevista estructurada, simulación), y nunca decidir solo con personalidad."},
+  {p:"¿Qué diferencia a la honestidad-humildad de la amabilidad?",o:["Son lo mismo con otro nombre","H es no explotar al otro cuando podrías sin castigo (dictador: dar correlaciona con H); A es seguir cooperando aunque te exploten (ultimátum: aceptar ofertas injustas correlaciona con A)","A predice el robo y H la cortesía","H es una faceta de A en todos los inventarios"],c:1,f:"Hilbig et al. (2013). Para la caja importa H; para el cliente que grita importa A. La candidata B puntúa alto en A y bajo en los rasgos oscuros que marcan bajo H."},
+];
+
+// ===================== ESTACIÓN 5: SIMULACRO =====================
+const SIM=[{"titulo":"Pregunta 1. Procesos afectivos en el mesón (20 puntos)","tema":"Tema 3. Procesos afectivos: eventos afectivos, trabajo emocional, contagio y regulación","partes":[{"tipo":"OBLIGATORIA","id":"1a","titulo":"(a) La teoría de los eventos afectivos y el programa \"Buena Onda\" (12 puntos)","texto":"Usa la teoría de los eventos afectivos para explicar lo que ocurre en el mesón (rotación de 58%, licencias en enero, riesgo alto en exigencias emocionales). Identifica en el caso (i) una característica del ambiente de trabajo que hace probables ciertos eventos afectivos, (ii) dos eventos afectivos, (iii) la reacción afectiva que producen, ubicando al menos una en el circumplejo (valencia y activación), (iv) una conducta impulsada por el afecto y (v) una actitud o conducta impulsada por el juicio. Luego evalúa el programa \"Buena Onda\" con la evidencia sobre la asimetría entre eventos negativos y positivos.","pauta":[["Nombré una característica del ambiente de trabajo (AgendaYa que duplica visitas, instructivo que prohíbe dar plazos o derivar, supervisor que corrige en público, sala de espera sin aire) y la distinguí de un evento.",2],["Identifiqué dos eventos afectivos concretos (cliente furioso por visita duplicada, corrección en voz alta de Héctor, cliente grosero; o uno positivo como la compañera que ayuda) como episodios, no condiciones.",2],["Describí la reacción afectiva y ubiqué al menos una en el circumplejo con valencia y activación (tensión/enojo: displacentero activado; \"no me queda nada\": displacentero desactivado).",2],["Di una conducta impulsada por el afecto (tono seco al siguiente cliente, temblor, contar hasta diez, poner la cara) distinta de la actitud.",1.5],["Di una actitud o conducta impulsada por el juicio (insatisfacción, intención de renunciar, rotación 58%, licencias de enero) y la vinculé a la acumulación de reacciones.",1.5],["Expliqué la lógica de la teoría: el ambiente determina los eventos, los eventos producen reacciones, las reacciones alimentan conductas inmediatas y, acumuladas, actitudes (\"se gestionan eventos, no ánimos\").",1],["Evalué \"Buena Onda\" con la asimetría (un negativo pesa unas cinco veces más que un positivo; Miner et al., 2005) y con el registro (27 vs 12; 8 evitables), concluyendo que el retorno está en eliminar negativos (AgendaYa, información, Héctor), no en agregar positivos.",2]],"errores":"confundir el instructivo (característica) con un evento; tratar \"estrés\" como la actitud; evaluar el programa por intuición (\"reconocer es bueno\") sin la asimetría; proponer entrenar a las ejecutivas para que \"no les afecte\"; lenguaje causal (\"el programa demostrará\")."},{"tipo":"OPTATIVA (b o c)","id":"1b","titulo":"(b) Trabajo emocional: Fernanda y Brayan (8 puntos)","texto":"Clasifica la estrategia de regulación de Fernanda y la de Brayan (actuación superficial, actuación profunda, regulación automática o reevaluación) y explica, con la evidencia del curso, por qué el problema de Fernanda no se resuelve enseñándole a sonreír mejor, y por qué a Brayan todavía \"lo saca de quicio\" el instructivo.","pauta":[["Clasifiqué a Fernanda como actuación superficial, citando la frase (\"sonrío... por dentro quiero gritarle\") y explicando la disonancia.",1.5],["Clasifiqué a Brayan como reevaluación (actuación profunda) que se volvió regulación automática (\"ya no finjo la calma: la tengo\"), explicando el mecanismo.",1.5],["Reporté la evidencia de Hülsheger y Schewe (2011) en la dirección correcta: superficial se asocia con agotamiento (≈ .44) y menor satisfacción, sin beneficio para el cliente; profunda, sin agotamiento (≈ .09) y con mejor satisfacción del cliente (≈ .37).",2],["Expliqué la precisión de Zapf et al. (2021): los ítems de actuación superficial mezclan máscara y emoción sentida; la emoción sentida (el cliente gritando) se lleva la mayor parte del daño; por eso entrenar la sonrisa no ataca la causa.",1.5],["Expliqué por qué a Brayan lo \"saca de quicio\" el instructivo: la regla de no dar plazos impone una disonancia que no viene del cliente sino de la empresa (tarea ilegítima o regla sin legitimidad).",1],["Indiqué la primera palanca organizacional (reducir eventos: AgendaYa, información real, derivar o cortar interacciones abusivas, corregir en privado) y la obligación de la Ley Karin (21.643) frente a la violencia de terceros.",0.5]],"errores":"llamar a Brayan \"inteligente emocionalmente\" en vez de clasificar la estrategia; decir que la actuación profunda es \"mentir mejor\"; recomendar el taller de IE como primera medida; tratar el agotamiento como falta de resiliencia."},{"tipo":"OPTATIVA (b o c)","id":"1c","titulo":"(c) \"Aquí se aprende a gritos\" (8 puntos)","texto":"Evalúa la práctica de Héctor con el modelo EASI (las dos rutas por las que la emoción expresada afecta al observador) y con la evidencia experimental sobre el enojo del líder. Predice el efecto de sus correcciones en voz alta sobre el ánimo de las ejecutivas, su conducta con el siguiente cliente y la coordinación del mesón.","pauta":[["Expliqué la ruta afectiva del EASI: el enojo de Héctor se contagia por imitación automática y baja el ánimo del mesón (Barsade, 2002; Sy et al., 2005).",2],["Expliqué la ruta inferencial: las ejecutivas deducen algo (\"aquí se castiga en público\", \"no conviene preguntar\", \"está descontrolado\"), y los clientes en espera infieren desorganización.",2],["Cité la evidencia experimental: quien expresa enojo es visto como menos competente y con menos estatus (Porat & Levy Paluck, 2024, cuatro experimentos prerregistrados); el ánimo negativo del líder empeora la coordinación del grupo (Sy et al., 2005).",2],["Predije efectos concretos: peor ánimo al inicio del turno, trato más seco al siguiente cliente, menos preguntas y menos reporte de errores, peor coordinación; y noté que tres de los doce eventos negativos de la semana los produce el propio supervisor.",2]],"errores":"\"depende de la cultura\" sin evidencia; confundir exigencia con maltrato (dual tuning no legitima el evento negativo gratuito); afirmar que el grito \"causa\" la rotación sin matiz."}]},{"titulo":"Pregunta 2. El comité de verano (20 puntos)","tema":"Tema 4. Diversidad: formas de diversidad, categorización-elaboración, fallas, perfil oculto y gestión","partes":[{"tipo":"OBLIGATORIA","id":"2a","titulo":"(a) Tres formas de diversidad en el comité (12 puntos)","texto":"Con la tipología de Harrison y Klein (2007), clasifica la diversidad del comité en (i) nacionalidad, (ii) sueldo y (iii) opinión sobre la agenda (encuesta previa) como separación, variedad o disparidad. Para cada una indica el estadístico con que se mide y la consecuencia típica que predice la tipología, y relaciónala con lo que ocurrió en las reuniones. Calcula el índice de Blau para la nacionalidad.","pauta":[["Clasifiqué nacionalidad como variedad (categorías cualitativas sin orden).",1],["Clasifiqué sueldo como disparidad (cantidad de un recurso valioso, concentrada en pocos).",1],["Clasifiqué la opinión 1-7 como separación (posiciones en un continuo de actitud).",1],["Indiqué el estadístico de cada una: Blau (o entropía) para variedad; coeficiente de variación o Gini para disparidad; desviación estándar para separación.",3],["Indiqué la consecuencia típica: variedad → más información y perspectivas (potencial de elaboración y de categorización); disparidad → deferencia, silencio de los de abajo, competencia; separación máxima → menos cohesión, más conflicto, peor desempeño.",3],["Relacioné cada consecuencia con el caso: 83% del tiempo hablado por los jefes (disparidad); dos polos de opinión alineados con el cargo (separación bimodal, falla); variedad suficiente que no se aprovechó.",1.5],["Calculé Blau mostrando el procedimiento: 1 − (.625² + 3 × .125²) = 1 − .4375 = .56 (máximo con cuatro categorías: .75).",1.5]],"errores":"clasificar la nacionalidad o la edad como separación \"porque las personas están separadas\"; usar Blau para la opinión; decir que el comité \"no era diverso\"; confundir diversidad (composición) con inclusión (experiencia)."},{"tipo":"OPTATIVA (b o c)","id":"2b","titulo":"(b) Por qué el comité decidió mal (8 puntos)","texto":"Explica con el modelo de categorización-elaboración por qué el comité produjo una decisión pobre: (i) describe la falla (qué atributos se alinean; ajuste comparativo) y el gatillo que la activó; (ii) explica la ruta de la categorización al sesgo intergrupal y de ahí al bloqueo de la elaboración, usando las frases de los integrantes; (iii) explica qué es un perfil oculto y qué información única quedó fuera.","pauta":[["Describí la falla: cargo, edad, antigüedad, sueldo, opinión y (casi) nacionalidad se alinean en dos subgrupos homogéneos de cuatro; ajuste comparativo alto porque las categorías parten al grupo por la misma línea.",2],["Identifiqué el gatillo: la frase de Gonzalo (nombra la categoría, pide \"la perspectiva de los extranjeros\", trato diferencial) y la de Héctor (\"los nuevos no cachan\"), que cuestiona la competencia del subgrupo.",1.5],["Expliqué que la categorización en sí no daña (es automática); daña cuando la identidad se siente amenazada (P6), lo que produce sesgo intergrupal (voz para los míos, descuento de los otros).",1.5],["Expliqué que el sesgo interrumpe la elaboración (P7) usando las frases: \"lo que yo dijera iba a ser la opinión de los bolivianos\", \"los jefes ya venían con la respuesta\", 17% del tiempo para los operativos.",1.5],["Expliqué el perfil oculto: la mejor decisión (AgendaYa, los cuatro edificios, bodega a las 17:00, los lunes) solo era visible juntando la información única de cada operativo; se discutió lo compartido y se decidió el síntoma (Stasser & Titus, 1985; Lu et al., 2012: ocho veces menos probable).",1.5]],"errores":"culpar a los operativos por no hablar o a Héctor por su carácter; decir que faltó diversidad; tratar la unanimidad rápida como señal de buena decisión; proponer no hablar de nacionalidad (suprimir la categoría también amenaza)."},{"tipo":"OPTATIVA (b o c)","id":"2c","titulo":"(c) Qué haría un(a) Ingeniero(a) Comercial (8 puntos)","texto":"Evalúa la capacitación obligatoria en línea de una hora y la \"encuesta de clima inclusivo\" de cuatro preguntas con la evidencia del curso. Luego propón dos estrategias distintas, basadas en el modelo de categorización-elaboración, para que el comité (o uno nuevo) elabore la información que tiene, y justifica cada una con el modelo o con un estudio del curso.","pauta":[["Evalué la capacitación obligatoria en línea con la evidencia: se asoció con caídas en jefaturas diversas (Dobbin & Kalev, 2016, hasta −9%); una hora en línea cambió actitudes y ninguna conducta (Chang et al., 2019); trata un problema de proceso como de actitudes.",2],["Evalué la encuesta de cuatro preguntas: sin fiabilidad, validez ni invarianza publicadas no sirve para medir un antes y después; hay instrumentos validados (PGIS, Jansen et al., 2014).",1],["Propuse una primera palanca del CEM (protocolo de elaboración: ronda de información por fuente, tabla, preguntas a quien menos habló; rendir cuentas por el proceso) y la justifiqué (van Ginkel & van Knippenberg, 2008; Scholten et al., 2007).",2.5],["Propuse una segunda palanca distinta (cruzar categorías y roles; creencias pro-diversidad y representación compartida de la tarea; vigilar gatillos; grupo de trabajo mixto con responsable) y la justifiqué con el modelo o un estudio (Homan et al., 2007; Ely & Thomas, 2001; Chrobot-Mason et al., 2009; Dobbin & Kalev, 2016).",2.5]],"errores":"proponer \"más diversidad\" o \"menos diversidad\"; palancas de sentido común (\"que todos participen\") sin mecanismo; defender la capacitación \"porque algo es mejor que nada\"."}]},{"titulo":"Pregunta 3. Seleccionar para el verano (20 puntos)","tema":"Tema 5. Personalidad y diferencias individuales: situación, activación de rasgos, lado oscuro, evaluación de instrumentos y faking","partes":[{"tipo":"OBLIGATORIA","id":"3a","titulo":"(a) Leer la situación del puesto y aplicar rasgos de personalidad (12 puntos)","texto":"Identifica las demandas del puesto de ejecutiva o ejecutivo de mesón en verano (con la caja de 18:00 a 20:00) y los rasgos que cada demanda convoca. Elige entre el candidato A y la candidata B y justifica con el perfil Big Five y de tríada oscura, con los datos de Camila sobre las personas \"muy simpáticas\" y con una cautela sobre las normas usadas.","pauta":[["Identifiqué al menos tres demandas del puesto en verano: cuadrar caja sola con cierre semanal, mantener la calma con clientes furiosos, seguir siendo cortés cuando te tratan mal, quedarse hasta marzo, y la demanda social secundaria del mostrador.",3],["Vinculé cada demanda con el rasgo que convoca: responsabilidad (caja, cierre), estabilidad emocional y amabilidad (cliente molesto), honestidad vía bajos rasgos oscuros (efectivo sin control), extraversión solo como secundaria.",3],["Elegí a la candidata B y lo justifiqué rasgo por demanda: C 80 vs 38; A 72 vs 40; narcisismo 30 vs 85 y maquiavelismo 20 vs 65 (asociados con baja honestidad-humildad; Muris et al., 2017); E 92 de A es lo que Héctor ve, no lo que el puesto paga.",3],["Usé los datos de Camila y la teoría: las \"muy simpáticas\" sin mejores notas, más renuncias y peores cuadraturas; la extraversión se selecciona y la responsabilidad se paga (Wiersma & Kappe, 2017); la personalidad predice más lo discrecional.",1.5],["Agregué una cautela: normas de estudiantes, provisionales; postulantes inflan rasgos deseables; escalas breves; un percentil alto en narcisismo no es un diagnóstico; nunca decidir solo con el cuestionario.",1.5]],"errores":"elegir por \"perfil equilibrado\" sin vincular rasgo y demanda; llamar \"psicópata\" o \"narcisista clínico\" al candidato A; defender la \"chispa\"; ignorar que las normas son de estudiantes."},{"tipo":"OPTATIVA (b o c)","id":"3b","titulo":"(b) El tribunal de los tests (8 puntos)","texto":"Analiza las tres herramientas de Talento Andino (test de colores, DISC, cuestionario de inteligencia emocional) con las reglas para juzgar un instrumento y decide cuál sería la menos mala si no hubiera otra alternativa. Propón una alternativa con mejor evidencia para evaluar el manejo de clientes molestos.","pauta":[["Evalué el test de colores con las reglas: sin confiabilidad ni validez de criterio publicadas, sin estructura ni constructo definidos; se sostiene por el efecto Forer (Didier Pino, 2014: ningún estudio de validez predictiva para proyectivos en Chile).",1.5],["Evalué el DISC: tipos a partir de dimensiones continuas (inestables, pierden información); escalas que se reducen al Big Five; sin validez de criterio laboral publicada ni normas locales: \"acusado sin expediente\".",1.5],["Evalué el cuestionario de IE: mide personalidad (≈ .85 con el factor general; van der Linden et al., 2017); sin validez incremental (β ≈ −.02; Joseph et al., 2015); fácil de falsear; los menos hábiles se sobreestiman (Sheldon et al., 2014).",1.5],["Elegí la \"menos mala\" con argumento: el DISC o el cuestionario de IE, solo porque miden algo de personalidad (y entonces convendría un inventario Big Five validado); el test de colores no mide nada.",1.5],["Propuse una alternativa con mejor evidencia: entrevista estructurada de incidentes críticos (≈ .42) y simulación o muestra de trabajo con un cliente molesto, observada con pauta (≈ .33), más un inventario de personalidad validado para C, estabilidad y H con normas de postulantes (Sackett et al., 2022).",2]],"errores":"rechazar los tests \"porque son antiguos\" sin reglas; \"el DISC mide el Big Five, así que sirve\" (reducirse al Big Five sin aportar nada es la crítica); proponer una escala de mentira; mejorar \"la entrevista de Héctor\" sin estructurarla."},{"tipo":"OPTATIVA (b o c)","id":"3c","titulo":"(c) \"Contratemos gente honesta y responsable y se acaba el tema\" (8 puntos)","texto":"Evalúa la afirmación de Gonzalo. Distingue seleccionar por rasgos de personalidad de diseñar la situación, explica por qué la caja del mesón es una situación que activa los rasgos equivocados, y propón un cambio concreto justificado con la teoría.","pauta":[["Reconocí lo cierto de la afirmación: la honestidad-humildad es el predictor más fuerte de la desviación laboral (ρ ≈ −.48; Pletzer et al., 2019) y la responsabilidad predice la conducta contraproducente (−.32).",1.5],["Expliqué la activación situacional: los bajos en H eligen la opción egoísta cuando el castigo es improbable y cooperan cuando es probable (Hilbig et al., 2012); el rasgo \"espera su situación\" (de Vries et al., 2016).",2],["Mostré que la caja del mesón es exactamente esa situación: una sola persona de 18:00 a 20:00, cierre semanal, cámara a la puerta, descuadres nunca aclarados.",1.5],["Distinguí las dos palancas: seleccionar (reduce la proporción con la tendencia; limitado por el faking y porque no se decide solo con personalidad) y diseñar la situación (quitar las claves que activan el bajo H).",1.5],["Propuse un cambio concreto justificado: arqueo al cierre de cada turno con doble firma, cámara sobre la caja, depósito en caja fuerte con registro; porque hace probable la detección y convierte una situación débil en fuerte para esa conducta (Pletzer et al., 2019: evitar las señales situacionales que activan los bajos H, C, A y E).",1.5]],"errores":"\"no sirve seleccionar porque todos mienten\" (confunde faking con validez); proponer \"más confianza en el equipo\" (la confianza sin control es la clave que activa el bajo H); etiquetar al candidato A como deshonesto."}]}];
+let cronoT=null, cronoS=0;
+function cronoStart(min=20){ cronoStop(); cronoS=min*60; cronoTick(); cronoT=setInterval(cronoTick,1000); }
+function cronoTick(){ const m=Math.floor(cronoS/60), s=cronoS%60; document.getElementById("cronoV").textContent=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`; if(cronoS<=0){ cronoStop(); alert("Tiempo cumplido."); return; } cronoS--; }
+function cronoStop(){ if(cronoT){ clearInterval(cronoT); cronoT=null; } }
+function initSim(){ const c=document.getElementById("simulacro"); c.innerHTML="";
+  SIM.forEach((q,qi)=>{ const h=document.createElement("h3"); h.textContent=q.titulo; c.appendChild(h); const pm=document.createElement("p"); pm.className="mini"; pm.textContent=q.tema; c.appendChild(pm);
+    q.partes.forEach(pt=>{ const d=document.createElement("div"); d.className="pregunta"; const ob=pt.tipo.startsWith("OBLIG");
+      d.innerHTML=`<span class="etq ${ob?"ob":"op"}">${pt.tipo}</span><strong>${pt.titulo}</strong><p style="margin:.5rem 0">${pt.texto}</p>
+        <textarea class="resp" id="t_${pt.id}" placeholder="Escribe aquí tu respuesta (se guarda en este navegador)..." oninput="guardarTexto('${pt.id}')">${estado.textos[pt.id]||""}</textarea>
+        <button class="btn sec" onclick="verPauta('${pt.id}')">Ver pauta y autocorregir</button>
+        <div id="p_${pt.id}" style="display:none"><div class="check">${pt.pauta.map((e,i)=>`<label><input type="checkbox" data-id="${pt.id}" data-i="${i}" onchange="checkSim('${pt.id}')" ${estado.checks[pt.id+"_"+i]?"checked":""}><span>${e[0]} <span class="pts">(${e[1]} pts)</span></span></label>`).join("")}</div>
+        <div class="nota aviso"><strong>Errores frecuentes:</strong> ${pt.errores}</div><div class="nota" id="s_${pt.id}"></div></div>`;
+      c.appendChild(d); }); });
+  SIM.forEach(q=>q.partes.forEach(pt=>checkSim(pt.id,true))); totalSim(); }
+function guardarTexto(id){ estado.textos[id]=document.getElementById("t_"+id).value; guardar(); }
+function verPauta(id){ const p=document.getElementById("p_"+id); p.style.display=p.style.display==="none"?"block":"none"; }
+function partePorId(id){ for(const q of SIM) for(const pt of q.partes) if(pt.id===id) return pt; }
+function checkSim(id,silent){ const pt=partePorId(id); let s=0; pt.pauta.forEach((e,i)=>{ const c=document.querySelector(`input[data-id="${id}"][data-i="${i}"]`); if(c&&c.checked){ s+=e[1]; estado.checks[id+"_"+i]=1; } else delete estado.checks[id+"_"+i]; }); const max=pt.pauta.reduce((a,e)=>a+e[1],0); document.getElementById("s_"+id).innerHTML=`<strong>Autoevaluación: ${s} de ${max} puntos.</strong> ${s>=max*.85?"Nivel Logrado.":s>=max*.6?"Nivel Parcial alto: revisa los elementos sin marcar.":s>=max*.35?"Nivel Parcial.":"Insuficiente: vuelve al apunte antes de reescribir."}`; estado.respuestas["5_s_"+id]=s; if(!silent){ guardar(); totalSim(); } }
+function totalSim(){ const t=document.getElementById("simTot"); let total=0; const filas=SIM.map((q,qi)=>{ const ob=q.partes[0], ops=q.partes.slice(1); const so=estado.respuestas["5_s_"+ob.id]||0; const sop=Math.max(...ops.map(p=>estado.respuestas["5_s_"+p.id]||0)); const st=so+sop; total+=st; return `<div class="stat"><div class="lbl">Pregunta ${qi+1}: obligatoria ${so} + mejor optativa ${sop}</div><div class="num">${st} / 20</div></div>`; }).join("");
+  const nota=total<=36?1+3*total/36:4+3*(total-36)/24; t.innerHTML=filas+`<div class="stat"><div class="lbl">Total simulado y nota estimada</div><div class="num">${total} / 60 → ${nota.toFixed(1)}</div></div>`;
+  const hechas=SIM.every(q=>q.partes.some(p=>(estado.textos[p.id]||"").length>200)); if(hechas) marcar(5); }
+
+// ===================== ESTACIÓN 6: MITOS =====================
+const MITOS=[
+  ["Un trabajador feliz es un trabajador productivo, así que el programa \"Buena Onda\" debería subir el desempeño.",false,"El afecto positivo del momento se asocia con mejor desempeño, pero explica menos del 5% de su varianza (Aitken et al., 2026); y el ánimo es efecto de los eventos, no una causa que se decreta.","Apunte 10."],
+  ["Un evento negativo mueve el ánimo unas cinco veces más que uno positivo.",true,"Miner et al. (2005): −0.96 vs +0.20 DE. Lo malo es más fuerte que lo bueno (Baumeister et al., 2001). El retorno está en evitar, no en compensar.","Apunte 10."],
+  ["El estrés y el compromiso son opuestos: una ejecutiva estresada no puede estar comprometida.",false,"Ambos son estados de alta activación que difieren en valencia (Russell, 2003; Warr, 2007). Chile reporta a la vez 41% de estrés diario y el engagement más alto de la región.","Apunte 10."],
+  ["Fingir la sonrisa cansa; por lo tanto la solución es entrenar a las ejecutivas para que no finjan.",false,"Zapf et al. (2021): los ítems de actuación superficial confunden la máscara con la emoción sentida, y esta se lleva la mayor parte del daño. Primera palanca: reducir los eventos que obligan a fingir.","Apunte 11."],
+  ["La actuación profunda se asocia con mejor satisfacción del cliente y no con agotamiento.",true,"Hülsheger & Schewe (2011): .37 con satisfacción del cliente, .09 con agotamiento. Y se entrena (Zhu et al., 2025).","Apunte 11."],
+  ["Un supervisor que grita se hace respetar, aunque sea desagradable.",false,"Porat & Levy Paluck (2024): quien expresa enojo es visto como menos competente y recibe menos estatus. Obediencia inmediata no es respeto.","Apunte 11."],
+  ["Un cuestionario de 12 minutos puede medir la inteligencia emocional como habilidad.",false,"Los cuestionarios de rasgo correlacionan ≈ .85 con el factor general de personalidad (van der Linden et al., 2017). La habilidad se mide con tareas con respuestas correctas.","Apunte 12."],
+  ["Quienes tienen menos habilidad emocional son los que más se sobreestiman y menos quieren mejorar.",true,"Sheldon et al. (2014): el decil inferior se sobreestima 63 a 69 puntos percentiles y descarta el feedback.","Apunte 12."],
+  ["Los equipos diversos rinden más, así que basta con componer comités diversos.",false,"Wallrich et al. (2024): r = .024 en 2.638 tamaños de efecto; Joshi & Roh (2009): 20/20/60. La diversidad suma cuando la tarea lo exige y el equipo elabora; resta cuando se activan los bandos.","Apuntes 13 y 14."],
+  ["La diversidad es una propiedad del grupo, no de una persona.",true,"\"Brayan es diverso\" no tiene sentido; el comité tiene variedad de nacionalidad (Blau = .56), disparidad de sueldo y separación de opinión.","Apunte 13."],
+  ["Si el comité discute mucho, es señal de que está aprovechando su diversidad.",false,"El conflicto de tarea tiene efecto promedio nulo o negativo (De Dreu & Weingart, 2003; de Wit et al., 2012). Lo que mejora la decisión es la cobertura de la información única (Lu et al., 2012).","Apunte 14."],
+  ["Para que un equipo con falla funcione hay que evitar mencionar las diferencias.",false,"Suprimir la categoría también amenaza la identidad (P6). Lo que protege es creer que las diferencias sirven (Homan et al., 2007a) y gestionar gatillos, distribución y protocolo.","Apunte 14."],
+  ["La capacitación obligatoria en diversidad es la medida con mejor evidencia para cambiar la composición de las jefaturas.",false,"Dobbin & Kalev (2016): se asoció con caídas de hasta 9%; mentoría, grupos de trabajo y un cargo responsable, con aumentos de 9% a 30%.","Apunte 13."],
+  ["Las diferencias entre generaciones en el trabajo son, en promedio, de una décima de desviación estándar y no se pueden separar de la edad.",true,"Ravid et al. (2024): d = .09; Rudolph et al. (2021): el diseño no puede separar generación, edad y época.","Apunte 13."],
+  ["La personalidad explica cerca del 4% del desempeño global, así que no sirve para seleccionar.",false,"Predice poco el desempeño global y bastante lo discrecional (CWB −.32 con responsabilidad, −.39 con amabilidad) y, bien elegido el rasgo para la ocupación, hasta .37 (Wilmot & Ones, 2021). Poco y válido a la vez.","Apunte 17."],
+  ["En una situación fuerte, la personalidad se ve menos.",true,"Meyer et al. (2010); Judge & Zapata (2015): la validez de la extraversión sube de .11 a .29 en las situaciones más débiles. La caja de las 19:00 es una situación débil.","Apunte 17."],
+  ["Los postulantes mienten en los tests de personalidad, por lo tanto los tests no sirven.",false,"Inflan las medias (≈ .5 DE), pero la validez se atenúa y no desaparece (Anglim et al., 2018). Las escalas de mentira no detectan nada (Lanz et al., 2022). Se maneja con diseño.","Apuntes 18 y 19."],
+  ["Si un test \"me describió perfecto\", eso prueba que mide algo.",false,"Forer (1949): un perfil idéntico para todos obtuvo 4.26/5 de precisión percibida. La aceptación del usuario es la forma más débil de validez.","Apunte 19."],
+  ["Basta con seleccionar personas honestas para que se acaben los descuadres de caja.",false,"Los bajos en H cooperan cuando el castigo es probable (Hilbig et al., 2012); seleccionar y diseñar la situación son dos palancas (Pletzer et al., 2019; Hemsey & Dahling, 2024).","Apunte 18."],
+  ["Un percentil 85 en narcisismo indica que el candidato tiene un trastorno de personalidad.",false,"Narcisismo, maquiavelismo y psicopatía subclínicos son dimensiones continuas en población general (Muris et al., 2017). Un percentil es una tendencia frente a una situación, no un diagnóstico.","Apunte 18."],
+];
+function initMitos(){
+  const c=document.getElementById("mitos"); c.innerHTML="";
+  MITOS.forEach((m,i)=>{ const d=document.createElement("div"); d.className="pregunta";
+    d.innerHTML=`<strong>${i+1}. ${m[0]}</strong><br><span class="opc" data-v="1">Verdadero</span><span class="opc" data-v="0">Falso</span><div class="feedback" style="display:none"></div>`;
+    c.appendChild(d);
+    d.querySelectorAll(".opc").forEach(el=>el.onclick=()=>{ if(d.dataset.done) return; d.dataset.done="1"; const v=el.dataset.v==="1"; const ok=v===m[1];
+      el.classList.add(ok?"correcta":"incorrecta"); d.querySelectorAll(".opc")[m[1]?0:1].classList.add("correcta");
+      const fb=d.querySelector(".feedback"); fb.style.display="block"; fb.innerHTML=`<strong>${m[1]?"Verdadero":"Falso"}.</strong> ${m[2]} <span class="cita">${m[3]}</span>`;
+      estado.respuestas["6_m"+i]=ok?1:0; guardar();
+      const done=MITOS.every((_,k)=>("6_m"+k) in estado.respuestas);
+      if(done){ const ac=MITOS.filter((_,k)=>estado.respuestas["6_m"+k]===1).length; const r=document.getElementById("mitosRes"); r.style.display="block"; r.innerHTML=`<strong>Resultado:</strong> ${ac} de ${MITOS.length} veredictos correctos. En la prueba, cada uno de estos mitos escrito como afirmación cuesta puntos: o es un concepto mal aplicado (cero en el elemento) o lenguaje causal sin respaldo (descuento).`; marcar(6); }
+    }); });
+}
+
+// ===================== FICHA =====================
+const REPASO={1:"Vuelve a leer el caso marcando, por tema, las frases y los números; la estación 1 te dice qué concepto activa cada uno.",2:"Apunte 10 (TEA, circumplejo, Miner et al.), apunte 11 (trabajo emocional, Zapf, EASI, Porat) y apunte 12 (IE: tres corrientes, van der Linden, Joseph, Sheldon).",3:"Apunte 13 (Harrison y Klein, Blau, Dobbin & Kalev, caso de negocio vs justicia) y apunte 14 (CEM, fallas, gatillos, perfil oculto, Lu et al., palancas).",4:"Apunte 17 (fuerza situacional, activación, Wiersma, Wilmot & Ones), apunte 18 (H vs A, Pletzer, Hilbig, tríada oscura, Anglim), apunte 19 (seis reglas, Forer, faking) y apunte 20 (tabla de Sackett).",5:"Reescribe las partes con autoevaluación bajo 60% siguiendo la pauta: concepto nombrado, aplicado a una frase o dato del caso, justificado con la teoría o la evidencia.",6:"Secciones E (Mito versus evidencia) de los apuntes 10 a 19."};
+function pintarFicha(){
+  const k=EST.filter(i=>estado.hechas[i]); const falt=EST.filter(i=>!estado.hechas[i]);
+  const EXCL=new Set(["2_asim","2_te","3_falla","3_po","4_fs","4_cd","4_tri","4_fk","4_caja"]);
+  const resp=Object.entries(estado.respuestas).filter(([key])=>/^[12346]_/.test(key)&&!EXCL.has(key));
+  const ac=resp.filter(([,v])=>v===1).length;
+  let sim=0; SIM.forEach(q=>{ const so=estado.respuestas["5_s_"+q.partes[0].id]||0; const sop=Math.max(...q.partes.slice(1).map(p=>estado.respuestas["5_s_"+p.id]||0)); sim+=so+sop; });
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas:</strong> ${k.length? k.map(i=>NOMBRES[i]).join(" · "):"ninguna todavía"}.` + (falt.length? ` <strong>Faltan:</strong> ${falt.map(i=>NOMBRES[i]).join(" · ")}.`:" Las seis.") + (resp.length? `<br><strong>Preguntas y clasificaciones respondidas:</strong> ${resp.length}, con ${ac} aciertos a la primera.`:"") + (sim? `<br><strong>Simulacro:</strong> ${sim} de 60 puntos autoevaluados (nota estimada ${(sim<=36?1+3*sim/36:4+3*(sim-36)/24).toFixed(1)}).`:"");
+  const errores={}; resp.forEach(([key,v])=>{ if(v===0){ const e=+key.split("_")[0]; errores[e]=(errores[e]||0)+1; } });
+  const lista=Object.keys(errores).map(e=>`<li>${NOMBRES[e]}: ${errores[e]} ${errores[e]===1?"error":"errores"}. Repasa: ${REPASO[e]}</li>`).join("") + (sim&&sim<36?`<li>Simulacro bajo la línea de aprobación. ${REPASO[5]}</li>`:"");
+  document.getElementById("fichaRepaso").innerHTML = lista? `<h3>Sugerencias de repaso</h3><ul class="sans" style="font-size:.92rem">${lista}</ul>` : (resp.length? `<div class="nota ok">Sin errores en lo respondido. Último ejercicio: explica con tus palabras, en seis líneas, por qué corregir AgendaYa resuelve a la vez la Pregunta 1 (eventos), la Pregunta 2 (información única) y parte de la Pregunta 3 (situación del mesón).</div>`:"");
+}
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado, incluidas tus respuestas del simulacro?")) return; try{ localStorage.removeItem(KEY); }catch(e){} location.reload(); }
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1tema",TEMAS,C1TEMA,"t",1); clasificador("c1dato",DATOS,C1DATO,"d",1); pregunta("q1",Q1,1);
+clasificador("c2tea",TEA,C2TEA,"tea",2); circDraw(); asim(); clasificador("c2te",TEC,C2TE,"te",2); initTE(); clasificador("c2reglas",LEG,C2REG,"reg",2); clasificador("c2easi",EASI,C2EASI,"easi",2); clasificador("c2ie",IEC,C2IE,"ie",2);
+barra("bIe1",.29,-.3,.9,"pos"); barra("bIe2",-.02,-.3,.9,"neg"); barra("bIe3",.24,-.3,.9,"pos"); barra("bIe4",.01,-.3,.9,"pos"); barra("bIe5",.85,-.3,.9,"pos"); pregunta("q2",Q2,2);
+initHK(); initFalla(); clasificador("c3gat",GAT,C3GAT,"gat",3); initOrden(); initPO(); clasificador("c3elab",ELAB,C3ELAB,"elab",3); clasificador("c3pal",PAL,C3PAL,"pal",3);
+barra("bDk1",-9,-12,32,"neg"); barra("bDk2",-7,-12,32,"neg"); barra("bDk3",11,-12,32,"pos"); barra("bDk4",16,-12,32,"pos"); barra("bDk5",20,-12,32,"pos"); pregunta("q3",Q3,3);
+fuerza(); initMatch("dem",DEM,"elige el rasgo..."); initCD(); initTri(); clasificador("c4reg",REG,C4REG,"reg",4); initSack(); faking(); clasificador("c4sel",SD,C4SEL,"sel",4); initCaja(); pregunta("q4",Q4,4);
+initSim(); initMitos();
+</script>
+</body>
+</html>

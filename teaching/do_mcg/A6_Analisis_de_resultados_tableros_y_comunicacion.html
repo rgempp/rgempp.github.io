@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de resultados, tableros de control y comunicación · Diagnóstico Organizacional MCG UDP</title>
+<meta name="description" content="Apunte N° 6 del curso Diagnóstico Organizacional (MCG, UDP). Análisis de resultados de encuesta por subgrupos, integración cuanti-cuali, diagrama de Porras, tablero de personas y comunicación del diagnóstico.">
+<meta name="author" content="René Gempp">
+<style>
+  /* ===== Plantilla base de la serie de apuntes DO MCG, v1 (2026) · misma línea que la serie PyE ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+    --ambar:#B45309; --ambar-claro:#FEF3C7;
+    --verde:#15803D; --verde-claro:#DCFCE7;
+    /* alias para figuras SVG heredadas */
+    --fg:var(--tinta); --muted:var(--gris); --accent:var(--rojo); --accent-soft:var(--tinte);
+    --rule:var(--borde); --note-bg:var(--gris-claro); --note-border:var(--acero);
+    --ex-bg:var(--tinte); --ex-border:var(--rojo); --warn-bg:var(--ambar-claro); --warn-border:var(--ambar);
+    --code-bg:var(--gris-claro); --bg:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  .lead{margin:1rem 0 0; color:var(--acero); font-size:1rem}
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros: idea clave (.box), ejemplo de caso (.box.ejemplo), atención (.box.atencion), mito versus evidencia (.mito) */
+  .box,.mito{
+    border:1px solid var(--borde); border-left:5px solid var(--acero);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--gris-claro);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .box p,.mito p{margin:0 0 .55rem}
+  .box p:last-child,.mito p:last-child{margin-bottom:0}
+  .box ul,.box ol{margin-bottom:.4rem}
+  .box .label{
+    display:block; font-weight:700; color:var(--acero);
+    font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.35rem;
+  }
+  .box.ejemplo,.mito{border-left-color:var(--rojo); background:var(--tinte)}
+  .box.ejemplo .label{color:var(--rojo)}
+  .box.atencion{border-left-color:var(--ambar); background:var(--ambar-claro)}
+  .box.atencion .label{color:var(--ambar)}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tablas */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Figuras */
+  figure,.figura{margin:0 0 1.4rem}
+  figure img,figure svg{max-width:100%;height:auto;display:block;margin:0 auto}
+  figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
+  code{background:var(--gris-claro);padding:.1em .35em;border-radius:4px}
+  pre{background:var(--gris-claro);padding:.9rem 1rem;border-radius:8px;overflow-x:auto}
+  /* Glosario */
+  dl.glosario dt{font-weight:700;margin-top:.7rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.95rem}
+  dl.glosario dd{margin:0 0 .3rem 0}
+  /* Referencias con sangría francesa */
+  .referencias p,.refs p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .box,.mito,table,figure{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes · Diagnóstico Organizacional · N° 6</p>
+  <h1>Análisis de resultados, tableros de control y comunicación: del dato al diagnóstico y del diagnóstico al tablero</h1>
+  <p class="meta">
+    Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026<br>
+    Apunte N° 6 · Sesión 6 (sábado 21-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Las cinco sesiones anteriores produjeron un diseño diagnóstico, un cuestionario, una pauta de entrevista y un conjunto de escalas con fiabilidad verificada. Nada de eso tiene valor para la organización hasta que se convierte en dos productos: un diagnóstico que la dirección entienda y acepte, y un mecanismo que permita seguir en el tiempo las variables que el diagnóstico mostró como críticas. Este apunte cubre el tramo final del proceso: cómo analizar los resultados de una encuesta organizacional sin que los promedios escondan los problemas, cómo integrar lo cuantitativo con lo cualitativo, cómo sintetizar el diagnóstico en un diagrama de flujos y en tres frases, cómo diseñar un tablero de personas que sea un instrumento de control y no un adorno, y cómo comunicar los resultados a la dirección y a los trabajadores.</p>
+<p>El énfasis del apunte responde al perfil del curso. Un profesional del control de gestión no suele ser quien analiza la encuesta, pero sí quien decide si sus resultados entran al tablero de la organización, con qué indicadores, con qué metas y con qué consecuencias. Al terminar, el lector debería poder leer un informe diagnóstico con criterio, detectar sus errores habituales (promedios globales, correlaciones leídas como causas, comparaciones entre unidades pequeñas) y diseñar una ficha de indicador que resista la pregunta de un auditor: qué mide, con qué error, para qué decisión.</p>
+
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>El análisis de resultados empieza por segmentar. En TechNova, la satisfacción general promedia 4,9 en una escala de 1 a 7, una cifra que parece aceptable; desagregada, muestra un área (desarrollo, n = 50) en 3,7 y el resto de la organización en 5,7, con una diferencia de casi dos desviaciones estándar (d = 1,95). El promedio global no describe a nadie. La segunda regla es reportar magnitud además de significación: con muestras grandes toda diferencia es significativa; con unidades de diez personas casi ninguna lo es, y en ambos casos la pregunta relevante es cuánto importa la diferencia.</p>
+<p>Las correlaciones orientan hipótesis y ordenan prioridades, pero no prueban mecanismos. Conviene distinguir entre las facetas del criterio (satisfacción con el ambiente, con el liderazgo) y las condiciones que la gestión puede mover (coherencia entre líderes, claridad de prioridades); el "factor más asociado" se busca entre las segundas. Los hallazgos cuantitativos se integran con los cualitativos en una matriz de triangulación, se sintetizan en un diagrama de flujos de Porras y se condensan en un diagnóstico de tres frases: qué ocurre, a quién le ocurre, por qué ocurre.</p>
+<p>Un diagnóstico puntual se convierte en control cuando sus variables se transforman en indicadores con fórmula, fuente, frecuencia, unidad de análisis, n mínimo, meta, umbral, responsable y acción asociada. El tablero de personas combina pocos indicadores de resultado (rotación, ausentismo), de proceso o adelantados (índices de encuesta, eNPS, intención de salida) y al menos uno del propio sistema de medición (tasa de respuesta), con reglas de anonimato y sin uso punitivo. La evidencia a nivel de unidad muestra que las actitudes agregadas se relacionan con resultados de negocio con correlaciones moderadas, suficientes para justificar el seguimiento e insuficientes para premiar o sancionar jefaturas por décimas.</p>
+<p>La comunicación cierra el ciclo: un informe con resumen ejecutivo, método y limitaciones, hallazgos con evidencia múltiple y plan; gráficos que titulan el hallazgo y muestran el n; una presentación que pide una decisión; y una devolución a los trabajadores que, cuando se omite, cobra su precio en la tasa de respuesta de la siguiente ola.</p>
+</div>
+
+<h2>C. Los conceptos</h2>
+
+<h3>1. Métricas de personas: lo que la dirección ya ve</h3>
+<p>Antes de abrir la encuesta conviene mirar las métricas que el sistema de control ya produce: rotación (salidas del período sobre dotación promedio, separando voluntaria e involuntaria), permanencia y supervivencia por cohorte de ingreso, ausentismo por tipo (licencias, permisos, injustificado) y patrón semanal, costo y tiempo de reemplazo (Cascio &amp; Boudreau, 2011; Fitz-enz, 2010). Estas métricas son indicadores de resultado: registran lo que ya ocurrió. Su valor diagnóstico está en la desagregación. La rotación de TechNova, cercana a 50% anual en desarrollo, se descompone en cerca de 70% entre desarrolladores junior, 50% entre seniors y 17% entre leads, con una permanencia media antes de renunciar de 11 a 18 meses. Esa descomposición localiza el problema en un área y en un tramo de antigüedad antes de que la encuesta diga nada, y fija el orden del informe: primero lo que la dirección reconoce, después lo que la encuesta agrega.</p>
+<p>Las referencias externas (benchmarks) son orientativas y dependen de la industria, el país y la definición operacional; sirven para ubicar una cifra, no para fijar metas. Más útil que el número de referencia es la definición estable: una rotación que se calcula igual cada mes vale más que una comparada con un promedio sectorial de definición desconocida.</p>
+<div class="box">
+<span class="label">Idea clave</span>
+<p>El diagnóstico no reemplaza las métricas administrativas: las explica. Un informe que empieza por la encuesta y deja la rotación para el anexo invierte el orden en que la dirección procesa la información.</p>
+</div>
+
+<h3>2. Segmentar antes de concluir</h3>
+<p>La estadística descriptiva esencial de un informe diagnóstico cabe en pocas reglas: media y desviación estándar por escala con el n de cada grupo; mediana cuando la distribución es asimétrica; porcentaje de respuestas favorables como lectura complementaria y no como sustituto de la media; precisión reportada coherente con el error de medición (un decimal en escalas de 1 a 7). Pero la regla que separa un análisis útil de uno decorativo es segmentar: probar los cortes que el diseño diagnóstico anticipó (área, antigüedad, nivel, género) y quedarse con los que discriminan.</p>
+<p>En TechNova, el área discrimina y el nivel jerárquico y el género no. Que un corte no discrimine también es un hallazgo: descarta hipótesis que la dirección pudo tener. La segmentación por antigüedad muestra un patrón conocido en la literatura: satisfacción de 5,1 en los primeros seis meses, caída a 4,5 entre los meses 7 y 18 y recuperación a 5,7 entre quienes superan los 18 meses, con la misma curva en claridad de rol, eNPS e intención de salida. Cruzando área y antigüedad aparece el grupo crítico: desarrolladores con 7 a 18 meses, satisfacción media de 3,1 (n = 30).</p>
+
+<figure class="figura">
+<svg viewBox="0 0 700 300" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif" font-size="13">
+  <text x="20" y="24" font-weight="700" fill="currentColor">Satisfacción general (1 a 7) por área, TechNova (n = 127)</text>
+  <line x1="200" y1="50" x2="200" y2="250" stroke="currentColor" stroke-width="1"/>
+  <line x1="200" y1="250" x2="660" y2="250" stroke="currentColor" stroke-width="1"/>
+  <g fill="var(--muted)"><text x="200" y="268" text-anchor="middle">1</text><text x="353" y="268" text-anchor="middle">3</text><text x="507" y="268" text-anchor="middle">5</text><text x="660" y="268" text-anchor="middle">7</text></g>
+  <line x1="501" y1="50" x2="501" y2="250" stroke="var(--muted)" stroke-dasharray="4 4"/>
+  <text x="505" y="62" fill="var(--muted)" font-size="11">media global 4,9</text>
+  <g>
+    <text x="190" y="90" text-anchor="end" fill="currentColor">Desarrollo (n = 50)</text><rect x="200" y="76" width="208" height="22" fill="var(--accent)"/><text x="414" y="92" fill="currentColor">3,7</text>
+    <text x="190" y="135" text-anchor="end" fill="currentColor">Producto (n = 29)</text><rect x="200" y="121" width="374" height="22" fill="var(--acero)"/><text x="580" y="137" fill="currentColor">5,9</text>
+    <text x="190" y="180" text-anchor="end" fill="currentColor">Marketing (n = 28)</text><rect x="200" y="166" width="357" height="22" fill="var(--acero)"/><text x="563" y="182" fill="currentColor">5,6</text>
+    <text x="190" y="225" text-anchor="end" fill="currentColor">Operaciones (n = 20)</text><rect x="200" y="211" width="358" height="22" fill="var(--acero)"/><text x="564" y="227" fill="currentColor">5,7</text>
+  </g>
+</svg>
+<figcaption>Figura 1. El promedio global de 4,9 no describe a ninguna de las cuatro áreas: desarrollo está dos puntos por debajo del resto. Elaboración propia a partir de la base simulada Encuesta_TechNova_Datos.</figcaption>
+</figure>
+
+<div class="box atencion">
+<span class="label">Atención</span>
+<p>Toda segmentación tiene un límite ético y estadístico: el n de la celda. Con menos de 5 a 10 respuestas un promedio es la opinión de dos personas y el anonimato prometido se rompe. En TechNova, las siete personas que marcaron "otro" o "prefiero no decir" en género no se reportan por separado, y los cruces de área por antigüedad solo se publican donde la celda lo permite.</p>
+</div>
+
+<h3>3. Comparar grupos: significación y magnitud</h3>
+<p>Cuando dos grupos difieren, la pregunta tiene dos partes. La primera es si la diferencia es distinguible del azar muestral: la responden la prueba t (Welch cuando las varianzas difieren) para dos grupos y el ANOVA para más de dos, con su valor p. La segunda es cuánto importa: la responden los tamaños del efecto, d de Cohen para dos grupos (0,2 pequeño, 0,5 mediano, 0,8 grande, como convenciones orientativas) y eta cuadrado para el ANOVA (Cohen, 1988; Cumming, 2014). Desarrollo frente al resto de TechNova: t = -10,3, p &lt; ,001, d = 1,95. Por área: F(3, 123) = 38,4, eta cuadrado = ,48; el área explica casi la mitad de la variación en satisfacción.</p>
+<p>Para el control de gestión la lección es doble. Con n grande, cualquier diferencia es significativa, y lo que decide es la magnitud. Con unidades de diez personas, como las sucursales del caso del examen final, el error estándar de una media de unidad es del mismo orden que las diferencias entre unidades, de modo que un ranking de sucursales por clima es en buena medida ruido ordenado. Reportar p sin tamaño del efecto, o medias de unidades pequeñas sin su error, es la forma más común de convertir un diagnóstico en una injusticia.</p>
+
+<h3>4. Correlación: hipótesis, no mecanismo</h3>
+<p>La correlación de Pearson ordena qué variables se mueven juntas. En TechNova, las variables más correlacionadas con la satisfacción general son otras facetas de satisfacción (ambiente ,90; liderazgo ,85; desarrollo ,84), lo que no explica nada: miden el mismo criterio. Entre las condiciones que la gestión puede mover, la coherencia entre líderes (,84), el apoyo (,78) y la visión (,68) encabezan la lista, mientras que las claridades (rol ,36; prioridades ,21) correlacionan poco a pesar de ser bajas en toda la organización. Las dos lecturas conviven: la coherencia separa a desarrollo del resto; la claridad es un problema transversal que no discrimina entre áreas y que reaparece con fuerza en las respuestas abiertas.</p>
+<p>Una correlación transversal admite al menos tres explicaciones: que la condición cause la actitud, que la actitud tiña la percepción de la condición (halo) o que una tercera variable produzca ambas. En TechNova la tercera variable es visible: estar en desarrollo, donde chocan las prioridades del CEO y del CTO. Por eso el informe escribe "se asocia con" y traslada la hipótesis causal al diagrama de Porras, donde queda explícita como hipótesis que la intervención pondrá a prueba (Shadish et al., 2002).</p>
+<div class="box ejemplo">
+<span class="label">Ejemplo · TechNova</span>
+<p>El eNPS se calcula con un ítem de 0 a 10 (¿recomendaría trabajar aquí?): porcentaje de promotores (9 y 10) menos porcentaje de detractores (0 a 6) (Reichheld, 2003). TechNova: 28% promotores, 27% pasivos, 46% detractores, eNPS = -18; desarrollo -68, producto +24, operaciones +10, marketing +7. El indicador es barato, comparable y familiar para la dirección; su límite es que un solo ítem no tiene fiabilidad estimable y que en una unidad de 20 personas cada respuesta mueve cinco puntos. Sirve como ancla de pulso trimestral, no como meta de una jefatura.</p>
+</div>
+
+<h3>5. Integrar: triangulación, convergencia y divergencia</h3>
+<p>La triangulación consiste en examinar un mismo hallazgo con fuentes o métodos distintos (Denzin, 1978; Jick, 1979). La herramienta práctica es una matriz con una fila por hallazgo, una columna por fuente (encuesta, entrevistas, métricas administrativas, documentos) y una columna de veredicto. Cuando las fuentes convergen, el hallazgo sube de hipótesis a conclusión y puede ir al resumen ejecutivo con la cifra, la cita y el documento que lo sostienen. Cuando divergen, primero se sospecha del método (¿la escala mide otra cosa? ¿los entrevistados fueron elegidos por la dirección?) y después se busca la variable que explica la divergencia. En TechNova, la compensación aparece como motivo secundario en la encuesta (r = ,68 con la satisfacción; 9 menciones en 112 respuestas abiertas) y en las entrevistas como vía de salida más que como causa del malestar: la hipótesis del CEO ("es un problema de sueldos") no se sostiene como causa principal, y documentarlo evita una intervención cara y equivocada (Creswell &amp; Plano Clark, 2018).</p>
+<p>La síntesis se hace en el diagrama de flujos de Porras (1987), visto en la sesión 2: cuatro corrientes (arreglos organizacionales, factores sociales, tecnología, ambiente físico), tres niveles (síntomas, problemas básicos, problemas fundamentales) y flechas causales. Los síntomas son lo que la dirección ve (rotación, bugs, licencias); los problemas básicos, lo que la encuesta y las entrevistas muestran (instrucciones contradictorias, prioridades sin definir, ausencia de onboarding); los fundamentales, lo que la intervención debe tocar para que los síntomas no vuelvan (una estructura informal que no escaló con el crecimiento y un desacuerdo estratégico no resuelto entre los cofundadores). El diagrama se acompaña del diagnóstico en tres frases: qué ocurre, a quién le ocurre, por qué ocurre.</p>
+
+<h3>6. Del diagnóstico al tablero de personas</h3>
+<p>Un tablero de personas es el instrumento que convierte el diagnóstico en control. En los términos de Simons (1995), un mismo indicador puede usarse de forma diagnóstica (alerta frente a un umbral, sin intervención de la dirección mientras no se cruce) o interactiva (agenda de conversación periódica entre niveles sobre por qué se mueve). El diseño del tablero debe declarar cuál de los dos usos tiene cada indicador; para variables de clima y liderazgo, el uso interactivo es casi siempre el adecuado, porque el dato señala una desviación cuya explicación requiere conversar (Merchant &amp; Van der Stede, 2017).</p>
+<p>La selección de indicadores sigue cuatro criterios. Pocos: entre cinco y nueve en el tablero de dirección, con el detalle en el drill-down. Causalmente conectados: cada indicador ocupa un lugar en el diagrama de Porras o en el mapa estratégico, de modo que se sabe qué resultado debería moverse si el indicador mejora (Kaplan &amp; Norton, 1996, 2004). Sensibles a la gestión: una acción de la dirección debe poder moverlos en el horizonte de medición; la antigüedad promedio no cumple, la claridad de prioridades sí. Medibles con calidad: escala con fiabilidad verificada, definición estable entre olas, n suficiente por unidad, fuente y responsable definidos (Neely et al., 2002). El tablero equilibra indicadores de resultado (rotación, ausentismo), de proceso o adelantados (índices de encuesta, eNPS, intención de salida) y del propio sistema de medición (tasa de respuesta por unidad), más uno o dos resultados de negocio que cierren la cadena causal.</p>
+
+<figure class="figura">
+<svg viewBox="0 0 700 230" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif" font-size="12">
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>
+  <g fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2">
+    <rect x="10" y="60" width="150" height="70" rx="8"/><rect x="185" y="60" width="150" height="70" rx="8"/>
+  </g>
+  <g fill="var(--note-bg)" stroke="var(--rule)" stroke-width="1.2">
+    <rect x="360" y="60" width="150" height="70" rx="8"/><rect x="535" y="60" width="155" height="70" rx="8"/>
+  </g>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="85" y="86" font-weight="700">Coherencia y claridad</text><text x="85" y="104">índices de encuesta</text><text x="85" y="120" fill="var(--muted)" font-size="11">pulso trimestral</text>
+    <text x="260" y="86" font-weight="700">Salida y eNPS</text><text x="260" y="104">adelantados</text><text x="260" y="120" fill="var(--muted)" font-size="11">pulso trimestral</text>
+    <text x="435" y="86" font-weight="700">Rotación, ausentismo</text><text x="435" y="104">resultado (lagging)</text><text x="435" y="120" fill="var(--muted)" font-size="11">registros, mensual</text>
+    <text x="612" y="86" font-weight="700">Bugs, velocidad, clientes</text><text x="612" y="104">resultados de negocio</text><text x="612" y="120" fill="var(--muted)" font-size="11">sistemas operacionales</text>
+  </g>
+  <g stroke="var(--muted)" stroke-width="1.5" marker-end="url(#arr)"><line x1="160" y1="95" x2="183" y2="95"/><line x1="335" y1="95" x2="358" y2="95"/><line x1="510" y1="95" x2="533" y2="95"/></g>
+  <text x="350" y="30" text-anchor="middle" fill="currentColor" font-weight="700">Cadena causal hipotética del tablero de personas de TechNova</text>
+  <text x="350" y="165" text-anchor="middle" fill="var(--muted)" font-size="11">Perspectiva de aprendizaje y crecimiento → procesos internos → clientes. Cada flecha es una hipótesis que se verifica con varias olas.</text>
+  <rect x="10" y="185" width="680" height="34" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/>
+  <text x="350" y="207" text-anchor="middle" fill="currentColor" font-size="11">Indicador del sistema de medición: tasa de respuesta por área (mínimo 60%; sin ella, el resto del tablero no se reporta)</text>
+</svg>
+<figcaption>Figura 2. Los indicadores del tablero se ordenan según la hipótesis causal del mapa estratégico; la tasa de respuesta protege la validez de todos los demás. Elaboración propia a partir de Kaplan y Norton (1996, 2004).</figcaption>
+</figure>
+
+<p>La ficha de indicador es lo que distingue un indicador de una variable con un número al lado. Contiene nombre, definición y fórmula, fuente y frecuencia, unidad de análisis y n mínimo para reportar, línea base y meta, umbrales (semáforo) con una regla adicional de alerta por caída entre olas, responsable, acción asociada y uso (diagnóstico o interactivo). Los umbrales se fijan con dos criterios: la distribución observada (dónde están hoy las unidades) y el error de medición (una diferencia de 0,5 puntos entre olas en un área de 20 personas está en el margen del error; por eso la alerta por caída complementa la alerta por nivel).</p>
+<div class="box ejemplo">
+<span class="label">Ejemplo · TechNova</span>
+<p>Índice de coherencia del liderazgo: promedio de los ítems de coherencia y visión (1 a 7) por área; pulso trimestral con ítems ancla y encuesta anual completa; se reporta con n de al menos 8 y tasa de respuesta de al menos 60%; línea base global 3,1 y desarrollo 1,5; meta a doce meses: ningún área bajo 4,0; rojo bajo 3,5, ámbar de 3,5 a 4,4, verde desde 4,5, con alerta si cae 0,5 entre olas; responsables CEO y CTO; en rojo, reunión de alineamiento en quince días y revisión del backlog único; uso interactivo, no evaluativo de jefaturas.</p>
+</div>
+<p>Las reglas de drill-down y anonimato se declaran antes de aplicar la encuesta, en el consentimiento informado, y se cumplen aunque la dirección pida el dato: n mínimo por celda (5 como piso absoluto, 8 a 10 como práctica recomendable), cruces de variables definidos de antemano, celdas pequeñas agregadas u ocultas. Y el tablero se vincula con el presupuesto: las acciones asociadas a los indicadores en rojo se financian, el costo de la rotación (reemplazo, curva de aprendizaje, errores) es el argumento que convierte el tablero en una decisión de inversión, y la revisión se hace en el mismo comité que revisa los resultados financieros.</p>
+
+<h3>7. Comunicar: informe, visualización, presentación y devolución</h3>
+<p>El informe diagnóstico tiene cuatro partes: un resumen ejecutivo de una página con el diagnóstico en tres frases, tres hallazgos, tres recomendaciones y qué pasa si no se actúa; método y limitaciones (qué se midió, a quién, cuándo, con qué tasa de respuesta; qué no se puede concluir por el diseño transversal, el autorreporte y el sesgo de supervivencia); hallazgos con evidencia múltiple y gráficos por subgrupo; diagnóstico y plan, con el diagrama de Porras, las recomendaciones priorizadas por impacto y factibilidad, el tablero y el plan de devolución. Se escribe en orden inverso y el resumen ejecutivo al final, porque es lo único que la mayoría leerá. Las fortalezas también se reportan: un diagnóstico que solo enumera problemas pierde a la audiencia.</p>
+<p>La visualización sigue la regla de un gráfico, un mensaje: el título dice el hallazgo, no la variable; las barras horizontales se ordenan por valor y muestran el n y la referencia; un solo color de énfasis para la unidad crítica; nada de tortas con más de tres categorías, radares, ejes truncados ni dobles ejes sin anuncio (Few, 2012; Knaflic, 2015; Tufte, 2001). La presentación a la dirección dura quince minutos, anticipa las objeciones previsibles con la cifra que las responde y termina pidiendo una decisión, no "tomar conocimiento".</p>
+<p>La devolución a los trabajadores se omite con frecuencia por temor a las expectativas y al conflicto. Su costo es la tasa de respuesta de la próxima ola y la credibilidad del proceso. Nadler (1977) sistematizó la retroalimentación de datos como intervención en sí misma: devolver resultados cambia a la organización aunque no se haga nada más. Lo que se devuelve son resultados agregados, las decisiones tomadas y lo que no se hará y por qué, en cascada por unidad, con la jefatura presente, dentro de las ocho semanas siguientes al cierre de la encuesta (Church &amp; Waclawski, 2001). El ciclo se cierra cuando el plan de cambio tiene dueños, plazos e indicadores en el tablero, y la siguiente ola repite la encuesta ancla en el mismo mes, con la misma regla de anonimato.</p>
+
+<figure class="figura">
+<svg viewBox="0 0 700 250" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif" font-size="12">
+  <defs><marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker></defs>
+  <g fill="var(--note-bg)" stroke="var(--rule)" stroke-width="1.2">
+    <rect x="20" y="30" width="130" height="56" rx="8"/><rect x="190" y="30" width="130" height="56" rx="8"/><rect x="360" y="30" width="130" height="56" rx="8"/><rect x="530" y="30" width="150" height="56" rx="8"/>
+    <rect x="360" y="160" width="130" height="56" rx="8"/>
+  </g>
+  <rect x="190" y="160" width="130" height="56" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.2"/>
+  <g fill="currentColor" text-anchor="middle">
+    <text x="85" y="54" font-weight="700">Diagnóstico</text><text x="85" y="72" font-size="11">hallazgos, Porras</text>
+    <text x="255" y="54" font-weight="700">Informe</text><text x="255" y="72" font-size="11">tres frases, plan</text>
+    <text x="425" y="54" font-weight="700">Decisión</text><text x="425" y="72" font-size="11">comité, presupuesto</text>
+    <text x="605" y="54" font-weight="700">Devolución</text><text x="605" y="72" font-size="11">ocho semanas, cascada</text>
+    <text x="425" y="184" font-weight="700">Acción</text><text x="425" y="202" font-size="11">dueños y plazos</text>
+    <text x="255" y="184" font-weight="700">Tablero</text><text x="255" y="202" font-size="11">pulso, nueva ola</text>
+  </g>
+  <g stroke="var(--muted)" stroke-width="1.5" fill="none" marker-end="url(#arr2)">
+    <line x1="150" y1="58" x2="188" y2="58"/><line x1="320" y1="58" x2="358" y2="58"/><line x1="490" y1="58" x2="528" y2="58"/>
+    <path d="M605,86 L605,188 L492,188"/><line x1="360" y1="188" x2="322" y2="188"/><path d="M190,188 L85,188 L85,88"/>
+  </g>
+  <text x="350" y="240" text-anchor="middle" fill="var(--muted)" font-size="11">Una encuesta sin devolución ni acción es un costo; con ambas y con un tablero que vuelve al diagnóstico, es un sistema de control.</text>
+</svg>
+<figcaption>Figura 3. El ciclo diagnóstico se cierra cuando el tablero devuelve información al siguiente diagnóstico. Elaboración propia a partir de Cummings y Worley (2014) y Nadler (1977).</figcaption>
+</figure>
+
+<h2>D. Qué dice la evidencia</h2>
+<h3>El estudio destacado: actitudes agregadas y resultados de unidad</h3>
+<p>El argumento de que las variables de personas merecen un lugar en el tablero descansa en la relación entre actitudes agregadas y resultados de negocio a nivel de unidad. El metaanálisis de Harter, Schmidt y Hayes (2002) reunió datos de 7.939 unidades de negocio en 36 empresas que habían aplicado el cuestionario de doce ítems de Gallup y registrado resultados de unidad: satisfacción de clientes, productividad, utilidad, rotación y accidentes. Las correlaciones corregidas entre la satisfacción y el compromiso agregados de la unidad y un compuesto de resultados fueron moderadas, del orden de ,3 a ,4, con relaciones más altas para satisfacción de clientes y rotación y más bajas para utilidad. Dos lecciones se desprenden para el diseño de tableros. La primera es que la relación existe y es generalizable entre empresas, lo que justifica medir y seguir estas variables junto a las financieras. La segunda es que es moderada: las actitudes explican una parte de la variación de los resultados, no su totalidad, y por tanto sirven para orientar prioridades y detectar desviaciones, no para explicar o premiar el desempeño de una unidad concreta por décimas de diferencia.</p>
+<p>El diseño del estudio también importa para el curso. La unidad de análisis es el equipo o la sucursal, no la persona, y las relaciones se estiman con datos agregados cuya fiabilidad depende del n de cada unidad y del acuerdo entre sus miembros (Bliese, 2000). Es la condición vista en la sesión 5 para agregar puntuaciones a nivel de unidad, y la razón por la que un tablero exige n mínimo por celda.</p>
+
+<h3>Otros hallazgos</h3>
+<p>Sobre la dinámica temporal de la satisfacción, Boswell, Boudreau y Tichy (2005), con datos longitudinales de ejecutivos que cambiaron de empleo, documentaron el patrón de luna de miel y resaca: la satisfacción sube al ingresar a un nuevo puesto, cae en los meses siguientes y tiende a estabilizarse después. El patrón transversal de TechNova (5,1, 4,5, 5,7 por tramo de antigüedad) es compatible con ese efecto, con una salvedad que el informe debe declarar: en un corte transversal, la recuperación entre quienes superan los 18 meses puede reflejar que los insatisfechos ya se fueron (sesgo de supervivencia).</p>
+<p>Sobre la intención de salida como indicador adelantado, el metaanálisis de Griffeth, Hom y Gaertner (2000) la identifica como el mejor predictor individual de la rotación voluntaria, con correlaciones moderadas. Es suficiente para usarla como indicador adelantado en el tablero y para verificar cada ola si la relación con la rotación observada se mantiene, e insuficiente para tratarla como pronóstico exacto.</p>
+<p>Sobre los efectos de convertir medidas en metas con consecuencias, Bevan y Hood (2006) documentaron en el sistema de salud inglés cómo los objetivos con sanciones produjeron cumplimiento formal con deterioro de lo que la meta pretendía medir (listas de espera "cumplidas" reclasificando pacientes). La formulación de Strathern (1997) resume el mecanismo: cuando una medida se convierte en meta, deja de ser una buena medida. Aplicado a las encuestas, ligar bonos de jefaturas al clima de su equipo produce gestión de la respuesta, no del clima.</p>
+<h3>Chile</h3>
+<p>En Chile, el instrumento de aplicación obligatoria para evaluar riesgos psicosociales en el trabajo es el cuestionario CEAL-SM/SUSESO, administrado por la Superintendencia de Seguridad Social en el marco del protocolo de vigilancia del Ministerio de Salud. Su interés para este apunte es doble: por una parte, fija reglas explícitas de aplicación, cobertura mínima y reporte por unidad que pueden servir de referencia para un tablero interno; por otra, muestra que la medición periódica de variables de ambiente laboral ya es una obligación regulatoria para muchas organizaciones chilenas, de modo que el costo marginal de integrar esos resultados al sistema de control es bajo. Conviene revisar los manuales vigentes en el sitio de la SUSESO antes de citar cifras o reglas específicas, porque el protocolo se ha actualizado en los últimos años.</p>
+
+<h2>E. Mito versus evidencia</h2>
+<div class="mito">
+<p><span class="etiqueta">Mito:</span> "Un promedio de satisfacción de 4,9 sobre 7 indica que el clima está bien."</p>
+<p><span class="etiqueta ev">Evidencia:</span> en TechNova el mismo promedio esconde un área en 3,7 y tres áreas entre 5,6 y 5,9, con d = 1,95 entre desarrollo y el resto. El promedio global no describe a ningún grupo real.</p>
+<p><span class="etiqueta pq">Por qué importa:</span> un tablero que muestra el promedio corporativo es el diseño que impide ver la crisis; el drill-down por unidad, con n mínimo, no es un detalle técnico.</p>
+</div>
+<div class="mito">
+<p><span class="etiqueta">Mito:</span> "La variable más correlacionada con la satisfacción es la que hay que intervenir."</p>
+<p><span class="etiqueta ev">Evidencia:</span> las correlaciones más altas suelen ser con otras facetas del mismo criterio (ambiente ,90), que no son causas sino medidas paralelas; y las correlaciones transversales admiten causalidad inversa y terceras variables (Shadish et al., 2002).</p>
+<p><span class="etiqueta pq">Por qué importa:</span> el "factor" se elige entre condiciones que la gestión puede mover y se trata como hipótesis que la intervención pone a prueba; la dirección causal se verifica con varias olas y con las entrevistas.</p>
+</div>
+<div class="mito">
+<p><span class="etiqueta">Mito:</span> "Si la encuesta de clima es confiable, sirve para evaluar a las jefaturas."</p>
+<p><span class="etiqueta ev">Evidencia:</span> la fiabilidad de una escala a nivel individual no garantiza la fiabilidad de la media de una unidad de diez personas; además, las metas con consecuencias inducen gestión de la medida (Bevan &amp; Hood, 2006; Strathern, 1997). Las relaciones entre actitudes agregadas y resultados son moderadas (Harter et al., 2002).</p>
+<p><span class="etiqueta pq">Por qué importa:</span> el uso evaluativo exige un instrumento diseñado para ello (360 con reglas propias), n mínimo, error conocido y reglas declaradas antes de medir. Sin eso, el tablero destruye la encuesta que lo alimenta.</p>
+</div>
+<div class="mito">
+<p><span class="etiqueta">Mito:</span> "Devolver los resultados a los trabajadores crea expectativas que después no se pueden cumplir; mejor no hacerlo."</p>
+<p><span class="etiqueta ev">Evidencia:</span> la retroalimentación de datos es una intervención con efectos propios (Nadler, 1977) y su omisión se asocia con caídas de la tasa de respuesta en olas siguientes (Church &amp; Waclawski, 2001).</p>
+<p><span class="etiqueta pq">Por qué importa:</span> la tasa de respuesta es un indicador del sistema de medición; cuando cae, el resto del tablero pierde validez antes que precisión. Devolver lo que se hará y lo que no se hará, y por qué, gestiona las expectativas mejor que el silencio.</p>
+</div>
+
+<h2>F. Qué significa para el control de gestión</h2>
+<p>Primero, el análisis de resultados de una encuesta es un análisis de desviaciones: la unidad de observación relevante es el subgrupo, no la organización, y la pregunta es para quiénes y respecto de qué. Un tablero de personas que no permite drill-down por unidad, con las reglas de anonimato declaradas, no es un instrumento de control.</p>
+<p>Segundo, la precisión de un indicador de encuesta depende del n de la unidad y de la fiabilidad de la escala. Comparar unidades pequeñas, fijar metas sobre percepciones sin conocer la variación normal entre olas y ligar consecuencias a esos indicadores son los tres errores que convierten una encuesta de diagnóstico en una fuente de manipulación. La ficha de indicador, con umbrales y regla de alerta por caída, es la defensa.</p>
+<p>Tercero, el tablero combina fuentes: índices de encuesta con fiabilidad verificada, ítems únicos de pulso, métricas administrativas y resultados de negocio, más un indicador del propio sistema de medición. La hipótesis causal que los conecta se declara en el mapa estratégico y se verifica con varias olas; mientras tanto, el uso de los indicadores de clima es interactivo (conversación sobre la desviación), no diagnóstico-automático ni evaluativo.</p>
+<p>Cuarto, el ciclo se cierra con decisiones de asignación de recursos. Un tablero que no conduce a financiar las acciones asociadas a los indicadores en rojo, ni se revisa en el comité que revisa las finanzas, es decorativo. El costo de la rotación, traducido a pesos, es el argumento que une las dos agendas.</p>
+
+<h2>G. Para los controles y el examen</h2>
+<p>En el Control 6, el informe breve de TechNova se evalúa por el rigor del análisis (segmentación, significación y magnitud, correlatos elegidos entre condiciones, eNPS e intención de salida por área), por la integración (matriz de triangulación, diagrama de Porras, diagnóstico en tres frases), por la pertinencia del tablero (cinco a siete indicadores con fichas completas, n mínimo, vínculo con las recomendaciones) y por la comunicación a una audiencia directiva. Los errores más frecuentes en versiones anteriores: reportar la media global como aceptable sin segmentar; elegir una faceta de satisfacción como "factor"; afirmar causalidad; diagramas de Porras sin niveles; tableros con doce indicadores o sin indicador del sistema de medición; presentaciones que leen las láminas en lugar de abrir con el diagnóstico.</p>
+<p>En el examen final, la pregunta (a) pide exactamente lo que este apunte desarrolla en las secciones 6 y F: qué condiciones metodológicas y de diseño del sistema de control tendrían que cumplirse para que una encuesta de clima aplicada sin pilotaje a unidades de diez personas sirviera para definir KPI y evaluar jefes de sucursal, y qué tablero propondría en su lugar. La pregunta (c) pide el diagrama de Porras como síntesis.</p>
+<p>Preguntas de autoevaluación: (1) ¿Qué tres cosas deben acompañar a toda media reportada en un informe diagnóstico? (2) ¿Por qué la satisfacción con el ambiente no es un buen candidato a "factor explicativo" de la satisfacción general? (3) ¿Qué campos de una ficha de indicador protegen contra el uso punitivo de una encuesta? (4) ¿En qué se diferencia el uso diagnóstico del uso interactivo de un indicador de clima, y cuál conviene para la coherencia del liderazgo en TechNova? (5) ¿Qué pierde una organización que no devuelve los resultados a los trabajadores, y en qué indicador del tablero se ve esa pérdida?</p>
+
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Becker, B. E., Huselid, M. A., &amp; Ulrich, D. (2001). <em>The HR scorecard: Linking people, strategy, and performance</em>. Harvard Business School Press.</p>
+<p>Bevan, G., &amp; Hood, C. (2006). What's measured is what matters: Targets and gaming in the English public health care system. <em>Public Administration, 84</em>(3), 517–538. https://doi.org/10.1111/j.1467-9299.2006.00600.x</p>
+<p>Bliese, P. D. (2000). Within-group agreement, non-independence, and reliability: Implications for data aggregation and analysis. En K. J. Klein &amp; S. W. J. Kozlowski (Eds.), <em>Multilevel theory, research, and methods in organizations</em> (pp. 349–381). Jossey-Bass.</p>
+<p>Borg, I., &amp; Mastrangelo, P. M. (2008). <em>Employee surveys in management: Theories, tools, and practical applications</em>. Hogrefe.</p>
+<p>Boswell, W. R., Boudreau, J. W., &amp; Tichy, J. (2005). The relationship between employee job change and job satisfaction: The honeymoon-hangover effect. <em>Journal of Applied Psychology, 90</em>(5), 882–892. https://doi.org/10.1037/0021-9010.90.5.882</p>
+<p>Cascio, W. F., &amp; Boudreau, J. W. (2011). <em>Investing in people: Financial impact of human resource initiatives</em> (2nd ed.). FT Press.</p>
+<p>Church, A. H., &amp; Waclawski, J. (2001). <em>Designing and using organizational surveys: A seven-step process</em>. Jossey-Bass.</p>
+<p>Cohen, J. (1988). <em>Statistical power analysis for the behavioral sciences</em> (2nd ed.). Erlbaum.</p>
+<p>Creswell, J. W., &amp; Plano Clark, V. L. (2018). <em>Designing and conducting mixed methods research</em> (3rd ed.). Sage.</p>
+<p>Cumming, G. (2014). The new statistics: Why and how. <em>Psychological Science, 25</em>(1), 7–29. https://doi.org/10.1177/0956797613504966</p>
+<p>Cummings, T. G., &amp; Worley, C. G. (2014). <em>Organization development and change</em> (10th ed.). Cengage Learning.</p>
+<p>Denzin, N. K. (1978). <em>The research act: A theoretical introduction to sociological methods</em> (2nd ed.). McGraw-Hill.</p>
+<p>Few, S. (2012). <em>Show me the numbers: Designing tables and graphs to enlighten</em> (2nd ed.). Analytics Press.</p>
+<p>Fitz-enz, J. (2010). <em>The new HR analytics: Predicting the economic value of your company's human capital investments</em>. AMACOM.</p>
+<p>Griffeth, R. W., Hom, P. W., &amp; Gaertner, S. (2000). A meta-analysis of antecedents and correlates of employee turnover: Update, moderator tests, and research implications for the next millennium. <em>Journal of Management, 26</em>(3), 463–488. https://doi.org/10.1177/014920630002600305</p>
+<p>Harter, J. K., Schmidt, F. L., &amp; Hayes, T. L. (2002). Business-unit-level relationship between employee satisfaction, employee engagement, and business outcomes: A meta-analysis. <em>Journal of Applied Psychology, 87</em>(2), 268–279. https://doi.org/10.1037/0021-9010.87.2.268</p>
+<p>Jick, T. D. (1979). Mixing qualitative and quantitative methods: Triangulation in action. <em>Administrative Science Quarterly, 24</em>(4), 602–611. https://doi.org/10.2307/2392366</p>
+<p>Kaplan, R. S., &amp; Norton, D. P. (1996). <em>The balanced scorecard: Translating strategy into action</em>. Harvard Business School Press.</p>
+<p>Kaplan, R. S., &amp; Norton, D. P. (2004). <em>Strategy maps: Converting intangible assets into tangible outcomes</em>. Harvard Business School Press.</p>
+<p>Knaflic, C. N. (2015). <em>Storytelling with data: A data visualization guide for business professionals</em>. Wiley.</p>
+<p>Merchant, K. A., &amp; Van der Stede, W. A. (2017). <em>Management control systems: Performance measurement, evaluation and incentives</em> (4th ed.). Pearson.</p>
+<p>Nadler, D. A. (1977). <em>Feedback and organization development: Using data-based methods</em>. Addison-Wesley.</p>
+<p>Neely, A., Adams, C., &amp; Kennerley, M. (2002). <em>The performance prism: The scorecard for measuring and managing business success</em>. FT Prentice Hall.</p>
+<p>Porras, J. I. (1987). <em>Stream analysis: A powerful way to diagnose and manage organizational change</em>. Addison-Wesley.</p>
+<p>Reichheld, F. F. (2003). The one number you need to grow. <em>Harvard Business Review, 81</em>(12), 46–54.</p>
+<p>Saldaña, J. (2021). <em>The coding manual for qualitative researchers</em> (4th ed.). Sage.</p>
+<p>Shadish, W. R., Cook, T. D., &amp; Campbell, D. T. (2002). <em>Experimental and quasi-experimental designs for generalized causal inference</em>. Houghton Mifflin.</p>
+<p>Simons, R. (1995). <em>Levers of control: How managers use innovative control systems to drive strategic renewal</em>. Harvard Business School Press.</p>
+<p>Strathern, M. (1997). "Improving ratings": Audit in the British University system. <em>European Review, 5</em>(3), 305–321.</p>
+<p>Tufte, E. R. (2001). <em>The visual display of quantitative information</em> (2nd ed.). Graphics Press.</p>
+</div>
+<h3>Para profundizar</h3>
+<p>Becker, Huselid y Ulrich (2001) desarrollan la arquitectura completa de un scorecard de personas vinculado a la estrategia, con ejemplos de cadenas causales e indicadores. Knaflic (2015) es la guía más práctica para rehacer los gráficos de un informe diagnóstico pensando en la audiencia directiva. Bevan y Hood (2006) es la lectura recomendada para la pregunta (a) del examen: un caso documentado de lo que ocurre cuando las medidas se convierten en metas con consecuencias.</p>
+
+
+<footer>
+  Serie de apuntes · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas.
+</footer>
+
+</div>
+</body>
+</html>

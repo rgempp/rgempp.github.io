@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de entrevista de diagnóstico · Sesión 4 · Diagnóstico Organizacional MCG UDP</title>
+<meta name="author" content="René Gempp">
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  .pregunta .opc.parcial{background:var(--ambar-claro);border-color:var(--ambar)}
+  .nivel-tag{display:inline-block;font-weight:700;margin-right:.3rem}
+
+/* ---- simulador ---- */
+.chat{border:1px solid var(--borde);border-radius:10px;padding:1rem;background:#fff;max-height:52vh;overflow-y:auto;margin:.8rem 0}
+.burbuja{max-width:88%;padding:.6rem .85rem;border-radius:12px;margin:.45rem 0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.95rem;line-height:1.45}
+.burbuja.e{margin-left:auto;background:var(--tinte);border:1px solid var(--rojo);border-bottom-right-radius:3px}
+.burbuja.r{margin-right:auto;background:var(--gris-claro);border:1px solid var(--borde);border-bottom-left-radius:3px}
+.burbuja.sys{margin:.6rem auto;background:#fff;border:1px dashed var(--borde);color:var(--gris);font-size:.85rem;max-width:95%;text-align:center}
+.burbuja .quien{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);margin-bottom:.2rem}
+.panel{border:1px solid var(--borde);border-radius:10px;padding:.9rem 1rem;margin:.8rem 0;background:#fff}
+.panel h4{margin:.2rem 0 .5rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:1rem;color:var(--rojo)}
+.opcion{display:block;width:100%;text-align:left;border:1px solid var(--borde);background:#fff;border-radius:8px;padding:.6rem .8rem;margin:.35rem 0;cursor:pointer;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.93rem;line-height:1.4}
+.opcion:hover{border-color:var(--rojo);background:var(--tinte)}
+.opcion:disabled{opacity:.55;cursor:default}
+.rapport{display:flex;align-items:center;gap:.6rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.85rem;color:var(--gris);margin:.4rem 0}
+.rapport .barra-r{flex:1;height:8px;background:var(--gris-claro);border-radius:4px;overflow:hidden;border:1px solid var(--borde)}
+.rapport .barra-r span{display:block;height:100%;background:var(--rojo)}
+.estado{display:flex;flex-wrap:wrap;gap:.5rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.82rem;margin:.3rem 0}
+.estado .chip{border:1px solid var(--borde);border-radius:999px;padding:.15rem .6rem;background:#fff;color:var(--gris)}
+.estado .chip.on{border-color:var(--rojo);color:var(--rojo);background:var(--tinte)}
+.fb{border-left:3px solid var(--rojo);background:var(--tinte);padding:.5rem .8rem;margin:.5rem 0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.88rem;border-radius:0 8px 8px 0}
+.fb.ok{border-left-color:#15803d;background:#f0fdf4}
+.fb.medio{border-left-color:#b45309;background:#fffbeb}
+textarea.libre{width:100%;min-height:70px;border:1px solid var(--borde);border-radius:8px;padding:.6rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.93rem}
+.informe table{width:100%;border-collapse:collapse;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.9rem;margin:.6rem 0}
+.informe th,.informe td{border:1px solid var(--borde);padding:.4rem .6rem;text-align:left;vertical-align:top}
+.informe th{background:var(--gris-claro)}
+.sel-inf{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media (max-width:700px){.sel-inf{grid-template-columns:1fr}}
+.tarjeta-inf{border:1px solid var(--borde);border-radius:10px;padding:.9rem 1rem;background:#fff}
+.tarjeta-inf h3{margin:.1rem 0 .4rem;color:var(--rojo)}
+.tarjeta-inf p{font-size:.92rem;margin:.3rem 0}
+.oculto{display:none}
+</style>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Simulador interactivo · Sesión 4</p>
+  <h1>Simulador de entrevista de diagnóstico: practicar preguntas, sondeo y conducción con un informante de TechNova</h1>
+  <p class="meta">Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026 · Acompaña a la sesión 4 (viernes 13-11-2026), al apunte 4 y al Control 4<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ 0 INICIO ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Usted es parte del equipo diagnóstico de TechNova y va a entrevistar a un informante clave. La entrevista tiene tres fases: apertura, ocho temas y cierre. En cada tema elige una pregunta entre cuatro (o escribe la suya) y, después de la respuesta, elige un sondeo. El informante reacciona según cómo usted pregunta: las preguntas cerradas, inductivas, dobles o acusatorias producen respuestas cortas, oficiales o defensivas; las abiertas y las de incidente crítico, seguidas de sondeos de ejemplo, secuencia o especificidad, producen episodios con fecha, actores y consecuencias. Al final recibe un informe con el vocabulario de la rúbrica del Control 4 y puede descargar la transcripción de su propia entrevista para codificarla.</p>
+  <div class="grid g3">
+    <div class="caja"><strong>Rapport.</strong> Una barra muestra la disposición del informante. Baja con cada pregunta mal formulada y con cada opinión que usted emite; si cae demasiado, el informante responde con cautela y usted pierde episodios.</div>
+    <div class="caja"><strong>Episodios y objetivos.</strong> Cada informante guarda entre siete y ocho episodios contrastables con registros. El informe dice cuáles obtuvo, cuáles se perdió y qué objetivos del diseño (OE1 a OE4) quedaron cubiertos.</div>
+    <div class="caja"><strong>Situaciones.</strong> En algún momento el informante le pedirá su opinión, dará la versión oficial o le planteará un dilema de confidencialidad. Lo que usted haga ahí cuenta para la conducción.</div>
+  </div>
+  <div class="nota info">Modo de texto libre: en cada tema puede escribir su propia pregunta. Un clasificador por reglas (sin inteligencia artificial, sin conexión) estima si es abierta, cerrada, inductiva, múltiple, acusatoria o abstracta, y el informante responde según esa lectura. Es aproximado: sirve para practicar, no para calificar. Si el clasificador se equivoca, use las opciones guiadas.</div>
+  <h3>Elija un informante</h3>
+  <div class="sel-inf">
+    <div class="tarjeta-inf">
+      <h3>Paula · gerenta de operaciones</h3>
+      <p>14 meses en TechNova. Coordina soporte, facturación y la relación con desarrollo para los tickets. Reporta al CEO; en la práctica, la directora de producto le pide cosas cada semana. Leal a la empresa, cuida la imagen de los cofundadores ante extraños y tiende a dar primero la versión oficial.</p>
+      <p><strong>Objetivos que puede cubrir:</strong> OE2 (decisiones y prioridades), OE3 (calidad y tickets), OE4 (roles), uso de indicadores. <strong>Dificultad:</strong> discurso oficial; pide su opinión.</p>
+      <button class="btn" onclick="elegir('paula')">Entrevistar a Paula</button>
+    </div>
+    <div class="tarjeta-inf">
+      <h3>Diego · desarrollador senior</h3>
+      <p>14 meses en TechNova, equipo de producto. Entró con entusiasmo, hoy está cansado y tiene una oferta de otra empresa que no ha contado a nadie. Habla con franqueza si confía; se cierra si siente que lo juzgan o que lo que diga llegará a los cofundadores.</p>
+      <p><strong>Objetivos que puede cubrir:</strong> OE1 (intención de salida), OE2 (prioridades), OE4 (roles y feedback). <strong>Dificultad:</strong> temas sensibles; dilema de confidencialidad.</p>
+      <button class="btn" onclick="elegir('diego')">Entrevistar a Diego</button>
+    </div>
+  </div>
+  <p class="mini">Tiempo estimado: 15 a 20 minutos por informante. El avance se guarda en este navegador. Material simulado con fines docentes; los nombres son ficticios.</p>
+</section>
+
+<!-- ============ 1 ENTREVISTA ============ -->
+<section class="estacion" id="e1">
+  <h2 id="tituloEnt">Entrevista</h2>
+  <div class="rapport"><span>Disposición del informante</span><div class="barra-r"><span id="rapBar" style="width:60%"></span></div><span id="rapTxt">60</span></div>
+  <div class="estado" id="chips"></div>
+  <div class="chat" id="chat"></div>
+  <div class="panel" id="panel"></div>
+</section>
+
+<!-- ============ 2 INFORME ============ -->
+<section class="estacion" id="e2">
+  <h2>Informe de la entrevista</h2>
+  <div id="informe" class="informe"></div>
+  <p><button class="btn" onclick="descargar()">Descargar la transcripción (txt)</button> <button class="btn light" onclick="reiniciarEntrevista()">Entrevistar de nuevo</button></p>
+  <div class="nota">Para seguir practicando: codifique su propia transcripción con la matriz del Control 4 (una fila por fragmento; código descriptivo; categoría; memo). Compare los episodios que obtuvo con los que el informe dice que se perdió, y revise qué pregunta o sondeo los habría producido.</div>
+</section>
+
+<footer>
+  Simulador interactivo · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas. El avance se guarda solo en este navegador.
+</footer>
+</div>
+<script>
+// ===================== DATOS =====================
+// Tipos de pregunta: buena | cerrada | inductiva | multiple | acusatoria | abstracta
+// Tipos de sondeo: buena | neutra | mala | saltar
+const TIPOS = {buena:"Abierta o de incidente crítico", cerrada:"Cerrada", inductiva:"Inductiva o cargada", multiple:"Múltiple", acusatoria:"'Por qué' acusatorio", abstracta:"Abstracta o con jerga"};
+const RAP_Q = {buena:5, cerrada:-3, inductiva:-10, multiple:-5, acusatoria:-12, abstracta:-4};
+const RAP_S = {buena:4, neutra:1, mala:-8, saltar:-2};
+const OBJ = {OE1:"OE1 · intención de salida y motivos de quienes se fueron", OE2:"OE2 · cómo se toman y revierten las decisiones de producto", OE3:"OE3 · procesos de revisión y bugs críticos", OE4:"OE4 · claridad de roles y diseño de cargos", CI:"Uso de indicadores (control interactivo)"};
+
+const APERTURA = {
+  items:[
+   {t:"Explicar el propósito del diagnóstico en dos frases", ok:true, fb:"Sin propósito claro, el informante decide por su cuenta para qué sirve la conversación."},
+   {t:"Decir quién encargó el diagnóstico y quién verá el informe, en qué versión", ok:true, fb:"En TechNova el informe va a ambos cofundadores y al directorio en la misma versión; omitirlo alimenta la sospecha de que la entrevista es para uno de los dos."},
+   {t:"Explicar la confidencialidad y sus límites (patrones, sin nombres; hechos graves no se silencian)", ok:true, fb:"Prometer menos y cumplirlo: en 50 personas no hay anonimato total."},
+   {t:"Pedir permiso para grabar y decir qué pasa con la grabación", ok:true, fb:"La grabación es la cadena de custodia de las citas; se pide, no se asume."},
+   {t:"Aclarar que puede no responder cualquier pregunta", ok:true, fb:"Derecho a no responder: parte del consentimiento."},
+   {t:"Prometer anonimato total: nadie sabrá jamás quién dijo qué", ok:false, fb:"No se puede cumplir: el entrevistador sabe quién dijo qué y los cofundadores pueden reconocer episodios. Promesa que se rompe sola."},
+   {t:"Contar su hipótesis: 'creemos que el problema está en el desacuerdo de los fundadores'", ok:false, fb:"Convierte la entrevista en una validación; el informante confirmará o se pondrá a la defensiva."},
+   {t:"Asegurar que lo que diga no tendrá ninguna consecuencia para nadie", ok:false, fb:"Un diagnóstico produce consecuencias; prometer lo contrario es falso y el informante lo sabe."},
+  ],
+  calentamiento:"Cuénteme cómo llegó a TechNova y qué hace hoy."
+};
+const CIERRE = {
+  items:[
+   {t:"Si pudiera cambiar una sola cosa primero, ¿cuál sería?", ok:true, fb:"Pregunta de cierre que produce prioridades del informante, insumo para recomendaciones."},
+   {t:"¿Hay algo que no le pregunté y debería haber preguntado?", ok:true, fb:"Abre lo que la pauta no previó."},
+   {t:"Explicar qué pasa ahora con lo conversado y cuándo habrá devolución", ok:true, fb:"Cierra el ciclo; evita la sensación de que la información desaparece."},
+   {t:"Agradecer y recordar los términos de confidencialidad", ok:true, fb:"Refuerza el acuerdo justo cuando el informante se pregunta si habló de más."},
+   {t:"Decirle qué cree usted que va a concluir el diagnóstico", ok:false, fb:"Anticipar conclusiones contamina las entrevistas siguientes (el informante lo comenta) y compromete la confirmabilidad."},
+   {t:"Pedirle que no comente la entrevista con sus compañeros", ok:false, fb:"No es exigible y genera desconfianza; lo que se pide es discreción sobre lo que otros hayan dicho, no silencio sobre la propia participación."},
+  ]
+};
+
+const INF = {};
+
+// ---------- PAULA ----------
+INF.paula = {
+ nombre:"Paula", rol:"gerenta de operaciones, 14 meses", obj:["OE2","OE3","OE4","CI"],
+ saludo:"Hola. Tengo cuarenta y cinco minutos, después tengo reunión con soporte. Martín me dijo que esto era importante, así que aquí estoy.",
+ calent:"Llegué hace 14 meses, cuando ya eran como 35 personas. Martín me contrató para 'ordenar la casa', esas fueron sus palabras. Venía de una empresa de logística bastante más grande. Hoy coordino soporte, que son cuatro personas, facturación, que son dos, y hago de puente con desarrollo para los tickets de clientes. En teoría eso es todo; en la práctica, todo lo que no tiene dueño cae en operaciones.",
+ episodios:{
+  conc:"Episodio del módulo de conciliación (fecha comprometida por el CEO, 40 tickets, disculpas a dos clientes grandes)",
+  roadmap:"Cómo llegan las prioridades a operaciones (dos canales: CEO y directora de producto; sin instancia conjunta)",
+  tickets:"Tiempo de resolución de tickets de 2 a 6 días y por qué (sin QA, releases sin revisión)",
+  reporte:"Doble reporte en la práctica (CEO formal; directora de producto cada semana)",
+  salida:"Salida de la analista de soporte a los 11 meses y lo que dijo al irse",
+  kpi:"Qué indicadores mira Paula y qué hace cuando se mueven (NPS de clientes 48 a 29)",
+  reunion:"La reunión de los lunes: 'todo es prioridad'",
+  cambio:"Qué cambiaría primero: un lugar donde los dos decidan"
+ },
+ temas:[
+  {id:"prior", titulo:"Tema 1 · Cómo llegan las prioridades a su área", obj:"OE2",
+   opts:[
+    {t:"¿Cómo se entera su área de que algo pasó a ser prioridad?", tipo:"buena", ep:"roadmap", r:"Depende de quién lo diga. Oficialmente tenemos un roadmap trimestral que arma Carolina con producto y que se presenta a todos. Pero Martín habla con los clientes grandes todas las semanas y llega con cosas urgentes, y eso llega directo a soporte, porque el cliente ya llamó. Entonces nosotros nos enteramos dos veces: una por el roadmap y otra por el cliente enojado."},
+    {t:"¿Tienen un roadmap y lo siguen?", tipo:"cerrada", r:"Sí, tenemos un roadmap trimestral, con la flexibilidad propia de una startup."},
+    {t:"¿No cree que el problema es que Martín y Carolina no se ponen de acuerdo?", tipo:"inductiva", r:"Sí, puede ser. Son dos estilos distintos."},
+    {t:"¿Cómo se definen las prioridades, quién las comunica y qué pasa cuando cambian?", tipo:"multiple", r:"Cuando cambian, soporte se entera por los clientes. Es lo que más nos pasa."},
+   ],
+   sondeos:[
+    {t:"'La flexibilidad propia de una startup': ¿me da un ejemplo de la última vez que esa flexibilidad operó? ¿Qué pasó?", tipo:"buena", ep:"roadmap", r:"Bueno, ejemplo concreto... hace un mes. El roadmap decía rediseño del onboarding, y un cliente grande pidió el módulo de conciliación bancaria para renovar. Martín dijo que sí. Carolina se enteró en el daily. Desde operaciones vimos las dos cosas avanzar a medias durante tres semanas."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que no hay un lugar donde se junten las dos cosas, el roadmap y lo que piden los clientes. Cada uno llega por su lado."},
+    {t:"¿Y eso es porque Martín no respeta el trabajo de producto?", tipo:"mala", r:"No diría eso. Martín tiene que vender; es su trabajo. Prefiero no opinar sobre eso."},
+    {t:"Entiendo. Pasemos al siguiente tema.", tipo:"saltar", r:"Perfecto."},
+   ]},
+  {id:"conc", titulo:"Tema 2 · Un episodio concreto", obj:"OE2",
+   opts:[
+    {t:"Cuénteme la última vez que una prioridad cambió y afectó a su área. ¿Qué pasó, con el mayor detalle que recuerde?", tipo:"buena", ep:"conc", r:"Hace un mes. Martín comprometió con un cliente grande una fecha para el módulo de conciliación bancaria. Producto no estaba de acuerdo porque el trimestre era del onboarding. Se hizo igual, apurado, con la mitad del equipo. Salió a producción un viernes y el lunes teníamos 40 tickets en soporte. Cuarenta en una semana, cuando lo normal son diez. Yo tuve que llamar personalmente a dos clientes grandes a pedir disculpas. Uno de ellos todavía está evaluando irse."},
+    {t:"¿Ha habido problemas por cambios de prioridad?", tipo:"cerrada", r:"Alguno ha habido, como en cualquier empresa que crece rápido."},
+    {t:"¿Por qué no avisó usted que esa fecha no se iba a cumplir?", tipo:"acusatoria", r:"Yo no fijo las fechas. Y avisé, si es lo que pregunta. Pero no sé si esto es una entrevista de diagnóstico o una evaluación de mi gestión."},
+    {t:"¿Cómo evalúa la gobernanza del proceso de priorización?", tipo:"abstracta", r:"Mire, yo soy de operaciones. La gobernanza... supongo que se podría mejorar la coordinación, como en todos lados."},
+   ],
+   sondeos:[
+    {t:"¿Y qué pasó después con esos tickets? ¿Cuántos quedaron abiertos y en cuánto tiempo?", tipo:"buena", ep:"tickets", r:"Tardamos tres semanas en bajarlos. El tiempo de resolución promedio, que era de dos días cuando llegué, hoy está en seis. Y no es solo ese módulo: cada release trae lo suyo, porque no hay nadie de QA desde hace ocho meses y la revisión entre pares se hace cuando hay tiempo."},
+    {t:"¿Me da un ejemplo?", tipo:"buena", ep:"conc", r:"El mismo del módulo de conciliación: fecha puesta por Martín con el cliente, producto en desacuerdo, cuarenta tickets, dos llamadas de disculpas. Si quiere le mando los números de tickets de esa semana."},
+    {t:"¿Y Martín reconoció que se equivocó?", tipo:"mala", r:"Eso tendría que preguntárselo a él."},
+    {t:"Perfecto, ya entendí. Pasemos a otro tema.", tipo:"saltar", r:"Bien."},
+   ]},
+  {id:"tickets", titulo:"Tema 3 · Calidad y tickets", obj:"OE3",
+   opts:[
+    {t:"Piense en el último release que generó muchos tickets. ¿Qué revisión existía antes de salir y qué se saltó?", tipo:"buena", ep:"tickets", r:"El de conciliación. Revisión formal, ninguna: no hay QA desde que se fue la persona que lo hacía, hace ocho meses, y no se reemplazó. La revisión entre pares existe, pero cuando la fecha está puesta por un cliente, se salta. Nadie decide saltarla; se salta sola, el viernes a las siete. Y el lunes los tickets son míos."},
+    {t:"¿Tienen un proceso de control de calidad?", tipo:"cerrada", r:"Hay revisión entre pares, sí. Es lo estándar en desarrollo."},
+    {t:"¿No es verdad que los desarrolladores entregan sin probar?", tipo:"inductiva", r:"No lo plantearía así. Trabajan mucho. No es un tema de falta de ganas."},
+    {t:"¿Cómo es el proceso de calidad y qué métricas usan y quién es responsable?", tipo:"multiple", r:"Responsable... no sabría decirle. Supongo que el lead de cada equipo."},
+   ],
+   sondeos:[
+    {t:"¿Quién es responsable hoy de que algo no salga sin revisar?", tipo:"buena", ep:"tickets", r:"Nadie, formalmente. Cuando se fue QA, nadie heredó eso. Yo lo levanté en una reunión de los lunes y la respuesta fue 'lo vemos'. Hace ocho meses."},
+    {t:"Cuénteme más sobre eso.", tipo:"neutra", r:"Es que no hay un dueño de la calidad. Se asume que el equipo se hace cargo, y el equipo está haciendo dos cosas a la vez."},
+    {t:"¿O sea que el lead de desarrollo no está haciendo su trabajo?", tipo:"mala", r:"No, por favor no anote eso. Los leads hacen lo que pueden. Prefiero no seguir por ahí."},
+    {t:"Bien. Siguiente tema.", tipo:"saltar", r:"Como quiera."},
+   ]},
+  {id:"reporte", titulo:"Tema 4 · Roles y a quién reporta", obj:"OE4", evento:"opinion",
+   opts:[
+    {t:"¿A quién le reporta usted en la práctica? ¿Cómo es una semana típica en ese sentido?", tipo:"buena", ep:"reporte", r:"En el papel, a Martín. En la práctica, Carolina me pide cosas todas las semanas: datos de tickets, que soporte priorice tal cliente, que facturación espere con tal cobro. Y Martín me pide otras. Nunca me han dicho a quién le digo que no. Una semana típica tiene dos o tres pedidos cruzados, y yo decido sola cuál va primero, porque nadie más lo va a decidir."},
+    {t:"¿Tiene claro cuáles son sus responsabilidades?", tipo:"cerrada", r:"Sí, bastante claro. Operaciones es operaciones."},
+    {t:"¿No le parece que Carolina se mete en lo que no le corresponde?", tipo:"inductiva", r:"Carolina hace su trabajo. No voy a hablar mal de ella."},
+    {t:"¿Cómo describiría la estructura de reporte y la matriz de responsabilidades?", tipo:"abstracta", r:"Matriz no hay. Organigrama tampoco, que yo sepa. Es una startup."},
+   ],
+   sondeos:[
+    {t:"¿Cuántas veces diría que pasó eso de los pedidos cruzados en el último mes? ¿Y la última vez?", tipo:"buena", ep:"reporte", r:"Tres o cuatro por semana, así que doce o quince al mes. La última fue el martes: Martín me pidió que soporte dejara todo para atender al cliente grande; Carolina me pidió ese mismo día que soporte documentara los bugs del onboarding para su equipo. Hice las dos cosas a medias, como todos acá."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que no existe el cargo, en el fondo. Soy gerenta de operaciones porque alguien tenía que llamarse así."},
+    {t:"¿Y no ha pensado en decirle a Martín que ponga orden?", tipo:"mala", r:"Lo que yo le diga a Martín es asunto mío. ¿Puedo preguntarle algo yo? Y usted, ¿qué opina? ¿Esto es normal en otras empresas?"},
+    {t:"Perfecto. Avancemos.", tipo:"saltar", r:"Bueno. Aprovecho de preguntarle algo: y usted, ¿qué opina? ¿Esto es normal en otras empresas?"},
+   ]},
+  {id:"salida", titulo:"Tema 5 · Salidas en su área", obj:"OE1",
+   opts:[
+    {t:"Piense en la última persona de su área que renunció. ¿Qué pasó en sus últimos meses aquí?", tipo:"buena", ep:"salida", r:"Fue Valentina, analista de soporte, a los once meses. Muy buena. Los últimos dos meses dejó de proponer cosas; antes proponía todo el tiempo. Me dijo al irse que estaba cansada de pedir disculpas a clientes por cosas que ella no podía arreglar y que nadie arreglaba. Se fue a un banco, por un sueldo parecido. Martín dijo que era el mercado. No era el mercado."},
+    {t:"¿Ha tenido rotación en su equipo?", tipo:"cerrada", r:"Una persona este año. Dentro de lo normal, diría."},
+    {t:"¿No es cierto que la gente se va por el sueldo?", tipo:"inductiva", r:"Es lo que dice Martín. Puede ser."},
+    {t:"¿Por qué no retuvo a la gente que se fue?", tipo:"acusatoria", r:"Hice lo que pude con lo que tenía. No manejo los sueldos ni las prioridades. Esa pregunta debería hacérsela a otra persona."},
+   ],
+   sondeos:[
+    {t:"¿Qué habría tenido que pasar para que se quedara?", tipo:"buena", ep:"salida", r:"Que alguien se hiciera cargo de lo que ella reportaba. Que los bugs que soporte levanta tuvieran un dueño. Ella me lo dijo con esas palabras: 'no me voy por la plata, me voy porque acá nada se cierra'."},
+    {t:"¿Y qué dijo la empresa cuando se fue?", tipo:"buena", ep:"salida", r:"Martín la felicitó por el nuevo trabajo en el canal general y dijo que el mercado está muy competitivo. No hubo entrevista de salida. Nadie le preguntó por qué."},
+    {t:"¿Se fue por culpa de los desarrolladores que no arreglan los bugs?", tipo:"mala", r:"No. Y le pido que no simplifique así. Los desarrolladores tampoco pueden."},
+    {t:"Bien, sigamos.", tipo:"saltar", r:"Sigamos."},
+   ]},
+  {id:"kpi", titulo:"Tema 6 · Qué indicadores mira", obj:"CI",
+   opts:[
+    {t:"Cuénteme la última vez que revisó los indicadores de su área. ¿Qué miró primero y qué hizo después?", tipo:"buena", ep:"kpi", r:"Los miro todos los lunes antes de la reunión: tickets abiertos, tiempo de resolución y el NPS de clientes, que bajó de 48 a 29 en un año. Lo primero que miro es el NPS, porque es lo que Martín mira. ¿Qué hago después? Los llevo a la reunión. Se comentan. Y después nada, porque la causa no está en mi área: está en lo que sale a producción."},
+    {t:"¿Tienen indicadores de gestión en operaciones?", tipo:"cerrada", r:"Sí, tickets, tiempos de resolución y NPS. Lo estándar."},
+    {t:"¿Cómo evalúa la madurez del sistema de control de gestión de la empresa?", tipo:"abstracta", r:"No sabría ponerle una nota. Hay números; no sé si hay sistema."},
+    {t:"¿Qué indicadores usa, con qué frecuencia y quién los revisa con usted?", tipo:"multiple", r:"Los revisa... bueno, los presento los lunes. Quien los revisa, en realidad, soy yo."},
+   ],
+   sondeos:[
+    {t:"Cuando el NPS bajó, ¿qué pasó en la reunión? ¿Quién dijo qué?", tipo:"buena", ep:"reunion", r:"Martín dijo que había que vender más para compensar. Carolina dijo que el NPS bajaba por los bugs del onboarding. Yo dije que bajaba por los tickets sin resolver. Los tres teníamos razón y no se decidió nada. Esa reunión es así: Martín cuenta la visión, Carolina pregunta cuál es la prioridad hoy, y la respuesta es 'todo es prioridad'. La gente se ríe, pero es nerviosa."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Los indicadores se miran, pero nadie es dueño de la acción que viene después."},
+    {t:"¿Y Martín no se da cuenta de que el NPS baja por su culpa?", tipo:"mala", r:"Yo no dije que fuera culpa de nadie. Prefiero no seguir con esa línea."},
+    {t:"Entendido. Siguiente.", tipo:"saltar", r:"Bien."},
+   ]},
+  {id:"reunion", titulo:"Tema 7 · Las reuniones de los lunes", obj:"OE2",
+   opts:[
+    {t:"Descríbame la última reunión de los lunes: quién habló, qué se decidió, cómo terminó.", tipo:"buena", ep:"reunion", r:"Empezó quince minutos tarde. Martín habló diez minutos de la visión y de un posible cliente nuevo. Carolina preguntó cuál era la prioridad de la semana. Martín dijo 'todo es prioridad'. Nadie anotó nada. Tres personas se fueron antes del cierre porque tenían dailies. Se decidió, que yo sepa, nada. Así son todas."},
+    {t:"¿Las reuniones de los lunes son útiles?", tipo:"cerrada", r:"Sirven para alinearnos, en general."},
+    {t:"¿No le parece que las reuniones son una pérdida de tiempo?", tipo:"inductiva", r:"Son mejorables, como todas las reuniones."},
+    {t:"¿Cómo es la dinámica de las reuniones, qué temas se tratan y qué cambiaría?", tipo:"multiple", r:"Cambiaría que se decida algo. Es lo que cambiaría."},
+   ],
+   sondeos:[
+    {t:"'Todo es prioridad': ¿qué hace su equipo esa misma tarde, después de escuchar eso?", tipo:"buena", ep:"reunion", r:"Lo que hace cada uno: soporte atiende al cliente que más grita, facturación cobra a quien se pueda, y yo decido sola qué pedido de Martín o de Carolina va primero. A veces espero un día, porque si espero, la prioridad cambia sola y me ahorro trabajo. Suena mal, pero es así."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que la reunión no está hecha para decidir. Está hecha para que Martín cuente la visión."},
+    {t:"¿Martín es un mal líder, entonces?", tipo:"mala", r:"No voy a contestar eso. Y le agradecería que no lo anote como si yo lo hubiera dicho."},
+    {t:"Vale. Avancemos.", tipo:"saltar", r:"Bien."},
+   ]},
+  {id:"cambio", titulo:"Tema 8 · Lo que cambiaría", obj:"OE2",
+   opts:[
+    {t:"Si pudiera cambiar una sola cosa primero, ¿cuál sería y por qué esa antes que las demás?", tipo:"buena", ep:"cambio", r:"Que Martín y Carolina decidan juntos, en un lugar y un momento fijos, y que lo que salga de ahí sea lo que vale. Una hora a la semana con una lista. No es burocracia; es que la gente sepa para quién trabaja. QA, cargos, onboarding, todo eso viene después. Sin lo primero, lo demás no sirve."},
+    {t:"¿Cree que hay que contratar a alguien de QA?", tipo:"cerrada", r:"Sí, ayudaría."},
+    {t:"¿No cree que la solución es que Martín deje de hablar con los clientes?", tipo:"inductiva", r:"Martín tiene que hablar con los clientes. Es el CEO."},
+    {t:"¿Qué estrategia de transformación organizacional propondría?", tipo:"abstracta", r:"No sé de estrategias de transformación. Yo le hablo de lo que veo."},
+   ],
+   sondeos:[
+    {t:"¿Qué tendría que pasar para que esa reunión exista? ¿Quién podría convocarla?", tipo:"buena", ep:"cambio", r:"Que alguien de afuera lo diga, creo. Ellos dos solos no lo van a armar, porque armarlo es reconocer que hoy no deciden juntos. Quizás el directorio. Quizás ustedes."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es lo que le decía: primero decidir juntos; lo demás viene después."},
+    {t:"¿Y usted no ha podido armarla porque no la respetan?", tipo:"mala", r:"No es un tema de respeto. Dejémoslo ahí."},
+    {t:"Gracias, vamos cerrando.", tipo:"saltar", r:"Bien."},
+   ]},
+ ],
+ evento_opinion:{
+   intro:"Paula se queda mirándolo: 'Y usted, ¿qué opina? ¿Esto es normal en otras empresas?'",
+   opts:[
+    {t:"'Me interesa más su lectura que la mía; si quiere, al final le cuento lo que he visto en otras organizaciones. ¿Qué cree usted que explica lo que me describe?'", g:2, r:"Está bien, tiene razón. Lo que yo creo es que los dos jefes mandan y ninguno decide. Eso es todo.", fb:"Devuelve la pregunta sin desairar y mantiene la neutralidad; además obtiene la opinión personal de la informante."},
+    {t:"'En mi experiencia es bastante común en startups que crecen rápido; no se preocupe.'", g:0, r:"Ah, bueno. Entonces no es tan grave. Me quedo más tranquila.", fb:"Emitir una opinión tranquiliza a la informante y cierra el tema: deja de contar lo que le preocupa. Además contamina la entrevista con la lectura del entrevistador."},
+    {t:"'Sinceramente, me parece que falta liderazgo.'", g:0, r:"Mire, yo no dije eso. Prefiero que sigamos con sus preguntas.", fb:"Juicio sobre los cofundadores delante de una informante leal: pierde rapport y, de paso, la informante se cuida de ahí en adelante."},
+    {t:"'Prefiero no opinar.'", g:1, r:"Entiendo. Sigamos.", fb:"Correcto en lo esencial, pero seco: devolver la pregunta ('¿qué cree usted?') habría producido un dato."},
+   ]
+ }
+};
+
+// ---------- DIEGO ----------
+INF.diego = {
+ nombre:"Diego", rol:"desarrollador senior, 14 meses", obj:["OE1","OE2","OE4"],
+ saludo:"Hola. Me dijeron que esto era confidencial, así que ok. Pero igual, somos cincuenta personas; todos sabemos quién es quién.",
+ calent:"Entré hace 14 meses, cuando éramos como 30. Me trajo un amigo que ya estaba acá. Al principio era increíble: producto bueno, gente muy buena, aprendí más en seis meses que en dos años en mi trabajo anterior. Hoy estoy en el equipo de producto, en el rediseño del onboarding. Bueno, a veces. Depende de la semana.",
+ episodios:{
+  indic:"Última vez con indicaciones distintas (conciliación vs onboarding; 'fui con los dos'; una semana rehecha)",
+  saber:"Cómo sabe en qué trabajar (adivinar quién va a ganar; esperar)",
+  feedback:"Cómo se entera de si su trabajo está bien (felicitación pública por algo que se desechó; ningún feedback formal)",
+  cambio:"Qué cambió a los seis meses (dejó de preguntar porque las respuestas cambiaban)",
+  tomas:"Salida de Tomás a los 14 meses ('allá por lo menos sé para quién trabajo')",
+  oferta:"La oferta que tiene y qué lo haría quedarse",
+  espera:"La norma de esperar antes de empezar ('la mitad del equipo')",
+  retiene:"Lo que lo retiene: producto, equipo, aprendizaje, flexibilidad"
+ },
+ temas:[
+  {id:"saber", titulo:"Tema 1 · Cómo sabe en qué trabajar", obj:"OE2",
+   opts:[
+    {t:"¿Cómo sabe usted cada semana en qué tiene que trabajar?", tipo:"buena", ep:"saber", r:"Buena pregunta. El lunes hay planificación con el lead y tomamos cosas del roadmap de Carolina. Y después, durante la semana, llega Martín con algo de un cliente y eso pasa primero. O no. Depende de quién hable último. Entonces lo que hacemos es mirar quién pidió qué y adivinar cuál va a ganar. Con el tiempo uno le achunta."},
+    {t:"¿Tiene claras sus prioridades?", tipo:"cerrada", r:"Más o menos. Como todos, supongo."},
+    {t:"¿No cree que el problema es que Martín pasa por encima de producto?", tipo:"inductiva", r:"Puede ser. No sé. No me meto en eso."},
+    {t:"¿Cómo se asigna el trabajo, quién lo decide y qué pasa cuando cambia?", tipo:"multiple", r:"Cuando cambia, cambia. Uno se adapta."},
+   ],
+   sondeos:[
+    {t:"'Adivinar cuál va a ganar': ¿cómo fue la última vez? ¿Qué hizo usted?", tipo:"buena", ep:"espera", r:"La última vez esperé. Si la prioridad va a cambiar el martes, para qué partir el lunes. Suena mal, pero es lo que hace la mitad del equipo. Los más nuevos no; los más nuevos hacen todo lo que les piden y a los seis meses se queman."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que no hay una sola fuente. Hay dos, y las dos son jefes."},
+    {t:"¿Y eso no es un poco cómodo para ustedes?", tipo:"mala", r:"¿Cómodo? Si quiere le muestro mis horas. Prefiero que no vayamos por ahí."},
+    {t:"Entiendo. Siguiente tema.", tipo:"saltar", r:"Ok."},
+   ]},
+  {id:"indic", titulo:"Tema 2 · Un episodio con indicaciones distintas", obj:"OE2",
+   opts:[
+    {t:"Cuénteme la última vez que recibió indicaciones distintas sobre qué hacer. ¿Qué pasó?", tipo:"buena", ep:"indic", r:"Hace tres semanas. Estábamos en el onboarding, que era lo del trimestre. Martín pidió priorizar conciliación bancaria porque un cliente grande lo exigía. Nos cambiamos. El martes Carolina llegó al daily y dijo que eso no estaba en el roadmap. Mi lead fue con los dos, por separado, y volvió con dos respuestas. Terminamos haciendo las dos cosas a medias. Rehicimos una semana entera. Y el release salió con cuatro bugs críticos."},
+    {t:"¿Le ha pasado recibir instrucciones contradictorias?", tipo:"cerrada", r:"Sí, a veces."},
+    {t:"¿Por qué no se negó a cambiar de tarea?", tipo:"acusatoria", r:"¿Negarme? No es mi rol decir que no al CEO. Y el que diga que no acá, dura poco. No me gusta esa pregunta."},
+    {t:"¿Cómo caracterizaría la coherencia de las directrices estratégicas?", tipo:"abstracta", r:"Eh... no sé qué quiere decir con eso. Las directrices cambian, si es eso."},
+   ],
+   sondeos:[
+    {t:"¿Cuánto trabajo se rehízo? ¿Y cuántas veces pasó algo así este año?", tipo:"buena", ep:"indic", r:"Una semana de cinco personas, esa vez. Este año, en mi equipo, unas seis o siete que yo recuerde. En los otros equipos debe ser parecido."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que no hay un lugar donde se resuelva. Cada uno tiene razón por su lado."},
+    {t:"¿Y Carolina no debería haber cedido, si el cliente lo pedía?", tipo:"mala", r:"Yo no soy quién para decir quién debería ceder. Ustedes son los consultores."},
+    {t:"Ok, pasemos a otra cosa.", tipo:"saltar", r:"Ok."},
+   ]},
+  {id:"feedback", titulo:"Tema 3 · Cómo sabe si su trabajo está bien", obj:"OE4",
+   opts:[
+    {t:"¿Cómo se entera usted de si su trabajo está bien o mal hecho?", tipo:"buena", ep:"feedback", r:"Si está mal, por los tickets de soporte. Si está bien, por una felicitación de Martín en el canal general, a veces. Feedback formal, cero. Evaluación de desempeño, nunca he tenido una. La última felicitación que recibí fue por el módulo de conciliación, que se desechó a la semana siguiente. Así que no sé muy bien qué vale."},
+    {t:"¿Recibe feedback de su jefe?", tipo:"cerrada", r:"Más o menos. Mi lead es buena onda."},
+    {t:"¿No siente que nadie valora su trabajo?", tipo:"inductiva", r:"No diría eso. Martín felicita bastante."},
+    {t:"¿Recibe feedback, de quién, con qué frecuencia y le sirve?", tipo:"multiple", r:"Si me sirve... no mucho, la verdad."},
+   ],
+   sondeos:[
+    {t:"¿Y a quién le reporta usted en la práctica? ¿Quién le diría si algo está mal?", tipo:"buena", ep:"feedback", r:"A mi lead, que tampoco tiene el cargo de lead en ningún papel. Pero las indicaciones me llegan de Martín, de Carolina y de mi lead. Tres personas. Si algo está mal, me entero por soporte o por un cliente. Nadie me lo dice antes."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que no hay un proceso. Hay buena onda, que no es lo mismo."},
+    {t:"¿Su lead no hace bien su trabajo, entonces?", tipo:"mala", r:"Mi lead hace lo que puede. No me ponga a hablar mal de él."},
+    {t:"Bien. Sigamos.", tipo:"saltar", r:"Ok."},
+   ]},
+  {id:"cambio", titulo:"Tema 4 · Qué cambió desde los primeros meses", obj:"OE1",
+   opts:[
+    {t:"¿Qué cambió para usted entre los primeros meses y ahora? ¿Cuándo lo notó?", tipo:"buena", ep:"cambio", r:"A los seis meses, más o menos. Al principio preguntaba todo: por qué esto, por qué aquello. Y me respondían, pero la respuesta cambiaba a la semana siguiente. Entonces dejé de preguntar. No por mala onda; es que preguntar no servía. Seguí trabajando igual de bien, creo, pero más callado. Hoy hago lo que me piden y no discuto."},
+    {t:"¿Sigue tan motivado como al principio?", tipo:"cerrada", r:"Menos, supongo. Es normal."},
+    {t:"¿No cree que la empresa lo ha decepcionado?", tipo:"inductiva", r:"Decepcionado es mucho. Es una startup, nadie prometió nada."},
+    {t:"¿Cómo ha evolucionado su engagement y su compromiso organizacional?", tipo:"abstracta", r:"¿Mi engagement? No sé. Trabajo igual."},
+   ],
+   sondeos:[
+    {t:"'Dejé de preguntar': ¿me da un ejemplo de algo que preguntó y cuya respuesta cambió?", tipo:"buena", ep:"cambio", r:"Pregunté si el onboarding era la prioridad del trimestre. Me dijeron que sí. Dos semanas después era conciliación. Pregunté si íbamos a tener QA. Me dijeron que estaba en proceso. Hace ocho meses. Pregunté qué significaba mi equity. Nadie supo."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que uno se cansa de preguntar cuando la respuesta no dura."},
+    {t:"¿Y no será que usted también bajó los brazos?", tipo:"mala", r:"Puede ser. Gracias por la observación. ¿Seguimos?"},
+    {t:"Ok. Siguiente.", tipo:"saltar", r:"Dale."},
+   ]},
+  {id:"tomas", titulo:"Tema 5 · Un compañero que se fue", obj:"OE1",
+   opts:[
+    {t:"Piense en un compañero que se fue este año. ¿Qué pasó en sus últimos meses?", tipo:"buena", ep:"tomas", r:"Tomás. Entró conmigo casi. Era el que más preguntaba. A los seis meses dejó de preguntar, igual que yo. Siguió trabajando bien, pero callado. A los 14 meses me contó que tenía una oferta por un sueldo parecido, no mucho más, y que se iba. Me dijo: 'allá por lo menos sé para quién trabajo'. Esa frase me quedó."},
+    {t:"¿Se ha ido gente de su equipo?", tipo:"cerrada", r:"Sí, dos este año."},
+    {t:"¿No es cierto que la gente se va por la plata?", tipo:"inductiva", r:"Es lo que dice Martín. Yo no sé."},
+    {t:"¿Por qué no lo convencieron de quedarse?", tipo:"acusatoria", r:"¿Convencerlo yo? No es mi trabajo retener gente. Esa pregunta háganla arriba."},
+   ],
+   sondeos:[
+    {t:"¿Qué dijo la empresa cuando se fue? ¿Y qué habría tenido que pasar para que se quedara?", tipo:"buena", ep:"tomas", r:"Martín dijo que el mercado está muy competitivo. Le dijeron que no podían igualar la oferta, y la oferta era casi igual. Para que se quedara habría bastado que alguien decidiera. Que las prioridades duraran un mes. Que se supiera para quién trabaja uno."},
+    {t:"Cuénteme más de Tomás.", tipo:"neutra", r:"Muy buen desarrollador. Se fue a una fintech más grande. Está mejor."},
+    {t:"¿Se fue por culpa de Martín, entonces?", tipo:"mala", r:"Yo no dije eso. No me haga decir cosas."},
+    {t:"Ok. Siguiente tema.", tipo:"saltar", r:"Ok."},
+   ]},
+  {id:"oferta", titulo:"Tema 6 · ¿Se ve en TechNova dentro de un año?", obj:"OE1", evento:"confid",
+   opts:[
+    {t:"¿Se ve trabajando en TechNova dentro de un año? ¿Qué tendría que pasar para que sí?", tipo:"buena", ep:"oferta", r:"[Pausa larga.] Le voy a decir algo, pero necesito saber que esto no llega a Martín con mi nombre. Tengo una oferta. La tengo hace dos semanas. No la he contestado. No es por la plata; es parecida. Es que allá sé qué voy a hacer el mes que viene. ¿Esto queda entre nosotros?"},
+    {t:"¿Ha pensado en irse?", tipo:"cerrada", r:"Como todos, a veces. Nada concreto."},
+    {t:"¿No le parece que debería irse, con lo que me cuenta?", tipo:"inductiva", r:"Eso no se lo voy a responder. No es su rol decirme eso."},
+    {t:"¿Está buscando trabajo, tiene ofertas y qué lo retiene?", tipo:"multiple", r:"Lo que me retiene es el equipo. Lo demás prefiero no comentarlo."},
+   ],
+   sondeos:[
+    {t:"¿Qué tendría que pasar aquí, concretamente, para que diga que no a esa oferta?", tipo:"buena", ep:"oferta", r:"Que exista un lugar donde Martín y Carolina decidan juntos y que lo que salga de ahí dure. Que mi lead tenga el cargo de verdad y pueda decir que no. Que alguien me diga si lo que hago sirve antes de que lo deseche. Con eso me quedo. Sin eso, en un mes no estoy."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que no es la plata. Nunca fue la plata."},
+    {t:"¿Y ya se lo contó a Martín?", tipo:"mala", r:"No. Y no se lo voy a contar. ¿Para qué me pregunta eso?"},
+    {t:"Entiendo. Cerremos este tema.", tipo:"saltar", r:"Mejor."},
+   ]},
+  {id:"retiene", titulo:"Tema 7 · Lo que lo retiene", obj:"OE1",
+   opts:[
+    {t:"Hemos hablado de lo que no funciona. ¿Qué es lo que sí funciona, lo que hace que siga aquí después de 14 meses?", tipo:"buena", ep:"retiene", r:"El producto es bueno de verdad; resuelve un problema real a las pymes. El equipo es el mejor con el que he trabajado; gente que en otro lado ganaría más. Puedo trabajar desde la casa cuando necesito. Y aprendí más acá que en toda mi carrera. Por eso duele. La materia prima está."},
+    {t:"¿Le gusta trabajar en TechNova?", tipo:"cerrada", r:"Sí, en general sí."},
+    {t:"¿No es verdad que lo único bueno es el sueldo?", tipo:"inductiva", r:"No, el sueldo es normal. Lo bueno es otra cosa."},
+    {t:"¿Cómo describiría la propuesta de valor al empleado de la organización?", tipo:"abstracta", r:"¿Propuesta de valor? No sé. Buena gente, buen producto. Eso."},
+   ],
+   sondeos:[
+    {t:"De todo eso, ¿qué pesa más? ¿Hasta cuándo compensa?", tipo:"buena", ep:"retiene", r:"El equipo pesa más. Y compensa hasta que uno ve que los mejores se van. Cuando se fue Tomás pensé: si él se va, por qué me quedo yo. Esa fue la semana en que empecé a contestar correos de reclutadores."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es que lo bueno es mucho. Por eso cuesta irse."},
+    {t:"¿Entonces no está tan mal como decía antes?", tipo:"mala", r:"No dije que estuviera mal. Dije que no se decide. Son cosas distintas."},
+    {t:"Bien. Vamos cerrando.", tipo:"saltar", r:"Ok."},
+   ]},
+  {id:"cambio2", titulo:"Tema 8 · Qué cambiaría primero", obj:"OE2",
+   opts:[
+    {t:"Si pudiera cambiar una sola cosa primero, ¿cuál sería?", tipo:"buena", ep:"espera", r:"Que se decida. Una sola vez por semana, los dos juntos, y que dure. Con eso la mitad del equipo deja de esperar y la otra mitad deja de hacer dos cosas a la vez. QA, cargos, onboarding: todo eso viene después. Sin lo primero no sirve."},
+    {t:"¿Cree que hay que cambiar a los cofundadores?", tipo:"cerrada", r:"No, no es eso."},
+    {t:"¿No cree que lo mejor sería que Martín deje de meterse en producto?", tipo:"inductiva", r:"Martín es el CEO. No voy a decirle qué hacer."},
+    {t:"¿Qué palancas de cambio organizacional priorizaría?", tipo:"abstracta", r:"Palancas... no sé. Que decidan, le diría."},
+   ],
+   sondeos:[
+    {t:"¿Qué tendría que pasar para que esa decisión conjunta exista? ¿Quién podría empujarla?", tipo:"buena", ep:"espera", r:"Alguien de afuera. El directorio, ustedes. Ellos dos solos no, porque armarlo es admitir que hoy no deciden juntos."},
+    {t:"Cuénteme más.", tipo:"neutra", r:"Es simple: decidir juntos y que dure. Lo demás es ruido."},
+    {t:"¿Y usted por qué no lo propuso?", tipo:"mala", r:"Lo propuse a los seis meses. Me dijeron 'lo vemos'. ¿Seguimos?"},
+    {t:"Gracias. Cerremos.", tipo:"saltar", r:"Ok."},
+   ]},
+ ],
+ evento_confid:{
+   intro:"Diego espera su respuesta: '¿Esto queda entre nosotros?'",
+   opts:[
+    {t:"'Lo que usted me cuente no va con su nombre a nadie; el informe habla de patrones. Lo único que no puedo prometer es silencio ante un hecho grave, y esto no lo es. Siga, por favor.'", g:2, r:"Ok. Gracias por decírmelo así. [Continúa con la respuesta completa.]", fb:"Reitera el acuerdo de confidencialidad con sus límites, en el momento en que importa, sin prometer lo que no puede cumplir."},
+    {t:"'Por supuesto, esto queda absolutamente entre nosotros, se lo juro.'", g:0, r:"Ok. [Continúa.]", fb:"Obtiene el relato, pero con una promesa que no puede cumplir (el informe existe, el equipo diagnóstico lo lee). Cuando el informante lo note, la confianza se rompe para todo el proceso."},
+    {t:"'Mire, yo tengo que reportar lo que me cuenten.'", g:0, r:"Entonces mejor no. Olvide lo que dije. ¿Cuál era la siguiente pregunta?", fb:"Falso además de torpe: el informe reporta patrones, no confidencias con nombre. Pierde el episodio y el rapport."},
+    {t:"'No se preocupe, sigamos.'", g:1, r:"Mmm. Bueno. [Responde en forma breve y vaga.]", fb:"Evasivo: el informante no sabe a qué atenerse y se cuida. Habría bastado recordar los términos de la apertura."},
+   ]
+ }
+};
+
+// ===================== CLASIFICADOR DE TEXTO LIBRE (reglas) =====================
+function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+function clasificar(txt){
+  const t = norm(txt.trim()); const razones = [];
+  if(t.length < 8) return {tipo:"cerrada", razones:["Demasiado corta para ser una pregunta abierta."]};
+  const nq = (t.match(/\?/g)||[]).length;
+  if(/(no cree que|no le parece que|no es cierto que|no es verdad que|verdad que|no sera que|cierto que|o sea que|entonces .* es)/.test(t)) razones.push("Contiene una fórmula que sugiere la respuesta ('¿no cree que...?', '¿no es cierto que...?').");
+  if(/(por culpa|la culpa|es el problema|el problema es)/.test(t)) razones.push("Atribuye culpa o nombra el problema antes de que lo haga el informante.");
+  if(razones.length) return {tipo:"inductiva", razones};
+  if(/por que no /.test(t) && !/cuenteme/.test(t)) return {tipo:"acusatoria", razones:["'¿Por qué no...?' pide una justificación y activa la defensa."]};
+  if(nq >= 2 || /\?[^?]*\?/.test(t) || /( y | e )(que|como|cual|quien|cuando)/.test(t)) return {tipo:"multiple", razones:["Contiene más de una pregunta o dos interrogativos encadenados; el informante responderá solo una parte."]};
+  if(/(gobernanza|engagement|compromiso organizacional|madurez|propuesta de valor|alineamiento estrategico|cultura organizacional|clima organizacional|palancas|matriz de|estructura de reporte|directrices|transformacion)/.test(t)) return {tipo:"abstracta", razones:["Usa jerga o un concepto abstracto que el informante debe traducir; produce discurso oficial."]};
+  const abierta = /(cuenteme|cuentame|describa|describame|relateme|como |que paso|que ocurrio|que hizo|ultima vez|piense en|de que manera|que cambio|que tendria|quien decide|como se decide|como se entera|como sabe|que es lo que)/.test(t);
+  const cerradaIni = /^(¿)?\s*(esta|estan|ha |han |tiene|tienen|cree|creen|es |son |le |les |hay |existe|se siente|siente|le gusta|recibe|sigue|ha pensado|esta conforme|le parece|considera|piensa|esta de acuerdo|estaria|podria|puede|quiere)/.test(t);
+  if(abierta && !cerradaIni) return {tipo:"buena", razones:["Pide descripción, un episodio o un proceso; abierta y de una idea."]};
+  if(cerradaIni || /(si o no|verdad\?|cierto\?)/.test(t)) return {tipo:"cerrada", razones:["Empieza con un verbo que admite sí o no ('¿está...?', '¿tiene...?', '¿cree...?')."]};
+  if(/^(¿)?\s*(que|cual|cuales|quien|quienes|cuando|donde|cuanto|cuantos|cuanta|cuantas)/.test(t)) return {tipo:"buena", razones:["Interrogativo abierto; el informante elige qué contar. Conviene seguirla con un sondeo de ejemplo."]};
+  return {tipo:"cerrada", razones:["No se reconoce una estructura abierta; el clasificador la trata como cerrada. Pruebe con 'cuénteme la última vez que...'."]};
+}
+
+// ===================== ESTADO =====================
+const CLAVE = "sim_do_s4_v1";
+const NOMBRES = ["Inicio","Entrevista","Informe"];
+let S = null; // estado de la entrevista
+function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(S)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(CLAVE); if(s) S = JSON.parse(s); }catch(e){} }
+let actual = 0;
+function pintarNav(){
+  const nav = document.getElementById("nav"); nav.innerHTML = "";
+  NOMBRES.forEach((n,i)=>{ const b = document.createElement("button"); b.textContent = n; if(i===actual) b.classList.add("activa");
+    if(i===2 && S && S.fase==="fin") b.classList.add("lista"); b.onclick = ()=>{ if(i===1 && !S) return; if(i===2 && !(S && S.fase==="fin")) return; ir(i); }; nav.appendChild(b); });
+  document.getElementById("progreso").textContent = S ? `Informante: ${INF[S.inf].nombre} · ${S.fase==="fin" ? "entrevista terminada" : "entrevista en curso"}` : "Sin entrevista iniciada";
+}
+function ir(i){ actual = i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa")); document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===2) informe(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+function elegir(k){
+  S = {inf:k, fase:"apertura", tema:0, rap:60, log:[], apertura:[], cierre:[], preguntas:[], sondeos:[], eventos:{}, episodios:{}, objetivos:{}, sub:"pregunta", libre:0};
+  guardar(); ir(1); render();
+}
+function reiniciarEntrevista(){ if(!confirm("¿Borrar esta entrevista y empezar de nuevo?")) return; try{ localStorage.removeItem(CLAVE); }catch(e){} S=null; ir(0); }
+
+// ===================== RENDER =====================
+function inf(){ return INF[S.inf]; }
+function rapSet(d){ S.rap = Math.max(0, Math.min(100, S.rap + d)); }
+function cauteloso(){ return S.rap < 35; }
+function recortar(r){ const m = r.match(/^[^.?!]+[.?!]/); return (m ? m[0] : r) + " [Responde con cautela y no agrega más.]"; }
+function burbuja(quien, texto, cls){ S.log.push({q:quien, t:texto, c:cls}); guardar(); }
+function pintarChat(){
+  const c = document.getElementById("chat"); c.innerHTML = "";
+  S.log.forEach(b=>{ const d = document.createElement("div"); d.className = "burbuja " + b.c; d.innerHTML = (b.c!=="sys" ? `<span class="quien">${b.q}</span>` : "") + b.t; c.appendChild(d); });
+  c.scrollTop = c.scrollHeight;
+  document.getElementById("rapBar").style.width = S.rap + "%"; document.getElementById("rapTxt").textContent = S.rap;
+  const ch = document.getElementById("chips"); ch.innerHTML = "";
+  inf().obj.forEach(o=>{ const s = document.createElement("span"); s.className = "chip" + (S.objetivos[o] ? " on" : ""); s.textContent = o + (S.objetivos[o] ? " ✓" : ""); ch.appendChild(s); });
+  const ne = Object.keys(S.episodios).length, nt = Object.keys(inf().episodios).length;
+  const s2 = document.createElement("span"); s2.className = "chip" + (ne ? " on" : ""); s2.textContent = `Episodios: ${ne} de ${nt}`; ch.appendChild(s2);
+  document.getElementById("tituloEnt").textContent = `Entrevista a ${inf().nombre} (${inf().rol})`;
+}
+function render(){
+  pintarChat(); const p = document.getElementById("panel"); p.innerHTML = "";
+  if(S.fase==="apertura") renderApertura(p);
+  else if(S.fase==="temas") renderTema(p);
+  else if(S.fase==="evento") renderEvento(p);
+  else if(S.fase==="cierre") renderCierre(p);
+  else if(S.fase==="fin") { p.innerHTML = `<p>La entrevista terminó.</p><button class="btn" onclick="ir(2)">Ver el informe</button>`; }
+}
+function renderApertura(p){
+  if(!S.log.length) burbuja(inf().nombre, inf().saludo, "r");
+  pintarChat();
+  p.innerHTML = `<h4>Apertura: marque lo que va a decir antes de la primera pregunta</h4><p class="mini">Seleccione todos los elementos que incluirá y pulse 'Comenzar'.</p>`;
+  APERTURA.items.forEach((it,i)=>{ const l = document.createElement("label"); l.className = "opcion"; l.innerHTML = `<input type="checkbox" data-i="${i}"> ${it.t}`; p.appendChild(l); });
+  const b = document.createElement("button"); b.className = "btn"; b.textContent = "Comenzar la entrevista"; b.onclick = ()=>{
+    const sel = [...p.querySelectorAll("input:checked")].map(x=>+x.dataset.i); S.apertura = sel;
+    const buenos = APERTURA.items.filter((it,i)=>it.ok && sel.includes(i)).length, malos = APERTURA.items.filter((it,i)=>!it.ok && sel.includes(i)).length;
+    const texto = sel.map(i=>APERTURA.items[i].t).join("; ") || "(sin apertura)";
+    burbuja("Usted", "Apertura: " + texto + ". " + APERTURA.calentamiento, "e");
+    rapSet(buenos*3 - malos*8 - (buenos<3 ? 8 : 0));
+    let fb = `Apertura: ${buenos} de 5 elementos necesarios` + (malos ? `; ${malos} elemento(s) que no conviene incluir.` : ".");
+    sel.filter(i=>!APERTURA.items[i].ok).forEach(i=>fb += " " + APERTURA.items[i].fb);
+    if(buenos<3) fb += " Con menos de tres elementos, el informante no sabe para qué es la conversación ni qué pasará con lo que diga.";
+    burbuja("", fb, "sys");
+    let r = inf().calent; if(buenos<3) r = recortar(r);
+    if(sel.includes(6)) r = "Bueno, si ya tienen la hipótesis... " + r;
+    burbuja(inf().nombre, r, "r");
+    S.fase = "temas"; S.tema = 0; S.sub = "pregunta"; guardar(); render();
+  }; p.appendChild(b);
+}
+function renderTema(p){
+  const T = inf().temas[S.tema];
+  if(S.sub==="pregunta"){
+    p.innerHTML = `<h4>${T.titulo} <span class="mini">(${OBJ[T.obj]})</span></h4><p class="mini">Elija una pregunta o escriba la suya.</p>`;
+    const orden = [...T.opts.keys()].sort(()=>Math.random()-0.5);
+    orden.forEach(j=>{ const b = document.createElement("button"); b.className = "opcion"; b.textContent = T.opts[j].t; b.onclick = ()=>preguntar(T.opts[j], false); p.appendChild(b); });
+    const d = document.createElement("div"); d.innerHTML = `<p class="mini" style="margin-top:.8rem">O escriba su propia pregunta sobre este tema (clasificador por reglas):</p><textarea class="libre" id="libre" placeholder="Cuénteme la última vez que..."></textarea>`;
+    const b = document.createElement("button"); b.className = "btn light"; b.textContent = "Preguntar con mi texto"; b.onclick = ()=>{
+      const txt = document.getElementById("libre").value.trim(); if(txt.length<4) return;
+      const c = clasificar(txt); let opt = T.opts.find(o=>o.tipo===c.tipo);
+      if(!opt){ const alt = {acusatoria:["inductiva","cerrada"], abstracta:["cerrada","multiple"], multiple:["cerrada","abstracta"], inductiva:["cerrada"]}[c.tipo]||["cerrada"]; for(const a of alt){ opt = T.opts.find(o=>o.tipo===a); if(opt) break; } }
+      preguntar({t:txt, tipo:c.tipo, ep:opt.ep, r:opt.r}, c);
+    }; d.appendChild(b); p.appendChild(d);
+  } else {
+    p.innerHTML = `<h4>Sondeo</h4><p class="mini">El informante respondió. ¿Cómo profundiza?</p>`;
+    const orden = [...T.sondeos.keys()].sort(()=>Math.random()-0.5);
+    const ultima = S.preguntas[S.preguntas.length-1];
+    orden.forEach(j=>{ const b = document.createElement("button"); b.className = "opcion"; let tx = T.sondeos[j].t;
+      if(ultima && ultima.tipo!=="buena" && /^'[^']+':\s*/.test(tx)){ tx = tx.replace(/^'[^']+':\s*/, ""); tx = tx.charAt(0).toUpperCase() + tx.slice(1); }
+      b.textContent = tx; b.onclick = ()=>sondear(Object.assign({}, T.sondeos[j], {t:tx})); p.appendChild(b); });
+  }
+}
+function preguntar(opt, libre){
+  const T = inf().temas[S.tema];
+  burbuja("Usted", opt.t, "e"); if(libre) S.libre++;
+  S.preguntas.push({tema:T.id, tipo:opt.tipo, t:opt.t, libre:!!libre});
+  rapSet(RAP_Q[opt.tipo]);
+  let r = opt.r; let fb = `<b>Pregunta: ${TIPOS[opt.tipo]}.</b> `;
+  if(libre) fb += "Lectura del clasificador: " + libre.razones.join(" ") + " ";
+  if(opt.tipo==="buena"){ if(cauteloso()) { r = recortar(r); fb += "La pregunta es buena, pero la disposición del informante está baja: responde con cautela. Un sondeo de ejemplo puede recuperar parte del relato."; } else { fb += "Pide descripción antes que valoración; el informante entra en el episodio."; if(opt.ep){ S.episodios[opt.ep]=1; S.objetivos[T.obj]=1; } } }
+  else if(opt.tipo==="cerrada") fb += "Produce una respuesta de una línea; el peso lo pone usted. Reescritura: pedir cómo ocurre o la última vez.";
+  else if(opt.tipo==="inductiva") fb += "Contiene su hipótesis: el informante asiente para no discutir y usted no aprende nada. Baja la disposición.";
+  else if(opt.tipo==="multiple") fb += "Dos o tres preguntas en una: el informante responde la última o la más cómoda.";
+  else if(opt.tipo==="acusatoria") fb += "'¿Por qué no...?' pide justificación y activa la defensa. La disposición cae fuerte.";
+  else if(opt.tipo==="abstracta") fb += "Jerga o abstracción: el informante traduce como puede y produce discurso oficial.";
+  burbuja("", fb, "sys"); burbuja(inf().nombre, r, "r");
+  S.sub = "sondeo"; guardar(); render();
+}
+function sondear(sd){
+  const T = inf().temas[S.tema];
+  burbuja("Usted", sd.t, "e"); S.sondeos.push({tema:T.id, tipo:sd.tipo, t:sd.t}); rapSet(RAP_S[sd.tipo]);
+  let r = sd.r; let fb = "";
+  if(sd.tipo==="buena"){ fb = "<b>Sondeo de ejemplo, secuencia o especificidad.</b> Convierte la opinión en episodio con fecha, actores y consecuencias."; if(cauteloso()) { r = recortar(r); fb += " Con la disposición baja, el relato llega recortado."; } else if(sd.ep){ S.episodios[sd.ep]=1; S.objetivos[T.obj]=1; } }
+  else if(sd.tipo==="neutra") fb = "<b>Sondeo neutro ('cuénteme más').</b> No daña, pero no orienta hacia el episodio; conviene seguirlo con uno de especificidad.";
+  else if(sd.tipo==="mala") fb = "<b>No es un sondeo: contiene su hipótesis o un juicio.</b> El informante se cierra y usted pierde el episodio.";
+  else if(sd.tipo==="saltar") fb = "<b>Pasó al siguiente tema sin sondear.</b> Lo que el informante iba a contar se perdió; en una entrevista real se recupera volviendo atrás ('antes mencionó...').";
+  burbuja("", fb, "sys"); burbuja(inf().nombre, r, "r");
+  if(T.evento && !S.eventos[T.evento]){ S.fase = "evento"; S.eventoActual = T.evento; guardar(); render(); return; }
+  avanzar();
+}
+function avanzar(){
+  S.tema++; S.sub = "pregunta";
+  if(S.tema >= inf().temas.length){ S.fase = "cierre"; }
+  guardar(); render();
+}
+function renderEvento(p){
+  const ev = S.eventoActual==="opinion" ? inf().evento_opinion : inf().evento_confid;
+  burbuja("", ev.intro, "sys"); pintarChat();
+  p.innerHTML = `<h4>Situación</h4><p>${ev.intro}</p>`;
+  ev.opts.forEach(o=>{ const b = document.createElement("button"); b.className = "opcion"; b.textContent = o.t; b.onclick = ()=>{
+    burbuja("Usted", o.t, "e"); S.eventos[S.eventoActual] = o.g; rapSet(o.g===2 ? 6 : (o.g===1 ? 0 : -12));
+    burbuja("", `<b>${o.g===2 ? "Defendible" : (o.g===1 ? "Aceptable, con matices" : "Débil")}.</b> ${o.fb}`, "sys"); burbuja(inf().nombre, o.r, "r");
+    if(S.eventoActual==="confid" && o.g>=1 && !cauteloso()){ S.episodios["oferta"]=1; S.objetivos["OE1"]=1; }
+    S.fase = "temas"; avanzar();
+  }; p.appendChild(b); });
+}
+function renderCierre(p){
+  p.innerHTML = `<h4>Cierre: marque lo que va a hacer</h4>`;
+  CIERRE.items.forEach((it,i)=>{ const l = document.createElement("label"); l.className = "opcion"; l.innerHTML = `<input type="checkbox" data-i="${i}"> ${it.t}`; p.appendChild(l); });
+  const b = document.createElement("button"); b.className = "btn"; b.textContent = "Terminar la entrevista"; b.onclick = ()=>{
+    const sel = [...p.querySelectorAll("input:checked")].map(x=>+x.dataset.i); S.cierre = sel;
+    burbuja("Usted", "Cierre: " + (sel.map(i=>CIERRE.items[i].t).join("; ") || "(sin cierre)"), "e");
+    const buenos = CIERRE.items.filter((it,i)=>it.ok && sel.includes(i)).length;
+    let r = buenos>=3 ? "Gracias a usted. Me sirvió decirlo en voz alta. Si sirve para que algo cambie, avíseme." : "Ok. Bueno, eso. Gracias.";
+    if(sel.includes(4)) r = "¿Ya saben lo que van a concluir? Entonces para qué me preguntaron. " + r;
+    burbuja(inf().nombre, r, "r"); S.fase = "fin"; guardar(); render(); ir(2);
+  }; p.appendChild(b);
+}
+
+// ===================== INFORME =====================
+function pct(a,b){ return b ? Math.round(100*a/b) : 0; }
+function nivel(x){ return x>=80 ? "Logrado" : (x>=55 ? "Parcial" : "Insuficiente"); }
+function informe(){
+  if(!S || S.fase!=="fin") { document.getElementById("informe").innerHTML = "<p>Aún no hay una entrevista terminada.</p>"; return; }
+  const I = inf(); const nq = S.preguntas.length;
+  const porTipo = {}; S.preguntas.forEach(q=>porTipo[q.tipo]=(porTipo[q.tipo]||0)+1);
+  const qb = porTipo.buena||0; const sb = S.sondeos.filter(s=>s.tipo==="buena").length, sn = S.sondeos.filter(s=>s.tipo==="neutra").length, sm = S.sondeos.filter(s=>s.tipo==="mala").length, ss = S.sondeos.filter(s=>s.tipo==="saltar").length;
+  const apB = APERTURA.items.filter((it,i)=>it.ok && S.apertura.includes(i)).length, apM = APERTURA.items.filter((it,i)=>!it.ok && S.apertura.includes(i)).length;
+  const ciB = CIERRE.items.filter((it,i)=>it.ok && S.cierre.includes(i)).length, ciM = CIERRE.items.filter((it,i)=>!it.ok && S.cierre.includes(i)).length;
+  const evs = Object.values(S.eventos); const evScore = evs.length ? Math.round(100*evs.reduce((a,b)=>a+b,0)/(2*evs.length)) : 100;
+  const pQ = pct(qb, nq), pS = pct(sb + 0.5*sn, S.sondeos.length);
+  const pC = Math.max(0, Math.round((pct(apB,5)*0.35 + pct(ciB,4)*0.25 + evScore*0.4) - apM*10 - ciM*10));
+  const eps = Object.keys(I.episodios); const ne = eps.filter(e=>S.episodios[e]).length; const pE = pct(ne, eps.length);
+  const objs = I.obj; const no = objs.filter(o=>S.objetivos[o]).length;
+  let h = `<div class="caja"><strong>Entrevista a ${I.nombre} (${I.rol}).</strong> ${nq} preguntas (${S.libre} escritas por usted), ${S.sondeos.length} sondeos, disposición final ${S.rap}/100. Episodios obtenidos: ${ne} de ${eps.length}. Objetivos cubiertos: ${no} de ${objs.length}.</div>`;
+  h += `<h3>Resultado por criterio (vocabulario de la rúbrica del Control 4)</h3><table><tr><th>Criterio</th><th>Resultado</th><th>Nivel</th><th>Comentario</th></tr>`;
+  h += `<tr><td>Calidad de las preguntas</td><td>${qb} de ${nq} abiertas o de incidente crítico (${pQ}%)</td><td>${nivel(pQ)}</td><td>${Object.entries(porTipo).filter(([k])=>k!=="buena").map(([k,v])=>`${v} ${TIPOS[k].toLowerCase()}`).join(", ") || "Ninguna pregunta mal formulada."}</td></tr>`;
+  h += `<tr><td>Calidad de los sondeos</td><td>${sb} de ejemplo, secuencia o especificidad; ${sn} neutras; ${sm} con hipótesis; ${ss} temas sin sondear (${pS}%)</td><td>${nivel(pS)}</td><td>${sm ? "Un sondeo que contiene su hipótesis deja de ser sondeo. " : ""}${ss ? "Cada tema sin sondear es un episodio perdido. " : ""}${sn>2 ? "'Cuénteme más' no daña, pero rara vez produce el dato: siga con especificidad." : ""}</td></tr>`;
+  h += `<tr><td>Conducción: apertura, situaciones, cierre</td><td>Apertura ${apB}/5${apM ? " (+" + apM + " indebidos)" : ""}; situaciones ${evScore}%; cierre ${ciB}/4${ciM ? " (+" + ciM + " indebidos)" : ""} (${pC}%)</td><td>${nivel(pC)}</td><td>${apB<5 ? "Faltó en la apertura: " + APERTURA.items.filter((it,i)=>it.ok && !S.apertura.includes(i)).map(it=>it.t.toLowerCase()).join("; ") + ". " : "Apertura completa. "}${ciB<4 ? "Faltó en el cierre: " + CIERRE.items.filter((it,i)=>it.ok && !S.cierre.includes(i)).map(it=>it.t.toLowerCase()).join("; ") + "." : "Cierre completo."}</td></tr>`;
+  h += `<tr><td>Cobertura: episodios y objetivos</td><td>${ne} de ${eps.length} episodios; ${no} de ${objs.length} objetivos (${pE}%)</td><td>${nivel(pE)}</td><td>Los episodios son lo que se puede contrastar con registros y codificar; las opiniones no.</td></tr></table>`;
+  h += `<h3>Episodios</h3><table><tr><th>Episodio</th><th>Estado</th></tr>` + eps.map(e=>`<tr><td>${I.episodios[e]}</td><td>${S.episodios[e] ? "Obtenido" : "<span style='color:var(--rojo)'>Perdido</span>: revise qué pregunta o sondeo del tema correspondiente lo habría producido"}</td></tr>`).join("") + `</table>`;
+  h += `<h3>Objetivos del diseño</h3><ul>` + objs.map(o=>`<li>${OBJ[o]}: ${S.objetivos[o] ? "cubierto con al menos un episodio" : "<span style='color:var(--rojo)'>sin episodio</span>"}</li>`).join("") + `</ul>`;
+  h += `<h3>Tres cosas para la próxima entrevista</h3><ul>`;
+  const tips = [];
+  if(pQ<80) tips.push("Describir antes de valorar: 'cuénteme la última vez que...' en lugar de '¿cree que...?' o '¿no le parece que...?'.");
+  if(sm||ss) tips.push("Sondear con las palabras del informante y sin hipótesis: ejemplo, secuencia ('¿y qué pasó después?'), especificidad ('¿cuántas veces?').");
+  if(apB<5||apM) tips.push("La apertura dice propósito, quién encargó, destino del informe, confidencialidad con límites y permiso para grabar; nunca promete anonimato total ni cuenta la hipótesis.");
+  if(evScore<100) tips.push("Ante 'y usted qué opina' o '¿esto queda entre nosotros?', devolver la pregunta o recordar los términos acordados; no opinar ni prometer lo que no se puede cumplir.");
+  if(S.rap<50) tips.push("La disposición terminó baja: cada pregunta inductiva o acusatoria cuesta episodios en los temas siguientes, no solo en el actual.");
+  if(!tips.length) tips.push("Entrevista bien conducida. Siguiente paso: codificar la transcripción con la matriz del Control 4 y comparar sus categorías con las de la transcripción E07.");
+  h += tips.slice(0,3).map(t=>`<li>${t}</li>`).join("") + `</ul>`;
+  document.getElementById("informe").innerHTML = h;
+}
+function descargar(){
+  if(!S) return; const I = inf();
+  const txt = [`Transcripción simulada · entrevista a ${I.nombre} (${I.rol}) · TechNova · generada en el simulador de la sesión 4`, "E: entrevistador/a (usted) · R: informante · [sys]: retroalimentación del simulador", ""].concat(S.log.map(b=>b.c==="sys" ? "[sys] " + b.t.replace(/<[^>]+>/g,"") : (b.c==="e" ? "E: " : "R: ") + b.t.replace(/<[^>]+>/g,""))).join("\n\n");
+  const a = document.createElement("a"); a.href = "data:text/plain;charset=utf-8," + encodeURIComponent(txt); a.download = `Transcripcion_simulada_${I.nombre}.txt`; a.click();
+}
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+if(S){ if(S.fase==="fin") ir(2); else { ir(1); render(); } }
+</script>
+</body>
+</html>

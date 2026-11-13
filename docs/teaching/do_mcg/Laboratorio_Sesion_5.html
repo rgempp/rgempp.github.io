@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de la sesión 5 · Análisis psicométrico · Diagnóstico Organizacional MCG UDP</title>
+<meta name="author" content="René Gempp">
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  .pregunta .opc.parcial{background:var(--ambar-claro);border-color:var(--ambar)}
+  .nivel-tag{display:inline-block;font-weight:700;margin-right:.3rem}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Sesión 5</p>
+  <h1>Análisis psicométrico: ¿se pueden sumar estos ítems y sirve el índice para el tablero?</h1>
+  <p class="meta">Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · Sesión 5 (viernes 20-11-2026) · Acompaña al apunte A5 y a la guía A0<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Seis estaciones que siguen los pasos del apunte A5. Cada una tiene algo que manipular o clasificar y preguntas con retroalimentación. Los datos son los de la sesión: la encuesta de clima de la demostración (625 personas, 26 ítems) y el cuestionario de ambiente laboral del Control 5 (800 personas, 33 ítems). Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. No hay registro ni nota.</p>
+  <div class="grid g3">
+    <div class="caja"><strong>1. Descriptivos.</strong> Reconocer efecto techo, ítems informativos e ítems inversos aparentes.</div>
+    <div class="caja"><strong>2. Dimensionalidad.</strong> Leer bloques de correlaciones y tomar las decisiones del análisis factorial.</div>
+    <div class="caja"><strong>3. Alfa.</strong> Simulador: cómo cambia el alfa con el número de ítems y su correlación promedio, y qué no mide.</div>
+    <div class="caja"><strong>4. Decidir ítems.</strong> Mantener, eliminar, reasignar o reescribir con casos reales de la sesión.</div>
+    <div class="caja"><strong>5. Agregación.</strong> Simulador de acuerdo intragrupo (rWG) y regla de n mínimo por unidad.</div>
+    <div class="caja"><strong>6. Del índice al KPI.</strong> Dictaminar la aptitud de cuatro escalas para el tablero.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 35 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en el apunte A5.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Descriptivos de ítems</h2>
+  <p>Antes de correlacionar o sumar, cada ítem se mira por separado: ¿usa varias alternativas?, ¿tiene techo?, ¿su texto y sus datos van en la misma dirección? Clasifica estos ítems reales de la encuesta de clima según sus descriptivos.</p>
+  <h3>A. Clasifica cada ítem</h3>
+  <div id="c1"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Dimensionalidad</h2>
+  <p>La pregunta del paso 2 es si los datos reproducen las dimensiones que el cuestionario prometía. Primero se lee la matriz de correlaciones por bloques; después el análisis factorial exploratorio formaliza la lectura.</p>
+  <h3>A. Lee el patrón de correlaciones</h3>
+  <p class="mini">Cada enunciado describe lo que se ve en el mapa de calor para un conjunto de ítems. Indica qué significa.</p>
+  <div id="c2"></div>
+  <h3>B. Las decisiones del análisis factorial</h3>
+  <div id="q2"></div>
+</section>
+
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Alfa de Cronbach: qué mueve el coeficiente</h2>
+  <p>En su forma estandarizada, el alfa depende solo de dos cosas: el número de ítems (k) y su correlación promedio (r̄). Mueve los deslizadores y observa el resultado.</p>
+  <div class="caja">
+    <div class="slider">Número de ítems (k): <span class="v" id="v_k">4</span><input type="range" id="s_k" min="2" max="20" value="4"></div>
+    <div class="slider">Correlación promedio entre ítems (r̄): <span class="v" id="v_r">0,50</span><input type="range" id="s_r" min="5" max="90" value="50" step="5"></div>
+    <p style="font-family:system-ui,sans-serif;font-size:1.05rem;margin:.6rem 0 .3rem">α estandarizado = <strong id="v_alpha" style="color:var(--rojo)">.80</strong> &nbsp;·&nbsp; <span id="v_lect" class="mini"></span></p>
+    <p class="mini">Con DE = 0,8 en una escala de 1 a 5, el error estándar de medición sería <strong id="v_eem">0,36</strong> y el intervalo del 95% de una persona, <strong id="v_ic">±0,70</strong> puntos.</p>
+  </div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q3"></div>
+</section>
+
+<section class="estacion" id="e4">
+  <h2>Estación 4 · Decidir sobre ítems</h2>
+  <p>Cada ítem tiene cuatro salidas: mantener, eliminar, reasignar o reescribir. La decisión combina la evidencia estadística con el contenido del ítem y el uso del indicador. Los casos son reales y vienen de los dos cuestionarios de la sesión.</p>
+  <div id="g4"></div>
+</section>
+
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Agregar por unidad</h2>
+  <p>La media de una unidad representa un clima compartido solo si hay acuerdo (rWG), tamaño suficiente y anonimato. El simulador calcula el rWG de una unidad a partir de cómo se reparten sus respuestas.</p>
+  <div class="caja">
+    <p class="mini">Reparte 20 respuestas de una unidad entre las cinco alternativas (1 = muy en desacuerdo … 5 = muy de acuerdo). El total se ajusta solo.</p>
+    <div class="grid g5">
+      <div class="slider">1: <span class="v" id="v_f1">0</span><input type="range" id="s_f1" min="0" max="20" value="0"></div>
+      <div class="slider">2: <span class="v" id="v_f2">1</span><input type="range" id="s_f2" min="0" max="20" value="1"></div>
+      <div class="slider">3: <span class="v" id="v_f3">3</span><input type="range" id="s_f3" min="0" max="20" value="3"></div>
+      <div class="slider">4: <span class="v" id="v_f4">12</span><input type="range" id="s_f4" min="0" max="20" value="12"></div>
+      <div class="slider">5: <span class="v" id="v_f5">4</span><input type="range" id="s_f5" min="0" max="20" value="4"></div>
+    </div>
+    <p style="font-family:system-ui,sans-serif;margin:.6rem 0 .2rem">n = <strong id="v_n">20</strong> · media = <strong id="v_m">3,95</strong> · DE = <strong id="v_sd">0,69</strong> · rWG = <strong id="v_rwg" style="color:var(--rojo)">.76</strong></p>
+    <p class="mini" id="v_lec5"></p>
+  </div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q5"></div>
+</section>
+
+<section class="estacion" id="e6">
+  <h2>Estación 6 · Del índice psicométrico al KPI</h2>
+  <p>Un índice entra a un tablero cuando es unidimensional, fiable, capaz de variar, agregable en las unidades que se reportarán y comparable entre olas. Con los datos de cada escala, elige el dictamen más defendible.</p>
+  <div id="g6"></div>
+</section>
+
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div class="caja">
+    <strong>Lo que deberías poder hacer ahora.</strong>
+    <ul>
+      <li>Identificar en una tabla de descriptivos los ítems con techo, los informativos y los que piden verificar su dirección.</li>
+      <li>Leer una matriz de correlaciones por bloques y una tabla de cargas con corte .30, y comparar la solución con el plan de dimensiones.</li>
+      <li>Explicar por qué el alfa depende de k y r̄, y por qué no indica unidimensionalidad.</li>
+      <li>Decidir sobre un ítem combinando evidencia y contenido, y registrar la decisión.</li>
+      <li>Exigir n, media y acuerdo en cualquier tabla por unidad, y aplicar la regla de n mínimo.</li>
+      <li>Dictaminar si una escala es apta para seguimiento, solo para diagnóstico o no apta.</li>
+    </ul>
+  </div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas. El avance se guarda solo en este navegador.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y NAVEGACIÓN (mismo patrón que lab_personalidad) =====================
+const CLAVE = "lab_do_s5_v1";
+const NOMBRES = ["Inicio","1 · Descriptivos","2 · Dimensionalidad","3 · Alfa","4 · Decidir ítems","5 · Agregación","6 · Del índice al KPI","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+const estado = { hechas: {}, resp: {} };
+function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(CLAVE); if(s) Object.assign(estado, JSON.parse(s)); }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+function pintarNav(){
+  const nav = document.getElementById("nav"); nav.innerHTML = "";
+  NOMBRES.forEach((n,i)=>{ const b = document.createElement("button"); b.textContent = n;
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista");
+    b.onclick = ()=>ir(i); nav.appendChild(b); });
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de ${EST.length}`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa"));
+  document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===NOMBRES.length-1) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem(CLAVE); }catch(e){} location.reload(); }
+
+// ===================== COMPONENTES =====================
+// pregunta(contId, items, estacion): items = [{q, opts:[...], ok: índice, fb: "explicación"}]
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = "";
+  let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.q}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(+s.dataset.j===it.ok ? "correcta" : "incorrecta");
+      d.querySelectorAll(".opc")[it.ok].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb;
+      estado.resp[contId+"_"+k] = +s.dataset.j; guardar();
+      if(hechas===items.length) marcar(estacion);
+    });
+    cont.appendChild(d);
+  });
+}
+// clasificador(contId, cats, items, estacion): items = [{t:"enunciado", c:"categoría correcta", fb:"explicación"}]
+function clasificador(contId, cats, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "clasif";
+    d.innerHTML = `<p class="enun">${it.t}</p><div class="cats">` + cats.map(c=>`<span class="cat" data-c="${c}">${c}</span>`).join("") + `</div><div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".cat").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(s.dataset.c===it.c ? "correcta" : "incorrecta");
+      d.querySelector(`.cat[data-c="${it.c}"]`).classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb; guardar();
+      if(hechas===items.length) marcar(estacion);
+    });
+    cont.appendChild(d);
+  });
+}
+// graduada(contId, items, estacion, etiquetas): items = [{t, opts:[{o, g:2|1|0, fb}]}]
+// Para ejercicios de solución abierta: 2 = defendible, 1 = aceptable con matices, 0 = débil. Muestra la retroalimentación
+// de la opción elegida y, si no fue la mejor, la de la opción más defendible. 'etiquetas' permite renombrar los niveles.
+const NIVEL = {2:"Defendible", 1:"Aceptable, con matices", 0:"Débil"};
+function graduada(contId, items, estacion, etiquetas){
+  const L = etiquetas || NIVEL;
+  const cont = document.getElementById(contId); cont.innerHTML = ""; let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.t}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o.o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      const j = +s.dataset.j, o = it.opts[j];
+      s.classList.add(o.g===2 ? "correcta" : (o.g===1 ? "parcial" : "incorrecta"));
+      const best = it.opts.findIndex(x=>x.g===2); if(best>=0) d.querySelectorAll(".opc")[best].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block";
+      f.innerHTML = `<span class="nivel-tag">${L[o.g]}.</span>${o.fb}` + (o.g<2 && best>=0 ? `<br><b>Opción más defendible: ${it.opts[best].o}.</b> ${it.opts[best].fb}` : "");
+      estado.resp[contId+"_"+k] = j; guardar();
+      if(hechas===items.length) marcar(estacion);
+    });
+    cont.appendChild(d);
+  });
+}
+function pintarFicha(){
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas: ${k} de ${EST.length}.</strong> ` + (k===EST.length ? "Laboratorio completo." : "Faltan: " + EST.filter(e=>!estado.hechas[e]).map(e=>NOMBRES[e]).join(", ") + ".");
+}
+
+
+// ===================== CONTENIDO =====================
+const C1 = [
+ { t:"CLARORG02 'Tengo claro que el trabajo de mi unidad aporta a los objetivos de XXX': media 4,44, DE 0,69, asimetría −1,8; 96% de acuerdo o muy de acuerdo.", c:"Efecto techo", fb:"Casi toda la varianza está en dos categorías. El ítem es fiable (correlaciona con los suyos), pero no podrá detectar cambios entre olas ni diferencias finas entre unidades." },
+ { t:"CARGTR01 'Dentro de mi jornada puedo cumplir bien con mis tareas': media 3,32, DE 1,27, asimetría −0,4; las cinco categorías con frecuencias altas y 32% en desacuerdo.", c:"Discrimina bien", fb:"Es el ítem con mayor varianza del cuestionario: diferencia cargos y sucursales. Un indicador construido con esta escala sí puede moverse." },
+ { t:"COM03 'En mi sucursal no comunicamos cordialmente': 76% de acuerdo; correlaciona .51 a .70 con los otros ítems de Comunicaciones; ítem-resto .72.", c:"Verificar la dirección", fb:"El texto parece inverso, pero los datos se comportan como un ítem positivo: las personas leyeron 'nos comunicamos'. No se recodifica; se registra el error de tipeo y se corrige en la próxima aplicación." },
+ { t:"SATIS02 'Me gusta el trabajo que hago en XXX': media 4,55, DE 0,68, asimetría −2,0; 95% de acuerdo.", c:"Efecto techo", fb:"Techo severo. En una organización con clima favorable (o con deseabilidad social alta) la satisfacción general suele saturar; el ítem sirve para describir, no para seguir." },
+ { t:"AMBI01 'Contamos con el equipamiento necesario': media 3,12, DE 1,12, asimetría −0,3; 33% en desacuerdo y 46% de acuerdo.", c:"Discrimina bien", fb:"Distribución amplia y centrada. Ambiente físico es una escala que diferencia sucursales y es agregable por sucursal, porque las instalaciones son de la sucursal." },
+ { t:"P33 (Control 5) 'Mi trabajo en XXXXX no se interpone con mis relaciones personales': correlaciona .62 a .72 con P30 a P32; ítem-resto .79.", c:"Verificar la dirección", fb:"Contiene 'no', pero describe un estado positivo (el trabajo no interfiere) y correlaciona positivamente con su escala. No es inverso; recodificarlo lo arruinaría." },
+];
+const Q1 = [
+ { q:"Un ítem tiene 12% de datos perdidos y los demás ítems del cuestionario tienen menos de 2%. ¿Qué indica?", opts:["Nada: 12% está dentro de lo normal", "Que el ítem es sensible o confuso y debe revisarse antes de usarlo", "Que hay que imputar los perdidos con la media del ítem"], ok:1, fb:"Sobre 5% el ítem merece revisión; una tasa de perdidos muy distinta a la de sus vecinos señala un problema del ítem (contenido sensible, redacción confusa, ubicación). Imputar la media oculta el problema y reduce la varianza." },
+ { q:"¿Por qué los descriptivos van antes que la fiabilidad?", opts:["Porque JASP los calcula más rápido", "Porque un ítem con techo o sin recodificar distorsiona las correlaciones y, con ellas, todo lo que sigue", "Porque la fiabilidad no se puede calcular sin la media"], ok:1, fb:"La dimensionalidad y la fiabilidad se basan en correlaciones; un inverso sin recodificar las vuelve negativas y un ítem sin varianza las vuelve pequeñas. Lo que no se detecta en el paso 1 contamina los pasos 2 y 3." },
+];
+const C2 = [
+ { t:"Los cuatro ítems de Carga de trabajo correlacionan entre sí .60 a .80 y con los ítems de otras escalas .20 a .45.", c:"Escala nítida", fb:"Intraescala alta y mayor que la interescala: el bloque se ve como un cuadrado rojo intenso en el mapa de calor. La escala funciona como se diseñó." },
+ { t:"Los cinco ítems de Identidad y los cuatro de Satisfacción correlacionan entre sí (.39 a .77) tanto como dentro de cada escala; las puntuaciones de ambas correlacionan .80.", c:"Dos escalas fundidas", fb:"Un solo bloque grande en lugar de dos. Empíricamente son un constructo; la decisión (fusionar o declarar la distinción como conceptual) se toma por uso, no por estadística." },
+ { t:"SATIS04 ('existe un buen ambiente de trabajo') correlaciona .38 a .47 con los ítems de Comunicaciones y .46 a .59 con los otros de Satisfacción.", c:"Ítem mal ubicado o cruzado", fb:"Correlaciona casi igual con dos escalas: carga cruzada. Su texto habla del clima general, no de la satisfacción personal; candidato a reasignar o reescribir." },
+ { t:"En el Control 5, los ocho ítems de Autonomía y Seguridad tienen correlación intraescala mínima .27 y media .41; P14 a P17 correlacionan entre sí .41 a .53 y P18 a P21 entre sí .42 a .64, pero cruzados solo .27 a .43.", c:"Dos escalas fundidas", fb:"El bloque de ocho se ve como dos bloques de cuatro con una zona pálida entre ellos: dos constructos (autonomía en el trabajo y seguridad del empleo) que el diseñador juntó. El alfa de .85 no lo delata; la matriz sí." },
+];
+const Q2 = [
+ { q:"¿Qué criterio para el número de factores se recomienda como principal?", opts:["Autovalor mayor que 1 (Kaiser)", "El número que indique el gráfico de sedimentación", "El análisis paralelo, contrastado siempre con el número previsto en el plan"], ok:2, fb:"El análisis paralelo retiene solo los factores que superan a los de datos aleatorios del mismo tamaño (Horn, 1965). Kaiser sobreestima con muchos ítems y la sedimentación es subjetiva; ambos sirven de apoyo. Y la comparación con el plan es la pregunta real." },
+ { q:"¿Por qué se recomienda rotación oblicua (oblimin) y no varimax en encuestas de clima?", opts:["Porque oblimin produce cargas más altas", "Porque las dimensiones del clima correlacionan entre sí y varimax las fuerza a ser independientes", "Porque varimax no está disponible en JASP"], ok:1, fb:"Liderazgo, comunicación y claridad correlacionan .4 a .6 entre sí. Una rotación ortogonal reparte artificialmente las cargas para fingir independencia; la oblicua deja que los factores correlacionen y reporta esa correlación." },
+ { q:"En el Control 5, Kaiser sugiere 8 factores y el análisis paralelo 7; la dimensión propuesta era 7. ¿Qué se hace?", opts:["Se informa 7 y se cierra el tema: el análisis paralelo manda", "Se examinan ambas soluciones y se decide por el contenido de los ítems del octavo factor", "Se informa 8 porque es el número mayor"], ok:1, fb:"El octavo factor separa Autonomía (P14 a P17) de Seguridad (P18 a P21), dos constructos con sentido propio y fiabilidad aceptable cada uno. Cuando los criterios discrepan, decide el contenido; el informe declara ambas soluciones." },
+ { q:"Un ítem carga .45 en su factor y .35 en otro. ¿Qué es?", opts:["Un ítem bien ubicado: .45 supera .30", "Una carga cruzada: las dos superan .30 y difieren menos de .20; se decide por contenido", "Un ítem que debe eliminarse de inmediato"], ok:1, fb:"Es exactamente el caso de SATIS04. La estadística muestra ambigüedad; el texto dice a qué dimensión pertenece. Las opciones son reasignar o reescribir, no eliminar automáticamente." },
+];
+const Q3 = [
+ { q:"Dos escalas tienen alfa .80: una con 4 ítems y otra con 12. ¿Qué se puede inferir?", opts:["Que son igual de buenas", "Que la de 12 ítems tiene una correlación promedio mucho menor (cerca de .25 frente a .50) y probablemente cubre más facetas con ítems menos homogéneos", "Que la de 4 ítems es peor porque tiene menos ítems"], ok:1, fb:"Compruébalo en el simulador: k = 4 y r̄ = .50 dan .80; k = 12 necesita solo r̄ ≈ .25 para el mismo alfa. El alfa no distingue entre pocos ítems muy coherentes y muchos ítems mediocres." },
+ { q:"Una escala de 8 ítems tiene alfa .85 y el análisis factorial muestra dos factores de 4 ítems correlacionados .45. ¿Qué concluyes?", opts:["Que es unidimensional, porque el alfa es alto", "Que el alfa es correcto como número pero la suma mezcla dos constructos; hay que separar la escala", "Que el análisis factorial está mal porque contradice al alfa"], ok:1, fb:"Es la dimensión Autonomía y Seguridad del Control 5. El alfa mide consistencia de una suma que ya se decidió hacer; la dimensionalidad decide si la suma tiene sentido. Separadas: Autonomía .77, Seguridad .82." },
+ { q:"Alfa .96 en una escala de 4 ítems de remuneración, con dos ítems que correlacionan .90 entre sí. ¿Qué sugiere?", opts:["Una escala excelente", "Redundancia: dos ítems dicen lo mismo y la escala cubre poco del constructo", "Un error de cálculo"], ok:1, fb:"Sobre .95 conviene sospechar ítems repetidos con otras palabras. La fiabilidad sube, la cobertura del constructo baja. Eliminar uno de los dos no pierde nada." },
+ { q:"¿Cuándo omega y alfa difieren de forma apreciable?", opts:["Cuando la muestra es pequeña", "Cuando las cargas de los ítems son muy desiguales o los errores correlacionan", "Nunca: son el mismo coeficiente"], ok:1, fb:"El alfa supone que todos los ítems miden el constructo con la misma intensidad; omega no. En escalas homogéneas coinciden (en la demostración, .85 y .85); si difieren, omega es la estimación defendible y la diferencia es información." },
+];
+const G4 = [
+ { t:"SATIS04 'En general, en XXX existe un buen ambiente de trabajo'. Carga .45 en Satisfacción y .35 en Comunicaciones; ítem-resto .58 (el más bajo de la escala); sin él, el alfa de Satisfacción sube de .852 a .884.", opts:[
+   {o:"Eliminarlo: baja el alfa y cruza", g:1, fb:"Es estadísticamente defendible, pero desaprovecha un ítem que mide algo real (clima general) y deja Satisfacción con 3 ítems."},
+   {o:"Reasignarlo a una medida de clima general (o reescribirlo para que hable de la satisfacción propia) y recalcular Satisfacción con 3 ítems", g:2, fb:"Combina dato y contenido: el texto describe el ambiente, no la satisfacción personal; la carga cruzada lo confirma. La decisión queda registrada para la próxima ola."},
+   {o:"Mantenerlo tal cual porque carga sobre .30 en su factor", g:0, fb:"Ignora la carga cruzada y el contenido. Un índice de satisfacción que incluye un ítem de clima general se interpreta mal."}]},
+ { t:"COM03 'En mi sucursal no comunicamos cordialmente'. 76% de acuerdo; correlaciones positivas .51 a .70 con su escala; ítem-resto .72.", opts:[
+   {o:"Recodificarlo (6 − x) porque el texto es negativo", g:0, fb:"Produciría una correlación de −.72 con su escala y hundiría el alfa de .85 a cerca de .60. Los datos muestran que nadie lo leyó como negativo."},
+   {o:"Mantenerlo sin recodificar, registrar el error de tipeo y corregir el texto en la próxima aplicación", g:2, fb:"Los datos muestran cómo lo leyeron las personas ('nos comunicamos'); el texto muestra lo que se quiso preguntar. El informe dice ambas cosas y conserva el mejor ítem de la escala."},
+   {o:"Eliminarlo por ambiguo", g:1, fb:"Prudente pero costoso: es el ítem con mayor ítem-resto de Comunicaciones y los datos no muestran ambigüedad alguna en cómo se respondió."}]},
+ { t:"P14 (Control 5) 'Los colaboradores(as) de XXXXX sentimos que la organización confía en nosotros'. Carga .34 en Autonomía (solución de 8 factores) y correlaciona .39 a .43 con los ítems de Seguridad.", opts:[
+   {o:"Eliminarlo: es el ítem más débil del cuestionario", g:1, fb:"Defendible como medida de corto plazo, pero el problema es de contenido: el ítem mide confianza organizacional, que no es ni autonomía ni seguridad."},
+   {o:"Reescribirlo o reasignarlo a una medida de confianza; en el corto plazo, mantenerlo en Autonomía con advertencia explícita", g:2, fb:"Reconoce que el ítem es ambiguo por diseño (referente 'nosotros', constructo distinto) y propone la corrección para la próxima ola sin perder la información actual."},
+   {o:"Mantenerlo en la escala conjunta de 8 ítems porque el alfa total es .85", g:0, fb:"Repite el error central del control: el alfa de la escala conjunta no dice nada sobre si P14 pertenece a ella."}]},
+ { t:"P06 y P07 (Control 5), ambos sobre la remuneración comparada con otras organizaciones, correlacionan .90 entre sí; el alfa de Remuneración es .95 y bajaría a .93 sin uno de ellos.", opts:[
+   {o:"Eliminar uno en la próxima aplicación y señalar la redundancia; mantener ambos en esta ola", g:2, fb:"Dos ítems casi idénticos no agregan información y acortan el cuestionario sin costo. La fiabilidad apenas cambia y la cobertura no se resiente."},
+   {o:"Mantener ambos para no bajar el alfa", g:0, fb:"Optimiza el número equivocado: .93 sigue siendo muy alto y el cuestionario pierde un ítem redundante, no uno informativo."},
+   {o:"Eliminar ambos porque están repetidos", g:1, fb:"Exagera: uno de los dos aporta la comparación externa, que es una faceta legítima de la remuneración percibida."}]},
+];
+const Q5 = [
+ { q:"Una sucursal de 8 personas tiene la media de liderazgo más baja de la organización. ¿Qué regla de reporte se aplica?", opts:["Se reporta destacada en rojo: es la peor", "No se reporta por separado: n bajo 10, media inestable y anonimato comprometido; se fusiona con una unidad afín o se reporta al nivel superior", "Se reporta solo si el rWG es alto"], ok:1, fb:"Con ocho personas y un jefe que recibe el informe, cualquier respuesta extrema es identificable y la media cambia con una sola persona. La regla de n mínimo protege a los respondientes y al indicador." },
+ { q:"En el Control 5, el rWG de Liderazgo fue inferior a .70 en 18 de 46 sucursales. ¿La interpretación más plausible?", opts:["El cuestionario de liderazgo es malo", "El liderazgo es del jefe directo y cada sucursal tiene varios jefes: el nivel de agregación correcto es el equipo, no la sucursal", "Las personas respondieron al azar"], ok:1, fb:"El acuerdo depende del referente del ítem ('mi jefe directo') y del nivel al que opera la variable. Agregar por la unidad equivocada produce medias que no describen a nadie. Lo mismo ocurrió con Carga de trabajo en la demostración, que depende del cargo." },
+ { q:"¿Qué tres columnas debe tener toda tabla de resultados por unidad?", opts:["Media, mínimo y máximo", "n, media y una medida de acuerdo (rWG o DE)", "Media, meta y semáforo"], ok:1, fb:"Sin el n no se sabe si la media es estable ni si el anonimato se respeta; sin el acuerdo no se sabe si la media representa a alguien. Un tablero que solo muestra medias por unidad esconde las dos columnas que dicen si la media significa algo." },
+];
+const G6 = [
+ { t:"Carga de trabajo (demostración): 4 ítems, un factor limpio, alfa .90, omega .91, media 3,17, DE 1,06, sin techo; rWG bajo .70 en 28 de 32 sucursales pero el acuerdo es alto dentro de cada cargo.", opts:[
+   {o:"Apta para seguimiento, desagregada por cargo y no por sucursal", g:2, fb:"Cumple dimensionalidad, fiabilidad y capacidad de variar; la agregación falla por sucursal porque la variable depende del cargo. El tablero debe desagregar por la unidad que tiene sentido."},
+   {o:"Apta solo para diagnóstico, por el bajo acuerdo", g:1, fb:"Demasiado conservador: el bajo acuerdo es por sucursal, no por cargo. Cambiar el nivel de desagregación resuelve el problema sin perder el indicador."},
+   {o:"No apta: no se puede agregar", g:0, fb:"Confunde un problema de nivel de agregación con un problema de la escala."}]},
+ { t:"Claridad organizacional (demostración): 4 ítems, un factor, alfa .92, omega .92, media 4,41, DE 0,65; cuatro ítems con más del 92% de acuerdo.", opts:[
+   {o:"Apta para seguimiento: tiene la fiabilidad más alta del cuestionario", g:0, fb:"La fiabilidad alta no compensa el techo: un índice en 4,4 sobre 5 con 95% de acuerdo solo puede bajar y no detectará mejoras. Una meta sobre él es incontrolable."},
+   {o:"Apta solo para diagnóstico: fiable, pero con techo y poca varianza; útil para identificar unidades atípicas, no para metas", g:2, fb:"Es la categoría intermedia en la que caen muchas escalas de clima reales: describen bien una vez, pero no sirven para seguimiento fino."},
+   {o:"No apta: el techo invalida la escala", g:1, fb:"Exagera: la escala mide lo que dice medir; su limitación es de uso, no de validez."}]},
+ { t:"Autonomía y Seguridad (Control 5), tal como la propuso el área de personas: 8 ítems, alfa .85, omega .85; el análisis paralelo con 8 factores y la matriz de correlaciones muestran dos bloques de cuatro ítems (Autonomía .77; Seguridad .82).", opts:[
+   {o:"Apta para seguimiento: alfa y omega superan .80", g:0, fb:"Es el error central del control: un índice que suma dos constructos no indica qué cambiar cuando baja, aunque su alfa sea alto."},
+   {o:"No apta como índice único; separar en Autonomía (apta para diagnóstico, alfa .77) y Seguridad (apta, alfa .82) y rediseñar P14", g:2, fb:"Resuelve el problema de dimensionalidad y dictamina cada parte por sus méritos. La recomendación al área de personas es concreta y accionable."},
+   {o:"Apta solo para diagnóstico, con advertencia", g:1, fb:"Mejor que ignorar el problema, pero mantener un índice bidimensional 'con advertencia' lo deja en el tablero donde alguien le pondrá una meta."}]},
+ { t:"Remuneración (Control 5): 4 ítems, un factor, alfa .95, omega .95, media 2,73, DE amplia; P06 y P07 correlacionan .90; medias en papel 0,23 puntos más altas que en línea.", opts:[
+   {o:"Apta para seguimiento, declarando la redundancia de P06 y P07 y controlando la modalidad de aplicación antes de comparar sucursales", g:2, fb:"Es la escala más informativa del cuestionario (media centrada, mucha varianza); la redundancia se corrige en la próxima ola y el efecto de modalidad se declara, no se ignora."},
+   {o:"No apta: el alfa .95 indica redundancia", g:0, fb:"La redundancia es un defecto menor y corregible; no invalida la escala."},
+   {o:"Apta solo para diagnóstico, por la diferencia entre papel y en línea", g:1, fb:"El efecto de modalidad obliga a controlarlo (comparar dentro de modalidad o ajustar), no a renunciar al seguimiento."}]},
+];
+
+// ===================== SIMULADORES =====================
+function fmt(x,d){ return x.toFixed(d).replace(".",",").replace(/^0,/,"0,"); }
+function alphaSim(){
+  const k=+document.getElementById("s_k").value, r=+document.getElementById("s_r").value/100;
+  const a=k*r/(1+(k-1)*r);
+  document.getElementById("v_k").textContent=k; document.getElementById("v_r").textContent=fmt(r,2);
+  document.getElementById("v_alpha").textContent=a.toFixed(2).replace("0.",".");
+  let l = a<.60?"inaceptable para cualquier uso":a<.70?"cuestionable: solo exploración":a<.80?"aceptable para diagnosticar una vez":a<.90?"buena: permite comparar unidades y olas":a<.95?"muy alta":"sospechosa de redundancia";
+  if(k>=10 && r<=.25 && a>=.75) l += " (y sin embargo los ítems apenas correlacionan: muchos ítems mediocres)";
+  document.getElementById("v_lect").textContent=l;
+  const eem=0.8*Math.sqrt(1-a); document.getElementById("v_eem").textContent=fmt(eem,2); document.getElementById("v_ic").textContent="±"+fmt(1.96*eem,2);
+}
+["s_k","s_r"].forEach(id=>document.getElementById(id).addEventListener("input",alphaSim));
+let lock5=false;
+function rwgSim(e){
+  const ids=["s_f1","s_f2","s_f3","s_f4","s_f5"]; let f=ids.map(i=>+document.getElementById(i).value);
+  let tot=f.reduce((a,b)=>a+b,0);
+  if(e && tot!==20 && !lock5){ lock5=true; const ch=ids.indexOf(e.target.id); let diff=tot-20; const others=[0,1,2,3,4].filter(i=>i!==ch);
+    let guard=0; while(diff!==0 && guard<100){ guard++; for(const i of others){ if(diff>0 && f[i]>0){ f[i]--; diff--; } else if(diff<0){ f[i]++; diff++; } if(diff===0) break; } }
+    ids.forEach((i,k)=>document.getElementById(i).value=f[k]); lock5=false; }
+  tot=f.reduce((a,b)=>a+b,0); ids.forEach((i,k)=>document.getElementById("v_"+i.slice(2)).textContent=f[k]);
+  const m=f.reduce((a,b,i)=>a+b*(i+1),0)/tot; const v=f.reduce((a,b,i)=>a+b*Math.pow(i+1-m,2),0)/(tot-1); const sd=Math.sqrt(v); const rwg=1-v/2;
+  document.getElementById("v_n").textContent=tot; document.getElementById("v_m").textContent=fmt(m,2); document.getElementById("v_sd").textContent=fmt(sd,2);
+  document.getElementById("v_rwg").textContent=(rwg<0?"−":"")+Math.abs(rwg).toFixed(2).replace("0.",".");
+  document.getElementById("v_lec5").textContent = rwg>=.70 ? "Acuerdo suficiente: la media representa un clima compartido (convención rWG ≥ .70). Con n = 20 la unidad es reportable." : (rwg>=.50 ? "Acuerdo moderado: reportar la media con la DE o el rWG al lado; probablemente hay subgrupos." : "Sin acuerdo: la media no describe a nadie. Antes de reportarla, buscar los subgrupos (por cargo, turno, jefe) o explicar con entrevistas.");
+}
+["s_f1","s_f2","s_f3","s_f4","s_f5"].forEach(id=>document.getElementById(id).addEventListener("input",rwgSim));
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1", ["Discrimina bien","Efecto techo","Verificar la dirección"], C1, 1); pregunta("q1", Q1, 1);
+clasificador("c2", ["Escala nítida","Dos escalas fundidas","Ítem mal ubicado o cruzado"], C2, 2); pregunta("q2", Q2, 2);
+alphaSim(); pregunta("q3", Q3, 3);
+graduada("g4", G4, 4);
+rwgSim(); pregunta("q5", Q5, 5);
+graduada("g6", G6, 6);
+</script>
+</body>
+</html>

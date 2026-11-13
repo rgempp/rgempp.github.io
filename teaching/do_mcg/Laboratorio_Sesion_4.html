@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de la sesión 4 · Técnicas cualitativas y codificación · Diagnóstico Organizacional MCG UDP</title>
+<meta name="author" content="René Gempp">
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  .pregunta .opc.parcial{background:var(--ambar-claro);border-color:var(--ambar)}
+  .nivel-tag{display:inline-block;font-weight:700;margin-right:.3rem}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Sesión 4</p>
+  <h1>Preguntar, sondear y codificar: del relato al hallazgo que se puede poner al lado de un indicador</h1>
+  <p class="meta">Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026 · Acompaña a la sesión 4 (viernes 13-11-2026) y al apunte 4<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<!-- ============ ESTACIÓN 0 ============ -->
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Seis estaciones con ejercicios autocorregidos sobre el caso TechNova y la transcripción E07 del Control 4. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. No hay registro ni nota. Varias estaciones usan ejercicios de solución abierta: la retroalimentación distingue la opción más defendible de las aceptables con matices y de las débiles.</p>
+  <div class="grid g3">
+    <div class="caja"><strong>1. Qué técnica.</strong> Elegir entre entrevista, grupo focal, observación, documentos y encuesta según la pregunta diagnóstica.</div>
+    <div class="caja"><strong>2. Preguntas y sondeo.</strong> Reconocer los errores de formulación y elegir el sondeo que profundiza sin dirigir.</div>
+    <div class="caja"><strong>3. A quién y cuántas veces.</strong> Muestreo intencionado, saturación y confidencialidad en una organización de 50 personas.</div>
+    <div class="caja"><strong>4. Codificar.</strong> Códigos descriptivos, in vivo e interpretativos; asignar fragmentos de E07 a categorías con el libro de códigos.</div>
+    <div class="caja"><strong>5. Contar y triangular.</strong> Frecuencia, saliencia, prevalencia; qué le falta a un hallazgo para ser defendible.</div>
+    <div class="caja"><strong>6. Lo cualitativo en el tablero.</strong> Qué hacer ante una desviación; qué puede y qué no puede hacer la IA generativa.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 25 a 30 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en el apunte 4. Para practicar la conducción de una entrevista completa, use el <a href="Simulador_Entrevista_Sesion_4.html">simulador de entrevista de la sesión 4</a>.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<!-- ============ ESTACIÓN 1 ============ -->
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Qué técnica para qué pregunta</h2>
+  <p>Cada técnica produce un tipo de dato y tiene un sesgo principal (apunte 4, C.7). Para cada pregunta diagnóstica de TechNova, elige la técnica que mejor la responde como fuente principal (las otras pueden complementar).</p>
+  <div id="c1"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<!-- ============ ESTACIÓN 2 ============ -->
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Preguntas que funcionan y sondeos que no dirigen</h2>
+  <p>Los errores de redacción de ítems (apunte 3) reaparecen en las preguntas de entrevista, con dos agregados: el "por qué" acusatorio y la hipotética sin ancla. Clasifica cada pregunta.</p>
+  <h3>A. Clasifica el problema de cada pregunta</h3>
+  <div id="c2"></div>
+  <h3>B. Elige la mejor sondeo</h3>
+  <p>La informante acaba de decir algo vago o general. Elige el sondeo que profundiza sin introducir la hipótesis del entrevistador.</p>
+  <div id="g2"></div>
+</section>
+
+<!-- ============ ESTACIÓN 3 ============ -->
+<section class="estacion" id="e3">
+  <h2>Estación 3 · A quién, cuántas veces y con qué promesa</h2>
+  <p>En investigación cualitativa se muestrea para cubrir perspectivas, no para estimar prevalencia; se deja de entrevistar por saturación; y la confidencialidad se promete solo en lo que se puede cumplir.</p>
+  <h3>A. Decisiones de muestreo y saturación</h3>
+  <div id="g3"></div>
+  <h3>B. Qué se puede prometer en TechNova</h3>
+  <div id="c3"></div>
+</section>
+
+<!-- ============ ESTACIÓN 4 ============ -->
+<section class="estacion" id="e4">
+  <h2>Estación 4 · Codificar la transcripción E07</h2>
+  <p>La codificación abierta usa códigos descriptivos pegados al texto, con las palabras de la informante cuando son más precisas (in vivo). Los códigos interpretativos o evaluativos ("liderazgo tóxico") se dejan para después, si es que llegan.</p>
+  <h3>A. Qué tipo de código es</h3>
+  <p>Fragmento de E07: <em>"Yo fui con los dos. Por separado, porque juntos no se puede. Cada uno me explicó por qué tenía razón. Al final hicimos las dos cosas a medias y el release salió con cuatro bugs críticos."</em> Clasifica cada código propuesto.</p>
+  <div id="c4a"></div>
+  <h3>B. Asigna el fragmento a la categoría</h3>
+  <div class="nota info">Libro de códigos de referencia. <b>Decisión sin mecanismo de resolución</b>: indicaciones de dos fuentes legítimas sin instancia que las integre; reversiones; adivinación del equipo. No se aplica a quejas de carga sin indicaciones opuestas. <b>Diseño organizacional ausente</b>: cargos, roles y responsabilidades no definidos tras el crecimiento. <b>Conductas de adaptación del equipo</b>: esperar, obedecer al más insistente, hacer todo y sobrecargarse, como respuesta a la inconsistencia. <b>Calidad sacrificada</b>: revisión omitida, QA ausente, bugs por doble objetivo. <b>Desgaste y salida</b>: señales de desgaste y renuncias a los 13 a 15 meses. <b>Lo que retiene</b>: producto, equipo, flexibilidad, aprendizaje.</div>
+  <div id="c4b"></div>
+</section>
+
+<!-- ============ ESTACIÓN 5 ============ -->
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Contar sin engañarse y triangular</h2>
+  <p>La frecuencia ordena, la saliencia interpreta y la prevalencia se deja a la encuesta. Un hallazgo cualitativo defendible tiene afirmación en términos de mecanismo, evidencia con número y citas, contraste con la encuesta, lo que no encaja y una implicancia.</p>
+  <h3>A. Qué se puede concluir</h3>
+  <div id="q5"></div>
+  <h3>B. Qué le falta a este hallazgo</h3>
+  <div id="m5"></div>
+</section>
+
+<!-- ============ ESTACIÓN 6 ============ -->
+<section class="estacion" id="e6">
+  <h2>Estación 6 · Lo cualitativo en el sistema de control</h2>
+  <p>Ante un semáforo rojo en el tablero de personas, la pregunta del controlador no es quién es responsable sino qué mecanismo lo explica. Y la inteligencia artificial generativa puede ayudar en la codificación, con reglas.</p>
+  <h3>A. Qué hacer ante la desviación</h3>
+  <div id="g6"></div>
+  <h3>B. IA generativa en la codificación</h3>
+  <div id="q6"></div>
+</section>
+
+<!-- ============ FICHA ============ -->
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div class="nota">Lo que conviene llevarse: (1) describir antes de valorar, con preguntas de incidente crítico y sondeos escritos de antemano; (2) muestrear por perspectivas y documentar la saturación por estrato; (3) prometer solo la confidencialidad que se puede cumplir; (4) códigos descriptivos, libro de códigos con reglas, frecuencia por informante, dos citas por categoría y lo que no encaja; (5) ante una desviación del tablero, buscar el mecanismo antes de fijar la meta.</div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas. El avance se guarda solo en este navegador.
+</footer>
+</div>
+<script>
+// ===================== ESTADO Y NAVEGACIÓN (mismo patrón que lab_personalidad) =====================
+const CLAVE = "lab_do_s4_v1";
+const NOMBRES = ["Inicio","1 · Qué técnica","2 · Preguntas y sondeo","3 · A quién y cuántas","4 · Codificar","5 · Contar y triangular","6 · En el tablero","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+const estado = { hechas: {}, resp: {} };
+function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(CLAVE); if(s) Object.assign(estado, JSON.parse(s)); }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+function pintarNav(){
+  const nav = document.getElementById("nav"); nav.innerHTML = "";
+  NOMBRES.forEach((n,i)=>{ const b = document.createElement("button"); b.textContent = n;
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista");
+    b.onclick = ()=>ir(i); nav.appendChild(b); });
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de ${EST.length}`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa"));
+  document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===NOMBRES.length-1) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem(CLAVE); }catch(e){} location.reload(); }
+
+// ===================== COMPONENTES =====================
+// Cada estación puede tener varios componentes; se marca cuando todos terminan.
+const PEND = {};
+function registrar(est, id){ PEND[est] = PEND[est] || new Set(); PEND[est].add(id); }
+function terminar(est, id){ PEND[est].delete(id); if(PEND[est].size===0) marcar(est); }
+
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId);
+  let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.q}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(+s.dataset.j===it.ok ? "correcta" : "incorrecta");
+      d.querySelectorAll(".opc")[it.ok].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb;
+      estado.resp[contId+"_"+k] = +s.dataset.j; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+function clasificador(contId, cats, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "clasif";
+    d.innerHTML = `<p class="enun">${it.t}</p><div class="cats">` + cats.map(c=>`<span class="cat" data-c="${c}">${c}</span>`).join("") + `</div><div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".cat").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(s.dataset.c===it.c ? "correcta" : "incorrecta");
+      d.querySelector(`.cat[data-c="${it.c}"]`).classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+// multisel: items = [{t, opts:[...], ok:[índices], fb}] ; el usuario marca varias y comprueba
+function multisel(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.t}</strong></p><p class="mini">Marca todas las condiciones que faltan y comprueba.</p>` +
+      it.opts.map((o,j)=>`<label class="opc"><input type="checkbox" data-j="${j}"> ${o}</label>`).join("") +
+      `<button class="btn" style="margin-top:.5rem">Comprobar</button><div class="feedback" style="display:none"></div>`;
+    d.querySelector("button").onclick = ()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      const marcadas = [...d.querySelectorAll("input")].filter(i=>i.checked).map(i=>+i.dataset.j);
+      d.querySelectorAll(".opc").forEach((l,j)=>{ const esOk = it.ok.includes(j); const m = marcadas.includes(j);
+        if(esOk) l.classList.add("correcta"); if(m && !esOk) l.classList.add("incorrecta"); l.querySelector("input").disabled = true; });
+      const aciertos = it.ok.filter(j=>marcadas.includes(j)).length; const extra = marcadas.filter(j=>!it.ok.includes(j)).length;
+      const f = d.querySelector(".feedback"); f.style.display = "block";
+      f.innerHTML = `<b>${aciertos} de ${it.ok.length} condiciones faltantes identificadas${extra?`, ${extra} marcada${extra>1?"s":""} de más`:""}.</b> ${it.fb}`;
+      d.querySelector("button").disabled = true; guardar(); if(hechas===items.length) terminar(estacion, contId);
+    };
+    cont.appendChild(d);
+  });
+}
+
+// graduada(contId, items, estacion): items = [{t, opts:[{o, g:2|1|0, fb}]}]; 2 defendible, 1 aceptable con matices, 0 débil
+const NIVEL = {2:"Defendible", 1:"Aceptable, con matices", 0:"Débil"};
+function graduada(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; registrar(estacion, contId); let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.t}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o.o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      const j = +s.dataset.j, o = it.opts[j];
+      s.classList.add(o.g===2 ? "correcta" : (o.g===1 ? "parcial" : "incorrecta"));
+      const best = it.opts.findIndex(x=>x.g===2); if(best>=0) d.querySelectorAll(".opc")[best].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block";
+      f.innerHTML = `<span class="nivel-tag">${NIVEL[o.g]}.</span>${o.fb}` + (o.g<2 && best>=0 ? `<br><b>Opción más defendible: ${it.opts[best].o}.</b> ${it.opts[best].fb}` : "");
+      estado.resp[contId+"_"+k] = j; guardar();
+      if(hechas===items.length) terminar(estacion, contId);
+    });
+    cont.appendChild(d);
+  });
+}
+function pintarFicha(){
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas: ${k} de ${EST.length}.</strong> ` + (k===EST.length ? "Laboratorio completo." : "Faltan: " + EST.filter(e=>!estado.hechas[e]).map(e=>NOMBRES[e]).join(", ") + ".");
+}
+
+// ===================== CONTENIDO =====================
+const TEC = ["Entrevista","Grupo focal","Observación","Documentos y registros","Encuesta"];
+const C1 = [
+ { t:"¿Cuántas decisiones de producto de los últimos seis meses se revirtieron y quién las revirtió?", c:"Documentos y registros", fb:"Es una pregunta de conteo sobre hechos fechables: el backlog y el registro de decisiones la responden; las entrevistas la complementan con el relato de cómo ocurrió." },
+ { t:"¿Qué pasos de revisión existen antes de un release y cuáles se omiten bajo presión?", c:"Observación", fb:"Lo que se omite bajo presión es una brecha entre discurso y práctica: se ve observando una planificación y un release. Las entrevistas a leads y QA complementan." },
+ { t:"¿Cómo describen los desarrolladores que renunciaron la razón principal de su salida?", c:"Entrevista", fb:"Relato individual de un episodio personal, con informantes fuera de la organización: entrevista semiestructurada con preguntas de incidente crítico." },
+ { t:"¿Qué proporción de desarrolladores declara intención de irse en 12 meses y con qué variables se asocia?", c:"Encuesta", fb:"Proporción y asociación son preguntas de prevalencia y relación: encuesta censal con escalas (Apunte 3). Lo cualitativo explica después el porqué." },
+ { t:"¿Existe una norma compartida entre desarrolladores de 'esperar' antes de empezar una tarea, y cómo la justifican entre ellos?", c:"Grupo focal", fb:"Una norma grupal y su justificación compartida se observan en la interacción entre pares: grupo focal homogéneo, sin leads ni cofundadores." },
+ { t:"¿Cómo vive cada cofundador el desacuerdo sobre crecer o ser rentables y qué espera del diagnóstico?", c:"Entrevista", fb:"Informantes clave, tema sensible y posiciones enfrentadas: entrevistas por separado, nunca un grupo focal con los dos." },
+];
+const Q1 = [
+ { q:"¿Por qué el diseño del Control 2 para TechNova propuso entrevistas antes que la encuesta (mixto exploratorio)?", opts:["Porque las entrevistas son más baratas que una encuesta censal","Porque nunca se midió nada y el problema está mal definido: una encuesta sin exploración mediría lo que el CEO cree","Porque en una empresa de 50 personas no se puede aplicar una encuesta"], ok:1, fb:"La encuesta mide con precisión lo que ya se sabe preguntar. Cuando el problema está mal definido, la exploración cualitativa decide qué medir y con qué palabras." },
+ { q:"¿Cuál es el sesgo principal que la observación corrige respecto de la entrevista?", opts:["La reactividad del observado","La deseabilidad social y la memoria del informante","La presión de conformidad del grupo"], ok:1, fb:"La observación registra lo que la gente hace, no lo que dice que hace ni lo que recuerda. Su propio sesgo es la reactividad y la interpretación del observador; por eso se triangula." },
+];
+const ERR = ["Cerrada","Inductiva o cargada","Múltiple","'Por qué' acusatorio","Abstracta o con jerga","Bien formulada"];
+const C2 = [
+ { t:"¿No cree que el conflicto entre los fundadores es lo que hace renunciar a la gente?", c:"Inductiva o cargada", fb:"Dicta la respuesta; el informante confirma para no discutir. Reescritura: '¿Qué explica, según usted, que la gente se vaya cerca de los 14 meses?'" },
+ { t:"¿Cómo es la comunicación con su jefe y con producto, y qué habría que mejorar?", c:"Múltiple", fb:"Tres preguntas en una; se responde la última o la más cómoda. Una a la vez: primero describir, después evaluar." },
+ { t:"¿Por qué no avisó que la fecha no se iba a cumplir?", c:"'Por qué' acusatorio", fb:"Pide justificación y activa la defensa. Reescritura: 'Cuénteme qué pasó en la semana previa a esa fecha'." },
+ { t:"Cuénteme la última vez que una prioridad de su equipo cambió a mitad de un sprint. ¿Qué pasó?", c:"Bien formulada", fb:"Pregunta de incidente crítico: pide un episodio con fecha, actores y consecuencias, contrastable con el backlog." },
+ { t:"¿Está conforme con cómo se fijan las prioridades?", c:"Cerrada", fb:"Produce sí o no y el peso lo pone el entrevistador. Reescritura: '¿Cómo se decide en qué trabaja su equipo cada semana?'" },
+ { t:"¿Cómo evalúa la gobernanza de la toma de decisiones en TechNova?", c:"Abstracta o con jerga", fb:"Obliga a traducir y produce discurso oficial. Reescritura: 'La última vez que una prioridad cambió, ¿cómo se enteró y quién lo decidió?'" },
+ { t:"¿Cómo se entera usted de si su trabajo está bien o mal hecho?", c:"Bien formulada", fb:"Abierta, de una idea, conductual, en el nivel del informante; cubre OE4 (claridad de roles)." },
+];
+const G2 = [
+ { t:"La informante dice: 'Las prioridades acá cambian todo el tiempo'. ¿Qué sondeo usa?", opts:[
+   {o:"¿Cuántas veces diría que cambiaron en el último sprint, y cuál fue la última?", g:2, fb:"Sondeo de especificidad y de ejemplo: convierte la opinión en un episodio contable y contrastable con el backlog."},
+   {o:"Cuénteme más.", g:1, fb:"Es neutral y suele funcionar, pero no orienta hacia el episodio; sirve como primer sondeo si va seguida de una de especificidad."},
+   {o:"¿Y eso es por el conflicto entre Martín y Carolina?", g:0, fb:"Contiene la hipótesis del entrevistador: deja de ser sondeo y se convierte en pregunta inductiva."}] },
+ { t:"El informante dice: 'Tenemos un roadmap y lo seguimos, con la flexibilidad propia de una startup'. ¿Qué sondeo usa?", opts:[
+   {o:"Esa flexibilidad, ¿me da un ejemplo de la última vez que operó? ¿Qué pasó?", g:2, fb:"Ante el discurso oficial, pedir el ejemplo concreto y la última vez; usa las palabras del informante."},
+   {o:"¿Y en la práctica es así?", g:1, fb:"Apunta en la dirección correcta (práctica frente a política) pero es cerrada; el informante puede responder 'sí' y cerrar el tema."},
+   {o:"Entiendo. Pasemos al siguiente tema.", g:0, fb:"Acepta la versión oficial como dato; se pierde la oportunidad de obtener el episodio."}] },
+ { t:"La informante dice: 'Uno aprende a esperar'. ¿Qué sondeo usa?", opts:[
+   {o:"¿Qué quiere decir con 'esperar'? ¿Qué hizo usted la última vez?", g:2, fb:"Clarificación de un término in vivo más pedido de episodio: produce la definición conductual que el código necesita."},
+   {o:"¿Y eso no afecta la productividad?", g:0, fb:"Evaluativa e inductiva; además cambia el foco del relato de la informante a la preocupación del entrevistador."},
+   {o:"[Silencio de cuatro segundos]", g:1, fb:"El silencio es un sondeo legítimo y suele producir continuación; con una expresión tan cargada conviene pedir la clarificación explícita después."}] },
+];
+const G3 = [
+ { t:"El equipo diagnóstico tiene presupuesto para 15 entrevistas en TechNova. ¿Cómo las distribuye?", opts:[
+   {o:"Por estratos: 2 cofundadores, 3 a 4 leads, 5 a 6 desarrolladores con 10 a 18 meses, 4 a 5 exempleados; saturación evaluada dentro de cada estrato", g:2, fb:"Muestreo intencionado por máxima variación e informantes clave; la saturación se documenta por estrato porque los estratos ven el fenómeno desde posiciones distintas."},
+   {o:"15 desarrolladores actuales elegidos al azar, porque son la población con el problema", g:1, fb:"Cubre el estrato principal pero pierde a quienes deciden (cofundadores, leads) y a quienes se fueron; una muestra aleatoria no es el criterio en cualitativo."},
+   {o:"Los 15 que el CEO proponga, porque conoce a la gente", g:0, fb:"Sesgo de selección por la fuente de la hipótesis que el diagnóstico debe poner a prueba."}] },
+ { t:"Tras ocho entrevistas a desarrolladores no aparecen códigos nuevos. ¿Qué concluye?", opts:[
+   {o:"Saturación probable en ese estrato; se documenta en qué entrevista dejó de aparecer un código nuevo y se revisa si las categorías están bien comprendidas", g:2, fb:"Coincide con la evidencia (Guest et al., 2006; Hennink y Kaiser, 2022): 6 a 12 entrevistas en poblaciones homogéneas. Saturación de códigos no es saturación de significado: hay que verificar la comprensión."},
+   {o:"Se puede dejar de entrevistar en todos los estratos", g:0, fb:"La saturación en un estrato no dice nada sobre los otros (cofundadores, exempleados)."},
+   {o:"Hay que llegar a 30 entrevistas de todas formas, por rigor", g:1, fb:"Más entrevistas no son más rigor si no agregan información; el costo tiene otro uso (observación, registros)."}] },
+ { t:"Un desarrollador que renunció acepta la entrevista pero pide que la empresa no sepa que participó. ¿Qué hace?", opts:[
+   {o:"Acepta: los exempleados participan como voluntarios y sin intermediación de la empresa; eso se acordó en el contrato", g:2, fb:"Es el resguardo ético propuesto en el Control 2; la empresa recibe hallazgos agregados, no la lista de participantes."},
+   {o:"Le pide autorización al CEO antes de entrevistarlo", g:0, fb:"Rompe la condición de participación y expone al exempleado; además sesga quién acepta."},
+   {o:"Acepta pero le advierte que no puede garantizar que el CEO no se entere", g:1, fb:"Honesto sobre los límites, pero el acuerdo con el cliente debía resolver esto de antemano: la lista de participantes externos no se comparte."}] },
+];
+const PROM = ["Se puede prometer","No se puede prometer"];
+const C3 = [
+ { t:"Nadie fuera del equipo diagnóstico escuchará las grabaciones.", c:"Se puede prometer", fb:"Depende solo del equipo; se cumple con custodia y destrucción al cierre." },
+ { t:"Anonimato: ni siquiera el equipo diagnóstico sabrá quién dijo qué.", c:"No se puede prometer", fb:"El entrevistador sabe quién dijo qué. Lo que se promete es confidencialidad, no anonimato." },
+ { t:"Los cofundadores no reconocerán ninguna situación relatada.", c:"No se puede prometer", fb:"En 50 personas, quienes vivieron el episodio pueden reconocerlo aunque se quite el nombre; por eso las citas se despojan de rol y detalle." },
+ { t:"Los resultados por equipo se informarán solo si hay ocho o más respuestas.", c:"Se puede prometer", fb:"Regla de n mínimo del Control 2; depende del equipo diagnóstico y del acuerdo con el cliente." },
+ { t:"Si aparece un hecho grave (acoso, fraude), quedará en silencio.", c:"No se puede prometer", fb:"Los límites de la confidencialidad se declaran en la apertura; prometer silencio incondicional es un error ético." },
+ { t:"El informe llegará a ambos cofundadores y al directorio en la misma versión.", c:"Se puede prometer", fb:"Si se acordó por escrito antes de la primera entrevista; es la condición para que el diagnóstico no se use por uno contra el otro." },
+];
+const TIPO = ["Descriptivo (sirve)","In vivo (sirve)","Interpretativo o evaluativo (todavía no)"];
+const C4A = [
+ { t:"Doble reporte informal", c:"Descriptivo (sirve)", fb:"Describe lo que la informante hizo (ir con los dos) sin valorarlo." },
+ { t:"Liderazgo incoherente", c:"Interpretativo o evaluativo (todavía no)", fb:"Es una valoración del analista sobre los cofundadores; en la codificación abierta se describe la conducta, no se juzga." },
+ { t:"'Juntos no se puede'", c:"In vivo (sirve)", fb:"Expresión de la informante que condensa la ausencia de instancia conjunta mejor que una paráfrasis." },
+ { t:"Ejecución a medias", c:"Descriptivo (sirve)", fb:"Describe el resultado (dos indicaciones atendidas en forma parcial) sin interpretar la causa." },
+ { t:"Desmotivación del equipo", c:"Interpretativo o evaluativo (todavía no)", fb:"El fragmento no habla de motivación; es una inferencia psicológica del analista." },
+ { t:"Bugs críticos como consecuencia", c:"Descriptivo (sirve)", fb:"Registra la consecuencia que la propia informante conecta con la ejecución a medias." },
+];
+const CAT = ["Decisión sin mecanismo","Diseño organizacional ausente","Conductas de adaptación","Calidad sacrificada","Desgaste y salida","Lo que retiene","Ninguna: categoría nueva"];
+const C4B = [
+ { t:"R4: 'En la práctica, Martín habla con los clientes grandes y llega con urgencias. Las dos cosas son legítimas, el problema es que no hay un lugar donde se junten.'", c:"Decisión sin mecanismo", fb:"Dos fuentes legítimas de prioridad sin instancia de integración: definición de la categoría." },
+ { t:"R2: 'No existe el cargo de lead en ningún papel. Simplemente un día Martín me dijo tú ves este equipo.'", c:"Diseño organizacional ausente", fb:"Rol asignado informalmente, sin cargo definido tras el crecimiento." },
+ { t:"R9: 'Si la prioridad va a cambiar el martes, para qué partir el lunes. Eso suena mal, pero es lo que hace la mitad del equipo.'", c:"Conductas de adaptación", fb:"Espera estratégica como respuesta del equipo a la inconsistencia; no es desgaste (categoría 5) ni la decisión misma (categoría 1)." },
+ { t:"R13: 'No hay nadie de QA; lo hubo, pero se fue hace ocho meses y no se reemplazó. Cuando hay apuro, la revisión es lo primero que se salta.'", c:"Calidad sacrificada", fb:"Revisión omitida y QA ausente. Un codificador podría además marcar 'diseño ausente' por el rol no reemplazado: el libro de códigos decide, y el memo lo registra." },
+ { t:"R10: 'Gente que deja de hablar en Slack, que empieza a contestar con monosílabos en el daily. Después piden vacaciones y vuelven con una oferta.'", c:"Desgaste y salida", fb:"Señales observables de desgaste y salida; son indicadores leading que la informante describe." },
+ { t:"R17: 'El equipo es talentoso, gente que en otra parte estaría ganando más. Y aprendí más en estos dos años que en los cinco anteriores.'", c:"Lo que retiene", fb:"Atributos valorados que explican la permanencia; aparecen al preguntar, lo que se registra como saliencia." },
+ { t:"R12: 'Él tiene la teoría de que la gente se va por plata, y es cómodo pensar eso.'", c:"Ninguna: categoría nueva", fb:"No es un episodio de decisión ni una conducta del equipo: es la lectura que la informante atribuye a la dirección sobre las causas de la rotación. La clave del profesor lo codifica como 'lectura de la dirección (divergencia)', se registra como percepción y se verifica en la entrevista al CEO. Forzarlo en una categoría existente es el error típico; el memo debe decir por qué se creó la categoría." },
+];
+const Q5 = [
+ { q:"En 14 entrevistas intencionadas, 11 describen 'esperar' antes de empezar una tarea. ¿Qué se puede concluir?", opts:["Que el 79% de la organización espera antes de empezar una tarea","Que la conducta aparece en la mayoría de los entrevistados, todos desarrolladores o leads, y en ningún cofundador; la prevalencia se estima con un ítem en la encuesta pulso","Que la espera es la causa principal de la rotación"], ok:1, fb:"La frecuencia en una muestra intencionada no estima prevalencia; se reporta con el número, quiénes y quiénes no, y se deja la prevalencia a la encuesta." },
+ { q:"El CEO menciona una vez, con detalle, cómo fija prioridades con los clientes grandes; diez desarrolladores se quejan de que las prioridades cambian. ¿Cuál es la lectura correcta?", opts:["La queja pesa más porque es diez veces más frecuente","Ambas son evidencia de categorías distintas: la del CEO describe el mecanismo de decisión; las diez quejas describen su consecuencia. La saliencia y la posición del informante importan tanto como la frecuencia","Solo cuenta lo que dice el CEO porque es quien decide"], ok:1, fb:"Frecuencia y saliencia se interpretan juntas; una descripción del mecanismo desde quien decide es evidencia de otro tipo que diez descripciones de la consecuencia." },
+ { q:"Las respuestas abiertas de la encuesta mencionan 'onboarding estructurado' 12 veces, pero el tema casi no aparece en las entrevistas. ¿Qué significa la divergencia?", opts:["Que las entrevistas están mal hechas y hay que repetirlas","Que la encuesta está mal diseñada","Que es una pista: quizá la pauta no preguntó por la integración de los nuevos; se revisa la pauta y se vuelve al texto (R15 de E07 sí lo toca) antes de concluir"], ok:2, fb:"La divergencia entre fuentes informa: puede ser una pregunta que faltó, un sesgo de una fuente o un hallazgo nuevo. Se explora, no se descarta." },
+];
+const M5 = [
+ { t:"Borrador de hallazgo: 'Todos los entrevistados coinciden en que la comunicación del liderazgo es mala. Cita: \"es un caos\". Recomendación: taller de comunicación para los cofundadores.' Marca todo lo que le falta para ser defendible.", opts:["Afirmación en términos de mecanismo (qué produce qué) en lugar de una valoración ('comunicación mala')","Número de informantes y quiénes, en lugar de 'todos'","Dos citas trazables (turno y fuente), una típica y una de matiz","Contraste con la encuesta (qué variable, qué grupo, qué magnitud)","Lo que no encaja (fuentes o informantes que lo contradicen)","Una recomendación más larga"], ok:[0,1,2,3,4], fb:"El hallazgo salta de una categoría vaga a una recomendación sin pasar por el mecanismo, sin número, sin citas trazables, sin contraste y sin lo que contradice. La extensión de la recomendación no es el problema." },
+];
+const G6 = [
+ { t:"Una unidad cae 0,8 puntos en engagement entre dos olas de la encuesta pulso. Semáforo rojo. ¿Qué hace el controlador?", opts:[
+   {o:"Grupo focal homogéneo de 60 minutos con la unidad (sin jefatura) y revisión de cambios de dotación y de jefatura en el período; después decidir entre intervenir, esperar una ola o revisar el ítem", g:2, fb:"Busca el mecanismo con la técnica adecuada al tamaño del grupo y a la sensibilidad del tema, y contrasta con registros antes de decidir."},
+   {o:"Pedir a la jefatura de la unidad un informe explicando la caída", g:1, fb:"La versión de la jefatura es una fuente, pero es la fuente con más interés en la explicación; sola no es diagnóstico."},
+   {o:"Fijar a la jefatura la meta de recuperar 0,8 puntos en la próxima ola", g:0, fb:"Meta sobre una percepción sin mecanismo conocido: induce presión sobre las respuestas (efecto Goodhart) y no corrige nada."}] },
+ { t:"Un indicador de clima mejora bruscamente en todas las sucursales el trimestre siguiente a anunciarse que se usará para evaluar a los jefes de sucursal. ¿Qué hace?", opts:[
+   {o:"Entrevistas a trabajadores y jefaturas sobre cómo se habló de la encuesta antes de responderla; comparar tasas de respuesta y distribución por sucursal; revisar el uso evaluativo y el anonimato", g:2, fb:"La mejora coincide con el cambio de uso: hay que distinguir mejora de gestión de cambio en la forma de responder. Es el problema del examen final."},
+   {o:"Celebrar la mejora y mantener el incentivo", g:0, fb:"Toma el indicador como medida del fenómeno cuando el fenómeno más probable es la presión sobre las respuestas."},
+   {o:"Esperar una ola más antes de decidir", g:1, fb:"Prudente, pero el daño del uso evaluativo sobre la calidad del dato continúa mientras se espera; conviene investigar ahora."}] },
+ { t:"La gerenta quiere saber si las jefaturas usan el tablero de personas para aprender o para rendir cuentas. ¿Qué pregunta de entrevista a una jefatura lo revela mejor?", opts:[
+   {o:"Cuénteme la última vez que revisó los resultados de clima de su equipo: qué miró primero, con quién lo conversó y qué hizo después", g:2, fb:"Incidente crítico sobre el uso real del indicador: distingue el uso interactivo (discusión, hipótesis, acción) del diagnóstico (cumplir la meta)."},
+   {o:"¿Usted usa el tablero para aprender o para rendir cuentas?", g:0, fb:"Cerrada, con la respuesta deseable evidente; produce la versión oficial."},
+   {o:"¿Qué opina del tablero de personas?", g:1, fb:"Abierta pero evaluativa y sin ancla; conviene precederla de la descripción de un episodio."}] },
+];
+const Q6 = [
+ { q:"¿Cuál de estos usos de la IA generativa en la codificación es defendible con las reglas del curso?", opts:["Subir las transcripciones completas con nombres a un servicio en línea para que proponga los temas","Proponer códigos abiertos sobre fragmentos anonimizados, que el analista revisa, y buscar fragmentos que podrían faltar en una categoría (control de cobertura), declarando qué se pidió y qué se cambió","Pedirle las citas más representativas y pegarlas en el informe"], ok:1, fb:"Asistencia auditada para lo descriptivo con texto anonimizado y declaración en la nota metodológica. Las citas siempre se verifican en la transcripción: la herramienta puede fabricarlas." },
+ { q:"Según la comparación de Morgan (2023), ¿dónde falla la codificación asistida por IA?", opts:["En los temas descriptivos y explícitos","En los temas que requieren interpretación del contexto","En el conteo de frecuencias"], ok:1, fb:"Recuperó razonablemente los temas descriptivos y falló en los interpretativos; de ahí la frontera: asistencia para lo descriptivo, criterio humano para lo interpretativo." },
+];
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+clasificador("c1", TEC, C1, 1); pregunta("q1", Q1, 1);
+clasificador("c2", ERR, C2, 2); graduada("g2", G2, 2);
+graduada("g3", G3, 3); clasificador("c3", PROM, C3, 3);
+clasificador("c4a", TIPO, C4A, 4); clasificador("c4b", CAT, C4B, 4);
+pregunta("q5", Q5, 5); multisel("m5", M5, 5);
+graduada("g6", G6, 6); pregunta("q6", Q6, 6);
+</script>
+</body>
+</html>

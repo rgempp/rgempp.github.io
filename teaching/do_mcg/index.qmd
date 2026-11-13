@@ -43,7 +43,8 @@ resultados.
 sesiones de 4 horas (24 horas); viernes y miércoles de 18:00 a 22:00 hrs
 online por Zoom, sábados de 9:30 a 13:30 hrs presencial **Software**:
 [JASP](https://jasp-stats.org/) (gratuito; instalarlo antes de la sesión
-5) **Prerrequisitos**: No tiene.
+5 y revisar el [Apunte 0: Guía rápida de JASP para diagnóstico
+organizacional](A0_Guia_rapida_JASP.html)) **Prerrequisitos**: No tiene.
 
 ## Resultados de Aprendizaje
 
@@ -66,62 +67,63 @@ Al aprobar el curso, los estudiantes serán capaces de:
 *Este calendario es tentativo y puede estar sujeto a cambios en caso de
 imprevistos.*
 
-+--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
-| Sesión | Fecha       | Contenido                 | Tipo       | Material complementario\*                                                    |
-+:======:+:===========:+:==========================+:===========+:============================================================================:+
-| 1      | vie 06-11   | Fundamentos y modelos de  | Clase      | [Apunte 1: Fundamentos y modelos de diagnóstico                              |
-|        |             | diagnóstico               | online     | organizacional](A1_Fundamentos_y_modelos_de_diagnostico_organizacional.html) |
-|        | 18:00–22:00 | organizacional:           | (Zoom)     |                                                                              |
-|        |             | paradigmas, modelos       |            | [Laboratorio interactivo sesión 1: síntomas y causas, paradigmas, modelos,   |
-|        |             | clásicos, el diagnóstico  |            | tipos de control](Laboratorio_Sesion_1.html)                                 |
-|        |             | en el sistema de control  |            |                                                                              |
-|        |             | de gestión                |            |                                                                              |
-+--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
-| 2      | sáb 07-11   | Diseño metodológico del   | Clase      | [Apunte 2: Diseño del proceso                                                |
-|        |             | proceso diagnóstico:      | presencial | diagnóstico](A2_Diseno_del_proceso_diagnostico.html)                         |
-|        | 9:30–13:30  | problema presentado y     |            |                                                                              |
-|        |             | real, objetivos,          |            | [Laboratorio interactivo sesión 2: diseño del proceso                        |
-|        |             | variables e indicadores,  |            | diagnóstico](Laboratorio_Sesion_2.html)                                      |
-|        |             | enfoques, ética, análisis |            |                                                                              |
-|        |             | de flujos de Porras       |            |                                                                              |
-+--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
-| 3      | mié 11-11   | Encuestas                 | Clase      | [Apunte 3: Encuestas organizacionales y diseño de                            |
-|        |             | organizacionales y diseño | online     | cuestionarios](A3_Encuestas_organizacionales_y_diseno_de_cuestionarios.html) |
-|        | 18:00–22:00 | de cuestionarios: la      | (Zoom)     |                                                                              |
-|        |             | encuesta como sistema de  |            | [Apunte 0: Guía rápida de JASP para diagnóstico                              |
-|        |             | monitoreo, redacción de   |            | organizacional](A0_Guia_rapida_JASP.html)                                    |
-|        |             | ítems, instrumentos       |            |                                                                              |
-|        |             | estandarizados, fuentes   |            | [Laboratorio interactivo sesión 3: del ítem al indicador, error de encuesta, |
-|        |             | de error                  |            | fiabilidad y validez](Laboratorio_Sesion_3.html)                             |
-+--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
-| 4      | vie 13-11   | Técnicas cualitativas:    | Clase      | Apunte 4                                                                     |
-|        |             | entrevistas, grupos       | online     |                                                                              |
-|        | 18:00–22:00 | focales, observación y    | (Zoom)     |                                                                              |
-|        |             | análisis documental;      |            |                                                                              |
-|        |             | codificación abierta,     |            |                                                                              |
-|        |             | axial y selectiva         |            |                                                                              |
-+--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
-| 5      | vie 20-11   | Análisis psicométrico de  | Clase      | Apunte 5                                                                     |
-|        |             | cuestionarios:            | online     |                                                                              |
-|        | 18:00–22:00 | descriptivos de ítems,    | (Zoom)     |                                                                              |
-|        |             | dimensionalidad,          |            |                                                                              |
-|        |             | confiabilidad,            |            |                                                                              |
-|        |             | puntuaciones; la          |            |                                                                              |
-|        |             | psicometría como control  |            |                                                                              |
-|        |             | de calidad de los         |            |                                                                              |
-|        |             | indicadores               |            |                                                                              |
-+--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
-| 6      | sáb 21-11   | Análisis de resultados,   | Clase      | Apunte 6                                                                     |
-|        |             | tableros de control y     | presencial |                                                                              |
-|        | 9:30–13:30  | comunicación: métricas de |            | Guía del examen final                                                        |
-|        |             | personas, análisis por    |            |                                                                              |
-|        |             | subgrupos, integración    |            |                                                                              |
-|        |             | cuantitativa-cualitativa, |            |                                                                              |
-|        |             | tablero de personas,      |            |                                                                              |
-|        |             | informe y devolución.     |            |                                                                              |
-|        |             | **Entrega del examen      |            |                                                                              |
-|        |             | final**                   |            |                                                                              |
-+--------+-------------+---------------------------+------------+------------------------------------------------------------------------------+
++--------+-------------+---------------------------+---------------+-------------------------------------------------------------------------------+
+| Sesión | Fecha       | Contenido                 | Tipo          | Material complementario\*                                                     |
++:======:+:===========:+:==========================+:==============+:=============================================================================:+
+| 1      | vie 06-11   | Fundamentos y modelos de  | Clase online  | [Apunte 1: Fundamentos y modelos de diagnóstico                               |
+|        |             | diagnóstico               | (Zoom)        | organizacional](A1_Fundamentos_y_modelos_de_diagnostico_organizacional.html)  |
+|        | 18:00–22:00 | organizacional:           |               |                                                                               |
+|        |             | paradigmas, modelos       |               | [Laboratorio interactivo sesión 1: síntomas y causas, paradigmas, modelos,    |
+|        |             | clásicos, el diagnóstico  |               | tipos de control](Laboratorio_Sesion_1.html)                                  |
+|        |             | en el sistema de control  |               |                                                                               |
+|        |             | de gestión                |               |                                                                               |
++--------+-------------+---------------------------+---------------+-------------------------------------------------------------------------------+
+| 2      | sáb 07-11   | Diseño metodológico del   | Clase         | [Apunte 2: Diseño del proceso                                                 |
+|        |             | proceso diagnóstico:      | presencial    | diagnóstico](A2_Diseno_del_proceso_diagnostico.html)                          |
+|        | 9:30–13:30  | problema presentado y     |               |                                                                               |
+|        |             | real, objetivos,          |               | [Laboratorio interactivo sesión 2: diseño del proceso                         |
+|        |             | variables e indicadores,  |               | diagnóstico](Laboratorio_Sesion_2.html)                                       |
+|        |             | enfoques, ética, análisis |               |                                                                               |
+|        |             | de flujos de Porras       |               |                                                                               |
++--------+-------------+---------------------------+---------------+-------------------------------------------------------------------------------+
+| 3      | mié 11-11   | Encuestas                 | Clase online  | [Apunte 3: Encuestas organizacionales y diseño de                             |
+|        |             | organizacionales y diseño | (Zoom)        | cuestionarios](A3_Encuestas_organizacionales_y_diseno_de_cuestionarios.html)  |
+|        | 18:00–22:00 | de cuestionarios: la      |               |                                                                               |
+|        |             | encuesta como sistema de  |               | [Laboratorio interactivo sesión 3: Del ítem al indicador, error de encuesta,  |
+|        |             | monitoreo, redacción de   |               | fiabilidad y validez](Laboratorio_Sesion_3.html)                              |
+|        |             | ítems, instrumentos       |               |                                                                               |
+|        |             | estandarizados, fuentes   |               |                                                                               |
+|        |             | de error                  |               |                                                                               |
++--------+-------------+---------------------------+---------------+-------------------------------------------------------------------------------+
+| 4      | vie 13-11   | Técnicas cualitativas:    | Clase online  | [Apunte 4: Técnicas cualitativas y análisis de datos                          |
+|        |             | entrevistas, grupos       | (Zoom)        | cualitativos](A4_Tecnicas_cualitativas_y_analisis_de_datos_cualitativos.html) |
+|        | 18:00–22:00 | focales, observación y    |               |                                                                               |
+|        |             | análisis documental;      |               | [Simulador de entrevista de diagnóstico](Simulador_Entrevista_Sesion_4.html)  |
+|        |             | codificación abierta,     |               |                                                                               |
+|        |             | axial y selectiva         |               | [Laboratorio Interactivo sesión 4: Preguntar, sondear y codificar: del relato |
+|        |             |                           |               | al hallazgo](Laboratorio_Sesion_4.html)                                       |
++--------+-------------+---------------------------+---------------+-------------------------------------------------------------------------------+
+| 5      | vie 20-11   | Análisis psicométrico de  | Clase online  | [Apunte 5: Análisis psicométrico de escalas                                   |
+|        |             | cuestionarios:            | (Zoom)        | aditivas](A5_Analisis_psicometrico_de_escalas_aditivas.html)                  |
+|        | 18:00–22:00 | descriptivos de ítems,    |               |                                                                               |
+|        |             | dimensionalidad,          |               | [Laboratorio interactivo sesión 5: Análisis psicométrico: ¿se pueden sumar    |
+|        |             | confiabilidad,            |               | estos ítems y sirve el índice para el tablero?](Laboratorio_Sesion_5.html)    |
+|        |             | puntuaciones; la          |               |                                                                               |
+|        |             | psicometría como control  |               |                                                                               |
+|        |             | de calidad de los         |               |                                                                               |
+|        |             | indicadores               |               |                                                                               |
++--------+-------------+---------------------------+---------------+-------------------------------------------------------------------------------+
+| 6      | sáb 21-11   | Análisis de resultados,   | Clase         | [Apunte 6: Análisis de resultados, tableros de control y                      |
+|        |             | tableros de control y     | presencial    | comunicación](A6_Analisis_de_resultados_tableros_y_comunicacion.html)         |
+|        | 9:30–13:30  | comunicación: métricas de |               |                                                                               |
+|        |             | personas, análisis por    |               | [Laboratorio interactivo sesión 6: Del dato al diagnóstico y del diagnóstico  |
+|        |             | subgrupos, integración    |               | al tablero](Laboratorio_Sesion_3.html)                                        |
+|        |             | cuantitativa-cualitativa, |               |                                                                               |
+|        |             | tablero de personas,      |               |                                                                               |
+|        |             | informe y devolución.     |               |                                                                               |
+|        |             | **Entrega del examen      |               |                                                                               |
+|        |             | final**                   |               |                                                                               |
++--------+-------------+---------------------------+---------------+-------------------------------------------------------------------------------+
 
 \* Todo el material oficial del curso (presentaciones, enunciados de los
 controles, bases de datos, examen) está disponible en la página oficial
@@ -130,23 +132,10 @@ laboratorios complementarios, que se agregan a medida que se publican.
 
 ## Evaluación
 
-+------------------+-------------+---------------------+-------------+
-| Componente       | Cuándo      | Formato             | Peso        |
-+:=================+:===========:+:====================+:===========:+
-| Trabajos         | Sesiones 1  | Grupal, en clases;  | 60%         |
-| grupales en      | a 6         | grupos estables de  |             |
-| clases (6, uno   |             | 3 a 4 personas. Se  |             |
-| por sesión)      |             | promedian las 5     |             |
-|                  |             | mejores             |             |
-|                  |             | calificaciones de   |             |
-|                  |             | las 6               |             |
-+------------------+-------------+---------------------+-------------+
-| Examen final     | Se entrega  | Individual o en     | 40%         |
-|                  | el 21-11;   | parejas, no         |             |
-|                  | plazo dom   | presencial          |             |
-|                  | 06-12,      |                     |             |
-|                  | 23:59 hrs   |                     |             |
-+------------------+-------------+---------------------+-------------+
+| Componente | Cuándo | Formato | Peso |
+|:---|:--:|:---|:--:|
+| Trabajos grupales en clases (6, uno por sesión) | Sesiones 1 a 6 | Grupal, en clases; grupos estables de 3 a 4 personas. Se promedian las 5 mejores calificaciones de las 6 | 60% |
+| Examen final | Se entrega el 21-11; plazo dom 06-12, 23:59 hrs | Individual o en parejas, no presencial | 40% |
 
 Todos los trabajos grupales tienen solución abierta y se entregan en
 Canvas al terminar la actividad, en formato PPT o PDF. El examen final

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis psicométrico de escalas aditivas · Diagnóstico Organizacional MCG UDP</title>
+<meta name="description" content="Apunte N° 5 del curso Diagnóstico Organizacional (MCG, UDP). Cuatro pasos para verificar una escala aditiva (descriptivos, dimensionalidad, fiabilidad, puntuaciones) y dictaminar si el índice sirve para un tablero de personas.">
+<meta name="author" content="René Gempp">
+<style>
+  /* ===== Plantilla base de la serie de apuntes DO MCG, v1 (2026) · misma línea que la serie PyE ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+    --ambar:#B45309; --ambar-claro:#FEF3C7;
+    --verde:#15803D; --verde-claro:#DCFCE7;
+    /* alias para figuras SVG heredadas */
+    --fg:var(--tinta); --muted:var(--gris); --accent:var(--rojo); --accent-soft:var(--tinte);
+    --rule:var(--borde); --note-bg:var(--gris-claro); --note-border:var(--acero);
+    --ex-bg:var(--tinte); --ex-border:var(--rojo); --warn-bg:var(--ambar-claro); --warn-border:var(--ambar);
+    --code-bg:var(--gris-claro); --bg:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  .lead{margin:1rem 0 0; color:var(--acero); font-size:1rem}
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros: idea clave (.box), ejemplo de caso (.box.ejemplo), atención (.box.atencion), mito versus evidencia (.mito) */
+  .box,.mito{
+    border:1px solid var(--borde); border-left:5px solid var(--acero);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--gris-claro);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .box p,.mito p{margin:0 0 .55rem}
+  .box p:last-child,.mito p:last-child{margin-bottom:0}
+  .box ul,.box ol{margin-bottom:.4rem}
+  .box .label{
+    display:block; font-weight:700; color:var(--acero);
+    font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.35rem;
+  }
+  .box.ejemplo,.mito{border-left-color:var(--rojo); background:var(--tinte)}
+  .box.ejemplo .label{color:var(--rojo)}
+  .box.atencion{border-left-color:var(--ambar); background:var(--ambar-claro)}
+  .box.atencion .label{color:var(--ambar)}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tablas */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Figuras */
+  figure,.figura{margin:0 0 1.4rem}
+  figure img,figure svg{max-width:100%;height:auto;display:block;margin:0 auto}
+  figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
+  code{background:var(--gris-claro);padding:.1em .35em;border-radius:4px}
+  pre{background:var(--gris-claro);padding:.9rem 1rem;border-radius:8px;overflow-x:auto}
+  /* Glosario */
+  dl.glosario dt{font-weight:700;margin-top:.7rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.95rem}
+  dl.glosario dd{margin:0 0 .3rem 0}
+  /* Referencias con sangría francesa */
+  .referencias p,.refs p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .box,.mito,table,figure{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes · Diagnóstico Organizacional · N° 5</p>
+  <h1>Análisis psicométrico de escalas aditivas: cuatro pasos antes de convertir una encuesta en indicador</h1>
+  <p class="meta">
+    Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026<br>
+    Apunte N° 5 · Sesión 5 (viernes 20-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Casi todos los informes de clima, engagement o cultura que llegan a un comité directivo presentan índices por dimensión: liderazgo 4,2; comunicación 3,8; carga de trabajo 3,1. Esos índices se construyen sumando o promediando las respuestas a varios ítems, y la operación parece tan natural que rara vez se pregunta si es legítima. Sin embargo, la suma solo tiene sentido si los ítems miden lo mismo, en la misma dirección y con un error tolerable. Cuando alguna de esas condiciones falla, el índice mezcla constructos, reacciona a cosas que nadie pretendía medir o cambia de una ola a otra por puro azar. Un tablero de personas alimentado con índices así controla ruido, y las decisiones que se toman sobre ellos (metas, comparaciones entre unidades, evaluación de jefaturas) heredan el problema.</p>
+<p>Este apunte presenta la secuencia mínima de verificación de una escala aditiva después de aplicada: descriptivos de ítems, dimensionalidad, fiabilidad y construcción de puntuaciones, más un quinto paso propio de este curso, el dictamen sobre la aptitud del índice para seguimiento. Complementa la guía A0 (cómo ejecutar cada análisis en JASP) y usa como hilo los dos cuestionarios reales de la sesión 5. Al terminarlo, el lector podrá leer una tabla de cargas factoriales y una tabla de fiabilidad, decidir qué hacer con un ítem que no funciona y explicar a un gerente por qué un alfa de .85 no autoriza, por sí solo, a poner una meta sobre ese índice.</p>
+
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>Una escala aditiva supone que sus ítems comparten una causa común. Esa suposición se verifica en cuatro pasos ordenados. Primero, los descriptivos de cada ítem muestran si discrimina (usa varias alternativas, no tiene efecto techo) y si está completo (perdidos bajo 5%); aquí se recodifican los ítems inversos, decisión que se toma por el contenido y se comprueba con los datos. Segundo, la dimensionalidad se examina en la matriz de correlaciones (los ítems de una escala deben correlacionar entre sí por sobre .15 y más que con los de otras escalas) y se formaliza con un análisis factorial exploratorio, cuya pregunta no es cuántos factores hay en abstracto sino si los datos reproducen las dimensiones que el cuestionario prometía.</p>
+<p>Tercero, la fiabilidad (alfa de Cronbach y omega de McDonald) estima qué proporción de la varianza del índice es señal; .70 sirve para diagnosticar una vez, .80 para comparar unidades y olas. El alfa no indica unidimensionalidad: una escala con dos factores correlacionados puede alcanzar .85, por lo que la fiabilidad va después de la dimensionalidad y nunca la reemplaza. Cuarto, la puntuación se construye como promedio de ítems, se verifica su distribución y sus correlaciones con las demás escalas, y solo se agrega por unidad cuando hay acuerdo intragrupo (rWG ≥ .70), tamaño suficiente (n ≥ 10) y anonimato resguardado.</p>
+<p>El quinto paso es el dictamen. Cada ítem se mantiene, elimina, reasigna o reescribe combinando la evidencia estadística con su contenido y con el uso del indicador. Cada escala se clasifica como apta para seguimiento, apta solo para diagnóstico o no apta. En los datos de la sesión, un cuestionario con todas sus escalas sobre alfa .80 contenía una dimensión que era en realidad dos constructos y tres escalas con efecto techo que no podrán detectar cambios. La psicometría es, en este curso, el control de calidad de los indicadores de personas (Merchant &amp; Van der Stede, 2017): dice si el indicador mide; el diseño del sistema de control dice si conviene usarlo como meta.</p>
+</div>
+
+<h2>C. Los conceptos</h2>
+
+<h3>Escalas aditivas y la lógica de la suma</h3>
+<p>Una escala aditiva, o sumativa, es un conjunto de ítems con el mismo formato de respuesta cuyas puntuaciones se suman o promedian para representar un constructo (Spector, 1992). La convención es tan extendida que suele olvidarse que descansa sobre un modelo: cada respuesta se concibe como el efecto de una variable latente común (el constructo) más un error específico del ítem. Si el modelo se cumple, al sumar los ítems la parte común se acumula y los errores tienden a cancelarse; el total es una medida más estable que cualquier ítem aislado (DeVellis &amp; Thorpe, 2022). Si no se cumple, la suma combina cosas distintas y su interpretación se vuelve indeterminada.</p>
+<p>Tres supuestos están implícitos. Unidimensionalidad: todos los ítems responden al mismo constructo. Direccionalidad: todos apuntan en el mismo sentido, de modo que un ítem redactado al revés debe recodificarse. Error tolerable: la varianza de error acumulada es pequeña respecto de la varianza común. Los cuatro pasos del análisis psicométrico son la comprobación empírica de estos tres supuestos, en el orden en que se necesitan (Figura 1).</p>
+
+<figure class="figura">
+<svg viewBox="0 0 760 170" width="100%" role="img" aria-labelledby="f1t" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+<title id="f1t">Los cuatro pasos del análisis psicométrico y el dictamen</title>
+<defs><marker id="f1a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<g>
+<rect x="8" y="30" width="130" height="80" rx="8" fill="var(--note-bg)" stroke="var(--rule)"/><text x="73" y="58" text-anchor="middle" font-weight="700">1. Descriptivos</text><text x="73" y="78" text-anchor="middle" font-size="11.5">frecuencias, techo,</text><text x="73" y="94" text-anchor="middle" font-size="11.5">perdidos, inversos</text>
+<rect x="160" y="30" width="130" height="80" rx="8" fill="var(--note-bg)" stroke="var(--rule)"/><text x="225" y="58" text-anchor="middle" font-weight="700">2. Dimensionalidad</text><text x="225" y="78" text-anchor="middle" font-size="11.5">correlaciones,</text><text x="225" y="94" text-anchor="middle" font-size="11.5">análisis factorial</text>
+<rect x="312" y="30" width="130" height="80" rx="8" fill="var(--note-bg)" stroke="var(--rule)"/><text x="377" y="58" text-anchor="middle" font-weight="700">3. Fiabilidad</text><text x="377" y="78" text-anchor="middle" font-size="11.5">alfa, omega,</text><text x="377" y="94" text-anchor="middle" font-size="11.5">ítem-resto</text>
+<rect x="464" y="30" width="130" height="80" rx="8" fill="var(--note-bg)" stroke="var(--rule)"/><text x="529" y="58" text-anchor="middle" font-weight="700">4. Puntuaciones</text><text x="529" y="78" text-anchor="middle" font-size="11.5">promedio, perdidos,</text><text x="529" y="94" text-anchor="middle" font-size="11.5">agregación</text>
+<rect x="616" y="30" width="136" height="80" rx="8" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="684" y="58" text-anchor="middle" font-weight="700" fill="var(--accent)">5. Dictamen</text><text x="684" y="78" text-anchor="middle" font-size="11.5">ítems: 4 salidas</text><text x="684" y="94" text-anchor="middle" font-size="11.5">escalas: semáforo</text>
+<line x1="138" y1="70" x2="158" y2="70" stroke="currentColor" stroke-width="1.5" marker-end="url(#f1a)"/><line x1="290" y1="70" x2="310" y2="70" stroke="currentColor" stroke-width="1.5" marker-end="url(#f1a)"/><line x1="442" y1="70" x2="462" y2="70" stroke="currentColor" stroke-width="1.5" marker-end="url(#f1a)"/><line x1="594" y1="70" x2="614" y2="70" stroke="currentColor" stroke-width="1.5" marker-end="url(#f1a)"/>
+<text x="73" y="140" text-anchor="middle" font-size="11" fill="var(--muted)">¿discrimina?</text><text x="225" y="140" text-anchor="middle" font-size="11" fill="var(--muted)">¿van juntos?</text><text x="377" y="140" text-anchor="middle" font-size="11" fill="var(--muted)">¿cuánto error?</text><text x="529" y="140" text-anchor="middle" font-size="11" fill="var(--muted)">¿cómo se suma?</text><text x="684" y="140" text-anchor="middle" font-size="11" fill="var(--muted)">¿sirve para el tablero?</text>
+</g></svg>
+<figcaption>Figura 1. Secuencia de verificación de una escala aditiva. El orden importa: la fiabilidad se calcula sobre una estructura ya comprobada. Elaboración propia a partir de DeVellis y Thorpe (2022).</figcaption>
+</figure>
+
+<h3>Paso 1: descriptivos de ítems e ítems inversos</h3>
+<p>El primer paso responde una pregunta sencilla: ¿aporta información este ítem? Se examinan la distribución de frecuencias (si se usan todas las alternativas), la media, la mediana, la desviación estándar, la asimetría, los valores fuera de rango y el porcentaje de datos perdidos. Un ítem con el 95% de las respuestas en las dos categorías superiores tiene efecto techo: casi no varía entre personas y, por tanto, casi no puede correlacionar con nada ni detectar cambios entre olas. En clima organizacional el techo es frecuente en ítems de identificación con la empresa y de satisfacción general, y puede reflejar una fortaleza real, deseabilidad social o un ítem mal calibrado; los datos por sí solos no permiten distinguirlo, pero sí advierten que el ítem servirá poco para seguimiento. Los perdidos por ítem se toleran bajo 5%; entre 5% y 15% el ítem merece revisión (¿es sensible?, ¿confuso?) y sobre 15% el ítem o la aplicación tienen un problema (Groves et al., 2009).</p>
+<p>En este paso se recodifican los ítems inversos, aquellos redactados en sentido contrario al constructo. La regla aritmética es trivial (en una escala de 1 a 5, el nuevo valor es 6 menos el original); la decisión no lo es. Se toma por el contenido del ítem y se verifica con los datos: un ítem inverso correctamente identificado correlaciona negativamente con el resto de su escala antes de recodificar, y positivamente después. Si el texto y los datos se contradicen, los datos muestran cómo leyeron las personas el ítem, y el texto, lo que se quiso preguntar; el informe debe decir ambas cosas.</p>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · Cuestionario de clima de la demostración</span>
+  <p>El ítem COM03 dice textualmente "En mi sucursal no comunicamos cordialmente". Leído literalmente es un ítem inverso. Pero el 76% de las 625 personas estuvo de acuerdo, sus correlaciones con los otros cuatro ítems de Comunicaciones van de .51 a .70 y su correlación ítem-resto (.72) es la más alta de la escala. Los encuestados leyeron "nos comunicamos": el "no" es un error de tipeo del cuestionario original. Recodificarlo por fe en el texto habría producido una correlación de −.72 con su escala y habría hundido el alfa de Comunicaciones de .85 a cerca de .60. La decisión correcta es no recodificar, registrar el error y corregir el texto en la próxima aplicación.</p>
+</div>
+
+<h3>Paso 2: dimensionalidad</h3>
+<p>La pregunta del segundo paso no es cuántos factores hay en los datos, sino si los datos reproducen las dimensiones que el cuestionario prometía. Por eso el análisis exige un plan de dimensiones escrito antes de abrir el software: la planilla que indica qué ítems forman cada escala. Hay dos aproximaciones complementarias.</p>
+<p>La primera es el examen de la matriz de correlaciones. Los ítems de una misma escala deben correlacionar positivamente entre sí (por sobre .15 como mínimo y por sobre .30 en escalas bien construidas) y esas correlaciones deben ser mayores que las que cada ítem tiene con los ítems de otras escalas. Un ítem que correlaciona más con otra escala está mal ubicado; uno que correlaciona poco con todos es ruido o mide otra cosa. Con 26 ítems la matriz tiene 325 correlaciones, de modo que se lee con un mapa de calor y no celda por celda; los bloques nítidos a lo largo de la diagonal son escalas que funcionan, y los bloques que se funden son escalas que no se distinguen.</p>
+<p>La segunda es el análisis factorial exploratorio (AFE), que agrupa los ítems según sus correlaciones en un número reducido de variables latentes y entrega, para cada ítem, su carga en cada factor (la correlación ítem-factor) y su comunalidad (la proporción de varianza explicada por los factores). Cuatro decisiones técnicas determinan la calidad de la solución (Fabrigar et al., 1999; Costello &amp; Osborne, 2005). El método de extracción debe ser un análisis factorial propiamente tal (mínimos residuos o máxima verosimilitud), no el análisis de componentes principales que muchos programas ofrecen por defecto y que, al no modelar el error, infla las cargas. El número de factores se decide con el análisis paralelo (Horn, 1965), que retiene solo los factores cuyos autovalores superan a los que producirían datos aleatorios del mismo tamaño; el criterio de Kaiser (autovalor mayor que 1) tiende a sobreestimar y el gráfico de sedimentación es subjetivo, por lo que ambos se usan como apoyo. La rotación debe ser oblicua (oblimin o promax), porque las dimensiones del clima correlacionan entre sí y una rotación ortogonal como varimax fuerza una independencia inexistente. Por último, un ítem se asigna al factor en que carga .30 o más; si carga .30 o más en dos factores, o la diferencia entre sus cargas es menor que .20, tiene carga cruzada y la decisión sobre él se toma por contenido.</p>
+
+<div class="box">
+  <span class="label">Idea clave</span>
+  <p>El AFE no decide: muestra la estructura. La comparación entre la solución encontrada y el plan original es el hallazgo del análisis, y una discrepancia no es un error de los datos sino información sobre el cuestionario. Dos escalas que el diseñador separó pueden ser una sola para quienes responden, y una escala que el diseñador unió puede ser dos.</p>
+</div>
+
+<figure class="figura">
+<svg viewBox="0 0 760 250" width="100%" role="img" aria-labelledby="f2t" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+<title id="f2t">Autovalores observados frente a análisis paralelo</title>
+<line x1="60" y1="200" x2="730" y2="200" stroke="currentColor" stroke-width="1"/><line x1="60" y1="20" x2="60" y2="200" stroke="currentColor" stroke-width="1"/>
+<text x="395" y="238" text-anchor="middle" font-size="12" fill="var(--muted)">Factor (orden de extracción)</text>
+<text x="20" y="110" text-anchor="middle" font-size="12" fill="var(--muted)" transform="rotate(-90 20 110)">Autovalor</text>
+<line x1="60" y1="170" x2="730" y2="170" stroke="var(--muted)" stroke-dasharray="3 4"/><text x="700" y="165" font-size="11" fill="var(--muted)">Kaiser = 1</text>
+<polyline points="100,30 180,135 260,150 340,165 420,172 500,185 580,188 660,190" fill="none" stroke="var(--accent)" stroke-width="2"/>
+<g fill="var(--accent)"><circle cx="100" cy="30" r="4"/><circle cx="180" cy="135" r="4"/><circle cx="260" cy="150" r="4"/><circle cx="340" cy="165" r="4"/><circle cx="420" cy="172" r="4"/><circle cx="500" cy="185" r="4"/><circle cx="580" cy="188" r="4"/><circle cx="660" cy="190" r="4"/></g>
+<polyline points="100,160 180,163 260,165 340,167 420,169 500,171 580,173 660,175" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="6 4"/>
+<g fill="currentColor"><rect x="96" y="156" width="8" height="8"/><rect x="176" y="159" width="8" height="8"/><rect x="256" y="161" width="8" height="8"/><rect x="336" y="163" width="8" height="8"/><rect x="416" y="165" width="8" height="8"/><rect x="496" y="167" width="8" height="8"/><rect x="576" y="169" width="8" height="8"/><rect x="656" y="171" width="8" height="8"/></g>
+<g font-size="11.5" text-anchor="middle" fill="var(--muted)"><text x="100" y="216">1</text><text x="180" y="216">2</text><text x="260" y="216">3</text><text x="340" y="216">4</text><text x="420" y="216">5</text><text x="500" y="216">6</text><text x="580" y="216">7</text><text x="660" y="216">8</text></g>
+<rect x="455" y="90" width="12" height="3" fill="var(--accent)"/><text x="472" y="94" font-size="11.5">autovalores observados</text>
+<rect x="455" y="108" width="12" height="3" fill="currentColor"/><text x="472" y="112" font-size="11.5">percentil 95 de datos aleatorios</text>
+<text x="420" y="60" font-size="11.5" fill="var(--accent)" text-anchor="middle">cinco factores superan al azar;</text><text x="420" y="75" font-size="11.5" fill="var(--accent)" text-anchor="middle">el sexto cae por debajo</text>
+</svg>
+<figcaption>Figura 2. Lógica del análisis paralelo: se retienen los factores cuyo autovalor observado supera al que producirían datos aleatorios con el mismo número de casos e ítems. Esquema con la forma de los resultados del cuestionario de demostración (26 ítems, n = 625). Elaboración propia a partir de Horn (1965).</figcaption>
+</figure>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · Seis escalas previstas, cinco encontradas</span>
+  <p>El cuestionario de la demostración preveía seis escalas. El análisis paralelo y el criterio de Kaiser coincidieron en cinco factores. Cuatro escalas (Ambiente físico, Comunicaciones, Claridad organizacional y Carga de trabajo) se reprodujeron con cargas entre .49 y .94 y sin cruces. Los cinco ítems de Identidad y compromiso y los cuatro de Satisfacción laboral cargaron en un mismo factor; las puntuaciones de ambas escalas correlacionan .80, lo que corregido por la fiabilidad de cada una equivale a una correlación cercana a .93: en estos datos son el mismo constructo. Además, SATIS04 ("En general, en XXX existe un buen ambiente de trabajo") cargó .45 en su factor y .35 en Comunicaciones; su texto habla del clima general, no de la satisfacción de la persona. Las opciones defendibles son fusionar las dos escalas en un índice de vínculo con la organización, o mantenerlas separadas declarando que la distinción es conceptual y no empírica; y reasignar o reescribir SATIS04. Reportar las seis dimensiones como independientes sin advertir nada no es una opción defendible.</p>
+</div>
+
+<h3>Paso 3: fiabilidad</h3>
+<p>La fiabilidad es la proporción de la varianza de las puntuaciones observadas que corresponde a diferencias reales entre las personas y no a error de medición. Una fiabilidad de .80 indica que el 20% de la varianza del índice es ruido. En encuestas organizacionales se estima casi siempre por consistencia interna, es decir, por el grado en que los ítems de una escala concuerdan entre sí en una sola aplicación; la fiabilidad test-retest vista en la sesión 3 exige volver a encuestar y rara vez es viable.</p>
+<p>El coeficiente alfa de Cronbach (1951) es el estimador más usado. En su forma estandarizada depende solo de dos cantidades, el número de ítems <em>k</em> y su correlación promedio r̄: α = k·r̄ / [1 + (k − 1)·r̄]. La fórmula explica sus propiedades y sus trampas (Cortina, 1993). Con cuatro ítems y r̄ = .50 el alfa es .80; con ocho ítems y r̄ = .33, también .80; con veinte ítems de r̄ = .20, .83. El alfa sube con el número de ítems aunque sean mediocres y baja con ítems inversos sin recodificar o con ítems que miden otra cosa. Lo que el alfa no hace es indicar unidimensionalidad: una escala formada por dos factores correlacionados alcanza con facilidad valores de .85, porque sus ítems correlacionan entre sí aunque no por una única causa común (Schmitt, 1996; Sijtsma, 2009). Por eso el paso 3 va después del paso 2 y no lo sustituye. Un alfa muy alto, sobre .95, tampoco es una buena noticia: suele indicar ítems redundantes que repiten la misma frase con otras palabras y cubren mal el constructo.</p>
+
+<figure class="figura">
+<svg viewBox="0 0 760 230" width="100%" role="img" aria-labelledby="f3t" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+<title id="f3t">Dos escalas con el mismo alfa y distinta estructura</title>
+<g>
+<text x="190" y="22" text-anchor="middle" font-weight="700">Escala A: un factor, 4 ítems, r̄ = .50</text>
+<circle cx="190" cy="70" r="22" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="190" y="74" text-anchor="middle" font-size="11.5" fill="var(--accent)">F</text>
+<g fill="var(--note-bg)" stroke="var(--rule)"><rect x="70" y="150" width="50" height="30" rx="5"/><rect x="140" y="150" width="50" height="30" rx="5"/><rect x="210" y="150" width="50" height="30" rx="5"/><rect x="280" y="150" width="50" height="30" rx="5"/></g>
+<g font-size="11.5" text-anchor="middle"><text x="95" y="170">i1</text><text x="165" y="170">i2</text><text x="235" y="170">i3</text><text x="305" y="170">i4</text></g>
+<g stroke="currentColor" stroke-width="1.2"><line x1="178" y1="89" x2="97" y2="150"/><line x1="186" y1="92" x2="165" y2="150"/><line x1="196" y1="92" x2="233" y2="150"/><line x1="205" y1="88" x2="303" y2="150"/></g>
+<text x="190" y="210" text-anchor="middle" font-size="12">α = .80 · la suma mide un constructo</text>
+</g>
+<line x1="380" y1="15" x2="380" y2="215" stroke="var(--rule)"/>
+<g>
+<text x="570" y="22" text-anchor="middle" font-weight="700">Escala B: dos factores, 8 ítems, r̄ = .33</text>
+<circle cx="490" cy="70" r="22" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="490" y="74" text-anchor="middle" font-size="11.5" fill="var(--accent)">F1</text>
+<circle cx="650" cy="70" r="22" fill="var(--accent-soft)" stroke="var(--accent)"/><text x="650" y="74" text-anchor="middle" font-size="11.5" fill="var(--accent)">F2</text>
+<path d="M512,66 Q570,40 628,66" fill="none" stroke="var(--muted)" stroke-dasharray="4 3"/><text x="570" y="48" text-anchor="middle" font-size="10.5" fill="var(--muted)">r = .45</text>
+<g fill="var(--note-bg)" stroke="var(--rule)"><rect x="410" y="150" width="34" height="30" rx="5"/><rect x="452" y="150" width="34" height="30" rx="5"/><rect x="494" y="150" width="34" height="30" rx="5"/><rect x="536" y="150" width="34" height="30" rx="5"/><rect x="586" y="150" width="34" height="30" rx="5"/><rect x="628" y="150" width="34" height="30" rx="5"/><rect x="670" y="150" width="34" height="30" rx="5"/><rect x="712" y="150" width="34" height="30" rx="5"/></g>
+<g font-size="11" text-anchor="middle"><text x="427" y="170">i1</text><text x="469" y="170">i2</text><text x="511" y="170">i3</text><text x="553" y="170">i4</text><text x="603" y="170">i5</text><text x="645" y="170">i6</text><text x="687" y="170">i7</text><text x="729" y="170">i8</text></g>
+<g stroke="currentColor" stroke-width="1.2"><line x1="478" y1="89" x2="429" y2="150"/><line x1="485" y1="92" x2="469" y2="150"/><line x1="496" y1="92" x2="511" y2="150"/><line x1="504" y1="89" x2="551" y2="150"/><line x1="638" y1="89" x2="605" y2="150"/><line x1="646" y1="92" x2="645" y2="150"/><line x1="656" y1="92" x2="687" y2="150"/><line x1="664" y1="89" x2="727" y2="150"/></g>
+<text x="570" y="210" text-anchor="middle" font-size="12">α = .80 · la suma mezcla dos constructos</text>
+</g></svg>
+<figcaption>Figura 3. El coeficiente alfa depende del número de ítems y de su correlación promedio, no de la estructura: ambas escalas alcanzan .80. Solo el análisis de dimensionalidad distingue la escala A de la B. Elaboración propia a partir de Cortina (1993).</figcaption>
+</figure>
+
+<p>El coeficiente omega de McDonald (1999) estima la fiabilidad a partir de las cargas de un modelo de un factor: la proporción de la varianza de la suma atribuible al factor común. A diferencia del alfa, no supone que todos los ítems midan el constructo con la misma intensidad; cuando las cargas son desiguales el alfa subestima la fiabilidad, y cuando los errores de los ítems correlacionan la sobreestima (Dunn et al., 2014; Hayes &amp; Coutts, 2020; Flora, 2020). JASP entrega ambos con un clic. La regla práctica del curso es reportar los dos: si coinciden, cualquiera comunica lo mismo; si difieren, omega es la estimación defendible y la diferencia es información sobre la escala. Ninguno de los dos detecta un problema de dimensionalidad, como muestra la Figura 3.</p>
+<p>Dos estadísticos por ítem acompañan al coeficiente. La correlación ítem-resto (entre el ítem y la suma de los demás) debe ser positiva y, como orientación, superior a .30; valores bajos señalan ítems que aportan poco. El alfa si se elimina el ítem indica cuánto cambiaría la fiabilidad sin él: si sube de forma apreciable, el ítem resta consistencia. Ninguno de los dos autoriza por sí solo a eliminar un ítem; un ítem con estadísticos modestos puede ser el único que cubre una faceta del constructo, y eliminarlo mejora el alfa a costa de la validez de contenido (Streiner et al., 2015).</p>
+
+<table>
+  <thead><tr><th>Fiabilidad</th><th>Lectura habitual</th><th>Qué permite</th><th>Advertencia</th></tr></thead>
+  <tbody>
+    <tr><td>&lt; .60</td><td>Inaceptable</td><td>Nada: la puntuación es mayoritariamente ruido</td><td>Revisar inversos, dimensionalidad y codificación antes de concluir</td></tr>
+    <tr><td>.60 a .69</td><td>Cuestionable</td><td>Exploración; comparaciones gruesas entre grupos grandes</td><td>No fijar metas ni comparar unidades pequeñas</td></tr>
+    <tr><td>.70 a .79</td><td>Aceptable</td><td>Diagnóstico a nivel organizacional; correlaciones entre escalas</td><td>Umbral de Nunnally para investigación exploratoria, no para decisiones sobre personas</td></tr>
+    <tr><td>.80 a .89</td><td>Buena</td><td>Comparaciones entre unidades con n suficiente; seguimiento entre olas</td><td>Verificar que no se deba solo a muchos ítems</td></tr>
+    <tr><td>≥ .90</td><td>Muy alta</td><td>Decisiones con consecuencias, siempre con otras fuentes</td><td>Sobre .95, probable redundancia: revisar la cobertura del constructo</td></tr>
+  </tbody>
+</table>
+<p>Los umbrales son convenciones. Lance et al. (2006) rastrearon el origen del famoso .70 y mostraron que Nunnally (1978) lo propuso para etapas tempranas de investigación, recomendando .80 para investigación básica y valores mayores para decisiones aplicadas; la mayoría de los artículos que lo citan omiten esa distinción. Para este curso la regla operativa es .70 para diagnosticar una vez, .80 para comparar unidades y hacer seguimiento, y en todos los casos leer las diferencias contra el error estándar de medición, EEM = DE × √(1 − fiabilidad), que es el margen de error de la puntuación de una persona o de una unidad.</p>
+
+<h3>Paso 4: puntuaciones y agregación</h3>
+<p>Comprobada la estructura y estimado el error, se construye la puntuación. El promedio de los ítems es la opción por defecto: conserva la métrica de respuesta (1 a 5) y se interpreta directamente. La suma cambia de métrica según el número de ítems y solo es útil cuando existen normas en esa escala. El porcentaje del máximo posible, POMP = (promedio − mínimo)/(máximo − mínimo) × 100, facilita comparar escalas con distinto formato y es el que usan varios benchmarks comerciales (Cohen et al., 1999). Las puntuaciones estandarizadas sirven para análisis internos, nunca para reportar a la dirección. Con datos perdidos, la práctica recomendada es promediar los ítems disponibles cuando la persona respondió al menos dos tercios de la escala y dejar la puntuación perdida en caso contrario, sin imputar la media del ítem en informes diagnósticos, porque reduce artificialmente la varianza.</p>
+<p>Las puntuaciones se verifican como cualquier variable: distribución, media, desviación estándar y correlaciones con las demás escalas, que deben ser positivas y menores que la fiabilidad de cada una. Una correlación entre escalas de .80 o más indica que no se distinguen, como ocurrió con Identidad y Satisfacción.</p>
+<p>Pasar de la persona a la unidad (sucursal, área, equipo) es un cambio de nivel de análisis, y la psicometría individual no garantiza que la media de la unidad signifique algo. Tres condiciones deben cumplirse (Chan, 1998; Bliese, 2000). Primera, acuerdo intragrupo: la media representa un clima compartido solo si las personas concuerdan. El índice rWG compara la varianza observada dentro de la unidad con la que se esperaría si las respuestas fueran aleatorias (James et al., 1984); la convención de .70 indica acuerdo suficiente, y valores bajos revelan subgrupos o un clima débil, en cuyo caso la media no describe a nadie (LeBreton &amp; Senter, 2008). Nivel (media) y fuerza (acuerdo) se reportan juntos (Figura 4). Segunda, tamaño mínimo: con menos de cinco a siete respondientes la media es inestable; las políticas de encuesta suelen fijar n ≥ 5 para reportar y n ≥ 10 para desagregar por subgrupos, y la tasa de respuesta por unidad importa tanto como el n. Tercera, anonimato: si la unidad es pequeña y la jefatura recibe los resultados, las respuestas dejan de ser anónimas en la práctica y la siguiente ola lo reflejará; las unidades pequeñas se fusionan con otras afines o se reportan solo al nivel superior.</p>
+
+<figure class="figura">
+<svg viewBox="0 0 760 230" width="100%" role="img" aria-labelledby="f4t" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+<title id="f4t">Nivel y fuerza del clima en dos unidades con la misma media</title>
+<g>
+<text x="190" y="22" text-anchor="middle" font-weight="700">Unidad 1: media 3,6 · rWG = .85</text>
+<line x1="60" y1="170" x2="330" y2="170" stroke="currentColor"/>
+<g fill="var(--accent)" opacity=".85"><rect x="75" y="165" width="40" height="5"/><rect x="130" y="150" width="40" height="20"/><rect x="185" y="70" width="40" height="100"/><rect x="240" y="100" width="40" height="70"/><rect x="295" y="160" width="40" height="10"/></g>
+<g font-size="11.5" text-anchor="middle" fill="var(--muted)"><text x="95" y="188">1</text><text x="150" y="188">2</text><text x="205" y="188">3</text><text x="260" y="188">4</text><text x="315" y="188">5</text></g>
+<text x="190" y="212" text-anchor="middle" font-size="12">clima compartido: la media representa a la unidad</text>
+</g>
+<line x1="380" y1="15" x2="380" y2="215" stroke="var(--rule)"/>
+<g>
+<text x="570" y="22" text-anchor="middle" font-weight="700">Unidad 2: media 3,6 · rWG = .20</text>
+<line x1="440" y1="170" x2="710" y2="170" stroke="currentColor"/>
+<g fill="var(--accent)" opacity=".85"><rect x="455" y="95" width="40" height="75"/><rect x="510" y="125" width="40" height="45"/><rect x="565" y="160" width="40" height="10"/><rect x="620" y="130" width="40" height="40"/><rect x="675" y="85" width="40" height="85"/></g>
+<g font-size="11.5" text-anchor="middle" fill="var(--muted)"><text x="475" y="188">1</text><text x="530" y="188">2</text><text x="585" y="188">3</text><text x="640" y="188">4</text><text x="695" y="188">5</text></g>
+<text x="570" y="212" text-anchor="middle" font-size="12">dos subgrupos: la media no describe a nadie</text>
+</g></svg>
+<figcaption>Figura 4. Dos unidades con la misma media y distinta fuerza del clima. Un tablero que muestra solo la media las trata como iguales. Elaboración propia a partir de LeBreton y Senter (2008) y Schneider et al. (2002).</figcaption>
+</figure>
+
+<div class="box atencion">
+  <span class="label">Atención</span>
+  <p>El acuerdo depende del referente del ítem (sesión 3) y del nivel al que opera la variable. En la demostración, Satisfacción tuvo rWG sobre .70 en 27 de 32 sucursales, pero Carga de trabajo lo tuvo bajo .70 en 28 de 32, porque la carga depende del cargo (administración y jefaturas reportan menos capacidad de cumplir en la jornada que caja y atención de público) y no de la sucursal. El nivel de agregación correcto para ese indicador es el cargo. Agregar por la unidad equivocada produce medias que no representan a nadie.</p>
+</div>
+
+<h3>Paso 5: el dictamen</h3>
+<p>El análisis culmina en decisiones. Para cada ítem hay cuatro salidas: mantener, eliminar, reasignar a otra dimensión o reescribir para la próxima aplicación. Un árbol simple ordena la decisión: ¿discrimina? ¿carga en el factor de su dimensión y correlaciona con sus ítems? ¿tiene carga cruzada? ¿su eliminación sube el alfa de manera apreciable con ítem-resto bajo? ¿mide algo que ningún otro ítem mide? En cada bifurcación la estadística y el contenido se leen juntos: un ítem puede tener estadísticos que invitan a eliminarlo y un contenido que obliga a reasignarlo, como SATIS04, o un texto que invita a recodificarlo y datos que lo prohíben, como COM03.</p>
+<p>Para cada escala, el dictamen clasifica su aptitud en tres categorías. Apta para seguimiento: unidimensional y coincidente con el plan, fiabilidad de .80 o más, sin techo ni piso y con varianza suficiente, agregable en las unidades que se reportarán y con ítems estables entre olas. Apta solo para diagnóstico: unidimensional pero con techo, poca varianza o fiabilidad entre .70 y .79, o agregable solo al nivel organizacional; describe una vez y orienta entrevistas, pero no admite metas ni comparaciones finas. No apta: dimensionalidad distinta del plan sin resolver, fiabilidad bajo .70, inversos sin recodificar o perdidos excesivos; se corrige el instrumento antes de reportar. La mayoría de las escalas de clima reales caen en la categoría intermedia, y eso no es un fracaso sino información sobre lo que el tablero puede y no puede hacer con ellas.</p>
+
+<h2>D. Qué dice la evidencia</h2>
+<h3>El estudio destacado: lo que se reporta y lo que se verifica</h3>
+<p>Flake et al. (2017) revisaron las prácticas de validación de escalas en 35 artículos publicados en un año en una revista líder de psicología social y de la personalidad, con 433 escalas en total. El hallazgo central fue la distancia entre lo que se reporta y lo que haría falta para justificar una suma: la evidencia de validez más frecuente fue el coeficiente alfa, mientras que la dimensionalidad (análisis factorial o equivalente) se reportó para una minoría de las escalas, y muchas medidas fueron modificadas por los autores (ítems eliminados, formatos cambiados) sin volver a examinar su estructura. Si eso ocurre en investigación revisada por pares, donde los incentivos favorecen el rigor, la situación en informes de consultoría y en encuestas internas es previsiblemente peor. El estudio documenta con precisión el error que este apunte intenta prevenir: tratar el alfa como certificado de calidad de una escala cuya estructura nadie comprobó.</p>
+<p>Hussey y Hughes (2020) fueron un paso más allá y pusieron a prueba 15 medidas de uso frecuente con datos de más de 80.000 participantes. Casi todas mostraron consistencia interna adecuada y la mayoría presentó estabilidad test-retest aceptable; sin embargo, una proporción alta falló en validez estructural (la estructura factorial prevista no se ajustaba a los datos) y en invarianza de medición entre grupos (los ítems no funcionaban igual para distintos subgrupos), y los autores observaron que las medidas con mejor consistencia interna no eran las de mejor estructura. Su conclusión, que la validez estructural y la invarianza son las propiedades menos reportadas y más frecuentemente violadas, coincide con los resultados de los dos cuestionarios de la sesión 5: todas las escalas superaron alfa .80 y, aun así, una dimensión era dos constructos y otras dos no se distinguían entre sí.</p>
+<h3>Otros hallazgos</h3>
+<p>Sobre la fuerza del clima, Schneider et al. (2002) mostraron en 134 sucursales bancarias que la relación entre el clima de servicio y la satisfacción de los clientes era más fuerte cuando el acuerdo dentro de la sucursal era alto: la fuerza del clima moderaba el efecto del nivel. La implicación para un tablero es directa: la misma media de clima predice cosas distintas según el acuerdo que la sustenta, de modo que reportar la media sin el acuerdo omite la mitad de la información. Sobre la elección del coeficiente de fiabilidad, Dunn et al. (2014) y Hayes y Coutts (2020) recomiendan omega sobre alfa con argumentos psicométricos y evidencia de simulación, aclarando que en escalas homogéneas la diferencia es pequeña; la recomendación de reportar ambos recoge ese matiz.</p>
+<h3>Chile</h3>
+<p>Los dos cuestionarios de la sesión son encuestas reales aplicadas por organizaciones chilenas de servicios, anonimizadas para uso docente, y sus resultados constituyen la evidencia local de este apunte. En la encuesta de clima (625 personas, 32 sucursales), diez de 26 ítems superaron el 85% de acuerdo, con medias de 4,4 a 4,6 en una escala de 1 a 5, un patrón de techo frecuente en encuestas internas chilenas en que las personas saben que la jefatura verá los resultados. En el cuestionario de ambiente laboral (800 personas, 46 sucursales), las respuestas en papel fueron sistemáticamente más altas que las respuestas en línea, con diferencias de hasta 0,23 puntos en Remuneración: un efecto de modalidad que debe declararse antes de comparar sucursales que respondieron de distinta forma. Ninguno de los dos patrones aparece en el coeficiente alfa; ambos aparecen en el paso 1.</p>
+
+<h2>E. Mito versus evidencia</h2>
+<div class="mito">
+  <p><span class="etiqueta">Mito:</span> "El cuestionario tiene un alfa de .96, así que es muy confiable y sus dimensiones están validadas".</p>
+  <p><span class="etiqueta ev">Evidencia:</span> El alfa de un cuestionario completo de 33 ítems que correlacionan positivamente entre sí será alto por construcción y no dice nada sobre las dimensiones (Cortina, 1993; Sijtsma, 2009). En el ejercicio de la sesión, la dimensión Autonomía y seguridad tuvo alfa .85 y dos factores nítidos; separadas, Autonomía alcanzó .77 y Seguridad .82. Flake et al. (2017) y Hussey y Hughes (2020) muestran que las escalas con alfa adecuado fallan con frecuencia en validez estructural.</p>
+  <p><span class="etiqueta pq">Por qué importa:</span> Un índice que suma dos constructos no indica qué debe cambiar cuando baja, y una meta sobre él puede cumplirse moviendo el componente más fácil.</p>
+</div>
+<div class="mito">
+  <p><span class="etiqueta">Mito:</span> "Si el ítem baja el alfa, se elimina".</p>
+  <p><span class="etiqueta ev">Evidencia:</span> El alfa si se elimina el ítem mide consistencia, no validez. Eliminar ítems para maximizar el alfa produce escalas estrechas y redundantes que cubren mal el constructo (Streiner et al., 2015; DeVellis &amp; Thorpe, 2022). En la demostración, SATIS04 subía el alfa de Satisfacción de .85 a .88 al eliminarse; la decisión defendible fue reasignarlo, porque su contenido mide clima general y no satisfacción, y no eliminarlo porque "molesta".</p>
+  <p><span class="etiqueta pq">Por qué importa:</span> La decisión sobre un ítem se toma por dato y por contenido; la estadística sola optimiza el número equivocado.</p>
+</div>
+<div class="mito">
+  <p><span class="etiqueta">Mito:</span> "Con una buena escala, la media por sucursal se puede comparar y rankear".</p>
+  <p><span class="etiqueta ev">Evidencia:</span> La media de una unidad representa un clima compartido solo si hay acuerdo (rWG ≥ .70) y tamaño suficiente (LeBreton &amp; Senter, 2008; Bliese, 2000), y la fuerza del clima modera la relación entre el nivel y los resultados (Schneider et al., 2002). En el ejercicio de la sesión, Liderazgo tuvo acuerdo insuficiente en 18 de 46 sucursales, porque el liderazgo es del jefe directo y hay varios jefes por sucursal. Además, dos medias que difieren menos que el error estándar de medición no difieren.</p>
+  <p><span class="etiqueta pq">Por qué importa:</span> Un ranking de sucursales construido sobre medias sin acuerdo ni margen de error crea diferencias inexistentes y las convierte en consecuencias para las jefaturas.</p>
+</div>
+
+<h2>F. Qué significa para el control de gestión</h2>
+<p>Un indicador de personas construido con una encuesta es una puntuación psicométrica con ficha de indicador. Las condiciones que Merchant y Van der Stede (2017) exigen a una medida para que sirva en un control de resultados (precisión, objetividad, oportunidad y comprensibilidad) tienen traducción directa: la precisión es la fiabilidad y su error estándar de medición; la comprensibilidad exige unidimensionalidad, porque un índice que suma dos constructos no se puede interpretar ni gestionar; la objetividad depende de que la medición no cambie según quién la administra ni según la modalidad de aplicación. La perspectiva de aprendizaje y crecimiento del cuadro de mando (Kaplan &amp; Norton, 1996) solo puede sostener relaciones causales con los resultados si sus indicadores miden lo que dicen medir; una relación entre un índice de clima mal construido y la rotación es ininterpretable aunque sea estadísticamente significativa.</p>
+<p>Tres mecanismos convierten una escala deficiente en un daño para el sistema de control. El error propagado: con fiabilidad .60 y desviación estándar 0,8, el intervalo del 95% de una persona es de ±1,0 puntos en una escala de 1 a 5; la mitad del recorrido es ruido. Las comparaciones no interpretables: dos unidades con medias 3,9 y 4,1 difieren menos que el error de medición, y un semáforo que las pinta de colores distintos crea un problema que no existe. Las metas sobre ruido: si la escala mezcla constructos o tiene efecto techo, la meta no dice qué cambiar o no puede cumplirse. A estos se suma el efecto Goodhart (Strathern, 1997): cuando el índice se convierte en meta de la jefatura, la jefatura tiene incentivos para gestionar el índice y no el clima, presionando respuestas o eligiendo quién responde, y el daño es mayor cuanto más pequeña la unidad y más borrosa la escala. La calidad psicométrica es condición necesaria pero no suficiente: una escala impecable usada con incentivos punitivos también se degrada.</p>
+<p>De aquí se sigue la división del trabajo entre el análisis psicométrico y el diseño del sistema de control. El primero dice si el indicador mide, con cuánto error y a qué nivel puede agregarse; el segundo dice si conviene usarlo como meta, con qué umbrales, con qué desagregación y con qué consecuencias. Las dos respuestas pueden ser distintas y el informe debe entregar ambas: Carga de trabajo, en la demostración, es un indicador apto para seguimiento si se desagrega por cargo, y no por sucursal; Claridad organizacional es un indicador fiable que, por su techo, no debería recibir una meta de mejora.</p>
+
+<h2>G. Para los controles y el examen</h2>
+<p>El Control 5 pide exactamente la secuencia de este apunte sobre un cuestionario real de 33 ítems: descriptivos con los ítems que piden atención, dimensionalidad con análisis paralelo y comparación entre dimensiones propuestas y encontradas, fiabilidad por dimensión con alfa y omega, dictamen por ítem con evidencia y contenido, y semáforo de aptitud por escala. El Control 6 aplica los mismos pasos a las escalas de Claridad y Liderazgo de la base TechNova antes de construir el informe y el tablero. La pregunta (b) del examen final exige un análisis exhaustivo de la calidad de un cuestionario de 53 ítems aplicado sin pilotaje a 978 personas, y la pregunta (a) pide decir qué condiciones metodológicas y de diseño del sistema de control harían defendible usar esa encuesta para fijar KPI y evaluar jefaturas de sucursal; la sección F es el esquema de respuesta.</p>
+<p>Preguntas de autoevaluación. ¿Por qué la fiabilidad se calcula después de la dimensionalidad y no antes? Dos escalas tienen alfa .80: una con cuatro ítems y otra con doce; ¿qué puede inferirse sobre la correlación promedio de sus ítems y sobre su cobertura? Un ítem redactado con "no" correlaciona positivamente con su escala: ¿se recodifica? Una dimensión propuesta tiene alfa .85 pero el análisis paralelo sugiere un factor más que el número propuesto: ¿qué se revisa primero? Una sucursal de nueve personas tiene la media de liderazgo más baja de la organización: ¿qué tres columnas faltan para interpretarla y qué regla de reporte se aplica? ¿En qué se diferencia el dictamen "apta solo para diagnóstico" de "no apta", y qué recomendación acompaña a cada uno?</p>
+
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Bliese, P. D. (2000). Within-group agreement, non-independence, and reliability: Implications for data aggregation and analysis. En K. J. Klein &amp; S. W. J. Kozlowski (Eds.), <em>Multilevel theory, research, and methods in organizations: Foundations, extensions, and new directions</em> (pp. 349–381). Jossey-Bass.</p>
+<p>Chan, D. (1998). Functional relations among constructs in the same content domain at different levels of analysis: A typology of composition models. <em>Journal of Applied Psychology, 83</em>(2), 234–246. https://doi.org/10.1037/0021-9010.83.2.234</p>
+<p>Cohen, P., Cohen, J., Aiken, L. S., &amp; West, S. G. (1999). The problem of units and the circumstance for POMP. <em>Multivariate Behavioral Research, 34</em>(3), 315–346. https://doi.org/10.1207/S15327906MBR3403_2</p>
+<p>Cortina, J. M. (1993). What is coefficient alpha? An examination of theory and applications. <em>Journal of Applied Psychology, 78</em>(1), 98–104. https://doi.org/10.1037/0021-9010.78.1.98</p>
+<p>Costello, A. B., &amp; Osborne, J. W. (2005). Best practices in exploratory factor analysis: Four recommendations for getting the most from your analysis. <em>Practical Assessment, Research &amp; Evaluation, 10</em>(7), 1–9. https://doi.org/10.7275/jyj1-4868</p>
+<p>Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. <em>Psychometrika, 16</em>(3), 297–334. https://doi.org/10.1007/BF02310555</p>
+<p>DeVellis, R. F., &amp; Thorpe, C. T. (2022). <em>Scale development: Theory and applications</em> (5.ª ed.). Sage.</p>
+<p>Dunn, T. J., Baguley, T., &amp; Brunsden, V. (2014). From alpha to omega: A practical solution to the pervasive problem of internal consistency estimation. <em>British Journal of Psychology, 105</em>(3), 399–412. https://doi.org/10.1111/bjop.12046</p>
+<p>Fabrigar, L. R., Wegener, D. T., MacCallum, R. C., &amp; Strahan, E. J. (1999). Evaluating the use of exploratory factor analysis in psychological research. <em>Psychological Methods, 4</em>(3), 272–299. https://doi.org/10.1037/1082-989X.4.3.272</p>
+<p>Flake, J. K., Pek, J., &amp; Hehman, E. (2017). Construct validation in social and personality research: Current practice and recommendations. <em>Social Psychological and Personality Science, 8</em>(4), 370–378. https://doi.org/10.1177/1948550617693063</p>
+<p>Flora, D. B. (2020). Your coefficient alpha is probably wrong, but which coefficient omega is right? A tutorial on using R to obtain better reliability estimates. <em>Advances in Methods and Practices in Psychological Science, 3</em>(4), 484–501. https://doi.org/10.1177/2515245920951747</p>
+<p>Groves, R. M., Fowler, F. J., Couper, M. P., Lepkowski, J. M., Singer, E., &amp; Tourangeau, R. (2009). <em>Survey methodology</em> (2.ª ed.). Wiley.</p>
+<p>Hayes, A. F., &amp; Coutts, J. J. (2020). Use omega rather than Cronbach's alpha for estimating reliability. But… <em>Communication Methods and Measures, 14</em>(1), 1–24. https://doi.org/10.1080/19312458.2020.1718629</p>
+<p>Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis. <em>Psychometrika, 30</em>(2), 179–185. https://doi.org/10.1007/BF02289447</p>
+<p>Hussey, I., &amp; Hughes, S. (2020). Hidden invalidity among 15 commonly used measures in social and personality psychology. <em>Advances in Methods and Practices in Psychological Science, 3</em>(2), 166–184. https://doi.org/10.1177/2515245919882903</p>
+<p>James, L. R., Demaree, R. G., &amp; Wolf, G. (1984). Estimating within-group interrater reliability with and without response bias. <em>Journal of Applied Psychology, 69</em>(1), 85–98. https://doi.org/10.1037/0021-9010.69.1.85</p>
+<p>Kaplan, R. S., &amp; Norton, D. P. (1996). <em>The balanced scorecard: Translating strategy into action</em>. Harvard Business School Press.</p>
+<p>Lance, C. E., Butts, M. M., &amp; Michels, L. C. (2006). The sources of four commonly reported cutoff criteria: What did they really say? <em>Organizational Research Methods, 9</em>(2), 202–220. https://doi.org/10.1177/1094428105284919</p>
+<p>LeBreton, J. M., &amp; Senter, J. L. (2008). Answers to 20 questions about interrater reliability and interrater agreement. <em>Organizational Research Methods, 11</em>(4), 815–852. https://doi.org/10.1177/1094428106296642</p>
+<p>McDonald, R. P. (1999). <em>Test theory: A unified treatment</em>. Lawrence Erlbaum.</p>
+<p>Merchant, K. A., &amp; Van der Stede, W. A. (2017). <em>Management control systems: Performance measurement, evaluation and incentives</em> (4.ª ed.). Pearson.</p>
+<p>Nunnally, J. C. (1978). <em>Psychometric theory</em> (2.ª ed.). McGraw-Hill.</p>
+<p>Schmitt, N. (1996). Uses and abuses of coefficient alpha. <em>Psychological Assessment, 8</em>(4), 350–353. https://doi.org/10.1037/1040-3590.8.4.350</p>
+<p>Schneider, B., Salvaggio, A. N., &amp; Subirats, M. (2002). Climate strength: A new direction for climate research. <em>Journal of Applied Psychology, 87</em>(2), 220–229. https://doi.org/10.1037/0021-9010.87.2.220</p>
+<p>Sijtsma, K. (2009). On the use, the misuse, and the very limited usefulness of Cronbach's alpha. <em>Psychometrika, 74</em>(1), 107–120. https://doi.org/10.1007/s11336-008-9101-0</p>
+<p>Spector, P. E. (1992). <em>Summated rating scale construction: An introduction</em>. Sage.</p>
+<p>Strathern, M. (1997). "Improving ratings": Audit in the British university system. <em>European Review, 5</em>(3), 305–321.</p>
+<p>Streiner, D. L., Norman, G. R., &amp; Cairney, J. (2015). <em>Health measurement scales: A practical guide to their development and use</em> (5.ª ed.). Oxford University Press.</p>
+</div>
+<h3>Para profundizar</h3>
+<p>DeVellis y Thorpe (2022), capítulos 5 a 7: la exposición más clara de fiabilidad, análisis factorial y decisiones sobre ítems para quien construye escalas aplicadas. Flora (2020): tutorial sobre qué coeficiente omega usar y por qué, con código reproducible. LeBreton y Senter (2008): las veinte preguntas que hay que hacerse antes de agregar respuestas individuales a nivel de unidad.</p>
+
+<footer>
+  Serie de apuntes · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas.
+</footer>
+
+</div>
+</body>
+</html>

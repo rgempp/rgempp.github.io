@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A4 Técnicas cualitativas y análisis de datos cualitativos · Diagnóstico Organizacional MCG UDP</title>
+<meta name="description" content="Apunte N° 4 del curso Diagnóstico Organizacional (MCG, UDP): entrevistas, grupos focales, observación, documentos, codificación abierta, axial y selectiva, calidad del análisis y lo cualitativo en el sistema de control.">
+<meta name="author" content="René Gempp">
+<style>
+  /* ===== Plantilla base de la serie de apuntes DO MCG, v1 (2026) · misma línea que la serie PyE ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+    --ambar:#B45309; --ambar-claro:#FEF3C7;
+    --verde:#15803D; --verde-claro:#DCFCE7;
+    /* alias para figuras SVG heredadas */
+    --fg:var(--tinta); --muted:var(--gris); --accent:var(--rojo); --accent-soft:var(--tinte);
+    --rule:var(--borde); --note-bg:var(--gris-claro); --note-border:var(--acero);
+    --ex-bg:var(--tinte); --ex-border:var(--rojo); --warn-bg:var(--ambar-claro); --warn-border:var(--ambar);
+    --code-bg:var(--gris-claro); --bg:#ffffff;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  .lead{margin:1rem 0 0; color:var(--acero); font-size:1rem}
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros: idea clave (.box), ejemplo de caso (.box.ejemplo), atención (.box.atencion), mito versus evidencia (.mito) */
+  .box,.mito{
+    border:1px solid var(--borde); border-left:5px solid var(--acero);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--gris-claro);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .box p,.mito p{margin:0 0 .55rem}
+  .box p:last-child,.mito p:last-child{margin-bottom:0}
+  .box ul,.box ol{margin-bottom:.4rem}
+  .box .label{
+    display:block; font-weight:700; color:var(--acero);
+    font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; margin-bottom:.35rem;
+  }
+  .box.ejemplo,.mito{border-left-color:var(--rojo); background:var(--tinte)}
+  .box.ejemplo .label{color:var(--rojo)}
+  .box.atencion{border-left-color:var(--ambar); background:var(--ambar-claro)}
+  .box.atencion .label{color:var(--ambar)}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tablas */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Figuras */
+  figure,.figura{margin:0 0 1.4rem}
+  figure img,figure svg{max-width:100%;height:auto;display:block;margin:0 auto}
+  figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+  code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
+  code{background:var(--gris-claro);padding:.1em .35em;border-radius:4px}
+  pre{background:var(--gris-claro);padding:.9rem 1rem;border-radius:8px;overflow-x:auto}
+  /* Glosario */
+  dl.glosario dt{font-weight:700;margin-top:.7rem;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:.95rem}
+  dl.glosario dd{margin:0 0 .3rem 0}
+  /* Referencias con sangría francesa */
+  .referencias p,.refs p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .box,.mito,table,figure{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes · Diagnóstico Organizacional · N° 4</p>
+  <h1>Técnicas cualitativas y análisis de datos cualitativos: cómo averiguar el mecanismo detrás del indicador</h1>
+  <p class="meta">
+    Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · 2º semestre 2026<br>
+    Apunte N° 4 · Sesión 4 (viernes 13-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a>
+  </p>
+</header>
+
+<h2 id="a">A. Por qué existe este apunte</h2>
+<p>Un sistema de control de gestión informa desviaciones: la rotación de desarrolladores subió al 50%, la claridad de prioridades en un área cayó a 3,3 en una escala de 7, los bugs críticos por release pasaron de 3 a 11. Lo que el sistema no informa es el mecanismo que produce esas cifras, y sin mecanismo no hay acción defendible: solo queda fijar una meta sobre el indicador y esperar que alguien la cumpla. Las técnicas cualitativas (entrevistas, grupos focales, observación y análisis documental) son el procedimiento con que el diagnóstico averigua ese mecanismo. En el dominio financiero esa función la cumple el análisis de variaciones; en el dominio de las personas la cumple una conversación bien diseñada, bien conducida y bien analizada.</p>
+<p>Este apunte acompaña a la sesión 4 y cubre dos tareas que suelen enseñarse por separado: cómo producir material cualitativo de calidad (a quién preguntar, qué preguntar, cómo registrar) y cómo convertir ese material en hallazgos auditables (codificación abierta, axial y selectiva, libro de códigos, frecuencia y saliencia, triangulación). Al terminar, el lector debería poder escribir una pauta de entrevista alineada con los objetivos de un diseño diagnóstico, codificar una transcripción de modo que otra persona llegue a categorías parecidas, y redactar un hallazgo cualitativo que pueda ponerse al lado de un indicador en un informe para la dirección. Esas son las habilidades que evalúa el Control 4 y, en parte, el examen final.</p>
+
+<h2 id="b">B. La idea en breve</h2>
+<div class="resumen">
+<p>La entrevista de diagnóstico es una conversación con propósito, no un cuestionario oral ni una charla informal (Kvale &amp; Brinkmann, 2015). Produce relatos, y los relatos tienen autor, audiencia e intención; por eso su valor no está en lo que dice un informante sino en lo que se sostiene cuando se contrasta con otros informantes, con la observación, con los registros y con la encuesta. La variante semiestructurada es la opción por defecto; dentro de ella conviene incluir preguntas de incidente crítico (Flanagan, 1954), que piden episodios concretos con fecha, actores y consecuencias, porque esos episodios pueden contrastarse con los registros del sistema de control.</p>
+<p>A quién entrevistar se decide por muestreo intencionado (informantes clave, máxima variación, casos críticos), no por representatividad; cuántas veces, por saturación. La evidencia empírica indica que, en poblaciones relativamente homogéneas y con objetivos acotados, los temas principales aparecen en las primeras seis entrevistas y el libro de códigos se estabiliza hacia la duodécima (Guest et al., 2006); una revisión sistemática de 23 estudios sitúa el rango habitual entre 9 y 17 entrevistas o entre 4 y 8 grupos focales (Hennink &amp; Kaiser, 2022). La calidad de la entrevista se decide antes de hacerla: pauta alineada con los objetivos, sondeos escritos de antemano, registro con consentimiento y un acuerdo de confidencialidad que en una organización de 50 personas no puede prometer anonimato.</p>
+<p>Analizar datos cualitativos es condensar, mostrar y concluir con verificación (Miles et al., 2014). La codificación en tres niveles convierte el texto en algo auditable: códigos abiertos descriptivos y pegados al texto; categorías axiales definidas con reglas de inclusión y exclusión, con frecuencia por informante y dos citas cada una; y una categoría central que propone un mecanismo y se ubica en las corrientes de Porras (1987). La frecuencia ordena, la saliencia interpreta, y la prevalencia se deja a la encuesta. La inteligencia artificial generativa puede acelerar la codificación descriptiva y auditar la cobertura, pero no responde por la interpretación ni por la confidencialidad (Morgan, 2023).</p>
+<p>Para el control de gestión, lo cualitativo es el procedimiento de investigación de desviaciones para las variables de personas y la técnica para averiguar cómo las jefaturas usan los indicadores, es decir, si el tablero opera como control diagnóstico o interactivo (Simons, 1995). Un tablero de personas se diseña también a partir de cómo lo van a leer quienes lo reciben.</p>
+</div>
+
+<h2 id="c">C. Los conceptos</h2>
+
+<h3>C.1 El indicador muestra que algo ocurre; la conversación explica por qué</h3>
+<p>Un indicador es una variable con definición operacional, fuente, frecuencia, unidad de análisis y meta (Apunte 2). Por construcción, resume: una tasa de rotación del 50% no distingue si la gente se va a los 6 o a los 14 meses, ni si se va por el sueldo, por la jefatura o por la inestabilidad de las prioridades. Un ítem de encuesta tampoco: "la claridad de prioridades es 3,3" dice cuánto, no qué hace que una prioridad cambie ni quién la cambia. Harrison (2004) describe esta complementariedad como la diferencia entre medir el estado de un sistema y comprender sus procesos; Alderfer (2011) la formula como la diferencia entre registrar síntomas y explicar la dinámica que los produce.</p>
+<p>La figura 1 resume la lógica que recorre este apunte. El sistema de control detecta una desviación; el diagnóstico cualitativo pregunta por el mecanismo (a quién, con qué técnica); el mecanismo se contrasta con otras fuentes; y el resultado vuelve al sistema de control como una decisión mejor fundada (intervenir, esperar, cambiar el indicador) o como un indicador nuevo.</p>
+
+<figure class="figura">
+<svg viewBox="0 0 760 230" width="100%" role="img" aria-labelledby="fig1" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig1">Del indicador al mecanismo y de vuelta al sistema de control</title>
+  <defs><marker id="f1a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+  <marker id="f1r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+  <rect x="20" y="40" width="160" height="70" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/>
+  <text x="100" y="68" text-anchor="middle" font-weight="700">Señal del tablero</text>
+  <text x="100" y="88" text-anchor="middle" fill="var(--muted)" font-size="11.5">rotación 50%; claridad 3,3/7</text>
+  <text x="100" y="103" text-anchor="middle" fill="var(--muted)" font-size="11.5">bugs 3 → 11 por release</text>
+  <line x1="182" y1="75" x2="208" y2="75" stroke="currentColor" stroke-width="1.4" marker-end="url(#f1a)"/>
+  <rect x="210" y="40" width="160" height="70" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+  <text x="290" y="68" text-anchor="middle" font-weight="700" fill="var(--accent)">Pregunta cualitativa</text>
+  <text x="290" y="88" text-anchor="middle" fill="var(--muted)" font-size="11.5">a quién, con qué técnica</text>
+  <text x="290" y="103" text-anchor="middle" fill="var(--muted)" font-size="11.5">pauta, sondeos, registro</text>
+  <line x1="372" y1="75" x2="398" y2="75" stroke="currentColor" stroke-width="1.4" marker-end="url(#f1a)"/>
+  <rect x="400" y="40" width="160" height="70" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/>
+  <text x="480" y="68" text-anchor="middle" font-weight="700">Mecanismo</text>
+  <text x="480" y="88" text-anchor="middle" fill="var(--muted)" font-size="11.5">codificación en tres niveles</text>
+  <text x="480" y="103" text-anchor="middle" fill="var(--muted)" font-size="11.5">triangulado con otras fuentes</text>
+  <line x1="562" y1="75" x2="588" y2="75" stroke="currentColor" stroke-width="1.4" marker-end="url(#f1a)"/>
+  <rect x="590" y="40" width="150" height="70" rx="6" fill="var(--note-bg)" stroke="var(--note-border)"/>
+  <text x="665" y="68" text-anchor="middle" font-weight="700">Decisión</text>
+  <text x="665" y="88" text-anchor="middle" fill="var(--muted)" font-size="11.5">intervenir, esperar,</text>
+  <text x="665" y="103" text-anchor="middle" fill="var(--muted)" font-size="11.5">cambiar o crear indicador</text>
+  <path d="M665,112 L665,160 L100,160 L100,114" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#f1r)"/>
+  <text x="380" y="180" text-anchor="middle" fill="var(--accent)" font-size="12" font-weight="700">retroalimentación al sistema de control: indicador nuevo (p. ej., decisiones revertidas por trimestre) o umbral revisado</text>
+  <text x="380" y="212" text-anchor="middle" fill="var(--muted)" font-size="12">La versión de la jefatura sobre la desviación es una fuente más; no es el diagnóstico.</text>
+</svg>
+<figcaption>Figura 1. Del indicador al mecanismo y de vuelta al sistema de control. Elaboración propia a partir de Harrison (2004) y Simons (1995).</figcaption>
+</figure>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · TechNova</span>
+  <p>El sistema de control de TechNova dice que los desarrolladores renuncian con 14 meses de antigüedad promedio y que los bugs críticos se triplicaron. La base de la encuesta del curso agrega que la claridad de prioridades y la coherencia del liderazgo son las variables más bajas en Desarrollo y que la claridad de rol cae entre los 6 y los 18 meses. Ninguna de esas cifras dice qué hace que una prioridad cambie. La transcripción E07 (lead de desarrollo, 21 meses) lo dice: dos fuentes legítimas de prioridad (el roadmap de producto y los compromisos del CEO con clientes) sin una instancia que las integre; episodios fechados; retrabajo de "una semana completa de cinco personas"; "seis o siete veces este año". Eso es un mecanismo, y es contrastable con el backlog.</p>
+</div>
+
+<h3>C.2 Qué es y qué no es una entrevista de diagnóstico</h3>
+<p>Kvale y Brinkmann (2015) definen la entrevista de investigación como una conversación con estructura y propósito, en la que el entrevistador busca descripciones del mundo vital del entrevistado para interpretar el significado de lo descrito. Tres consecuencias prácticas siguen de la definición. Primera, la entrevista produce descripciones, no mediciones: lo que se obtiene es lo que la persona está dispuesta y es capaz de contar, con los sesgos de memoria, deseabilidad y posición que ello implica. Segunda, la estructura la pone el entrevistador (la pauta), pero el contenido lo pone el informante; una entrevista en la que el consultor expone su hipótesis y pide confirmación no es una entrevista sino una validación. Tercera, el significado se interpreta después, en el análisis, y esa interpretación debe ser trazable a lo dicho.</p>
+<p>En el diagnóstico organizacional la entrevista cumple tres funciones según el momento del diseño (Apunte 2): explorar antes de la encuesta, cuando el problema está mal definido y no se sabe qué preguntar ni con qué palabras (diseño mixto exploratorio, el elegido para TechNova en el Control 2); explicar después de la encuesta, cuando un resultado por subgrupo necesita mecanismo (diseño explicativo); y comprender procesos que la encuesta no captura, como la manera en que se toman y revierten decisiones.</p>
+
+<h3>C.3 Tipos de entrevista; la entrevista de incidentes críticos</h3>
+<p>La distinción clásica entre entrevista estructurada, semiestructurada y no estructurada ordena un continuo de control del entrevistador sobre la conversación (Patton, 2015). La estructurada fija preguntas y orden y gana comparabilidad a costa de lo emergente; la no estructurada maximiza profundidad y espontaneidad a costa de la comparabilidad y del esfuerzo de análisis; la semiestructurada, con una pauta de temas y preguntas guía y libertad de orden y profundización, es la opción por defecto del diagnóstico organizacional.</p>
+<p>Dentro de la semiestructurada, este curso recomienda incluir al menos dos preguntas de incidente crítico. La técnica de Flanagan (1954) consiste en pedir al informante que relate episodios concretos que ilustren el fenómeno de interés ("cuénteme la última vez que una prioridad de su equipo cambió a mitad de un sprint; qué pasó, quién intervino, qué resultó"). Los incidentes producen datos conductuales con fecha, actores y consecuencias, menos expuestos a la opinión general que las preguntas evaluativas, y contrastables con registros. Para un controlador de gestión esa propiedad es decisiva: convierte "las prioridades cambian todo el tiempo" en "tres cambios en el último sprint", que se puede verificar en el backlog y, eventualmente, convertir en indicador.</p>
+
+<div class="box">
+  <span class="label">Idea clave</span>
+  <p>Describir antes de valorar. Una pauta en la que cada pregunta evaluativa ("¿cómo es la comunicación con su jefatura?") va precedida de una descriptiva o de incidente ("¿cómo se entera usted de si su trabajo está bien hecho? ¿un ejemplo del último mes?") produce material codificable y no solo opiniones.</p>
+</div>
+
+<h3>C.4 A quién entrevistar y cuántas veces: muestreo intencionado y saturación</h3>
+<p>En la investigación cualitativa no se muestrea para estimar una prevalencia sino para cubrir perspectivas (Patton, 2015). Las estrategias más útiles en el diagnóstico son tres. Los informantes clave son quienes conocen el proceso que interesa (en TechNova, los cofundadores y los leads para la toma de decisiones). La máxima variación asegura que la muestra incluya las posiciones desde las que el fenómeno se ve distinto: áreas, antigüedad, nivel, quienes se fueron y quienes se quedan. Los casos críticos son las unidades donde la desviación es más fuerte (el equipo con mayor rotación) o más anómala (el equipo donde, contra lo esperado, nadie se va).</p>
+<p>Cuántas entrevistas hacer se decide por saturación: el punto en que las entrevistas nuevas ya no agregan códigos ni matices relevantes. La saturación es un criterio de calidad que debe documentarse (en qué entrevista dejó de aparecer un código nuevo), no una excusa para entrevistar poco. La sección D resume la evidencia empírica sobre cuántas entrevistas suelen bastar.</p>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · TechNova</span>
+  <p>El diseño del Control 2 propuso: los dos cofundadores por separado; tres o cuatro leads de desarrollo y producto; cinco o seis desarrolladores con 10 a 18 meses (el tramo donde cae la claridad y ocurren las salidas); cuatro o cinco desarrolladores que renunciaron en el último año, contactados como voluntarios y sin intermediación de la empresa; y un grupo focal de desarrolladores sin leads. Entre 14 y 17 entrevistas de 45 a 60 minutos. Con esa estructura por estratos, la saturación se evalúa dentro de cada estrato y no en el total.</p>
+</div>
+
+<h3>C.5 La pauta: anatomía, preguntas y sondeo</h3>
+<p>Una pauta semiestructurada tiene cuatro partes (figura 2). La apertura explica el propósito en dos frases, quién encargó el diagnóstico y quién verá qué, los términos de la confidencialidad y sus límites, el derecho a no responder y el permiso para grabar; termina con una pregunta de calentamiento descriptiva y no amenazante. Las preguntas centrales (seis a ocho) se agrupan por objetivo diagnóstico, van de lo general a lo específico y de lo descriptivo a lo evaluativo, incluyen al menos dos de incidente crítico y dejan los temas sensibles para el final del bloque. Los sondeos se escriben de antemano, dos o tres por pregunta central, porque durante la conversación no hay tiempo de inventarlas. El cierre pregunta qué faltó preguntar y qué cambiaría primero, explica qué pasa con lo conversado y agradece.</p>
+
+<figure class="figura">
+<svg viewBox="0 0 760 250" width="100%" role="img" aria-labelledby="fig2" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig2">Anatomía de la pauta semiestructurada</title>
+  <defs><marker id="f2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+  <rect x="20" y="30" width="165" height="150" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/>
+  <text x="102" y="55" text-anchor="middle" font-weight="700">1. Apertura · 5 min</text>
+  <text x="30" y="78" font-size="11.5" fill="var(--muted)">propósito en dos frases</text>
+  <text x="30" y="94" font-size="11.5" fill="var(--muted)">quién encargó, quién verá qué</text>
+  <text x="30" y="110" font-size="11.5" fill="var(--muted)">confidencialidad y límites</text>
+  <text x="30" y="126" font-size="11.5" fill="var(--muted)">permiso para grabar</text>
+  <text x="30" y="142" font-size="11.5" fill="var(--muted)">derecho a no responder</text>
+  <text x="30" y="164" font-size="11.5" fill="var(--accent)" font-weight="700">calentamiento descriptivo</text>
+  <line x1="187" y1="105" x2="208" y2="105" stroke="currentColor" stroke-width="1.4" marker-end="url(#f2a)"/>
+  <rect x="210" y="30" width="200" height="150" rx="6" fill="var(--accent-soft)" stroke="var(--accent)"/>
+  <text x="310" y="55" text-anchor="middle" font-weight="700" fill="var(--accent)">2. Centrales · 30 a 40 min</text>
+  <text x="220" y="78" font-size="11.5" fill="var(--muted)">6 a 8 preguntas por objetivo</text>
+  <text x="220" y="94" font-size="11.5" fill="var(--muted)">de lo general a lo específico</text>
+  <text x="220" y="110" font-size="11.5" fill="var(--muted)">de lo descriptivo a lo evaluativo</text>
+  <text x="220" y="126" font-size="11.5" fill="var(--muted)">≥ 2 de incidente crítico</text>
+  <text x="220" y="142" font-size="11.5" fill="var(--muted)">temas sensibles al final</text>
+  <text x="220" y="164" font-size="11.5" fill="var(--accent)" font-weight="700">2 a 3 sondeos por pregunta</text>
+  <line x1="412" y1="105" x2="433" y2="105" stroke="currentColor" stroke-width="1.4" marker-end="url(#f2a)"/>
+  <rect x="435" y="30" width="150" height="150" rx="6" fill="var(--note-bg)" stroke="var(--rule)"/>
+  <text x="510" y="55" text-anchor="middle" font-weight="700">3. Cierre · 5 min</text>
+  <text x="445" y="78" font-size="11.5" fill="var(--muted)">qué faltó preguntar</text>
+  <text x="445" y="94" font-size="11.5" fill="var(--muted)">qué cambiaría primero</text>
+  <text x="445" y="110" font-size="11.5" fill="var(--muted)">qué pasa con lo dicho</text>
+  <text x="445" y="126" font-size="11.5" fill="var(--muted)">agradecimiento</text>
+  <line x1="587" y1="105" x2="608" y2="105" stroke="currentColor" stroke-width="1.4" marker-end="url(#f2a)"/>
+  <rect x="610" y="30" width="130" height="150" rx="6" fill="var(--note-bg)" stroke="var(--note-border)"/>
+  <text x="675" y="55" text-anchor="middle" font-weight="700">4. Después</text>
+  <text x="620" y="78" font-size="11.5" fill="var(--muted)">notas de campo</text>
+  <text x="620" y="94" font-size="11.5" fill="var(--muted)">en las 2 horas siguientes</text>
+  <text x="620" y="110" font-size="11.5" fill="var(--muted)">registros a pedir</text>
+  <text x="620" y="126" font-size="11.5" fill="var(--muted)">(backlog, releases)</text>
+  <text x="380" y="215" text-anchor="middle" fill="var(--muted)" font-size="12">Formato: dos páginas; encabezado con código del informante (E07), rol, objetivos que cubre, fecha, duración y entrevistador.</text>
+  <text x="380" y="235" text-anchor="middle" fill="var(--muted)" font-size="12">Los sondeos (ejemplo, secuencia, especificidad, clarificación) son la diferencia entre una opinión y un dato.</text>
+</svg>
+<figcaption>Figura 2. Anatomía de la pauta semiestructurada. Elaboración propia a partir de Kvale y Brinkmann (2015) y Patton (2015).</figcaption>
+</figure>
+
+<p>Los errores de redacción de ítems vistos en el Apunte 3 reaparecen en las preguntas de entrevista, con dos agregados propios de la conversación. La tabla 1 los resume con una reescritura para cada caso.</p>
+<table>
+  <thead><tr><th>Problema</th><th>Ejemplo que no funciona</th><th>Por qué</th><th>Reescritura</th></tr></thead>
+  <tbody>
+    <tr><td>Cerrada</td><td>¿Está conforme con cómo se fijan las prioridades?</td><td>Produce sí o no; el peso lo pone el entrevistador</td><td>¿Cómo se decide en qué trabaja su equipo cada semana?</td></tr>
+    <tr><td>Inductiva o cargada</td><td>¿No cree que el conflicto entre los fundadores hace renunciar a la gente?</td><td>Dicta la respuesta; el informante confirma para no discutir</td><td>¿Qué explica, según usted, que la gente se vaya cerca de los 14 meses?</td></tr>
+    <tr><td>Múltiple</td><td>¿Cómo es la comunicación con su jefe y con producto, y qué habría que mejorar?</td><td>Tres preguntas; se responde la última o la más cómoda</td><td>Una a la vez: primero describir, después evaluar</td></tr>
+    <tr><td>"Por qué" acusatorio</td><td>¿Por qué no avisó que la fecha no se iba a cumplir?</td><td>Pide justificación; activa la defensa</td><td>Cuénteme qué pasó en la semana previa a esa fecha</td></tr>
+    <tr><td>Abstracta o con jerga</td><td>¿Cómo evalúa la gobernanza de la toma de decisiones?</td><td>Obliga a traducir; produce discurso oficial</td><td>La última vez que una prioridad cambió, ¿cómo se enteró y quién lo decidió?</td></tr>
+    <tr><td>Hipotética sin ancla</td><td>¿Qué pasaría si hubiera un proceso de calidad?</td><td>Especulación sin dato</td><td>¿Qué revisión se hace hoy antes de un release? ¿Qué se saltó la última vez?</td></tr>
+  </tbody>
+</table>
+<p>Los sondeos son preguntas breves que profundizan sin dirigir: el silencio de tres a cinco segundos, el eco de la última palabra, "cuénteme más", el pedido de un ejemplo reciente, la especificidad ("a veces" se convierte en "¿cuántas veces en el último mes?"), la secuencia ("¿y qué pasó después? ¿quién decidió?"), el contraste ("antes mencionó X y ahora Y") y la clarificación ("¿qué quiere decir con esa palabra?"). Un sondeo que contiene la respuesta ("¿fue por el conflicto entre los fundadores?") deja de ser sondeo y se convierte en pregunta inductiva.</p>
+
+<h3>C.6 Conducción, registro y confidencialidad</h3>
+<p>La conducción descansa en tres prácticas: rapport (puntualidad, propósito claro, confidencialidad explicada antes de la primera pregunta), escucha (atención a lo dicho y a lo omitido; parafrasear para verificar) y neutralidad (no opinar, no corregir, no consolar con soluciones; la emoción es un dato y se registra). Las situaciones frecuentes tienen respuestas conocidas: ante el discurso oficial, pedir cómo es en la práctica y la última vez; ante el informante monosilábico, más silencio y preguntas más concretas; ante el hablador, interrumpir con cortesía y volver a la pauta; ante quien pide la opinión del entrevistador, devolver la pregunta y, si insiste, ofrecerla al final.</p>
+<p>El registro es la cadena de custodia de la evidencia cualitativa. Sin grabación (con permiso explícito) o sin notas expandidas en las dos horas siguientes no hay cita auditable. La transcripción editada (sin muletillas, con la sintaxis respetada) basta para el diagnóstico; una hora de audio toma entre cuatro y seis horas de transcripción manual, y la transcripción automática en servicios externos solo es aceptable con audio anonimizado y acuerdo del cliente. Los informantes se identifican por código (E07) desde la transcripción, con la tabla de correspondencia guardada aparte.</p>
+
+<div class="box atencion">
+  <span class="label">Atención</span>
+  <p>En una organización de 50 personas, "lead de desarrollo con 21 meses" identifica a una persona. Lo que se puede prometer es que nadie fuera del equipo diagnóstico escuchará las grabaciones, que las citas se reportarán sin rol ni detalle reconocible y que los resultados por grupo se informarán solo con n suficiente. Lo que no se puede prometer es anonimato total ni silencio ante hechos graves; ambos límites se declaran en la apertura. En TechNova, donde el inversionista que encargó el diagnóstico quiere ver el informe, el acuerdo de que el informe llegue a ambos cofundadores y al directorio en la misma versión se firma antes de la primera entrevista, no al redactar el informe.</p>
+</div>
+
+<h3>C.7 Grupos focales, observación y documentos</h3>
+<p>El grupo focal es una conversación moderada de seis a diez personas sobre un tema acotado, de 90 a 120 minutos (Krueger &amp; Casey, 2015). Sirve para observar consensos y disensos, normas del grupo y lenguaje compartido, y para validar hallazgos preliminares con quienes los vivieron; no sirve para temas que exponen a la persona ante sus pares. La regla de diseño más importante es no mezclar jefaturas con sus subordinados: la jerarquía silencia. La composición homogénea (solo desarrolladores) conviene para temas sensibles; la heterogénea, para temas generales. Las técnicas de activación (escritura previa en tarjetas, grupo nominal, línea de tiempo colectiva, mapa del proceso de decisión) reducen la presión de conformidad y son también herramientas de taller de devolución.</p>
+<p>La observación registra lo que la gente hace, no lo que dice que hace, y por eso corrige dos sesgos de la entrevista: la deseabilidad y la memoria. Se observa con foco (una planificación de sprint, un release, la reunión semanal), de modo no participante y con consentimiento, en al menos dos ocasiones, y se registran observación e interpretación en columnas separadas: "el CEO interrumpió cinco veces en diez minutos" es observación; "el CEO es autoritario" es interpretación, y además es la que el inversionista querrá leer.</p>
+<p>El análisis documental parte de una idea simple: la organización ya se describió a sí misma. Los documentos estratégicos dicen qué se promete y a quién; los operativos (o su ausencia: en TechNova no hay descripciones de cargo) dicen cómo se supone que funciona; los registros del sistema de control (backlog, decisiones revertidas, releases, tickets) permiten fechar y cuantificar lo que las entrevistas relatan; las comunicaciones internas (canales que "se vaciaron") muestran tono, horario y flujo. Se analiza el contenido manifiesto y el latente (qué supone, qué omite), la coherencia entre documentos y entre documento y práctica, el tiempo (cuándo se escribió, si se actualizó) y la autoría (quién escribe para quién; qué voces faltan).</p>
+<table>
+  <thead><tr><th></th><th>Entrevista</th><th>Grupo focal</th><th>Observación</th><th>Documentos</th></tr></thead>
+  <tbody>
+    <tr><td>Tipo de dato</td><td>Relato, significado, episodio</td><td>Consenso, disenso, norma</td><td>Conducta, interacción</td><td>Discurso oficial, registro</td></tr>
+    <tr><td>Sesgo principal</td><td>Deseabilidad, memoria</td><td>Conformidad, jerarquía</td><td>Reactividad, interpretación</td><td>Versión oficial, desactualización</td></tr>
+    <tr><td>Mejor para</td><td>Explorar y explicar; procesos de decisión</td><td>Validar hallazgos; normas del grupo</td><td>Brecha entre discurso y práctica</td><td>Fechar y cuantificar lo relatado</td></tr>
+    <tr><td>En TechNova</td><td>Cofundadores, leads, desarrolladores, exempleados</td><td>Desarrolladores sin leads</td><td>Planificación, release, reunión semanal</td><td>Backlog, decisiones, releases, Slack</td></tr>
+  </tbody>
+</table>
+<p>Ninguna técnica basta sola. El diseño elige la combinación cuyos sesgos no coinciden, de modo que la convergencia entre fuentes sea informativa (sección C.10).</p>
+
+<h3>C.8 Codificación abierta, axial y selectiva</h3>
+<p>Miles et al. (2014) describen el análisis cualitativo como tres operaciones concurrentes: condensar (segmentar y codificar), mostrar (matrices, redes, frecuencias) y concluir con verificación (volver al texto a buscar lo que contradice). La codificación es el corazón de la primera y la condición de las otras dos. La tradición de la teoría fundamentada la organiza en tres niveles (Strauss &amp; Corbin, 1998); Saldaña (2021) los reformula como ciclos de codificación (figura 3).</p>
+
+<figure class="figura">
+<svg viewBox="0 0 760 270" width="100%" role="img" aria-labelledby="fig3" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:13px">
+  <title id="fig3">Tres niveles de codificación</title>
+  <polygon points="40,235 720,235 560,160 200,160" fill="var(--note-bg)" stroke="var(--rule)"/>
+  <polygon points="200,160 560,160 450,85 310,85" fill="var(--note-bg)" stroke="var(--note-border)"/>
+  <polygon points="310,85 450,85 380,25" fill="var(--accent-soft)" stroke="var(--accent)"/>
+  <text x="380" y="205" text-anchor="middle" font-weight="700">1. Codificación abierta</text>
+  <text x="380" y="223" text-anchor="middle" fill="var(--muted)" font-size="11.5">30 a 100 códigos descriptivos, pegados al texto, in vivo cuando convenga · ¿qué está pasando aquí?</text>
+  <text x="380" y="125" text-anchor="middle" font-weight="700">2. Codificación axial</text>
+  <text x="380" y="143" text-anchor="middle" fill="var(--muted)" font-size="11.5">6 a 12 categorías: definición, reglas, frecuencia, citas</text>
+  <text x="380" y="70" text-anchor="middle" font-weight="700" fill="var(--accent)" font-size="12">3. Selectiva</text>
+  <text x="575" y="45" fill="var(--accent)" font-size="11.5" font-weight="700">categoría central:</text>
+  <text x="575" y="61" fill="var(--muted)" font-size="11.5">un mecanismo en un párrafo,</text>
+  <text x="575" y="77" fill="var(--muted)" font-size="11.5">ubicado en las corrientes de Porras</text>
+  <text x="40" y="45" fill="var(--muted)" font-size="11.5">pregunta de la axial:</text>
+  <text x="40" y="61" fill="var(--muted)" font-size="11.5">¿qué va con qué y por qué?</text>
+  <text x="380" y="260" text-anchor="middle" fill="var(--muted)" font-size="12">Libro de códigos: nombre, definición, se aplica cuando, no se aplica cuando, ejemplo (MacQueen et al., 1998).</text>
+</svg>
+<figcaption>Figura 3. Tres niveles de codificación. Adaptado de Strauss y Corbin (1998) y Saldaña (2021).</figcaption>
+</figure>
+
+<p>La codificación abierta lee el texto segmento por segmento y asigna códigos descriptivos, pegados a los datos, con las palabras del informante cuando son más precisas que las del analista (códigos in vivo: "uno aprende a esperar"). La regla de oro es describir antes de interpretar: "prioridad revertida", no "liderazgo incoherente"; "espera estratégica", no "desmotivación". La codificación axial agrupa los códigos en categorías por semejanza y por relación (condición, acción, consecuencia), define cada categoría con reglas de inclusión y exclusión, cuenta en cuántos informantes aparece y registra si apareció espontáneamente o al preguntar. La codificación selectiva identifica la categoría central que conecta a las demás y escribe la explicación en un párrafo, en términos de mecanismo, de modo que pueda estar equivocada, es decir, que otra fuente pueda contradecirla.</p>
+<p>El libro de códigos es lo que vuelve auditable la frecuencia. MacQueen et al. (1998) proponen un formato de cinco campos para cada código o categoría: nombre, definición breve, cuándo se aplica, cuándo no se aplica y un ejemplo. Sin él, dos personas del mismo equipo codifican distinto y el conteo no significa nada. El acuerdo entre codificadores puede estimarse en una muestra de fragmentos y usarse para afinar las definiciones antes de codificar el resto (O'Connor &amp; Joffe, 2020).</p>
+
+<div class="box ejemplo">
+  <span class="label">Ejemplo · TechNova, transcripción E07</span>
+  <p>Fragmento: "Yo fui con los dos. Por separado, porque juntos no se puede. Cada uno me explicó por qué tenía razón. Al final hicimos las dos cosas a medias y el release salió con cuatro bugs críticos." Códigos abiertos: doble reporte informal; ausencia de instancia de resolución; ejecución a medias; bugs críticos como consecuencia. Categoría axial: decisión sin mecanismo de resolución (condición), con calidad sacrificada (consecuencia). En la transcripción completa esa categoría aparece en 8 de los 19 turnos de la informante, siempre con episodios fechados; la categoría central de referencia es "crecimiento sin instancia de decisión", ubicada en la corriente de arreglos organizacionales de Porras, con las conductas de adaptación del equipo, el desgaste y los bugs como consecuencias en factores sociales y tecnología.</p>
+</div>
+
+<h3>C.9 Frecuencia, saliencia y respuestas abiertas de encuesta</h3>
+<p>Contar es útil si se sabe qué se cuenta. Lo que se cuenta es el número de informantes (o de turnos, dentro de una entrevista) en que aparece una categoría, no el número de menciones, para no inflar con un informante hablador. Lo que se registra junto a la frecuencia es la saliencia: quién la menciona y quién no, si apareció espontáneamente o al preguntar, con cuánto detalle. Y lo que no se concluye es la prevalencia: la frecuencia en 14 entrevistas intencionadas no estima qué proporción de la organización piensa algo; para eso está la encuesta. El formato de reporte que exige el curso dice las tres cosas: "11 de 14 entrevistados, todos ellos desarrolladores o leads, describen esperar antes de empezar una tarea; ningún cofundador lo menciona", seguido de dos citas (una típica y una de matiz) y de lo que contradice.</p>
+<p>Las respuestas abiertas de una encuesta ("qué habría que mejorar") son material cualitativo de otro tipo: una frase por persona, sin sondeos, pero de toda la organización. Se codifican con el mismo libro de códigos que las entrevistas, para que las categorías sean comparables, y sirven para ordenar temas, detectar los que las entrevistas no cubrieron y elegir a quién entrevistar. En la base TechNova del curso, "más claridad en las prioridades" (22 de 112 respuestas) y "que los fundadores se pongan de acuerdo" (17) encabezan la lista, frente a "mejores salarios" (9); "onboarding estructurado" (12) y "menos reuniones improductivas" (11) aparecen más que en las entrevistas, lo que sugiere revisar si la pauta preguntó por ellos.</p>
+
+<h3>C.10 Calidad del análisis y triangulación</h3>
+<p>Lincoln y Guba (1985) propusieron cuatro criterios de calidad para la investigación cualitativa, equivalentes funcionales de la validez interna, la fiabilidad, la objetividad y la validez externa: credibilidad (los hallazgos reflejan lo que dijeron e hicieron las personas; se sostiene con triangulación, verificación con participantes y búsqueda activa de casos negativos), dependabilidad (otro analista con el mismo libro de códigos llegaría a lo mismo; se sostiene con un segundo codificador en una muestra y con el registro de decisiones), confirmabilidad (las conclusiones salen de los datos y no de la hipótesis del consultor o del cliente; cada afirmación con fragmentos trazables y reflexividad explícita) y transferibilidad (descripción suficiente del contexto para que el lector juzgue si el hallazgo aplica a otra unidad).</p>
+<p>La triangulación compara el mismo hallazgo en fuentes cuyos sesgos no coinciden. La convergencia da confianza; la divergencia da información: señala una hipótesis del cliente que no se sostiene, una pregunta que faltó o un sesgo de una fuente. Las dos se reportan (figura 4). Fetters et al. (2013) describen la integración de resultados cuantitativos y cualitativos mediante matrices conjuntas y mediante la narrativa que explica la convergencia y la discordancia; la matriz de triangulación de este curso es una versión simplificada de esa idea.</p>
+
+<figure class="figura">
+<svg viewBox="0 0 760 300" width="100%" role="img" aria-labelledby="fig4" style="color:var(--fg);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-size:12px">
+  <title id="fig4">Matriz de triangulación de TechNova</title>
+  <rect x="20" y="20" width="720" height="34" fill="var(--fg)" />
+  <text x="30" y="42" fill="#fff" font-weight="700">Hallazgo</text><text x="190" y="42" fill="#fff" font-weight="700">Encuesta</text><text x="310" y="42" fill="#fff" font-weight="700">Entrevistas</text><text x="440" y="42" fill="#fff" font-weight="700">Observación</text><text x="560" y="42" fill="#fff" font-weight="700">Registros</text><text x="670" y="42" fill="#fff" font-weight="700">Lectura</text>
+  <rect x="20" y="54" width="720" height="60" fill="var(--note-bg)" stroke="var(--rule)"/>
+  <text x="30" y="76" font-weight="700" font-size="11.5">Decisión sin</text><text x="30" y="92" font-weight="700" font-size="11.5">mecanismo</text>
+  <text x="190" y="76" font-size="11">coherencia 2,8/7</text><text x="190" y="92" font-size="11">claridad 3,3/7</text>
+  <text x="310" y="76" font-size="11">13 de 14,</text><text x="310" y="92" font-size="11">con episodios</text>
+  <text x="440" y="76" font-size="11">dos indicaciones</text><text x="440" y="92" font-size="11">opuestas en reunión</text>
+  <text x="560" y="76" font-size="11">12 de 31 decisiones</text><text x="560" y="92" font-size="11">revertidas</text>
+  <circle cx="672" cy="84" r="8" fill="var(--accent)"/><text x="685" y="88" font-size="11" fill="var(--accent)" font-weight="700">robusto</text>
+  <rect x="20" y="114" width="720" height="60" fill="#fff" stroke="var(--rule)"/>
+  <text x="30" y="136" font-weight="700" font-size="11.5">Espera</text><text x="30" y="152" font-weight="700" font-size="11.5">estratégica</text>
+  <text x="190" y="136" font-size="11" fill="var(--muted)">no se preguntó</text>
+  <text x="310" y="136" font-size="11">11 de 14 devs y leads;</text><text x="310" y="152" font-size="11">ningún cofundador</text>
+  <text x="440" y="136" font-size="11">equipo sin rumbo</text><text x="440" y="152" font-size="11">tras la reunión</text>
+  <text x="560" y="136" font-size="11">tareas sin commits</text><text x="560" y="152" font-size="11">por días</text>
+  <circle cx="672" cy="144" r="8" fill="none" stroke="var(--accent)" stroke-width="2"/><text x="685" y="140" font-size="11" fill="var(--muted)">parcial:</text><text x="685" y="153" font-size="11" fill="var(--muted)">ítem nuevo</text>
+  <rect x="20" y="174" width="720" height="60" fill="var(--note-bg)" stroke="var(--rule)"/>
+  <text x="30" y="196" font-weight="700" font-size="11.5">Salario como</text><text x="30" y="212" font-weight="700" font-size="11.5">causa de salida</text>
+  <text x="190" y="196" font-size="11">compensación 4,3/7;</text><text x="190" y="212" font-size="11">9 de 112 abiertas</text>
+  <text x="310" y="196" font-size="11">lo afirman los</text><text x="310" y="212" font-size="11">cofundadores; 2 de 10 devs</text>
+  <text x="440" y="196" font-size="11" fill="var(--muted)">no observable</text>
+  <text x="560" y="196" font-size="11" fill="var(--muted)">sin datos de mercado</text>
+  <line x1="665" y1="197" x2="679" y2="211" stroke="var(--accent)" stroke-width="2"/><line x1="679" y1="197" x2="665" y2="211" stroke="var(--accent)" stroke-width="2"/><text x="685" y="200" font-size="11" fill="var(--muted)">divergencia</text><text x="685" y="213" font-size="11" fill="var(--muted)">(cliente)</text>
+  <text x="380" y="262" text-anchor="middle" fill="var(--muted)" font-size="12">La convergencia da confianza; la divergencia da información. Las dos se reportan.</text>
+  <text x="380" y="282" text-anchor="middle" fill="var(--muted)" font-size="12">Cifras de la base simulada del curso y de las 14 entrevistas simuladas del plan del Control 2.</text>
+</svg>
+<figcaption>Figura 4. Matriz de triangulación de TechNova: convergencia, convergencia parcial y divergencia. Elaboración propia a partir de Fetters et al. (2013).</figcaption>
+</figure>
+
+<h3>C.11 Herramientas e inteligencia artificial generativa</h3>
+<p>Para 15 a 20 entrevistas y un analista, una hoja de cálculo basta: una fila por fragmento con la cita textual, el código, la categoría y un memo, más una hoja de libro de códigos y otra de citas por categoría. El software especializado (ATLAS.ti, NVivo, MAXQDA; QualCoder y Taguette como opciones libres) permite codificar sobre el texto, recuperar fragmentos por código, analizar co-ocurrencias y calcular acuerdo entre codificadores; se justifica con más de 20 entrevistas, varios codificadores o proyectos que se repiten.</p>
+<p>La inteligencia artificial generativa puede proponer una primera lista de códigos sobre un fragmento anonimizado, buscar en un corpus ya codificado los fragmentos que podrían corresponder a una categoría y que el analista no marcó, redactar resúmenes para las notas de campo y actuar como segundo codificador para estimar desacuerdo. Morgan (2023) comparó la codificación temática producida por ChatGPT con una codificación humana previa en dos conjuntos de datos: la herramienta recuperó razonablemente los temas descriptivos y explícitos y falló en los que requerían interpretación del contexto. Esa es la frontera que propone este curso: asistencia auditada para lo descriptivo, criterio humano para lo interpretativo. Los riesgos tienen nombre: confidencialidad (no subir transcripciones identificables a servicios externos), fabricación (verificar cada cita en el texto fuente), homogeneización (tendencia a códigos genéricos que pierden los in vivo) y pérdida de inmersión (quien no leyó el texto no puede juzgar la saliencia). La regla del curso es declarar qué se pidió, qué se obtuvo y qué se cambió.</p>
+
+<h2 id="d">D. Qué dice la evidencia</h2>
+<h3>El estudio destacado: cuántas entrevistas bastan</h3>
+<p>Guest, Bunce y Johnson (2006) abordaron empíricamente una pregunta que hasta entonces se respondía con reglas de pulgar: cuántas entrevistas hacen falta para alcanzar la saturación. Analizaron 60 entrevistas semiestructuradas realizadas a mujeres de dos países de África occidental en un estudio sobre percepciones de riesgo y conducta sexual, codificándolas en orden en lotes de seis y registrando, en cada lote, cuántos códigos nuevos aparecían y cuánto cambiaban las definiciones del libro de códigos. De los 114 códigos finales, 80 (el 70%) estaban ya en las primeras seis entrevistas y 100 (el 88%) en las primeras doce; de los códigos de alta frecuencia (usados en más de la mitad del corpus), el 94% apareció en las primeras seis. Los cambios al libro de códigos fueron casi todos ajustes de definición concentrados en los dos primeros lotes. La conclusión de los autores es que, para una población relativamente homogénea y un conjunto de objetivos acotado, la saturación ocurre dentro de las primeras doce entrevistas y los metatemas básicos se hacen visibles a las seis.</p>
+<p>Tres advertencias acompañan al resultado. Primera, el estudio usó una pauta estructurada aplicada de modo consistente y un dominio temático definido; con pautas abiertas y temas difusos la saturación tarda más. Segunda, la muestra era homogénea en cuanto a experiencia; con grupos heterogéneos (en TechNova, cofundadores, leads, desarrolladores y exempleados) la saturación debe evaluarse por estrato. Tercera, saturación de códigos no es saturación de significado: que no aparezcan códigos nuevos no garantiza que las categorías estén bien comprendidas.</p>
+<p>Hennink y Kaiser (2022) revisaron sistemáticamente 23 estudios que evaluaron empíricamente la saturación, con métodos y poblaciones distintos. Concluyen que la saturación se alcanzó en un rango de 9 a 17 entrevistas y de 4 a 8 grupos focales en la mayoría de los estudios, con menos entrevistas cuando la población era homogénea y los objetivos acotados, y más cuando se buscaba saturación de significado y no solo de códigos. Para el diseño de TechNova (14 a 17 entrevistas en cuatro estratos más un grupo focal), ese rango sitúa el plan dentro de lo que la evidencia respalda, siempre que se documente en qué entrevista de cada estrato dejó de aparecer un código nuevo.</p>
+<h3>Otros hallazgos</h3>
+<p>Braun y Clarke (2006) sistematizaron el análisis temático como método en seis fases (familiarización, códigos iniciales, búsqueda de temas, revisión, definición y nombre de los temas, informe) y advirtieron contra dos errores que reaparecen en los diagnósticos: usar las preguntas de la pauta como temas y presentar extractos sin análisis. O'Connor y Joffe (2020) revisan el debate sobre la fiabilidad entre codificadores y proponen un uso pragmático: codificación independiente de una muestra del 10% al 25% de las unidades, discusión de los desacuerdos para afinar el libro de códigos y reporte transparente del procedimiento, más que la búsqueda de un coeficiente alto como fin en sí mismo. Sobre inteligencia artificial, el estudio de Morgan (2023) descrito en C.11 es, por ahora, una de las pocas comparaciones publicadas en una revista de métodos; la evidencia es incipiente y conviene tratarla como tal.</p>
+
+<h2 id="e">E. Mito versus evidencia</h2>
+<div class="mito">
+  <p><span class="etiqueta">Mito:</span> "Las entrevistas son subjetivas; los números son objetivos. Si hay encuesta, las entrevistas sobran."</p>
+  <p><span class="etiqueta ev">Evidencia:</span> Una escala de encuesta es una muestra de respuestas autorreportadas sujeta a deseabilidad social y estilos de respuesta (Apunte 3); su objetividad está en la estandarización, no en la ausencia de sesgo. La entrevista tiene otros sesgos (memoria, posición) y produce otro tipo de dato (mecanismos, episodios). Los diseños mixtos existen porque los sesgos de ambas fuentes no coinciden (Creswell &amp; Plano Clark, 2018; Fetters et al., 2013).</p>
+  <p><span class="etiqueta pq">Por qué importa:</span> Un tablero que solo tiene números explica por qué subió un indicador con la versión de la jefatura. Esa versión es una fuente, no un diagnóstico.</p>
+</div>
+<div class="mito">
+  <p><span class="etiqueta">Mito:</span> "Con tres o cuatro entrevistas a la gente clave ya se entiende el problema."</p>
+  <p><span class="etiqueta ev">Evidencia:</span> En el estudio de Guest et al. (2006), las primeras seis entrevistas contenían el 70% de los códigos finales, pero el 30% restante y los ajustes de definición requirieron hasta la duodécima; la revisión de Hennink y Kaiser (2022) sitúa la saturación entre 9 y 17 entrevistas. Con estratos heterogéneos la cifra se multiplica por estrato.</p>
+  <p><span class="etiqueta pq">Por qué importa:</span> Tres entrevistas a "la gente clave" suelen ser tres entrevistas a la dirección, es decir, a la fuente de la hipótesis que el diagnóstico debía poner a prueba.</p>
+</div>
+<div class="mito">
+  <p><span class="etiqueta">Mito:</span> "Lo más mencionado es lo más importante."</p>
+  <p><span class="etiqueta ev">Evidencia:</span> La frecuencia en una muestra intencionada depende de a quién se entrevistó y de qué se preguntó; no estima prevalencia. La saliencia (quién lo dice, con qué detalle, espontáneamente o no) y la posición del informante son parte de la interpretación (Miles et al., 2014; Saldaña, 2021). Una descripción del CEO sobre cómo decide pesa distinto que diez quejas sobre sus decisiones.</p>
+  <p><span class="etiqueta pq">Por qué importa:</span> Un informe que convierte conteos de menciones en porcentajes de la organización produce un tablero con cifras sin fuente defendible.</p>
+</div>
+<div class="mito">
+  <p><span class="etiqueta">Mito:</span> "La inteligencia artificial ya puede codificar las entrevistas sola."</p>
+  <p><span class="etiqueta ev">Evidencia:</span> La comparación de Morgan (2023) muestra recuperación razonable de temas descriptivos y explícitos, y fallas en los que requieren interpretación del contexto; a ello se suman los riesgos de fabricación de citas y de confidencialidad al subir transcripciones a servicios externos. La evidencia publicada es todavía escasa.</p>
+  <p><span class="etiqueta pq">Por qué importa:</span> La codificación asistida puede acelerar la primera pasada; la interpretación, la confidencialidad y la firma del libro de códigos siguen siendo del analista, y el informe lo declara.</p>
+</div>
+
+<h2 id="f">F. Qué significa para el control de gestión</h2>
+<p>Primero, las técnicas cualitativas son el procedimiento de investigación de desviaciones para las variables de personas. Cuando una unidad cae 0,8 puntos en engagement entre dos olas de la encuesta pulso, el indicador no dice si cambió la jefatura, la carga, la composición del equipo o la forma de responder; un grupo focal homogéneo de 60 minutos y la revisión de los cambios de dotación en el período sí lo dicen, y permiten decidir entre intervenir, esperar una ola más o revisar el ítem. Cuando una sucursal duplica la rotación promedio, las entrevistas de salida con pauta común, las entrevistas a quienes se quedan y la observación de un turno producen un mecanismo contrastable con otras sucursales. La pregunta del controlador ante un semáforo rojo no es quién es responsable sino qué mecanismo lo explica.</p>
+<p>Segundo, lo cualitativo alimenta el tablero. Un episodio relatado ("seis o siete reversiones de prioridad este año en mi equipo") se convierte, verificado en el registro de decisiones, en un indicador leading (proporción de decisiones de producto revertidas por trimestre); una conducta de adaptación descrita en las entrevistas (esperar antes de empezar) se convierte en un ítem de la encuesta pulso que antes no existía. El ciclo de la figura 1 se cierra cuando el hallazgo cualitativo cambia qué se mide.</p>
+<p>Tercero, la entrevista es la técnica para diagnosticar cómo las jefaturas usan los indicadores. Simons (1995) distingue el uso diagnóstico (monitorear y corregir desvíos frente a metas) del uso interactivo (atención frecuente de la dirección, debate, hipótesis, aprendizaje). Para variables de personas, cuya medición es imperfecta y cuyas metas inducen manipulación, el uso interactivo suele ser el único defendible (Merchant &amp; Van der Stede, 2017). Cinco preguntas a una jefatura ("cuénteme la última vez que revisó los resultados de clima de su equipo; qué miró primero; con quién lo conversó; qué hace cuando un indicador baja y cree que está mal medido; cómo le explicaría a su equipo para qué sirve la encuesta") muestran si el tablero se usa para aprender o para rendir cuentas, si hay presión sobre las respuestas y si la devolución ocurre. Un tablero de personas se diseña también a partir de cómo lo van a leer quienes lo reciben.</p>
+<p>Cuarto, la evidencia cualitativa tiene cadena de custodia. Una afirmación del informe que no pueda rastrearse a fragmentos codificados, con fuente y fecha, no es evidencia; es la opinión del consultor. Para un controlador acostumbrado a que cada cifra tenga respaldo, el libro de códigos y la matriz cumplen la función de los papeles de trabajo.</p>
+
+<h2 id="g">G. Para los controles y el examen</h2>
+<p>En el Control 4 se espera, en la parte (a), una pauta escrita para un informante concreto de TechNova y alineada con al menos dos objetivos específicos del diseño del Control 2: apertura con propósito, quién encargó, destino del informe, confidencialidad y sus límites y permiso para grabar; entre 8 y 10 preguntas abiertas, de una idea, de lo descriptivo a lo evaluativo, al menos dos de incidente crítico, cada una con su objetivo y dos sondeos; y un cierre. En la parte (b), la codificación abierta y axial de la transcripción E07: una matriz con cita, código, categoría y memo (al menos 12 fragmentos que cubran la transcripción); entre cuatro y seis categorías con definición, reglas de inclusión y exclusión, frecuencia en turnos y dos citas; una propuesta de categoría central ubicada en Porras; y una línea sobre lo que no encaja.</p>
+<p>En la sesión 6, los hallazgos cualitativos se integran con los resultados de la encuesta en el informe de TechNova mediante la matriz de triangulación y el diagrama de Porras. En el examen final, la pregunta (a) pide una reflexión crítica sobre el uso de una encuesta para definir KPI y evaluar jefaturas; parte de la respuesta esperada es qué técnicas cualitativas harían falta para interpretar las diferencias entre sucursales antes de convertirlas en metas, y cómo se averiguaría si las jefaturas presionan las respuestas.</p>
+<p>Preguntas de autoevaluación: (1) ¿Qué distingue un sondeo de una pregunta inductiva? (2) ¿Por qué la frecuencia de una categoría en 14 entrevistas no estima una prevalencia? (3) ¿Qué campos tiene un libro de códigos y cuál de ellos separa una categoría de un tema vago? (4) ¿Qué puede prometerse y qué no en materia de confidencialidad en una organización de 50 personas? (5) ¿Qué técnica cualitativa usaría para explicar la caída del engagement en una unidad entre dos olas de la encuesta pulso, y por qué no un grupo focal con la jefatura presente?</p>
+
+<h2 id="h">H. Referencias</h2>
+<div class="referencias">
+<p>Alderfer, C. P. (2011). <em>The practice of organizational diagnosis: Theory and methods</em>. Oxford University Press.</p>
+<p>Braun, V., &amp; Clarke, V. (2006). Using thematic analysis in psychology. <em>Qualitative Research in Psychology, 3</em>(2), 77–101. https://doi.org/10.1191/1478088706qp063oa</p>
+<p>Creswell, J. W., &amp; Plano Clark, V. L. (2018). <em>Designing and conducting mixed methods research</em> (3rd ed.). Sage.</p>
+<p>Fetters, M. D., Curry, L. A., &amp; Creswell, J. W. (2013). Achieving integration in mixed methods designs: Principles and practices. <em>Health Services Research, 48</em>(6, Pt. 2), 2134–2156. https://doi.org/10.1111/1475-6773.12117</p>
+<p>Flanagan, J. C. (1954). The critical incident technique. <em>Psychological Bulletin, 51</em>(4), 327–358. https://doi.org/10.1037/h0061470</p>
+<p>Guest, G., Bunce, A., &amp; Johnson, L. (2006). How many interviews are enough? An experiment with data saturation and variability. <em>Field Methods, 18</em>(1), 59–82. https://doi.org/10.1177/1525822X05279903</p>
+<p>Harrison, M. I. (2004). <em>Diagnosing organizations: Methods, models, and processes</em> (3rd ed.). Sage.</p>
+<p>Hennink, M., &amp; Kaiser, B. N. (2022). Sample sizes for saturation in qualitative research: A systematic review of empirical tests. <em>Social Science &amp; Medicine, 292</em>, 114523. https://doi.org/10.1016/j.socscimed.2021.114523</p>
+<p>Krueger, R. A., &amp; Casey, M. A. (2015). <em>Focus groups: A practical guide for applied research</em> (5th ed.). Sage.</p>
+<p>Kvale, S., &amp; Brinkmann, S. (2015). <em>InterViews: Learning the craft of qualitative research interviewing</em> (3rd ed.). Sage.</p>
+<p>Lincoln, Y. S., &amp; Guba, E. G. (1985). <em>Naturalistic inquiry</em>. Sage.</p>
+<p>MacQueen, K. M., McLellan, E., Kay, K., &amp; Milstein, B. (1998). Codebook development for team-based qualitative analysis. <em>Cultural Anthropology Methods, 10</em>(2), 31–36. https://doi.org/10.1177/1525822X980100020301</p>
+<p>Merchant, K. A., &amp; Van der Stede, W. A. (2017). <em>Management control systems: Performance measurement, evaluation and incentives</em> (4th ed.). Pearson.</p>
+<p>Miles, M. B., Huberman, A. M., &amp; Saldaña, J. (2014). <em>Qualitative data analysis: A methods sourcebook</em> (3rd ed.). Sage.</p>
+<p>Morgan, D. L. (2023). Exploring the use of artificial intelligence for qualitative data analysis: The case of ChatGPT. <em>International Journal of Qualitative Methods, 22</em>. https://doi.org/10.1177/16094069231211248</p>
+<p>O'Connor, C., &amp; Joffe, H. (2020). Intercoder reliability in qualitative research: Debates and practical guidelines. <em>International Journal of Qualitative Methods, 19</em>. https://doi.org/10.1177/1609406919899220</p>
+<p>Patton, M. Q. (2015). <em>Qualitative research &amp; evaluation methods</em> (4th ed.). Sage.</p>
+<p>Porras, J. I. (1987). <em>Stream analysis: A powerful way to diagnose and manage organizational change</em>. Addison-Wesley.</p>
+<p>Saldaña, J. (2021). <em>The coding manual for qualitative researchers</em> (4th ed.). Sage.</p>
+<p>Simons, R. (1995). <em>Levers of control: How managers use innovative control systems to drive strategic renewal</em>. Harvard Business School Press.</p>
+<p>Strauss, A., &amp; Corbin, J. (1998). <em>Basics of qualitative research: Techniques and procedures for developing grounded theory</em> (2nd ed.). Sage.</p>
+</div>
+<h3>Para profundizar</h3>
+<p>Kvale y Brinkmann (2015) es el texto de referencia sobre el oficio de entrevistar: los capítulos sobre la calidad de la entrevista y sobre las preguntas son los más útiles para escribir una pauta. Saldaña (2021) es un catálogo de métodos de codificación con ejemplos; para el diagnóstico bastan los capítulos sobre codificación descriptiva, in vivo, de proceso y de patrones. Miles, Huberman y Saldaña (2014) es la mejor fuente sobre matrices y otras formas de mostrar datos cualitativos para una audiencia directiva.</p>
+
+<footer>
+  Serie de apuntes · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas.
+</footer>
+
+
+</div>
+</body>
+</html>

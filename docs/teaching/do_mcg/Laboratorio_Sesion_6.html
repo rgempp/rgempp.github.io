@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laboratorio de la sesión 6 · Análisis de resultados y tablero de personas · Diagnóstico Organizacional MCG UDP</title>
+<meta name="author" content="René Gempp">
+<style>
+  :root{ --rojo:#C8102E; --rojo-oscuro:#9B0C23; --tinta:#1F2937; --gris:#6B7280; --gris-claro:#F3F4F6; --borde:#E5E7EB; --tinte:#FDF2F3; --acero:#475569; --verde:#15803D; --verde-claro:#DCFCE7; --ambar:#B45309; --ambar-claro:#FEF3C7; --azul:#1D4ED8; --azul-claro:#DBEAFE; }
+  *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:#fff;color:var(--tinta);font-family:Georgia,'Times New Roman',serif;font-size:1.04rem;line-height:1.6}
+  .sans{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .contenedor{max-width:62rem;margin:0 auto;padding:0 1.25rem 4rem}
+  header{border-bottom:4px solid var(--rojo);padding:2rem 0 1.2rem;margin-bottom:1.5rem}
+  .serie{font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);font-weight:700;margin:0 0 .5rem}
+  h1{font-size:1.8rem;line-height:1.2;margin:0 0 .6rem}
+  .meta{font-family:system-ui,sans-serif;font-size:.88rem;color:var(--gris);margin:0;line-height:1.5}
+  h2{font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--rojo);margin:1.8rem 0 .6rem;font-weight:700}
+  h3{font-family:system-ui,sans-serif;font-size:1.02rem;margin:1.3rem 0 .4rem;font-weight:700}
+  p{margin:0 0 .9rem}
+  a{color:var(--rojo);text-decoration:none;border-bottom:1px dotted var(--rojo)}
+  nav.estaciones{display:flex;flex-wrap:wrap;gap:.4rem;margin:1rem 0 1.5rem;font-family:system-ui,sans-serif}
+  nav.estaciones button{border:1px solid var(--borde);background:var(--gris-claro);color:var(--tinta);padding:.5rem .8rem;border-radius:.5rem;cursor:pointer;font-size:.88rem;font-weight:600}
+  nav.estaciones button.activa{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+  nav.estaciones button.lista::after{content:" ✓";color:var(--verde)}
+  nav.estaciones button.activa.lista::after{color:#fff}
+  section.estacion{display:none} section.estacion.activa{display:block}
+  .caja{background:var(--gris-claro);border-radius:.6rem;padding:1rem 1.2rem;margin:0 0 1rem}
+  .nota{border-left:5px solid var(--rojo);background:var(--tinte);border-radius:.4rem;padding:.8rem 1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .ok{border-left-color:var(--verde);background:var(--verde-claro)}
+  .aviso{border-left-color:var(--ambar);background:var(--ambar-claro)}
+  .info{border-left-color:var(--azul);background:var(--azul-claro)}
+  .grid{display:grid;gap:.8rem} .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g5{grid-template-columns:repeat(5,1fr)}
+  @media (max-width:760px){.g3,.g2,.g4,.g5{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:480px){.g3,.g4,.g5{grid-template-columns:1fr}}
+  .stat{background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.7rem;font-family:system-ui,sans-serif}
+  .stat .num{font-size:1.7rem;font-weight:700;color:var(--rojo);line-height:1.1}
+  .stat .lbl{font-size:.8rem;color:var(--gris)}
+  .stat .nivel{display:inline-block;margin-top:.3rem;padding:.1rem .5rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--gris-claro)}
+  .nivel.min{background:#E0E7FF;color:#3730A3} .nivel.mod{background:var(--ambar-claro);color:var(--ambar)} .nivel.max{background:var(--tinte);color:var(--rojo)} .nivel.bien{background:var(--verde-claro);color:var(--verde)}
+  svg{max-width:100%;height:auto;display:block} svg text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  .btn{font-family:system-ui,sans-serif;border:none;background:var(--rojo);color:#fff;padding:.5rem .9rem;border-radius:.45rem;cursor:pointer;font-weight:600;font-size:.9rem;margin:.2rem .3rem .2rem 0}
+  .btn.sec{background:var(--acero)} .btn.light{background:#fff;color:var(--tinta);border:1px solid var(--borde)} .btn.light.on{background:var(--tinta);color:#fff}
+  .btn:disabled{opacity:.5;cursor:default}
+  .pregunta{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:1rem;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.95rem}
+  .pregunta .opc{display:block;padding:.35rem .5rem;border-radius:.35rem;cursor:pointer;border:1px solid transparent}
+  .pregunta .opc:hover{background:var(--gris-claro)}
+  .pregunta .opc.correcta{background:var(--verde-claro);border-color:var(--verde)} .pregunta .opc.incorrecta{background:var(--tinte);border-color:var(--rojo)}
+  .feedback{margin-top:.6rem;font-size:.9rem;color:var(--tinta);border-top:1px dashed var(--borde);padding-top:.5rem}
+  .cita{font-size:.82rem;color:var(--gris)}
+  table{width:100%;border-collapse:collapse;margin:0 0 1rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  th{text-align:left;background:var(--tinta);color:#fff;padding:.45rem .6rem} td{padding:.45rem .6rem;border-bottom:1px solid var(--borde);vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  .clasif{background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .7rem;font-family:system-ui,sans-serif;font-size:.93rem}
+  .clasif .enun{margin:0 0 .5rem}
+  .clasif .cats{display:flex;flex-wrap:wrap;gap:.35rem}
+  .clasif .cat{border:1px solid var(--borde);background:var(--gris-claro);border-radius:1rem;padding:.25rem .7rem;cursor:pointer;font-size:.85rem;font-weight:600}
+  .clasif .cat:hover{background:#E5E7EB}
+  .clasif .cat.correcta{background:var(--verde-claro);border-color:var(--verde);color:var(--verde)} .clasif .cat.incorrecta{background:var(--tinte);border-color:var(--rojo);color:var(--rojo)}
+  .clasif .feedback{font-size:.88rem}
+  .orden{list-style:none;padding:0;margin:0 0 .8rem;font-family:system-ui,sans-serif}
+  .orden li{display:flex;align-items:center;gap:.6rem;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.5rem .7rem;margin:0 0 .4rem;font-size:.92rem}
+  .orden li .n{width:1.6rem;height:1.6rem;border-radius:50%;background:var(--gris-claro);text-align:center;line-height:1.6rem;font-weight:700;flex:none;font-size:.8rem}
+  .orden li .txt{flex:1}
+  .orden li button{border:1px solid var(--borde);background:#fff;border-radius:.3rem;cursor:pointer;padding:.1rem .45rem;font-size:.85rem}
+  .orden li.bien{border-color:var(--verde);background:var(--verde-claro)} .orden li.mal{border-color:var(--rojo);background:var(--tinte)}
+  .slider{font-family:system-ui,sans-serif;font-size:.88rem;margin:.3rem 0}
+  .slider input{width:100%}
+  .slider .v{font-weight:700;color:var(--rojo)}
+  select.sel{font-family:system-ui,sans-serif;font-size:.92rem;padding:.35rem;border:1px solid var(--borde);border-radius:.4rem;max-width:100%}
+  .desafio{display:flex;gap:.6rem;align-items:flex-start;background:#fff;border:1px solid var(--borde);border-radius:.5rem;padding:.6rem .8rem;margin:0 0 .5rem;font-family:system-ui,sans-serif;font-size:.9rem}
+  .desafio .chk{width:1.4rem;height:1.4rem;border-radius:50%;border:2px solid var(--borde);flex:none;text-align:center;line-height:1.2rem;font-weight:700;color:#fff}
+  .desafio.hecho .chk{background:var(--verde);border-color:var(--verde)}
+  .match{display:grid;grid-template-columns:1fr auto;gap:.5rem .8rem;align-items:center;font-family:system-ui,sans-serif;font-size:.9rem;background:#fff;border:1px solid var(--borde);border-radius:.6rem;padding:.8rem 1rem;margin:0 0 .8rem}
+  @media (max-width:600px){.match{grid-template-columns:1fr}}
+  .match .def{padding:.3rem 0;border-bottom:1px dashed var(--borde)}
+  .match .def.bien{color:var(--verde)} .match .def.mal{color:var(--rojo)}
+  .barra{display:flex;align-items:center;gap:.5rem;font-family:system-ui,sans-serif;font-size:.85rem;margin:.25rem 0}
+  .barra .lb{width:13rem;flex:none;text-align:right;color:var(--gris)} .barra .tr{flex:1;height:1.1rem;background:var(--gris-claro);border-radius:.3rem;overflow:hidden;position:relative} .barra .tr>div{height:100%;background:var(--acero);position:absolute;top:0} .barra .vv{width:3.4rem;font-weight:700}
+  .barra .tr>div.neg{background:var(--rojo)} .barra .tr>div.pos{background:var(--verde)}
+  @media (max-width:600px){.barra .lb{width:8rem;font-size:.75rem}}
+  .cont{display:grid;grid-template-columns:repeat(6,1fr);gap:.3rem;font-family:system-ui,sans-serif;font-size:.78rem;margin:.6rem 0}
+  @media (max-width:760px){.cont{grid-template-columns:repeat(3,1fr)}}
+  .cont div{border:1px solid var(--borde);border-radius:.4rem;padding:.4rem;text-align:center;cursor:pointer;background:#fff}
+  .cont div.ctrl{border-bottom:4px solid var(--ambar)} .cont div.auto{border-bottom:4px solid var(--verde)} .cont div.amo{border-bottom:4px solid var(--gris)}
+  .cont div.on{background:var(--tinta);color:#fff}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--borde);font-family:system-ui,sans-serif;font-size:.8rem;color:var(--gris)}
+  .progreso{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--gris)}
+  .mini{font-size:.8rem;color:var(--gris);font-family:system-ui,sans-serif}
+  .pregunta .opc.parcial{background:var(--ambar-claro);border-color:var(--ambar)}
+  .nivel-tag{display:inline-block;font-weight:700;margin-right:.3rem}
+</style>
+</head>
+<body>
+<div class="contenedor">
+<header>
+  <p class="serie">Laboratorio interactivo · Sesión 6</p>
+  <h1>Del dato al diagnóstico y del diagnóstico al tablero: ¿qué dicen los resultados y qué se puede controlar con ellos?</h1>
+  <p class="meta">Diagnóstico Organizacional (MCG9003), Magíster en Control de Gestión, FAE UDP · Sesión 6 (sábado 21-11-2026) · Acompaña al apunte A6 y al Control 6<br>
+  Prof. <a href="https://www.gempp.cl">René Gempp</a> · <a href="https://gempp.cl/teaching/do_mcg/">Página del curso</a><br>
+  <span id="progreso" class="progreso"></span></p>
+</header>
+
+<nav class="estaciones" id="nav"></nav>
+
+<section class="estacion activa" id="e0">
+  <h2>Cómo funciona</h2>
+  <p>Seis estaciones que siguen el orden del apunte A6 y del informe del Control 6. Los datos son los de la encuesta de TechNova (127 respuestas, cuatro áreas) y del caso del examen final (978 trabajadores, 50 sucursales). Cada estación tiene algo que manipular o clasificar y preguntas con retroalimentación. Puedes hacerlas en cualquier orden; el avance se guarda en este navegador. No hay registro ni nota.</p>
+  <div class="grid g3">
+    <div class="caja"><strong>1. Segmentar.</strong> Simulador: cómo una media global esconde una crisis localizada; qué cortes se reportan y cuáles no.</div>
+    <div class="caja"><strong>2. Magnitud.</strong> Simulador de t, p y d: por qué el valor p no basta y qué pasa con unidades de diez personas.</div>
+    <div class="caja"><strong>3. Correlatos.</strong> Facetas frente a condiciones; qué se puede y qué no se puede concluir de una correlación.</div>
+    <div class="caja"><strong>4. eNPS y salida.</strong> Calculadora de eNPS y de su inestabilidad; la intención de salida como indicador adelantado.</div>
+    <div class="caja"><strong>5. Integrar.</strong> Triangulación (convergente o divergente) y niveles del diagrama de Porras.</div>
+    <div class="caja"><strong>6. Tablero.</strong> Elegir indicadores, completar una ficha y detectar los errores típicos de los tableros de personas.</div>
+  </div>
+  <p class="mini">Tiempo estimado: 35 minutos. Funciona sin conexión una vez cargado. Las referencias completas están en el apunte A6.</p>
+  <button class="btn" onclick="ir(1)">Empezar en la estación 1</button>
+</section>
+
+<section class="estacion" id="e1">
+  <h2>Estación 1 · Segmentar antes de concluir</h2>
+  <p>En TechNova la satisfacción general promedia 4,9 en una escala de 1 a 7. El simulador muestra cómo se forma ese promedio a partir de dos grupos y qué tan distinta puede ser la realidad de cada uno con la misma media global.</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div class="slider">Media de desarrollo: <span class="v" id="v_md">3,7</span><input type="range" id="s_md" min="10" max="70" value="37"></div>
+      <div class="slider">Tamaño de desarrollo (n): <span class="v" id="v_nd">50</span><input type="range" id="s_nd" min="5" max="120" value="50"></div>
+      <div class="slider">Media del resto de la organización: <span class="v" id="v_mr">5,7</span><input type="range" id="s_mr" min="10" max="70" value="57"></div>
+      <div class="slider">Tamaño del resto (n): <span class="v" id="v_nr">77</span><input type="range" id="s_nr" min="5" max="120" value="77"></div>
+    </div>
+    <p style="font-family:system-ui,sans-serif;font-size:1.05rem;margin:.6rem 0 .3rem">Media global = <strong id="v_mg" style="color:var(--rojo)">4,9</strong> &nbsp;·&nbsp; brecha entre grupos = <strong id="v_br">2,0</strong> puntos &nbsp;·&nbsp; <span id="v_lec1" class="mini"></span></p>
+    <div id="barras1"></div>
+  </div>
+  <h3>A. ¿Se reporta este corte?</h3>
+  <p class="mini">Cada enunciado describe un subgrupo de la base TechNova. Decide qué se hace con él en el informe.</p>
+  <div id="c1"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q1"></div>
+</section>
+
+<section class="estacion" id="e2">
+  <h2>Estación 2 · Significación y magnitud</h2>
+  <p>Cuando dos grupos difieren, hay dos preguntas: si la diferencia es distinguible del azar (p) y cuánto importa (d). El simulador calcula ambas para dos grupos con desviación estándar 1,2 (la de las escalas de TechNova).</p>
+  <div class="caja">
+    <div class="grid g2">
+      <div class="slider">Diferencia entre medias (puntos de 1 a 7): <span class="v" id="v_dif">2,0</span><input type="range" id="s_dif" min="0" max="30" value="20"></div>
+      <div class="slider">n por grupo: <span class="v" id="v_n2">50</span><input type="range" id="s_n2" min="5" max="200" value="50"></div>
+    </div>
+    <p style="font-family:system-ui,sans-serif;font-size:1.05rem;margin:.6rem 0 .3rem">d = <strong id="v_d" style="color:var(--rojo)">1,67</strong> &nbsp;·&nbsp; t = <strong id="v_t">8,3</strong> &nbsp;·&nbsp; p <strong id="v_p">&lt; ,001</strong> &nbsp;·&nbsp; <span id="v_lec2" class="mini"></span></p>
+    <p class="mini">Error estándar de la media de cada grupo: <strong id="v_se">0,17</strong>. Con n = 10 por sucursal, como en el caso del examen, ese error es 0,38: del mismo orden que las diferencias entre sucursales.</p>
+  </div>
+  <h3>A. ¿Qué dice cada número?</h3>
+  <div id="c2"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q2"></div>
+</section>
+
+<section class="estacion" id="e3">
+  <h2>Estación 3 · Correlatos de la satisfacción</h2>
+  <p>La tabla muestra las correlaciones reales de TechNova con la satisfacción general. Clasifica cada variable según lo que puede aportar al diagnóstico.</p>
+  <div class="caja">
+    <div class="barra"><span class="lb">Sat. con el ambiente</span><div class="tr"><div style="width:90%"></div></div><span class="vv">,90</span></div>
+    <div class="barra"><span class="lb">Compromiso</span><div class="tr"><div style="width:86%"></div></div><span class="vv">,86</span></div>
+    <div class="barra"><span class="lb">Sat. con el liderazgo</span><div class="tr"><div style="width:85%"></div></div><span class="vv">,85</span></div>
+    <div class="barra"><span class="lb">Coherencia entre líderes</span><div class="tr"><div style="width:84%" class="neg"></div></div><span class="vv">,84</span></div>
+    <div class="barra"><span class="lb">Apoyo de los líderes</span><div class="tr"><div style="width:78%" class="neg"></div></div><span class="vv">,78</span></div>
+    <div class="barra"><span class="lb">Visión de los líderes</span><div class="tr"><div style="width:68%" class="neg"></div></div><span class="vv">,68</span></div>
+    <div class="barra"><span class="lb">Sat. con la compensación</span><div class="tr"><div style="width:68%"></div></div><span class="vv">,68</span></div>
+    <div class="barra"><span class="lb">Claridad de rol</span><div class="tr"><div style="width:36%" class="neg"></div></div><span class="vv">,36</span></div>
+    <div class="barra"><span class="lb">Claridad de prioridades</span><div class="tr"><div style="width:21%" class="neg"></div></div><span class="vv">,21</span></div>
+    <p class="mini">Rojo: condiciones que la gestión puede mover. Gris: facetas de la propia satisfacción. r de Pearson, n = 127.</p>
+  </div>
+  <h3>A. Clasifica cada variable</h3>
+  <div id="c3"></div>
+  <h3>B. Qué se puede concluir</h3>
+  <div id="g3"></div>
+</section>
+
+<section class="estacion" id="e4">
+  <h2>Estación 4 · eNPS e intención de salida</h2>
+  <p>El eNPS se calcula con un ítem de 0 a 10: porcentaje de promotores (9 y 10) menos porcentaje de detractores (0 a 6). Reparte las respuestas de una unidad y observa cuánto se mueve el indicador cuando cambia una sola persona.</p>
+  <div class="caja">
+    <div class="grid g3">
+      <div class="slider">Promotores (9 a 10): <span class="v" id="v_pro">6</span><input type="range" id="s_pro" min="0" max="60" value="6"></div>
+      <div class="slider">Pasivos (7 a 8): <span class="v" id="v_pas">7</span><input type="range" id="s_pas" min="0" max="60" value="7"></div>
+      <div class="slider">Detractores (0 a 6): <span class="v" id="v_det">7</span><input type="range" id="s_det" min="0" max="60" value="7"></div>
+    </div>
+    <p style="font-family:system-ui,sans-serif;font-size:1.05rem;margin:.6rem 0 .3rem">n = <strong id="v_n4">20</strong> · eNPS = <strong id="v_enps" style="color:var(--rojo)">−5</strong> &nbsp;·&nbsp; <span id="v_lec4" class="mini"></span></p>
+    <p class="mini">Referencia TechNova: global −18 (28% promotores, 27% pasivos, 46% detractores); desarrollo −68; producto +24; operaciones +10; marketing +7.</p>
+  </div>
+  <h3>A. Leer el eNPS y la intención de salida</h3>
+  <div id="c4"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q4"></div>
+</section>
+
+<section class="estacion" id="e5">
+  <h2>Estación 5 · Integrar y sintetizar</h2>
+  <p>Un hallazgo sube de hipótesis a conclusión cuando varias fuentes lo sostienen. Después, cada hallazgo ocupa un nivel en el diagrama de flujos de Porras: síntoma (lo que la dirección ve), problema básico (lo que la encuesta y las entrevistas muestran) o problema fundamental (lo que la intervención debe tocar).</p>
+  <h3>A. Triangulación: ¿convergente o divergente?</h3>
+  <div id="c5a"></div>
+  <h3>B. Niveles del diagrama de Porras</h3>
+  <div id="c5b"></div>
+  <h3>Para cerrar la estación</h3>
+  <div id="q5"></div>
+</section>
+
+<section class="estacion" id="e6">
+  <h2>Estación 6 · Del diagnóstico al tablero de personas</h2>
+  <p>Un tablero de personas tiene pocos indicadores, causalmente conectados, sensibles a la gestión y medibles con calidad, con fichas completas y reglas de anonimato. Primero arma una ficha; después decide sobre indicadores candidatos y detecta errores.</p>
+  <h3>A. Completa la ficha del indicador "índice de coherencia del liderazgo"</h3>
+  <div class="caja" id="ficha6">
+    <p class="mini">Elige una opción por campo. La ficha se evalúa al completar los seis campos.</p>
+    <div class="grid g2">
+      <div class="slider">Fórmula<br><select class="sel" id="f_form"><option value="">Elegir</option><option value="1">Promedio de los ítems de coherencia y visión (1 a 7), por persona y luego por área</option><option value="0">La nota que el CEO pone a cada líder</option><option value="0">Porcentaje de personas que respondió la encuesta</option></select></div>
+      <div class="slider">Fuente y frecuencia<br><select class="sel" id="f_fuente"><option value="">Elegir</option><option value="0">Encuesta completa cada tres años</option><option value="1">Pulso trimestral con ítems ancla y encuesta anual completa</option><option value="0">Opinión del comité directivo en cada reunión</option></select></div>
+      <div class="slider">Unidad de análisis y n mínimo<br><select class="sel" id="f_unidad"><option value="">Elegir</option><option value="0">Persona (cada líder recibe su puntaje)</option><option value="1">Área, con n de al menos 8 y tasa de respuesta de al menos 60%</option><option value="0">Organización completa, sin desagregar</option></select></div>
+      <div class="slider">Meta y umbrales<br><select class="sel" id="f_meta"><option value="">Elegir</option><option value="0">Subir de 3,1 a 6,0 en seis meses</option><option value="1">Ningún área bajo 4,0 a 12 meses; rojo bajo 3,5; alerta si cae 0,5 entre olas</option><option value="0">Sin meta: solo se observa</option></select></div>
+      <div class="slider">Responsable y acción asociada<br><select class="sel" id="f_resp"><option value="">Elegir</option><option value="1">CEO y CTO; en rojo, reunión de alineamiento en 15 días y revisión del backlog único</option><option value="0">Gerente de personas; en rojo, informe al directorio</option><option value="0">Cada líder evaluado; en rojo, descuento del bono</option></select></div>
+      <div class="slider">Uso<br><select class="sel" id="f_uso"><option value="">Elegir</option><option value="0">Evaluativo: ranking de líderes</option><option value="1">Interactivo: agenda de conversación entre niveles sobre la desviación</option><option value="0">Diagnóstico automático: alerta por correo sin reunión</option></select></div>
+    </div>
+    <p id="v_ficha" style="font-family:system-ui,sans-serif;margin:.6rem 0 0"></p>
+  </div>
+  <h3>B. Indicadores candidatos para el tablero de TechNova</h3>
+  <div id="g6"></div>
+  <h3>C. Detecta el error</h3>
+  <div id="c6"></div>
+</section>
+
+<section class="estacion" id="e7">
+  <h2>Ficha de salida</h2>
+  <div id="fichaEstado" class="caja"></div>
+  <div class="caja">
+    <strong>Lo que deberías poder hacer ahora.</strong>
+    <ul>
+      <li>Segmentar una encuesta por los cortes del diseño, reportar solo las celdas con n suficiente y reconocer una crisis localizada bajo un promedio global.</li>
+      <li>Leer una comparación de grupos con p y d, y explicar por qué un ranking de unidades de diez personas es ruido ordenado.</li>
+      <li>Distinguir facetas del criterio de condiciones antecedentes y escribir una correlación como asociación, no como causa.</li>
+      <li>Calcular un eNPS, estimar cuánto lo mueve una persona y usar la intención de salida como indicador adelantado.</li>
+      <li>Resolver convergencias y divergencias entre fuentes y ubicar cada hallazgo en su nivel del diagrama de Porras.</li>
+      <li>Completar una ficha de indicador y descartar los indicadores que no pasan los cuatro criterios o que caen en los errores típicos.</li>
+    </ul>
+  </div>
+  <p class="mini">El avance queda guardado en este navegador. Si quieres partir de cero, borra el progreso.</p>
+  <button class="btn light" onclick="reiniciar()">Borrar progreso y empezar de nuevo</button>
+</section>
+
+<footer>
+  Laboratorio interactivo · <a href="https://gempp.cl/teaching/do_mcg/">Diagnóstico Organizacional, MCG UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; las presentaciones, los enunciados de los controles y los datos de cada sesión están en Canvas. El avance se guarda solo en este navegador.
+</footer>
+</div>
+
+<script>
+// ===================== ESTADO Y NAVEGACIÓN (mismo patrón que lab_personalidad) =====================
+const CLAVE = "lab_do_s6_v1";
+const NOMBRES = ["Inicio","1 · Segmentar","2 · Magnitud","3 · Correlatos","4 · eNPS y salida","5 · Integrar","6 · Tablero","Ficha de salida"];
+const EST = [1,2,3,4,5,6];
+const estado = { hechas: {}, resp: {} };
+function guardar(){ try{ localStorage.setItem(CLAVE, JSON.stringify(estado)); }catch(e){} }
+function cargar(){ try{ const s = localStorage.getItem(CLAVE); if(s) Object.assign(estado, JSON.parse(s)); }catch(e){} }
+function marcar(est){ estado.hechas[est] = true; guardar(); pintarNav(); }
+function pintarNav(){
+  const nav = document.getElementById("nav"); nav.innerHTML = "";
+  NOMBRES.forEach((n,i)=>{ const b = document.createElement("button"); b.textContent = n;
+    if(i===actual) b.classList.add("activa"); if(estado.hechas[i]) b.classList.add("lista");
+    b.onclick = ()=>ir(i); nav.appendChild(b); });
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("progreso").textContent = `Estaciones completadas: ${k} de ${EST.length}`;
+}
+let actual = 0;
+function ir(i){ actual=i; document.querySelectorAll("section.estacion").forEach(s=>s.classList.remove("activa"));
+  document.getElementById("e"+i).classList.add("activa"); pintarNav(); if(i===NOMBRES.length-1) pintarFicha(); window.scrollTo({top:0,behavior:"smooth"}); }
+function reiniciar(){ if(!confirm("¿Borrar todo el progreso guardado?")) return; try{ localStorage.removeItem(CLAVE); }catch(e){} location.reload(); }
+
+// ===================== COMPONENTES =====================
+// pregunta(contId, items, estacion): items = [{q, opts:[...], ok: índice, fb: "explicación"}]
+function pregunta(contId, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = "";
+  let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.q}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(+s.dataset.j===it.ok ? "correcta" : "incorrecta");
+      d.querySelectorAll(".opc")[it.ok].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb;
+      estado.resp[contId+"_"+k] = +s.dataset.j; guardar();
+      if(hechas===items.length) marcar(estacion);
+    });
+    cont.appendChild(d);
+  });
+}
+// clasificador(contId, cats, items, estacion): items = [{t:"enunciado", c:"categoría correcta", fb:"explicación"}]
+function clasificador(contId, cats, items, estacion){
+  const cont = document.getElementById(contId); cont.innerHTML = ""; let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "clasif";
+    d.innerHTML = `<p class="enun">${it.t}</p><div class="cats">` + cats.map(c=>`<span class="cat" data-c="${c}">${c}</span>`).join("") + `</div><div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".cat").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      s.classList.add(s.dataset.c===it.c ? "correcta" : "incorrecta");
+      d.querySelector(`.cat[data-c="${it.c}"]`).classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block"; f.textContent = it.fb; guardar();
+      if(hechas===items.length) marcar(estacion);
+    });
+    cont.appendChild(d);
+  });
+}
+// graduada(contId, items, estacion, etiquetas): items = [{t, opts:[{o, g:2|1|0, fb}]}]
+// Para ejercicios de solución abierta: 2 = defendible, 1 = aceptable con matices, 0 = débil. Muestra la retroalimentación
+// de la opción elegida y, si no fue la mejor, la de la opción más defendible. 'etiquetas' permite renombrar los niveles.
+const NIVEL = {2:"Defendible", 1:"Aceptable, con matices", 0:"Débil"};
+function graduada(contId, items, estacion, etiquetas){
+  const L = etiquetas || NIVEL;
+  const cont = document.getElementById(contId); cont.innerHTML = ""; let hechas = 0;
+  items.forEach((it,k)=>{
+    const d = document.createElement("div"); d.className = "pregunta";
+    d.innerHTML = `<p><strong>${k+1}. ${it.t}</strong></p>` + it.opts.map((o,j)=>`<span class="opc" data-j="${j}">${o.o}</span>`).join("") + `<div class="feedback" style="display:none"></div>`;
+    d.querySelectorAll(".opc").forEach(s=>s.onclick=()=>{
+      if(d.dataset.done) return; d.dataset.done = 1; hechas++;
+      const j = +s.dataset.j, o = it.opts[j];
+      s.classList.add(o.g===2 ? "correcta" : (o.g===1 ? "parcial" : "incorrecta"));
+      const best = it.opts.findIndex(x=>x.g===2); if(best>=0) d.querySelectorAll(".opc")[best].classList.add("correcta");
+      const f = d.querySelector(".feedback"); f.style.display = "block";
+      f.innerHTML = `<span class="nivel-tag">${L[o.g]}.</span>${o.fb}` + (o.g<2 && best>=0 ? `<br><b>Opción más defendible: ${it.opts[best].o}.</b> ${it.opts[best].fb}` : "");
+      estado.resp[contId+"_"+k] = j; guardar();
+      if(hechas===items.length) marcar(estacion);
+    });
+    cont.appendChild(d);
+  });
+}
+function pintarFicha(){
+  const k = EST.filter(e=>estado.hechas[e]).length;
+  document.getElementById("fichaEstado").innerHTML = `<strong>Estaciones completadas: ${k} de ${EST.length}.</strong> ` + (k===EST.length ? "Laboratorio completo." : "Faltan: " + EST.filter(e=>!estado.hechas[e]).map(e=>NOMBRES[e]).join(", ") + ".");
+}
+
+
+// ===================== CONTENIDO =====================
+const C1 = [
+ { t:"Satisfacción por área: desarrollo 3,7 (n = 50), producto 5,9 (n = 29), marketing 5,6 (n = 28), operaciones 5,7 (n = 20).", c:"Se reporta: discrimina", fb:"Celdas de 20 a 50 personas y una brecha de dos puntos: es el corte principal del informe y va con n y media global de referencia." },
+ { t:"Satisfacción por nivel jerárquico: IC 5,0 (n = 88), leads 4,8 (n = 28), gerentes 4,9 (n = 11).", c:"Se reporta: no discrimina", fb:"Que un corte no discrimine también es un hallazgo: descarta la hipótesis de que el problema sea de jerarquía. Se reporta en una línea, no con un gráfico." },
+ { t:"Satisfacción de las 3 personas que marcaron 'otro' y las 4 que marcaron 'prefiero no decir' en género.", c:"No se reporta: celda pequeña", fb:"Siete personas en dos celdas: un promedio sería la opinión de dos o tres personas identificables. Se agregan o se omiten, y se declara la regla." },
+ { t:"Satisfacción de desarrollo con 7 a 18 meses de antigüedad: 3,1 (n = 30).", c:"Se reporta: discrimina", fb:"Es el grupo crítico del caso y la celda tiene n = 30. El cruce área por tramo se publica solo donde la celda lo permite; esta lo permite." },
+ { t:"Satisfacción de operaciones con hasta 6 meses de antigüedad: 5,5 (n = 2).", c:"No se reporta: celda pequeña", fb:"Dos personas. La cifra existe en JASP, pero no es un hallazgo ni es anónima. Se agrega con el tramo siguiente o se omite." },
+ { t:"Satisfacción por género: mujeres 5,1 (n = 44), hombres 4,9 (n = 76).", c:"Se reporta: no discrimina", fb:"Diferencia de 0,2 puntos con DE de 1,4: no discrimina. Se informa para cerrar la hipótesis y se pasa a los cortes que sí explican." },
+];
+const Q1 = [
+ { q:"Con el simulador en los valores iniciales (3,7 y 5,7), ¿qué describe la media global de 4,9?", opts:["La satisfacción típica de una persona de TechNova", "Un valor que no corresponde a ningún grupo real: desarrollo está muy por debajo y el resto muy por encima", "La satisfacción de producto, que es el área más grande"], ok:1, fb:"Las dos distribuciones casi no se superponen. El promedio es una construcción aritmética que describe a nadie. Primera regla del análisis: segmentar antes de concluir." },
+ { q:"Mueve el n de desarrollo a 20 y deja las medias. ¿Qué pasa con la media global y con el problema?", opts:["La media global sube y el problema deja de existir", "La media global sube; el problema sigue siendo igual de grave para quienes están en desarrollo, pero más fácil de ocultar", "La media global baja porque el grupo es más pequeño"], ok:1, fb:"Con menos personas en el grupo crítico, el promedio corporativo mejora sin que nada cambie para ese grupo. Un tablero que muestra el promedio corporativo es el diseño que impide ver la crisis." },
+ { q:"¿Cuál es la regla práctica de n mínimo por celda reportada?", opts:["No hay regla: se reporta todo lo que JASP calcule", "Un piso absoluto de 5 y una práctica recomendable de 8 a 10, declarada antes de aplicar la encuesta", "Solo se reportan celdas de 30 o más, porque bajo eso la estadística no funciona"], ok:1, fb:"La regla es ética y práctica más que estadística: protege el anonimato prometido y evita promedios de dos personas. Debe declararse en el consentimiento y cumplirse aunque la dirección pida el dato." },
+];
+const C2 = [
+ { t:"Desarrollo frente al resto: t = −10,3, p < ,001.", c:"Significación", fb:"p dice que una diferencia así sería muy improbable si los dos grupos no difirieran en la población. No dice cuánto importa." },
+ { t:"Desarrollo frente al resto: d = 1,95.", c:"Magnitud", fb:"Casi dos desviaciones estándar: una diferencia enorme (0,2 pequeña, 0,5 mediana, 0,8 grande, como convenciones orientativas). Es lo que la dirección necesita saber." },
+ { t:"Satisfacción por área: η² = ,48.", c:"Magnitud", fb:"El área explica casi la mitad de la variación en satisfacción. Es un tamaño del efecto para más de dos grupos." },
+ { t:"Satisfacción por tramo de antigüedad: F(2, 124) = 9,8, p < ,001.", c:"Significación", fb:"La diferencia entre tramos es distinguible del azar. Para saber cuánto importa hay que mirar η² (aquí ,14: moderado) o las diferencias de medias." },
+ { t:"Sucursal 17 frente a sucursal 32 en el caso del examen: medias 3,9 y 4,1 con n = 10 cada una.", c:"Ni lo uno ni lo otro: no interpretable", fb:"Con n = 10 y DE de 0,6, el error estándar de cada media es cerca de 0,2: la diferencia de 0,2 está dentro del error. Ningún ranking de sucursales se sostiene con esos tamaños." },
+];
+const Q2 = [
+ { q:"En el simulador, fija la diferencia en 0,3 puntos y sube el n por grupo a 200. ¿Qué pasa?", opts:["d sube con el n", "p se vuelve significativo aunque d sigue siendo pequeño (0,25)", "t baja porque hay más personas"], ok:1, fb:"Con n grande casi todo es significativo. La significación depende del n; la magnitud no. Reportar solo p convierte diferencias triviales en hallazgos." },
+ { q:"Ahora fija la diferencia en 1,0 y baja el n a 8 por grupo. ¿Qué pasa?", opts:["d es grande (0,83) pero p ya no es significativo: la muestra no permite distinguirlo del azar", "d baja a cero", "p sigue siendo significativo porque la diferencia es grande"], ok:0, fb:"Con unidades pequeñas, diferencias importantes no alcanzan significación. Es la situación de las sucursales del examen: premiar o sancionar jefaturas por diferencias que el diseño no puede distinguir del azar." },
+ { q:"¿Qué debe acompañar a toda media de unidad en un informe o tablero?", opts:["Dos decimales y el color del semáforo", "El n de la unidad y alguna medida del error o la dispersión (DE, error estándar o intervalo)", "La media del año anterior"], ok:1, fb:"Sin n y sin error, una media no se puede interpretar ni comparar. La precisión reportada (decimales) debe ser coherente con el error de medición de la escala." },
+];
+const C3 = [
+ { t:"Satisfacción con el ambiente (r = ,90)", c:"Faceta del criterio", fb:"Mide casi lo mismo que la satisfacción general. Correlaciona alto porque es parte del criterio, no porque lo explique." },
+ { t:"Coherencia entre líderes (r = ,84)", c:"Condición que la gestión puede mover", fb:"Describe una condición del entorno (los líderes dicen cosas compatibles o contradictorias) que una intervención puede cambiar. Es el correlato relevante para el diagnóstico." },
+ { t:"Compromiso organizacional (r = ,86)", c:"Faceta del criterio", fb:"Es otra actitud, un resultado paralelo a la satisfacción, no una condición antecedente. Va al tablero como indicador adelantado, no como explicación." },
+ { t:"Claridad de prioridades (r = ,21)", c:"Condición que la gestión puede mover", fb:"Condición de gestión, aunque correlacione poco: es baja en todas las áreas y por eso no discrimina. Reaparece con fuerza en las respuestas abiertas; va al diagrama de Porras como problema transversal." },
+ { t:"Satisfacción con la compensación (r = ,68)", c:"Faceta del criterio", fb:"Faceta de satisfacción. La compensación como condición se mediría con datos de sueldos y de mercado, y la evidencia cualitativa la sitúa como vía de salida, no como causa." },
+ { t:"Apoyo de los líderes (r = ,78)", c:"Condición que la gestión puede mover", fb:"Conducta de liderazgo observable y modificable. Candidato a indicador de proceso." },
+];
+const G3 = [
+ { t:"El informe debe nombrar el 'factor más asociado a la satisfacción'. ¿Cuál es la formulación más defendible?", opts:[
+   {o:"'La satisfacción con el ambiente es el factor que más explica la satisfacción general (r = ,90)'", g:0, fb:"Es una faceta del mismo criterio: no explica nada. Es el error más frecuente del Control 6."},
+   {o:"'La coherencia entre líderes es la condición más asociada con la satisfacción general (r = ,84); la dirección causal es una hipótesis que las entrevistas apoyan'", g:2, fb:"Elige entre condiciones, usa 'asociada', declara la hipótesis causal y la fuente que la sostiene."},
+   {o:"'La incoherencia de los líderes causa la insatisfacción de desarrollo (r = ,84)'", g:1, fb:"Elige bien la variable, pero afirma causalidad a partir de un corte transversal. La frase correcta es 'se asocia con'; la causalidad va al diagrama de Porras como hipótesis."}] },
+ { t:"r = ,84 entre coherencia y satisfacción admite varias lecturas. ¿Cuál es la tercera variable más plausible en TechNova?", opts:[
+   {o:"El área: estar en desarrollo, donde chocan las prioridades del CEO y del CTO, baja a la vez la coherencia percibida y la satisfacción", g:2, fb:"Se ve en el gráfico de dispersión: la nube de desarrollo está abajo a la izquierda. Por eso el análisis debe repetirse dentro de desarrollo (r = ,60) y triangularse con entrevistas."},
+   {o:"La edad de las personas", g:0, fb:"No hay evidencia en la base ni en el caso que conecte la edad con ambas variables."},
+   {o:"El sesgo de halo: quien está insatisfecho ve peor a sus líderes", g:1, fb:"Es una explicación plausible (causalidad inversa), pero no una tercera variable. Conviene mencionarla como limitación del autorreporte."}] },
+];
+const C4 = [
+ { t:"eNPS de desarrollo: −68, con 74% de detractores y n = 50.", c:"Indicador en rojo, estable", fb:"Con n = 50 cada persona vale dos puntos: la cifra es estable y el signo es inequívoco. Va al tablero con drill-down por área." },
+ { t:"eNPS de operaciones: +10, con n = 20.", c:"Indicador frágil: n pequeño", fb:"Con n = 20 cada persona mueve cinco puntos; dos personas que cambien de opinión lo llevan a 0. Se reporta con n y sin leer variaciones pequeñas entre olas." },
+ { t:"Intención de permanencia en desarrollo: 56% no, 24% tal vez, 20% sí.", c:"Indicador adelantado de la rotación", fb:"La intención de salida es el mejor predictor individual de la rotación voluntaria (correlación moderada). Si la mitad de los 'no' se va, la rotación del próximo año supera la actual." },
+ { t:"Propuesta del CEO: fijar al líder de cada área una meta de eNPS de +20 ligada al bono.", c:"Uso que destruye el indicador", fb:"Meta sobre una percepción, con consecuencias, en unidades de 20 a 50 personas: los líderes gestionarán la respuesta, no el clima (Goodhart). El eNPS sirve como ancla de pulso, no como meta de jefatura." },
+ { t:"eNPS global −18 reportado sin tasa de respuesta ni n.", c:"Indicador frágil: n pequeño", fb:"Aun con n = 127, sin tasa de respuesta ni n por área no se sabe a quién representa. La tasa de respuesta es el indicador del propio sistema de medición." },
+];
+const Q4 = [
+ { q:"En el simulador, con 6 promotores, 7 pasivos y 7 detractores (n = 20), mueve un promotor a detractor. ¿Cuánto cambia el eNPS?", opts:["5 puntos", "10 puntos", "No cambia: los pasivos no cuentan"], ok:1, fb:"Un promotor que pasa a detractor resta 5 puntos de promotores y suma 5 de detractores: 10 puntos de eNPS por una persona. En unidades pequeñas el eNPS es muy inestable." },
+ { q:"¿Por qué el eNPS no puede tener fiabilidad estimada por alfa?", opts:["Porque es una escala de 0 a 10", "Porque es un solo ítem: la consistencia interna necesita al menos dos", "Porque los pasivos no se usan en el cálculo"], ok:1, fb:"Un ítem único no permite estimar consistencia interna. Su fiabilidad solo podría estimarse por test-retest, que casi nunca se hace. Por eso se usa como ancla barata y comparable, acompañado de índices multi-ítem." },
+ { q:"¿Qué par de indicadores forma la relación leading-lagging básica de un tablero de personas?", opts:["Satisfacción y compromiso", "Intención de salida (adelantado) y rotación observada (resultado)", "eNPS y tasa de respuesta"], ok:1, fb:"La rotación registra lo que ya ocurrió; la intención de salida anticipa. El tablero necesita los dos y verifica cada ola si la relación entre ambos se mantiene." },
+];
+const C5A = [
+ { t:"Encuesta: coherencia entre líderes 1,5 en desarrollo. Entrevistas: contradicciones entre el CEO y el CTO mencionadas de forma espontánea. Documentos: correos con prioridades opuestas el mismo día.", c:"Convergente", fb:"Tres fuentes con tres lenguajes (cifra, cita, documento). El hallazgo sube de hipótesis a conclusión y va al resumen ejecutivo." },
+ { t:"Encuesta: satisfacción con la compensación 4,3 global, 9 menciones en 112 abiertas. Entrevistas: las ofertas externas aparecen como vía de salida, no como motivo del malestar. Hipótesis del CEO: 'es un problema de sueldos'.", c:"Divergente", fb:"La hipótesis de la dirección no se sostiene como causa principal. Documentarlo evita una intervención cara y equivocada; la divergencia se reporta, no se esconde." },
+ { t:"Encuesta: balance vida-trabajo 2,9 en desarrollo. Entrevistas: jornadas extendidas para compensar retrabajo. Métricas: licencias por estrés y bugs al alza.", c:"Convergente", fb:"Convergencia entre percepción, relato y registro administrativo. El hallazgo también conecta con la corriente de tecnología (deuda técnica) en el diagrama." },
+ { t:"Encuesta: claridad de prioridades 4,2 en todas las áreas por igual. Entrevistas con desarrollo: 'no sé a quién hacer caso'. Entrevistas con marketing: 'las prioridades están claras'.", c:"Divergente", fb:"La encuesta dice que el problema es transversal; las entrevistas, que es de desarrollo. Antes de resolver, revisar el método: ¿quién eligió a los entrevistados? ¿la escala mide lo mismo en todas las áreas? Se reporta como divergencia." },
+];
+const C5B = [
+ { t:"Rotación anual cercana a 50% en desarrollo; intención de salida 80%.", c:"Síntoma", fb:"Es lo que la dirección ya ve y lo que motivó el diagnóstico. Los síntomas van arriba; la intervención no los toca directamente." },
+ { t:"Instrucciones contradictorias del CEO y del CTO; coherencia percibida 1,5.", c:"Problema básico", fb:"Lo que la encuesta y las entrevistas muestran como mecanismo inmediato. Conecta el problema fundamental con los síntomas." },
+ { t:"Desacuerdo estratégico no resuelto entre los cofundadores.", c:"Problema fundamental", fb:"Es el problema núcleo: si no se resuelve, cualquier otra medida será transitoria. Corriente de factores sociales." },
+ { t:"Bugs triplicados, velocidad del equipo a la baja, deuda técnica.", c:"Síntoma", fb:"Resultado visible en los sistemas operacionales. Se acepta ubicarlo como problema básico si se argumenta que la deuda técnica alimenta la sobrecarga; lo que no se acepta es dejarlo sin nivel." },
+ { t:"Estructura informal que no escaló al crecer de 12 a 127 personas.", c:"Problema fundamental", fb:"Corriente de arreglos organizacionales. Explica la falta de roles, prioridades y procesos; es lo que la intervención debe tocar junto con el acuerdo entre fundadores." },
+ { t:"Sin onboarding ni estándares de desarrollo.", c:"Problema básico", fb:"Mecanismo concreto (corriente de tecnología y arreglos) que explica el valle del desencanto entre los meses 7 y 18. Una recomendación directa lo ataca." },
+];
+const Q5 = [
+ { q:"¿Cuál de estas formulaciones es un diagnóstico en tres frases y no una lista de hallazgos?", opts:["Desarrollo tiene 3,7 de satisfacción; el eNPS es −18; las abiertas piden claridad", "TechNova tiene una crisis localizada en desarrollo, no un problema general de clima. Se explica por instrucciones contradictorias de los cofundadores y por una estructura que no creció con la empresa, no por los sueldos. Si los fundadores no acuerdan prioridades, cualquier otra medida será transitoria", "Hay que mejorar el liderazgo, la comunicación y el onboarding"], ok:1, fb:"Qué ocurre, a quién le ocurre, por qué ocurre, y qué pasa si no se actúa. La primera opción son hallazgos sin diagnóstico; la tercera, recomendaciones sin diagnóstico." },
+ { q:"La matriz impacto por factibilidad coloca el 'ajuste salarial general' abajo. ¿Por qué?", opts:["Porque es caro", "Porque la evidencia no lo sostiene como causa: tendría bajo impacto sobre el problema núcleo aunque fuera factible", "Porque los desarrolladores no lo pidieron"], ok:1, fb:"El impacto se estima sobre el problema núcleo del diagrama de Porras, no sobre el síntoma. Una medida factible pero sin efecto sobre la causa es gasto, no intervención." },
+];
+const G6 = [
+ { t:"Antigüedad promedio del área (meses)", opts:[{o:"No entra: no es sensible a la gestión", g:2, fb:"Ninguna acción de la dirección la mueve en el horizonte de medición; es un dato de contexto, no un indicador."},{o:"Entra como indicador de resultado", g:0, fb:"No es un resultado de la gestión; sube sola si nadie se va y baja si se contrata."},{o:"Entra como indicador adelantado", g:0, fb:"No anticipa nada que la rotación y la intención de salida no anticipen mejor."}] },
+ { t:"Tasa de respuesta de la encuesta por área", opts:[{o:"Entra como indicador del sistema de medición, con mínimo de 60% para reportar el área", g:2, fb:"Dice cuánto se puede confiar en el resto del tablero. Es el indicador que casi siempre falta y el que habría advertido del problema en el caso del examen."},{o:"No entra: no es un resultado de personas", g:0, fb:"No es un resultado, pero sin él los demás indicadores pierden validez antes que precisión."},{o:"Entra como meta de cada jefatura", g:1, fb:"Entra, pero no como meta con consecuencias: presionar por respuestas produce respuestas forzadas y menos sinceras."}] },
+ { t:"Índice de claridad (4 ítems, alfa ,93), con r = ,33 con la satisfacción", opts:[{o:"Entra como indicador de proceso: es fiable, bajo en toda la organización, sensible a la gestión (prioridades públicas, roles definidos) y vinculado a una recomendación", g:2, fb:"Que correlacione poco con la satisfacción no lo descalifica: es un problema transversal con recomendación propia. Pasa los cuatro criterios."},{o:"No entra: correlaciona poco con la satisfacción", g:0, fb:"La correlación baja se debe a que es bajo en todas las áreas (no discrimina), no a que sea irrelevante. Las abiertas lo señalan como primer tema."},{o:"Entra solo como dato del diagnóstico, sin seguimiento", g:1, fb:"Puede defenderse si el tablero ya tiene demasiados indicadores, pero se pierde el seguimiento de la recomendación sobre prioridades."}] },
+ { t:"Satisfacción con la compensación (ítem único)", opts:[{o:"No entra al tablero de dirección; se mantiene en el diagnóstico anual", g:2, fb:"Ítem único, faceta del criterio, sin recomendación asociada (la evidencia no sostiene el ajuste salarial). El tablero debe ser corto."},{o:"Entra con meta de subir 1 punto", g:0, fb:"Meta sobre una percepción sin recomendación que la mueva, y sin conocer la variación entre olas."},{o:"Entra como indicador adelantado de la rotación", g:1, fb:"Correlaciona con la salida, pero la intención de salida y el eNPS ya cumplen esa función con más directitud."}] },
+ { t:"Rotación voluntaria anual en desarrollo (registros de personas)", opts:[{o:"Entra como indicador de resultado, mensual acumulado a 12 meses, desagregado por nivel", g:2, fb:"Es el síntoma principal, objetivo, continuo y en el lenguaje de la dirección. Sin n mínimo porque es un dato administrativo."},{o:"No entra: la encuesta ya lo cubre con la intención de salida", g:0, fb:"La intención anticipa; la rotación confirma. El tablero necesita el par."},{o:"Entra solo a nivel de organización", g:1, fb:"Entra, pero sin desagregar por área y nivel se pierde justamente lo que el diagnóstico encontró."}] },
+];
+const C6 = [
+ { t:"El tablero de una empresa muestra 24 indicadores de personas, 21 en verde: horas de capacitación, asistencia a eventos, publicaciones internas, cumpleaños celebrados.", c:"Tablero de vanidad", fb:"Se mide lo fácil de medir, no lo conectado con resultados. Criterio que falla: causalmente conectados y pocos." },
+ { t:"Meta anual: 'subir la satisfacción general de 4,9 a 5,5' sin conocer la variación entre olas ni el error de medición.", c:"Metas sobre percepciones", fb:"Traslada la lógica de las metas financieras a escalas de actitud. Se reemplaza por umbrales, tendencias y metas duras sobre métricas administrativas." },
+ { t:"Ranking de las 50 sucursales por clima, con n de 10 a 38, y premio a las cinco primeras.", c:"Comparación sin considerar el error", fb:"Confunde precisión aparente (dos decimales) con fiabilidad. Con n = 10 el error de cada media es del orden de las diferencias entre sucursales." },
+ { t:"El bono de los jefes de sucursal depende de la encuesta de clima de su equipo.", c:"Uso punitivo", fb:"Goodhart: la medida deja de medir. Los jefes gestionarán la respuesta, no el clima, y la siguiente ola perderá sinceridad y tasa de respuesta." },
+ { t:"Cada año se reescriben los ítems 'para mejorar el cuestionario' y se cambia el mes de aplicación.", c:"Serie rota", fb:"Sin ítems ancla ni fecha estable no hay comparación entre olas y el tablero no tiene tendencia. Los cambios van en bloques separados del núcleo." },
+ { t:"Se publica el eNPS de una unidad de seis personas con el nombre de su jefe.", c:"Comparación sin considerar el error", fb:"Celda bajo el n mínimo, identificable y con un indicador que cada persona mueve 17 puntos. Falla el anonimato y la precisión a la vez." },
+];
+
+// ===================== SIMULADORES =====================
+function fmt(x,d){ return x.toFixed(d).replace(".",","); }
+function sim1(){
+  const md=+document.getElementById("s_md").value/10, nd=+document.getElementById("s_nd").value, mr=+document.getElementById("s_mr").value/10, nr=+document.getElementById("s_nr").value;
+  document.getElementById("v_md").textContent=fmt(md,1); document.getElementById("v_nd").textContent=nd; document.getElementById("v_mr").textContent=fmt(mr,1); document.getElementById("v_nr").textContent=nr;
+  const mg=(md*nd+mr*nr)/(nd+nr); const br=Math.abs(mr-md);
+  document.getElementById("v_mg").textContent=fmt(mg,1); document.getElementById("v_br").textContent=fmt(br,1);
+  document.getElementById("v_lec1").textContent = br>=1.2 ? "la media global no describe a ningún grupo: la brecha supera una desviación estándar (1,2)." : (br>=0.5 ? "brecha moderada: segmentar sigue siendo necesario, pero la media global no es absurda." : "grupos parecidos: aquí la media global sí describe a la organización.");
+  const w=x=>Math.round((x-1)/6*100);
+  document.getElementById("barras1").innerHTML = `<div class="barra"><span class="lb">Desarrollo (n = ${nd})</span><div class="tr"><div class="neg" style="width:${w(md)}%"></div></div><span class="vv">${fmt(md,1)}</span></div>
+  <div class="barra"><span class="lb">Resto (n = ${nr})</span><div class="tr"><div style="width:${w(mr)}%"></div></div><span class="vv">${fmt(mr,1)}</span></div>
+  <div class="barra"><span class="lb">Media global (n = ${nd+nr})</span><div class="tr"><div class="pos" style="width:${w(mg)}%"></div></div><span class="vv">${fmt(mg,1)}</span></div>`;
+}
+["s_md","s_nd","s_mr","s_nr"].forEach(id=>document.getElementById(id).addEventListener("input",sim1));
+// aproximación de p bilateral para t con gl grandes (normal) y corrección t para gl pequeños vía fórmula de Abramowitz-Stegun
+function pNorm(z){ const t=1/(1+0.2316419*Math.abs(z)); const d=0.3989423*Math.exp(-z*z/2); const p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return 2*p; }
+function pT(t,df){ // aproximación de Hill para t -> z
+  const g=df-1.5, b=48*g*g, w=Math.sqrt(g*Math.log(1+t*t/df)); const z=w+(w*w*w+3*w)/b-(4*Math.pow(w,7)+33*Math.pow(w,5)+240*w*w*w+855*w)/(10*b*(b+0.8*Math.pow(w,4)+100)); return pNorm(z); }
+function sim2(){
+  const dif=+document.getElementById("s_dif").value/10, n=+document.getElementById("s_n2").value, sd=1.2;
+  document.getElementById("v_dif").textContent=fmt(dif,1); document.getElementById("v_n2").textContent=n;
+  const d=dif/sd, se=sd*Math.sqrt(2/n), t=dif/se, df=2*n-2, p=pT(t,df);
+  document.getElementById("v_d").textContent=fmt(d,2); document.getElementById("v_t").textContent=fmt(t,1);
+  document.getElementById("v_p").innerHTML = p<0.001 ? "&lt; ,001" : "= "+fmt(p,3).replace("0,",",");
+  document.getElementById("v_se").textContent=fmt(sd/Math.sqrt(n),2);
+  const mag = d<0.2?"trivial":(d<0.5?"pequeña":(d<0.8?"mediana":"grande")); const sig = p<0.05?"distinguible del azar":"no distinguible del azar";
+  document.getElementById("v_lec2").textContent = `magnitud ${mag}; diferencia ${sig} (α = ,05).` + (p<0.05 && d<0.2 ? " Significativa pero irrelevante." : "") + (p>=0.05 && d>=0.8 ? " Grande pero la muestra no la distingue del azar." : "");
+}
+["s_dif","s_n2"].forEach(id=>document.getElementById(id).addEventListener("input",sim2));
+function sim4(){
+  const pro=+document.getElementById("s_pro").value, pas=+document.getElementById("s_pas").value, det=+document.getElementById("s_det").value; const n=pro+pas+det;
+  document.getElementById("v_pro").textContent=pro; document.getElementById("v_pas").textContent=pas; document.getElementById("v_det").textContent=det; document.getElementById("v_n4").textContent=n;
+  if(n===0){ document.getElementById("v_enps").textContent="–"; document.getElementById("v_lec4").textContent="sin respuestas."; return; }
+  const e=Math.round(100*(pro-det)/n); document.getElementById("v_enps").textContent=(e<0?"−":"")+Math.abs(e);
+  const mov=Math.round(200/n);
+  document.getElementById("v_lec4").textContent = `una persona que pase de promotor a detractor mueve el eNPS ${mov} puntos.` + (n<8 ? " Con n < 8 la unidad no se reporta." : (n<30 ? " Unidad pequeña: reportar con n y no leer variaciones menores entre olas." : " Unidad reportable con cautela normal."));
+}
+["s_pro","s_pas","s_det"].forEach(id=>document.getElementById(id).addEventListener("input",sim4));
+function ficha6(){
+  const ids=["f_form","f_fuente","f_unidad","f_meta","f_resp","f_uso"]; const vals=ids.map(i=>document.getElementById(i).value);
+  const out=document.getElementById("v_ficha");
+  if(vals.some(v=>v==="")){ out.innerHTML=`<span class="mini">Campos completados: ${vals.filter(v=>v!=="").length} de 6.</span>`; return; }
+  const ok=vals.filter(v=>v==="1").length;
+  const msgs={f_form:"La fórmula debe salir de los ítems validados, por persona y luego por unidad.", f_fuente:"Pulso trimestral con ítems ancla más encuesta anual: suficiente frecuencia y comparabilidad.", f_unidad:"Área con n mínimo y tasa de respuesta mínima: protege anonimato y precisión; el puntaje por líder es uso evaluativo.", f_meta:"Meta por umbral y tendencia, con alerta por caída entre olas; subir de 3,1 a 6,0 en seis meses es una meta sobre percepciones sin base.", f_resp:"Los responsables son quienes pueden mover la condición (CEO y CTO) y la acción es concreta; descontar bonos es uso punitivo.", f_uso:"Uso interactivo: el dato abre una conversación sobre la desviación; el ranking destruye la encuesta."};
+  let html=`<strong>Ficha ${ok===6?"completa y defendible":"con "+(6-ok)+" campo(s) por revisar"}.</strong><ul style="margin:.4rem 0 0;font-size:.9rem">`;
+  ids.forEach((i,k)=>{ html+=`<li style="color:${vals[k]==="1"?"var(--verde)":"var(--rojo)"}">${msgs[i]}</li>`; });
+  out.innerHTML=html+"</ul>"; if(ok===6) estado.resp["ficha6"]=1; guardar();
+}
+["f_form","f_fuente","f_unidad","f_meta","f_resp","f_uso"].forEach(id=>document.getElementById(id).addEventListener("change",ficha6));
+
+// ===================== INIT =====================
+cargar(); pintarNav();
+sim1(); clasificador("c1", ["Se reporta: discrimina","Se reporta: no discrimina","No se reporta: celda pequeña"], C1, 1); pregunta("q1", Q1, 1);
+sim2(); clasificador("c2", ["Significación","Magnitud","Ni lo uno ni lo otro: no interpretable"], C2, 2); pregunta("q2", Q2, 2);
+clasificador("c3", ["Faceta del criterio","Condición que la gestión puede mover"], C3, 3); graduada("g3", G3, 3);
+sim4(); clasificador("c4", ["Indicador en rojo, estable","Indicador frágil: n pequeño","Indicador adelantado de la rotación","Uso que destruye el indicador"], C4, 4); pregunta("q4", Q4, 4);
+clasificador("c5a", ["Convergente","Divergente"], C5A, 5); clasificador("c5b", ["Síntoma","Problema básico","Problema fundamental"], C5B, 5); pregunta("q5", Q5, 5);
+ficha6(); graduada("g6", G6, 6); clasificador("c6", ["Tablero de vanidad","Metas sobre percepciones","Comparación sin considerar el error","Uso punitivo","Serie rota"], C6, 6);
+</script>
+</body>
+</html>

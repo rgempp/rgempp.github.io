@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo se piensa un equipo: de IPO a IMOI, y los otros mapas · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 31</p>
+  <h1>Cómo se piensa un equipo: de IPO a IMOI, y los otros mapas</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 31 · Tema 6 (lectura de base; conviene leerlo antes del apunte 23)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Si estás en el Taller de Liderazgo y Trabajo en Equipo, ya te presentaron el modelo IMOI de Mathieu et al. (2019). Si no estás, el texto guía te muestra en la Figura 10-3 un "modelo de eficacia de los equipos" con tres cajas: contexto, composición y proceso. Son el mismo mapa dibujado por manos distintas, y nadie te lo dice. Peor: ambos aparecen como si hubieran existido siempre, cuando en realidad son el resultado de sesenta años de discusión sobre una pregunta bastante simple: ¿por qué algunos equipos rinden y otros no?</p>
+<p>Este apunte cuenta esa discusión. Parte del modelo original de entradas, procesos y resultados (IPO), explica qué le criticaron y cómo se transformó en IMO y luego en IMOI, y después revisa otros marcos que miran al equipo desde un ángulo específico: el tiempo, la estructura, las condiciones de diseño, la identidad social, la complejidad. Al final te dejo una tabla que traduce el vocabulario del texto guía al del taller y al de la investigación actual, para que no tengas que aprender tres teorías cuando hay una.</p>
+<p>Lo escribí porque un modelo no es un adorno académico. Es la lista de lugares donde mirar cuando un equipo falla, y de lugares donde tocar para arreglarlo. Un administrador que no tiene mapa termina pidiendo "más compromiso" o contratando un outdoor. Los estados emergentes (confianza, cohesión, seguridad psicológica, cognición compartida), que son la parte del mapa que más se confunde, quedan para el apunte 32.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>Durante cuarenta años, la investigación sobre equipos usó el modelo <strong>IPO</strong>: las entradas (quiénes son los miembros, cómo está diseñada la tarea, qué contexto los rodea) determinan los procesos (cómo interactúan), y los procesos determinan los resultados. Es un modelo limpio y útil, y por eso sigue en todos los manuales. Pero tiene tres problemas que Ilgen et al. (2005) hicieron explícitos: muchas de las cosas que llamábamos "procesos" no son conductas sino estados que el equipo llega a tener; el modelo supone un solo ciclo, cuando los equipos trabajan en episodios que se repiten; y supone una flecha recta, cuando los resultados de hoy son las entradas de mañana. La respuesta fue el modelo <strong>IMOI</strong>: entradas, mediadores (procesos y estados emergentes), resultados, y una flecha de vuelta.</p>
+<p>Alrededor de ese tronco crecieron otros mapas, cada uno con una pregunta propia. El de Marks, Mathieu y Zaccaro (2001) pregunta <strong>cuándo</strong> ocurre cada proceso y organiza el trabajo en episodios de transición y acción. El de Hollenbeck, Beersma y Schouten (2012) pregunta <strong>qué clase de equipo</strong> es este, y reemplaza 42 etiquetas por tres dimensiones. El de Hackman (1987, 2002, 2012) pregunta <strong>qué condiciones</strong> hay que crear antes de que el equipo empiece, y propone que el diseño pesa más que la conducción. La teoría de la identidad social pregunta <strong>en cuántos subgrupos</strong> se parte un equipo y por qué. Y la visión de los equipos como sistemas complejos adaptativos (Arrow, McGrath &amp; Berdahl, 2001; Mathieu et al., 2019) recuerda que ningún diagrama de cajas captura del todo a un grupo de personas que cambia mientras trabaja.</p>
+<p>Para la prueba necesitas la Figura 10-3 del texto guía. Para entender un equipo real, necesitas saber que esa figura es una versión abreviada de IMOI, que mezcla procesos con estados dentro de la caja "proceso", y que hay varias preguntas (tiempo, estructura, condiciones, subgrupos) que no responde.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Qué es un modelo de equipo y para qué sirve</h3>
+<p>Un modelo de eficacia de equipos es un mapa que ordena las variables que explican por qué un equipo rinde. Ordenar no es poca cosa. Cuando un equipo falla, la lista de sospechosos es larga: la gente, la tarea, el jefe, los incentivos, la historia, el mal ambiente, la mala suerte. El modelo te dice en qué categoría cae cada sospechoso, cuáles son causas y cuáles son síntomas, y dónde conviene intervenir. Woolley y Mayo (2025), en el capítulo sobre equipos del nuevo Handbook of Social Psychology, lo resumen así: la composición y la estructura siguen siendo la base de casi todo lo que se estudia en equipos, y los procesos y los estados emergentes son los mecanismos que conectan esa base con los resultados.</p>
+<p>Hay una segunda razón para tener un modelo. Mathieu et al. (2019) revisaron 685 artículos sobre equipos publicados entre 2008 y 2018 en once revistas: 386 de campo, 146 de laboratorio, 29 meta-análisis. De los empíricos, 327 eran transversales y solo 83 longitudinales. Es decir, la mayor parte de lo que sabemos sobre equipos viene de fotografías, no de películas. Un buen modelo te ayuda a leer esas fotografías sin confundir correlación con causa.</p>
+<h3>IPO: el modelo que todos aprendimos</h3>
+<p>El modelo de entradas, procesos y resultados (<em>input-process-output</em>, IPO) se atribuye a McGrath (1964) y fue elaborado por Hackman y Morris (1975) y Gladstein (1984). La lógica es lineal. Las <strong>entradas</strong> son los factores previos que habilitan y limitan la interacción: características de los miembros (habilidades, personalidad), factores del equipo (tamaño, estructura de la tarea, liderazgo) y factores del contexto (recursos, recompensas, complejidad del entorno). Los <strong>procesos</strong> son las interacciones de los miembros dirigidas a la tarea: comunicarse, coordinarse, resolver conflictos. Los <strong>resultados</strong> son el desempeño (calidad, cantidad) y las reacciones de los miembros (satisfacción, compromiso, viabilidad del equipo). La Figura 1 lo dibuja.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 190" role="img" aria-label="Modelo IPO: entradas, procesos, resultados" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <defs><marker id="f1a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker></defs>
+  <rect x="10" y="30" width="190" height="130" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+  <text x="105" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="#1F2937">ENTRADAS (I)</text>
+  <text x="105" y="80" text-anchor="middle" font-size="10.5" fill="#1F2937">Miembros: habilidades, personalidad</text>
+  <text x="105" y="100" text-anchor="middle" font-size="11.5" fill="#1F2937">Equipo: tamaño, tarea, liderazgo</text>
+  <text x="105" y="120" text-anchor="middle" font-size="11.5" fill="#1F2937">Contexto: recursos, recompensas</text>
+  <text x="105" y="140" text-anchor="middle" font-size="11.5" fill="#1F2937">y complejidad del entorno</text>
+  <line x1="205" y1="95" x2="240" y2="95" stroke="#475569" stroke-width="2.5" marker-end="url(#f1a)"/>
+  <rect x="245" y="30" width="190" height="130" rx="6" fill="#FDF2F3" stroke="#C8102E"/>
+  <text x="340" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="#C8102E">PROCESOS (P)</text>
+  <text x="340" y="80" text-anchor="middle" font-size="11.5" fill="#1F2937">Comunicación</text>
+  <text x="340" y="100" text-anchor="middle" font-size="11.5" fill="#1F2937">Coordinación</text>
+  <text x="340" y="120" text-anchor="middle" font-size="11.5" fill="#1F2937">Manejo del conflicto</text>
+  <text x="340" y="140" text-anchor="middle" font-size="10.5" fill="#1F2937">(y todo lo demás que pase adentro)</text>
+  <line x1="440" y1="95" x2="475" y2="95" stroke="#475569" stroke-width="2.5" marker-end="url(#f1a)"/>
+  <rect x="480" y="30" width="190" height="130" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+  <text x="575" y="55" text-anchor="middle" font-size="14" font-weight="700" fill="#1F2937">RESULTADOS (O)</text>
+  <text x="575" y="80" text-anchor="middle" font-size="11.5" fill="#1F2937">Desempeño: calidad, cantidad</text>
+  <text x="575" y="100" text-anchor="middle" font-size="11.5" fill="#1F2937">Satisfacción, compromiso</text>
+  <text x="575" y="120" text-anchor="middle" font-size="11.5" fill="#1F2937">Viabilidad: ganas de seguir</text>
+  <text x="575" y="140" text-anchor="middle" font-size="11.5" fill="#1F2937">trabajando juntos</text>
+  <text x="340" y="182" text-anchor="middle" font-size="11" fill="#6B7280">Una flecha, un ciclo, una dirección.</text>
+</svg>
+<figcaption>Figura 1. El modelo IPO. Elaborado a partir de McGrath (1964), Hackman y Morris (1975) y Mathieu et al. (2008).</figcaption>
+</figure>
+<p>Dentro de este marco nació la ecuación más citada de la psicología de grupos. Steiner (1972) propuso que la productividad real de un grupo es igual a su productividad potencial menos las pérdidas de proceso: lo que se pierde por coordinarse mal y por esforzarse menos. Hackman y Morris (1975) agregaron el término que faltaba, las ganancias de proceso, y la ecuación quedó así: productividad real = potencial + ganancias − pérdidas (Larson, 2010). La sinergia de la que habla el texto guía en la Figura 10-1 es exactamente eso: ganancias mayores que pérdidas. Los apuntes 25 y 27 muestran lo frecuente que es lo contrario.</p>
+<p>El IPO funciona porque es simple. Y falla por lo mismo.</p>
+<h3>Las tres críticas y el paso a IMO e IMOI</h3>
+<p>Ilgen et al. (2005) publicaron en el Annual Review of Psychology la crítica que cambió el vocabulario del campo. Tres puntos.</p>
+<p>Primero, muchas de las cosas que los investigadores metían en la caja "proceso" no son procesos. La cohesión, la confianza, la potencia del equipo, los modelos mentales compartidos no son interacciones: son propiedades que el equipo llega a tener como resultado de interactuar. Ilgen et al. (2005, p. 520) lo dicen sin rodeos: muchos constructos presentados como proceso "no son proceso en absoluto, sino estados cognitivos o afectivos emergentes". La distinción venía de Marks et al. (2001), que definieron los <strong>procesos</strong> como los actos interdependientes de los miembros que convierten entradas en resultados mediante actividades cognitivas, verbales y conductuales dirigidas a organizar el trabajo, y los <strong>estados emergentes</strong> como propiedades del equipo, típicamente dinámicas, que varían en función del contexto, las entradas, los procesos y los resultados. Cohen y Bailey (1997) las habían llamado "rasgos psicosociales" del grupo. El nombre que quedó fue estados emergentes.</p>
+<p>Segundo, el IPO supone un solo ciclo. Los equipos reales trabajan por episodios: planifican, ejecutan, revisan, vuelven a planificar. Lo que un equipo logra en un episodio cambia lo que tiene para el siguiente.</p>
+<p>Tercero, el IPO supone una flecha recta de causa a efecto. En la práctica hay retroalimentación por todos lados: un buen resultado sube la confianza, la confianza cambia cómo se comunican, y la comunicación cambia quién quiere quedarse en el equipo.</p>
+<p>La propuesta fue reemplazar la P por una M de <strong>mediadores</strong>, que abarca procesos y estados emergentes, y agregar una I al final para marcar el ciclo: <strong>IMOI</strong>, entradas, mediadores, resultados, entradas. Mathieu et al. (2008) ordenaron el contenido de cada caja en la revisión más usada de la década siguiente, y Mathieu et al. (2019) actualizaron el mapa con dos agregados: los niveles anidados (personas dentro de equipos, equipos dentro de organizaciones, organizaciones dentro de entornos) y el tiempo como dimensión explícita. La Figura 2 resume el modelo tal como se usa hoy.</p>
+<figure class="figura">
+<svg viewBox="0 0 700 350" role="img" aria-label="Modelo IMOI: entradas, mediadores, resultados y retroalimentación, en niveles anidados" style="width:100%;height:auto;max-width:700px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <defs><marker id="f2a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker><marker id="f2r" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#C8102E"/></marker></defs>
+  <rect x="8" y="8" width="684" height="302" rx="8" fill="none" stroke="#E5E7EB" stroke-dasharray="5 4"/>
+  <text x="18" y="26" font-size="11" fill="#6B7280">Contexto organizacional y entorno (nivel superior)</text>
+  <rect x="24" y="36" width="652" height="262" rx="8" fill="none" stroke="#E5E7EB" stroke-dasharray="5 4"/>
+  <text x="34" y="54" font-size="11" fill="#6B7280">Equipo (nivel intermedio) · los miembros (nivel inferior) aportan desde abajo</text>
+  <rect x="40" y="70" width="170" height="180" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+  <text x="125" y="94" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1F2937">ENTRADAS</text>
+  <text x="125" y="118" text-anchor="middle" font-size="11" fill="#1F2937">Composición: promedios,</text>
+  <text x="125" y="134" text-anchor="middle" font-size="11" fill="#1F2937">diversidad, fallas de línea</text>
+  <text x="125" y="158" text-anchor="middle" font-size="11" fill="#1F2937">Estructura: tarea, roles,</text>
+  <text x="125" y="174" text-anchor="middle" font-size="11" fill="#1F2937">interdependencia, virtualidad</text>
+  <text x="125" y="198" text-anchor="middle" font-size="11" fill="#1F2937">Contexto: recursos,</text>
+  <text x="125" y="214" text-anchor="middle" font-size="11" fill="#1F2937">incentivos, liderazgo</text>
+  <line x1="215" y1="160" x2="250" y2="160" stroke="#475569" stroke-width="2.5" marker-end="url(#f2a)"/>
+  <rect x="255" y="70" width="200" height="180" rx="6" fill="#FDF2F3" stroke="#C8102E"/>
+  <text x="355" y="94" text-anchor="middle" font-size="13.5" font-weight="700" fill="#C8102E">MEDIADORES</text>
+  <rect x="268" y="106" width="174" height="60" rx="4" fill="#fff" stroke="#E5E7EB"/>
+  <text x="355" y="124" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1F2937">Procesos (lo que hacen)</text>
+  <text x="355" y="141" text-anchor="middle" font-size="10.5" fill="#1F2937">transición · acción ·</text>
+  <text x="355" y="156" text-anchor="middle" font-size="10.5" fill="#1F2937">interpersonales</text>
+  <rect x="268" y="176" width="174" height="64" rx="4" fill="#fff" stroke="#E5E7EB"/>
+  <text x="355" y="194" text-anchor="middle" font-size="11.5" font-weight="700" fill="#1F2937">Estados emergentes</text>
+  <text x="355" y="211" text-anchor="middle" font-size="10.5" fill="#1F2937">(lo que llegan a tener)</text>
+  <text x="355" y="227" text-anchor="middle" font-size="9.5" fill="#1F2937">cognitivos · afectivos · motivacionales</text>
+  <line x1="460" y1="160" x2="495" y2="160" stroke="#475569" stroke-width="2.5" marker-end="url(#f2a)"/>
+  <rect x="500" y="70" width="160" height="180" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+  <text x="580" y="94" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1F2937">RESULTADOS</text>
+  <text x="580" y="122" text-anchor="middle" font-size="11" fill="#1F2937">Desempeño</text>
+  <text x="580" y="146" text-anchor="middle" font-size="11" fill="#1F2937">Actitudes de los miembros</text>
+  <text x="580" y="170" text-anchor="middle" font-size="11" fill="#1F2937">Conductas (rotación,</text>
+  <text x="580" y="186" text-anchor="middle" font-size="11" fill="#1F2937">ausentismo, seguridad)</text>
+  <text x="580" y="212" text-anchor="middle" font-size="11" fill="#1F2937">Viabilidad del equipo</text>
+  <path d="M580,252 L580,272 L125,272 L125,256" fill="none" stroke="#C8102E" stroke-width="2.5" marker-end="url(#f2r)"/>
+  <text x="352" y="290" text-anchor="middle" font-size="11" font-weight="700" fill="#C8102E">retroalimentación: los resultados de hoy son entradas mañana (la segunda I)</text>
+  <text x="350" y="334" text-anchor="middle" font-size="11" fill="#6B7280">Tres niveles anidados, dos flechas, y el tiempo corriendo por debajo (episodios).</text>
+</svg>
+<figcaption>Figura 2. El modelo IMOI con sus niveles. Elaborado a partir de Ilgen et al. (2005), Mathieu et al. (2008) y Mathieu et al. (2019).</figcaption>
+</figure>
+<p>La tabla 1 pone los tres modelos lado a lado, junto con la versión del texto guía.</p>
+<table><tr><th></th><th>IPO (McGrath, 1964; Hackman &amp; Morris, 1975)</th><th>IMO (Mathieu et al., 2008)</th><th>IMOI (Ilgen et al., 2005; Mathieu et al., 2019)</th><th>Figura 10-3 del texto guía</th></tr><tr><td>Qué hay en el medio</td><td>Procesos: interacciones</td><td>Mediadores: procesos y estados emergentes</td><td>Mediadores, con el tiempo y los niveles explícitos</td><td>"Proceso": mezcla conductas (conflicto, pereza social) con estados (cohesión, eficacia, identidad, modelos mentales)</td></tr><tr><td>Forma</td><td>Lineal, un ciclo</td><td>Lineal, distingue mediadores</td><td>Cíclica: los resultados vuelven a ser entradas</td><td>Lineal, un ciclo</td></tr><tr><td>Unidad de tiempo</td><td>No la trata</td><td>Episodios de desempeño (desde Marks et al., 2001)</td><td>Episodios y trayectorias; emergencia</td><td>No la trata</td></tr><tr><td>Niveles</td><td>Implícitos</td><td>Individuo, equipo, organización, entorno</td><td>Multinivel explícito</td><td>Implícitos</td></tr><tr><td>Para qué sirve</td><td>Enseñar la lógica básica</td><td>Clasificar variables</td><td>Investigar y diagnosticar equipos reales</td><td>Aprobar la prueba</td></tr></table>
+<p>Tabla 1. Tres generaciones del mismo mapa y la versión del manual.</p>
+<h3>Los otros mapas: una pregunta cada uno</h3>
+<p>El tronco IPO-IMOI organiza el flujo de entradas a resultados. Varios marcos influyentes miran otra cosa. Conviene conocerlos porque cada uno agrega una pregunta que el tronco no hace.</p>
+<p><strong>El tiempo: episodios y transiciones.</strong> Marks, Mathieu y Zaccaro (2001) observaron que los equipos no "procesan" de manera continua sino en ciclos. Hay <strong>fases de transición</strong>, en que el equipo planifica y evalúa (análisis de la misión, especificación de metas, formulación de estrategia), y <strong>fases de acción</strong>, en que ejecuta (monitoreo del avance, monitoreo de los sistemas, respaldo entre miembros, coordinación). Por debajo de ambas corren los <strong>procesos interpersonales</strong>: manejo del conflicto, motivación y construcción de confianza, manejo del afecto. Diez procesos en tres categorías. La Figura 3 los ordena. Lo importante no es la lista sino la idea: lo que hay que hacer bien en la transición (planificar) no es lo que hay que hacer bien en la acción (coordinar), y un equipo que es bueno en una cosa puede ser malo en la otra. Gersick (1988) había mostrado antes, con ocho equipos de proyecto, que la transición más importante ocurre cerca de la mitad del plazo, cuando el equipo descarta cómo venía trabajando y adopta un nuevo enfoque; es el modelo de equilibrio puntuado que trae el texto guía y que el apunte 25 compara con las etapas de Tuckman (1965). McGrath (1991) agregó que un grupo cumple tres funciones a la vez, producir, sostener a sus miembros y mantener el bienestar del grupo, y que puede estar en modos distintos para cada una.</p>
+<figure class="figura">
+<svg viewBox="0 0 700 250" role="img" aria-label="Taxonomía temporal de procesos de Marks, Mathieu y Zaccaro: transición, acción, interpersonales" style="width:100%;height:auto;max-width:700px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <defs><marker id="f3a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker></defs>
+  <rect x="20" y="30" width="190" height="120" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+  <text x="115" y="54" text-anchor="middle" font-size="13" font-weight="700" fill="#1F2937">TRANSICIÓN</text>
+  <text x="115" y="78" text-anchor="middle" font-size="11" fill="#1F2937">Análisis de la misión</text>
+  <text x="115" y="98" text-anchor="middle" font-size="11" fill="#1F2937">Especificación de metas</text>
+  <text x="115" y="118" text-anchor="middle" font-size="11" fill="#1F2937">Formulación de estrategia</text>
+  <text x="115" y="140" text-anchor="middle" font-size="10" fill="#6B7280">planificar y evaluar</text>
+  <line x1="215" y1="90" x2="250" y2="90" stroke="#475569" stroke-width="2.5" marker-end="url(#f3a)"/>
+  <rect x="255" y="30" width="190" height="120" rx="6" fill="#FDF2F3" stroke="#C8102E"/>
+  <text x="350" y="54" text-anchor="middle" font-size="13" font-weight="700" fill="#C8102E">ACCIÓN</text>
+  <text x="350" y="76" text-anchor="middle" font-size="11" fill="#1F2937">Monitoreo del avance</text>
+  <text x="350" y="94" text-anchor="middle" font-size="11" fill="#1F2937">Monitoreo de sistemas</text>
+  <text x="350" y="112" text-anchor="middle" font-size="11" fill="#1F2937">Respaldo entre miembros</text>
+  <text x="350" y="130" text-anchor="middle" font-size="11" fill="#1F2937">Coordinación</text>
+  <text x="350" y="146" text-anchor="middle" font-size="10" fill="#6B7280">ejecutar</text>
+  <line x1="450" y1="90" x2="485" y2="90" stroke="#475569" stroke-width="2.5" marker-end="url(#f3a)"/>
+  <rect x="490" y="30" width="190" height="120" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+  <text x="585" y="54" text-anchor="middle" font-size="13" font-weight="700" fill="#1F2937">TRANSICIÓN</text>
+  <text x="585" y="80" text-anchor="middle" font-size="11" fill="#1F2937">Revisar lo hecho</text>
+  <text x="585" y="100" text-anchor="middle" font-size="11" fill="#1F2937">Ajustar metas y estrategia</text>
+  <text x="585" y="120" text-anchor="middle" font-size="11" fill="#1F2937">(aquí vive el debrief)</text>
+  <text x="585" y="140" text-anchor="middle" font-size="10" fill="#6B7280">y vuelve a empezar</text>
+  <rect x="20" y="170" width="660" height="50" rx="6" fill="#fff" stroke="#475569" stroke-dasharray="6 4"/>
+  <text x="350" y="190" text-anchor="middle" font-size="12.5" font-weight="700" fill="#475569">PROCESOS INTERPERSONALES, durante todo el episodio</text>
+  <text x="350" y="209" text-anchor="middle" font-size="11" fill="#1F2937">manejo del conflicto · motivación y construcción de confianza · manejo del afecto</text>
+  <text x="350" y="242" text-anchor="middle" font-size="11" fill="#6B7280">Un episodio de desempeño. Los equipos encadenan muchos.</text>
+</svg>
+<figcaption>Figura 3. Los diez procesos de Marks et al. (2001) ordenados en el tiempo. Elaboración propia a partir del artículo original.</figcaption>
+</figure>
+<p><strong>La estructura: tres dimensiones en vez de 42 etiquetas.</strong> La literatura acumuló tipologías de equipos como quien colecciona estampillas: equipos de producción, de proyecto, de asesoría, de acción, transfuncionales, autodirigidos, virtuales, de alta dirección. Hollenbeck, Beersma y Schouten (2012) contaron 42 tipos distintos y propusieron algo más útil: describir cualquier equipo por su posición en tres dimensiones continuas. <strong>Diferenciación de habilidades</strong>: cuán especializados e insustituibles son los miembros. <strong>Diferenciación de autoridad</strong>: cuán concentrada está la decisión en una persona o repartida en el equipo. <strong>Estabilidad temporal</strong>: cuánto dura la membresía y si hay historia compartida y futuro esperado. Un equipo quirúrgico es alto en las tres primeras y bajo en la tercera; un equipo de proyecto estudiantil es bajo en diferenciación de autoridad y de estabilidad. La ventaja es que las tres dimensiones predicen cosas (cuánto hace falta coordinar, cuánto pesa el líder, cuánto cuesta reemplazar a alguien), mientras que la etiqueta "equipo transfuncional" no predice nada por sí sola. Wageman (1995) había añadido una dimensión de estructura que sigue siendo central: la <strong>interdependencia</strong> de la tarea (cuánto necesito tu trabajo para hacer el mío) y la de los resultados (cuánto comparto contigo la recompensa) deben estar alineadas; equipos con tarea interdependiente y pago individual, o al revés, rinden peor que los que tienen ambas altas o ambas bajas. Thompson (1967) ya había distinguido la interdependencia agrupada (cada uno aporta su parte), secuencial (mi trabajo pasa al siguiente) y recíproca (iteramos juntos), que exigen cantidades crecientes de coordinación.</p>
+<p><strong>Las condiciones: diseñar antes que conducir.</strong> Richard Hackman dedicó su carrera a una idea incómoda para los jefes: lo que más determina el rendimiento de un equipo se decide antes de que el equipo empiece a trabajar. En su modelo normativo (Hackman, 1987) los procesos que importan son tres, el esfuerzo que aplican los miembros, el conocimiento y la habilidad que traen, y la adecuación de sus estrategias, y lo que hace un buen diseño es crear condiciones para que esos tres procesos ocurran. En Leading Teams (Hackman, 2002) las condiciones son cinco: un equipo real (límites claros, interdependencia, estabilidad), una dirección convincente, una estructura habilitante (tarea bien diseñada, tamaño adecuado, normas claras), un contexto organizacional de apoyo (recompensas, información, educación) y coaching experto en el momento oportuno. Wageman, Hackman y Lehman (2005) construyeron el Team Diagnostic Survey para medirlas. Hackman (2011) las reformuló en seis, separando "la gente correcta" y "normas claras". Y en su último artículo (Hackman, 2012) argumentó que la investigación de grupos debía pasar de buscar causas (qué variable produce qué efecto) a identificar condiciones (qué configuración hace probable que el equipo se autoorganice bien). De aquí viene la regla heurística que circula en los libros de Hackman: cerca del 60% de la varianza en eficacia se juega en el diseño previo, 30% en el lanzamiento y 10% en el coaching posterior. Es una heurística de experto, no un meta-análisis; úsala como recordatorio de prioridades, no como cifra.</p>
+<p><strong>La identidad: en cuántos pedazos se parte el equipo.</strong> La teoría de la identidad social (Tajfel &amp; Turner, 1979) dice que basta categorizar a las personas en "nosotros" y "ellos" para que favorezcan a los suyos; el apunte 23 la desarrolla. Lau y Murnighan (1998) la aplicaron a la composición de equipos con el concepto de <strong>fallas de línea</strong> (<em>faultlines</em>): líneas hipotéticas que dividen un equipo en subgrupos cuando varios atributos se alinean. Si las tres mujeres del equipo son además las tres ingenieras y las tres de la planta de Antofagasta, hay una falla fuerte; si los atributos se cruzan, no. Las fallas fuertes dañan la coordinación y suben el conflicto (Lau &amp; Murnighan, 2005), con varios moderadores que las desactivan: identificarse con el equipo completo (Bezrukova, Jehn, Zanutto &amp; Thatcher, 2009), creer que la diversidad vale (Homan, van Knippenberg, Van Kleef &amp; De Dreu, 2007), y el tipo de subgrupo que se forma, de identidad, de recursos o de conocimiento (Carton &amp; Cummings, 2012). Meyer, Glenz, Antino, Rico y González-Romá (2014) revisaron las formas de medirlas. Una advertencia de evidencia primero: el meta-análisis más citado sobre fallas de línea (Thatcher &amp; Patel, 2011) fue retractado en 2016 (Journal of Applied Psychology, 2016); si lo encuentras en una presentación, desconfía de las cifras.</p>
+<p><strong>La complejidad: el equipo como sistema que cambia mientras trabaja.</strong> Arrow, McGrath y Berdahl (2001) propusieron tratar a los grupos pequeños como sistemas complejos adaptativos: muchas influencias operando a la vez, efectos no lineales, propiedades que emergen de la interacción y que no se reducen a los individuos. Cronin, Weingart y Todorova (2011) preguntaron si la investigación había llegado a ese punto y respondieron que no del todo. Kozlowski, Chao, Grand, Braun y Kuljanin (2013) definieron la emergencia: un fenómeno es emergente cuando se origina en la cognición, el afecto o la conducta de los individuos, se amplifica por sus interacciones y se manifiesta como un fenómeno colectivo de nivel superior. Humphrey y Aime (2014) fueron más lejos y propusieron estudiar "microdinámicas": los equipos ya no se definen por quiénes son sus miembros sino por cómo se organizan las contribuciones para lograr un resultado. Mortensen y Haas (2018) llevaron eso a su consecuencia: muchos equipos actuales no tienen membresía acotada sino participación dinámica, y la pregunta "¿quién está en el equipo?" no siempre tiene respuesta. El apunte 29 recoge estas formas nuevas (pertenencia múltiple, sistemas multiequipo, equipos fluidos).</p>
+<p><strong>La inteligencia colectiva: una capacidad general del equipo.</strong> Woolley, Chabris, Pentland, Hashmi y Malone (2010) hicieron lo que la psicometría había hecho un siglo antes con los individuos: dieron a muchos grupos una batería de tareas distintas y buscaron un factor general. Lo encontraron: el primer factor explicó el 43% de la varianza del desempeño en todas las tareas, comparable al 30% a 50% que explica el factor g en las baterías individuales. Lo llamaron <em>c</em>. Woolley y Mayo (2025) reorganizan desde ahí la noción de capacidad del equipo: más que un desempeño en una tarea, lo que importa es la capacidad de adaptarse a muchas. El apunte 28 explica qué predice <em>c</em> (la sensibilidad social de los miembros y la igualdad en los turnos de palabra) y qué no (la inteligencia promedio, la cohesión, la satisfacción).</p>
+<p>La tabla 2 resume la pregunta de cada mapa.</p>
+<table><tr><th>Mapa</th><th>Pregunta que responde</th><th>Unidad central</th><th>Qué agrega al tronco IPO-IMOI</th><th>Límite</th></tr><tr><td>Episodios (Marks et al., 2001)</td><td>¿Cuándo ocurre cada proceso?</td><td>El episodio de desempeño</td><td>Transición y acción exigen cosas distintas; los interpersonales corren siempre</td><td>Supone episodios reconocibles; en trabajo continuo son difusos</td></tr><tr><td>Equilibrio puntuado (Gersick, 1988)</td><td>¿Cuándo cambia un equipo de rumbo?</td><td>El plazo</td><td>La mitad del plazo como momento de transición</td><td>Ocho equipos de proyecto; generalización limitada</td></tr><tr><td>Tres dimensiones (Hollenbeck et al., 2012)</td><td>¿Qué clase de equipo es?</td><td>Habilidad, autoridad, estabilidad</td><td>Reemplaza 42 tipos por tres escalas</td><td>Describe, no explica</td></tr><tr><td>Interdependencia (Thompson, 1967; Wageman, 1995)</td><td>¿Cuánto se necesitan?</td><td>La tarea y la recompensa</td><td>Alinear tarea y pago</td><td>Trata la interdependencia como fija; también emerge</td></tr><tr><td>Condiciones (Hackman, 1987, 2002, 2012)</td><td>¿Qué hay que diseñar antes?</td><td>El diseño del equipo</td><td>El diseño pesa más que la conducción</td><td>Heurísticas de experto; menos meta-análisis detrás</td></tr><tr><td>Identidad y fallas de línea (Tajfel &amp; Turner, 1979; Lau &amp; Murnighan, 1998)</td><td>¿En cuántos subgrupos se parte?</td><td>La alineación de atributos</td><td>Explica por qué dos equipos con la misma diversidad rinden distinto</td><td>El meta-análisis principal fue retractado</td></tr><tr><td>Sistemas complejos (Arrow et al., 2001; Mathieu et al., 2019)</td><td>¿Cómo cambia mientras trabaja?</td><td>La emergencia</td><td>No linealidad, multinivel, tiempo</td><td>Difícil de medir; exige datos continuos</td></tr><tr><td>Inteligencia colectiva (Woolley et al., 2010)</td><td>¿Cuán capaz es el equipo en general?</td><td>El factor <em>c</em></td><td>Una capacidad general medible</td><td>Mayormente en laboratorio; debate sobre su estructura</td></tr></table>
+<p>Tabla 2. Ocho mapas, ocho preguntas. Elaboración propia.</p>
+<h3>Un solo mapa, tres vocabularios</h3>
+<p>Ahora sí: la Figura 10-3 del texto guía, el IMOI del taller y la revisión de Mathieu et al. (2019) son el mismo mapa. La tabla 3 los traduce.</p>
+<table><tr><th>Texto guía (Fig. 10-3, p. 319)</th><th>Mathieu et al. (2019)</th><th>Taller de Liderazgo y Trabajo en Equipo</th><th>Observación</th></tr><tr><td>Contexto: recursos, liderazgo y estructura, evaluación y recompensas</td><td>Región A, estructura: contingencias, alcance y complejidad de la tarea, interdependencia, virtualidad</td><td>Estructura del equipo: objetivo, roles, normas, interdependencia, incentivos, contrato</td><td>El texto guía no menciona la interdependencia ni la virtualidad; son las dos variables estructurales con más investigación reciente</td></tr><tr><td>Contexto: clima de confianza</td><td>Región C, estado emergente</td><td>Estado emergente: confianza</td><td>El texto guía la pone como condición previa; la investigación la trata como algo que el equipo produce y que se mide</td></tr><tr><td>Composición: aptitudes, personalidad, roles, diversidad, cultura, tamaño, preferencias</td><td>Región B, composición: promedios, diversidad superficial, profunda y funcional, fallas de línea</td><td>Composición, diversidad, fallas de línea, identidad social</td><td>Coinciden casi punto por punto</td></tr><tr><td>Proceso: niveles de conflicto, pereza social</td><td>Región C, procesos: transición, acción, interpersonales</td><td>Procesos de Marks et al. (2001); conflicto de tarea, relación y proceso</td><td>Conductas observables</td></tr><tr><td>Proceso: propósito común, metas, eficacia del equipo, identidad, cohesión, modelos mentales</td><td>Región C, estados emergentes: cognitivos, afectivos, motivacionales</td><td>Los seis estados emergentes</td><td>El texto guía los llama "proceso"; son estados. El apunte 32 los desarrolla</td></tr></table>
+<p>Tabla 3. Traducción entre el texto guía, la revisión de Mathieu et al. (2019) y el taller.</p>
+<p>La única diferencia que importa es la de la última fila. Un proceso es algo que el equipo hace y que se puede intervenir directamente: pedirle que planifique, que haga un debrief, que reparta los turnos de palabra. Un estado emergente es algo que el equipo llega a tener y que solo cambia a través de la estructura y los procesos. Nadie consigue cohesión pidiéndola.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>Cuánto predice cada caja</h3>
+<p>Mathieu et al. (2019) compilaron en dos tablas las correlaciones meta-analíticas (ρ, corregidas por falta de confiabilidad) de las principales variables con el desempeño del equipo. La Figura 4 muestra una selección. Léela como un ranking de dónde mirar.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 420" role="img" aria-label="Correlaciones meta-analíticas de entradas, procesos y estados emergentes con el desempeño del equipo" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <g font-size="11.5" fill="#1F2937">
+    <text x="0" y="22" font-weight="700" fill="#6B7280">ENTRADAS</text>
+    <text x="0" y="46">Habilidad mental general (promedio)</text>
+    <text x="0" y="74">Colectivismo (promedio)</text>
+    <text x="0" y="102">Preferencia por trabajar en equipo</text>
+    <text x="0" y="130">Amabilidad (promedio)</text>
+    <text x="0" y="158">Diversidad relevante al trabajo</text>
+    <text x="0" y="186">Diversidad de antecedentes</text>
+    <text x="0" y="214" font-weight="700" fill="#6B7280">MEDIADORES</text>
+    <text x="0" y="238">Compartir información</text>
+    <text x="0" y="266">Procesos de equipo (en conjunto)</text>
+    <text x="0" y="294">Eficacia del equipo (estado)</text>
+    <text x="0" y="322">Confianza intraequipo (estado)</text>
+    <text x="0" y="350">Cohesión (estado)</text>
+    <text x="0" y="378">Conflicto de tarea (estado)</text>
+  </g>
+  <g>
+    <rect x="300" y="34" width="162" height="16" rx="3" fill="#C8102E"/>
+    <rect x="300" y="62" width="150" height="16" rx="3" fill="#475569"/>
+    <rect x="300" y="90" width="108" height="16" rx="3" fill="#475569"/>
+    <rect x="300" y="118" width="72" height="16" rx="3" fill="#9CA3AF"/>
+    <rect x="300" y="146" width="42" height="16" rx="3" fill="#9CA3AF"/>
+    <rect x="264" y="174" width="36" height="16" rx="3" fill="#9CA3AF"/>
+    <rect x="300" y="226" width="246" height="16" rx="3" fill="#C8102E"/>
+    <rect x="300" y="254" width="186" height="16" rx="3" fill="#C8102E"/>
+    <rect x="300" y="282" width="246" height="16" rx="3" fill="#475569"/>
+    <rect x="300" y="310" width="174" height="16" rx="3" fill="#475569"/>
+    <rect x="300" y="338" width="126" height="16" rx="3" fill="#475569"/>
+    <rect x="300" y="366" width="2" height="16" rx="1" fill="#9CA3AF"/>
+    <line x1="300" y1="30" x2="300" y2="390" stroke="#E5E7EB"/>
+  </g>
+  <g font-size="11.5" font-weight="700" fill="#1F2937">
+    <text x="468" y="47">.27</text><text x="456" y="75">.25</text><text x="414" y="103">.18</text><text x="378" y="131">.12</text><text x="348" y="159">.07</text><text x="222" y="187">−.06</text>
+    <text x="552" y="239">.41</text><text x="492" y="267">.31</text><text x="552" y="295">.41</text><text x="480" y="323">.29</text><text x="432" y="351">.21</text><text x="310" y="379">.00</text>
+  </g>
+  <text x="340" y="410" text-anchor="middle" font-size="10.5" fill="#6B7280">Correlaciones corregidas (ρ) con el desempeño del equipo; escala: 100 px = .17</text>
+</svg>
+<figcaption>Figura 4. Cuánto se asocia cada variable con el desempeño del equipo. Elaborado a partir de las Tablas 1 y 2 de Mathieu et al. (2019), que compilan los meta-análisis disponibles; la eficacia del equipo proviene de Gully et al. (2002), la confianza de De Jong et al. (2016), la cohesión y el conflicto de los meta-análisis citados en los apuntes 25 y 27.</figcaption>
+</figure>
+<p>Tres lecturas. Primera, los mediadores se asocian más con el desempeño que las entradas, lo que es esperable: están más cerca en la cadena. Pero son también más difíciles de interpretar causalmente, porque casi todos esos estudios son transversales y el desempeño puede estar produciendo el estado tanto como al revés (el apunte 32 muestra que con la cohesión ocurre exactamente eso). Segunda, entre las entradas, la habilidad y las preferencias colectivistas pesan más que la personalidad y mucho más que la diversidad, cuyo promedio está cerca de cero; el apunte 26 explica por qué el promedio engaña. Tercera, el conflicto de tarea, que tantos manuales presentan como saludable, se asocia .00 con el desempeño.</p>
+<h3>Lo que predice la estructura</h3>
+<p>Las tres dimensiones de Hollenbeck et al. (2012) no son solo descriptivas. La diferenciación de autoridad, es decir la jerarquía, es el caso mejor estudiado: Greer, de Jong, Schouten y Dannals (2018), en el meta-análisis que es el estudio destacado de la Clase 20, encontraron que la jerarquía se asocia con peor desempeño en promedio, y que daña más cuando es inestable y cuando el equipo hace tareas complejas. Woolley y Mayo (2025) añaden el matiz que la investigación posterior fue encontrando: la jerarquía ayuda cuando las bases del rango están alineadas (quien tiene más poder tiene también más estatus y más experticia) y cuando los cambios de rango se deben a quién aporta más al trabajo; daña cuando el estatus se gana por otra vía y la gente compite por él. La interdependencia de Wageman (1995) también predice: la interdependencia de tarea se asocia .13 con el desempeño y la de metas .27 (Mathieu et al., 2019), y la combinación desalineada rinde peor que cualquiera de las alineadas.</p>
+<h3>Lo que predicen las condiciones</h3>
+<p>El modelo de Hackman tiene menos meta-análisis detrás que el IMOI, en parte porque es más difícil de poner a prueba: las condiciones son configuraciones, no variables sueltas. Lo que sí hay es evidencia de piezas. Los contratos de equipo y la planificación inicial, que son la operacionalización del "lanzamiento", predicen trayectorias de desempeño más altas y sostenidas en el estudio de Mathieu y Rapp (2009) con 32 equipos (apunte 30). Las normas explícitas se establecen más rápido en los primeros encuentros, y una vez establecidas persisten por inercia (Gersick &amp; Hackman, 1990). Y los debriefs, que Hackman habría llamado coaching en el momento oportuno, tienen el tamaño de efecto más alto entre las intervenciones (apunte 30). La regla del 60-30-10 no está medida, pero las piezas que la componen sí.</p>
+<h3>Lo que la mayoría de los estudios no puede decir</h3>
+<p>Vuelvo al dato de Mathieu et al. (2019): 327 estudios transversales contra 83 longitudinales. Añade que la mayoría mide procesos y estados con cuestionarios que responden los propios miembros, y que una porción grande de la evidencia experimental viene de equipos de estudiantes armados para la sesión. Woolley y Mayo (2025) ven en los datos digitales (registros de comunicación, sensores, trazas de colaboración) una vuelta a las medidas conductuales que el campo abandonó cuando se pasó a las encuestas. Mientras eso madura, la regla de lectura es la de siempre en este curso: una correlación entre un estado del equipo y su desempeño, medidos el mismo día por las mismas personas, dice que van juntos. No dice cuál empuja a cuál.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el modelo IPO es "el" modelo de los equipos.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el campo lo abandonó como modelo vigente hace veinte años por tres razones documentadas: confunde procesos con estados, supone un solo ciclo y supone una flecha recta (Ilgen et al., 2005). Sigue siendo útil para enseñar la lógica básica, y por eso está en el texto guía.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> es fácil de dibujar, y los manuales tardan una década en actualizarse.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> los equipos pasan por etapas fijas: formación, tormenta, normalización, desempeño.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la secuencia de Tuckman (1965) salió de una revisión de grupos de terapia y de laboratorio, no de equipos de trabajo; los equipos de proyecto de Gersick (1988) no mostraron esas etapas sino un salto a mitad del plazo; y la 17.ª edición del texto guía ya no la incluye. El apunte 25 lo desarrolla.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> las cuatro palabras riman en inglés y caben en una lámina.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> hay un tipo de equipo ideal (el autodirigido, el transfuncional, el ágil).</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las etiquetas no predicen nada; lo que predice son las dimensiones que las componen (habilidad, autoridad, estabilidad; Hollenbeck et al., 2012). Los equipos autodirigidos no superan a los tradicionales en el estudio de DeVaro (2008) que cita el apunte 29, y la jerarquía ayuda o daña según cómo esté construida (Greer et al., 2018).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> cada década tiene su etiqueta de moda y una consultora que la vende.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> si el equipo tiene buena gente, el resto se arregla solo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la composición explica una parte modesta del desempeño (habilidad ρ = .27, personalidad entre .04 y .12; Mathieu et al., 2019), y Hackman (2012) argumenta que la configuración de condiciones pesa más que cualquier variable individual. Dos equipos con los mismos promedios rinden distinto según cómo se alineen los atributos (Woolley &amp; Mayo, 2025) y según cómo estén diseñados.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> contratar es más visible que diseñar, y es más fácil culpar a una persona que a una estructura.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, ten un mapa y úsalo en orden. Cuando un equipo falla, antes de opinar sobre la gente recorre las cajas: ¿la tarea exige interdependencia? ¿están alineados el trabajo y el pago? ¿hay roles claros y estabilidad? ¿qué procesos se ven (planifican, coordinan, revisan)? ¿qué estados se leen (confianza, cohesión, seguridad)? El diagnóstico suele estar en las dos primeras preguntas y la queja suele estar en la última.</p>
+<p>Segundo, distingue lo que se interviene de lo que se lee. Los procesos y la estructura se tocan directamente. Los estados emergentes se leen como indicadores. "Falta confianza" es un termómetro, no una prescripción.</p>
+<p>Tercero, invierte en el diseño y en el lanzamiento. La heurística de Hackman dice que ahí se juega la mayor parte; la evidencia sobre contratos de equipo y normas tempranas dice que al menos esa parte es real. Un equipo mal diseñado consume después todo el coaching disponible.</p>
+<p>Cuarto, piensa en episodios. Pregúntate en qué fase está el equipo: si está planificando, lo que importa es la calidad de las metas y la estrategia; si está ejecutando, lo que importa es la coordinación y el respaldo; y entre un episodio y otro, revisa. Un equipo que nunca hace transición repite sus errores.</p>
+<p>Quinto, mira las líneas de falla antes de armar el equipo. Si los atributos visibles se alinean con las funciones y las sedes, el equipo viene partido de fábrica. Cruzar atributos cuesta poco en la composición y mucho después.</p>
+<p>Sexto, lee con cautela. La mayor parte de lo que te dirán sobre equipos sale de estudios transversales con autorreporte. Cuando alguien te muestre una correlación entre "clima" y "resultados", pregunta cuándo se midió cada uno.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Dibujar y explicar el modelo IPO, y enunciar la ecuación de Steiner con el término de ganancias de proceso.</li><li>Explicar las tres críticas de Ilgen et al. (2005) al IPO y qué cambia en el IMOI (mediadores, ciclo, niveles).</li><li>Distinguir proceso de estado emergente con las definiciones de Marks et al. (2001) y dar dos ejemplos de cada uno.</li><li>Describir la taxonomía temporal de Marks et al. (2001): fases de transición y acción, procesos interpersonales, y qué exige cada fase.</li><li>Describir las tres dimensiones de Hollenbeck et al. (2012) y ubicar en ellas un equipo concreto.</li><li>Enunciar las condiciones de Hackman (2002) y explicar la diferencia entre buscar causas y crear condiciones (Hackman, 2012).</li><li>Explicar qué es una falla de línea y qué la desactiva.</li><li>Traducir las tres cajas de la Figura 10-3 del texto guía a las regiones de Mathieu et al. (2019) y a los conceptos del taller.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Arrow, H., McGrath, J. E., &amp; Berdahl, J. L. (2001). <em>Small groups as complex systems: Formation, coordination, development, and adaptation</em>. SAGE.</p>
+<p>Bezrukova, K., Jehn, K. A., Zanutto, E. L., &amp; Thatcher, S. M. B. (2009). Do workgroup faultlines help or hurt? A moderated model of faultlines, team identification, and group performance. <em>Organization Science, 20</em>(1), 35–50. <a href="https://doi.org/10.1287/orsc.1080.0379">https://doi.org/10.1287/orsc.1080.0379</a></p>
+<p>Carton, A. M., &amp; Cummings, J. N. (2012). A theory of subgroups in work teams. <em>Academy of Management Review, 37</em>(3), 441–470. <a href="https://doi.org/10.5465/amr.2009.0322">https://doi.org/10.5465/amr.2009.0322</a></p>
+<p>Cohen, S. G., &amp; Bailey, D. E. (1997). What makes teams work: Group effectiveness research from the shop floor to the executive suite. <em>Journal of Management, 23</em>(3), 239–290. <a href="https://doi.org/10.1177/014920639702300303">https://doi.org/10.1177/014920639702300303</a></p>
+<p>Cronin, M. A., Weingart, L. R., &amp; Todorova, G. (2011). Dynamics in groups: Are we there yet? <em>Academy of Management Annals, 5</em>(1), 571–612. <a href="https://doi.org/10.5465/19416520.2011.590297">https://doi.org/10.5465/19416520.2011.590297</a></p>
+<p>De Jong, B. A., Dirks, K. T., &amp; Gillespie, N. (2016). Trust and team performance: A meta-analysis of main effects, moderators, and covariates. <em>Journal of Applied Psychology, 101</em>(8), 1134–1150. <a href="https://doi.org/10.1037/apl0000110">https://doi.org/10.1037/apl0000110</a></p>
+<p>DeVaro, J. (2008). The effects of self-managed and closely managed teams on labor productivity and product quality: An empirical analysis of a cross-section of establishments. <em>Industrial Relations, 47</em>(4), 659–697. <a href="https://doi.org/10.1111/j.1468-232X.2008.00540.x">https://doi.org/10.1111/j.1468-232X.2008.00540.x</a></p>
+<p>Gersick, C. J. G. (1988). Time and transition in work teams: Toward a new model of group development. <em>Academy of Management Journal, 31</em>(1), 9–41. <a href="https://doi.org/10.2307/256496">https://doi.org/10.2307/256496</a></p>
+<p>Gersick, C. J. G., &amp; Hackman, J. R. (1990). Habitual routines in task-performing groups. <em>Organizational Behavior and Human Decision Processes, 47</em>(1), 65–97. <a href="https://doi.org/10.1016/0749-5978(90)90047-D">https://doi.org/10.1016/0749-5978(90)90047-D</a></p>
+<p>Gladstein, D. L. (1984). Groups in context: A model of task group effectiveness. <em>Administrative Science Quarterly, 29</em>(4), 499–517. <a href="https://doi.org/10.2307/2392936">https://doi.org/10.2307/2392936</a></p>
+<p>Greer, L. L., de Jong, B. A., Schouten, M. E., &amp; Dannals, J. E. (2018). Why and when hierarchy impacts team effectiveness: A meta-analytic integration. <em>Journal of Applied Psychology, 103</em>(6), 591–613. <a href="https://doi.org/10.1037/apl0000291">https://doi.org/10.1037/apl0000291</a></p>
+<p>Gully, S. M., Incalcaterra, K. A., Joshi, A., &amp; Beaubien, J. M. (2002). A meta-analysis of team-efficacy, potency, and performance: Interdependence and level of analysis as moderators of observed relationships. <em>Journal of Applied Psychology, 87</em>(5), 819–832. <a href="https://doi.org/10.1037/0021-9010.87.5.819">https://doi.org/10.1037/0021-9010.87.5.819</a></p>
+<p>Hackman, J. R. (1987). The design of work teams. En J. W. Lorsch (Ed.), <em>Handbook of organizational behavior</em> (pp. 315–342). Prentice Hall.</p>
+<p>Hackman, J. R. (2002). <em>Leading teams: Setting the stage for great performances</em>. Harvard Business School Press.</p>
+<p>Hackman, J. R. (2011). <em>Collaborative intelligence: Using teams to solve hard problems</em>. Berrett-Koehler.</p>
+<p>Hackman, J. R. (2012). From causes to conditions in group research. <em>Journal of Organizational Behavior, 33</em>(3), 428–444. <a href="https://doi.org/10.1002/job.1774">https://doi.org/10.1002/job.1774</a></p>
+<p>Hackman, J. R., &amp; Morris, C. G. (1975). Group tasks, group interaction process, and group performance effectiveness: A review and proposed integration. En L. Berkowitz (Ed.), <em>Advances in experimental social psychology</em> (Vol. 8, pp. 45–99). Academic Press.</p>
+<p>Hollenbeck, J. R., Beersma, B., &amp; Schouten, M. E. (2012). Beyond team types and taxonomies: A dimensional scaling conceptualization for team description. <em>Academy of Management Review, 37</em>(1), 82–106. <a href="https://doi.org/10.5465/amr.2010.0181">https://doi.org/10.5465/amr.2010.0181</a></p>
+<p>Homan, A. C., van Knippenberg, D., Van Kleef, G. A., &amp; De Dreu, C. K. W. (2007). Bridging faultlines by valuing diversity: Diversity beliefs, information elaboration, and performance in diverse work groups. <em>Journal of Applied Psychology, 92</em>(5), 1189–1199. <a href="https://doi.org/10.1037/0021-9010.92.5.1189">https://doi.org/10.1037/0021-9010.92.5.1189</a></p>
+<p>Humphrey, S. E., &amp; Aime, F. (2014). Team microdynamics: Toward an organizing approach to teamwork. <em>Academy of Management Annals, 8</em>(1), 443–503. <a href="https://doi.org/10.5465/19416520.2014.904140">https://doi.org/10.5465/19416520.2014.904140</a></p>
+<p>Ilgen, D. R., Hollenbeck, J. R., Johnson, M., &amp; Jundt, D. (2005). Teams in organizations: From input-process-output models to IMOI models. <em>Annual Review of Psychology, 56</em>, 517–543. <a href="https://doi.org/10.1146/annurev.psych.56.091103.070250">https://doi.org/10.1146/annurev.psych.56.091103.070250</a></p>
+<p>Journal of Applied Psychology. (2016). "Demographic faultlines: A meta-analysis of the literature": Retraction of Thatcher and Patel (2011). <em>Journal of Applied Psychology, 101</em>(8), 1150. <a href="https://doi.org/10.1037/apl0000137">https://doi.org/10.1037/apl0000137</a></p>
+<p>Kozlowski, S. W. J., Chao, G. T., Grand, J. A., Braun, M. T., &amp; Kuljanin, G. (2013). Advancing multilevel research design: Capturing the dynamics of emergence. <em>Organizational Research Methods, 16</em>(4), 581–615. <a href="https://doi.org/10.1177/1094428113493119">https://doi.org/10.1177/1094428113493119</a></p>
+<p>Larson, J. R., Jr. (2010). <em>In search of synergy in small group performance</em>. Psychology Press.</p>
+<p>Lau, D. C., &amp; Murnighan, J. K. (1998). Demographic diversity and faultlines: The compositional dynamics of organizational groups. <em>Academy of Management Review, 23</em>(2), 325–340. <a href="https://doi.org/10.2307/259377">https://doi.org/10.2307/259377</a></p>
+<p>Lau, D. C., &amp; Murnighan, J. K. (2005). Interactions within groups and subgroups: The effects of demographic faultlines. <em>Academy of Management Journal, 48</em>(4), 645–659. <a href="https://doi.org/10.5465/amj.2005.17843943">https://doi.org/10.5465/amj.2005.17843943</a></p>
+<p>Marks, M. A., Mathieu, J. E., &amp; Zaccaro, S. J. (2001). A temporally based framework and taxonomy of team processes. <em>Academy of Management Review, 26</em>(3), 356–376. <a href="https://doi.org/10.2307/259182">https://doi.org/10.2307/259182</a></p>
+<p>Mathieu, J. E., Gallagher, P. T., Domingo, M. A., &amp; Klock, E. A. (2019). Embracing complexity: Reviewing the past decade of team effectiveness research. <em>Annual Review of Organizational Psychology and Organizational Behavior, 6</em>, 17–46. <a href="https://doi.org/10.1146/annurev-orgpsych-012218-015106">https://doi.org/10.1146/annurev-orgpsych-012218-015106</a></p>
+<p>Mathieu, J. E., Maynard, M. T., Rapp, T., &amp; Gilson, L. (2008). Team effectiveness 1997-2007: A review of recent advancements and a glimpse into the future. <em>Journal of Management, 34</em>(3), 410–476. <a href="https://doi.org/10.1177/0149206308316061">https://doi.org/10.1177/0149206308316061</a></p>
+<p>Mathieu, J. E., &amp; Rapp, T. L. (2009). Laying the foundation for successful team performance trajectories: The roles of team charters and performance strategies. <em>Journal of Applied Psychology, 94</em>(1), 90–103. <a href="https://doi.org/10.1037/a0013257">https://doi.org/10.1037/a0013257</a></p>
+<p>McGrath, J. E. (1964). <em>Social psychology: A brief introduction</em>. Holt, Rinehart &amp; Winston.</p>
+<p>McGrath, J. E. (1991). Time, interaction, and performance (TIP): A theory of groups. <em>Small Group Research, 22</em>(2), 147–174. <a href="https://doi.org/10.1177/1046496491222001">https://doi.org/10.1177/1046496491222001</a></p>
+<p>Meyer, B., Glenz, A., Antino, M., Rico, R., &amp; González-Romá, V. (2014). Faultlines and subgroups: A meta-review and measurement guide. <em>Small Group Research, 45</em>(6), 633–670. <a href="https://doi.org/10.1177/1046496414552195">https://doi.org/10.1177/1046496414552195</a></p>
+<p>Mortensen, M., &amp; Haas, M. R. (2018). Rethinking teams: From bounded membership to dynamic participation. <em>Organization Science, 29</em>(2), 341–355. <a href="https://doi.org/10.1287/orsc.2017.1198">https://doi.org/10.1287/orsc.2017.1198</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Steiner, I. D. (1972). <em>Group process and productivity</em>. Academic Press.</p>
+<p>Tajfel, H., &amp; Turner, J. C. (1979). An integrative theory of intergroup conflict. En W. G. Austin &amp; S. Worchel (Eds.), <em>The social psychology of intergroup relations</em> (pp. 33–47). Brooks/Cole.</p>
+<p>Thompson, J. D. (1967). <em>Organizations in action: Social science bases of administrative theory</em>. McGraw-Hill.</p>
+<p>Tuckman, B. W. (1965). Developmental sequence in small groups. <em>Psychological Bulletin, 63</em>(6), 384–399. <a href="https://doi.org/10.1037/h0022100">https://doi.org/10.1037/h0022100</a></p>
+<p>Turner, J. R. (2026). <em>Team science: Research on teams, teamwork and organizational effectiveness</em> [Sitio web]. https://www.science-teams.com/</p>
+<p>Wageman, R. (1995). Interdependence and group effectiveness. <em>Administrative Science Quarterly, 40</em>(1), 145–180. <a href="https://doi.org/10.2307/2393703">https://doi.org/10.2307/2393703</a></p>
+<p>Wageman, R., Hackman, J. R., &amp; Lehman, E. (2005). Team Diagnostic Survey: Development of an instrument. <em>The Journal of Applied Behavioral Science, 41</em>(4), 373–398. <a href="https://doi.org/10.1177/0021886305281984">https://doi.org/10.1177/0021886305281984</a></p>
+<p>Woolley, A. W., Chabris, C. F., Pentland, A., Hashmi, N., &amp; Malone, T. W. (2010). Evidence for a collective intelligence factor in the performance of human groups. <em>Science, 330</em>(6004), 686–688. <a href="https://doi.org/10.1126/science.1193147">https://doi.org/10.1126/science.1193147</a></p>
+<p>Woolley, A. W., &amp; Mayo, A. T. (2025). Teams. En D. T. Gilbert, S. T. Fiske, E. J. Finkel, &amp; W. B. Mendes (Eds.), <em>The handbook of social psychology</em> (6.ª ed.). Situational Press. <a href="https://doi.org/10.70400/HXAM4508">https://doi.org/10.70400/HXAM4508</a></p>
+<h3>Para profundizar</h3>
+<p>Woolley y Mayo (2025): el capítulo sobre equipos del nuevo Handbook of Social Psychology, de acceso abierto. Es la síntesis más reciente del campo, escrita por quien descubrió el factor <em>c</em>; úsalo como mapa de lo que se investiga hoy.</p>
+<p>Ilgen et al. (2005): las veintisiete páginas que cambiaron el vocabulario. Si solo vas a leer un artículo sobre modelos de equipos, que sea este.</p>
+<p>Turner (2026), science-teams.com: un sitio que ordena los modelos de equipos (IPO, IMOI, la taxonomía temporal, las condiciones de Hackman) con sus referencias originales. Varias secciones siguen en construcción; las que están listas sirven como repaso.</p>
+<p>&lt;!-- NOTAS DE PRODUCCIÓN: Palabras del cuerpo (secciones A a G, sin encabezado ni referencias): aproximadamente 4,700. Referencias totales: 46. Verificadas en Crossref el 15-11-2026 (vía API): Bezrukova, Carton &amp; Cummings, Cohen &amp; Bailey, Cronin, De Jong 2016, Gersick 1988, Gersick &amp; Hackman, Gladstein, Greer, Gully, Hackman 2012, Hollenbeck, Homan, Humphrey &amp; Aime, Ilgen, retracción JAP 2016, Kozlowski 2013, Lau &amp; Murnighan 1998 y 2005, Marks, Mathieu 2019, Mathieu 2008, Mathieu &amp; Rapp, McGrath 1991, Meyer 2014, Mortensen &amp; Haas, Tuckman, Wageman 1995, Wageman 2005, Woolley 2010. Libros (sin DOI): Arrow 2001, Hackman 1987, 2002, 2011, Hackman &amp; Morris 1975, Larson 2010, McGrath 1964, Steiner 1972, Thompson 1967, Tajfel &amp; Turner 1979: datos tomados de la lista de referencias de Woolley &amp; Mayo (2025). Woolley &amp; Mayo (2025): cita APA y DOI tomados de la página del capítulo en openpublishing.princeton.edu. DeVaro 2008: tomado del apunte 29 (verificado allí). Regla 60-30-10: presentada como heurística atribuida a los libros de Hackman, sin cifra de estudio; si René prefiere, se elimina. Thatcher &amp; Patel (2011) se menciona SOLO como retractado; no citar sus cifras. Figuras: 4 SVG inline (IPO, IMOI, Marks 2001, correlaciones de Mathieu 2019). Las ρ de la Figura 4: habilidad .27, colectivismo .25, preferencia .18, amabilidad .12, diversidad .07 y −.06, compartir información .41, procesos .31, eficacia .41, confianza .29, cohesión .21, conflicto de tarea .00, todas de las Tablas 1 y 2 de Mathieu et al. (2019) según la ficha C_teams_MZ. --&gt;</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

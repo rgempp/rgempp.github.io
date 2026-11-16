@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De los grupos a los equipos: qué es un grupo, identidad social, roles y normas · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 23</p>
+  <h1>De los grupos a los equipos: qué es un grupo, identidad social, roles y normas</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 23 · Clase 20 (lunes 16-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>El capítulo 9 de Robbins y Judge abre con una historia que vale la pena leer dos veces. Courtland Kelley dirigía el programa de inspección de seguridad de General Motors. Encontró el defecto del interruptor de encendido del Chevrolet Cobalt y chocó contra "todos los grupos y comités de GM que revisaron el problema", que "no hicieron nada o actuaron con mucha lentitud". Le ordenaron reportar el defecto como un problema de comodidad. Lo presionaron para bajar el tono de sus informes. Terminaron sacándolo del organigrama. Hubo 13 muertes, 54 choques y 2,084,000 vehículos retirados (Robbins &amp; Judge, 2017, pp. 275-276). Nadie en esos comités era un monstruo. Eran ingenieros razonables en un grupo que había decidido, sin votarlo, que el silencio era la norma.</p>
+<p>La pregunta que organiza este apunte y el siguiente es la que deja ese caso: ¿qué le hace un grupo a una persona? ¿Por qué gente sensata calla, se ajusta y castiga al que no se ajusta?</p>
+<p>El texto guía responde con un inventario de propiedades (roles, normas, estatus, tamaño, cohesión, diversidad). Está bien hasta ahí, pero quedó detenido en los años noventa. No distingue las normas que describen lo que la gente hace de las que prescriben lo que debería hacer. No explica por qué un equipo mantiene normas que ninguno de sus miembros aprueba. Y mezcla conductas con estados dentro de una sola caja llamada "proceso". Este apunte cubre los fundamentos: qué es un grupo y cuándo es un equipo, identidad social, roles y normas. El apunte 24 se concentra en conformidad, estatus y jerarquía, con los experimentos clásicos bajo la lupa. Y si quieres el mapa general de cómo se piensa un equipo (los modelos IPO e IMOI, el vocabulario del taller y el del texto guía puestos en paralelo), está en el apunte 31.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>Un grupo son dos o más personas que interactúan, dependen unas de otras y persiguen objetivos. Un equipo de trabajo es un grupo cuyo producto exige coordinación y donde el resultado colectivo importa más que la suma de los individuales. La diferencia es de grado, no de clase: hay cinco criterios (meta compartida, interdependencia, límites, estabilidad, autoridad) que se cumplen más o menos, y llamar equipo a un grupo no le agrega nada.</p>
+<p>El grupo cambia la conducta porque cambia quién eres. Basta asignar a alguien a una categoría arbitraria para que prefiera a los suyos y vea a los otros como un bloque: eso dice la teoría de la identidad social, y lo dice con experimentos. Los roles son las expectativas atadas a una posición, y el contrato psicológico es el rol no escrito que une a la persona con la empresa; cuando la empresa lo rompe, la gente se va o deja de esforzarse.</p>
+<p>Las normas son estándares compartidos de conducta, y aquí está lo nuevo. Hay normas descriptivas (lo que la gente hace) y prescriptivas (lo que la gente aprueba), y las personas se guían más por lo que creen que hace su círculo cercano que por lo que ellas mismas consideran correcto. Como esa creencia suele estar equivocada, los grupos sostienen normas que nadie defiende en privado. La cura más intuitiva, informar la norma real, funciona mucho menos de lo que promete. Las normas se sostienen con sanciones, y las sanciones, incluidos el chisme y la exclusión, a veces hacen que el grupo coopere más. Nada de esto requiere un jefe: las normas emergen desde abajo, y por eso cuesta tanto cambiarlas desde arriba. En Chile, donde la confianza en los desconocidos es de las más bajas del mundo, la confianza dentro de un equipo no se hereda del entorno. Hay que construirla a propósito.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Qué es un grupo y cuándo es un equipo</h3>
+<p>El texto guía define <strong>grupo</strong> como "dos o más individuos que interactúan, son interdependientes y se reúnen para lograr objetivos específicos" (Robbins &amp; Judge, 2017, p. 277). Un <strong>grupo formal</strong> es el que la organización designa; un <strong>grupo informal</strong> surge solo, por la necesidad de contacto social (p. 277). Los que almuerzan juntos cada día son un grupo informal. El comité de seguridad de GM que revisó el Cobalt era un grupo formal. Los dos generan normas, y en GM fueron los formales los que impusieron el silencio.</p>
+<p>En el capítulo 10, Robbins y Judge separan <strong>grupo de trabajo</strong>, que "interactúa básicamente para compartir información y tomar decisiones que ayuden a cada uno de sus miembros a desempeñarse en su área de responsabilidad" (p. 313), de <strong>equipo de trabajo</strong>, donde "los esfuerzos individuales dan como resultado un desempeño que es mayor que la suma de las aportaciones de cada individuo" (p. 314). La Figura 10-1 (p. 314) contrasta ambos en cuatro filas: meta (compartir información frente a desempeño colectivo), sinergia (neutral o negativa frente a positiva), responsabilidad (individual frente a individual y mutua) y habilidades (aleatorias y variadas frente a complementarias).</p>
+<p>Esa figura sirve para el examen. Conviene leerla con dos correcciones. La primera la hace el propio texto guía una línea más abajo: "No hay nada mágico en los equipos que garantice el logro de esa sinergia positiva. Llamar equipo a un grupo tampoco mejora en forma automática su desempeño" (p. 314). La segunda viene de la literatura especializada. Dipboye (2018) escribe que la distinción grupo-equipo "está bastante difusa y es, en mi opinión, una falsa dicotomía", usa ambos términos de forma intercambiable y advierte que la metáfora deportiva o militar del "equipo" a veces daña al grupo al que se aplica. Las definiciones académicas de equipo acumuladas en medio siglo (DeChurch et al., 2018, Tabla 14.1) coinciden en cinco temas, no en una frontera: tamaño reducido, metas comunes, interdependencia, límites reconocibles y especialización de roles.</p>
+<p>En este curso usamos cinco criterios que permiten graduar cuán "equipo" es un grupo:</p>
+<ol><li><strong>Meta compartida.</strong> Hay un trabajo que hacer y la responsabilidad por el resultado es colectiva.</li><li><strong>Interdependencia.</strong> Nadie puede lograr el objetivo por su cuenta.</li><li><strong>Límites.</strong> Se puede decir quién es miembro y quién no.</li><li><strong>Estabilidad.</strong> La membresía dura un tiempo considerable.</li><li><strong>Autoridad.</strong> Los miembros tienen poder para gestionar su propio trabajo y sus procesos internos.</li></ol>
+<figure class="figura">
+<svg viewBox="0 0 680 230" role="img" aria-label="Continuo de grupo a equipo según cinco criterios" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="20" y="24" font-size="12" font-weight="700" fill="#6B7280">GRUPO DE TRABAJO</text>
+  <text x="660" y="24" text-anchor="end" font-size="12" font-weight="700" fill="#C8102E">EQUIPO</text>
+  <g font-size="11.5" fill="#1F2937">
+    <text x="20" y="58">Meta compartida</text><text x="20" y="92">Interdependencia</text><text x="20" y="126">Límites claros</text><text x="20" y="160">Estabilidad</text><text x="20" y="194">Autoridad propia</text>
+  </g>
+  <g stroke="#E5E7EB" stroke-width="6" stroke-linecap="round">
+    <line x1="170" y1="54" x2="640" y2="54"/><line x1="170" y1="88" x2="640" y2="88"/><line x1="170" y1="122" x2="640" y2="122"/><line x1="170" y1="156" x2="640" y2="156"/><line x1="170" y1="190" x2="640" y2="190"/>
+  </g>
+  <g>
+    <circle cx="250" cy="54" r="8" fill="#475569"/><circle cx="220" cy="88" r="8" fill="#475569"/><circle cx="520" cy="122" r="8" fill="#475569"/><circle cx="560" cy="156" r="8" fill="#475569"/><circle cx="300" cy="190" r="8" fill="#475569"/>
+    <circle cx="600" cy="54" r="8" fill="#C8102E"/><circle cx="620" cy="88" r="8" fill="#C8102E"/><circle cx="590" cy="122" r="8" fill="#C8102E"/><circle cx="470" cy="156" r="8" fill="#C8102E"/><circle cx="560" cy="190" r="8" fill="#C8102E"/>
+  </g>
+  <circle cx="120" cy="219" r="6" fill="#475569"/><text x="132" y="223" font-size="11" fill="#6B7280">seis analistas que entregan informes separados el día 5</text><circle cx="470" cy="219" r="6" fill="#C8102E"/><text x="482" y="223" font-size="11" fill="#6B7280">cuadrilla de rescate minero</text>
+</svg>
+<figcaption>Figura 1. Dos grupos reales ubicados en los cinco criterios. Un equipo en sentido fuerte está a la derecha en casi todos; un grupo de trabajo, a la izquierda en los dos primeros. Ninguno es mejor por definición.</figcaption>
+</figure>
+<p>Un grupo que cumple los cinco en grado alto es un equipo en sentido fuerte. Uno que cumple dos o tres es un grupo de trabajo. Ninguno de los dos es mejor por definición. El deck del coordinador propone un continuo parecido con cinco dimensiones (interdependencia, estabilidad, consistencia del trabajo, proximidad, similitud de conocimientos); las dos listas se solapan en interdependencia y estabilidad, y cualquiera sirve para el examen, siempre que la uses como escala y no como etiqueta.</p>
+<h3>Un solo mapa con tres vocabularios</h3>
+<p>La Figura 10-3 del texto guía (p. 319) ordena los factores de eficacia en tres cajas: contexto, composición y proceso. En el taller leíste la revisión de Mathieu et al. (2019), que organiza las mismas variables en regiones: estructura, composición y mediadores, con los mediadores divididos en procesos (lo que el equipo hace) y estados emergentes (lo que el equipo llega a tener). No son teorías rivales. El texto guía es una versión abreviada y algo anticuada del mismo marco, y la tabla completa de equivalencias está en el apunte 31.</p>
+<p>Lo único que importa retener aquí es la mezcla que el texto guía hace dentro de "proceso". Un proceso es algo que el equipo hace (coordinarse, monitorear, discutir) y se puede intervenir directamente. Un estado emergente es algo que el equipo llega a tener (confianza, cohesión, un modelo mental compartido) y solo cambia a través de los procesos y la estructura. Confundir ambos lleva a pedir "más cohesión" sin tocar nada que la produzca. El apunte 32 desarrolla los estados emergentes.</p>
+<h3>Identidad social: por qué el grupo cambia a la persona</h3>
+<p>Para el texto guía, la <strong>teoría de la identidad social</strong> es la "perspectiva que establece cuándo y por qué los individuos se consideran miembros de un grupo" (Robbins &amp; Judge, 2017, p. 277). La formulación original es más precisa: la identidad social es la parte del autoconcepto de una persona que deriva de saber que pertenece a un grupo, junto con el significado emocional de esa pertenencia (Tajfel, 1974, citado en Ellemers &amp; Haslam, 2012). Tres procesos la componen: categorización social (dividir el mundo en "nosotros" y "ellos"), comparación social (evaluar al propio grupo frente a otros) e identificación (incorporar la pertenencia al yo). El <strong>endogrupo</strong> es el grupo propio; el <strong>exogrupo</strong>, cualquier otro. El <strong>favoritismo endogrupal</strong> consiste en considerar mejores a los miembros del propio grupo y ver a los ajenos como un bloque homogéneo (p. 279).</p>
+<p>El hallazgo fundacional es el paradigma del grupo mínimo (Tajfel, Billig, Bundy &amp; Flament, 1971, citados en Ellemers &amp; Haslam, 2012). Basta asignar a personas a dos categorías por un criterio irrelevante, o al azar, sin interacción, sin historia y sin beneficio propio, para que repartan recursos favoreciendo a los suyos. No se necesita conflicto de intereses. La mera categorización alcanza. Eso explica por qué un equipo recién armado, o dos áreas de la misma empresa, desarrollan "nosotros y ellos" en cuestión de días. Brewer (1991) agregó la dinámica interna: las personas buscan equilibrar dos necesidades opuestas, pertenecer y distinguirse, y lo logran en grupos de tamaño intermedio, inclusivos hacia dentro y distintos hacia fuera. Lo llamó <strong>distintividad óptima</strong>.</p>
+<p>En el taller viste la identidad social como el mecanismo detrás de las fallas de línea: cuando dos atributos se alinean, la categorización se activa y el equipo se parte (apunte 31). Aquí la usamos para otra cosa: explicar por qué el grupo cambia la conducta de sus miembros. Cuando una persona se identifica con un grupo, la norma del grupo deja de ser una presión externa y pasa a ser una descripción de quién es ella. Conformarse deja de sentirse como ceder. El apunte 24 muestra que hasta el experimento de Asch cambia de lectura con esta lente: nos conformamos con quienes consideramos "nosotros", no con cualquiera (Spears, 2021).</p>
+<h3>Roles, expectativas y contrato psicológico</h3>
+<p>Un <strong>rol</strong> es el "conjunto de patrones de conducta esperados y atribuidos a alguien que ocupa una posición dada en la unidad social" (Robbins &amp; Judge, 2017, p. 281); la definición clásica de Shaw que recoge Sánchez (2014) es casi idéntica. El texto guía distingue la <strong>percepción del rol</strong>, cómo cree el ocupante que debe actuar, de las <strong>expectativas del rol</strong>, lo que los demás piensan que debería hacer (p. 281). Cuando coinciden, el rol funciona sin fricción. Cuando divergen, aparece el conflicto.</p>
+<p>En el trabajo, las expectativas mutuas entre persona y empleador forman el <strong>contrato psicológico</strong>: un "acuerdo no escrito que establece lo que la gerencia espera del trabajador y a la inversa" (p. 281). Es, en rigor, el rol no escrito que la persona cree haber aceptado al firmar el escrito. Importa porque sus violaciones se asocian con intención de renunciar, menor productividad, más hurto y más aislamiento (estudios citados en Robbins &amp; Judge, 2017, p. 282), y porque su contenido varía entre culturas: en Francia se percibe como un arreglo que favorece al más poderoso; en Noruega, como una relación de confianza (p. 282).</p>
+<p>Hay dos tipos de conflicto. El <strong>conflicto de roles</strong> aparece cuando una persona enfrenta expectativas divergentes dentro de un mismo rol: el gerente que debe evaluar al subordinado al que también tutela (p. 282). El <strong>conflicto entre roles</strong> aparece cuando las expectativas de distintos grupos a los que la persona pertenece se oponen (p. 282). El ejemplo canónico es el conflicto trabajo-familia, y aquí el texto guía cita bien: el meta-análisis de Amstad, Meier, Fasel, Elfering y Semmer (2011) muestra que el conflicto entre ambos dominios se asocia con peores resultados laborales, familiares y de salud, con relaciones más fuertes dentro del dominio donde nace el conflicto que cruzando dominios.</p>
+<h3>Normas: qué son y cuántas clases hay</h3>
+<p>Las <strong>normas</strong> son los "estándares aceptables de comportamiento dentro de un grupo y que son compartidos por sus miembros" (Robbins &amp; Judge, 2017, p. 284). Cialdini y Trost (1998, citados en Sánchez, 2014) las definen como reglas comprendidas por los miembros que guían y constriñen la conducta sin el matiz coercitivo de una ley. Horne y Mollborn (2020), desde la sociología, les ponen dos componentes: contenido (qué se aprueba y qué se desaprueba) y aplicación (qué sanciones siguen a la desviación). Esa segunda parte es la que suele faltar en las definiciones de manual. Una norma sin sanción es una preferencia.</p>
+<p>Hay cuatro clases que aparecerán en la prueba, tomadas del deck del curso: <strong>normas de desempeño</strong> (cuánto trabajar, qué producción es aceptable), <strong>normas de presentación</strong> (vestimenta, cuándo parecer ocupado), <strong>normas de acuerdo social</strong> (con quién almorzar, de qué hablar) y <strong>normas de asignación de recursos</strong> (cómo se reparten tareas, herramientas, recompensas). Pueden ser <strong>explícitas</strong> (declaradas, como el contrato de equipo que redactaste en el taller) o <strong>implícitas</strong> (nadie las dijo pero todos las conocen, y suelen ser las más fuertes).</p>
+<p>Y hay una distinción que el texto guía no trae y que es central en la investigación actual. Una <strong>norma descriptiva</strong> es lo que la gente de un grupo de referencia hace en la práctica. Una <strong>norma prescriptiva</strong> (o injuntiva) es lo que el grupo cree que debe hacerse (Dannals &amp; Li, 2024). Casi siempre se asume que van juntas. La sección D muestra que esa suposición falla seguido, y que de esa falla nacen las normas más dañinas de una organización.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>Identidad: con quién te identificas predice qué haces</h3>
+<p>Que la identidad social no sea una abstracción se ve en los números. Riketta y Van Dick (2005, citados en Dipboye, 2018) meta-analizaron el apego al grupo de trabajo frente al apego a la organización: la identificación con el grupo correlaciona .53 con la satisfacción con el grupo, mientras que la identificación con la organización correlaciona .22 con la satisfacción con la organización; con la conducta extra-rol, .29 frente a .20. La identidad que importa en el día a día es la del grupo cercano. Dipboye advierte que eso no siempre le conviene a la organización: el grupo de GM que protegió su reputación frente al auditor estaba, en ese sentido, siendo leal a algo. El texto guía lo dice desde otro ángulo: identidad de equipo sin identidad organizacional produce silos (Robbins &amp; Judge, 2017, p. 328).</p>
+<p>El resto de lo que el texto guía afirma sobre identidad (las experiencias compartidas amplifican la percepción, la autoestima sube y baja con el desempeño del grupo, la amenaza a la identidad dispara desviación) proviene de estudios de laboratorio individuales (pp. 277-279). Son coherentes con la teoría. Trátalos como ilustraciones mientras no haya síntesis cuantitativas detrás.</p>
+<h3>Normas como cooperación y coordinación</h3>
+<p>Horne y Mollborn (2020) revisan tres explicaciones de por qué existen las normas. La consecuencialista dice que surgen de las consecuencias de la conducta para el grupo: si llegar tarde daña a todos, el grupo castiga la impuntualidad. Funciona en el laboratorio y falla en el campo, porque hay normas costosas que persisten (los ritos de iniciación, las normas académicas que castigan dedicar tiempo a la docencia). La relacional dice que las normas emergen de inferencias sobre lo que los demás aprueban, deducidas de su conducta visible, con especial atención a los de alto estatus. La agéntica dice que las personas negocian y aplican las normas en contexto. El marco integrado combina las tres: las normas resuelven problemas de cooperación (que cada uno aporte) y de coordinación (que todos sepan qué esperar de los otros).</p>
+<p>Lo útil de esta distinción es que las normas de coordinación no necesitan ser buenas para mantenerse. Si todos creen que los demás aprueban quedarse callado en las reuniones, quedarse callado se coordina solo, aunque nadie lo prefiera. La predicción de Horne y Mollborn, que la sección siguiente confirma con datos, es que informar la prevalencia de una conducta será menos eficaz que vincularla al bien común y dar razones.</p>
+<h3>Percibir la norma: el círculo cercano pesa más que la convicción propia</h3>
+<p>Dannals y Li (2024) proponen un modelo en tres etapas de cómo una persona se forma una idea de las normas de su grupo. Primero, llega con una expectativa previa egocéntrica: proyecta lo que ella haría sobre los demás. Segundo, encuentra información normativa de distinta calidad: observar a los demás es transparente; las estadísticas son generales; los chismes y los medios llegan filtrados. Tercero, integra ambas cosas. Las percepciones erróneas documentadas van desde el consumo de alcohol entre universitarios hasta el apoyo a la estrategia corporativa entre directivos y el acoso sexual en el trabajo. Cuando la mayoría de un grupo desaprueba en privado una conducta pero cree que los demás la aprueban, el fenómeno se llama <strong>ignorancia pluralista</strong>. Produce normas que todos siguen y nadie sostiene.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 250" role="img" aria-label="Ignorancia pluralista: lo que cada miembro piensa en privado frente a lo que cree que piensan los demás" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="340" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">Seis ingenieros y una norma que nadie sostiene</text>
+  <g font-size="10.5" fill="#1F2937" text-anchor="middle">
+    <g>
+      <circle cx="80" cy="90" r="22" fill="#F3F4F6" stroke="#475569"/><text x="80" y="94">A</text>
+      <text x="80" y="128" fill="#475569">en privado:</text><text x="80" y="143" font-weight="700" fill="#475569">"reportar"</text>
+      <text x="80" y="170" fill="#C8102E">cree que los otros:</text><text x="80" y="185" font-weight="700" fill="#C8102E">"callar"</text>
+    </g>
+    <g>
+      <circle cx="184" cy="90" r="22" fill="#F3F4F6" stroke="#475569"/><text x="184" y="94">B</text>
+      <text x="184" y="128" fill="#475569">en privado:</text><text x="184" y="143" font-weight="700" fill="#475569">"reportar"</text>
+      <text x="184" y="170" fill="#C8102E">cree que los otros:</text><text x="184" y="185" font-weight="700" fill="#C8102E">"callar"</text>
+    </g>
+    <g>
+      <circle cx="288" cy="90" r="22" fill="#F3F4F6" stroke="#475569"/><text x="288" y="94">C</text>
+      <text x="288" y="128" fill="#475569">en privado:</text><text x="288" y="143" font-weight="700" fill="#475569">"reportar"</text>
+      <text x="288" y="170" fill="#C8102E">cree que los otros:</text><text x="288" y="185" font-weight="700" fill="#C8102E">"callar"</text>
+    </g>
+    <g>
+      <circle cx="392" cy="90" r="22" fill="#F3F4F6" stroke="#475569"/><text x="392" y="94">D</text>
+      <text x="392" y="128" fill="#475569">en privado:</text><text x="392" y="143" font-weight="700" fill="#475569">"reportar"</text>
+      <text x="392" y="170" fill="#C8102E">cree que los otros:</text><text x="392" y="185" font-weight="700" fill="#C8102E">"callar"</text>
+    </g>
+    <g>
+      <circle cx="496" cy="90" r="22" fill="#F3F4F6" stroke="#475569"/><text x="496" y="94">E</text>
+      <text x="496" y="128" fill="#475569">en privado:</text><text x="496" y="143" font-weight="700" fill="#475569">"reportar"</text>
+      <text x="496" y="170" fill="#C8102E">cree que los otros:</text><text x="496" y="185" font-weight="700" fill="#C8102E">"callar"</text>
+    </g>
+    <g>
+      <circle cx="600" cy="90" r="22" fill="#FDF2F3" stroke="#C8102E"/><text x="600" y="94">F (jefe)</text>
+      <text x="600" y="128" fill="#475569">en privado:</text><text x="600" y="143" font-weight="700" fill="#475569">"sin líos"</text>
+      <text x="600" y="170" fill="#C8102E">y es el único</text><text x="600" y="185" font-weight="700" fill="#C8102E">al que todos miran</text>
+    </g>
+  </g>
+  <text x="340" y="222" text-anchor="middle" font-size="11" fill="#6B7280">Norma prescriptiva privada: reportar (5 de 6). Norma percibida: callar. Conducta del grupo: callar.</text>
+  <text x="340" y="240" text-anchor="middle" font-size="11" fill="#6B7280">Nadie la defiende, todos la cumplen, y el que la rompe es sancionado por los que están de acuerdo con él.</text>
+</svg>
+<figcaption>Figura 2. Cómo funciona la ignorancia pluralista en un comité. Elaboración propia a partir de Dannals y Li (2024).</figcaption>
+</figure>
+<p>Cuánto pesa lo que uno cree que hacen los otros lo muestra el estudio de Tunçgenç et al. (2021), con 6,674 personas de 114 países durante la pandemia. La adherencia propia a las medidas de distanciamiento se predijo por la adherencia percibida del círculo cercano (coeficiente estandarizado .38) más que por la propia aprobación de las medidas (.31); la adherencia percibida del país (.01) y del mundo (.04) no agregaron casi nada, y la vulnerabilidad propia al virus explicó apenas un 6% de la varianza. Dicho en llano: lo que la gente creía que hacían sus cercanos predijo su conducta mejor que su propia convicción de que distanciarse era correcto. Chile estaba entre los 114 países, pero el artículo no reporta resultados por país [DATO POR VERIFICAR en el material suplementario].</p>
+<p>La consecuencia para las intervenciones es incómoda. Si la conducta depende de la norma percibida, bastaría informar la norma real ("el 80% de tus colegas sí reporta los incidentes") para corregirla. Ese es el fundamento de los nudges de información social. DellaVigna y Linos (2022) compararon los nudges publicados en revistas académicas con los que implementaron a escala dos unidades gubernamentales en Estados Unidos: los publicados cambiaban la conducta en promedio 13.81 puntos porcentuales; los implementados a escala, 0.81 puntos. Dannals y Li (2024) leen esa brecha con su modelo: la expectativa previa es fuerte, y hay señales competidoras más específicas y vívidas (lo que uno ve hacer a su jefe) que un cartel con un porcentaje no vence. Su propuesta no es dar información, sino retirar las señales que producen la mala percepción. Aplicado a GM: ninguna campaña de "valoramos la seguridad" compite con ver que al auditor que insistió lo sacaron del organigrama.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 240" role="img" aria-label="Qué predice la conducta propia y cuánto rinde informar la norma" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="170" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#1F2937">Qué predice mi conducta (β)</text>
+  <g font-size="11" fill="#1F2937">
+    <text x="0" y="52">Lo que creo que hace mi círculo</text><text x="0" y="86">Mi propia convicción</text><text x="0" y="120">Lo que creo que hace el mundo</text><text x="0" y="154">Lo que creo que hace mi país</text>
+  </g>
+  <g>
+    <rect x="200" y="40" width="133" height="16" rx="3" fill="#C8102E"/><rect x="200" y="74" width="108" height="16" rx="3" fill="#475569"/><rect x="200" y="108" width="14" height="16" rx="3" fill="#9CA3AF"/><rect x="200" y="142" width="4" height="16" rx="3" fill="#9CA3AF"/>
+  </g>
+  <g font-size="11" font-weight="700" fill="#1F2937"><text x="339" y="53">.38</text><text x="314" y="87">.31</text><text x="220" y="121">.04</text><text x="210" y="155">.01</text></g>
+  <text x="170" y="190" text-anchor="middle" font-size="10.5" fill="#6B7280">Tunçgenç et al. (2021), 6,674 personas, 114 países</text>
+  <line x1="380" y1="30" x2="380" y2="200" stroke="#E5E7EB"/>
+  <text x="540" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#1F2937">Cuánto cambia la conducta un nudge (pp)</text>
+  <g font-size="11" fill="#1F2937"><text x="400" y="62">En revistas académicas</text><text x="400" y="132">Implementado a escala</text></g>
+  <rect x="400" y="72" width="276" height="18" rx="3" fill="#475569"/><text x="540" y="86" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">13.81</text>
+  <rect x="400" y="142" width="16" height="18" rx="3" fill="#C8102E"/><text x="424" y="156" font-size="11.5" font-weight="700" fill="#1F2937">0.81</text>
+  <text x="540" y="190" text-anchor="middle" font-size="10.5" fill="#6B7280">DellaVigna y Linos (2022), dos unidades de nudges, EE.UU.</text>
+</svg>
+<figcaption>Figura 3. El círculo cercano pesa más que la convicción propia, y la información sola casi no mueve la conducta cuando sale del laboratorio. Elaborado a partir de Tunçgenç et al. (2021) y DellaVigna y Linos (2022).</figcaption>
+</figure>
+<h3>Desviación, sanciones y la jaula de hierro</h3>
+<p>Las normas se sostienen con sanciones, y el texto guía las documenta en Hawthorne: sarcasmo, motes, ridículo y golpes en el antebrazo para quien producía demasiado o demasiado poco (Robbins &amp; Judge, 2017, p. 287). El reverso de la norma es el <strong>comportamiento desviado en el trabajo</strong>, la "conducta voluntaria que contraviene las normas organizacionales importantes y, al exhibirla, amenaza el bienestar de la organización o de sus miembros" (p. 288). La Figura 9-3 (p. 288) lo clasifica en cuatro categorías: de producción (irse temprano, trabajar lento a propósito), contra la propiedad (sabotaje, robo), política (favoritismo, chismes, culpar a colegas) y agresión personal (acoso, abuso verbal). Fíjate en que la tipología mide la desviación respecto de las normas de la organización. El grupo de Hawthorne que limitaba la producción era desviado para la empresa y perfectamente conforme para su grupo. Esa es la "jaula de hierro" de las normas grupales que recoge el deck del curso: un grupo puede encerrar a sus miembros en un nivel de esfuerzo, de silencio o de presentismo que ninguno elegiría solo, y castigar al que intenta salir.</p>
+<p>La desviación se difunde cuando las normas del grupo la apoyan, y el ausentismo se contagia entre miembros (estudios citados en Robbins &amp; Judge, 2017, p. 288). Sancionar tiene costo para quien sanciona, y la gente sanciona más cuando hay metanormas que premian hacerlo y cuando la relación es cercana (Horne &amp; Mollborn, 2020). Henrich y Muthukrishna (2021) muestran con evidencia comparada que los mecanismos que estabilizan la cooperación (reputación, castigo, señalización) pueden estabilizar cualquier norma costosa, incluso una que daña al individuo y al grupo. Por eso una norma disfuncional no se cae sola cuando deja de servir.</p>
+<p>Hay una pieza que el texto guía trata bien y que va contra la intuición. El recuadro "¿Mito o ciencia?" de la página 283 pregunta si los chismes y la exclusión dañan a los grupos y responde "no necesariamente". El experimento de Feinberg, Willer y Schultz (2014) lo respalda: cuando los participantes de un juego de bien público podían chismear sobre la conducta de los demás, la cooperación aumentó; cuando además podían excluir al que no cooperaba, aumentó más, y los excluidos cooperaron más al reincorporarse. El chisme es la sanción barata de la norma y la exclusión la cara. La condición que pone el texto guía es la que importa: esto ayuda cuando el chisme es veraz y sobre el trabajo, cuando hay vuelta al grupo y cuando la norma protegida es buena. En GM el chisme y la exclusión también funcionaron. Protegían la norma equivocada.</p>
+<h3>Chile: baja confianza generalizada, confianza intraequipo por construir</h3>
+<p>Chile es, en las encuestas comparadas, un país de baja confianza interpersonal generalizada. En la Encuesta Bicentenario UC, el acuerdo con "se puede confiar en la mayoría de las personas" fue 12% en 2006, 23% en 2015 y 19% en 2023 (Valenzuela, 2024). En ELSOC, el estudio longitudinal de COES, solo el 8% dice que "casi siempre se puede confiar en las personas", aunque la confianza en los vecinos llega al 48% (Emol, 2024). Entre los jóvenes de 18 a 29 años, Latinobarómetro 2023 da 18% para Chile (Del Solar &amp; Fernández, 2024). Las cifras nórdicas comparables están entre 60% y 70%.</p>
+<p>Hay dos razones para traer este dato a un apunte sobre grupos. La primera es que la confianza generalizada, hacia desconocidos, no es lo mismo que la confianza dentro de un equipo, hacia personas con las que se interactúa a diario. El mismo chileno que no confía en "la mayoría de las personas" puede confiar en sus cuatro compañeros de proyecto. La segunda es que la confianza intraequipo sí importa y se puede construir: correlaciona .30 con el desempeño del equipo en el meta-análisis de De Jong, Dirks y Gillespie (2016; 112 estudios, 7,763 equipos), y .33 en equipos virtuales frente a .22 en presenciales en el de Breuer, Hüffmeier y Hertel (2016). En un entorno de baja confianza de fondo, un equipo chileno tiene a su favor lo que viste más arriba: la confianza en el círculo cercano es alta y pesa más que cualquier otra. Lo que no tiene es el piso de una sociedad donde confiar en extraños es la norma. Por eso las normas explícitas, los compromisos chicos cumplidos y la documentación compartida del contrato del taller no son formalidades.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> si llamamos "equipo" al grupo y le ponemos un nombre, mejora.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> "llamar equipo a un grupo tampoco mejora en forma automática su desempeño" (Robbins &amp; Judge, 2017, p. 314); la distinción grupo-equipo es un continuo, no una categoría que se asigna (Dipboye, 2018; DeChurch et al., 2018), y la metáfora deportiva aplicada a un grupo de baja interdependencia puede dañarlo.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> la palabra "equipo" vende, y los costos de la interdependencia se ven después.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> la influencia de la opinión del líder sobre el grupo "suele durar solo tres días".</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la frase del texto guía (Robbins &amp; Judge, 2017, p. 284) extrapola un estudio de laboratorio sobre juicios de atractivo facial, en el que el ajuste de la propia calificación a la del grupo se desvanecía a los tres días (Huang, Kendrick &amp; Yu, 2014). Nada en ese diseño habla de líderes, de opiniones sobre el trabajo ni de normas; es un dato sobre memoria de un juicio perceptivo.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> un número preciso parece evidencia, y el titular del artículo original invitaba a la generalización.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el chisme y la exclusión siempre dañan al grupo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> cuando los miembros pueden chismear sobre la conducta de los demás y excluir a quien no coopera, la cooperación del grupo aumenta y los excluidos cooperan más al volver (Feinberg et al., 2014); son mecanismos de sanción de la norma. El problema no es el mecanismo sino la norma que protege (Robbins &amp; Judge, 2017, p. 283).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> ser objeto de chisme es doloroso, y la gestión de personas prefiere tratar los conflictos como desviaciones individuales en vez de como aplicación de normas.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> las normas las fija el jefe y, si no funcionan, basta comunicar la norma correcta.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> las normas emergen de lo que los miembros infieren que los demás aprueban, con especial peso de lo que hace el círculo cercano (.38 frente a .31 de la convicción propia; Tunçgenç et al., 2021); esa inferencia suele estar equivocada (ignorancia pluralista; Dannals &amp; Li, 2024); e informar la norma real cambia la conducta 0.81 puntos porcentuales cuando se implementa a escala, frente a 13.81 en los estudios publicados (DellaVigna &amp; Linos, 2022).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> desde arriba las normas parecen reglas, y las reglas se comunican; desde abajo son señales, y las señales que más pesan son las que el jefe emite sin querer.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, antes de armar un "equipo", recorre los cinco criterios. Si la tarea no exige interdependencia ni hay meta compartida, lo que estás formando es un grupo de trabajo. Gestiónalo como tal: metas individuales claras, coordinación ligera, sin reuniones de "cohesión". El apunte 29 desarrolla las tres pruebas del texto guía para decidir cuándo conviene un equipo.</p>
+<p>Segundo, no confundas procesos con estados. "Falta confianza" o "falta cohesión" son diagnósticos de estados emergentes. No se arreglan pidiéndolos; se arreglan tocando la estructura (interdependencia, normas explícitas, metas) y los procesos (cómo se coordina, cómo se decide, cómo se habla del conflicto).</p>
+<p>Tercero, toma en serio el contrato psicológico. La empresa lo viola cuando cambia reglas sin explicar, promete desarrollo que no llega o pide lealtad sin reciprocidad. El costo se paga en rotación y en esfuerzo retirado, y rara vez se registra como tal.</p>
+<p>Cuarto, diagnostica las normas antes de intentar cambiarlas. Dos preguntas en una encuesta anónima detectan la ignorancia pluralista: "¿qué haces tú?" y "¿qué crees que hacen los demás?". Si la brecha es grande, la norma que todos siguen no la sostiene nadie, y el trabajo consiste en hacer visible la norma privada, no en predicar la deseada. Antes de gastar en una campaña, identifica las señales vívidas que la contradicen: qué pasa con el que reporta un problema, qué hace el jefe cuando llega tarde, a quién se asciende.</p>
+<p>Quinto, acepta que el chisme y la exclusión son mecanismos de aplicación de normas que existirán con o sin tu permiso. La pregunta de gestión es qué norma protegen.</p>
+<p>Sexto, en Chile, no supongas confianza. El entorno no la regala, pero el círculo cercano la produce. Eso favorece a los equipos pequeños y estables, con normas explícitas desde el primer día y compromisos chicos que se cumplen y se ven.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Definir grupo, grupo formal e informal, grupo de trabajo y equipo de trabajo, reproducir la Figura 10-1 y explicar con los cinco criterios por qué la distinción grupo-equipo es un continuo.</li><li>Explicar por qué importa distinguir procesos de estados emergentes dentro de la caja "proceso" de la Figura 10-3 (el mapa completo está en el apunte 31).</li><li>Explicar la teoría de la identidad social (categorización, comparación, identificación; endogrupo, exogrupo, favoritismo), el paradigma del grupo mínimo y la distintividad óptima, y usarla para analizar por qué un grupo cambia la conducta de sus miembros.</li><li>Distinguir percepción del rol, expectativas del rol, contrato psicológico, conflicto de roles y conflicto entre roles, con un ejemplo de cada uno.</li><li>Clasificar las normas de un grupo (cuatro clases; explícitas e implícitas; descriptivas y prescriptivas) y usar la Figura 9-3 para clasificar conductas desviadas.</li><li>Explicar la ignorancia pluralista con los datos de Tunçgenç et al. (2021) y de DellaVigna y Linos (2022), y proponer un diagnóstico de normas para un equipo real.</li><li>Analizar el caso GM Cobalt con los conceptos del apunte y distinguir confianza generalizada de confianza intraequipo en el contexto chileno.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Amstad, F. T., Meier, L. L., Fasel, U., Elfering, A., &amp; Semmer, N. K. (2011). A meta-analysis of work–family conflict and various outcomes with a special emphasis on cross-domain versus matching-domain relations. <em>Journal of Occupational Health Psychology, 16</em>(2), 151–169. <a href="https://doi.org/10.1037/a0022170">https://doi.org/10.1037/a0022170</a></p>
+<p>Breuer, C., Hüffmeier, J., &amp; Hertel, G. (2016). Does trust matter more in virtual teams? A meta-analysis of trust and team effectiveness considering virtuality and documentation as moderators. <em>Journal of Applied Psychology, 101</em>(8), 1151–1177. <a href="https://doi.org/10.1037/apl0000113">https://doi.org/10.1037/apl0000113</a></p>
+<p>Brewer, M. B. (1991). The social self: On being the same and different at the same time. <em>Personality and Social Psychology Bulletin, 17</em>(5), 475–482. <a href="https://doi.org/10.1177/0146167291175001">https://doi.org/10.1177/0146167291175001</a></p>
+<p>Dannals, J. E., &amp; Li, Y. (2024). A theoretical framework for social norm perception. <em>Research in Organizational Behavior, 44</em>, 100211. <a href="https://doi.org/10.1016/j.riob.2024.100211">https://doi.org/10.1016/j.riob.2024.100211</a></p>
+<p>DeChurch, L. A., Carter, D. R., Asencio, R., Wax, A., Seely, P. W., Dalrymple, K., Vaughn, S. A., Jones, B. R., Plummer, G., &amp; Mesmer-Magnus, J. (2018). From teams in organizations to organizing in teams. En D. S. Ones, N. Anderson, C. Viswesvaran, &amp; H. K. Sinangil (Eds.), <em>The SAGE handbook of industrial, work and organizational psychology: Vol. 2. Organizational psychology</em> (2.ª ed., pp. 307–332). SAGE.</p>
+<p>De Jong, B. A., Dirks, K. T., &amp; Gillespie, N. (2016). Trust and team performance: A meta-analysis of main effects, moderators, and covariates. <em>Journal of Applied Psychology, 101</em>(8), 1134–1150. <a href="https://doi.org/10.1037/apl0000110">https://doi.org/10.1037/apl0000110</a></p>
+<p>Del Solar, M., &amp; Fernández, M. (2024). <em>Confianza interpersonal en los jóvenes chilenos</em> (Índice Generacional N° 05). Faro UDD. https://faro.udd.cl/files/2024/07/confianza-interpersonal-en-los-jovenes-chilenos-170124-1.pdf</p>
+<p>DellaVigna, S., &amp; Linos, E. (2022). RCTs to scale: Comprehensive evidence from two nudge units. <em>Econometrica, 90</em>(1), 81–116. <a href="https://doi.org/10.3982/ECTA18709">https://doi.org/10.3982/ECTA18709</a></p>
+<p>Dipboye, R. L. (2018). Groups and teams in organizations. En <em>The Emerald review of industrial and organizational psychology</em> (pp. 369–439). Emerald. <a href="https://doi.org/10.1108/978-1-78743-785-220181011">https://doi.org/10.1108/978-1-78743-785-220181011</a></p>
+<p>Ellemers, N., &amp; Haslam, S. A. (2012). Social identity theory. En P. A. M. Van Lange, A. W. Kruglanski, &amp; E. T. Higgins (Eds.), <em>Handbook of theories of social psychology</em> (Vol. 2, pp. 379–398). SAGE. <a href="https://doi.org/10.4135/9781446249222.n45">https://doi.org/10.4135/9781446249222.n45</a></p>
+<p>Emol. (2024, 25 de julio). <em>Estudio de cohesión social COES: solo 8% cree que casi siempre se puede confiar en las personas</em>. https://www.emol.com/noticias/Nacional/2024/07/25/1137640/estudio-cohesion-social-coes.html</p>
+<p>Feinberg, M., Willer, R., &amp; Schultz, M. (2014). Gossip and ostracism promote cooperation in groups. <em>Psychological Science, 25</em>(3), 656–664. <a href="https://doi.org/10.1177/0956797613510184">https://doi.org/10.1177/0956797613510184</a></p>
+<p>Henrich, J., &amp; Muthukrishna, M. (2021). The origins and psychology of human cooperation. <em>Annual Review of Psychology, 72</em>, 207–240. <a href="https://doi.org/10.1146/annurev-psych-081920-042106">https://doi.org/10.1146/annurev-psych-081920-042106</a></p>
+<p>Horne, C., &amp; Mollborn, S. (2020). Norms: An integrated framework. <em>Annual Review of Sociology, 46</em>, 467–487. <a href="https://doi.org/10.1146/annurev-soc-121919-054658">https://doi.org/10.1146/annurev-soc-121919-054658</a></p>
+<p>Huang, Y., Kendrick, K. M., &amp; Yu, R. (2014). Conformity to the opinions of other people lasts for no more than 3 days. <em>Psychological Science, 25</em>(7), 1388–1393. <a href="https://doi.org/10.1177/0956797614532104">https://doi.org/10.1177/0956797614532104</a></p>
+<p>Mathieu, J. E., Gallagher, P. T., Domingo, M. A., &amp; Klock, E. A. (2019). Embracing complexity: Reviewing the past decade of team effectiveness research. <em>Annual Review of Organizational Psychology and Organizational Behavior, 6</em>, 17–46. <a href="https://doi.org/10.1146/annurev-orgpsych-012218-015106">https://doi.org/10.1146/annurev-orgpsych-012218-015106</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Sánchez, J. C. (2014). <em>Psicología de los grupos: Teorías, procesos y aplicaciones</em>. McGraw-Hill Interamericana de España.</p>
+<p>Spears, R. (2021). Social influence and group identity. <em>Annual Review of Psychology, 72</em>, 367–390. <a href="https://doi.org/10.1146/annurev-psych-070620-111818">https://doi.org/10.1146/annurev-psych-070620-111818</a></p>
+<p>Tajfel, H., &amp; Turner, J. C. (1979). An integrative theory of intergroup conflict. En W. G. Austin &amp; S. Worchel (Eds.), <em>The social psychology of intergroup relations</em> (pp. 33–47). Brooks/Cole.</p>
+<p>Tunçgenç, B., El Zein, M., Sulik, J., Newson, M., Zhao, Y., Dezecache, G., &amp; Deroy, O. (2021). Social influence matters: We follow pandemic guidelines most when our close circle does. <em>British Journal of Psychology, 112</em>(3), 763–780. <a href="https://doi.org/10.1111/bjop.12491">https://doi.org/10.1111/bjop.12491</a></p>
+<p>Valenzuela, E. (2024). <em>Encuesta Bicentenario 2023: Cohesión social</em> [Presentación]. Centro de Políticas Públicas, Pontificia Universidad Católica de Chile. https://politicaspublicas.uc.cl/web/content/uploads/2024/04/Eduardo-Valenzuela_Encuesta-Bicentenario-2023-cohesion-social.pdf</p>
+<h3>Para profundizar</h3>
+<p>Dannals y Li (2024): el modelo de percepción de normas en veinte páginas, con el catálogo de percepciones erróneas documentadas; es la lectura que convierte "cultura organizacional" en algo que se puede medir y corregir.</p>
+<p>Horne y Mollborn (2020): por qué los grupos mantienen normas que nadie quiere y por qué casi nadie sanciona; corto, claro y con implicancias directas para cualquier contrato de equipo.</p>
+<p>&lt;!-- NOTAS DE PRODUCCIÓN (revisión 15-11-2026): Cambios: se eliminaron las líneas de encabezado "Complementa y corrige..." y "lectura previa a la clase"; la tabla de equivalencias R&amp;J / Mathieu / taller se movió al apunte 31 y aquí queda una versión de dos párrafos con referencia cruzada; se agregaron tres figuras SVG (continuo grupo-equipo; ignorancia pluralista; Tunçgenç y DellaVigna); se revisó la prosa (frases más cortas, tuteo, menos paréntesis apilados). Marks et al. (2001) salió de la lista al quedar la tabla en el apunte 31. Palabras del cuerpo: aproximadamente 4,700. Referencias: 22, todas verificadas en la versión anterior (ver notas previas: Crossref para Amstad, Brewer, Dannals &amp; Li, DellaVigna &amp; Linos, Feinberg, Huang, Tunçgenç, Ellemers &amp; Haslam; informes E y F para De Jong, Breuer, Spears, Horne, Mathieu, Tajfel &amp; Turner, Dipboye; fuentes chilenas con URL). Datos chilenos: Bicentenario UC 2006/2015/2023 (12/23/19%), ELSOC 8%, Latinobarómetro jóvenes 18%: verificados en informe F. [DATO POR VERIFICAR]: resultados por país de Chile en Tunçgenç et al. (2021). --&gt;</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cuánto rinde un grupo? Tamaño, holgazanería social y cohesión · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 25</p>
+  <h1>¿Cuánto rinde un grupo? Tamaño, holgazanería social y cohesión</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 25 · Clase 21 (miércoles 18-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>La pregunta de este apunte es la más antigua de la psicología de los grupos: ¿rinde un grupo lo que rinden sus miembros sumados, más, o menos? Robbins y Judge la responden en tres páginas del capítulo 9 y media del capítulo 10, con afirmaciones que suenan a regla: los grupos de "más o menos siete" son los más productivos, el "número mágico" de un equipo es "siete, más-menos dos", la cohesión aumenta la productividad si hay normas de desempeño y la reduce si no las hay, y en las culturas colectivistas la pereza social no existe. Casi ninguna lleva una fuente que la respalde. Varias están equivocadas: el "siete más-menos dos" es un hallazgo sobre memoria de corto plazo que el texto toma de una columna de Forbes; la matriz de cohesión por normas se sostiene en una nota al pie que cita artículos sobre pereza social; y el dato sobre chinos e israelíes viene de un estudio puntual que el meta-análisis no confirma.</p>
+<p>Lo que sí existe es un siglo de investigación cuantitativa sobre este problema: un marco conceptual (la ecuación de Steiner y sus tipos de tarea), un meta-análisis sobre holgazanería que sigue siendo la referencia treinta años después, tres meta-análisis sobre cohesión y un estudio experimental y de campo sobre por qué los gerentes agregan gente a los equipos sin anticipar el costo. Este apunte ordena esa evidencia con magnitudes y usa la ecuación de Steiner como hilo. Tamaño, holgazanería, cohesión y desarrollo del grupo son una sola historia: la de las ganancias y pérdidas de proceso.</p>
+<p>Si estás en el Taller de Liderazgo y Trabajo en Equipo, ya viste la cohesión como estado emergente, con sus ítems de escala y las citas a Beal et al. (2003) y Mathieu et al. (2015), y viste el equilibrio puntuado de Gersick en la sesión de ciclos de desempeño. El taller trabaja con equipos de cinco personas fijados de antemano, así que no discute el tamaño ni la holgazanería. Este apunte agrega eso: cuántos, por qué la gente se esfuerza menos en grupo y cuándo deja de hacerlo, y qué estatus tiene la matriz de cohesión por normas que entra en la prueba común.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>La eficacia real de un grupo es su eficacia potencial, más las ganancias de proceso, menos las pérdidas de proceso (es la Figura 10-5 de R&amp;J). El potencial depende primero de la tarea: si las contribuciones se suman (aditiva), el grupo rinde según el promedio de sus miembros; si avanza al ritmo del más lento (conjuntiva), según el peor; si basta con que uno acierte (disyuntiva), según el mejor. Esa clasificación decide casi todo lo demás.</p>
+<p>Sobre el tamaño no hay número mágico. La correlación meta-analítica entre tamaño y desempeño es .04; tres personas bastan para superar al mejor individuo en problemas con respuesta correcta y dos no; en 329 grupos reales, los de 3 a 6 superaron a los de 7 o más. Lo que sí crece con el tamaño es el costo de coordinación, y la gente no lo anticipa: en el estudio destacado de la clase, equipos de cuatro necesitaron 1.54 veces las persona-minutos de los equipos de dos para armar el mismo Lego, el 84% de quienes estimaban el esfuerzo lo subestimó, y en 1.118 proyectos de software reales cada desviación estándar de tamaño agregó 3.5 puntos de sobreoptimismo.</p>
+<p>La holgazanería social es real y moderada (d = 0.44 en 78 estudios) y desaparece cuando el aporte individual es identificable, la tarea importa, el grupo importa o cada persona aporta algo único. Es menor en culturas colectivistas, no inexistente. Y tiene reverso: en tareas conjuntivas el miembro más débil rinde más que solo (efecto Köhler). La cohesión se asocia moderadamente con el desempeño (ρ entre .18 y .31 según cómo se mida), más la cohesión de tarea que la social, y la relación es recíproca: rendir bien también une. La matriz de la Figura 9-4 es una heurística razonable, no un hallazgo. Y las etapas de Tuckman son vocabulario sin apoyo longitudinal; lo que se observa en equipos reales con plazo es el equilibrio puntuado de Gersick.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>La ecuación de Steiner y los tipos de tarea</h3>
+<p>Steiner (1972) propuso la fórmula que R&amp;J reproducen en la Figura 10-5 (p. 327) sin nombrarlo: <strong>productividad real = productividad potencial + ganancias de proceso - pérdidas de proceso</strong>. La productividad potencial es lo que el grupo lograría si usara perfectamente los recursos de sus miembros dada la tarea. Las <strong>pérdidas de proceso</strong> (process losses) son lo que se pierde en la interacción: tiempo de coordinación, esfuerzo que no se ejerce, información que no se comparte. Las <strong>ganancias de proceso</strong> (process gains) son lo que la interacción agrega: corrección de errores, división del trabajo, motivación adicional. La "sinergia positiva" con que R&amp;J definen un equipo (p. 314) es, en estos términos, ganancias mayores que pérdidas; y su advertencia de que "no hay nada mágico en los equipos que garantice el logro de esa sinergia" es lo que la ecuación predice.</p>
+<p>Para calcular el potencial hay que saber cómo la tarea combina las contribuciones. Steiner distinguió varios tipos (Dipboye, 2018, pp. 387-388):</p>
+<ul><li><strong>Aditiva</strong>: las contribuciones se suman (ocho personas tirando de una cuerda, una cuadrilla cosechando). El grupo rinde según el promedio de capacidad de sus miembros.</li><li><strong>Conjuntiva</strong>: todos deben completar su parte para que el grupo termine (una cordada de montañistas, una cadena de montaje). El potencial lo fija el miembro menos capaz.</li><li><strong>Disyuntiva</strong>: el grupo elige la contribución de uno (resolver un problema con respuesta correcta). El potencial lo fija el más capaz, si el grupo lo reconoce.</li><li><strong>Compensatoria</strong>: el producto es el promedio de juicios individuales (pronosticar las ventas del trimestre). Los errores de unos compensan los de otros.</li><li><strong>Discrecional</strong>: el grupo decide cómo combinar las contribuciones.</li></ul>
+<figure class="figura">
+<svg viewBox="0 0 680 250" role="img" aria-label="Ecuación de Steiner y tipos de tarea" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <rect x="20" y="20" width="640" height="54" rx="6" fill="#FDF2F3" stroke="#C8102E"/>
+  <text x="340" y="42" text-anchor="middle" font-size="14" font-weight="700" fill="#1F2937">productividad real = potencial + ganancias de proceso − pérdidas de proceso</text>
+  <text x="340" y="62" text-anchor="middle" font-size="11" fill="#6B7280">Steiner (1972); es la Figura 10-5 de R&amp;J sin el nombre del autor</text>
+  <text x="20" y="100" font-size="11.5" font-weight="700" fill="#1F2937">¿Quién fija el potencial? Depende de cómo la tarea combina las contribuciones:</text>
+  <g font-size="11" fill="#1F2937">
+    <rect x="20" y="112" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="95" y="134" text-anchor="middle" font-weight="700">ADITIVA</text>
+    <text x="95" y="154" text-anchor="middle">se suman</text>
+    <text x="95" y="176" text-anchor="middle" fill="#C8102E" font-weight="700">el promedio</text>
+    <text x="95" y="198" text-anchor="middle" fill="#6B7280">cuadrilla cosechando</text>
+    <text x="95" y="214" text-anchor="middle" fill="#6B7280">riesgo: holgazanería</text>
+    <rect x="183" y="112" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="258" y="134" text-anchor="middle" font-weight="700">CONJUNTIVA</text>
+    <text x="258" y="154" text-anchor="middle">todos deben terminar</text>
+    <text x="258" y="176" text-anchor="middle" fill="#C8102E" font-weight="700">el más débil</text>
+    <text x="258" y="198" text-anchor="middle" fill="#6B7280">cordada, cadena</text>
+    <text x="258" y="214" text-anchor="middle" fill="#6B7280">ganancia: efecto Köhler</text>
+    <rect x="346" y="112" width="150" height="110" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="421" y="134" text-anchor="middle" font-weight="700">DISYUNTIVA</text>
+    <text x="421" y="154" text-anchor="middle">basta que uno acierte</text>
+    <text x="421" y="176" text-anchor="middle" fill="#C8102E" font-weight="700">el mejor (si lo oyen)</text>
+    <text x="421" y="198" text-anchor="middle" fill="#6B7280">problema con respuesta</text>
+    <text x="421" y="214" text-anchor="middle" fill="#6B7280">riesgo: no reconocerlo</text>
+    <rect x="509" y="112" width="151" height="110" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="584" y="134" text-anchor="middle" font-weight="700">COMPENSATORIA</text>
+    <text x="584" y="154" text-anchor="middle">se promedian juicios</text>
+    <text x="584" y="176" text-anchor="middle" fill="#C8102E" font-weight="700">el promedio de errores</text>
+    <text x="584" y="198" text-anchor="middle" fill="#6B7280">pronosticar ventas</text>
+    <text x="584" y="214" text-anchor="middle" fill="#6B7280">ganancia: sabiduría</text>
+  </g>
+  <text x="340" y="243" text-anchor="middle" font-size="10.5" fill="#6B7280">La quinta, discrecional: el grupo decide cómo combinar.</text>
+</svg>
+<figcaption>Figura 1. La ecuación de Steiner y los tipos de tarea. Elaboración propia a partir de Steiner (1972) y Dipboye (2018).</figcaption>
+</figure>
+<p>La clasificación decide qué miembro importa, cuánto pesa el tamaño y qué pérdida amenaza. En una tarea aditiva cada persona suma potencial pero también holgazanería; en una conjuntiva el eslabón débil manda y el tamaño multiplica la probabilidad de tener uno; en una disyuntiva el problema no es el esfuerzo sino reconocer al que tiene la razón (apunte 27). La forma de agregar los atributos de los miembros para predecir el desempeño del equipo (promedio, mínimo, máximo), tema del apunte 26, sigue la misma lógica (Liu, Huang &amp; Dickson, 2017).</p>
+<h3>Holgazanería social, polizones y el efecto del tonto</h3>
+<p>R&amp;J definen la <strong>pereza social</strong> (social loafing) como la "tendencia mediante la cual los individuos hacen menos esfuerzo cuando trabajan en forma colectiva que cuando trabajan de forma individual" (Robbins &amp; Judge, 2017, p. 291). Es una pérdida de proceso motivacional, distinta de la de coordinación: ocho personas pueden tirar menos que la suma de sus fuerzas porque no tiran al mismo tiempo o porque cada una tira menos. Separar las dos es el logro central de esta literatura.</p>
+<p>Conviene distinguir tres fenómenos que R&amp;J mezclan bajo "pereza" y "polizón". La <strong>holgazanería social</strong> en sentido estricto es reducir el esfuerzo porque el aporte propio se diluye en el producto colectivo y no se puede evaluar. El <strong>free riding</strong> es reducirlo porque el aporte propio parece prescindible: el grupo logrará el resultado igual. El <strong>efecto del tonto</strong> (sucker effect) es reducirlo para no cargar con el trabajo de los demás: una respuesta a la holgazanería ajena. Karau y Williams (1993) integraron los tres en el <strong>modelo del esfuerzo colectivo</strong> (collective effort model): una persona se esfuerza en grupo cuando cree que su esfuerzo influirá en el desempeño del grupo, que ese desempeño producirá un resultado y que ese resultado le importa. El grupo debilita los tres eslabones: diluye la relación esfuerzo-desempeño, hace depender el resultado de otros y reparte las consecuencias.</p>
+<h3>Cohesión: de tarea y social</h3>
+<p>R&amp;J definen la <strong>cohesión</strong> como el "grado en que los miembros de un grupo se sienten atraídos entre sí y están motivados para permanecer en el grupo" (p. 293) y, en el capítulo 10, como la situación en que los miembros "están vinculados emocionalmente entre sí, y permanecen motivados por el equipo debido a su apego" (p. 328). Ambas son definiciones de <strong>cohesión social</strong> (interpersonal attraction): gustarse. La investigación distingue además la <strong>cohesión de tarea</strong> (task commitment), el compromiso compartido con el objetivo, y el <strong>orgullo grupal</strong> (group pride), la valoración de pertenecer (Beal, Cohen, Burke &amp; McLendon, 2003). La distinción importa porque predicen distinto: un equipo puede quererse mucho y no rendir, y puede rendir sin que sus miembros se elijan como amigos.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>Tamaño: lo que afirma el texto y lo que muestran los datos</h3>
+<p>R&amp;J afirman que "los grupos pequeños de más o menos siete miembros son mejores para hacer algo productivo" y que los de "una docena de miembros o más son buenos para hacer aportaciones variadas" (p. 291), sin fuente. En el capítulo 10 agregan la regla de las "dos pizzas" de Jeff Bezos y escriben: "El psicólogo George Miller afirmó que para el tamaño del equipo ideal 'el número mágico [es] siete, más-menos dos'" (p. 325). La nota remite a una columna de Forbes. Miller (1956) no afirmó nada sobre equipos: su artículo trata sobre cuántos elementos distintos caben en la memoria inmediata. Es uno de los títulos más citados de la psicología y uno de los más mal citados; que un manual lo convierta en regla de diseño organizacional vía una revista de negocios muestra cómo nace un mito de texto. La regla de Bezos es una heurística de gestión, consistente con la evidencia pero sin evidencia propia.</p>
+<p>Lo que la investigación muestra es menos memorable y más útil:</p>
+<table><tr><th>Fuente</th><th>Qué estudió</th><th>Hallazgo</th><th>En lenguaje llano</th></tr><tr><td>Stewart (2006), meta-análisis</td><td>Tamaño y desempeño del equipo</td><td>ρ = .04 con desempeño; ρ = .30 con innovación (Stewart &amp; Carter, 2018, Tabla 13.2)</td><td>El tamaño casi no predice el desempeño general; sí ayuda a innovar. "No se justifica una afirmación sobre el mejor tamaño" (Dipboye, 2018)</td></tr><tr><td>Wheelan (2009)</td><td>329 grupos de trabajo reales</td><td>Los de 3 a 6 superaron en productividad y madurez a los de 7 a 10 y a los de 11 o más, que no difirieron entre sí</td><td>Pasado de seis, agregar gente no suma; los de 3 y 4 superaron a los de 5 y 6 en varias medidas</td></tr><tr><td>Laughlin, Hatch, Silver y Boh (2006)</td><td>760 estudiantes, problemas de letras-a-números</td><td>Grupos de 3, 4 y 5 superaron al mejor de igual número de individuos; los de 2 solo igualaron al mejor de dos</td><td>Tres es necesario y suficiente para superar al mejor individuo en problemas con respuesta correcta</td></tr><tr><td>Mueller (2012)</td><td>Equipos de distinto tamaño</td><td>A mayor tamaño, peor desempeño individual, mediado por pérdida relacional (menos apoyo percibido de los compañeros)</td><td>En equipos grandes cada persona se siente menos acompañada y rinde menos</td></tr><tr><td>Hackman y Wageman (2009)</td><td>Síntesis de la investigación de Hackman</td><td>Equipos "tan pequeños como sea posible dado el trabajo"; con más de siete u ocho cuesta mantenerse involucrado y coordinar</td><td>El criterio es el mínimo que cubre las competencias necesarias</td></tr></table>
+<p>Dos mecanismos explican por qué el costo crece más rápido que el tamaño. El primero es combinatorio: los enlaces de comunicación entre n personas son n(n-1)/2; 3 personas tienen 3 enlaces, 6 tienen 15 y 12 tienen 66 (Staats, Milkman &amp; Fox, 2012). El segundo es la explosión de subgrupos: un grupo de 3 admite 3 configuraciones de subgrupos; uno de 5, 50; uno de 8, 4.138; uno de 10, 115.973 (Dipboye, 2018). Cada subgrupo potencial es una falla de línea potencial (apunte 14).</p>
+<h3>Estudio destacado: la falacia de escalamiento de equipos</h3>
+<p>Si coordinar cuesta más con más gente, ¿por qué los gerentes forman equipos demasiado grandes, como reconocen R&amp;J (p. 325)? Staats, Milkman y Fox (2012) propusieron una respuesta cognitiva: la <strong>falacia de escalamiento de equipos</strong> (team scaling fallacy), la tendencia a subestimar cada vez más las horas totales que requiere un proyecto a medida que el equipo crece. El mecanismo es el <strong>descuido de la coordinación</strong> (coordination neglect): al imaginar un equipo más grande, las personas atienden a las ganancias de proceso (dividir el trabajo) y descuidan las pérdidas (coordinar, integrar, comunicar). El contexto: entre el 33% y el 88% de los proyectos en construcción, salud, aeroespacial y tecnología se entregan tarde y sobre presupuesto.</p>
+<p><strong>Experimento 1.</strong> 267 estudiantes de MBA ejecutivo armaron una figura de Lego de 50 piezas en equipos de dos (34 equipos) o de cuatro (33), asignados al azar. El esfuerzo se midió en persona-minutos (minutos del equipo por número de personas). Los equipos de dos usaron 36.33; los de cuatro, 52.64 (t(65) = 2.17, p &lt; .05): el mismo Lego costó 45% más esfuerzo con el doble de gente. Aparte, 178 estudiantes pagados según su exactitud estimaron 22.93 persona-minutos para los equipos de dos y 30.07 para los de cuatro. Ambos optimistas, pero el sobreoptimismo fue mayor para los equipos grandes (13.40 contra 22.58).</p>
+<p><strong>Experimento 2.</strong> 80 estudiantes de MBA armaron un set de 188 piezas en equipos de dos (12 equipos) y de cuatro (14). Los de dos usaron 72.39 persona-minutos; los de cuatro, 111.50 (t(24) = 4.01, p &lt; .01). La razón real fue 1.54: el equipo de cuatro necesitó 54% más esfuerzo total. Se pidieron estimaciones a 197 evaluadores externos, que estimaron 50.03 para los equipos de dos y 47.12 para los de cuatro: no distinguieron entre tamaños, y el 84% dio razones menores a 1.54. Los propios participantes, antes de armar, estimaron 34.07 y 42.83; el 75% dio razones inferiores a la real. El mecanismo quedó a la vista en las respuestas abiertas: el 54.3% mencionó ganancias de coordinación (dividir el trabajo, más manos) y solo el 37.6% mencionó pérdidas (z = 3.34, p &lt; .01); quienes más atendían a las ganancias eran quienes más subestimaban (b = -0.42, p &lt; .01).</p>
+<p><strong>Estudio de campo.</strong> Para ver si la falacia sobrevive a la experiencia, los autores analizaron 1.118 proyectos de una empresa internacional de software entre 2004 y 2006 (mediana del equipo: 12 personas, rango de 2 a 151; mediana del proyecto: seis meses y 5.451 horas). La variable fue el porcentaje de optimismo en el esfuerzo (horas reales menos estimadas, dividido por las estimadas; mediana 3.9%, rango de -63.0% a 274.1%). El tamaño del equipo predijo el sobreoptimismo en ambos modelos (0.19, p &lt; .01; 0.12, p &lt; .05, con controles de tamaño del código y cliente): una desviación estándar más de tamaño se asoció con 3.5 puntos porcentuales más de sobreoptimismo. Y estos eran estimadores profesionales, entrenados en descomposición del trabajo y estimación de tres puntos, con retroalimentación frecuente y consecuencias económicas. La falacia persistió.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 270" role="img" aria-label="Persona-minutos reales y estimados en equipos de dos y de cuatro" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="340" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">El mismo Lego, el doble de gente: persona-minutos</text>
+  <text x="170" y="48" text-anchor="middle" font-size="11.5" font-weight="700" fill="#475569">Experimento 1 (50 piezas)</text>
+  <text x="510" y="48" text-anchor="middle" font-size="11.5" font-weight="700" fill="#475569">Experimento 2 (188 piezas)</text>
+  <g font-size="11" fill="#1F2937">
+    <text x="20" y="80">Equipos de 2, real</text><text x="20" y="110">Equipos de 4, real</text><text x="20" y="140">Estimado para 2</text><text x="20" y="170">Estimado para 4</text>
+    <text x="360" y="80">Equipos de 2, real</text><text x="360" y="110">Equipos de 4, real</text><text x="360" y="140">Estimado para 2</text><text x="360" y="170">Estimado para 4</text>
+  </g>
+  <g>
+    <rect x="140" y="68" width="109" height="16" rx="3" fill="#475569"/><rect x="140" y="98" width="158" height="16" rx="3" fill="#C8102E"/><rect x="140" y="128" width="69" height="16" rx="3" fill="#9CA3AF"/><rect x="140" y="158" width="90" height="16" rx="3" fill="#9CA3AF"/>
+    <rect x="480" y="68" width="109" height="16" rx="3" fill="#475569"/><rect x="480" y="98" width="167" height="16" rx="3" fill="#C8102E"/><rect x="480" y="128" width="75" height="16" rx="3" fill="#9CA3AF"/><rect x="480" y="158" width="71" height="16" rx="3" fill="#9CA3AF"/>
+  </g>
+  <g font-size="11" font-weight="700" fill="#1F2937">
+    <text x="255" y="81">36.3</text><text x="304" y="111">52.6</text><text x="215" y="141">22.9</text><text x="236" y="171">30.1</text>
+    <text x="595" y="81">72.4</text><text x="653" y="111">111.5</text><text x="561" y="141">50.0</text><text x="557" y="171">47.1</text>
+  </g>
+  <text x="340" y="205" text-anchor="middle" font-size="11" fill="#1F2937">Razón real de esfuerzo 4 vs 2: 1.45 y 1.54. Los estimadores externos ni siquiera distinguieron los tamaños (50.0 vs 47.1).</text>
+  <text x="340" y="225" text-anchor="middle" font-size="11" fill="#1F2937">En 1,118 proyectos de software reales: cada desviación estándar de tamaño, 3.5 puntos más de sobreoptimismo.</text>
+  <text x="340" y="255" text-anchor="middle" font-size="10.5" fill="#6B7280">Escalas distintas en cada panel. Los equipos de cuatro terminaron antes en reloj; lo que creció fue el costo.</text>
+</svg>
+<figcaption>Figura 2. La falacia de escalamiento de equipos. Elaborado a partir de Staats, Milkman y Fox (2012).</figcaption>
+</figure>
+<p>Tres precisiones. Primero, el estudio mide esfuerzo total (persona-minutos u horas), no tiempo calendario ni calidad: el equipo de cuatro terminó antes en tiempo de reloj; lo que creció fue el costo. Segundo, no dice que los equipos grandes rindan peor; dice que su costo se subestima sistemáticamente, y que por eso se forman equipos más grandes de lo que conviene. Tercero, la recomendación de los autores es una <strong>reparación cognitiva</strong>: corregir las estimaciones con un factor predeterminado según el tamaño esperado, usar tasas base de proyectos similares y desconfiar de las herramientas que descomponen el trabajo, porque al descomponer agravan el descuido de la integración.</p>
+<p>La anécdota que acompaña al estudio es la <strong>Ley de Brooks</strong>: agregar personas a un proyecto de software atrasado lo atrasa más (Brooks, 1975). Brooks dirigió el desarrollo del sistema operativo del IBM 360 y vio que cada persona nueva exigía tiempo de los que ya estaban y agregaba enlaces de comunicación. Lo que Staats, Milkman y Fox agregan es la prueba de que la gente no lo anticipa ni con experiencia.</p>
+<h3>Ringelmann, bien contado</h3>
+<p>Todos los manuales atribuyen a Max Ringelmann el descubrimiento de que los grupos rinden menos que la suma de sus miembros, y casi todos lo cuentan mal. Kravitz y Martin (1986) localizaron el artículo original, publicado en 1913. Los datos se recogieron entre 1882 y 1887 en una escuela agrícola francesa; Ringelmann era ingeniero agrónomo interesado en la eficiencia de hombres, bueyes y máquinas, y la comparación individuo-grupo era secundaria. La tabla que circula en los textos (rendimiento por persona de 100, 93, 85, 77, 70, 63, 56 y 49% para grupos de 1 a 8) corresponde a tareas no especificadas, y la atribución a "tirar la cuerda" proviene de Moede, quien la popularizó en los años 20. En la serie con cuerda que sí se reportó, un hombre solo tiraba 85.3 kg; en grupos de siete, 65.0 kg por persona (76%); en uno de catorce, 61.4 kg (72%). Y Ringelmann atribuyó la pérdida principalmente a la falta de coordinación, no a la motivación. Descubrió una pérdida de proceso sin separar sus componentes.</p>
+<p>La separación la hicieron Ingham, Levinger, Graves y Peckham (1974) con "pseudogrupos": un participante real tiraba con los ojos vendados creyendo que otros tiraban detrás, pero los otros eran cómplices que fingían. Si el rendimiento caía igual que en grupos reales, la pérdida no podía ser de coordinación. Cayó. Latané, Williams y Harkins (1979) lo replicaron con gritos y aplausos: participantes vendados y con audífonos, creyendo que un compañero gritaba con ellos, gritaron al 82% de su intensidad individual; creyendo que gritaban cinco, al 74%. Ellos acuñaron el término "social loafing".</p>
+<h3>Karau y Williams (1993): magnitud, moderadores y cultura</h3>
+<p>Karau y Williams (1993) sintetizaron 78 estudios (163 tamaños de efecto). El efecto promedio fue d = 0.44, con intervalo de confianza de 95% entre 0.39 y 0.48: en grupo, las personas se esfuerzan cerca de media desviación estándar menos que solas, y el 79% de las comparaciones mostró menor esfuerzo colectivo. Es un efecto moderado y robusto que no ha sido superado en cobertura en tres décadas. Lo más útil, sin embargo, son los moderadores: las condiciones que lo anulan.</p>
+<table><tr><th>Moderador</th><th>Qué pasa con la holgazanería</th><th>En lenguaje llano</th></tr><tr><td>Evaluabilidad del aporte individual</td><td>Máxima (d = 0.59) cuando el producto solo se puede evaluar en la condición individual; desaparece cuando la evaluabilidad es igual en ambas</td><td>Si alguien puede ver lo que hiciste tú, no holgazaneas</td></tr><tr><td>Valencia de la tarea</td><td>Desaparece en tareas de alta valencia (d = -0.10, intervalo que incluye cero)</td><td>Si la tarea te importa, no holgazaneas</td></tr><tr><td>Valor del grupo</td><td>Desaparece en grupos muy valorados (amigos cercanos, equipos establecidos)</td><td>Si el grupo te importa, no holgazaneas</td></tr><tr><td>Unicidad del aporte</td><td>Ocurre con aportes redundantes, no con aportes únicos</td><td>Si lo tuyo no lo puede hacer otro, no holgazaneas</td></tr><tr><td>Expectativa sobre los compañeros</td><td>Ocurre cuando se espera que rindan bien; no cuando se espera que rindan mal</td><td>Si crees que los demás no lo harán, compensas</td></tr><tr><td>Tamaño y cultura</td><td>Crece con el tamaño; menor en muestras de Japón, Taiwán y China que en occidentales</td><td>Más gente, más dilución; en culturas colectivistas, menor, no inexistente</td></tr></table>
+<p>El último moderador corrige a R&amp;J. El texto afirma que "los chinos y los israelíes no se mostraron proclives a la pereza social y, en realidad, se desempeñaron mejor en grupo que solos" (p. 292). La fuente, que el texto no cita, es Earley (1993), que comparó gerentes de Estados Unidos, China e Israel. Es un estudio puntual. El meta-análisis encuentra que el efecto es menor en culturas colectivistas, no que desaparezca ni se invierta. Para un administrador chileno la lección no es "aquí no hay holgazanería" sino "el efecto es algo menor y los mismos moderadores lo anulan".</p>
+<p>El modelo del esfuerzo colectivo tiene además una confirmación con datos que no son de laboratorio. Hüffmeier et al. (2017) analizaron cerca de 300.000 nados de competencia comparando los tiempos de los mismos nadadores en pruebas individuales y en relevos. Encontraron ganancias de esfuerzo en relevos cuando la expectativa de ganar era alta y el resultado valioso, y pérdidas cuando no. La misma persona nada más rápido o más lento en equipo según si cree que su esfuerzo cambia el resultado y si el resultado le importa.</p>
+<h3>El reverso: el efecto Köhler</h3>
+<p>En los años 20, Otto Köhler observó que remeros de un club de Berlín, al levantar peso en parejas, aguantaban más que el más débil de los dos cuando lo hacía solo. El <strong>efecto Köhler</strong> es una ganancia motivacional del miembro menos capaz en tareas conjuntivas, donde el grupo depende de él. Dos mecanismos lo explican: comparación social hacia arriba (no quiero ser el peor) e indispensabilidad (si yo fallo, fallamos todos). Weber y Hertel (2007) lo confirmaron en un meta-análisis: la ganancia es de magnitud media, aparece en tareas físicas y cognitivas, y es mayor con retroalimentación continua. Kerr y Hertel (2011) revisaron cómo activarlo: dar a la persona menos capaz un compañero algo mejor (no mucho mejor, porque la brecha desmotiva) en una tarea donde el resultado dependa de ella. La ecuación de Steiner tiene un término de ganancias por una razón.</p>
+<h3>Los remedios: R&amp;J, los moderadores y las seis reglas</h3>
+<p>R&amp;J proponen cinco formas de evitar la pereza social (p. 292): metas grupales, competencia intergrupal, evaluación entre pares, elegir miembros motivados que prefieran trabajar en grupo, y basar las recompensas grupales en parte en las contribuciones individuales; agregan que divulgar las calificaciones individuales reduce el efecto. Cada ítem se mapea a un moderador del meta-análisis: la evaluación entre pares y la divulgación restauran la evaluabilidad; las metas y la competencia elevan la valencia de la tarea y el valor del grupo; seleccionar por preferencia por el grupo eleva la identificación. Lo que falta es el moderador más poderoso después de la evaluabilidad: la unicidad del aporte. Diseñar el trabajo para que cada persona haga algo que los demás no hacen elimina la redundancia que permite esconderse.</p>
+<p>Aguinis, Gottfredson y Joo (2013) formularon el problema como un dilema: si todo se mide y recompensa a nivel individual, se produce competencia interna y nadie coopera (su ejemplo es el equipo olímpico de básquetbol de Estados Unidos de 2004, lleno de estrellas y sin resultados); si todo se mide a nivel de equipo, se produce holgazanería, que contagia a los miembros de alto desempeño que necesitan reconocimiento. Sus seis reglas: medir desempeño individual y de equipo; medir procesos y resultados; construir las medidas con aportes de dentro y de fuera del equipo; recoger información de fuentes internas y externas; fomentar el aprendizaje del equipo; recompensar ambos niveles. El apunte 30 retoma los incentivos híbridos con evidencia experimental.</p>
+<h3>Cohesión: lo que dicen tres meta-análisis</h3>
+<p>R&amp;J afirman que "la cohesión de los equipos es una herramienta útil para predecir los resultados del equipo" (p. 328) sin citar un meta-análisis. Hay tres, más uno sobre la dirección causal.</p>
+<table><tr><th>Meta-análisis</th><th>Base</th><th>Relación cohesión-desempeño</th><th>Lectura</th></tr><tr><td>Beal et al. (2003)</td><td>Meta-análisis</td><td>ρ = .18 con eficacia (resultados), .31 con eficiencia; mayor con medidas conductuales y con alta interdependencia; los tres componentes predicen por separado</td><td>Moderada; más fuerte cuando el trabajo exige coordinarse</td></tr><tr><td>Castaño et al. (2013)</td><td>Reexamen comprensivo</td><td>ρ = .26 cohesión social, .30 cohesión de tarea</td><td>La de tarea predice algo más</td></tr><tr><td>Grossman et al. (2022)</td><td>195 estudios, 12.023 equipos</td><td>Las medidas proximales (tarea, referente "nosotros", conducta) predicen más que las distales (social, autorreporte individual, actitud); el orgullo grupal predice más de lo esperado</td><td>Cómo se mide cambia la respuesta</td></tr><tr><td>Mathieu et al. (2015)</td><td>17 estudios de panel más 57 equipos en 10 semanas</td><td>Relación recíproca; la vía cohesión → desempeño es más fuerte que la inversa y crece con el tiempo</td><td>Unirse ayuda a rendir, y rendir ayuda a unirse</td></tr></table>
+<p>El último responde lo que los correlacionales no pueden: ¿la cohesión causa el desempeño o al revés? Mathieu, Kukenberger, D'Innocenzo y Reilly (2015) encontraron que ambas flechas existen, pero la de cohesión a desempeño es más fuerte y se intensifica con el tiempo. Un detalle útil: el liderazgo compartido se relacionó con la cohesión pero no directamente con el desempeño, y la competencia promedio de los miembros con el desempeño pero no con la cohesión. Lo que une y lo que hace rendir no son lo mismo.</p>
+<h3>La Figura 9-4: una heurística, no un hallazgo</h3>
+<p>R&amp;J escriben que "los estudios demuestran en forma consistente que la relación entre la cohesión y la productividad depende de las normas grupales relacionadas con el desempeño" (p. 293) y lo resumen en la Figura 9-4: con cohesión alta y normas exigentes, productividad alta; con cohesión alta y normas laxas, baja; con cohesión baja, moderada en ambos casos. La idea viene de los estudios clásicos sobre grupos que restringían la producción y es plausible: un grupo unido en torno a la norma de "no sobresalir" la hará cumplir mejor que uno desunido. Pero la nota 71, única que respalda la afirmación, cita dos artículos sobre pereza social, no sobre cohesión. Los meta-análisis muestran una relación positiva moderada que depende del componente, de la medida y de la interdependencia; ninguno reporta la interacción con normas que la figura presenta como "consistente". La matriz es una heurística de texto, útil para recordar que la cohesión amplifica lo que el grupo valore. Como entra en la prueba común, conviene saber describirla y saber qué estatus tiene.</p>
+<p>Las siete medidas que R&amp;J proponen para aumentar la cohesión (p. 293: reducir el tamaño, fomentar el acuerdo con las metas, aumentar el tiempo juntos, elevar el estatus y la dificultad de ingreso, competir con otros grupos, recompensar al grupo y aislarlo físicamente) son coherentes con la literatura clásica sobre atracción interpersonal. Dos advertencias: casi todas apuntan a la cohesión social, que es la que menos predice, mientras que las que elevan la cohesión de tarea (metas claras, orgullo por el trabajo, retroalimentación de logro) tienen mejor respaldo; y aislar al grupo y enfrentarlo a otros son recetas para producir su lado oscuro.</p>
+<h3>Cuándo la cohesión daña</h3>
+<p>Bernthal e Insko (1993) mostraron experimentalmente que los grupos con alta cohesión social y baja cohesión de tarea presentaron más síntomas de pensamiento de grupo (presión hacia la uniformidad, autocensura); la cohesión de tarea protegía. Pero la integración cuantitativa de Mullen, Anthony, Salas y Driskell (1994) concluyó que la cohesión no predice de manera consistente peores decisiones: el efecto depende de qué componente se mide y de las demás condiciones. En los decks de años anteriores este artículo aparece como "Mullen et al., 1993"; la referencia correcta es 1994, en Small Group Research. El apunte 27 retoma el pensamiento de grupo como hipótesis histórica con apoyo experimental escaso. La conclusión para aquí: la cohesión social sin compromiso con la tarea es la combinación de riesgo; la de tarea es la que conviene construir.</p>
+<h3>Etapas del desarrollo: Tuckman como vocabulario, Gersick como evidencia</h3>
+<p>Si vienes del taller, viste el equilibrio puntuado de Gersick (1988, 1989), que es el único modelo que trae la 17ª edición de R&amp;J (p. 280). Pero el deck del coordinador enseña el modelo de cinco etapas de Tuckman (formación, tormenta, normatividad, desempeño y suspensión), y la prueba común puede preguntarlo.</p>
+<p>Tuckman (1965) revisó unos 50 artículos, en su mayoría sobre grupos de terapia y de entrenamiento en relaciones humanas, y propuso la secuencia de cuatro etapas como hipótesis a contrastar; la quinta la agregaron Tuckman y Jensen (1977) en otra revisión bibliográfica. Bonebright (2010) documentó cómo el modelo se convirtió en el más enseñado de la historia de los grupos pequeños con escasa contrastación empírica. Gersick (1988) siguió a ocho equipos reales de principio a fin de sus proyectos y no encontró etapas lineales: encontró una primera reunión que fija la dirección, una fase larga de inercia, una transición concentrada en el punto medio del plazo (durara el proyecto una semana o seis meses), una segunda inercia y una aceleración final; lo replicó en laboratorio (Gersick, 1989). La lectura correcta: Tuckman es vocabulario histórico sin apoyo longitudinal; no todos los equipos pasan por una tormenta antes de rendir. Gersick es lo que se observa en equipos con plazo, y su lección práctica es que la mitad del plazo es la ventana de intervención.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 260" role="img" aria-label="Tuckman frente a Gersick: etapas lineales versus equilibrio puntuado" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="20" y="22" font-size="12" font-weight="700" fill="#9CA3AF">TUCKMAN (1965): lo que se enseña</text>
+  <g font-size="11" fill="#1F2937" text-anchor="middle">
+    <rect x="20" y="34" width="118" height="34" rx="5" fill="#F3F4F6" stroke="#E5E7EB"/><text x="79" y="56">formación</text>
+    <rect x="154" y="34" width="118" height="34" rx="5" fill="#F3F4F6" stroke="#E5E7EB"/><text x="213" y="56">tormenta</text>
+    <rect x="288" y="34" width="118" height="34" rx="5" fill="#F3F4F6" stroke="#E5E7EB"/><text x="347" y="56">normatividad</text>
+    <rect x="422" y="34" width="118" height="34" rx="5" fill="#F3F4F6" stroke="#E5E7EB"/><text x="481" y="56">desempeño</text>
+    <rect x="556" y="34" width="104" height="34" rx="5" fill="#F3F4F6" stroke="#E5E7EB"/><text x="608" y="56">suspensión</text>
+  </g>
+  <text x="340" y="88" text-anchor="middle" font-size="10.5" fill="#6B7280">hipótesis a partir de grupos de terapia; sin contrastación longitudinal en equipos de trabajo (Bonebright, 2010)</text>
+  <text x="20" y="122" font-size="12" font-weight="700" fill="#C8102E">GERSICK (1988): lo que se observó en ocho equipos con plazo</text>
+  <line x1="40" y1="200" x2="640" y2="200" stroke="#E5E7EB" stroke-width="2"/>
+  <path d="M40,195 L60,170 L330,168 L350,140 L370,160 L620,158 L640,120" fill="none" stroke="#C8102E" stroke-width="3" stroke-linejoin="round"/>
+  <g font-size="10.5" fill="#1F2937" text-anchor="middle">
+    <text x="52" y="215">primera</text><text x="52" y="228">reunión</text>
+    <text x="195" y="215">inercia (la dirección fijada al inicio)</text>
+    <text x="350" y="215" font-weight="700" fill="#C8102E">punto medio:</text><text x="350" y="228" font-weight="700" fill="#C8102E">transición</text>
+    <text x="495" y="215">segunda inercia</text>
+    <text x="630" y="215">cierre</text>
+  </g>
+  <text x="340" y="252" text-anchor="middle" font-size="10.5" fill="#6B7280">El salto ocurre a la mitad del plazo, dure el proyecto una semana o seis meses. Ahí está la ventana para intervenir.</text>
+</svg>
+<figcaption>Figura 3. Dos modelos de desarrollo del grupo y su estatus empírico. Elaboración propia a partir de Tuckman (1965), Gersick (1988, 1989) y Bonebright (2010).</figcaption>
+</figure>
+<h3>Chile en la cancha: iniciativa, coordinación y saturación</h3>
+<p>Taylor y Beus (2025) analizaron los mapas de calor GPS y las redes de pases de los 190 partidos de la fase de grupos de los Mundiales masculinos de 2014 y 2018 (64 equipos), con datos públicos de la FIFA. Midieron la <strong>iniciativa</strong> de cada jugador como el área del campo que cubrió en relación con lo esperado para su posición, la <strong>coordinación</strong> como la distribución de los pases en la red (menos dependencia de uno o dos jugadores) y el <strong>desempeño</strong> como diferencia de goles, controlando partidos jugados y continente. La iniciativa agregada no se relacionó con el desempeño (r = .06, no significativo); sí con la coordinación (r = .19), y la coordinación con el desempeño (r = .19). En el modelo de mediación multinivel, el efecto directo de la iniciativa sobre los goles fue 0.00: toda su contribución pasó por la coordinación. Y la relación tuvo rendimientos decrecientes: cuando más del 30% a 40% de los jugadores mostraba alta iniciativa, la coordinación empezaba a caer. Rindieron mejor los equipos con iniciativa moderada y repartida que los de pocos héroes y el resto pasivo.</p>
+<p>Chile jugó la fase de grupos de 2014 (Grupo B: 3-1 a Australia, 2-0 a España y 0-2 con Países Bajos, segundo del grupo), así que sus tres partidos están en la base del estudio (dato externo al artículo, verificado en registros públicos; el artículo no reporta resultados por país). La conexión con este apunte es directa: la iniciativa individual es esfuerzo, lo contrario de la holgazanería, y sin embargo no basta, porque un equipo tiene pérdidas de proceso de coordinación. El exceso de iniciativa es la versión futbolística de la falacia de escalamiento: más actividad, más enlaces, más duplicación. Zhang, Li y Gong (2020) encontraron la misma U invertida con la personalidad proactiva de equipos de trabajo (apunte 26). La señal de alerta es la misma: mucho esfuerzo individual y poca producción.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el tamaño ideal de un equipo es "siete, más-menos dos", como demostró el psicólogo George Miller.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> Miller (1956) escribió sobre cuántos elementos caben en la memoria inmediata, no sobre equipos; R&amp;J lo toman de Forbes. La correlación meta-analítica tamaño-desempeño es .04 (Stewart, 2006); en 329 grupos reales los de 3 a 6 superaron a los de 7 o más (Wheelan, 2009); tres personas bastan para superar al mejor individuo en problemas con respuesta correcta (Laughlin et al., 2006). No hay número mágico: hay un criterio, el mínimo que cubre las competencias.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> un número se recuerda mejor que un criterio, y "siete más-menos dos" ya era famoso por otra razón.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> si el proyecto está atrasado, hay que agregar gente.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> equipos de cuatro necesitaron 1.54 veces las persona-minutos de los de dos para el mismo trabajo, el 84% de los estimadores lo subestimó, y en 1.118 proyectos de software cada desviación estándar de tamaño agregó 3.5 puntos de sobreoptimismo, incluso con estimadores profesionales (Staats et al., 2012). Los enlaces crecen como n(n-1)/2 y nadie los cuenta.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> al imaginar más gente pensamos en dividir el trabajo y no en integrarlo; es el descuido de la coordinación.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> la cohesión siempre ayuda: un equipo unido rinde más.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la relación es positiva pero moderada (ρ entre .18 y .31; Beal et al., 2003; Castaño et al., 2013), más fuerte para la cohesión de tarea que para la social, y recíproca (Mathieu et al., 2015). La cohesión social sin compromiso con la tarea se asocia con más síntomas de pensamiento de grupo (Bernthal &amp; Insko, 1993). La matriz de la Figura 9-4 es una heurística sin respaldo meta-analítico.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> confundimos pasarlo bien con rendir, y como los equipos que rinden suelen estar unidos, leemos la flecha en una sola dirección.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> todos los equipos pasan por formación, tormenta, normatividad y desempeño, en ese orden.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> Tuckman (1965) propuso la secuencia como hipótesis a partir de grupos de terapia; nunca se contrastó longitudinalmente en equipos de trabajo (Bonebright, 2010). Los equipos reales con plazo muestran inercia, transición en el punto medio y aceleración final (Gersick, 1988, 1989). La 17ª edición de R&amp;J ya no trae a Tuckman.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> rima, es intuitivo y da permiso para el conflicto inicial.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> en culturas colectivistas como China o Israel no hay holgazanería social; incluso rinden mejor en grupo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> eso proviene de un estudio puntual (Earley, 1993). El meta-análisis de 78 estudios encuentra que el efecto es menor en muestras de Japón, Taiwán y China, no que desaparezca (Karau &amp; Williams, 1993). Lo que lo anula, en cualquier cultura, son la evaluabilidad individual, una tarea valiosa, un grupo valorado y aportes únicos.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> un contraste cultural nítido es una buena historia, y R&amp;J la cuentan sin la cifra que la matiza.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, clasificar la tarea antes de armar el grupo. ¿Las contribuciones se suman, el grupo avanza al ritmo del más lento, basta con que uno acierte, o se promedian juicios? La respuesta dice qué miembro importa, si conviene un grupo o un individuo (apunte 29) y qué pérdida amenaza.</p>
+<p>Segundo, dimensionar al mínimo. El criterio es el menor número que cubre las competencias necesarias, no un número mágico. Pasado de seis u ocho, dividir en subequipos con interfaces claras. Cuando alguien proponga agregar gente, preguntar qué valor único aporta la persona nueva y cuántos enlaces suma.</p>
+<p>Tercero, estimar el esfuerzo en persona-horas, no en semanas, y corregirlo al alza según el tamaño del equipo. La falacia de escalamiento no se cura con experiencia: se cura con una regla de corrección y tasas base de proyectos parecidos.</p>
+<p>Cuarto, diseñar contra la holgazanería con los cuatro moderadores: aportes identificables, aportes únicos, una tarea que importe y un grupo que importe. Las cinco medidas de R&amp;J funcionan en la medida en que hacen alguna de estas cuatro cosas. Y medir en ambos niveles, individual y de equipo, para no caer en el dilema "yo contra nosotros".</p>
+<p>Quinto, usar el efecto Köhler a favor. En tareas conjuntivas, emparejar a la persona menos capaz con una algo mejor y hacer visible que el resultado depende de ella es una ganancia motivacional gratuita.</p>
+<p>Sexto, construir cohesión de tarea, no solo social. Metas claras, orgullo por el trabajo, retroalimentación de logro. Las actividades para que la gente se quiera predicen poco, y un grupo muy unido sin compromiso con la tarea es el que peor decide. Medir la cohesión con referente de equipo ("en este equipo nosotros...") y no con autorreportes individuales.</p>
+<p>Séptimo, intervenir en el punto medio del plazo. Si el equipo sigue el patrón de Gersick, la mitad del tiempo es cuando está dispuesto a revisar su estrategia. No esperar una "tormenta" que puede no llegar.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Escribir la ecuación de Steiner, relacionarla con la Figura 10-5 de R&amp;J y clasificar una tarea como aditiva, conjuntiva, disyuntiva o compensatoria, indicando qué miembro fija el potencial del grupo.</li><li>Contrastar lo que R&amp;J afirman sobre el tamaño (pp. 291 y 325) con la evidencia de Stewart (2006), Wheelan (2009) y Laughlin et al. (2006), y explicar por qué "siete más-menos dos" es una cita mal atribuida.</li><li>Describir los tres estudios de Staats, Milkman y Fox (2012) con sus cifras (36.33 contra 52.64; 1.54; 84%; 3.5 puntos), explicar el descuido de la coordinación y decir qué mide y qué no mide el estudio.</li><li>Contar la historia de Ringelmann correctamente (Kravitz &amp; Martin, 1986) y explicar cómo Ingham et al. (1974) y Latané et al. (1979) separaron coordinación de motivación.</li><li>Citar la magnitud de la holgazanería social (d = 0.44; Karau &amp; Williams, 1993), nombrar los cuatro moderadores que la anulan, distinguir holgazanería de free riding y de efecto del tonto, y corregir la afirmación de R&amp;J sobre las culturas colectivistas.</li><li>Explicar el efecto Köhler como ganancia de proceso y comparar las cinco medidas de R&amp;J con los moderadores meta-analíticos y las seis reglas de Aguinis et al. (2013).</li><li>Resumir la evidencia meta-analítica sobre cohesión y desempeño, distinguir cohesión de tarea y social, describir la Figura 9-4 y argumentar por qué es una heurística, y explicar cuándo la cohesión daña.</li><li>Describir los modelos de Tuckman y de Gersick, el estatus empírico de cada uno y cuál trae la 17ª edición de R&amp;J.</li><li>Explicar el estudio de Taylor y Beus (2025) y por qué la iniciativa individual no se traduce en desempeño sin coordinación.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Aguinis, H., Gottfredson, R. K., &amp; Joo, H. (2013). Avoiding a "me" versus "we" dilemma: Using performance management to turn teams into a source of competitive advantage. <em>Business Horizons, 56</em>(4), 503–512. <a href="https://doi.org/10.1016/j.bushor.2013.02.004">https://doi.org/10.1016/j.bushor.2013.02.004</a></p>
+<p>Beal, D. J., Cohen, R. R., Burke, M. J., &amp; McLendon, C. L. (2003). Cohesion and performance in groups: A meta-analytic clarification of construct relations. <em>Journal of Applied Psychology, 88</em>(6), 989–1004. <a href="https://doi.org/10.1037/0021-9010.88.6.989">https://doi.org/10.1037/0021-9010.88.6.989</a></p>
+<p>Bernthal, P. R., &amp; Insko, C. A. (1993). Cohesiveness without groupthink: The interactive effects of social and task cohesion. <em>Group &amp; Organization Management, 18</em>(1), 66–87. <a href="https://doi.org/10.1177/1059601193181005">https://doi.org/10.1177/1059601193181005</a></p>
+<p>Bonebright, D. A. (2010). 40 years of storming: A historical review of Tuckman's model of small group development. <em>Human Resource Development International, 13</em>(1), 111–120. <a href="https://doi.org/10.1080/13678861003589099">https://doi.org/10.1080/13678861003589099</a></p>
+<p>Brooks, F. P. (1975). <em>The mythical man-month: Essays on software engineering</em>. Addison-Wesley.</p>
+<p>Castaño, N., Watts, T., &amp; Tekleab, A. G. (2013). A reexamination of the cohesion–performance relationship meta-analyses: A comprehensive approach. <em>Group Dynamics: Theory, Research, and Practice, 17</em>(4), 207–231. <a href="https://doi.org/10.1037/a0034142">https://doi.org/10.1037/a0034142</a></p>
+<p>Dipboye, R. L. (2018). Groups and teams in organizations. En R. L. Dipboye, <em>The Emerald review of industrial and organizational psychology</em> (pp. 369–439). Emerald. <a href="https://doi.org/10.1108/978-1-78743-785-220181011">https://doi.org/10.1108/978-1-78743-785-220181011</a></p>
+<p>Earley, P. C. (1993). East meets West meets Mideast: Further explorations of collectivistic and individualistic work groups. <em>Academy of Management Journal, 36</em>(2), 319–348. <a href="https://doi.org/10.2307/256525">https://doi.org/10.2307/256525</a></p>
+<p>Gersick, C. J. G. (1988). Time and transition in work teams: Toward a new model of group development. <em>Academy of Management Journal, 31</em>(1), 9–41. <a href="https://doi.org/10.2307/256496">https://doi.org/10.2307/256496</a></p>
+<p>Gersick, C. J. G. (1989). Marking time: Predictable transitions in task groups. <em>Academy of Management Journal, 32</em>(2), 274–309. <a href="https://doi.org/10.2307/256363">https://doi.org/10.2307/256363</a></p>
+<p>Grossman, R., Nolan, K., Rosch, Z., Mazer, D., &amp; Salas, E. (2022). The team cohesion–performance relationship: A meta-analysis exploring measurement approaches and the changing team landscape. <em>Organizational Psychology Review, 12</em>(2), 181–238. <a href="https://doi.org/10.1177/20413866211041157">https://doi.org/10.1177/20413866211041157</a></p>
+<p>Hackman, J. R., &amp; Wageman, R. (2009). Foster team effectiveness by fulfilling key leadership functions. En E. A. Locke (Ed.), <em>Handbook of principles of organizational behavior: Indispensable knowledge for evidence-based management</em> (2.ª ed., pp. 275–293). Wiley.</p>
+<p>Hüffmeier, J., Filusch, M., Mazei, J., Hertel, G., Mojzisch, A., &amp; Krumm, S. (2017). On the boundary conditions of effort losses and effort gains in action teams. <em>Journal of Applied Psychology, 102</em>(12), 1673–1685. <a href="https://doi.org/10.1037/apl0000245">https://doi.org/10.1037/apl0000245</a></p>
+<p>Ingham, A. G., Levinger, G., Graves, J., &amp; Peckham, V. (1974). The Ringelmann effect: Studies of group size and group performance. <em>Journal of Experimental Social Psychology, 10</em>(4), 371–384. <a href="https://doi.org/10.1016/0022-1031(74)90033-X">https://doi.org/10.1016/0022-1031(74)90033-X</a></p>
+<p>Karau, S. J., &amp; Williams, K. D. (1993). Social loafing: A meta-analytic review and theoretical integration. <em>Journal of Personality and Social Psychology, 65</em>(4), 681–706. <a href="https://doi.org/10.1037/0022-3514.65.4.681">https://doi.org/10.1037/0022-3514.65.4.681</a></p>
+<p>Kerr, N. L., &amp; Hertel, G. (2011). The Köhler group motivation gain: How to motivate the 'weak links' in a group. <em>Social and Personality Psychology Compass, 5</em>(1), 43–55. <a href="https://doi.org/10.1111/j.1751-9004.2010.00333.x">https://doi.org/10.1111/j.1751-9004.2010.00333.x</a></p>
+<p>Kravitz, D. A., &amp; Martin, B. (1986). Ringelmann rediscovered: The original article. <em>Journal of Personality and Social Psychology, 50</em>(5), 936–941. <a href="https://doi.org/10.1037/0022-3514.50.5.936">https://doi.org/10.1037/0022-3514.50.5.936</a></p>
+<p>Latané, B., Williams, K., &amp; Harkins, S. (1979). Many hands make light the work: The causes and consequences of social loafing. <em>Journal of Personality and Social Psychology, 37</em>(6), 822–832. <a href="https://doi.org/10.1037/0022-3514.37.6.822">https://doi.org/10.1037/0022-3514.37.6.822</a></p>
+<p>Laughlin, P. R., Hatch, E. C., Silver, J. S., &amp; Boh, L. (2006). Groups perform better than the best individuals on letters-to-numbers problems: Effects of group size. <em>Journal of Personality and Social Psychology, 90</em>(4), 644–651. <a href="https://doi.org/10.1037/0022-3514.90.4.644">https://doi.org/10.1037/0022-3514.90.4.644</a></p>
+<p>Liu, M., Huang, J. L., &amp; Dickson, M. W. (2017). Team assessment and selection. En H. W. Goldstein, E. D. Pulakos, J. Passmore, &amp; C. Semedo (Eds.), <em>The Wiley Blackwell handbook of the psychology of recruitment, selection and employee retention</em> (pp. 310–333). Wiley. <a href="https://doi.org/10.1002/9781118972472.ch15">https://doi.org/10.1002/9781118972472.ch15</a></p>
+<p>Mathieu, J. E., Kukenberger, M. R., D'Innocenzo, L., &amp; Reilly, G. (2015). Modeling reciprocal team cohesion–performance relationships, as impacted by shared leadership and members' competence. <em>Journal of Applied Psychology, 100</em>(3), 713–734. <a href="https://doi.org/10.1037/a0038898">https://doi.org/10.1037/a0038898</a></p>
+<p>Miller, G. A. (1956). The magical number seven, plus or minus two: Some limits on our capacity for processing information. <em>Psychological Review, 63</em>(2), 81–97. <a href="https://doi.org/10.1037/h0043158">https://doi.org/10.1037/h0043158</a></p>
+<p>Mueller, J. S. (2012). Why individuals in larger teams perform worse. <em>Organizational Behavior and Human Decision Processes, 117</em>(1), 111–124. <a href="https://doi.org/10.1016/j.obhdp.2011.08.004">https://doi.org/10.1016/j.obhdp.2011.08.004</a></p>
+<p>Mullen, B., Anthony, T., Salas, E., &amp; Driskell, J. E. (1994). Group cohesiveness and quality of decision making: An integration of tests of the groupthink hypothesis. <em>Small Group Research, 25</em>(2), 189–204. <a href="https://doi.org/10.1177/1046496494252003">https://doi.org/10.1177/1046496494252003</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Staats, B. R., Milkman, K. L., &amp; Fox, C. R. (2012). The team scaling fallacy: Underestimating the declining efficiency of larger teams. <em>Organizational Behavior and Human Decision Processes, 118</em>(2), 132–142. <a href="https://doi.org/10.1016/j.obhdp.2012.03.002">https://doi.org/10.1016/j.obhdp.2012.03.002</a></p>
+<p>Steiner, I. D. (1972). <em>Group process and productivity</em>. Academic Press.</p>
+<p>Stewart, G. L. (2006). A meta-analytic review of relationships between team design features and team performance. <em>Journal of Management, 32</em>(1), 29–55. <a href="https://doi.org/10.1177/0149206305277792">https://doi.org/10.1177/0149206305277792</a></p>
+<p>Stewart, G. L., &amp; Carter, K. M. (2018). Team design characteristics. En D. S. Ones, N. Anderson, C. Viswesvaran, &amp; H. K. Sinangil (Eds.), <em>The SAGE handbook of industrial, work and organizational psychology: Vol. 2. Organizational psychology</em> (2.ª ed., pp. 289–306). SAGE. <a href="https://doi.org/10.4135/9781473914957.n14">https://doi.org/10.4135/9781473914957.n14</a></p>
+<p>Taylor, E. C., &amp; Beus, J. M. (2025). Why showing initiative is not enough in teams: A heat map analysis of soccer players' initiative and team coordination. <em>Group &amp; Organization Management, 51</em>(6), 3300–3309. <a href="https://doi.org/10.1177/10596011251356100">https://doi.org/10.1177/10596011251356100</a></p>
+<p>Tuckman, B. W. (1965). Developmental sequence in small groups. <em>Psychological Bulletin, 63</em>(6), 384–399. <a href="https://doi.org/10.1037/h0022100">https://doi.org/10.1037/h0022100</a></p>
+<p>Tuckman, B. W., &amp; Jensen, M. A. C. (1977). Stages of small-group development revisited. <em>Group &amp; Organization Studies, 2</em>(4), 419–427. <a href="https://doi.org/10.1177/105960117700200404">https://doi.org/10.1177/105960117700200404</a></p>
+<p>Weber, B., &amp; Hertel, G. (2007). Motivation gains of inferior group members: A meta-analytical review. <em>Journal of Personality and Social Psychology, 93</em>(6), 973–993. <a href="https://doi.org/10.1037/0022-3514.93.6.973">https://doi.org/10.1037/0022-3514.93.6.973</a></p>
+<p>Wheelan, S. A. (2009). Group size, group development, and group productivity. <em>Small Group Research, 40</em>(2), 247–262. <a href="https://doi.org/10.1177/1046496408328703">https://doi.org/10.1177/1046496408328703</a></p>
+<p>Zhang, R., Li, A., &amp; Gong, Y. (2020). Too much of a good thing: Examining the curvilinear relationship between team-level proactive personality and team performance. <em>Personnel Psychology, 74</em>(2), 295–321. <a href="https://doi.org/10.1111/peps.12413">https://doi.org/10.1111/peps.12413</a></p>
+<h3>Para profundizar</h3>
+<p>Staats, Milkman y Fox (2012): once páginas con dos experimentos y un estudio de campo; si alguna vez vas a estimar cuánta gente necesita un proyecto, es la lectura que te ahorrará dinero.</p>
+<p>Karau y Williams (1993): el meta-análisis que ordenó treinta años de holgazanería social y sigue vigente; la sección de moderadores es un manual de diseño de trabajo grupal.</p>
+<p>Kravitz y Martin (1986): seis páginas sobre cómo un ingeniero agrónomo del siglo XIX terminó en todos los manuales de psicología, y por qué casi todos lo citan mal.</p>
+<p>&lt;!-- NOTAS DE PRODUCCIÓN (revisión 15-11-2026: se quitaron las líneas 'Complementa y corrige' y 'lectura previa'; se agregaron 3 figuras SVG (Steiner; Staats; Tuckman vs Gersick); retoques de prosa en A): Palabras del cuerpo (secciones A a G, incluidas tablas y recuadros, sin encabezado ni referencias): aprox. 6.200 según wc -w; unas 5.600 sin contar las filas de las cuatro tablas. Excede en algo el tope de 5.000 del brief por la cantidad de contenido obligatorio asignado (tamaño, Staats con detalle, Ringelmann, Karau y Williams, Köhler, remedios, cohesión con tres meta-análisis, Fig. 9-4, Tuckman/Gersick, Chile); el orquestador puede recortar la sección G o la tabla de tamaño si necesita ajustar. Referencias totales en H: 35. Referencias [POR VERIFICAR]: 0. Todas verificadas en Crossref en esta sesión o copiadas de los informes A-G marcadas VERIFICADA o de los PDF del corpus. Verificaciones nuevas en esta sesión: Hüffmeier et al. (2017) (los autores incluyen a Mazei, omitido por Dipboye); Earley (1993); Miller (1956); Tuckman (1965); Bernthal &amp; Insko (1993); Mullen et al. (1994); Stewart (2006); Taylor &amp; Beus (2025) (vol. 51(6), 3300-3309 según Crossref; el PDF es versión "GOM Now" sin volumen); Zhang et al. (2020) (vol. 74(2), 295-321); Dipboye (2018) y Stewart &amp; Carter (2018) con editores confirmados en el PDF; Liu et al. (2017) pp. 310-333. Datos chilenos: resultados de Chile en el Grupo B del Mundial 2014 verificados en Wikipedia (3-1 Australia, 2-0 España, 0-2 Países Bajos; segundo del grupo); el artículo de Taylor y Beus no reporta resultados por país. Sin [DATO POR VERIFICAR] pendientes. Guiones medios: solo en rangos de páginas de la sección H (formato APA del apunte modelo aprobado); ninguno en el cuerpo. Correcciones a R&amp;J señaladas: p. 325 (Miller vía Forbes), p. 292 (Earley), p. 293 nota 71 (Fig. 9-4), p. 280 (solo Gersick); "Mullen 1993" de los decks corregido a 1994. --&gt;</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

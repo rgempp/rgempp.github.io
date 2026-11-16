@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conformidad, estatus y jerarquía: Asch, Stanford y Hawthorne bajo la lupa · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 24</p>
+  <h1>Conformidad, estatus y jerarquía: Asch, Stanford y Hawthorne bajo la lupa</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 24 · Clase 20 (lunes 16-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Las páginas 282 a 291 del texto guía contienen tres de los relatos más repetidos de la psicología: la cárcel de Stanford, las líneas de Asch y los estudios de Hawthorne. Los tres aparecen en casi todos los manuales de comportamiento organizacional. Se cuentan igual desde hace cuarenta años. Y están mal contados. Zimbardo no demostró que un rol convierta a cualquiera en un guardia abusivo; Asch no demostró que la mayoría de la gente se conforme; y los datos de iluminación de Hawthorne no muestran lo que todos dicen. El propio texto guía tiene las pistas: cita en una nota la crítica de Haslam y Reicher a Zimbardo sin incorporarla al cuerpo, y en Asch hace el matiz correcto (63% de respuestas independientes) que casi ningún otro manual hace. Este apunte termina ese trabajo.</p>
+<p>La segunda razón es el estatus. El texto guía le dedica dos páginas con una definición, tres fuentes y una lista de efectos. Ni una magnitud. Ni una respuesta a la pregunta que de verdad le importa a quien dirige un equipo: ¿una jerarquía clara ayuda o estorba? Hoy hay un meta-análisis que la responde, y es el estudio destacado de la clase. También hay una literatura madura sobre quién consigue estatus en un grupo (el dominante y el seguro de sí mismo, no el competente) que explica buena parte de lo que pasa en las reuniones a las que asistirás.</p>
+<p>Si estás en el Taller de Liderazgo y Trabajo en Equipo, ya viste el conflicto de estatus como un cuarto tipo de conflicto, la diferenciación de autoridad como característica estructural, y SUIT como protocolo para que la información circule antes de decidir. Este apunte pone debajo la psicología: por qué la gente se ajusta a la mayoría, por qué el que habla primero gana, y qué pasa con el desempeño cuando la jerarquía es empinada. Con eso, SUIT deja de ser una receta y pasa a ser la respuesta a un problema que puedes nombrar.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>Nos ajustamos al grupo por dos razones distintas: para estar en lo correcto cuando no sabemos (influencia informativa) y para ser aceptados cuando sí sabemos (influencia normativa). Asch estudió la segunda: con una mayoría unánime que decía algo evidentemente falso, el participante promedio se equivocó en un tercio de los ensayos y tres de cada cuatro cedieron al menos una vez. Pero dos tercios de las respuestas fueron independientes, un solo aliado bajaba la conformidad a casi nada, y los participantes preferían la independencia. El efecto es real y sigue vivo: una réplica preinscrita en 2021 obtuvo 33% de errores, y la presión también mueve opiniones políticas. La conformidad es mayor en culturas colectivistas, ha bajado en Estados Unidos desde los años cincuenta, y opera sobre todo con quienes consideramos "nosotros".</p>
+<p>La cárcel de Stanford no muestra que el rol transforme a la persona. Los archivos revelan que los guardias recibieron instrucciones de ser duros, que la mayoría no fue cruel y que el abuso se concentró en un turno y en una persona. Repetido sin instrucciones (BBC, 2006), los guardias no se volvieron tiranos. Lo que transforma la conducta es la identificación con un grupo más un liderazgo que define la crueldad como servicio a una causa; la misma lectura explica a Milgram. Hawthorne muestra que las normas de un grupo controlan la producción, pero el famoso "efecto Hawthorne" de la iluminación no está en los datos originales.</p>
+<p>El estatus es el rango que los demás te asignan, por poder, por contribución y por características personales. En la práctica lo obtiene quien habla más, propone primero y se muestra seguro, aunque no sea el más competente: la dominancia predice el estatus mejor que cualquier otro rasgo y no se relaciona con la inteligencia. Eso tiene un costo medible. En 54 estudios con casi 14,000 equipos, una jerarquía más empinada se asocia con un desempeño ligeramente peor y con menos ganas de seguir juntos, porque genera conflicto; solo ayuda cuando la tarea es ambigua. En un país con confianza interpersonal muy baja, callar frente al de más estatus es la opción barata; el Challenger y la mina San José muestran a dónde lleva.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Conformidad: dos razones para ceder</h3>
+<p>El texto guía define <strong>conformidad</strong> como el "ajuste del propio comportamiento para acatar las normas del grupo" (Robbins &amp; Judge, 2017, p. 284) y explica que nos conformamos con nuestros <strong>grupos de referencia</strong>, aquellos a los que pertenecemos o queremos pertenecer y cuyas normas es probable que obedezcamos (p. 286). Lo que el texto guía no trae es el marco que ordena todo lo demás. Deutsch y Gerard (1955) distinguieron dos tipos de influencia social. La <strong>influencia informativa</strong> opera cuando la persona cambia porque acepta la información de los demás como evidencia sobre la realidad: no sé cuánto vale esto, miro a los otros y aprendo. La <strong>influencia normativa</strong> opera cuando la persona cambia para cumplir las expectativas de los demás: sé cuánto vale esto, pero no quiero quedar afuera. Cialdini y Goldstein (2004) reformulan la distinción como tres motivos (precisión, afiliación y mantener un autoconcepto positivo), pero la lógica es la misma.</p>
+<p>El experimento del efecto autocinético de Sherif, de los años treinta, es el caso puro de influencia informativa (Spears, 2021): en una sala oscura, un punto de luz fijo parece moverse, la persona no tiene cómo saber cuánto, y los juicios de varias personas convergen hacia una norma común que luego cada una mantiene a solas. No hay presión; hay incertidumbre. Asch diseñó su experimento justo para eliminar la incertidumbre: la respuesta correcta era obvia, de modo que cualquier ajuste a la mayoría solo podía ser normativo. Que aun así hubiera conformidad fue lo que sorprendió. La distinción importa para la gestión porque las dos influencias se corrigen de forma distinta: la informativa, con mejor información y con diversidad de fuentes; la normativa, con anonimato, con un aliado y con normas que premien decir lo que uno ve.</p>
+<h3>Estatus: el rango que los demás te dan</h3>
+<p>El <strong>estatus</strong> es "una posición o un rango definido socialmente, que los demás dan a los grupos o a sus miembros" (Robbins &amp; Judge, 2017, p. 289). La definición tiene dos piezas que conviene retener: es social (no te lo das tú) y es un rango (ordena). Según la <strong>teoría de las características del estatus</strong>, las diferencias de estatus crean jerarquías dentro de los grupos, y el estatus deriva de tres fuentes: el poder que una persona ejerce sobre los demás, su capacidad de contribuir a las metas del grupo, y sus características personales, como apariencia, inteligencia, dinero o una personalidad agradable (p. 289). La tercera fuente es la que genera problemas, porque incluye atributos que nada tienen que ver con la tarea; la versión sociológica de la teoría (teoría de los estados de expectativas de Berger y colaboradores, citada en Sánchez, 2014) la formuló para explicar por qué el género, la raza o la edad fijan expectativas de competencia antes de que nadie haya hecho nada; y quienes obtienen bajo estatus inicial "tienen grandes dificultades para demostrar más tarde su valor" (Ridgeway, 1982, citada en Sánchez, 2014).</p>
+<p>La investigación contemporánea agrega una distinción útil (Cheng &amp; Tracy, 2014). Hay dos vías para subir en el rango: la <strong>dominancia</strong>, que obtiene deferencia por miedo y coerción, y el <strong>prestigio</strong>, que la obtiene porque los demás reconocen competencia y la conceden voluntariamente. Ambas funcionan, ambas coexisten en cualquier equipo, y solo la segunda está ligada a lo que el grupo necesita.</p>
+<h3>Jerarquía: la forma del grupo</h3>
+<p>Si el estatus es la posición de una persona, la <strong>jerarquía</strong> es la propiedad del grupo: cuánto varía el rango entre sus miembros. Un equipo donde todos tienen voz parecida tiene una jerarquía plana; uno donde una o dos personas concentran el estatus y las decisiones tiene una jerarquía empinada. Sobre la jerarquía hay dos tradiciones (Anderson &amp; Willer, 2014; Anderson &amp; Brown, 2010). La funcionalista sostiene que ordena: reduce el conflicto sobre quién manda, motiva a competir por subir y coordina porque alguien decide. La crítica sostiene que daña: asigna rango por rasgos arbitrarios, silencia a los de abajo y desperdicia su información. Anderson y Willer proponen un "funcionalismo acotado": la jerarquía ayuda cuando el rango coincide con la competencia y la tarea exige coordinación, y daña cuando no. La sección D muestra cuál de las dos tradiciones gana en promedio.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>Asch bien leído</h3>
+<p>En el experimento de Asch, grupos de siete u ocho personas comparaban una línea con tres de referencia; todos menos uno eran cómplices y, en los ensayos críticos, daban por unanimidad una respuesta evidentemente errónea. A solas, el error era menor al 1%. Bajo presión, "75 por ciento de los sujetos dieron al menos una respuesta de conformidad" y "el individuo promedio dio respuestas incorrectas 37 por ciento de las veces" (Robbins &amp; Judge, 2017, p. 285; la cifra exacta de Asch, 1956, es 36.8%, según Sánchez, 2014). Hasta aquí llega la versión que circula.</p>
+<p>El texto guía sigue, y hace bien: "el lado opuesto de 37 por ciento de respuestas de conformidad es 63 por ciento de respuestas independientes, y 95 por ciento dio la respuesta correcta (de no conformidad) al menos una vez" (p. 286). Alrededor de un cuarto de los participantes nunca cedió. Y Asch mismo escribió que quienes participaron coincidieron "casi sin excepción, en que la independencia era preferible a la conformidad" (citado en p. 286). Griggs (2015) revisó cómo los manuales de psicología presentan el estudio y encontró que la independencia desapareció: los textos reportan el 37% y el 75%, y omiten que la respuesta modal fue resistir. Asch tituló su monografía "Estudios de independencia y conformidad", en ese orden.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 300" role="img" aria-label="Las cifras de Asch: conformidad e independencia" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="340" y="22" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">Lo que cuentan los manuales y lo que falta</text>
+  <g font-size="11.5" fill="#1F2937">
+    <text x="0" y="58">Respuestas erradas bajo presión (promedio)</text>
+    <text x="0" y="92">Participantes que cedieron al menos una vez</text>
+    <text x="0" y="126" font-weight="700">Respuestas independientes</text>
+    <text x="0" y="160" font-weight="700">Participantes que resistieron al menos una vez</text>
+    <text x="0" y="194" font-weight="700">Participantes que nunca cedieron</text>
+    <text x="0" y="228">Respuestas erradas con UN aliado</text>
+    <text x="0" y="262">Respuestas erradas, réplica 2021 (Berna)</text>
+  </g>
+  <g>
+    <rect x="300" y="46" width="126" height="16" rx="3" fill="#9CA3AF"/>
+    <rect x="300" y="80" width="255" height="16" rx="3" fill="#9CA3AF"/>
+    <rect x="300" y="114" width="214" height="16" rx="3" fill="#C8102E"/>
+    <rect x="300" y="148" width="323" height="16" rx="3" fill="#C8102E"/>
+    <rect x="300" y="182" width="85" height="16" rx="3" fill="#C8102E"/>
+    <rect x="300" y="216" width="26" height="16" rx="3" fill="#475569"/>
+    <rect x="300" y="250" width="112" height="16" rx="3" fill="#475569"/>
+    <line x1="300" y1="40" x2="300" y2="272" stroke="#E5E7EB"/>
+  </g>
+  <g font-size="11.5" font-weight="700" fill="#1F2937">
+    <text x="432" y="59">37%</text><text x="561" y="93">75%</text><text x="520" y="127">63%</text><text x="629" y="161">95%</text><text x="391" y="195">~25%</text><text x="332" y="229">5-10%</text><text x="418" y="263">33%</text>
+  </g>
+  <text x="340" y="290" text-anchor="middle" font-size="10.5" fill="#6B7280">Las dos primeras filas son las que se repiten; las tres en rojo son las que desaparecieron (Griggs, 2015).</text>
+</svg>
+<figcaption>Figura 1. Asch completo. Elaborado a partir de Asch (1956), Robbins y Judge (2017, pp. 285-286), Griggs (2015) y Franzen y Mader (2023).</figcaption>
+</figure>
+<p>Dos variaciones del propio Asch cambian la lectura. El efecto de la mayoría se alcanza con tres o cuatro cómplices; agregar más no aumenta la conformidad (Asch, 1956; Bond &amp; Smith, 1996). Y basta un solo aliado que dé la respuesta correcta para que la conformidad caiga a cerca del 5 a 10% de los ensayos (Asch, 1956). La unanimidad es la condición, no el tamaño. La consecuencia para las reuniones es directa: la persona que dice en voz alta lo que ve, aunque esté sola, libera a los demás.</p>
+<p>Bond y Smith (1996) meta-analizaron 133 estudios con la tarea de Asch en 17 países, entre 1952 y 1994. Tres hallazgos: la conformidad es mayor en culturas colectivistas que en individualistas; en Estados Unidos declinó de forma fiable con el año del estudio; y es mayor cuando la respuesta es pública que cuando es privada (influencia normativa) y cuando el estímulo es difícil (influencia informativa). El efecto, en todo caso, no desapareció. Franzen y Mader (2023) lo replicaron en una muestra preinscrita de 210 estudiantes en Berna, en grupos de seis con cinco cómplices: 33% de respuestas erradas sin incentivo, contra el 36.8% original; con un franco por acierto, 25%. El dinero reduce la conformidad pero no la elimina. Y en una extensión con cinco preguntas de opinión política, las respuestas de los cómplices desplazaron el porcentaje de acuerdo en promedio 38 puntos porcentuales. De los rasgos medidos, solo la apertura a la experiencia predijo menor conformidad; la inteligencia, la autoestima y la necesidad de aprobación no.</p>
+<p>Hay una relectura que conecta este apunte con el anterior. Spears (2021) muestra que la pertenencia a un grupo común aumenta la conformidad con la mayoría incorrecta en el paradigma de Asch y la convergencia en el de Sherif, y que las fuentes del endogrupo son más influyentes que las del exogrupo. Nos conformamos con quienes consideramos "nosotros", en parte porque es razonable: cuando mi grupo, con el que comparto criterio, ve algo distinto de lo que veo yo, dudar de mis sentidos no es irracional. El reverso también está documentado: una minoría consistente influye. En los estudios de Moscovici, dos cómplices que llamaban "verde" a diapositivas azules en todos los ensayos lograron que la mayoría dijera "verde" en cerca del 9% de los ensayos y desplazaron el umbral privado de los participantes (Nemeth, 2012). La disidencia constante abre el pensamiento aunque esté equivocada.</p>
+<h3>La cárcel de Stanford: lo que dice el texto guía y lo que dicen los archivos</h3>
+<p>El texto guía cuenta la versión canónica (pp. 282-283): dos docenas de estudiantes estables, asignación al azar a guardias y prisioneros, motín al segundo día, prisioneros pasivos, "cada guardia, en cierto momento de la simulación, adoptó una conducta abusiva y autoritaria", y suspensión a los seis días por "las reacciones patológicas de los participantes". La conclusión: los participantes adoptaron roles estereotipados "sin antecedentes de patología o capacitación". En la nota 26, sin embargo, cita a Haslam y Reicher (2012), cuyo título es "Contesting the 'nature' of conformity: What Milgram and Zimbardo's studies really show". La crítica está en la nota; el cuerpo la ignora.</p>
+<p>Le Texier (2019) revisó los archivos de Stanford y entrevistó a participantes. Los guardias recibieron, en la orientación del 14 de agosto de 1971, instrucciones explícitas: crear aburrimiento, miedo y sensación de impotencia, y ser "guardias duros"; se les dijo que eran asistentes de investigación, no sujetos. Zimbardo publicó que no habían recibido entrenamiento específico. A los prisioneros se les dijo que solo podían salir por razones médicas o psiquiátricas; un prisionero admitió haber fingido el colapso, y solo 2 de 11 mostraron señales reales de crisis. Los abusos se concentraron en el turno nocturno del primer día y en un guardia; la mayoría de los guardias no fue cruel. Menos del 15% de las 150 horas quedó grabado. Nada de esto se parece a "cada guardia adoptó una conducta abusiva".</p>
+<p>El estudio de la BBC (Reicher &amp; Haslam, 2006) repitió la situación sin instruir a los guardias. El texto guía lo menciona (p. 284) y explica sus resultados "muy diferentes" por "un ambiente menos intenso" y por las cámaras. La explicación de los autores es otra: los guardias no se identificaron con su rol y no mostraron inclinación a la crueldad; los prisioneros, en cambio, desarrollaron una identidad compartida y terminaron desafiando al sistema. Haslam, Reicher y Van Bavel (2019) releen Stanford como un caso de <strong>liderazgo de identidad</strong>: la crueldad no brota del rol sino de líderes que convencen a los seguidores de que la dureza sirve a una meta noble del endogrupo (en Stanford, demostrar científicamente la brutalidad de las cárceles). La grabación del jefe de guardias presionando al Guardia 7, que se resistía a ser duro, muestra el mecanismo. Los autores no niegan que la situación importe; niegan que el rol baste.</p>
+<p>Milgram admite la misma relectura. Reicher, Haslam y Smith (2012) muestran con los archivos que los participantes continuaban aplicando descargas en la medida en que se identificaban con el experimentador y con la ciencia, y que la instrucción más parecida a una orden ("no tienes otra opción, debes continuar") era la que más desobediencia producía. No es obediencia ciega; es <strong>seguidismo comprometido</strong> (<em>engaged followership</em>): los seguidores preguntan qué quiere el líder y lo interpretan con entusiasmo. La conclusión pedagógica para este curso es que los roles importan, pero por identificación y por liderazgo, no por un disfraz. Eso es más inquietante que la versión del texto guía, porque significa que un jefe que define el silencio como lealtad no necesita uniformes.</p>
+<h3>Hawthorne: cómo nace un mito de texto</h3>
+<p>El texto guía cuenta Hawthorne en dos partes (pp. 286-287). En la primera, los investigadores aumentan la iluminación y la producción sube; la reducen y "la productividad continuó aumentando", hasta que la luz baja al nivel de la luna. En la segunda, en la sala de cableado los trabajadores fijan una norma de producción ("ni demasiado ni muy poco") y la hacen cumplir con sarcasmo, motes y golpes en el antebrazo. La segunda parte es una descripción de normas grupales que sigue siendo válida y que el apunte 23 usa. La primera es la que da nombre al "efecto Hawthorne".</p>
+<p>Levitt y List (2011) encontraron los datos originales de los experimentos de iluminación, que se creían destruidos, y los analizaron por primera vez. Su conclusión: "las descripciones existentes de patrones de datos supuestamente notables resultan ser enteramente ficticias"; la producción no subió cuando bajó la luz. Encontraron solo "manifestaciones más sutiles de posibles efectos Hawthorne", como una respuesta de la producción a los cambios inducidos por los experimentadores mayor que a la variación natural de la luz. El efecto de la atención puede existir; la historia con que se enseña no ocurrió. El valor didáctico está en el mecanismo: un relato bueno, repetido sin volver a los datos durante ochenta años, se convierte en hecho. Es el mismo mecanismo que fabricó la versión escolar de Asch y de Stanford.</p>
+<h3>Estatus en acción: quién habla, quién propone, quién gana</h3>
+<p>Los efectos del estatus sobre la interacción que describe el texto guía (los de alto estatus hablan más, critican más, dan más órdenes e interrumpen más; los de bajo estatus participan menos y el grupo pierde sus ideas; p. 290) tienen números. En los estudios clásicos de Bales, los miembros de mayor rango hablaban 15 veces más que los de menor rango (Bales et al., 1951, citados en Anderson &amp; Willer, 2014). Buzaglo y Wheelan (1999, citados en Anderson &amp; Willer, 2014) encontraron que los miembros de alto estatus de un equipo hablaban más del 75% del tiempo, aunque eran el 30% de los miembros. Anderson y Kilduff (2009), en equipos de cuatro personas resolviendo problemas, observaron que el 94% de las veces el equipo adoptó como respuesta final la primera propuesta que alguien hizo, y que los miembros de mayor rango tenían casi tres veces más probabilidad de hacer esa primera propuesta. En otras palabras: la discusión posterior casi nunca cambia lo que dijo primero el de más estatus.</p>
+<p>El problema es cómo se obtiene ese estatus. La dominancia (la tendencia a imponerse, hablar con seguridad y tomar el control) predice el estatus en grupos de forma más consistente que cualquier otra diferencia individual, incluida la inteligencia, y es el rasgo con la relación más fuerte con el estatus en un meta-análisis de 73 muestras (Lord et al., 1986, y Judge et al., 2002, citados en Anderson &amp; Willer, 2014). Al mismo tiempo, la dominancia "no se relaciona en gran medida con las capacidades cognitivas generales" (Anderson &amp; Willer, 2014, p. 56): los dominantes obtuvieron estatus en grupos que discutían dilemas éticos, resolvían tareas mecánicas o asignaban fondos, sin pericia especial en nada de eso. Y la confianza en uno mismo funciona aunque sea infundada: las personas sobreconfiadas "alcanzan consistentemente un rango más alto del que sus habilidades merecen" (Cheng &amp; Tracy, 2014, con datos de Anderson et al., 2012). El grupo concede estatus por señales de competencia que no son competencia.</p>
+<h3>Estudio destacado: Greer, de Jong, Schouten y Dannals (2018)</h3>
+<p>La pregunta era si la jerarquía dentro de un equipo mejora o empeora su eficacia, y por qué. Greer, de Jong, Schouten y Dannals (2018) meta-analizaron 54 estudios con 13,914 equipos, codificando la jerarquía como diferenciación de rango dentro del equipo (en poder, estatus o autoridad, con distintas formas: pendiente, centralización, acíclica) y dos resultados: el desempeño del equipo y su viabilidad (la capacidad y disposición de seguir trabajando juntos). Pusieron a prueba las dos tradiciones de la sección C: la vía funcionalista, en que la jerarquía mejora la coordinación y por esa vía el desempeño, y la vía del conflicto, en que la jerarquía genera disputas de estatus y por esa vía lo empeora.</p>
+<table><tr><th>Relación estimada</th><th>k estudios</th><th>N equipos</th><th>ρ</th><th>Lectura en lenguaje llano</th></tr><tr><td>Jerarquía y desempeño del equipo</td><td>54 (total)</td><td>13,914 (total)</td><td>−.08</td><td>Más jerarquía, desempeño ligeramente peor en promedio; efecto pequeño pero de signo negativo</td></tr><tr><td>Jerarquía y viabilidad del equipo</td><td>subconjunto</td><td>subconjunto</td><td>−.11</td><td>Más jerarquía, menos ganas y capacidad de seguir juntos</td></tr><tr><td>Vía del conflicto (jerarquía → conflicto → menor eficacia)</td><td>subconjunto</td><td>subconjunto</td><td>apoyada</td><td>El daño pasa por los estados que habilitan el conflicto</td></tr><tr><td>Vía de la coordinación (jerarquía → coordinación → mayor eficacia)</td><td>subconjunto</td><td>subconjunto</td><td>no apoyada</td><td>El beneficio prometido por la teoría funcionalista no aparece en promedio</td></tr><tr><td>Moderador: ambigüedad de la tarea</td><td>subconjunto</td><td>subconjunto</td><td>invierte el signo</td><td>Con tareas ambiguas, la jerarquía ayuda; es el único moderador que la vuelve positiva</td></tr><tr><td>Moderadores: diferenciación de habilidades, mutabilidad de la jerarquía, inestabilidad de la membresía</td><td>subconjunto</td><td>subconjunto</td><td>agravan el efecto negativo</td><td>Cuando los miembros tienen habilidades muy distintas, cuando la jerarquía puede cambiar o cuando la gente entra y sale, la jerarquía daña más</td></tr><tr><td>Moderadores: interdependencia, complejidad de la tarea, forma de la jerarquía</td><td>subconjunto</td><td>subconjunto</td><td>no significativos</td><td>No importa tanto cómo es la jerarquía sino que exista</td></tr></table>
+<p>Las k y N por relación específica no constan en los informes disponibles para este apunte y deben tomarse del artículo; las cifras de las dos primeras filas sí están verificadas. Hay una errata publicada que ajusta algunos moderadores (la inestabilidad de membresía deja de ser significativa en la corrección).</p>
+<p>Cómo leer la magnitud. Una correlación de −.08 es pequeña: la jerarquía explica menos del 1% de la varianza del desempeño entre equipos. Pero el signo importa por dos razones. Primero, la teoría dominante en gestión predice un signo positivo, y el promedio de 54 estudios dice lo contrario. Segundo, el promedio esconde heterogeneidad real: con tareas ambiguas la jerarquía ayuda; con equipos de habilidades muy diferenciadas, que es el caso de la mayoría de los equipos de conocimiento, daña más. La mediación por conflicto conecta este hallazgo con el anterior: cuando el rango no se corresponde con la competencia, los de abajo lo saben, y la energía se va en disputarlo o en callar.</p>
+<p>Limitaciones. Es evidencia correlacional en su mayoría, de modo que "se asocia con" y no "causa"; la jerarquía se midió de formas distintas entre estudios; el desempeño mezcla calificaciones de supervisores y medidas objetivas; y la errata muestra que algunos moderadores son frágiles. Lo que no es frágil es la conclusión central: no hay evidencia de que, en promedio, una jerarquía más empinada mejore el desempeño de un equipo.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 250" role="img" aria-label="Jerarquía y eficacia del equipo según Greer et al. 2018" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <defs><marker id="g1a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#C8102E"/></marker><marker id="g1g" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#9CA3AF"/></marker></defs>
+  <rect x="20" y="95" width="150" height="60" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+  <text x="95" y="120" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">JERARQUÍA</text>
+  <text x="95" y="140" text-anchor="middle" font-size="10.5" fill="#1F2937">más empinada</text>
+  <rect x="265" y="30" width="150" height="56" rx="6" fill="#FDF2F3" stroke="#C8102E"/>
+  <text x="340" y="53" text-anchor="middle" font-size="12" font-weight="700" fill="#C8102E">CONFLICTO</text>
+  <text x="340" y="72" text-anchor="middle" font-size="10.5" fill="#1F2937">vía apoyada</text>
+  <rect x="265" y="164" width="150" height="56" rx="6" fill="#F3F4F6" stroke="#E5E7EB" stroke-dasharray="5 4"/>
+  <text x="340" y="187" text-anchor="middle" font-size="12" font-weight="700" fill="#9CA3AF">COORDINACIÓN</text>
+  <text x="340" y="206" text-anchor="middle" font-size="10.5" fill="#9CA3AF">vía no apoyada</text>
+  <rect x="510" y="95" width="150" height="60" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+  <text x="585" y="116" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">EFICACIA</text>
+  <text x="585" y="133" text-anchor="middle" font-size="10.5" fill="#1F2937">desempeño ρ = −.08</text>
+  <text x="585" y="147" text-anchor="middle" font-size="10.5" fill="#1F2937">viabilidad ρ = −.11</text>
+  <line x1="175" y1="115" x2="258" y2="66" stroke="#C8102E" stroke-width="2.5" marker-end="url(#g1a)"/>
+  <line x1="420" y1="66" x2="503" y2="115" stroke="#C8102E" stroke-width="2.5" marker-end="url(#g1a)"/>
+  <line x1="175" y1="135" x2="258" y2="184" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#g1g)"/>
+  <line x1="420" y1="184" x2="503" y2="135" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#g1g)"/>
+  <text x="340" y="240" text-anchor="middle" font-size="10.5" fill="#6B7280">54 estudios, 13,914 equipos. Ayuda solo con tareas ambiguas; daña más con habilidades diferenciadas y jerarquía inestable.</text>
+</svg>
+<figcaption>Figura 2. Por qué la jerarquía se asocia con peor eficacia: la vía del conflicto se confirma y la de la coordinación no. Elaborado a partir de Greer et al. (2018).</figcaption>
+</figure>
+<h3>Diferencias de estatus, salud y estigma</h3>
+<p>El texto guía afirma que "grandes diferencias en el estatus dentro de los grupos también se asocian con un menor desempeño individual, salud más precaria y mayores intenciones de los miembros con estatus más bajo de abandonar el grupo" (p. 290), citando a Christie y Barling (2010). Es coherente con la viabilidad negativa de Greer et al. y con la literatura más amplia sobre jerarquías empinadas y estrés que revisan Anderson y Willer (2014). También documenta el <strong>estigma por asociación</strong>: hombres entrevistados para un puesto fueron juzgados menos calificados cuando estaban sentados junto a una mujer obesa en la sala de espera, incluso cuando se aclaraba que no tenían relación (p. 291). El estatus, que ya se asigna por características ajenas a la tarea, además se contagia.</p>
+<h3>Un caso situado: Challenger, y un eco chileno</h3>
+<p>El 28 de enero de 1986 el transbordador Challenger explotó 73 segundos después del despegue y murieron sus siete tripulantes. La noche anterior, ingenieros de Morton Thiokol, la contratista de los cohetes, advirtieron que las bajas temperaturas podían hacer fallar los anillos de sellado; en la teleconferencia con la NASA, que presionaba por lanzar, los directivos de la empresa minimizaron el riesgo y no quisieron oponerse al cliente (hechos según el deck del coordinador). El deck lo presenta como pensamiento de grupo, con sus síntomas. Esser y Lindoerfer (1989) intentaron un análisis cuantitativo del caso con ese modelo, y el apunte 27 discute qué encontraron y qué no. Aquí la propuesta es leerlo con la caja de herramientas de este apunte y del anterior: una norma descriptiva ("aquí se lanza") sostenida por quienes tenían estatus; una influencia normativa que convirtió la duda técnica en falta de lealtad; una jerarquía empinada entre cliente y contratista, y dentro de la contratista entre directivos e ingenieros, que hizo que la primera propuesta (lanzar) se adoptara como la de Anderson y Kilduff; y la ausencia del aliado único que, según Asch, habría bastado para que otros hablaran. Nada de eso requiere un síndrome; requiere lo que este apunte describe.</p>
+<p>Chile tiene su eco. El 5 de agosto de 2010, un derrumbe atrapó a 33 mineros en la mina San José, en Copiapó. La investigación periodística de CIPER (Villarrubia, 2011) recoge que la mina acumulaba accidentes graves, que los trabajadores que se quejaban a los jefes de turno eran objeto de burlas, lo que desalentaba nuevas quejas, que una paramédico advirtió a la mutualidad que vendrían más accidentes, y que la mañana del derrumbe los trabajadores quisieron salir a las diez y el jefe de turno les dijo que esperaran hasta la una. Las responsabilidades legales exceden este apunte y hay hechos que no pude verificar en fuentes oficiales [DATO POR VERIFICAR: autorización de reapertura y cumplimiento de las medidas ordenadas por Sernageomin]; lo que importa aquí es la forma: normas de silencio, sanción social del que reclama, y una jerarquía donde la última palabra la tiene quien no corre el riesgo. En un país donde entre el 8% y el 19% de las personas dice que se puede confiar en los demás (ver apunte 23), callar frente a quien tiene estatus es la opción de menor costo individual, y la influencia normativa necesita menos presión para operar. Esto último es una interpretación mía; no hay estudios chilenos con el paradigma de Asch ni sobre jerarquía en equipos en los informes revisados para este tema.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> cualquiera se vuelve un guardia abusivo si le dan el rol: lo demostró Zimbardo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los guardias de Stanford recibieron instrucciones de ser duros, la mayoría no fue cruel y el abuso se concentró en un turno y en una persona (Le Texier, 2019); sin instrucciones, los guardias del estudio de la BBC no se volvieron tiranos (Reicher &amp; Haslam, 2006). La conducta extrema aparece cuando la gente se identifica con un grupo y un líder define la crueldad como servicio a una causa (Haslam, Reicher &amp; Van Bavel, 2019).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> la historia exculpa ("fue la situación") y se filmó; el propio texto guía cita la crítica en una nota y la ignora en el cuerpo.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> somos ovejas: Asch demostró que la mayoría de la gente se conforma.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el 63% de las respuestas fue independiente, un cuarto de los participantes nunca cedió, el 95% resistió al menos una vez y un solo aliado baja la conformidad a cerca del 5 a 10% (Asch, 1956; Robbins &amp; Judge, 2017, p. 286). El efecto es real y vigente (33% en 2021; Franzen &amp; Mader, 2023), pero la respuesta modal fue resistir, y los manuales borraron esa mitad (Griggs, 2015).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> "la gente se conforma" es más memorable que "un tercio de las respuestas, dos tercios de las personas alguna vez, y basta un aliado", y Asch mismo pasó a la historia por el titular equivocado.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el efecto Hawthorne demostró que prestar atención a la gente aumenta su productividad.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> los datos originales de iluminación, analizados por primera vez en 2011, no muestran el patrón que cuentan los manuales; "las descripciones existentes de patrones de datos supuestamente notables resultan ser enteramente ficticias" y solo hay señales sutiles de un posible efecto de la atención (Levitt &amp; List, 2011). Lo que sí mostró Hawthorne es que las normas del grupo controlan la producción (Robbins &amp; Judge, 2017, p. 287).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> el relato se repitió durante ochenta años sin que nadie volviera a los datos, que se creían destruidos.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> una jerarquía clara ordena al equipo y mejora su desempeño.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> en 54 estudios con 13,914 equipos, la jerarquía se asocia con peor desempeño (ρ = −.08) y menor viabilidad (ρ = −.11), mediado por conflicto; la vía de coordinación no se confirmó y solo con tareas ambiguas la jerarquía ayuda (Greer et al., 2018). Además, el estatus se concede al dominante y al sobreconfiado, no al competente (Anderson &amp; Willer, 2014; Cheng &amp; Tracy, 2014).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> quien está arriba de la jerarquía es quien cuenta la historia, y la jerarquía sí reduce el ruido visible (menos discusión), que se confunde con eficacia.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, separar las dos influencias antes de intervenir. Si el equipo se equivoca porque no sabe, el remedio es información y diversidad de fuentes. Si se equivoca porque nadie quiere ser el primero en discrepar, el remedio es estructural: juicios por escrito y anónimos antes de discutir, ronda en que habla primero el de menor estatus, y una norma explícita que premie decir lo que uno ve. SUIT, que viste en el taller, es exactamente eso.</p>
+<p>Segundo, fabricar el aliado. Un solo disidente baja la conformidad de un tercio a casi nada. Si en una reunión importante nadie va a contradecir al jefe, pedirle a alguien de antemano que presente la evidencia en contra no es teatro: es la condición que Asch identificó. Y conviene que sea una persona del "nosotros", porque la influencia de un extraño pesa menos.</p>
+<p>Tercero, desconfiar de la primera propuesta y de quien la hace. El 94% de los equipos adopta la primera propuesta, y la hace tres veces más a menudo el de mayor estatus, que suele ser el más dominante y seguro, no el más competente. La regla práctica es que el líder habla último, y que las opciones se generan por escrito antes de que nadie las defienda en voz alta.</p>
+<p>Cuarto, aplanar lo que se pueda y declarar lo que no. La jerarquía no mejora el desempeño en promedio y lo daña más en equipos de habilidades diferenciadas. Donde la tarea es ambigua o es una emergencia, una jerarquía clara ayuda, y conviene decirlo: "aquí decide X por esta razón". Donde no, la diferenciación de estatus es un costo sin retorno.</p>
+<p>Quinto, mirar quién calla y por qué. Las diferencias grandes de estatus se asocian con peor salud y más intención de irse entre los de abajo. Cuando el de menor rango deja de hablar en las reuniones, el equipo no ganó orden; perdió información y probablemente perderá a la persona.</p>
+<p>Sexto, no usar Stanford ni Hawthorne como evidencia. Si alguien los cita en una capacitación para justificar que "la situación lo explica todo" o que "basta prestar atención", pedir los datos.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Distinguir influencia informativa de influencia normativa (Deutsch &amp; Gerard, 1955), ubicar a Sherif y a Asch en cada una, y proponer un remedio distinto para cada tipo.</li><li>Reportar los resultados de Asch con las cuatro cifras (37%, 75%, 63%, 95%), el efecto del aliado único y el techo de la mayoría, y explicar por qué la lectura "somos ovejas" es incorrecta (Griggs, 2015).</li><li>Resumir Bond y Smith (1996) y Franzen y Mader (2023), y explicar qué agrega la relectura desde la identidad social (Spears, 2021).</li><li>Explicar qué muestran los archivos de Stanford (Le Texier, 2019), qué mostró el estudio de la BBC y qué es el liderazgo de identidad, y formular la conclusión pedagógica sobre roles.</li><li>Describir el meta-análisis de Greer et al. (2018) con diseño, k, N, ρ, mediador y moderadores, traducir la magnitud a lenguaje llano y señalar dos limitaciones.</li><li>Explicar las tres fuentes del estatus, la distinción dominancia-prestigio y por qué el estatus se concede al dominante y al sobreconfiado, con los datos de Anderson y Kilduff (2009).</li><li>Analizar un caso de silencio organizacional (Challenger, San José, GM Cobalt) con la caja de herramientas: norma descriptiva y prescriptiva, influencia informativa y normativa, estatus, jerarquía, aliado único.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Anderson, C., &amp; Brown, C. E. (2010). The functions and dysfunctions of hierarchy. <em>Research in Organizational Behavior, 30</em>, 55–89. <a href="https://doi.org/10.1016/j.riob.2010.08.002">https://doi.org/10.1016/j.riob.2010.08.002</a></p>
+<p>Anderson, C., &amp; Kilduff, G. J. (2009). Why do dominant personalities attain influence in face-to-face groups? The competence-signaling effects of trait dominance. <em>Journal of Personality and Social Psychology, 96</em>(2), 491–503. <a href="https://doi.org/10.1037/a0014201">https://doi.org/10.1037/a0014201</a></p>
+<p>Anderson, C., &amp; Willer, R. (2014). Do status hierarchies benefit groups? A bounded functionalist account of status. En J. T. Cheng, J. L. Tracy, &amp; C. Anderson (Eds.), <em>The psychology of social status</em> (pp. 47–70). Springer. <a href="https://doi.org/10.1007/978-1-4939-0867-7_3">https://doi.org/10.1007/978-1-4939-0867-7_3</a></p>
+<p>Asch, S. E. (1956). Studies of independence and conformity: I. A minority of one against a unanimous majority. <em>Psychological Monographs: General and Applied, 70</em>(9), 1–70. <a href="https://doi.org/10.1037/h0093718">https://doi.org/10.1037/h0093718</a></p>
+<p>Bond, R., &amp; Smith, P. B. (1996). Culture and conformity: A meta-analysis of studies using Asch's (1952b, 1956) line judgment task. <em>Psychological Bulletin, 119</em>(1), 111–137. <a href="https://doi.org/10.1037/0033-2909.119.1.111">https://doi.org/10.1037/0033-2909.119.1.111</a></p>
+<p>Cheng, J. T., &amp; Tracy, J. L. (2014). Toward a unified science of hierarchy: Dominance and prestige are two fundamental pathways to human social rank. En J. T. Cheng, J. L. Tracy, &amp; C. Anderson (Eds.), <em>The psychology of social status</em> (pp. 3–27). Springer. <a href="https://doi.org/10.1007/978-1-4939-0867-7_1">https://doi.org/10.1007/978-1-4939-0867-7_1</a></p>
+<p>Christie, A. M., &amp; Barling, J. (2010). Beyond status: Relating status inequality to performance and health in teams. <em>Journal of Applied Psychology, 95</em>(5), 920–934. <a href="https://doi.org/10.1037/a0019856">https://doi.org/10.1037/a0019856</a></p>
+<p>Cialdini, R. B., &amp; Goldstein, N. J. (2004). Social influence: Compliance and conformity. <em>Annual Review of Psychology, 55</em>, 591–621. <a href="https://doi.org/10.1146/annurev.psych.55.090902.142015">https://doi.org/10.1146/annurev.psych.55.090902.142015</a></p>
+<p>Deutsch, M., &amp; Gerard, H. B. (1955). A study of normative and informational social influences upon individual judgment. <em>Journal of Abnormal and Social Psychology, 51</em>(3), 629–636. <a href="https://doi.org/10.1037/h0046408">https://doi.org/10.1037/h0046408</a></p>
+<p>Esser, J. K., &amp; Lindoerfer, J. S. (1989). Groupthink and the space shuttle Challenger accident: Toward a quantitative case analysis. <em>Journal of Behavioral Decision Making, 2</em>(3), 167–177. <a href="https://doi.org/10.1002/bdm.3960020304">https://doi.org/10.1002/bdm.3960020304</a></p>
+<p>Franzen, A., &amp; Mader, S. (2023). The power of social influence: A replication and extension of the Asch experiment. <em>PLOS ONE, 18</em>(11), e0294325. <a href="https://doi.org/10.1371/journal.pone.0294325">https://doi.org/10.1371/journal.pone.0294325</a></p>
+<p>Greer, L. L., de Jong, B. A., Schouten, M. E., &amp; Dannals, J. E. (2018). Why and when hierarchy impacts team effectiveness: A meta-analytic integration. <em>Journal of Applied Psychology, 103</em>(6), 591–613. <a href="https://doi.org/10.1037/apl0000291">https://doi.org/10.1037/apl0000291</a></p>
+<p>Griggs, R. A. (2015). The disappearance of independence in textbook coverage of Asch's social pressure experiments. <em>Teaching of Psychology, 42</em>(2), 137–142. <a href="https://doi.org/10.1177/0098628315569939">https://doi.org/10.1177/0098628315569939</a></p>
+<p>Haslam, S. A., &amp; Reicher, S. D. (2012). Contesting the "nature" of conformity: What Milgram and Zimbardo's studies really show. <em>PLoS Biology, 10</em>(11), e1001426. <a href="https://doi.org/10.1371/journal.pbio.1001426">https://doi.org/10.1371/journal.pbio.1001426</a></p>
+<p>Haslam, S. A., Reicher, S. D., &amp; Van Bavel, J. J. (2019). Rethinking the nature of cruelty: The role of identity leadership in the Stanford Prison Experiment. <em>American Psychologist, 74</em>(7), 809–822. <a href="https://doi.org/10.1037/amp0000443">https://doi.org/10.1037/amp0000443</a></p>
+<p>Le Texier, T. (2019). Debunking the Stanford Prison Experiment. <em>American Psychologist, 74</em>(7), 823–839. <a href="https://doi.org/10.1037/amp0000401">https://doi.org/10.1037/amp0000401</a></p>
+<p>Levitt, S. D., &amp; List, J. A. (2011). Was there really a Hawthorne effect at the Hawthorne plant? An analysis of the original illumination experiments. <em>American Economic Journal: Applied Economics, 3</em>(1), 224–238. <a href="https://doi.org/10.1257/app.3.1.224">https://doi.org/10.1257/app.3.1.224</a></p>
+<p>Nemeth, C. J. (2012). Minority influence theory. En P. A. M. Van Lange, A. W. Kruglanski, &amp; E. T. Higgins (Eds.), <em>Handbook of theories of social psychology</em> (Vol. 2, pp. 362–378). SAGE.</p>
+<p>Reicher, S. D., &amp; Haslam, S. A. (2006). Rethinking the psychology of tyranny: The BBC prison study. <em>British Journal of Social Psychology, 45</em>(1), 1–40. <a href="https://doi.org/10.1348/014466605X48998">https://doi.org/10.1348/014466605X48998</a></p>
+<p>Reicher, S. D., Haslam, S. A., &amp; Smith, J. R. (2012). Working toward the experimenter: Reconceptualizing obedience within the Milgram paradigm as identification-based followership. <em>Perspectives on Psychological Science, 7</em>(4), 315–324. <a href="https://doi.org/10.1177/1745691612448482">https://doi.org/10.1177/1745691612448482</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Sánchez, J. C. (2014). <em>Psicología de los grupos: Teorías, procesos y aplicaciones</em>. McGraw-Hill Interamericana de España.</p>
+<p>Spears, R. (2021). Social influence and group identity. <em>Annual Review of Psychology, 72</em>, 367–390. <a href="https://doi.org/10.1146/annurev-psych-070620-111818">https://doi.org/10.1146/annurev-psych-070620-111818</a></p>
+<p>Villarrubia, G. (2011, 16 de julio). Se salvan 33, mueren 45: siniestro balance de los accidentes de la minería chilena en 2010. <em>CIPER Chile</em>. https://www.ciperchile.cl/2011/07/16/se-salvan-33-mueren-41-el-siniestro-balance-de-los-accidentes-de-la-mineria-chilena-en-2010</p>
+<h3>Para profundizar</h3>
+<p>Le Texier (2019): diecisiete páginas con los archivos de Stanford sobre la mesa; después de leerlo no se puede volver a contar el experimento como lo cuenta el texto guía.</p>
+<p>Greer et al. (2018): el meta-análisis de jerarquía y eficacia; léelo por la discusión de moderadores, que es donde está la respuesta a "depende de qué".</p>
+<p>Franzen y Mader (2023): la réplica de Asch de acceso abierto, con el diseño preinscrito y la extensión a opiniones políticas; corto y legible.</p>
+<p>&lt;!-- NOTAS DE PRODUCCIÓN (revisión 15-11-2026: se quitaron las líneas de encabezado 'Complementa y corrige' y 'lectura previa'; se agregaron 2 figuras SVG (Asch; Greer); retoques de prosa en la sección A; 'metaanálisis' unificado como 'meta-análisis'): Palabras del cuerpo (secciones A a G, sin encabezado ni referencias): aproximadamente 5152 sin la tabla del estudio destacado (5383 con ella). Referencias totales: 24 (más 3 lecturas comentadas en "Para profundizar", todas ya listadas). Referencias [POR VERIFICAR]: 0 con marca visible. Notas de verificación: todas las revistas verificadas en Crossref en esta sesión (Anderson &amp; Kilduff, Asch 1956, Christie &amp; Barling, Deutsch &amp; Gerard, Esser &amp; Lindoerfer, Greer et al., Griggs, Le Texier, Levitt &amp; List, Reicher &amp; Haslam 2006, Dannals-relacionadas) o marcadas VERIFICADA en el informe E (Bond &amp; Smith, Franzen &amp; Mader, Cialdini &amp; Goldstein, Haslam &amp; Reicher 2012, Haslam et al. 2019, Reicher et al. 2012, Anderson &amp; Brown). Capítulos del libro de Cheng, Tracy y Anderson (2014): páginas tomadas del PDF (informe A); los DOI de capítulo (_1 y _3) se derivan del DOI del libro 10.1007/978-1-4939-0867-7 que consta en el PDF y NO se verificaron individualmente: si se publica antes de confirmarlos, eliminar el DOI de capítulo y dejar solo el del libro. Nemeth (2012): páginas 362-378 y año tomados del PDF del handbook (SAGE, "First published 2012"); sin DOI de capítulo verificado. Sánchez (2014): año según pie de imprenta del PDF. Villarrubia (2011): título, autor y fecha verificados en la página de CIPER; nótese que la URL dice "mueren-41" y el título visible dice "mueren 45". Las citas de Bales et al. (1951), Buzaglo y Wheelan (1999), Judge et al. (2002), Lord et al. (1986) y Anderson et al. (2012) van solo como "citados en" Anderson &amp; Willer (2014) o Cheng &amp; Tracy (2014), sin entrada propia. Las k y N por relación específica de Greer et al. (2018) no constan en los informes: la tabla lo declara. La afirmación sobre el techo de la mayoría en tres o cuatro cómplices se apoya en Bond &amp; Smith (1996) según el informe E y en Sánchez (2014) para Asch. Datos chilenos: confianza interpersonal 8-19% (remite al apunte 23, verificado en F). Caso San José: hechos tomados de CIPER (Villarrubia, 2011), fuente periodística verificada por web en esta sesión; marcado en el texto [DATO POR VERIFICAR] para autorización de reapertura y cumplimiento de medidas de Sernageomin. La lectura de la baja confianza como amplificador de la influencia normativa está declarada explícitamente como interpretación del autor, sin estudio chileno que la respalde. Hechos del Challenger: tomados del deck del coordinador (informe G, 3.2); se evitó la cifra de temperatura del deck por no estar verificada. Cross-referencias: apuntes 23 y 27 (Tema 6), taller (Bendersky &amp; Hays, SUIT, diferenciación de autoridad). --&gt;</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

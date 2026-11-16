@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cuándo conviene un equipo? Tipos de equipos, equipos virtuales e híbridos, e inteligencia artificial en el equipo · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 29</p>
+  <h1>¿Cuándo conviene un equipo? Tipos de equipos, equipos virtuales e híbridos, e inteligencia artificial en el equipo</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 29 · Clase 23 (miércoles 25-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Robbins y Judge abren el capítulo 10 con una cita de Forbes: un equipo comprometido "siempre superará a un individuo brillante". Matizan ("hasta cierto punto, tiene razón") y, veinte páginas después, advierten que "los equipos no siempre son la respuesta" (pp. 331-332). Primero el entusiasmo, al final la letra chica. Este apunte invierte el orden: parte de la pregunta previa (¿esta tarea necesita un equipo?), revisa cuánto rinden los equipos frente a los individuos, y recién después describe los cinco tipos del texto guía.</p>
+<p>Hay una segunda razón. La 17.ª edición es de 2017. Desde entonces, la pandemia convirtió a casi todos los equipos en virtuales o híbridos y dejó una ola de experimentos de campo con muestras enormes, y la inteligencia artificial generativa se sentó en la mesa como un integrante más. Sobre lo primero el texto guía tiene una página pre-pandemia; sobre lo segundo, nada.</p>
+<p>Si estás en el Taller de Liderazgo y Trabajo en Equipo, ya viste la virtualidad como contingencia estructural del modelo de Mathieu et al. (2019) y leíste a Edmondson y Daley (2020) sobre reuniones virtuales. Lo que agrega este apunte es la pregunta previa (¿equipo o individuo?), los meta-análisis que comparan equipos virtuales y presenciales, los experimentos de campo posteriores a 2020 y la evidencia sobre inteligencia artificial en el equipo. El apunte 30 sigue con cómo desarrollar equipos con evidencia.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>La creencia de que los equipos superan a los individuos es más fuerte que la evidencia que la respalda. Allen y Hecht (2004) la llamaron el "romance de los equipos": la evidencia de superioridad es "modesta, en el mejor de los casos", y los equipos persisten porque satisfacen necesidades psicológicas, no porque rindan más. Hackman (1998) estimó que, de 33 equipos que estudió, solo unos cuatro eran eficaces, y señaló seis errores de gestión que lo explican. Los equipos sí rinden cuando la tarea es compleja e interdependiente, y sus efectos pueden tardar años en aparecer. Usarlos donde no corresponde es "resolver a la perfección el problema equivocado".</p>
+<p>Sobre virtualidad, el meta-análisis más reciente muestra que en equipos organizacionales la virtualidad casi no afecta el desempeño; los efectos negativos vienen de laboratorios con estudiantes. Los experimentos de campo posteriores a 2020 afinan el cuadro: el híbrido redujo las renuncias un tercio sin tocar el desempeño, el remoto total puso a los equipos en silos, y la videollamada produce entre 15% y 20% menos ideas, aunque selecciona igual o mejor. La pregunta ya no es "¿virtual o presencial?" sino "¿qué tarea en qué modalidad?".</p>
+<p>Sobre inteligencia artificial, en 106 experimentos la combinación humano + IA superó al humano solo pero no al mejor de los dos por separado, salvo en tareas de creación. Y en Procter &amp; Gamble, un individuo con IA rindió en calidad promedio como un equipo de dos sin IA, mientras que el equipo con IA produjo más soluciones excepcionales. La IA no reemplaza al equipo; cambia para qué sirve uno. En Chile, el 6.9% de las personas trabajaba remoto en 2023 y el 1.1% de las empresas usaba inteligencia artificial: la discusión llega antes que la práctica.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Grupo, equipo y pseudoequipo: la pregunta que va antes</h3>
+<p>Robbins y Judge (2017) distinguen el <strong>grupo de trabajo</strong> ("aquel que interactúa básicamente para compartir información y tomar decisiones que ayuden a cada uno de sus miembros a desempeñarse en su área de responsabilidad", p. 313) del <strong>equipo de trabajo</strong> ("grupo donde los esfuerzos individuales dan como resultado un desempeño que es mayor que la suma de las aportaciones de cada individuo", p. 314), y advierten que "llamar equipo a un grupo tampoco mejora en forma automática su desempeño" (p. 314). El apunte 23 desarrolló esa distinción, y el apunte 31 trae el mapa completo de los modelos. Aquí importa la consecuencia: si el desempeño conjunto no puede superar a la suma de las partes, no hay equipo que armar.</p>
+<p>Para decidirlo, Robbins y Judge proponen <strong>tres pruebas</strong> (p. 332). Primera: ¿el trabajo resulta mejor si lo realiza más de una persona? El indicador es la complejidad de la tarea y la necesidad de puntos de vista distintos. Segunda: ¿el trabajo crea un propósito común que sea más que la suma de las metas individuales? Tercera: ¿los miembros son interdependientes? Su ejemplo es el deporte: el fútbol es un deporte de equipo porque exige coordinación entre jugadores interdependientes; un equipo de natación, salvo en relevos, es un grupo de atletas cuyo rendimiento total es la suma de los individuales. Detrás hay un costo: el trabajo en equipo "requiere más tiempo y con frecuencia más recursos", y los beneficios deben superarlos, lo que "no siempre ocurre" (p. 331).</p>
+<figure class="figura">
+<svg viewBox="0 0 680 250" role="img" aria-label="Las tres pruebas para decidir si corresponde un equipo" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <defs><marker id="t3a" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#475569"/></marker></defs>
+  <g font-size="11" fill="#1F2937" text-anchor="middle">
+    <rect x="20" y="30" width="190" height="70" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="115" y="54" font-weight="700">1. ¿Sale mejor con más</text><text x="115" y="70" font-weight="700">de una persona?</text><text x="115" y="90" fill="#6B7280">complejidad, puntos de vista</text>
+    <rect x="245" y="30" width="190" height="70" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="340" y="54" font-weight="700">2. ¿Hay un propósito común</text><text x="340" y="70" font-weight="700">mayor que la suma?</text><text x="340" y="90" fill="#6B7280">no solo metas individuales</text>
+    <rect x="470" y="30" width="190" height="70" rx="6" fill="#F3F4F6" stroke="#E5E7EB"/>
+    <text x="565" y="54" font-weight="700">3. ¿Son interdependientes?</text><text x="565" y="70" font-weight="700">(fútbol sí, natación no)</text><text x="565" y="90" fill="#6B7280">mi resultado depende del tuyo</text>
+  </g>
+  <line x1="115" y1="105" x2="115" y2="140" stroke="#475569" stroke-width="2" marker-end="url(#t3a)"/>
+  <line x1="340" y1="105" x2="340" y2="140" stroke="#475569" stroke-width="2" marker-end="url(#t3a)"/>
+  <line x1="565" y1="105" x2="565" y2="140" stroke="#475569" stroke-width="2" marker-end="url(#t3a)"/>
+  <rect x="20" y="145" width="300" height="60" rx="6" fill="#FDF2F3" stroke="#C8102E"/>
+  <text x="170" y="170" text-anchor="middle" font-size="12" font-weight="700" fill="#C8102E">Tres síes: equipo real</text>
+  <text x="170" y="190" text-anchor="middle" font-size="9.5" fill="#1F2937">y entonces: límites, estabilidad, autoridad, diseño (apunte 31)</text>
+  <rect x="360" y="145" width="300" height="60" rx="6" fill="#F3F4F6" stroke="#475569"/>
+  <text x="510" y="170" text-anchor="middle" font-size="12" font-weight="700" fill="#475569">Algún no: grupo de trabajo o individuo</text>
+  <text x="510" y="190" text-anchor="middle" font-size="9.5" fill="#1F2937">metas individuales claras, coordinación ligera, sin "cohesión"</text>
+  <text x="340" y="235" text-anchor="middle" font-size="10.5" fill="#6B7280">"Crear equipos donde los individuos pueden hacer mejor el trabajo es resolver a la perfección el problema equivocado" (R&amp;J, p. 319).</text>
+</svg>
+<figcaption>Figura 1. Las tres pruebas de Robbins y Judge (2017, p. 332) como árbol de decisión. Elaboración propia.</figcaption>
+</figure>
+<p>Hackman y Wageman (2009) convierten la misma idea en la primera función del liderazgo de equipos: decidir si corresponde un equipo. Las tareas que requieren pericia individual especializada o "composición creativa" no lo necesitan: escribir un informe lo hace mejor una persona que un comité. Y describen como "una suposición común pero errónea" la idea de que los equipos producen invariablemente productos de mayor calidad. Benishek y Lazzara (2019) recogen la distinción de Hackman (2002) entre <strong>equipo real</strong> y <strong>pseudoequipo</strong>: un equipo real tiene fronteras claras (se sabe quién está), interdependencia en la tarea, estabilidad moderada y autoridad para gestionar su trabajo. Muchos "equipos" organizacionales son listas de personas que reportan al mismo jefe; si tu grupo del curso no depende de nadie para su parte, es un grupo, y no le pidas sinergia.</p>
+<h3>Cinco tipos de equipos, y lo que ya no cabe en cinco</h3>
+<p>Robbins y Judge (2017, pp. 314-318) describen cinco tipos. Los <strong>equipos para resolver problemas</strong> son "grupos de cinco a 12 empleados del mismo departamento que se reúnen durante unas horas por semana" para mejorar calidad, eficiencia y ambiente (p. 315); recomiendan, rara vez implementan. Los <strong>equipos de trabajo autodirigidos</strong> son "grupos de 10 a 15 individuos que asumen las responsabilidades de sus supervisores" (p. 315); la evidencia "no es uniformemente positiva": en un estudio británico a gran escala, los equipos elevaron la productividad, pero los autodirigidos no superaron a los supervisados de cerca (DeVaro, 2008), y en 45 equipos autodirigidos lo que mejoró el desempeño fue el control ejercido por los propios compañeros mediante recompensas evaluadas por pares (Stewart et al., 2012). Los <strong>equipos transfuncionales</strong> reúnen a "empleados de un nivel jerárquico similar, pero de áreas de trabajo distintas" (p. 316); su problema es la ambigüedad de poder: en ellos la influencia cambia de manos según la fase del trabajo, y eso ayuda solo cuando los miembros lo perciben como legítimo (Aime et al., 2014). Los <strong>equipos virtuales</strong> "usan tecnología de cómputo para reunir a miembros dispersos físicamente" (p. 317). Los <strong>sistemas de equipos múltiples</strong> son "un conjunto de dos o más equipos interdependientes que comparten una meta superior; un equipo de equipos" (p. 317). No son un equipo grande: cada equipo componente tiene metas propias y una meta superordinada común, y la interdependencia es mayor dentro de cada equipo que entre ellos (Mathieu, Luciano, &amp; DeChurch, 2018). Lo que los hace funcionar es la coordinación entre equipos: los miembros que cruzan fronteras (Davison et al., 2012) y el liderazgo externo que empodera a varios equipos a la vez (Luciano et al., 2014). El rescate de la mina San José, caso del apunte 30, es un sistema multiequipo de libro.</p>
+<p>La tipología deja afuera dos realidades que DeChurch et al. (2018) describen como el paso "de equipos en organizaciones a organizar en equipos". La primera es la <strong>membresía múltiple</strong>: Benishek y Lazzara (2019) recogen estimaciones de que entre el 81% y el 94.9% de quienes trabajan en equipos pertenece a más de uno a la vez, y de que hasta el 84% de los equipos cambia de miembros durante su vida. La segunda son formas de colaboración que rompen los supuestos de tamaño, meta común e interdependencia: la colaboración ATLAS del CERN (más de 3.000 científicos de 174 instituciones), GitHub, Wikipedia. Si los equipos "reales" escasean, la pregunta de cuándo conviene uno importa más.</p>
+<p>El Punto/Contrapunto de R&amp;J (p. 333) discute si conviene "conceder facultades" (empowerment). El Punto sostiene que los equipos empoderados rinden mejor; el Contrapunto, que muchos reciben "facultades" solo porque se eliminaron niveles gerenciales, y que la autoridad distribuida borra roles y crea silos. Kirkman y Smith (2026) ordenan el debate: el empoderamiento tiene una cara estructural (autoridad real) y una psicológica (la experiencia compartida de autonomía, competencia, significado e impacto), se asocia con la resiliencia del equipo, y la segunda rinde cuando viene con la primera. Pedir "más responsabilidades sin el correspondiente incremento de los beneficios tangibles" es empoderamiento psicológico sin el estructural.</p>
+<h3>Virtualidad: un continuo, no una categoría</h3>
+<p>El error más común es tratar la virtualidad como categoría: un equipo es virtual o no lo es. Mak y Kozlowski (2019) muestran que es un continuo con varias dimensiones: dependencia de tecnología para comunicarse, riqueza de la información que esa tecnología transmite (texto, voz, video), sincronía (en tiempo real o diferida) y dispersión geográfica (cuántos sitios, cuán aislados, cuán desbalanceados). Un equipo que se reúne cada semana en la misma sala pero coordina el resto por mensajería es parcialmente virtual; uno en tres ciudades con videollamadas diarias es virtual en dispersión y poco en sincronía. La mayoría de los estudios no mide eso: contrasta "virtual" con "cara a cara" como dos cajas.</p>
+<p>Handke, Costa y Feitosa (2025) proponen medir la <strong>virtualidad percibida</strong>: cuánta distancia y cuánto déficit de información experimenta el equipo. Su escala de diez ítems, validada en 2.294 equipos, muestra que ambas dimensiones se asocian negativamente con la calidad de la interacción y el desempeño evaluados por el líder (correlaciones entre -.33 y -.40 en 400 equipos). La virtualidad que importa no es el porcentaje de reuniones por Zoom sino la que el equipo vive. El <strong>equipo híbrido</strong>, el formato dominante desde 2022, es un caso particular: miembros presenciales y remotos en configuraciones que cambian de un día a otro, con el riesgo de que la ubicación se convierta en una falla de línea (apunte 14) entre "los de la oficina" y "los de la casa".</p>
+<h3>La IA como integrante del equipo</h3>
+<p>El término <strong>equipos humano-autonomía</strong> (human-autonomy teaming) o <strong>equipos humano-agente</strong> designa equipos en que al menos un integrante es un sistema artificial con algún grado de autonomía. O'Neill et al. (2022) revisaron la literatura empírica: casi toda es de laboratorio, con agentes de automatización y no con modelos de lenguaje; los temas dominantes son la confianza en el agente, los modelos mentales compartidos y la comunicación; falta evidencia en equipos reales. Wildman et al. (2024) agregan que casi todo lo estudiado son díadas (un humano, un agente) y que la confianza en estos equipos es multirreferente, multinivel, dinámica y basada en eventos: se construye y se rompe con lo que el agente hace, igual que entre personas. Chen y Kanfer (2024) suman la pregunta motivacional: qué pasa con la eficacia colectiva cuando un integrante no se cansa, no se ofende y no tiene metas propias.</p>
+<p>La IA generativa movió la discusión de los laboratorios a las empresas, y ahí la evidencia es nueva y de buena calidad (sección D). Antes, una aclaración: la política de inteligencia artificial de este curso es de Nivel 1, es decir, el uso de IA no está autorizado en las evaluaciones. Lo que sigue describe cómo cambia el trabajo de los equipos cuando incorporan IA; no autoriza su uso en pruebas ni trabajos, por la razón del apunte 19: la respuesta asistida destruye la validez de lo que se quería medir.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>El romance de los equipos</h3>
+<p>Allen y Hecht (2004) contrastaron la evidencia sobre eficacia de los equipos con el entusiasmo con que las organizaciones los adoptan. Su conclusión, citada por Williams y Allen (2008): "la evidencia sobre la eficacia de los equipos debe describirse como modesta, en el mejor de los casos". Ese desajuste es el romance de los equipos, y su explicación es psicológica: los equipos satisfacen la necesidad de pertenencia y reducen la responsabilidad individual, con independencia de que rindan más. Dipboye (2018) agrega dos problemas de la literatura que sostiene el romance: pocos estudios comparan equipos con un grupo de control sin equipos, y muchos miden eficacia con autoinformes de los propios miembros.</p>
+<p>Hackman (1998) describe la paradoja desde adentro. De 33 equipos que estudió, estimó que solo unos cuatro cumplían con los tres criterios de eficacia: producto aceptable, capacidad creciente de trabajar juntos, aprendizaje de los miembros. Recuerda que, en tareas de ideas, los grupos nominales (personas que trabajan solas y luego juntan sus productos) suelen superar a los que interactúan (apunte 28). Y enumera seis errores de gestión: usar un equipo para trabajo que debería ser individual; llamar equipo a la unidad pero gestionar a los miembros como individuos; manejar mal la autoridad (todo o nada); desmontar las estructuras creyendo que un equipo "libre" rinde más; fijar metas ambiciosas sin apoyo organizacional; y suponer que las personas ya saben trabajar en equipo. Hackman (2002) convirtió ese diagnóstico en las condiciones habilitantes que el taller usa y el apunte 30 retoma.</p>
+<p>El romance sobrevive a sus fracasos por una razón más. Naquin y Tynan (2003), citados por Robbins y Judge (p. 331), mostraron en cuatro estudios que cuando un equipo falla, las personas culpan menos al equipo que a un individuo que fallara igual: el <strong>efecto halo del equipo</strong>. Los equipos reciben el crédito de los éxitos y esquivan la culpa de los fracasos, lo que vuelve muy difícil aprender de ellos.</p>
+<h3>Cuando sí rinden</h3>
+<p>Que la evidencia sea modesta no significa que sea nula. Delarue et al. (2008) revisaron las encuestas a empresas: el trabajo en equipo se asocia con mejores resultados operacionales, financieros y de actitudes, con diseños que rara vez permiten hablar de causalidad y efectos que dependen de que venga con autonomía, capacitación y recompensas. Hamilton, Nickerson y Owan (2003) estudiaron una planta de confección que pasó de pago individual a destajo a equipos con pago grupal: la productividad subió 14% en promedio, y los trabajadores de mayor productividad fueron los primeros en sumarse a los equipos aunque en muchos casos perdían ingresos, lo que sugiere que el equipo ofrecía algo más que dinero. Birdi et al. (2008) siguieron a 308 empresas manufactureras británicas durante 22 años: de siete prácticas, solo tres se asociaron con la productividad (empoderamiento, capacitación extensiva y trabajo en equipo), y el efecto del trabajo en equipo no apareció de inmediato sino años después. Esa demora es un dato: una empresa que evalúe sus equipos al año siguiente concluirá que no sirvieron.</p>
+<h3>Equipos virtuales: los meta-análisis anteriores y el más reciente</h3>
+<p>La investigación anterior a la pandemia tendía a concluir que la virtualidad perjudica. Ortiz de Guinea, Webster y Staples (2012) encontraron que a mayor virtualidad hay más conflicto de tarea, menos comunicación y menor desempeño y satisfacción, sobre todo en equipos de corta duración. Mesmer-Magnus et al. (2011), en 94 estudios, afinaron: los equipos muy virtuales comparten más información única (lo escrito iguala el estatus), pero menos información en total y con menos apertura. Y Breuer, Hüffmeier y Hertel (2016), en 52 estudios con 1.850 equipos, encontraron que la confianza se asocia con el desempeño con ρ = .33 en equipos virtuales frente a .22 en presenciales, y que la asociación es menor cuando las interacciones quedan documentadas (ρ = .20 con documentación frente a .29 sin ella). A distancia, la confianza pesa más, y documentar (actas, decisiones escritas, tableros visibles) sustituye en parte lo que la confianza hace.</p>
+<p>Purvanova y Kenda (2022) revisaron la pregunta con una distinción que cambió el resultado: separaron 73 muestras de equipos organizacionales (5.738 equipos) de 109 muestras de equipos no organizacionales, casi todos de laboratorio con estudiantes (5.620 equipos).</p>
+<table><tr><th>Resultado</th><th>Todos (ρ)</th><th>Organizacionales (ρ)</th><th>Laboratorio (ρ)</th><th>Lectura en lenguaje llano</th></tr><tr><td>Desempeño</td><td>-.04 (n.s.)</td><td>.01 (n.s.)</td><td>-.09</td><td>En equipos reales, la virtualidad no se asocia con el desempeño</td></tr><tr><td>Resultados productivos (calidad, eficiencia)</td><td>-.12</td><td>.07 (n.s.)</td><td>-.16</td><td>El efecto negativo es de laboratorio</td></tr><tr><td>Resultados sociales (cohesión, satisfacción)</td><td>-.15</td><td>-.03 (n.s.)</td><td>-.20</td><td>Ídem</td></tr><tr><td>Resultados individuales</td><td>-.11</td><td>-.04 (n.s.)</td><td>-.17</td><td>Ídem</td></tr></table>
+<p>Elaborado a partir de Purvanova y Kenda (2022). n.s. = no significativo.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 230" role="img" aria-label="Virtualidad y resultados del equipo en organizaciones y en laboratorio" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="340" y="20" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">El efecto negativo de la virtualidad vive en el laboratorio</text>
+  <g font-size="11" fill="#1F2937">
+    <text x="0" y="62">Desempeño</text><text x="0" y="104">Resultados productivos</text><text x="0" y="146">Resultados sociales</text><text x="0" y="188">Resultados individuales</text>
+  </g>
+  <line x1="420" y1="40" x2="420" y2="200" stroke="#1F2937"/>
+  <g>
+    <rect x="330" y="46" width="90" height="10" fill="#C8102E"/><rect x="420" y="58" width="10" height="10" fill="#475569"/>
+    <rect x="260" y="88" width="160" height="10" fill="#C8102E"/><rect x="420" y="100" width="70" height="10" fill="#475569"/>
+    <rect x="220" y="130" width="200" height="10" fill="#C8102E"/><rect x="390" y="142" width="30" height="10" fill="#475569"/>
+    <rect x="250" y="172" width="170" height="10" fill="#C8102E"/><rect x="380" y="184" width="40" height="10" fill="#475569"/>
+  </g>
+  <g font-size="10.5" font-weight="700" fill="#1F2937">
+    <text x="326" y="55" text-anchor="end">lab −.09</text><text x="436" y="67">org .01 n.s.</text>
+    <text x="256" y="97" text-anchor="end">lab −.16</text><text x="496" y="109">org .07 n.s.</text>
+    <text x="216" y="139" text-anchor="end">lab −.20</text><text x="386" y="151" text-anchor="end">org −.03 n.s.</text>
+    <text x="246" y="181" text-anchor="end">lab −.17</text><text x="376" y="193" text-anchor="end">org −.04 n.s.</text>
+  </g>
+  <text x="340" y="222" text-anchor="middle" font-size="10.5" fill="#6B7280">73 muestras organizacionales (5,738 equipos) vs 109 no organizacionales (5,620). Correlaciones corregidas con la virtualidad.</text>
+</svg>
+<figcaption>Figura 2. Virtualidad y eficacia del equipo, por tipo de muestra. Elaborado a partir de Purvanova y Kenda (2022).</figcaption>
+</figure>
+<p>La conclusión de los autores es que la virtualidad "no es un determinante directo" de la eficacia en equipos reales. Los efectos negativos venían de estudiantes que no se conocían, sesiones de 60 minutos y una medida dicotómica. Un equipo real tiene tiempo para construir confianza, normas y documentación; un grupo de laboratorio, no.</p>
+<h3>Los experimentos de campo posteriores a 2020</h3>
+<p>La pandemia produjo lo que esta literatura nunca tuvo: experimentos con decenas de miles de trabajadores reales.</p>
+<p>Bloom, Han y Liang (2024) hicieron un ensayo aleatorizado en Trip.com (Shanghái) con 1.612 empleados: la mitad trabajó dos días por semana desde casa y la otra mitad fue 100% presencial durante seis meses. Las renuncias cayeron un tercio (33%) en el grupo híbrido, con reducciones mayores entre no gerentes, mujeres y personas con trayectos largos. No hubo diferencias en evaluaciones de desempeño ni en promociones durante dos años, ni en líneas de código entre los programadores. Los gerentes partieron escépticos y terminaron a favor. Por ser experimental, aquí sí se puede hablar de causa, con el límite de una empresa, un país y un formato específico.</p>
+<p>Yang et al. (2022) usaron a 61.182 empleados de Microsoft en Estados Unidos durante el primer semestre de 2020, con quienes ya eran remotos antes como comparación. El remoto de toda la empresa volvió la red de colaboración "más estática y en silos": menos puentes entre partes distantes, menos comunicación sincrónica, con riesgo para la transferencia de conocimiento. El costo no aparece dentro de cada equipo sino entre equipos, donde los sistemas multiequipo fallan.</p>
+<p>Brucks y Levav (2022) estudiaron la generación de ideas. En laboratorio, parejas presenciales generaron entre 15% y 20% más ideas que parejas por videollamada; en un experimento de campo con 1.490 ingenieros en cinco países, alrededor de 15% más, y más divergentes. El mecanismo, medido con seguimiento ocular: la pantalla estrecha el foco visual y, con él, el cognitivo. Pero al seleccionar la mejor idea las parejas virtuales fueron iguales o mejores. De ahí la regla: generar ideas y construir lazos, presencial; ejecutar y seleccionar, remoto funciona.</p>
+<p>Dos lecturas de contexto. Edmondson y Daley (2020), asignada por el taller, da herramientas para que las reuniones virtuales no silencien a nadie; el apunte 28 trata la evidencia sobre reuniones virtuales. Y Pavez y Neves (2021), investigador y consultor de Santiago, describen una intervención de un año en el centro financiero regional de GlaxoSmithKline, que pasó a remoto en 2020: cinco preguntas generativas en talleres mensuales (por qué existimos como equipo, qué queremos lograr, cuáles son nuestras prácticas, cómo coordinamos, cómo manejamos los quiebres), con indicadores de confianza, coordinación y rendición de cuentas que pasaron de 3.5 a 4.4 (escala de 1 a 5) en cinco meses. Es un caso ilustrativo, no evidencia de eficacia: una medición antes y después, sin grupo de comparación. Muestra que el contrato de equipo del taller es la herramienta que los consultores usan cuando un equipo se vuelve virtual de golpe.</p>
+<h3>Inteligencia artificial en el equipo</h3>
+<p>Vaccaro, Almaatouq y Malone (2024) reunieron 370 tamaños de efecto de 106 experimentos publicados entre 2020 y 2023 que compararon humanos solos, IA sola y combinaciones. En promedio, la combinación superó al humano solo pero no al mejor de los dos componentes: hubo pérdida de sinergia. El patrón depende de la tarea: en tareas de decisión (clasificar, diagnosticar, detectar), la mayoría de los estudios, la combinación rindió peor que el mejor componente; en tareas de creación de contenido (alrededor del 10%) hubo sinergia positiva. Y depende de quién es mejor: cuando el humano superaba a la IA, la combinación ganaba (clasificar aves: humano 81%, IA 73%, combinación 90%); cuando la IA superaba al humano, la combinación perdía (detectar reseñas falsas: IA 73%, combinación 69%, humano 55%), porque las personas no saben cuándo confiar en la IA.</p>
+<p>Dell'Acqua et al. (2023) hicieron el primer experimento de campo con IA generativa en trabajo profesional real: 758 consultores de Boston Consulting Group resolvieron 18 tareas realistas, con y sin GPT-4, en abril de 2023. Dentro de lo que los autores llaman la <strong>frontera tecnológica</strong> (tareas que la IA hace bien), quienes usaron IA completaron 12.2% más tareas, 25.1% más rápido y con más de 40% de mayor calidad según evaluadores ciegos; los consultores bajo el promedio mejoraron 43% y los sobre el promedio 17%, de modo que la IA comprimió las diferencias. Pero en la tarea diseñada fuera de la frontera (datos que requerían juicio y entrevistas), los usuarios de IA fueron 19 puntos porcentuales menos propensos a acertar: confiaron en una respuesta fluida y equivocada. La frontera es "dentada" (jagged): la IA es excelente en tareas que parecen difíciles y mala en otras que parecen fáciles, y las personas no ven dónde está.</p>
+<p>Dell'Acqua et al. (2025), "The cybernetic teammate", es el estudio que el laboratorio de este tema usará, así que conviene conocerlo en detalle. Es un experimento de campo preregistrado en Procter &amp; Gamble con 776 profesionales de las áreas comercial y de investigación y desarrollo, en talleres de un día de desarrollo de producto para unidades de negocio reales. Cuatro condiciones asignadas al azar: individuo sin IA, individuo con IA (GPT-4 y GPT-4o), equipo de dos sin IA, equipo de dos con IA; cada equipo combinaba un especialista comercial y uno técnico, el formato habitual de la empresa. La calidad de las soluciones fue evaluada por jueces ciegos a la condición. Resultados, en desviaciones estándar respecto de los individuos sin IA: equipos sin IA, +0.24 DE; individuos con IA, +0.37 DE; equipos con IA, +0.39 DE, indistinguibles de los individuos con IA. En lenguaje llano: una persona con IA iguala, en calidad promedio, a un equipo de dos sin IA; sumar la segunda persona al individuo con IA no mejora el promedio. Pero el promedio no es toda la historia: los equipos con IA fueron significativamente más propensos a producir soluciones en el 10% superior de calidad. La IA sustituye al equipo en el centro de la distribución y lo complementa en la cola de las soluciones excepcionales. Tres resultados más. Los usuarios de IA ahorraron entre 12% y 16% del tiempo. Sin IA, los comerciales proponían soluciones comerciales y los técnicos soluciones técnicas; con IA, ambos produjeron soluciones balanceadas, sobre todo los menos experimentados: la IA hizo parte de la integración que justificaba el equipo transfuncional. Y quienes usaron IA reportaron más emociones positivas, lo que sugiere que cumple en parte el papel social de un compañero. Las limitaciones son importantes y el laboratorio las trabajará: equipos de dos (no de cinco), proyectos de un día (no de meses), participantes con poca experiencia en IA, una sola empresa, y ninguna medida de lo que pasa con el aprendizaje de los miembros cuando la IA integra por ellos.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 240" role="img" aria-label="Calidad de las soluciones en las cuatro condiciones del experimento de P&G" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="340" y="20" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">Calidad de las soluciones (jueces ciegos), en desviaciones estándar sobre el individuo sin IA</text>
+  <g font-size="11.5" fill="#1F2937">
+    <text x="0" y="60">Individuo sin IA (base)</text><text x="0" y="98">Equipo de dos sin IA</text><text x="0" y="136">Individuo con IA</text><text x="0" y="174">Equipo de dos con IA</text>
+  </g>
+  <line x1="250" y1="40" x2="250" y2="186" stroke="#E5E7EB"/>
+  <g>
+    <rect x="250" y="48" width="2" height="16" fill="#9CA3AF"/><rect x="250" y="86" width="192" height="16" rx="3" fill="#475569"/><rect x="250" y="124" width="296" height="16" rx="3" fill="#C8102E"/><rect x="250" y="162" width="312" height="16" rx="3" fill="#C8102E"/>
+  </g>
+  <g font-size="11.5" font-weight="700" fill="#1F2937"><text x="258" y="61">0</text><text x="448" y="99">+0.24 DE</text><text x="552" y="137">+0.37 DE</text><text x="568" y="175">+0.39 DE</text></g>
+  <text x="340" y="210" text-anchor="middle" font-size="10.5" fill="#6B7280">776 profesionales, asignación aleatoria, talleres reales de un día. El equipo con IA produjo más soluciones en el 10% superior.</text>
+  <text x="340" y="228" text-anchor="middle" font-size="10.5" fill="#6B7280">Una persona con IA iguala en promedio a un equipo de dos sin IA; el equipo con IA no la supera en promedio, pero sí en la cola.</text>
+</svg>
+<figcaption>Figura 3. El "compañero cibernético". Elaborado a partir de Dell'Acqua et al. (2025).</figcaption>
+</figure>
+<p>Juntando los tres estudios: la IA rinde más donde hay sinergia (crear, redactar, integrar perspectivas) y dentro de la frontera; rinde menos, y daña, en decisiones que requieren juicio sobre datos que la IA no tiene. Un equipo con IA necesita lo que Wildman et al. (2024) piden a un equipo humano-agente: saber cuándo confiar y cuándo verificar, y tratar cada error de la IA como un evento que recalibra esa confianza.</p>
+<h3>Chile: equipos, teletrabajo e inteligencia artificial</h3>
+<p>La Encuesta Laboral (ENCLA) 2023 de la Dirección del Trabajo, aplicada a 4.496 empresas, entrega la foto más reciente. El 96.7% de las empresas implementó teletrabajo "en alguna medida" durante la pandemia, el 65.9% lo mantenía en 2022, y en el segundo semestre de 2023 solo el 15.2% tenía trabajadores remotos; durante 2023, el 6.9% de las personas trabajadoras hacía funciones remotas (8% de las mujeres, 6.3% de los hombres). La automatización se reportó en 11.4% de las empresas según los empleadores y 20.4% según trabajadores y dirigentes, y el uso de inteligencia artificial alcanzó al 1.1% (Dirección del Trabajo, 2023, cifras según la cobertura de Diario Financiero, 2024; [DATO POR VERIFICAR en el informe oficial]). El Cuaderno de Investigación N° 69 de la misma Dirección, con microdatos del INE, sitúa el peak del trabajo desde el hogar en 21.95% de los ocupados en el trimestre junio-agosto de 2020, frente a 4.3% a 5% antes de la pandemia (Oyarzo, 2024). La Ley 21.220 de 2020 reguló el trabajo a distancia y obliga a registrar los pactos ante la Dirección del Trabajo; a 2026 ese registro contaba 149.816 personas, 6.108 empleadores y 162.312 contratos (Dirección del Trabajo, citada por CNN Chile, 2026; [DATO POR VERIFICAR: fecha exacta]). De las ofertas publicadas en Trabajando.com entre enero y julio de 2025, el 87.3% era presencial, el 10.8% híbrido y el 1.9% remoto (Emol, 2025), fuente privada que no representa a todos los trabajadores pero marca la dirección.</p>
+<p>Chile vivió el experimento de Bloom et al. a escala nacional (de 5% a 22% de trabajo en casa en cuatro meses) y volvió casi al punto de partida, sin evidencia chilena publicada sobre el efecto de esa vuelta en desempeño o rotación. Y con 1.1% de empresas usando IA, la discusión sobre equipos con IA llega antes que la práctica: una ventaja si sirve para diseñar bien, una desventaja si sirve para postergar.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> los equipos siempre superan a los individuos.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la evidencia de superioridad es "modesta, en el mejor de los casos" (Allen &amp; Hecht, 2004); de 33 equipos estudiados por Hackman (1998), unos cuatro eran eficaces; en tareas de ideas, los grupos nominales superan a los interactivos; y escribir un informe lo hace mejor una persona (Hackman &amp; Wageman, 2009). Rinden cuando la tarea es compleja e interdependiente, y sus efectos pueden tardar años (Birdi et al., 2008).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> los equipos satisfacen necesidades de pertenencia y reparten la responsabilidad; y cuando fallan, culpamos a individuos y no al equipo (Naquin &amp; Tynan, 2003).</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> lo virtual rinde menos.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> en equipos organizacionales reales, la virtualidad no se asocia con el desempeño (ρ = .01, n.s.; Purvanova &amp; Kenda, 2022); los efectos negativos vienen de laboratorios con estudiantes. El híbrido redujo las renuncias 33% sin tocar el desempeño (Bloom et al., 2024). Lo que sí cuesta son tareas específicas: generar ideas por video produce 15% a 20% menos ideas (Brucks &amp; Levav, 2022) y el remoto total aísla a los equipos entre sí (Yang et al., 2022).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> los gerentes no ven trabajar a la gente remota y confunden presencia con desempeño; y los primeros meta-análisis, basados en laboratorio, les dieron la razón.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> la IA reemplaza al equipo (o su inverso: la IA siempre suma).</p><p><span class="etiqueta ev">La evidencia muestra que...</span> en 106 experimentos, humano + IA no superó en promedio al mejor de los dos por separado, salvo en tareas de creación (Vaccaro et al., 2024). En P&amp;G, un individuo con IA igualó en calidad promedio a un equipo sin IA, pero el equipo con IA produjo más soluciones excepcionales (Dell'Acqua et al., 2025). Fuera de la frontera de la IA, usarla costó 19 puntos de acierto (Dell'Acqua et al., 2023). Ni reemplaza ni siempre suma: depende de la tarea y de saber cuándo confiar.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> la IA responde con fluidez tanto cuando acierta como cuando se equivoca, y las personas no distinguen la frontera; y los extremos venden más que el matiz.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> si el trabajo es importante, hay que hacerlo en equipo.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la importancia no es ninguna de las tres pruebas de R&amp;J (complejidad y diversidad de puntos de vista, propósito común, interdependencia). Las tareas que requieren pericia individual o composición creativa se hacen mejor solas (Hackman &amp; Wageman, 2009), y crear equipos "en situaciones en las cuales los individuos pueden hacer mejor el trabajo es equivalente a resolver a la perfección el problema equivocado" (Robbins &amp; Judge, 2017, p. 319).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> asignar algo importante a un equipo parece más seguro para quien asigna, porque reparte la responsabilidad; y el equipo, por el efecto halo, no cargará con la culpa si falla.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, hacer las tres pruebas antes de armar un equipo. Si la tarea no es compleja, no crea un propósito común y las personas no dependen unas de otras, asignarla a una persona y pedirle que consulte a quien necesite. El costo de un equipo innecesario no es solo tiempo de reuniones: es diluir la responsabilidad.</p>
+<p>Segundo, cuando el equipo corresponde, asegurarse de que sea un equipo real y no una lista: fronteras claras, interdependencia efectiva, estabilidad razonable y autoridad para decidir sobre su trabajo. Empoderar sin recursos ni autoridad transfiere responsabilidad, no poder.</p>
+<p>Tercero, decidir la modalidad por tarea, no por política general. Generación de ideas, incorporación de personas nuevas y construcción de lazos, presencial; ejecución, revisión y selección, remoto funciona igual. Diseñar los días presenciales con propósito (talleres, debriefs, decisiones difíciles) y no como control de asistencia. En equipos híbridos, cuidar que la ubicación no se convierta en falla de línea.</p>
+<p>Cuarto, en equipos virtuales, invertir en lo que la virtualidad vuelve más necesario: confianza (que pesa .33 en vez de .22) y documentación (que la sustituye en parte). Actas, decisiones escritas y normas explícitas de respuesta reemplazan lo que en la oficina se resolvía en el pasillo. Y proteger los puentes entre equipos, lo primero que el remoto rompe.</p>
+<p>Quinto, con inteligencia artificial, no comprar licencias y esperar sinergia. Mapear la frontera: en qué tareas la IA supera a las personas (redactar, sintetizar, integrar) y en cuáles no (decisiones con datos que la IA no tiene). Definir quién verifica qué. Y preguntarse qué pasa con el aprendizaje de los miembros cuando la IA integra por ellos: el estudio de P&amp;G no lo midió.</p>
+<p>Sexto, medir en el plazo correcto. Los efectos del trabajo en equipo en Birdi et al. (2008) tardaron años en aparecer. Evaluar un rediseño a los seis meses y concluir que no sirvió es un error de medición, no un hallazgo.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Aplicar las tres pruebas de Robbins y Judge a un caso y argumentar si corresponde un equipo o un individuo, usando el ejemplo del fútbol y la natación y la advertencia del "problema equivocado".</li><li>Explicar el "romance de los equipos" (Allen &amp; Hecht, 2004) y el efecto halo del equipo (Naquin &amp; Tynan, 2003), y usar los seis errores de Hackman (1998) para diagnosticar por qué falla un equipo.</li><li>Distinguir los cinco tipos de equipos de R&amp;J con la evidencia asociada, y explicar por qué un sistema multiequipo no es un equipo grande.</li><li>Explicar por qué la virtualidad es un continuo y resumir el hallazgo central de Purvanova y Kenda (2022) distinguiendo equipos organizacionales de equipos de laboratorio.</li><li>Describir los experimentos de Bloom et al. (2024), Yang et al. (2022) y Brucks y Levav (2022), indicar qué permite inferir cada diseño y derivar la regla "qué tarea en qué modalidad".</li><li>Resumir Vaccaro et al. (2024) y Dell'Acqua et al. (2023, 2025) con sus cifras, explicar la "frontera dentada" y argumentar cuándo la IA sustituye y cuándo complementa al equipo, con sus limitaciones.</li><li>Citar los datos chilenos de teletrabajo e IA (ENCLA 2023, Ley 21.220) y discutir qué implican para el diseño de equipos en Chile.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Aime, F., Humphrey, S., DeRue, D. S., &amp; Paul, J. B. (2014). The riddle of heterarchy: Power transitions in cross-functional teams. <em>Academy of Management Journal, 57</em>(2), 327-352. <a href="https://doi.org/10.5465/amj.2011.0756">https://doi.org/10.5465/amj.2011.0756</a></p>
+<p>Allen, N. J., &amp; Hecht, T. D. (2004). The "romance of teams": Toward an understanding of its psychological underpinnings and implications. <em>Journal of Occupational and Organizational Psychology, 77</em>(4), 439-461. <a href="https://doi.org/10.1348/0963179042596469">https://doi.org/10.1348/0963179042596469</a></p>
+<p>Benishek, L. E., &amp; Lazzara, E. H. (2019). Teams in a new era: Some considerations and implications. <em>Frontiers in Psychology, 10</em>, 1006. <a href="https://doi.org/10.3389/fpsyg.2019.01006">https://doi.org/10.3389/fpsyg.2019.01006</a></p>
+<p>Birdi, K., Clegg, C., Patterson, M., Robinson, A., Stride, C. B., Wall, T. D., &amp; Wood, S. J. (2008). The impact of human resource and operational management practices on company productivity: A longitudinal study. <em>Personnel Psychology, 61</em>(3), 467-501. <a href="https://doi.org/10.1111/j.1744-6570.2008.00136.x">https://doi.org/10.1111/j.1744-6570.2008.00136.x</a></p>
+<p>Bloom, N., Han, R., &amp; Liang, J. (2024). Hybrid working from home improves retention without damaging performance. <em>Nature, 630</em>(8018), 920-925. <a href="https://doi.org/10.1038/s41586-024-07500-2">https://doi.org/10.1038/s41586-024-07500-2</a></p>
+<p>Breuer, C., Hüffmeier, J., &amp; Hertel, G. (2016). Does trust matter more in virtual teams? A meta-analysis of trust and team effectiveness considering virtuality and documentation as moderators. <em>Journal of Applied Psychology, 101</em>(8), 1151-1177. <a href="https://doi.org/10.1037/apl0000113">https://doi.org/10.1037/apl0000113</a></p>
+<p>Brucks, M. S., &amp; Levav, J. (2022). Virtual communication curbs creative idea generation. <em>Nature, 605</em>(7908), 108-112. <a href="https://doi.org/10.1038/s41586-022-04643-y">https://doi.org/10.1038/s41586-022-04643-y</a></p>
+<p>Chen, G., &amp; Kanfer, R. (2024). The future of motivation in and of teams. <em>Annual Review of Organizational Psychology and Organizational Behavior, 11</em>, 93-112. <a href="https://doi.org/10.1146/annurev-orgpsych-111821-031621">https://doi.org/10.1146/annurev-orgpsych-111821-031621</a></p>
+<p>CNN Chile. (2026). Dirección del Trabajo: 150 mil trabajadores laboran en teletrabajo o a distancia en poco más de 6 mil empresas. https://www.cnnchile.com/pais/direccion-del-trabajo-150-mil-trabajadores-laboran-en-teletrabajo-o-a-distancia-en-poco-mas-de-6-mil-empresas/ [FECHA POR VERIFICAR]</p>
+<p>Davison, R. B., Hollenbeck, J. R., Barnes, C. M., Sleesman, D. J., &amp; Ilgen, D. R. (2012). Coordinated action in multiteam systems. <em>Journal of Applied Psychology, 97</em>(4), 808-824. <a href="https://doi.org/10.1037/a0026682">https://doi.org/10.1037/a0026682</a></p>
+<p>DeChurch, L. A., Carter, D. R., Asencio, R., Wax, A., Seely, P. W., Dalrymple, K., Vaughn, S. A., Jones, B. R., Plummer, G., &amp; Mesmer-Magnus, J. (2018). From teams in organizations to organizing in teams. En D. S. Ones, N. Anderson, C. Viswesvaran, &amp; H. K. Sinangil (Eds.), <em>The SAGE handbook of industrial, work and organizational psychology: Vol. 2. Organizational psychology</em> (2.ª ed., pp. 307-332). SAGE.</p>
+<p>Delarue, A., Van Hootegem, G., Procter, S., &amp; Burridge, M. (2008). Teamworking and organizational performance: A review of survey-based research. <em>International Journal of Management Reviews, 10</em>(2), 127-148. <a href="https://doi.org/10.1111/j.1468-2370.2007.00227.x">https://doi.org/10.1111/j.1468-2370.2007.00227.x</a></p>
+<p>Dell'Acqua, F., Ayoubi, C., Lifshitz-Assaf, H., Sadun, R., Mollick, E., Mollick, L., Han, Y., Goldman, J., Nair, H., Taub, S., &amp; Lakhani, K. (2025). <em>The cybernetic teammate: A field experiment on generative AI reshaping teamwork and expertise</em> (NBER Working Paper No. 33641). National Bureau of Economic Research. <a href="https://doi.org/10.3386/w33641">https://doi.org/10.3386/w33641</a></p>
+<p>Dell'Acqua, F., McFowland, E., III, Mollick, E. R., Lifshitz-Assaf, H., Kellogg, K., Rajendran, S., Krayer, L., Candelon, F., &amp; Lakhani, K. R. (2023). <em>Navigating the jagged technological frontier: Field experimental evidence of the effects of AI on knowledge worker productivity and quality</em> (Harvard Business School Working Paper No. 24-013). <a href="https://doi.org/10.2139/ssrn.4573321">https://doi.org/10.2139/ssrn.4573321</a></p>
+<p>DeVaro, J. (2008). The effects of self-managed and closely managed teams on labor productivity and product quality: An empirical analysis of a cross-section of establishments. <em>Industrial Relations, 47</em>(4), 659-697. <a href="https://doi.org/10.1111/j.1468-232X.2008.00540.x">https://doi.org/10.1111/j.1468-232X.2008.00540.x</a></p>
+<p>Diario Financiero. (2024). La otra foto que dejó la ENCLA: más automatización en las empresas y menos teletrabajo. https://www.df.cl/economia-y-politica/laboral-personas/la-otra-foto-que-dejo-la-encla-mas-automatizacion-en-las-empresas-y [FECHA Y TITULAR POR VERIFICAR]</p>
+<p>Dipboye, R. L. (2018). Groups and teams in organizations. En <em>The Emerald review of industrial and organizational psychology</em> (pp. 369-439). Emerald. <a href="https://doi.org/10.1108/978-1-78743-785-220181011">https://doi.org/10.1108/978-1-78743-785-220181011</a></p>
+<p>Edmondson, A. C., &amp; Daley, G. (2020, 25 de agosto). How to foster psychological safety in virtual meetings. <em>Harvard Business Review</em>. https://hbr.org/2020/08/how-to-foster-psychological-safety-in-virtual-meetings</p>
+<p>Emol. (2025, 13 de agosto). Teletrabajo en Chile: estudio de Trabajando.com sobre ofertas y postulaciones. https://www.emol.com/noticias/Economia/2025/08/13/1174824/teletrabajo-estudio-chile.html [TITULAR POR VERIFICAR]</p>
+<p>Hackman, J. R. (1998). Why teams don't work. En R. S. Tindale, L. Heath, J. Edwards, E. J. Posavac, F. B. Bryant, Y. Suarez-Balcazar, E. Henderson-King, &amp; J. Myers (Eds.), <em>Theory and research on small groups</em> (pp. 245-267). Plenum Press. <a href="https://doi.org/10.1007/0-306-47144-2_12">https://doi.org/10.1007/0-306-47144-2_12</a></p>
+<p>Hackman, J. R. (2002). <em>Leading teams: Setting the stage for great performances</em>. Harvard Business School Press.</p>
+<p>Hackman, J. R., &amp; Wageman, R. (2009). Foster team effectiveness by fulfilling key leadership functions. En E. A. Locke (Ed.), <em>Handbook of principles of organizational behavior: Indispensable knowledge for evidence-based management</em> (2.ª ed., pp. 275-293). Wiley.</p>
+<p>Hamilton, B. H., Nickerson, J. A., &amp; Owan, H. (2003). Team incentives and worker heterogeneity: An empirical analysis of the impact of teams on productivity and participation. <em>Journal of Political Economy, 111</em>(3), 465-497. <a href="https://doi.org/10.1086/374182">https://doi.org/10.1086/374182</a></p>
+<p>Handke, L., Costa, P., &amp; Feitosa, J. (2025). How virtual are we? Introducing the Team Perceived Virtuality Scale. <em>Journal of Business and Psychology, 40</em>(2), 455-478. <a href="https://doi.org/10.1007/s10869-024-09966-3">https://doi.org/10.1007/s10869-024-09966-3</a></p>
+<p>Kirkman, B. L., &amp; Smith, A. (2026). Team empowerment and team resilience. <em>Annual Review of Organizational Psychology and Organizational Behavior, 13</em>, 77-106. <a href="https://doi.org/10.1146/annurev-orgpsych-031424-094329">https://doi.org/10.1146/annurev-orgpsych-031424-094329</a></p>
+<p>Luciano, M. M., Mathieu, J. E., &amp; Ruddy, T. M. (2014). Leading multiple teams: Average and relative external leadership influences on team empowerment and effectiveness. <em>Journal of Applied Psychology, 99</em>(2), 322-331. <a href="https://doi.org/10.1037/a0035025">https://doi.org/10.1037/a0035025</a></p>
+<p>Mak, S., &amp; Kozlowski, S. W. J. (2019). Virtual teams: Conceptualization, integrative review, and research recommendations. En R. N. Landers (Ed.), <em>The Cambridge handbook of technology and employee behavior</em> (pp. 441-479). Cambridge University Press. <a href="https://doi.org/10.1017/9781108649636.018">https://doi.org/10.1017/9781108649636.018</a></p>
+<p>Mathieu, J. E., Gallagher, P. T., Domingo, M. A., &amp; Klock, E. A. (2019). Embracing complexity: Reviewing the past decade of team effectiveness research. <em>Annual Review of Organizational Psychology and Organizational Behavior, 6</em>, 17-46. <a href="https://doi.org/10.1146/annurev-orgpsych-012218-015106">https://doi.org/10.1146/annurev-orgpsych-012218-015106</a></p>
+<p>Mathieu, J. E., Luciano, M. M., &amp; DeChurch, L. A. (2018). Multiteam systems: The next chapter. En D. S. Ones, N. Anderson, C. Viswesvaran, &amp; H. K. Sinangil (Eds.), <em>The SAGE handbook of industrial, work and organizational psychology: Vol. 2. Organizational psychology</em> (2.ª ed., pp. 333-354). SAGE.</p>
+<p>Mesmer-Magnus, J. R., DeChurch, L. A., Jimenez-Rodriguez, M., Wildman, J., &amp; Shuffler, M. (2011). A meta-analytic investigation of virtuality and information sharing in teams. <em>Organizational Behavior and Human Decision Processes, 115</em>(2), 214-225. <a href="https://doi.org/10.1016/j.obhdp.2011.03.002">https://doi.org/10.1016/j.obhdp.2011.03.002</a></p>
+<p>Naquin, C. E., &amp; Tynan, R. O. (2003). The team halo effect: Why teams are not blamed for their failures. <em>Journal of Applied Psychology, 88</em>(2), 332-340. <a href="https://doi.org/10.1037/0021-9010.88.2.332">https://doi.org/10.1037/0021-9010.88.2.332</a></p>
+<p>O'Neill, T., McNeese, N., Barron, A., &amp; Schelble, B. (2022). Human-autonomy teaming: A review and analysis of the empirical literature. <em>Human Factors, 64</em>(5), 904-938. <a href="https://doi.org/10.1177/0018720820960865">https://doi.org/10.1177/0018720820960865</a></p>
+<p>Ortiz de Guinea, A., Webster, J., &amp; Staples, D. S. (2012). A meta-analysis of the consequences of virtualness on team functioning. <em>Information &amp; Management, 49</em>(6), 301-308. <a href="https://doi.org/10.1016/j.im.2012.08.003">https://doi.org/10.1016/j.im.2012.08.003</a></p>
+<p>Oyarzo, M. (2024). <em>Teletrabajo en Chile: evolución y caracterización</em> (Cuaderno de Investigación N° 69). Dirección del Trabajo. https://dt.gob.cl/portal/1629/articles-127266_recurso_1.pdf [TÍTULO Y NOMBRE DE AUTOR POR VERIFICAR]</p>
+<p>Pavez, I., &amp; Neves, E. (2021). Developing teams in a virtual environment: A generative approach. <em>The Journal of Applied Behavioral Science, 59</em>(1), 177-181. <a href="https://doi.org/10.1177/00218863211053881">https://doi.org/10.1177/00218863211053881</a></p>
+<p>Purvanova, R. K., &amp; Kenda, R. (2022). The impact of virtuality on team effectiveness in organizational and non-organizational teams: A meta-analysis. <em>Applied Psychology, 71</em>(3), 1082-1131. <a href="https://doi.org/10.1111/apps.12348">https://doi.org/10.1111/apps.12348</a></p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Stewart, G. L., Courtright, S. H., &amp; Barrick, M. R. (2012). Peer-based control in self-managing teams: Linking rational and normative influence with individual and group performance. <em>Journal of Applied Psychology, 97</em>(2), 435-447. <a href="https://doi.org/10.1037/a0025303">https://doi.org/10.1037/a0025303</a></p>
+<p>Vaccaro, M., Almaatouq, A., &amp; Malone, T. (2024). When combinations of humans and AI are useful: A systematic review and meta-analysis. <em>Nature Human Behaviour, 8</em>(12), 2293-2303. <a href="https://doi.org/10.1038/s41562-024-02024-1">https://doi.org/10.1038/s41562-024-02024-1</a></p>
+<p>Wildman, J. L., Nguyen, D., Thayer, A. L., Robbins-Roth, V. T., Carroll, M., Carmody, K., Ficke, C., Akib, M., &amp; Addis, A. (2024). Trust in human-agent teams: A multilevel perspective and future research agenda. <em>Organizational Psychology Review, 14</em>(3), 373-402. <a href="https://doi.org/10.1177/20413866241253278">https://doi.org/10.1177/20413866241253278</a></p>
+<p>Williams, H. M., &amp; Allen, N. J. (2008). Teams at work. En J. Barling &amp; C. L. Cooper (Eds.), <em>The SAGE handbook of organizational behavior: Vol. 1. Micro approaches</em> (pp. 124-140). SAGE.</p>
+<p>Yang, L., Holtz, D., Jaffe, S., Suri, S., Sinha, S., Weston, J., Joyce, C., Shah, N., Sherman, K., Hecht, B., &amp; Teevan, J. (2022). The effects of remote work on collaboration among information workers. <em>Nature Human Behaviour, 6</em>(1), 43-54. <a href="https://doi.org/10.1038/s41562-021-01196-4">https://doi.org/10.1038/s41562-021-01196-4</a></p>
+<h3>Para profundizar</h3>
+<p>Hackman (1998): veinte páginas de un investigador que pasó su vida estudiando equipos y concluyó que la mayoría no funciona; los seis errores siguen vigentes.</p>
+<p>Dell'Acqua et al. (2025): el experimento de P&amp;G completo, con las cuatro barras que verás en el laboratorio; léelo antes de opinar sobre IA y equipos.</p>
+<p>Purvanova y Kenda (2022): el meta-análisis que separa lo que sabemos de equipos reales de lo que sabemos de estudiantes en laboratorio; un buen ejemplo de cómo un moderador cambia una conclusión.</p>
+<p>&lt;!-- NOTAS DE PRODUCCIÓN (revisión 15-11-2026: se quitaron las líneas 'Complementa y actualiza' y 'lectura previa'; se agregaron 3 figuras SVG (tres pruebas; Purvanova &amp; Kenda; P&amp;G); referencia cruzada al apunte 31): Palabras del cuerpo (secciones A a G, sin encabezado ni referencias): 5329 (objetivo 3.500 a 5.000; excede en ~6% por el volumen de contenido obligatorio del encargo: cinco tipos, virtualidad, IA y Chile). Referencias totales: 42 (incluye 4 fuentes de prensa/informes chilenos y 2 working papers). Referencias con marca [POR VERIFICAR]: 4, todas fuentes chilenas de prensa o informes oficiales en que falta confirmar fecha, titular o título exacto: CNN Chile (2026) [fecha]; Diario Financiero (2024) [fecha y titular]; Emol (2025) [titular]; Oyarzo (2024, Cuaderno 69 DT) [título exacto y nombre completo del autor]. Las referencias académicas (38) fueron verificadas en Crossref o en el PDF (Allen &amp; Hecht, Delarue, Hamilton et al. 2003 [el deck 2025 lo citaba como 2004; el JPE es 2003], Birdi, Breuer [cifras .33/.22 y .20/.29 confirmadas en el abstract], de Guinea, Mesmer-Magnus 2011, Naquin &amp; Tynan, Hackman 1998 [capítulo en Tindale et al., Plenum 1998; Springer lo reedita con fecha 2002], Shuffler et al. no citado, Stewart 2012, DeVaro, Aime, Davison, Luciano, Handke 2025 [JBP 40(2), 455-478], Wildman [OPR 14(3), 373-402], Pavez &amp; Neves [JABS 59(1), 2023 en papel; se cita 2021 por fecha online, coherente con la ficha C], Mak &amp; Kozlowski [editor Landers confirmado], Mathieu et al. 2018 y DeChurch et al. 2018 [paginación del índice del SAGE; la lista de referencias interna del SAGE da 333-353 para Mathieu et al.], Kirkman &amp; Smith, Chen &amp; Kanfer, Bloom, Yang, Brucks, Vaccaro, Dell'Acqua 2023 y 2025, O'Neill 2022, Edmondson &amp; Daley [fecha confirmada en hbr.org]). Datos chilenos [POR VERIFICAR]: cifras ENCLA 2023 (6.9%, 15.2%, 65.9%, 96.7%, 63.5%, 11.4%/20.4%, 1.1%) tomadas de la cobertura de Diario Financiero, pendiente contraste con el informe oficial en dt.gob.cl; registro DT bajo Ley 21.220 (149.816 / 6.108 / 162.312) tomado de CNN Chile, fecha exacta pendiente. Verificados: Cuaderno 69 DT (21.95% peak 2020; 4.31% a 4.99% prepandemia), Trabajando.com vía Emol 13-08-2025 (87.3 / 10.8 / 1.9), Ley 21.220. Decisiones: Hamilton et al. se cita 2003 (JPE) y no 2004 como en el deck 2025. El 14% de productividad de Hamilton et al. fue confirmado en el abstract del JPE (RePEc). Se usa guion simple en rangos de páginas para cumplir la prohibición de guiones largos y medios. Sin estudio destacado (va en el apunte 30); Dell'Acqua et al. (2025) descrito en detalle para el laboratorio. --&gt;</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>

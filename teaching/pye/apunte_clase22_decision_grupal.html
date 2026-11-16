@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decidir en grupo: perfiles ocultos, sabiduría de las multitudes, pensamiento de grupo y polarización · Personas y Equipos UDP</title>
+<style>
+  /* ===== Plantilla base de la serie de apuntes PyE, v1 (2026-2) ===== */
+  :root{
+    --rojo:#C8102E;
+    --rojo-oscuro:#9B0C23;
+    --tinta:#1F2937;
+    --gris:#6B7280;
+    --gris-claro:#F3F4F6;
+    --borde:#E5E7EB;
+    --tinte:#FDF2F3;
+    --acero:#475569;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; padding:0; background:#fff; color:var(--tinta);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:1.06rem; line-height:1.65;
+  }
+  .contenedor{max-width:46rem; margin:0 auto; padding:0 1.25rem 4rem}
+  /* Encabezado estándar de la serie */
+  header{
+    border-bottom:4px solid var(--rojo);
+    padding:2.2rem 0 1.4rem; margin-bottom:2rem;
+  }
+  .serie{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--rojo); font-weight:700; margin:0 0 .6rem;
+  }
+  h1{
+    font-size:1.9rem; line-height:1.2; margin:0 0 .8rem; color:var(--tinta);
+    font-weight:700;
+  }
+  .meta{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.88rem; color:var(--gris); margin:0; line-height:1.55;
+  }
+  /* Secciones */
+  h2{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.25rem; color:var(--rojo); margin:2.4rem 0 .8rem;
+    font-weight:700;
+  }
+  h3{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:1.02rem; color:var(--tinta); margin:1.6rem 0 .5rem; font-weight:700;
+  }
+  p{margin:0 0 1rem}
+  strong{color:var(--tinta)}
+  em{color:inherit}
+  ol,ul{padding-left:1.4rem; margin:0 0 1rem}
+  li{margin-bottom:.45rem}
+  /* Caja resumen (sección B) */
+  .resumen{
+    background:var(--gris-claro); border-radius:.6rem;
+    padding:1.2rem 1.4rem; margin:0 0 1rem;
+  }
+  .resumen p:last-child{margin-bottom:0}
+  /* Recuadros Mito versus evidencia: componente distintivo de la serie */
+  .mito{
+    border:1px solid var(--borde); border-left:5px solid var(--rojo);
+    border-radius:.5rem; padding:1.05rem 1.25rem; margin:0 0 1.2rem;
+    background:var(--tinte);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.95rem; line-height:1.6;
+  }
+  .mito p{margin:0 0 .55rem}
+  .mito p:last-child{margin-bottom:0}
+  .mito .etiqueta{font-weight:700; color:var(--rojo)}
+  .mito .etiqueta.ev{color:var(--acero)}
+  .mito .etiqueta.pq{color:var(--gris)}
+  /* Tabla jerarquía */
+  table{
+    width:100%; border-collapse:collapse; margin:0 0 1.2rem;
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:.92rem;
+  }
+  th{
+    text-align:left; background:var(--tinta); color:#fff;
+    padding:.55rem .7rem; font-weight:600;
+  }
+  td{padding:.55rem .7rem; border-bottom:1px solid var(--borde); vertical-align:top}
+  tr:nth-child(even) td{background:var(--gris-claro)}
+  /* Referencias con sangría francesa */
+  .referencias p{
+    padding-left:2rem; text-indent:-2rem; margin-bottom:.8rem;
+    font-size:.95rem; line-height:1.55;
+  }
+  a{color:var(--rojo); text-decoration:none; border-bottom:1px dotted var(--rojo)}
+  a:hover{border-bottom-style:solid}
+  /* Pie */
+  footer{
+    margin-top:3rem; padding-top:1rem; border-top:1px solid var(--borde);
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.8rem; color:var(--gris);
+  }
+  @media (max-width:480px){
+    body{font-size:1rem}
+    h1{font-size:1.55rem}
+    .contenedor{padding:0 1rem 3rem}
+  }
+  @media print{
+    header{padding-top:0}
+    .mito{break-inside:avoid}
+  }
+
+  .figura{margin:0 0 1.4rem}
+  .figura figcaption{
+    font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+    font-size:.82rem; color:var(--gris); margin-top:.4rem; line-height:1.5}
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+<header>
+  <p class="serie">Serie de apuntes complementarios · N° 27</p>
+  <h1>Decidir en grupo: perfiles ocultos, sabiduría de las multitudes, pensamiento de grupo y polarización</h1>
+  <p class="meta">
+    Personas y Equipos, secciones 02 y 03 · 2º semestre 2026<br>
+    Apunte complementario N° 27 · Clase 22 (lunes 23-11-2026)<br>
+    Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+    <a href="https://gempp.cl/teaching/pye/">Página del curso</a>
+  </p>
+</header>
+
+<h2>A. Por qué existe este apunte</h2>
+<p>Robbins y Judge dedican cuatro páginas a la decisión grupal y en ellas conviven dos afirmaciones que suenan contradictorias. La primera: "las decisiones grupales por lo general son más exactas que las del individuo promedio de un grupo, pero menos exactas que los criterios del miembro más acertado" (Robbins &amp; Judge, 2017, p. 296). La segunda: el pensamiento de grupo "es un fenómeno que afecta a muchos grupos y puede entorpecer drásticamente su desempeño" (p. 296). Si el grupo es mejor que el promedio, ¿por qué temerle? Si es peor que su mejor miembro, ¿para qué reunirlo? Las dos cosas son ciertas a la vez, y al manual le falta el mecanismo que las explica: qué pasa con la información que cada persona trae a la mesa.</p>
+<p>Ese mecanismo tiene cuarenta años de evidencia experimental y ya lo conociste en la Clase 14 con la sucursal Temuco: el perfil oculto. Un grupo que reúne lo que cada uno sabe decide mejor que cualquiera de sus miembros; un grupo que solo repite lo que todos ya saben decide peor que si hubiera votado sin discutir. Este apunte explica por qué ocurre lo segundo, cuánto cuesta en cifras y qué lo corrige. En el camino revisa tres ideas que el texto guía presenta como hechos: que el pensamiento de grupo está demostrado, que un abogado del diablo lo previene, y que la polarización es "un caso especial" de pensamiento de grupo. Ninguna de las tres resiste bien la evidencia.</p>
+<p>Si estás en el Taller de Liderazgo y Trabajo en Equipo, ya trabajaste la comunicación SUIT (compartir, entender, integrar, decidir en equipo) y la memoria transactiva como estado emergente. Este apunte entrega la base experimental de por qué la etapa "compartir" es la que más falla, con qué magnitud, y por qué "integrar" exige disenso real y no un rol asignado. El apunte 28, que se lee junto con este, trata las técnicas (lluvia de ideas, grupo nominal), la inteligencia colectiva y las reuniones.</p>
+<h2>B. La idea en breve</h2>
+<div class="resumen">
+<p>Un grupo decide mejor que el individuo promedio en casi cualquier tarea, y puede superar a su mejor miembro bajo dos condiciones: que la respuesta correcta sea demostrable (quien la tiene puede convencer a los demás) o que la decisión agregue juicios independientes, por mayoría o por promedio. Galton lo mostró en 1907 con 787 apuestas sobre el peso de un buey: la mediana erró por menos de 1%. La clave es la independencia. Cuando las personas conocen las estimaciones ajenas antes de dar la suya, convergen hacia un valor compartido sin acercarse a la verdad.</p>
+<p>La discusión cara a cara destruye esa independencia y agrega un segundo problema: los grupos hablan de lo que todos saben y callan lo que solo uno sabe. En 65 estudios, los grupos con información repartida fueron ocho veces menos propensos a encontrar la mejor opción que los grupos con toda la información a la vista; en 72 estudios con 4.795 grupos, la preferencia por la información compartida sobre la única fue de ρ = .69. El remedio no es dejar de reunirse: es poner la información antes que las preferencias, orientar al grupo a la exactitud, asignar responsables por tipo de información y asegurar disenso auténtico. En un experimento con 135 tríos, acertó el 7% de los grupos que partían de acuerdo y el 62% de los que tenían un disidente que defendía la opción correcta. El abogado del diablo asignado ayuda menos: todos saben que actúa.</p>
+<p>El pensamiento de grupo (Janis) es el relato más famoso sobre decisiones colectivas fallidas y el menos respaldado: la cohesión, su antecedente central, no predice peores decisiones; lo ubicuo es la presión hacia la opinión inicial mayoritaria, con o sin cohesión. El Challenger se lee mejor como silencio, estatus e información que no llegó a quien decidía. La polarización (el grupo termina más extremo que sus miembros) es un fenómeno distinto y bien establecido. En Chile, un estudio con 156 equipos muestra que cuando el líder genera un clima afectivo positivo, los equipos comparten más información, y eso predice su innovación.</p>
+</div>
+<h2>C. Los conceptos</h2>
+<h3>Qué dice el texto guía, y la regla "grupo, promedio, mejor miembro"</h3>
+<p>Robbins y Judge (2017, pp. 295-296) listan tres fortalezas de la decisión grupal (información más completa, puntos de vista más diversos, mayor aceptación de la solución) y cuatro debilidades (consume más tiempo, presiones para conformarse, dominio de uno o pocos miembros, responsabilidad ambigua). Luego formulan la regla citada arriba, apoyada en Bonner, Sillito y Baumann (2007): el grupo supera al promedio de sus miembros, pero no a su mejor miembro. La regla describe bien lo que pasa cuando el grupo discute libremente una tarea de juicio. Pero tiene dos excepciones útiles para un administrador.</p>
+<p>La primera excepción depende de la <strong>demostrabilidad</strong> de la tarea (<em>demonstrability</em>; Laughlin &amp; Ellis, 1986). En una tarea <strong>intelectiva</strong> hay una respuesta correcta y quien la tiene puede mostrar a los demás por qué lo es, porque comparten un sistema conceptual (una fórmula, una regla, un dato verificable). Ahí opera lo que Laughlin llamó "la verdad gana" (<em>truth wins</em>): basta un miembro con la respuesta correcta para que el grupo acierte; o su versión más realista, "la verdad apoyada gana" (<em>truth supported wins</em>): se necesitan dos (Tindale &amp; Winget, 2019). Laughlin, Hatch, Silver y Boh (2006), con 760 estudiantes en problemas de letras y números, encontraron que grupos de tres, cuatro y cinco personas superaron al mejor de un número equivalente de individuos; los de dos solo lo igualaron. Tres bastan, pero dos no. En una tarea <strong>de juicio</strong> (<em>judgmental</em>), sin criterio objetivo (qué candidato contratar, qué estrategia seguir), nadie puede demostrar nada, y manda la mayoría inicial.</p>
+<p>La segunda excepción es la regla de combinación. Hastie y Kameda (2005) compararon por simulación distintas reglas para elegir entre muchas opciones bajo incertidumbre: la regla de mayoría o pluralidad (elegir la opción con más apoyo) fue más exacta que cualquier otra de complejidad comparable y superó a la regla del "mejor miembro" (seguir a quien ha sido más exacto en el pasado). Es decir, la frase de Robbins y Judge es cierta para la discusión libre, pero un grupo que vota por mayoría después de juzgar en forma independiente puede superar a su mejor miembro. Las revisiones de Kerr y Tindale (2004) y de Tindale y Winget (2019) organizan esta literatura con los <strong>esquemas de decisión social</strong> (<em>social decision schemes</em>; Davis, 1973): reglas que describen cómo las preferencias individuales se convierten en decisión grupal. La mayoría describe bien la mayor parte de las decisiones reales, y por eso amplifica la tendencia inicial del grupo, sea buena o mala.</p>
+<h3>Sabiduría de las multitudes y por qué la discusión la arruina</h3>
+<p>En 1907, Francis Galton analizó 787 boletos de una feria rural inglesa en que los asistentes estimaban el peso de un buey faenado. La mediana fue 1.207 libras; el peso real, 1.198: error menor a 1% (Galton, 1907). Un siglo después, Surowiecki (2004) popularizó el fenómeno como <strong>sabiduría de las multitudes</strong> (<em>wisdom of crowds</em>) y señaló sus condiciones: diversidad de opinión, independencia de los juicios, descentralización y un mecanismo de agregación. El fundamento es simple: si las estimaciones rodean el valor verdadero, los errores se cancelan al promediar; incluso cuando no lo rodean, el promedio no rinde peor que el juez típico (Tindale &amp; Winget, 2019). Larrick (2009) agrega que no hay forma confiable de identificar de antemano al experto que superará al promedio, así que promediar es la apuesta segura. Mannes, Soll y Larrick (2014) refinaron la regla: promediar a un "grupo selecto" (<em>select crowd</em>) de los cinco jueces con mejor historial reciente supera tanto al mejor individuo como al promedio total en la mayoría de los entornos.</p>
+<p>La independencia es la condición que la vida organizacional viola primero. Lorenz, Rauhut, Schweitzer y Helbing (2011) pidieron a 144 personas estimar cantidades (tasas de delitos, longitud de fronteras) con incentivo monetario; a algunas les mostraron las estimaciones ajenas antes de cada ronda. Con esa información, la diversidad de las estimaciones se redujo, la confianza aumentó y la exactitud colectiva no mejoró: el grupo convergió hacia un valor compartido, no hacia la verdad.</p>
+<p>Lo mismo ocurre con los consejos. En los sistemas juez-asesor (una persona decide, otra aconseja), los jueces ponderan su propia opinión más del doble que el consejo recibido, el <strong>descuento egocéntrico del consejo</strong> (<em>egocentric advice discounting</em>), replicado en una gran variedad de tareas (Tindale &amp; Winget, 2019). Y lo que mejor predice que un juez use un consejo es la confianza con que el asesor lo expresa, que correlaciona poco con su exactitud (Sniezek &amp; Van Swol, 2001). En una reunión, quien habla con más seguridad influye más, sepa o no sepa.</p>
+<h3>Perfiles ocultos y el sesgo hacia la información compartida</h3>
+<p>El <strong>perfil oculto</strong> (<em>hidden profile</em>; Stasser &amp; Titus, 1985) es la situación en que la mejor alternativa solo se ve al juntar la información que está repartida entre los miembros. Cada persona, con lo que sabe a solas, prefiere una opción inferior; el grupo, si pusiera todo sobre la mesa, vería la correcta. Lo trabajaste en el apunte 14 y en la actividad de la sucursal Temuco; aquí interesa el mecanismo y la cifra.</p>
+<p>El mecanismo es el <strong>sesgo de muestreo de información</strong> (<em>biased information sampling</em>): la información que varios miembros conocen tiene más probabilidades de ser mencionada que la que solo uno conoce, por aritmética (más personas pueden sacarla) y porque lo compartido se valida al oírse repetido. Mesmer-Magnus y DeChurch (2009), en un meta-análisis de 72 estudios con 4.795 grupos, estimaron que los equipos dedican mucho más tiempo a la información compartida que a la única: ρ = .69, casi 1.4 desviaciones estándar de diferencia, y más aún en tareas de baja demostrabilidad (ρ = .86). En el mismo meta-análisis, compartir información correlacionó .42 con el desempeño del equipo, y compartir información única (<em>uniqueness</em>) correlacionó .50, más que la apertura general de la comunicación (.32). Lu, Yuan y McLeod (2012), en 65 estudios con 3.189 grupos, encontraron que la información común se menciona unas dos desviaciones estándar más que la única, y que los grupos en perfil oculto fueron cerca de ocho veces menos propensos a encontrar la solución correcta que los grupos con información completa. El medio (presencial o electrónico) no cambió ni el intercambio ni la calidad.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 290" role="img" aria-label="Perfil oculto: lo que cada miembro sabe y lo que el grupo discute" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="340" y="20" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">Tres personas, dos candidatos, y la aritmética que decide la reunión</text>
+  <g font-size="10.5" fill="#1F2937">
+    <text x="20" y="50" font-weight="700">Lo que sabe cada uno</text>
+    <rect x="20" y="60" width="200" height="56" rx="5" fill="#F3F4F6" stroke="#E5E7EB"/><text x="30" y="78" font-weight="700">Ana</text><text x="30" y="94">A: + + +  (compartidos)</text><text x="30" y="108">B: + (solo ella lo sabe)</text>
+    <rect x="20" y="124" width="200" height="56" rx="5" fill="#F3F4F6" stroke="#E5E7EB"/><text x="30" y="142" font-weight="700">Bruno</text><text x="30" y="158">A: + + +  (compartidos)</text><text x="30" y="172">B: + (solo él lo sabe)</text>
+    <rect x="20" y="188" width="200" height="56" rx="5" fill="#F3F4F6" stroke="#E5E7EB"/><text x="30" y="206" font-weight="700">Carla</text><text x="30" y="222">A: + + +  (compartidos)</text><text x="30" y="236">B: + (solo ella lo sabe)</text>
+  </g>
+  <g font-size="10.5" fill="#1F2937">
+    <text x="250" y="50" font-weight="700">Antes de hablar</text>
+    <rect x="250" y="60" width="170" height="184" rx="5" fill="#FDF2F3" stroke="#C8102E"/>
+    <text x="335" y="90" text-anchor="middle">cada uno ve</text><text x="335" y="108" text-anchor="middle" font-weight="700">A: 3 ventajas</text><text x="335" y="126" text-anchor="middle" font-weight="700">B: 1 ventaja</text>
+    <text x="335" y="160" text-anchor="middle">los tres prefieren A</text><text x="335" y="178" text-anchor="middle">y lo dicen al abrir</text>
+    <text x="335" y="212" text-anchor="middle" fill="#C8102E" font-weight="700">se habla de lo que</text><text x="335" y="228" text-anchor="middle" fill="#C8102E" font-weight="700">los tres ya saben</text>
+  </g>
+  <g font-size="10.5" fill="#1F2937">
+    <text x="450" y="50" font-weight="700">Si pusieran todo sobre la mesa</text>
+    <rect x="450" y="60" width="210" height="184" rx="5" fill="#F3F4F6" stroke="#475569"/>
+    <text x="555" y="90" text-anchor="middle">el grupo vería</text><text x="555" y="108" text-anchor="middle" font-weight="700">A: 3 ventajas</text><text x="555" y="126" text-anchor="middle" font-weight="700">B: 3 ventajas distintas</text>
+    <text x="555" y="160" text-anchor="middle">(más las que no caben aquí)</text>
+    <text x="555" y="196" text-anchor="middle" fill="#475569" font-weight="700">B era mejor: estaba oculto</text>
+    <text x="555" y="214" text-anchor="middle" fill="#475569">en la suma de lo que</text><text x="555" y="230" text-anchor="middle" fill="#475569">nadie dijo</text>
+  </g>
+  <text x="340" y="272" text-anchor="middle" font-size="10.5" fill="#6B7280">Grupos con la información repartida: 8 veces menos propensos a acertar que con toda a la vista (Lu et al., 2012).</text>
+</svg>
+<figcaption>Figura 1. Anatomía de un perfil oculto. Elaboración propia a partir de Stasser y Titus (1985) y Lu, Yuan y McLeod (2012).</figcaption>
+</figure>
+<p>Hay un agravante que Tindale y Winget (2019) resumen desde el modelo de Brodbeck y colegas: además del sesgo al mencionar, hay un sesgo al evaluar. La información que confirma la preferencia inicial se juzga más creíble, y las preferencias anunciadas al comienzo enmarcan la discusión. Mojzisch y Schulz-Hardt (2010) lo mostraron en forma directa: conocer las preferencias de los demás antes de leer la información degradó la decisión, incluso con toda la información a la vista. Una reunión que empieza con "¿qué opinan?" en vez de "¿qué sabemos?" ya partió mal.</p>
+<h3>Disenso auténtico, abogado del diablo y la paradoja de Abilene</h3>
+<p>El antídoto más estudiado es el <strong>disenso</strong> (<em>dissent</em>). Nemeth (2011) resume treinta años de investigación sobre influencia minoritaria: una minoría consistente que discrepa estimula en la mayoría un pensamiento más divergente (más alternativas, más información considerada, más perspectivas), incluso cuando la minoría está equivocada, mientras que la mayoría induce convergencia. Schulz-Hardt, Brodbeck, Mojzisch, Kerschreiter y Frey (2006) lo probaron en perfiles ocultos con 135 tríos que elegían entre cuatro candidatos. Con información completa, acertó el 100% (19 de 19 grupos). En perfil oculto con preferencias iniciales homogéneas y erróneas, el 7% (2 de 28). Con disenso inicial pero sin nadie que defendiera la opción correcta, el 26% (12 de 46). Con disenso que incluía a un defensor de la opción correcta, el 62% (26 de 42). El disenso funcionó porque intensificó la discusión (más información mencionada y repetida, más tiempo) y redujo el sesgo hacia lo compartido.</p>
+<figure class="figura">
+<svg viewBox="0 0 680 230" role="img" aria-label="Porcentaje de grupos que eligieron al mejor candidato según la condición" style="width:100%;height:auto;max-width:680px">
+  <style>text{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}</style>
+  <text x="340" y="20" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1F2937">Grupos que acertaron, según con qué partieron (135 tríos)</text>
+  <g font-size="11" fill="#1F2937">
+    <text x="0" y="58">Información completa para todos</text><text x="0" y="96">Perfil oculto, todos de acuerdo (y equivocados)</text><text x="0" y="134">Perfil oculto, con disenso pero nadie defiende la correcta</text><text x="0" y="172">Perfil oculto, con un disidente que defiende la correcta</text>
+  </g>
+  <g>
+    <rect x="360" y="46" width="300" height="16" rx="3" fill="#475569"/><rect x="360" y="84" width="21" height="16" rx="3" fill="#C8102E"/><rect x="360" y="122" width="78" height="16" rx="3" fill="#9CA3AF"/><rect x="360" y="160" width="186" height="16" rx="3" fill="#C8102E"/>
+    <line x1="360" y1="40" x2="360" y2="182" stroke="#E5E7EB"/>
+  </g>
+  <g font-size="11" font-weight="700" fill="#1F2937"><text x="655" y="59" fill="#fff" text-anchor="end">100% (19/19)</text><text x="387" y="97">7% (2/28)</text><text x="444" y="135">26% (12/46)</text><text x="552" y="173">62% (26/42)</text></g>
+  <text x="340" y="210" text-anchor="middle" font-size="10.5" fill="#6B7280">Un abogado del diablo asignado ayuda menos que esto: todos saben que actúa (Nemeth et al., 2001).</text>
+</svg>
+<figcaption>Figura 2. El disenso auténtico multiplica por nueve la probabilidad de acertar en un perfil oculto. Elaborado a partir de Schulz-Hardt et al. (2006).</figcaption>
+</figure>
+<p>¿Sirve designar a alguien para que discrepe? Menos. Nemeth, Brown y Rogers (2001) compararon un <strong>abogado del diablo</strong> (<em>devil's advocate</em>) asignado con un disidente auténtico que sostenía la misma posición: el disenso auténtico produjo más y mejores soluciones, mientras que el abogado del diablo generó "refuerzo cognitivo" de la posición original, porque los demás saben que actúa un rol y descuentan sus argumentos. Nemeth, Connell, Rogers y Brown (2001) replicaron el patrón. El rol no es inútil: Schweiger, Sandberg y Ragan (1986) encontraron que el abogado del diablo y la indagación dialéctica mejoraron la calidad de decisiones estratégicas frente al consenso, a costa de menor satisfacción y aceptación. El rol asignado mejora el análisis, el disenso real mejora además la decisión, y lo que importa es la diversidad de preferencias previas, no un cargo en el acta.</p>
+<p>El caso límite de la ausencia de disenso es la <strong>paradoja de Abilene</strong> (Harvey, 1974): cuatro personas viajan 106 millas con 40 grados de calor para comer mal en Abilene porque cada una creyó que las otras querían ir. Nadie quería. Browne, Appan, Safi y Mellarkod (2018) la reprodujeron en laboratorio con 56 estudiantes que definían requisitos de un sitio web junto a cómplices: la ansiedad por actuar en contra del grupo y las "fantasías negativas" sobre las consecuencias redujeron la expresión de las creencias verdaderas; un solo aliado eliminó el efecto de la ansiedad, no el de las fantasías. A diferencia del pensamiento de grupo, Abilene ocurre en grupos transitorios y nada cohesivos. Un acuerdo unánime y rápido es una señal para sospechar.</p>
+<h2>D. Qué dice la evidencia</h2>
+<h3>Pensamiento de grupo: una teoría famosa con poco respaldo</h3>
+<p>Robbins y Judge (2017, p. 296) definen <strong>pensamiento de grupo</strong> (<em>groupthink</em>) como el "fenómeno en el cual la norma de consenso impide la evaluación realista de cursos de acción alternativos", y no citan a su autor. Janis (1972, 1982) lo propuso a partir de fiascos de política exterior estadounidense (Bahía de Cochinos, Pearl Harbor, la escalada en Vietnam). Su modelo tiene tres partes. Las <strong>condiciones antecedentes</strong>: alta cohesión, aislamiento del grupo, liderazgo directivo, falta de procedimientos de decisión, homogeneidad de los miembros y estrés alto con poca esperanza de una solución mejor que la del líder. Los <strong>ocho síntomas</strong>: ilusión de invulnerabilidad, racionalización colectiva, creencia en la moralidad inherente del grupo, estereotipos del exogrupo, presión directa sobre los disidentes, autocensura, ilusión de unanimidad y "guardianes de la mente" que filtran la información adversa. Y los <strong>defectos de decisión</strong>: pocas alternativas, no reexaminar la opción preferida, no buscar información, procesamiento sesgado, sin planes de contingencia.</p>
+<p>El modelo es un relato persuasivo y la evidencia es débil. Esser (1998) revisó 25 años de investigación: los estudios de caso tienden a confirmar el modelo porque se eligen fiascos (sesgo de selección), mientras que los experimentos son pocos y encuentran que la cohesión, definida como atracción mutua, no se asocia con los síntomas. Turner y Pratkanis (1998) advirtieron que aceptar el pensamiento de grupo sin mirar la evidencia es una forma de conformidad acrítica a una teoría. Mullen, Anthony, Salas y Driskell (1994) integraron las pruebas sobre cohesión y calidad de decisión y no encontraron el efecto negativo simple que Janis predijo. Park (2000) puso a prueba 23 predicciones del modelo: dos recibieron apoyo, 21 no, y siete resultaron significativas en la dirección contraria. Aldag y Fuller (1993) mostraron que el término se usa con al menos cuatro significados, uno tautológico (se infiere pensamiento de grupo del mal resultado). Baron (2005), en "So right it's wrong", concluyó que la evidencia no apoya las predicciones ambiciosas del modelo (cohesión y estrés como antecedentes), pero que las presiones de uniformidad, la supresión del disenso y la polarización son ubicuas: aparecen en casi cualquier grupo con una preferencia inicial compartida, con o sin las condiciones de Janis. Reader (2017) sintetiza: el fenómeno es "altamente situacional" y el término sirve como paraguas, no como teoría predictiva.</p>
+<table><tr><th>Predicción de Janis</th><th>Qué encontró la investigación</th><th>Fuente</th></tr><tr><td>Alta cohesión produce peores decisiones</td><td>No se sostiene; la cohesión no predice los síntomas y a veces reduce la autocensura</td><td>Esser (1998); Mullen et al. (1994)</td></tr><tr><td>Las condiciones antecedentes son necesarias</td><td>Presiones de uniformidad y polarización ocurren sin ellas</td><td>Baron (2005)</td></tr><tr><td>El modelo completo predice la decisión</td><td>2 de 23 predicciones apoyadas; 7 en dirección contraria</td><td>Park (2000)</td></tr><tr><td>Los casos históricos lo confirman</td><td>Sesgo de selección: se analizan fiascos, no éxitos con las mismas condiciones</td><td>Esser (1998); Aldag y Fuller (1993)</td></tr></table>
+<h3>El Challenger: el caso que confirma o refuta según quién codifique</h3>
+<p>El transbordador Challenger explotó el 28 de enero de 1986 por la falla de los sellos de los cohetes a baja temperatura. La noche anterior, los ingenieros del contratista Morton Thiokol recomendaron no lanzar; en una teleconferencia con la NASA, la gerencia del contratista revirtió la recomendación. Moorhead, Ference y Neck (1991) analizaron la teleconferencia y encontraron los ocho síntomas de Janis. Esser y Lindoerfer (1989) codificaron el informe de la comisión presidencial y contaron casi el doble de indicadores a favor del modelo que en contra. Pero Maier (2002), con los mismos materiales, encontró solo dos de las ocho condiciones antecedentes y concluyó que no fue pensamiento de grupo: los ingenieros sí disintieron, y lo que falló fue que su disenso no pesó frente a la jerarquía y a la presión del cliente. Vaughan (1996) ofreció la lectura sociológica que hoy domina: una "normalización de la desviación" acumulada durante años, en que cada anomalía de los sellos se reinterpretó como aceptable.</p>
+<p>La lección no es cuál codificación es correcta, sino que el mismo caso confirma el modelo si se busca confirmarlo. La relectura útil conecta con los apuntes 23 y 24: hubo disenso, pero de personas con menos estatus (ingenieros frente a gerentes, contratista frente a cliente); hubo información única (temperatura y erosión de los sellos) que no llegó con claridad a quienes decidían; y hubo silencio después de que la jerarquía fijó su preferencia. Perfil oculto, estatus y conformidad normativa: los mecanismos que sí tienen evidencia experimental. La actividad de la Clase 22 reproduce esa estructura.</p>
+<h3>Los remedios del texto guía, evaluados</h3>
+<p>Robbins y Judge (2017, pp. 297-298) proponen cuatro remedios. <strong>Vigilar el tamaño</strong>, con la afirmación de que sobre diez integrantes las personas se sienten menos responsables: no hay fuente; lo que sí sabemos es que tres a cinco personas bastan para superar al mejor individuo en tareas demostrables (Laughlin et al., 2006) y que el sesgo hacia la información compartida crece con el tamaño (Lu et al., 2012). <strong>Líderes imparciales</strong> que no expresen su opinión al comienzo: tiene respaldo por la vía del perfil oculto; las preferencias anunciadas temprano degradan la decisión (Mojzisch &amp; Schulz-Hardt, 2010) y los líderes que estimulan compartir información obtienen más información única (Tindale &amp; Winget, 2019). <strong>Abogado del diablo</strong>: mejora el análisis pero menos que el disenso real, y baja la satisfacción (Nemeth et al., 2001; Schweiger et al., 1986). <strong>Hablar primero de los riesgos</strong>: coherente con la orientación a la exactitud, aunque la evidencia directa es escasa.</p>
+<p>Lo que la investigación de perfiles ocultos agrega como remedios con evidencia experimental (Tindale &amp; Winget, 2019; Lu et al., 2012; Mesmer-Magnus &amp; DeChurch, 2009) es más concreto:</p>
+<ol><li><strong>Información antes que preferencias.</strong> Inventariar lo que cada uno sabe antes de que nadie diga qué prefiere; prohibir anunciar preferencias al inicio.</li><li><strong>Orientación a la exactitud, no al consenso.</strong> Enmarcar la tarea como "encontrar la mejor opción" y no como "ponernos de acuerdo". La discusión estructurada se asocia más con el desempeño (ρ = .46) que la no estructurada (.34) (Mesmer-Magnus &amp; DeChurch, 2009).</li><li><strong>Memoria transactiva explícita.</strong> Asignar responsables por tipo de información (quién sabe de costos, quién de clientes), de modo que la información única tenga dueño. Larson, Foster-Fishman y Keys (1994) mostraron que un entrenamiento breve en estas prácticas elevó la proporción de información única discutida de 28% a 40% (Sánchez, 2014).</li><li><strong>Registrar.</strong> Anotar la información a medida que aparece, para que lo mencionado una vez no se pierda frente a lo repetido.</li><li><strong>Disenso auténtico.</strong> Incluir a quien piensa distinto, no asignar el rol.</li></ol>
+<h3>Polarización y desplazamiento del grupo</h3>
+<p>El <strong>desplazamiento del grupo</strong> (<em>group shift</em>) o <strong>polarización grupal</strong> es, según Robbins y Judge (2017, p. 296), el "cambio entre la decisión de un grupo y la decisión individual que un miembro del grupo tomaría", que "generalmente representa una versión más extrema de la postura original del grupo". Myers y Lamm (1976) consolidaron el fenómeno: tras discutir, la media del grupo se desplaza en la dirección de la inclinación inicial, hacia el riesgo si el grupo ya se inclinaba al riesgo, hacia la cautela si ya era cauteloso. Isenberg (1986), en un meta-análisis, encontró que dos mecanismos lo explican: los <strong>argumentos persuasivos</strong> (en la discusión circulan más argumentos a favor de la postura dominante, y cada miembro oye razones nuevas en esa dirección) y la <strong>comparación social</strong> (las personas se ubican un poco más allá de la posición grupal percibida para diferenciarse favorablemente). El primero pesó más. Hay un tercer mecanismo, el metacontraste de la teoría de la autocategorización: el prototipo del grupo se define en contraste con el exogrupo, y por eso la posición "típica" se corre hacia el extremo que más lo distingue. Robbins y Judge (p. 298) recogen esta idea cuando mencionan el deseo de diferenciarse del exogrupo.</p>
+<p>Dos correcciones al texto guía. Primera, la polarización no es "un caso especial de pensamiento de grupo" (p. 298): es un fenómeno independiente, replicado cientos de veces, con mecanismos propios y sin los antecedentes de Janis; Baron (2005) lo usa como el ejemplo de que la presión hacia la posición inicial es ubicua. Segunda, el texto dice que "el grupo tiende a desplazarse más hacia el riesgo" (p. 298); la evidencia desde Myers y Lamm es que el signo depende de la inclinación inicial. Lo que la polarización comparte con el perfil oculto es la raíz: la discusión amplifica lo que la mayoría ya trae.</p>
+<h3>Decisiones menos éticas en grupo, bajo presión</h3>
+<p>El dilema ético de Robbins y Judge (2017, pp. 334-335) sobre las químicas Rongping y Luliang en China plantea que los equipos directivos deciden menos éticamente que sus miembros a solas cuando están presionados por resultados. La evidencia experimental que cita es Thau, Derfler-Rozin, Pitesa, Mitchell y Pillutla (2015): el riesgo de exclusión social del grupo aumenta la conducta no ética en favor del grupo, sobre todo en personas con alta necesidad de inclusión. Es el motor normativo de la conformidad (apunte 24) aplicado a la ética: callar o mentir para no perder el lugar en el grupo. No se lee como "los grupos son menos éticos", sino como una condición identificable: presión por resultados más amenaza de exclusión.</p>
+<h3>Chile: compartir información como eslabón</h3>
+<p>Madrid, Totterdell, Niven y Barros (2016) estudiaron 87 equipos de dos organizaciones públicas chilenas (350 personas) y 69 equipos de una organización privada de salud (734 personas). La <strong>presencia afectiva</strong> positiva del líder (la tendencia de una persona a hacer sentir bien a quienes la rodean, medida por los reportes de los miembros) se asoció con cuánto compartía información el equipo (b = .61 y .52; R² de .38 y .30), y compartir información se asoció a su vez con la innovación del equipo (efectos indirectos de .21 y .18). El diseño es transversal, así que las flechas son hipótesis, no causas demostradas. Pero es la pieza chilena que une este apunte con el anterior: el eslabón entre clima del equipo y resultados es el mismo que los experimentos de perfil oculto identifican, cuánta información circula.</p>
+<p>Un caso público chileno ilustra, con las cautelas de un análisis ex post, cómo falla una decisión colectiva. La Comisión Investigadora del Plan Transantiago de la Cámara de Diputados (2007) concluyó en su propuesta de conclusiones que iniciar la última etapa el 10 de febrero de 2007 "fue un error que ha significado enormes daños sociales y económicos al país"; que "hubo diversos informes técnicos negativos, provenientes de asesores externos" que no se ponderaron ni se transmitieron a otras autoridades; que la fecha "estaba consagrada y previamente definida"; y que los modelos de diseño requerían 6.500 buses, reducidos a 4.500 para no encarecer la tarifa. Con la caja de herramientas de este apunte: información técnica única que no llegó a quien decidía, preferencia inicial (la fecha) fijada antes de evaluar la información, y presión que convirtió el disenso técnico en ruido. No es prueba de pensamiento de grupo; es un ejemplo de por qué conviene diagnosticar lo observable en vez de un síndrome.</p>
+<h2>E. Mito versus evidencia</h2>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el grupo decide siempre mejor que el individuo, porque dos cabezas piensan mejor que una.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el grupo supera al individuo promedio, pero solo supera a su mejor miembro cuando la respuesta es demostrable (y hay al menos tres personas; Laughlin et al., 2006) o cuando agrega juicios independientes por mayoría o promedio (Hastie &amp; Kameda, 2005). En perfil oculto, los grupos que discuten libremente son ocho veces menos propensos a acertar que si tuvieran toda la información a la vista (Lu et al., 2012).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> las decisiones grupales se sienten más legítimas y la ilusión de productividad es fuerte; además, nadie lleva registro de las veces en que el mejor miembro fue ignorado.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> el pensamiento de grupo está demostrado y explica el Challenger.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> la cohesión, antecedente central del modelo, no predice peores decisiones (Esser, 1998; Mullen et al., 1994); 2 de 23 predicciones recibieron apoyo (Park, 2000); y el Challenger "confirma" los ocho síntomas para unos autores (Moorhead et al., 1991) y solo dos condiciones para otros (Maier, 2002). Lo que sí está demostrado son las presiones de uniformidad sin las condiciones de Janis (Baron, 2005).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> el relato es memorable, los casos se eligen por su fracaso, y "pensamiento de grupo" es una explicación que exime a cualquier individuo.</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> basta nombrar un abogado del diablo para evitar las malas decisiones.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el rol asignado mejora el análisis pero genera refuerzo de la posición original, porque los demás saben que actúa; el disenso auténtico produce más y mejores soluciones (Nemeth et al., 2001). Con un disidente real que defiende la opción correcta, el 62% de los grupos acertó, contra 7% sin disenso (Schulz-Hardt et al., 2006).</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> es barato, no exige incluir a nadie incómodo, y permite marcar la casilla "consideramos alternativas".</p></div>
+<div class="mito"><p><span class="etiqueta">Se dice que...</span> si todos están de acuerdo, es que la decisión es buena.</p><p><span class="etiqueta ev">La evidencia muestra que...</span> el acuerdo rápido es lo que se espera cuando el grupo solo discute lo que todos saben (ρ = .69 de sesgo hacia lo compartido; Mesmer-Magnus &amp; DeChurch, 2009), cuando las preferencias se anunciaron antes que la información (Mojzisch &amp; Schulz-Hardt, 2010) o cuando cada uno cree que los demás quieren lo que nadie quiere (Browne et al., 2018). La unanimidad sin información única sobre la mesa es una señal de alarma.</p><p><span class="etiqueta pq">Por qué persiste el mito:</span> el consenso es agradable y evita el conflicto; y la polarización hace que el grupo termine más convencido que cualquiera de sus miembros al entrar.</p></div>
+<h2>F. Qué significa para un administrador</h2>
+<p>Primero, clasificar la tarea antes de convocar. Si tiene respuesta demostrable, un grupo de tres a cinco con la instrucción de demostrar (no votar) supera al mejor individuo. Si es una estimación numérica, pedir juicios independientes por escrito y promediar o tomar la mediana; discutir después. Si es una tarea de juicio sin criterio, asumir que la mayoría inicial ganará y diseñar la reunión para que esa mayoría se forme con toda la información.</p>
+<p>Segundo, información antes que preferencias. Abrir con "¿qué sabemos?" y no con "¿qué opinan?". Inventariar por escrito lo que cada persona sabe que los demás no, asignar responsables por tipo de información y registrar lo que se menciona. Quien dirige no adelanta su preferencia.</p>
+<p>Tercero, tratar la unanimidad temprana como dato, no como meta. Si todos coinciden en cinco minutos, preguntar qué información única no se ha dicho y quién tiene una razón para dudar. Una votación anónima previa detecta falsos consensos de tipo Abilene.</p>
+<p>Cuarto, comprar disenso real, no un rol. Incluir a quien tiene una perspectiva distinta y protegerlo cuando la expresa (apunte 24: el disidente con un aliado resiste; solo, se calla). El abogado del diablo sirve como mínimo, no como sustituto.</p>
+<p>Quinto, no diagnosticar pensamiento de grupo ex post. Después de un fracaso, preguntar qué información existía, quién la tenía, cuándo se fijó la preferencia y por qué el disenso no pesó. Esas preguntas producen cambios de diseño; "fue pensamiento de grupo" no produce ninguno.</p>
+<p>Sexto, el clima importa por una vía concreta. En equipos chilenos, el líder que genera afecto positivo tiene equipos que comparten más información, y eso predice innovación (Madrid et al., 2016). No es amabilidad por sí misma: es la condición para que la información única salga a la mesa.</p>
+<h2>G. Para la evaluación</h2>
+<p>Después de leer este apunte deberías poder:</p>
+<ol><li>Enunciar la regla "grupo &gt; promedio pero &lt; mejor miembro" y explicar sus dos excepciones (demostrabilidad y regla de mayoría) con Laughlin et al. (2006) y Hastie y Kameda (2005).</li><li>Explicar la sabiduría de las multitudes, sus condiciones, por qué la discusión previa la destruye (Lorenz et al., 2011) y el descuento egocéntrico del consejo.</li><li>Definir perfil oculto y sesgo de muestreo de información, y citar las magnitudes de Mesmer-Magnus y DeChurch (2009) y Lu et al. (2012) en lenguaje llano.</li><li>Distinguir disenso auténtico de abogado del diablo (Nemeth et al., 2001; Schulz-Hardt et al., 2006) y explicar la paradoja de Abilene.</li><li>Describir el modelo de Janis y resumir por qué la evidencia es débil (Esser, Park, Baron), usando el Challenger como ejemplo de codificación dependiente del codificador.</li><li>Evaluar los cuatro remedios de Robbins y Judge y proponer los cinco remedios con evidencia experimental.</li><li>Definir polarización grupal y sus dos mecanismos (Isenberg, 1986), y explicar por qué no es un caso especial de pensamiento de grupo.</li><li>Analizar un caso (Challenger, Transantiago u otro) identificando información única, momento de fijación de la preferencia, estatus y disenso.</li></ol>
+<h2>H. Referencias</h2>
+<div class="referencias">
+<p>Aldag, R. J., &amp; Fuller, S. R. (1993). Beyond fiasco: A reappraisal of the groupthink phenomenon and a new model of group decision processes. <em>Psychological Bulletin, 113</em>(3), 533-552. <a href="https://doi.org/10.1037/0033-2909.113.3.533">https://doi.org/10.1037/0033-2909.113.3.533</a></p>
+<p>Baron, R. S. (2005). So right it's wrong: Groupthink and the ubiquitous nature of polarized group decision making. <em>Advances in Experimental Social Psychology, 37</em>, 219-253. <a href="https://doi.org/10.1016/S0065-2601(05)37004-3">https://doi.org/10.1016/S0065-2601(05)37004-3</a></p>
+<p>Bonner, B. L., Sillito, S. D., &amp; Baumann, M. R. (2007). Collective estimation: Accuracy, expertise, and extroversion as sources of intra-group influence. <em>Organizational Behavior and Human Decision Processes, 103</em>(1), 121-133. <a href="https://doi.org/10.1016/j.obhdp.2006.05.001">https://doi.org/10.1016/j.obhdp.2006.05.001</a></p>
+<p>Browne, G. J., Appan, R., Safi, R., &amp; Mellarkod, V. (2018). Investigating illusions of agreement in group requirements determination. <em>Information &amp; Management, 55</em>(8), 1071-1083. <a href="https://doi.org/10.1016/j.im.2018.05.013">https://doi.org/10.1016/j.im.2018.05.013</a></p>
+<p>Cámara de Diputados de Chile, Comisión Investigadora del Plan Transantiago. (2007). <em>Propuesta de conclusiones</em>. https://www.conadecus.cl/content/uploads/2018/11/INFORME-FINAL-TRANSANTIAGO-1.pdf</p>
+<p>Davis, J. H. (1973). Group decision and social interaction: A theory of social decision schemes. <em>Psychological Review, 80</em>(2), 97-125. [REFERENCIA POR VERIFICAR: número y DOI]</p>
+<p>Esser, J. K. (1998). Alive and well after 25 years: A review of groupthink research. <em>Organizational Behavior and Human Decision Processes, 73</em>(2-3), 116-141. <a href="https://doi.org/10.1006/obhd.1998.2758">https://doi.org/10.1006/obhd.1998.2758</a></p>
+<p>Esser, J. K., &amp; Lindoerfer, J. S. (1989). Groupthink and the space shuttle Challenger accident: Toward a quantitative case analysis. <em>Journal of Behavioral Decision Making, 2</em>(3), 167-177. <a href="https://doi.org/10.1002/bdm.3960020304">https://doi.org/10.1002/bdm.3960020304</a></p>
+<p>Galton, F. (1907). Vox populi. <em>Nature, 75</em>(1949), 450-451. <a href="https://doi.org/10.1038/075450a0">https://doi.org/10.1038/075450a0</a></p>
+<p>Harvey, J. B. (1974). The Abilene paradox: The management of agreement. <em>Organizational Dynamics, 3</em>(1), 63-80. <a href="https://doi.org/10.1016/0090-2616(74)90005-9">https://doi.org/10.1016/0090-2616(74)90005-9</a></p>
+<p>Hastie, R., &amp; Kameda, T. (2005). The robust beauty of majority rules in group decisions. <em>Psychological Review, 112</em>(2), 494-508. <a href="https://doi.org/10.1037/0033-295X.112.2.494">https://doi.org/10.1037/0033-295X.112.2.494</a></p>
+<p>Isenberg, D. J. (1986). Group polarization: A critical review and meta-analysis. <em>Journal of Personality and Social Psychology, 50</em>(6), 1141-1151. <a href="https://doi.org/10.1037/0022-3514.50.6.1141">https://doi.org/10.1037/0022-3514.50.6.1141</a></p>
+<p>Janis, I. L. (1972). <em>Victims of groupthink: A psychological study of foreign-policy decisions and fiascoes</em>. Houghton Mifflin.</p>
+<p>Janis, I. L. (1982). <em>Groupthink: Psychological studies of policy decisions and fiascoes</em> (2nd ed.). Houghton Mifflin.</p>
+<p>Kerr, N. L., &amp; Tindale, R. S. (2004). Group performance and decision making. <em>Annual Review of Psychology, 55</em>, 623-655. <a href="https://doi.org/10.1146/annurev.psych.55.090902.142009">https://doi.org/10.1146/annurev.psych.55.090902.142009</a></p>
+<p>Larrick, R. P. (2009). Broaden the decision frame to make effective decisions. En E. A. Locke (Ed.), <em>Handbook of principles of organizational behavior: Indispensable knowledge for evidence-based management</em> (2nd ed., pp. 461-485). Wiley.</p>
+<p>Larson, J. R., Jr., Foster-Fishman, P. G., &amp; Keys, C. B. (1994). Discussion of shared and unshared information in decision-making groups. <em>Journal of Personality and Social Psychology, 67</em>(3), 446-461. <a href="https://doi.org/10.1037/0022-3514.67.3.446">https://doi.org/10.1037/0022-3514.67.3.446</a></p>
+<p>Laughlin, P. R., &amp; Ellis, A. L. (1986). Demonstrability and social combination processes on mathematical intellective tasks. <em>Journal of Experimental Social Psychology, 22</em>(3), 177-189. <a href="https://doi.org/10.1016/0022-1031(86)90022-3">https://doi.org/10.1016/0022-1031(86)90022-3</a></p>
+<p>Laughlin, P. R., Hatch, E. C., Silver, J. S., &amp; Boh, L. (2006). Groups perform better than the best individuals on letters-to-numbers problems: Effects of group size. <em>Journal of Personality and Social Psychology, 90</em>(4), 644-651. <a href="https://doi.org/10.1037/0022-3514.90.4.644">https://doi.org/10.1037/0022-3514.90.4.644</a></p>
+<p>Lorenz, J., Rauhut, H., Schweitzer, F., &amp; Helbing, D. (2011). How social influence can undermine the wisdom of crowd effect. <em>Proceedings of the National Academy of Sciences, 108</em>(22), 9020-9025. <a href="https://doi.org/10.1073/pnas.1008636108">https://doi.org/10.1073/pnas.1008636108</a></p>
+<p>Lu, L., Yuan, Y. C., &amp; McLeod, P. L. (2012). Twenty-five years of hidden profiles in group decision making: A meta-analysis. <em>Personality and Social Psychology Review, 16</em>(1), 54-75. <a href="https://doi.org/10.1177/1088868311417243">https://doi.org/10.1177/1088868311417243</a></p>
+<p>Madrid, H. P., Totterdell, P., Niven, K., &amp; Barros, E. (2016). Leader affective presence and innovation in teams. <em>Journal of Applied Psychology, 101</em>(5), 673-686. <a href="https://doi.org/10.1037/apl0000078">https://doi.org/10.1037/apl0000078</a></p>
+<p>Maier, M. (2002). Ten years after a major malfunction... Reflections on "The Challenger syndrome". <em>Journal of Management Inquiry, 11</em>(3), 282-292. <a href="https://doi.org/10.1177/1056492602113013">https://doi.org/10.1177/1056492602113013</a></p>
+<p>Mannes, A. E., Soll, J. B., &amp; Larrick, R. P. (2014). The wisdom of select crowds. <em>Journal of Personality and Social Psychology, 107</em>(2), 276-299. <a href="https://doi.org/10.1037/a0036677">https://doi.org/10.1037/a0036677</a></p>
+<p>Mesmer-Magnus, J. R., &amp; DeChurch, L. A. (2009). Information sharing and team performance: A meta-analysis. <em>Journal of Applied Psychology, 94</em>(2), 535-546. <a href="https://doi.org/10.1037/a0013773">https://doi.org/10.1037/a0013773</a></p>
+<p>Mojzisch, A., &amp; Schulz-Hardt, S. (2010). Knowing others' preferences degrades the quality of group decisions. <em>Journal of Personality and Social Psychology, 98</em>(5), 794-808. <a href="https://doi.org/10.1037/a0017627">https://doi.org/10.1037/a0017627</a></p>
+<p>Moorhead, G., Ference, R., &amp; Neck, C. P. (1991). Group decision fiascoes continue: Space shuttle Challenger and a revised groupthink framework. <em>Human Relations, 44</em>(6), 539-550. <a href="https://doi.org/10.1177/001872679104400601">https://doi.org/10.1177/001872679104400601</a></p>
+<p>Mullen, B., Anthony, T., Salas, E., &amp; Driskell, J. E. (1994). Group cohesiveness and quality of decision making: An integration of tests of the groupthink hypothesis. <em>Small Group Research, 25</em>(2), 189-204. <a href="https://doi.org/10.1177/1046496494252003">https://doi.org/10.1177/1046496494252003</a></p>
+<p>Myers, D. G., &amp; Lamm, H. (1976). The group polarization phenomenon. <em>Psychological Bulletin, 83</em>(4), 602-627. <a href="https://doi.org/10.1037/0033-2909.83.4.602">https://doi.org/10.1037/0033-2909.83.4.602</a></p>
+<p>Nemeth, C. J. (2011). Minority influence theory. En P. A. M. Van Lange, A. W. Kruglanski, &amp; E. T. Higgins (Eds.), <em>Handbook of theories of social psychology</em> (Vol. 2, pp. 362-378). Sage.</p>
+<p>Nemeth, C., Brown, K., &amp; Rogers, J. (2001). Devil's advocate versus authentic dissent: Stimulating quantity and quality. <em>European Journal of Social Psychology, 31</em>(6), 707-720. <a href="https://doi.org/10.1002/ejsp.58">https://doi.org/10.1002/ejsp.58</a></p>
+<p>Nemeth, C. J., Connell, J. B., Rogers, J. D., &amp; Brown, K. S. (2001). Improving decision making by means of dissent. <em>Journal of Applied Social Psychology, 31</em>(1), 48-58. <a href="https://doi.org/10.1111/j.1559-1816.2001.tb02481.x">https://doi.org/10.1111/j.1559-1816.2001.tb02481.x</a></p>
+<p>Park, W.-W. (2000). A comprehensive empirical investigation of the relationships among variables of the groupthink model. <em>Journal of Organizational Behavior, 21</em>(8), 873-887. <a href="https://doi.org/10.1002/1099-1379(200012)21:8&lt;873::AID-JOB56&gt;3.0.CO;2-8">https://doi.org/10.1002/1099-1379(200012)21:8&lt;873::AID-JOB56&gt;3.0.CO;2-8</a></p>
+<p>Reader, T. W. (2017). Team decision making. En E. Salas, R. Rico, &amp; J. Passmore (Eds.), <em>The Wiley Blackwell handbook of the psychology of team working and collaborative processes</em> (pp. 271-296). Wiley Blackwell.</p>
+<p>Robbins, S. P., &amp; Judge, T. A. (2017). <em>Comportamiento organizacional</em> (17.ª ed.). Pearson.</p>
+<p>Sánchez, J. C. (2014). <em>Psicología de los grupos: Teorías, procesos y aplicaciones</em>. McGraw-Hill.</p>
+<p>Schulz-Hardt, S., Brodbeck, F. C., Mojzisch, A., Kerschreiter, R., &amp; Frey, D. (2006). Group decision making in hidden profile situations: Dissent as a facilitator for decision quality. <em>Journal of Personality and Social Psychology, 91</em>(6), 1080-1093. <a href="https://doi.org/10.1037/0022-3514.91.6.1080">https://doi.org/10.1037/0022-3514.91.6.1080</a></p>
+<p>Schweiger, D. M., Sandberg, W. R., &amp; Ragan, J. W. (1986). Group approaches for improving strategic decision making: A comparative analysis of dialectical inquiry, devil's advocacy, and consensus. <em>Academy of Management Journal, 29</em>(1), 51-71. <a href="https://doi.org/10.2307/255859">https://doi.org/10.2307/255859</a></p>
+<p>Sniezek, J. A., &amp; Van Swol, L. M. (2001). Trust, confidence, and expertise in a judge-advisor system. <em>Organizational Behavior and Human Decision Processes, 84</em>(2), 288-307. <a href="https://doi.org/10.1006/obhd.2000.2926">https://doi.org/10.1006/obhd.2000.2926</a></p>
+<p>Stasser, G., &amp; Titus, W. (1985). Pooling of unshared information in group decision making: Biased information sampling during discussion. <em>Journal of Personality and Social Psychology, 48</em>(6), 1467-1478. <a href="https://doi.org/10.1037/0022-3514.48.6.1467">https://doi.org/10.1037/0022-3514.48.6.1467</a></p>
+<p>Surowiecki, J. (2004). <em>The wisdom of crowds</em>. Doubleday.</p>
+<p>Thau, S., Derfler-Rozin, R., Pitesa, M., Mitchell, M. S., &amp; Pillutla, M. M. (2015). Unethical for the sake of the group: Risk of social exclusion and pro-group unethical behavior. <em>Journal of Applied Psychology, 100</em>(1), 98-113. <a href="https://doi.org/10.1037/a0036708">https://doi.org/10.1037/a0036708</a></p>
+<p>Tindale, R. S., &amp; Winget, J. R. (2019). Group decision-making. En <em>Oxford Research Encyclopedia of Psychology</em>. Oxford University Press. <a href="https://doi.org/10.1093/acrefore/9780190236557.013.262">https://doi.org/10.1093/acrefore/9780190236557.013.262</a></p>
+<p>Turner, M. E., &amp; Pratkanis, A. R. (1998). Twenty-five years of groupthink theory and research: Lessons from the evaluation of a theory. <em>Organizational Behavior and Human Decision Processes, 73</em>(2-3), 105-115. <a href="https://doi.org/10.1006/obhd.1998.2756">https://doi.org/10.1006/obhd.1998.2756</a></p>
+<p>Vaughan, D. (1996). <em>The Challenger launch decision: Risky technology, culture, and deviance at NASA</em>. University of Chicago Press. [REFERENCIA POR VERIFICAR]</p>
+<h3>Para profundizar</h3>
+<p>Tindale y Winget (2019): treinta páginas que ordenan toda la investigación sobre decisión grupal, desde la sabiduría de las multitudes hasta los perfiles ocultos; es la mejor entrada si quieres una sola lectura.</p>
+<p>Baron (2005): el artículo que explica por qué el pensamiento de grupo tiene razón en lo general y se equivoca en lo específico, y qué poner en su lugar.</p>
+<p>Lu, Yuan y McLeod (2012): el meta-análisis de perfiles ocultos, con las tablas de moderadores que sostienen las recomendaciones de la sección F.</p>
+<p>&lt;!-- NOTAS DE PRODUCCIÓN (revisión 15-11-2026: se quitaron las líneas 'Complementa y corrige' y 'lectura previa'; se agregaron 2 figuras SVG (perfil oculto; disenso de Schulz-Hardt); retoques de prosa en A; 'metaanálisis' unificado): Palabras del cuerpo (secciones A a G, sin encabezado ni referencias): 5.054 contando recuadros de mito y tabla; 4.400 aprox. de prosa corrida. Referencias totales: 45. Referencias [POR VERIFICAR]: 2. (1) Davis (1973), Psychological Review 80, 97-125: tomada de la lista de referencias de Riedl et al. (2021); número de ejemplar y DOI no verificados en Crossref durante la sesión. (2) Vaughan (1996), libro: no verificado en la sesión. Verificadas por Crossref en esta sesión: Bonner 2007; Browne 2018 (vol. 55(8), 1071-1083); Esser &amp; Lindoerfer 1989; Galton 1907; Harvey 1974; Hastie &amp; Kameda 2005; Larson 1994; Laughlin &amp; Ellis 1986; Lorenz 2011; Maier 2002; Mojzisch &amp; Schulz-Hardt 2010; Moorhead 1991; Mullen 1994; Nemeth Connell 2001; Park 2000; Schweiger 1986; Sniezek &amp; Van Swol 2001; Thau 2015; Tindale &amp; Winget 2019. El resto venía VERIFICADA en los informes E_web_procesos, A_grupos, F_web_equipos_chile o copiada de los PDF (Janis, Surowiecki, Nemeth 2011, Larrick 2009, Reader 2017, Sánchez 2014). Larrick, Mannes y Soll (2012) sobre descuento del consejo no se incluyó como referencia propia (no se pudo verificar el capítulo); el dato se cita vía Tindale &amp; Winget (2019). Datos chilenos: Madrid et al. (2016) VERIFICADO (F 10.4). Transantiago: documento "Propuesta de conclusiones" de la Comisión Investigadora, verificado por web en la URL de Conadecus (citas textuales pp. 4-6, 10, 28); el resultado de la votación en Sala de ese informe no se afirma. Sin [DATO POR VERIFICAR] pendientes. Guiones: en el cuerpo no hay guion largo ni medio; los rangos de páginas en H usan guion corto. --&gt;</p>
+</div>
+
+<footer>
+  Serie de apuntes complementarios · <a href="https://gempp.cl/teaching/pye/">Personas y Equipos, UDP</a> · Prof. <a href="https://www.gempp.cl">René Gempp</a><br>
+  Material complementario; el contenido básico corresponde a las lecturas obligatorias indicadas en el programa del curso (en Canvas) y lo visto en clases.
+</footer>
+
+</div>
+</body>
+</html>
